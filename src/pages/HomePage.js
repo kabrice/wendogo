@@ -152,7 +152,7 @@ function HomePage(){
                     <ul role="menu" className="Navbarstyles__Menu">
                       <li aria-expanded="false" role="menuitem" tabIndex={0} className="Navbarstyles__MenuItem Navbarstyles__MenuItem-common">
                         <span className="Navbarstyles__MenuItemLabel">
-                          <span>Simulez votre demande de visa</span>
+                          <span>Simuler mon visa</span>
                           <DropDownIcon/>
                         </span>
                         <ul className="Navbarstyles__SubMenu">
@@ -267,7 +267,7 @@ function HomePage(){
               <section className="styles__Main-sc-kz84w6-0 ≈">
                 <main className="styles__Main-sc-kz84w6-0 gEFmYD">
                   <section className="BlocRTB__Bloc-sc-15u9ccm-0 lgCmtM" style={{margin : 0}}>
-                    <div className="BlocRTB__Container-sc-15u9ccm-1 kSXqSI kSXqSI0">
+                    <div className="BlocRTB__Container-sc-15u9ccm-1 kSXqSI">
                       <h2 className="h2"> Nous vous aidons au  <br />
                         <span>maximum à obtenir votre visa</span>
                       </h2>
@@ -310,7 +310,7 @@ function HomePage(){
                     </section>
                     <section className="BlocRTB__Bloc-sc-15u9ccm-0 lgCmtM" style={{paddingBottom: 90}}>
                       <div className="BlocRTB__Container-sc-15u9ccm-1 kSXqSI">
-                        <div className="Card__Container-sc-1qqjegm-0 bSzjhs">
+                        <div className="Card__Container-sc-1qqjegm-0 bSzjhs mkxwco">
                           <div className="Card__CheckContainer-sc-1qqjegm-1 ffwQEH">
                             <FeatureTransparence/>
                           </div>

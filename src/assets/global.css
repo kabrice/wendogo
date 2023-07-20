@@ -261,8 +261,8 @@ button {
 }
 
 .jigKlE {
-	/* background-color: rgba(241, 235, 226, 0.5);
-	backdrop-filter: blur(24px); */
+	/* background-color: rgba(241, 235, 226, 0.5);*/
+	backdrop-filter: blur(5px); 
 	display: grid;
 	grid-template-columns: minmax(0px, calc(100% - 48px));
 	-webkit-box-pack: center;
@@ -2706,7 +2706,15 @@ h1 {
 	src: local("PensumPro-BookItalic"), url(https://www.pretto.fr/static/Pensum-Pro-Book-Italic-64fd6a5d73523b80afc14814313e575f.woff2) format("woff2"), url(https://www.pretto.fr/static/Pensum-Pro-Book-Italic-c738cd008c1d6eba1c1c3a30c28e9861.woff) format("woff");
 }
 
-
+@font-face {
+    font-family: 'Avenir Next';
+    src: local('Avenir Next Heavy'), local('Avenir-Next-Heavy'),
+        url('./fonts/AvenirNextCyr-Heavy.woff2') format('woff2'),
+        url('./fonts/AvenirNextCyr-Heavy.woff') format('woff'),
+        url('./fonts/AvenirNextCyr-Heavy.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+  }
 /* dsd*/
 /*! CSS Used from: Embedded */
 a,
@@ -3846,6 +3854,11 @@ h3 {
 
 .kSXqSI>div+div {
 	margin-top: 8px;
+}
+@media screen and (max-width: 768px){
+	.mkxwco {
+		margin-top: 8px;
+	}
 }
 
 @media screen and (min-width: 768px) {
