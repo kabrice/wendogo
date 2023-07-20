@@ -31,7 +31,7 @@ import "swiper/css/effect-fade";
 
 // import required modules
 import { Pagination, Autoplay } from "swiper";
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 
 function HomePage(){
 
@@ -44,46 +44,98 @@ function HomePage(){
     const [countdown, setCountdown] = useState(0);
     const [bannerAnimationClassList, updateBannerAnimationClassList] = useState(["bEueds", "egKQIA"]);
     //const [progressBarClass, setProgressBarClass] = useState('lahlbf');
+    const [browserWidth, setBrowserWidth] = useState(0) 
+    useEffect(() => {
+      function handleResize() {
+        setBrowserWidth(window.innerWidth)
+      }
+      
+      window.addEventListener("resize", handleResize)
+      
+      handleResize()
+      
+      return () => { 
+        window.removeEventListener("resize", handleResize)
+      }
+    }, [])
 
     useEffect(() => {
       let timeout;
+      if(browserWidth>768){
 
-      setTimeout(() => {
-        if(countdown === 0){
-          updateBannerAnimationClassList(["bEueds", "egKQIA"])
-          //setProgressBarClass('dctgrL')
-        }
-        if(countdown === 5){
-          updateBannerAnimationClassList(["ckXPUg", "egKQIA"])
-        }
-        if(countdown === 10){
-          updateBannerAnimationClassList(["PWeEw", "egKQIA"])
-        }
-        if (countdown >= 15) {
-          setCountdown(0)
-   
-        }else{
-          setCountdown(countdown + 1);
-        }
-      }, 1000); 
+        setTimeout(() => { 
+          if((countdown >= 0 && countdown<5) ){
+            updateBannerAnimationClassList(["bEueds", "egKQIA"])
+            //setProgressBarClass('dctgrL')
+          }
+          if(countdown >= 5 && countdown<10){
+            updateBannerAnimationClassList(["ckXPUg", "egKQIA"])
+          }
+          if(countdown >= 10 && countdown<15){
+            updateBannerAnimationClassList(["PWeEw", "egKQIA"])
+          }
+          if (countdown >= 15) {
+            setCountdown(0)         
+          }else{
+            setCountdown(countdown + 1);
+          }
+        }, 1000); 
+      }else{
+        setCountdown(0)  
+      }
+
       return () => clearTimeout(timeout);
-    }, [countdown]);
-    
+    }, [countdown, browserWidth]);
+ 
     const [scrollTop, setScrollTop] = useState(0);
-    const handleScroll = event => {
-      setScrollTop(window.scrollY);
-    };
+    const myElementRef = useRef(null);
+    const [positionLeft, setPositionLeft] = useState(0);
+
+    const [widthBanner, setWidthBanner] = useState(0);
+  
+    // useLayoutEffect(() => {
+    //   setWidthBanner(myElementRef.current.offsetWidth);
+    // }, []);
+
+
     useEffect(() => {
-      const handleScroll = event => {
+      
+      const handleScroll = () => {
         setScrollTop(window.scrollY);
+        const el = myElementRef.current;
+        setPositionLeft(el.scrollLeft);
+        setWidthBanner(el.offsetWidth);
       };
-  
-      window.addEventListener('scroll', handleScroll);
-  
+      console.log('positionLeft ', positionLeft, browserWidth)
+      
+      window.addEventListener('scroll', () => handleScroll());
+      const element = myElementRef.current;
+      element.addEventListener("scroll", () => handleScroll());  
+      console.log('aaaa ', window.pageYOffset)
+      if(browserWidth<=768){
+
+          if((positionLeft >= widthBanner/2) && (positionLeft < widthBanner)){
+            console.log('2')
+            setCountdown(5)
+            updateBannerAnimationClassList(["ckXPUg", "egKQIA"])
+          }else if( positionLeft>=widthBanner){
+            console.log('3')
+            setCountdown(10)
+            updateBannerAnimationClassList(["PWeEw", "egKQIA"])
+          }else{
+            console.log('1')
+            setCountdown(0)
+            updateBannerAnimationClassList(["bEueds", "egKQIA"])
+          }
+
+      }
+
       return () => {
-        window.removeEventListener('scroll', handleScroll);
+        window.removeEventListener('scroll', () => handleScroll());
       };
-    }, []);
+    }, [browserWidth, widthBanner, positionLeft,countdown]);    
+
+
     return <div >
             <nav className={"Navbarstyles__Navigation1 "+(scrollTop>900 ? "fBUtVg" : "kebTzo")}>
               <div className={"Navbarstyles__Navigation2 "+(scrollTop>900 ? "jBwgPO" : "jigKlE")}>
@@ -215,7 +267,7 @@ function HomePage(){
               <section className="styles__Main-sc-kz84w6-0 ≈">
                 <main className="styles__Main-sc-kz84w6-0 gEFmYD">
                   <section className="BlocRTB__Bloc-sc-15u9ccm-0 lgCmtM" style={{margin : 0}}>
-                    <div className="BlocRTB__Container-sc-15u9ccm-1 kSXqSI">
+                    <div className="BlocRTB__Container-sc-15u9ccm-1 kSXqSI kSXqSI0">
                       <h2 className="h2"> Nous vous aidons au  <br />
                         <span>maximum à obtenir votre visa</span>
                       </h2>
@@ -264,7 +316,7 @@ function HomePage(){
                           </div>
                           <div className="Card__TextContainer-sc-1qqjegm-3 ezVybs">
                             <div className="Card__Title-sc-1qqjegm-4 bqicpW">Transparence</div>
-                            <p className="Card__Text-sc-1qqjegm-5 iOmyQf"> Nos conseillers vous disent tout et défendre vos intérêts. </p>
+                            <p className="Card__Text-sc-1qqjegm-5 iOmyQf"> Nos conseillers vous disent tout et défendent vos intérêts. </p>
                           </div>
                         </div>
                         <div className="Card__Container-sc-1qqjegm-0 bSzjhs">
@@ -303,30 +355,19 @@ function HomePage(){
                           <span className="PrimaryButton__Label-sc-1vkvp7q-2 kVCvkJ"> Simuler mon visa </span>
                         </button>
                       </div>
-                      <div className="Laptop__Container-sc-1henh52-0 ebnCSa">
+                      {browserWidth>1024 ?
+                      <div className="Laptop__Container-sc-1henh52-0 ebnCSa ">
                         <div className="Sliderstyles__ImageContainer-sc-jd0rgd-6 isxeYt">
                           <picture>
                             <source type="image/webp" srcSet={SliderstylesImage1} />
                             <source srcSet={SliderstylesImage1} />
                             <img className={"Sliderstyles__Image-sc-jd0rgd-7 "+ (isLeftArrow ? "kCpYFv" : "CtOpC") } src={SliderstylesImage1} alt="" />
-                            {/* <img alt="v1677658638/website/page/home/Re%CC%81sultat.png" className="Sliderstyles__Image-sc-jd0rgd-7 kCpYFv" loading="lazy" src="https://res.cloudinary.com/pretto-fr/image/upload/q_auto/v1677658638/website/page/home/Re%CC%81sultat.png" /> */}
-                          </picture>
+                           </picture>
                           <picture>
                             <source type="image/webp" srcSet={SliderstylesImage2} />
                             <source srcSet={SliderstylesImage2} />
                             <img className={"Sliderstyles__Image-sc-jd0rgd-7 "+ (!isLeftArrow ? "kCpYFv" : "CtOpC") } src={SliderstylesImage2} alt="" />
-                            {/* <img alt="v1677658638/website/page/home/Re%CC%81sultat.png" className="Sliderstyles__Image-sc-jd0rgd-7 kCpYFv" loading="lazy" src="https://res.cloudinary.com/pretto-fr/image/upload/q_auto/v1677658638/website/page/home/Re%CC%81sultat.png" /> */}
                           </picture>
-                          {/* <picture>
-                            <source type="image/webp" srcSet="https://res.cloudinary.com/pretto-fr/image/upload/q_auto,f_webp/v1677658638/website/page/home/ZouClient.png" />
-                            <source srcSet="https://res.cloudinary.com/pretto-fr/image/upload/q_auto/v1677658638/website/page/home/ZouClient.png" />
-                            <img src={SliderstylesImage1} alt="" />
-                          </picture>
-                          <picture>
-                            <source type="image/webp" srcSet="https://res.cloudinary.com/pretto-fr/image/upload/q_auto,f_webp/v1677658638/website/page/home/EspaceClient.png" />
-                            <source srcSet="https://res.cloudinary.com/pretto-fr/image/upload/q_auto/v1677658638/website/page/home/EspaceClient.png" />
-                            <img alt="v1677658638/website/page/home/EspaceClient.png" className="Sliderstyles__Image-sc-jd0rgd-7 CtOpC" loading="lazy" src="https://res.cloudinary.com/pretto-fr/image/upload/q_auto/v1677658638/website/page/home/EspaceClient.png" />
-                          </picture> */}
                         </div>
                         <div className="Laptop__Content-sc-1henh52-2 bwEaWU">
                           <h3 className="Sliderstyles__Title-sc-jd0rgd-0 kQjOWu">  {(isLeftArrow ? "Notre simulateur" : "Suivez votre dossier en temps réel")}</h3>
@@ -358,37 +399,20 @@ function HomePage(){
                             </button>
                           </div>
                         </div>
-                      </div>
-                    </div>
-                    {/* <1024px 
-                    <div className="styles__Grid-sc-10gqksz-1 iuHviD BlocOutils__Container-sc-10c9hjh-0 fGvXyl">
-                    <div className="BlocOutils__Content-sc-10c9hjh-1 jQpxOw">
-                        <p className="BlocOutils__Transparency-sc-10c9hjh-2 jXRqut"> La transparence selon Pretto </p>
-                        <h2 className="BlocOutils__Title-sc-10c9hjh-3 wniqW"> Tout ce qu’on sait, vous le savez. </h2>
-                        <p className="BlocOutils__Description-sc-10c9hjh-4 eQpKZn"> Nous partageons toutes les informations en notre possession afin de garantir une relation transparente et des décisions éclairées. </p>
-                        <button className="PrimaryButton__Container-sc-1vkvp7q-0 iroZSn BlocOutils__Simulate-sc-10c9hjh-5 cWIQGA">
-                          <span className="PrimaryButton__Overlay-sc-1vkvp7q-3 sSEIO">
-                            <span className="PrimaryButton__OverlayBackground-sc-1vkvp7q-4 kxNCsz">
-                              <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="PrimaryButton__Arrow-sc-1vkvp7q-1 crhpBB">
-                                <path d="M20.7454 14.8908L17.1664 11.3187L18.7381 9.75L25 16L18.7381 22.25L17.1664 20.6813L20.7454 17.1092H7V14.8908H20.7454Z" />
-                              </svg>
-                            </span>
-                          </span>
-                          <span className="PrimaryButton__Label-sc-1vkvp7q-2 kVCvkJ"> Simuler mon prêt </span>
-                        </button>
-                      </div>
+                      </div> : (  (browserWidth<1024 && browserWidth>768) ?                   
                       <div className="Tablet__Container-sc-2ocpeo-0 UcQSe">
                         <div className="Tablet__Content-sc-2ocpeo-1 eyLBfp">
-                          <h3 className="Sliderstyles__Title-sc-jd0rgd-0 kQjOWu"> Notre simulateur </h3>
-                          <p className="Sliderstyles__Description-sc-jd0rgd-1 dzJZez"> La bonne offre au bon moment&nbsp;: notre simulateur doté d’algorithmes puissants compare en profondeur les offres des banques et identifie la meilleure pour vous. </p>
+                        <h3 className="Sliderstyles__Title-sc-jd0rgd-0 kQjOWu">  {(isLeftArrow ? "Notre simulateur" : "Suivez votre dossier en temps réel")}</h3>
+                          <p className="Sliderstyles__Description-sc-jd0rgd-1 dzJZez"> 
+                                  {(isLeftArrow ? "Soyez sûr avant de vous engager : notre simulateur doté d’algorithmes puissants vous donne un indice de confiance sur vos chances d'obtenir votre visa." 
+                                            : "Vous nous confiez votre projet, vous devez savoir où il en est. RDV à l'ambassade, décision d'une école ... Bénéficiez d’un espace en ligne sécurisé pour suivre l’avancée de votre dossier en toute autonomie.") } </p>
                           <div className="Sliderstyles__SlideContainer-sc-jd0rgd-4 exfKJT">
-                            <hr className="Divider-sc-1qii385-0 Sliderstyles__Slide-sc-jd0rgd-5 iyJAir LACWn" />
-                            <hr className="Divider-sc-1qii385-0 Sliderstyles__Slide-sc-jd0rgd-5 iyJAir jaXoBy" />
-                            <hr className="Divider-sc-1qii385-0 Sliderstyles__Slide-sc-jd0rgd-5 iyJAir jaXoBy" />
+                            <hr className={"Divider-sc-1qii385-0 Sliderstyles__Slide-sc-jd0rgd-5 iyJAir "+ (isLeftArrow ? "LACWn" : "jaXoBy") } />
+                            <hr className={"Divider-sc-1qii385-0 Sliderstyles__Slide-sc-jd0rgd-5 iyJAir "+ (!isLeftArrow ? "LACWn" : "jaXoBy")} />
                           </div>
                         </div>
                         <div className="Tablet__ImageController-sc-2ocpeo-2 qqeks">
-                          <button aria-label="Précédent" disabled="" type="button" className="ArrowButton__Container-sc-11aiclo-3 hRnQwB Sliderstyles__Previous-sc-jd0rgd-2 ENyIs">
+                          <button aria-label="Précédent" type="button" onClick={() => handleClickArrow(true)} className="ArrowButton__Container-sc-11aiclo-3 hRnQwB Sliderstyles__Previous-sc-jd0rgd-2 ENyIs" disabled={isLeftArrow}>
                             <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="ArrowButton__Arrow-sc-11aiclo-0 ArrowButton__Arrow1-sc-11aiclo-1 fhLDeK">
                               <path d="M20.7454 14.8908L17.1664 11.3187L18.7381 9.75L25 16L18.7381 22.25L17.1664 20.6813L20.7454 17.1092H7V14.8908H20.7454Z" />
                             </svg>
@@ -397,23 +421,18 @@ function HomePage(){
                             </svg>
                           </button>
                           <div className="Sliderstyles__ImageContainer-sc-jd0rgd-6 isxeYt">
-                            <picture>
-                              <source type="image/webp" srcSet="https://res.cloudinary.com/pretto-fr/image/upload/q_auto,f_webp/v1677658638/website/page/home/Re%CC%81sultat.png" />
-                              <source srcSet="https://res.cloudinary.com/pretto-fr/image/upload/q_auto/v1677658638/website/page/home/Re%CC%81sultat.png" />
-                              <img alt="v1677658638/website/page/home/Re%CC%81sultat.png" className="Sliderstyles__Image-sc-jd0rgd-7 kCpYFv" loading="lazy" src="https://res.cloudinary.com/pretto-fr/image/upload/q_auto/v1677658638/website/page/home/Re%CC%81sultat.png" />
-                            </picture>
-                            <picture>
-                              <source type="image/webp" srcSet="https://res.cloudinary.com/pretto-fr/image/upload/q_auto,f_webp/v1677658638/website/page/home/ZouClient.png" />
-                              <source srcSet="https://res.cloudinary.com/pretto-fr/image/upload/q_auto/v1677658638/website/page/home/ZouClient.png" />
-                              <img alt="v1677658638/website/page/home/ZouClient.png" className="Sliderstyles__Image-sc-jd0rgd-7 CtOpC" loading="lazy" src="https://res.cloudinary.com/pretto-fr/image/upload/q_auto/v1677658638/website/page/home/ZouClient.png" />
-                            </picture>
-                            <picture>
-                              <source type="image/webp" srcSet="https://res.cloudinary.com/pretto-fr/image/upload/q_auto,f_webp/v1677658638/website/page/home/EspaceClient.png" />
-                              <source srcSet="https://res.cloudinary.com/pretto-fr/image/upload/q_auto/v1677658638/website/page/home/EspaceClient.png" />
-                              <img alt="v1677658638/website/page/home/EspaceClient.png" className="Sliderstyles__Image-sc-jd0rgd-7 CtOpC" loading="lazy" src="https://res.cloudinary.com/pretto-fr/image/upload/q_auto/v1677658638/website/page/home/EspaceClient.png" />
-                            </picture>
-                          </div>
-                          <button aria-label="Suivant" type="button" className="ArrowButton__Container-sc-11aiclo-3 doTHWK Sliderstyles__Next-sc-jd0rgd-3 jZecqw">
+                          <picture>
+                            <source type="image/webp" srcSet={SliderstylesImage1} />
+                            <source srcSet={SliderstylesImage1} />
+                            <img className={"Sliderstyles__Image-sc-jd0rgd-7 "+ (isLeftArrow ? "kCpYFv" : "CtOpC") } src={SliderstylesImage1} alt="" />
+                           </picture>
+                          <picture>
+                            <source type="image/webp" srcSet={SliderstylesImage2} />
+                            <source srcSet={SliderstylesImage2} />
+                            <img className={"Sliderstyles__Image-sc-jd0rgd-7 "+ (!isLeftArrow ? "kCpYFv" : "CtOpC") } src={SliderstylesImage2} alt="" />
+                          </picture>
+                        </div>
+                          <button aria-label="Suivant" type="button" onClick={() => handleClickArrow(false)} className="ArrowButton__Container-sc-11aiclo-3 doTHWK Sliderstyles__Next-sc-jd0rgd-3 jZecqw" disabled={!isLeftArrow}>
                             <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="ArrowButton__Arrow-sc-11aiclo-0 ArrowButton__Arrow1-sc-11aiclo-1 bJwJPy">
                               <path d="M20.7454 14.8908L17.1664 11.3187L18.7381 9.75L25 16L18.7381 22.25L17.1664 20.6813L20.7454 17.1092H7V14.8908H20.7454Z" />
                             </svg>
@@ -422,8 +441,50 @@ function HomePage(){
                             </svg>
                           </button>
                         </div>
-                      </div>
-                    </div>*/}
+                      </div> : <div className="Mobile__Container-sc-fyrimv-0 jERalJ">
+                                <h3 className="Sliderstyles__Title-sc-jd0rgd-0 kQjOWu">  {(isLeftArrow ? "Notre simulateur" : "Suivez votre dossier en temps réel")}</h3>
+                                <p className="Sliderstyles__Description-sc-jd0rgd-1 dzJZez"> 
+                                      {(isLeftArrow ? "Soyez sûr avant de vous engager : notre simulateur doté d’algorithmes puissants vous donne un indice de confiance sur vos chances d'obtenir votre visa." 
+                                            : "Vous nous confiez votre projet, vous devez savoir où il en est. RDV à l'ambassade, décision d'une école ... Bénéficiez d’un espace en ligne sécurisé pour suivre l’avancée de votre dossier en toute autonomie.") }
+                                 </p>
+                                <div className="Mobile__Navbar-sc-fyrimv-1 kHmjuy">
+                                  <button aria-label="Précédent" type="button" onClick={() => handleClickArrow(true)} className="ArrowButton__Container-sc-11aiclo-3 hRnQwB Sliderstyles__Previous-sc-jd0rgd-2 ENyIs" disabled={isLeftArrow}>
+                                    <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="ArrowButton__Arrow-sc-11aiclo-0 ArrowButton__Arrow1-sc-11aiclo-1 fhLDeK">
+                                      <path d="M20.7454 14.8908L17.1664 11.3187L18.7381 9.75L25 16L18.7381 22.25L17.1664 20.6813L20.7454 17.1092H7V14.8908H20.7454Z" />
+                                    </svg>
+                                    <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="ArrowButton__Arrow-sc-11aiclo-0 ArrowButton__Arrow2-sc-11aiclo-2 fhLDeK">
+                                      <path d="M20.7454 14.8908L17.1664 11.3187L18.7381 9.75L25 16L18.7381 22.25L17.1664 20.6813L20.7454 17.1092H7V14.8908H20.7454Z" />
+                                    </svg>
+                                  </button>
+                                  <div className="Sliderstyles__SlideContainer-sc-jd0rgd-4 exfKJT">
+                                    <hr className={"Divider-sc-1qii385-0 Sliderstyles__Slide-sc-jd0rgd-5 iyJAir "+ (isLeftArrow ? "LACWn" : "jaXoBy") } />
+                                    <hr className={"Divider-sc-1qii385-0 Sliderstyles__Slide-sc-jd0rgd-5 iyJAir "+ (!isLeftArrow ? "LACWn" : "jaXoBy")} />
+                                  </div>
+                                  <button aria-label="Suivant" type="button" onClick={() => handleClickArrow(false)} className="ArrowButton__Container-sc-11aiclo-3 doTHWK Sliderstyles__Next-sc-jd0rgd-3 jZecqw" disabled={!isLeftArrow}>
+                                    <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="ArrowButton__Arrow-sc-11aiclo-0 ArrowButton__Arrow1-sc-11aiclo-1 bJwJPy">
+                                      <path d="M20.7454 14.8908L17.1664 11.3187L18.7381 9.75L25 16L18.7381 22.25L17.1664 20.6813L20.7454 17.1092H7V14.8908H20.7454Z" />
+                                    </svg>
+                                    <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="ArrowButton__Arrow-sc-11aiclo-0 ArrowButton__Arrow2-sc-11aiclo-2 bJwJPy">
+                                      <path d="M20.7454 14.8908L17.1664 11.3187L18.7381 9.75L25 16L18.7381 22.25L17.1664 20.6813L20.7454 17.1092H7V14.8908H20.7454Z" />
+                                    </svg>
+                                  </button>
+                                </div>
+                                <div className="Sliderstyles__ImageContainer-sc-jd0rgd-6 isxeYt">
+                                  <picture>
+                                    <source type="image/webp" srcSet={SliderstylesImage1} />
+                                    <source srcSet={SliderstylesImage1} />
+                                    <img className={"Sliderstyles__Image-sc-jd0rgd-7 "+ (isLeftArrow ? "kCpYFv" : "CtOpC") } src={SliderstylesImage1} alt="" />
+                                  </picture>
+                                  <picture>
+                                    <source type="image/webp" srcSet={SliderstylesImage2} />
+                                    <source srcSet={SliderstylesImage2} />
+                                    <img className={"Sliderstyles__Image-sc-jd0rgd-7 "+ (!isLeftArrow ? "kCpYFv" : "CtOpC") } src={SliderstylesImage2} alt="" />
+                                  </picture>
+                                </div>
+                              </div>)}
+
+
+                    </div>
                     <div className="section-2 section-9 wf-section">
                       <div className="pre-title">Comment ça marche</div>
                       <h1 className="center-text">Votre voyage en 6 étapes</h1>
@@ -435,7 +496,7 @@ function HomePage(){
                         <div className="column-19 w-col w-col-6 w-col-stack">
                           <div className="div-block-2">
                             <div className="work__item-num">1</div>
-                            <h2 className="steps">Testez vos chances de voyager</h2>
+                            <h2 className="steps">Test de chances de voyager</h2>
                             <p className="paragraph-2"> Grâce à notre puissant simulateur, nous évaluons vos chances d'obtenir un visa en évaluant si vous devez postuler à ce moment-là 
                                                         ou compléter nos recommandations personnelles pour augmenter vos chances et postuler plus tard.<a href="/plans">
                                 <br />
@@ -533,8 +594,11 @@ function HomePage(){
                           </span>
                           <span className="PrimaryButton__Label-sc-1vkvp7q-2 kVCvkJ"> Simuler mon visa </span>
                         </button>
+                        {/* <h1>{countdown}</h1>
+                        <h1>dd {positionLeft} - {browserWidth}</h1>
+                        <h1> widthBanner {widthBanner}</h1> */}
                       </div>
-                      <div className={"Images__Container-sc-2gr022-0 Banner__Images-sc-krte25-1 fCdAKA "+bannerAnimationClassList[0]}>
+                      <div className={"Images__Container-sc-2gr022-0 Banner__Images-sc-krte25-1 fCdAKA "+bannerAnimationClassList[0]} ref={myElementRef}>
                         <div className="Images__BaseImage-sc-2gr022-2 Images__Image1-sc-2gr022-3 ioovUp llLrAK">
                           {/* <picture>
                             <source type="image/webp" srcSet="https://res.cloudinary.com/pretto-fr/image/upload/q_auto,f_webp,w_320/v1677667256/website/page/home/BlocCourtier-1.jpg 320w, https://res.cloudinary.com/pretto-fr/image/upload/q_auto,f_webp,w_375/v1677667256/website/page/home/BlocCourtier-1.jpg 375w, https://res.cloudinary.com/pretto-fr/image/upload/q_auto,f_webp,w_425/v1677667256/website/page/home/BlocCourtier-1.jpg 425w, https://res.cloudinary.com/pretto-fr/image/upload/q_auto,f_webp,w_768/v1677667256/website/page/home/BlocCourtier-1.jpg 768w, https://res.cloudinary.com/pretto-fr/image/upload/q_auto,f_webp,w_1024/v1677667256/website/page/home/BlocCourtier-1.jpg 1024w, https://res.cloudinary.com/pretto-fr/image/upload/q_auto,f_webp,w_1240/v1677667256/website/page/home/BlocCourtier-1.jpg 1240w" />
@@ -552,7 +616,7 @@ function HomePage(){
                           <picture>
                             <source type="image/webp" srcSet={BlockCourtier2} />
                             <source srcSet={BlockCourtier2} />
-                            <img  className={"Images__Image-sc-2gr022-1 "+((countdown<10 && countdown>=5) ? bannerAnimationClassList[1] : "eXDVgd")} src={BlockCourtier1} alt="" size="(min-width: 1024px) 50vw, 100vw" loading="lazy"  />
+                            <img  className={"Images__Image-sc-2gr022-1 "+((countdown >= 5 && countdown<10) ? bannerAnimationClassList[1] : "eXDVgd")} src={BlockCourtier2} alt="" size="(min-width: 1024px) 50vw, 100vw" loading="lazy"  />
                             {/* <img alt="v1677658638/website/page/home/Re%CC%81sultat.png" className="Sliderstyles__Image-sc-jd0rgd-7 kCpYFv" loading="lazy" src="https://res.cloudinary.com/pretto-fr/image/upload/q_auto/v1677658638/website/page/home/Re%CC%81sultat.png" /> */}
                           </picture>
                           {/* <picture>
@@ -565,7 +629,7 @@ function HomePage(){
                           <picture>
                             <source type="image/webp" srcSet={BlockCourtier3} />
                             <source srcSet={BlockCourtier3} />
-                            <img className={"Images__Image-sc-2gr022-1 "+((countdown<15 && countdown>=10) ? bannerAnimationClassList[1] : "eXDVgd")} src={BlockCourtier3} alt="" size="(min-width: 1024px) 50vw, 100vw" loading="lazy"  />
+                            <img className={"Images__Image-sc-2gr022-1 "+((countdown >= 10 && countdown<15) ? bannerAnimationClassList[1] : "eXDVgd")} src={BlockCourtier3} alt="" size="(min-width: 1024px) 50vw, 100vw" loading="lazy"  />
                             {/* <img alt="v1677658638/website/page/home/Re%CC%81sultat.png" className="Sliderstyles__Image-sc-jd0rgd-7 kCpYFv" loading="lazy" src="https://res.cloudinary.com/pretto-fr/image/upload/q_auto/v1677658638/website/page/home/Re%CC%81sultat.png" /> */}
                           </picture>
                           {/* <picture>
@@ -589,28 +653,31 @@ function HomePage(){
                         </nav>
                         <div className="Rtb__Blocs-sc-cimcdw-1 bEvzQi">
                           <div className={"Bloc__Container-sc-abnssq-0 Rtb__Bloc-sc-cimcdw-5 kFnMN "+((countdown<5 || countdown===15) ? 'hCSAAW' : 'KNmFf')}>
-                            <div className="Bloc__CheckContainer-sc-abnssq-1 hlJPnb">
+                            {((countdown<5 || countdown===15)) ?   <><div className="Bloc__CheckContainer-sc-abnssq-1 hlJPnb">
                               <svg xmlns="http://www.w3.org/2000/svg" width={16} height={16} viewBox="0 0 16 16" fill="currentColor" className="Bloc__Check-sc-abnssq-2 ycIsS">
                                 <path d="M5.8,11.6l8-8.29,1.44,1.38L5.88,14.4.32,9.23,1.68,7.77Z" fillRule="evenodd" />
                               </svg>
                             </div>
                             <p className="Bloc__Description-sc-abnssq-3 iYfojT"> Des conseillers régulièrement formés aux dernières réglementations en vigueur et spécialisés par type de projet. </p>
+                            </> : null}
                           </div>
                           <div className={"Bloc__Container-sc-abnssq-0 Rtb__Bloc-sc-cimcdw-5 kFnMN "+((countdown<10 && countdown>=5) ? 'hCSAAW' : ((countdown<15 && countdown>=10) ? 'KNmFf' : 'cSHAph'))}>
-                            <div className={"Bloc__CheckContainer-sc-abnssq-1 "+((countdown<10 && countdown>=5) || (countdown<15 && countdown>=10)? 'hlJPnb' : 'kPeKBa')}>
+                            {((countdown<10 && countdown>=5)) ?   <><div className={"Bloc__CheckContainer-sc-abnssq-1 "+((countdown<10 && countdown>=5) || (countdown<15 && countdown>=10)? 'hlJPnb' : 'kPeKBa')}>
                               <svg xmlns="http://www.w3.org/2000/svg" width={16} height={16} viewBox="0 0 16 16" fill="currentColor" className="Bloc__Check-sc-abnssq-2 ycIsS">
                                 <path d="M5.8,11.6l8-8.29,1.44,1.38L5.88,14.4.32,9.23,1.68,7.77Z" fillRule="evenodd" />
                               </svg>
                             </div>
                             <p className="Bloc__Description-sc-abnssq-3 iYfojT"> Derrière votre expert attitré, des outils puissants et toute une équipe qui œuvre pour votre projet. </p>
+                            </> : null}
                           </div>
                           <div className={"Bloc__Container-sc-abnssq-0 Rtb__Bloc-sc-cimcdw-5 kFnMN "+((countdown<15 && countdown>=10)? 'hCSAAW' : 'cSHAph')}>
-                            <div className={"Bloc__CheckContainer-sc-abnssq-1 "+((countdown<15 && countdown>=10)? 'hlJPnb' : 'kPeKBa')}>
+                            {((countdown<15 && countdown>=10)) ?   <><div className={"Bloc__CheckContainer-sc-abnssq-1 "+((countdown<15 && countdown>=10)? 'hlJPnb' : 'kPeKBa')}>
                               <svg xmlns="http://www.w3.org/2000/svg" width={16} height={16} viewBox="0 0 16 16" fill="currentColor" className="Bloc__Check-sc-abnssq-2 ycIsS">
                                 <path d="M5.8,11.6l8-8.29,1.44,1.38L5.88,14.4.32,9.23,1.68,7.77Z" fillRule="evenodd" />
                               </svg>
                             </div>
                             <p className="Bloc__Description-sc-abnssq-3 iYfojT"> Nos conseillers engagés sont à votre écoute et toujours joignables (SMS, email et téléphone). </p>
+                            </> : null}
                           </div>
                         </div>
                       </div>
