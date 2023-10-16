@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="253px" height="282px" viewBox="0 0 253 282" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Group</title>
+    <g id="giveway" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group">
+            <circle id="Oval" fill="#FFFFFF" cx="126.5" cy="155.5" r="126.5"></circle>
+            <rect id="Round" fill="#0154C0" x="95" y="5" width="63" height="63" rx="21"></rect>
+            <text id="1" font-family="PensumSans-Book, Pensum Sans" font-size="43" font-weight="normal" letter-spacing="-0.43" fill="#FFFFFF">
+                <tspan x="120" y="46">1</tspan>
+            </text>
+        </g>
+    </g>
+</svg>
