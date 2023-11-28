@@ -112,9 +112,9 @@ function WaitingList() {
     <div className="section-21 wf-section" ref={myElementRef}>
       <div className="MenuStickystyles__StickyHeader-sc-ngpxs4-0 dWKCRV">
           <div className="MenuStickystyles__StickyContainer-sc-ngpxs4-1 evdTmz">
-              <a href="/" className="Logostyles__LogoLink-sc-10zpnfr-0 jJHAoQ">
+              <Link to="/" className="Logostyles__LogoLink-sc-10zpnfr-0 jJHAoQ">
                   <WendogoLogoIcon/>
-              </a>
+              </Link>
               <button type="button" className="MenuStickystyles__StickyMenuButton-sc-ngpxs4-2 jspYCr">
               <svg height={24} viewBox="0 0 24 24" width={24} xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" className="MenuStickystyles__MenuPicto-sc-ngpxs4-3 gMGCqw">
                   <use xlinkHref="#p_95qQ" />
@@ -222,7 +222,7 @@ function WaitingList() {
                     <h2 className="Card__Title-sc-1qqjegm-4 bqicpW">Partage</h2>
                     <div>
                       <div className="fb-share-button" data-href="https://wendogo.com/" data-width="200" data-type="button_count">
-                        <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwendogo.com%2F&amp;src=sdkpreparse" className="fb-xfbml-parse-ignore" rel="noreferrer">Partager</a>
+                        <Link target="_blank" to="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwendogo.com%2F&amp;src=sdkpreparse" className="fb-xfbml-parse-ignore" rel="noreferrer">Partager</Link>
                       </div> 
                       <p> ce jeu concours en nous tagguant.</p>
                     </div>

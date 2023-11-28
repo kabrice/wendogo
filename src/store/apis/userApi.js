@@ -2,14 +2,14 @@ import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
 
 export const userApi = createApi({
   reducerPath: 'usersApi',
-  baseQuery: fetchBaseQuery({baseUrl: 'http://127.0.0.1:5000',         prepareHeaders: (headers, { getState }) => {
+  baseQuery: fetchBaseQuery({baseUrl: 'http://127.0.0.1:5000', prepareHeaders: (headers, { getState }) => {
     headers.set('Content-Type', 'application/json')
     return headers
 }}),
   tagTypes: ['User'],
   endpoints: (builder) => ({
-    users: builder.query({
-      query: () => '/users',
+    user: builder.query({
+      query: ({phone}) => `/user/${phone}`,
       providesTags: ['User']
     }),
     addUser: builder.mutation({
@@ -36,20 +36,44 @@ export const userApi = createApi({
         }),
         invalidatesTags: ['User']
       }),
+    sendCodeForVerification: builder.mutation({ 
+      query: ({...body }) => ({
+        url: '/user/verificationCheck',
+        method: 'POST',
+        body
+      }),
+      invalidatesTags: ['User']
+    }),  
+    updateCredential: builder.mutation({ 
+      query: ({...body }) => ({
+        url: '/user/update/credentials',
+        method: 'POST',
+        body
+      }),
+      invalidatesTags: ['User']
+    }), 
     deleteUser: builder.mutation({
       query: (id) => ({
         url: `/users/${id}`,
         method: 'DELETE',
       }),
       invalidatesTags: ['User']
+    }),
+    countries: builder.query({
+      query: (countryIso2) => `/countries/${countryIso2}`,
+      method: 'GET',
+      providesTags: ['User']
     })
   })
 }) 
 
 export const {
-  useUsersQuery,
+  useUserQuery,
+  useCountriesQuery,
   useAddUserMutation,
   useUpdateUserMutation,
   useSendVerificationAndAddUserMutation,
+  useSendCodeForVerificationMutation,
+  useUpdateCredentialMutation,
   useDeleteUserMutation
 } = userApi 

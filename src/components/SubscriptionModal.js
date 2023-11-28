@@ -12,8 +12,9 @@ import { useNavigate } from "react-router-dom"
 import  { useForm, Controller }  from  "react-hook-form"
 import { activateSpinner, deactivateSpinner } from '../redux/spinnerslice';
 import { ToastContainer, toast } from 'react-toastify';
+import helper from '../utils/Helper';
 import 'react-toastify/dist/ReactToastify.css';
-import { setUserPhone } from '../redux/userslice';
+import { setUser } from '../redux/userslice';
 
 const SubscriptionModal = () => {
 
@@ -40,6 +41,11 @@ const SubscriptionModal = () => {
         // use mode to specify the event that triggers each input field 
         mode: "onBlur"
       })
+    let msgToast
+    let errorText = <p>Une erreur est survenue. Nous en sommes désolé. Veuillez nous soumettre le problème 
+                         <a href="https://m.me/wendogoHQ" style={{color: "rgb(1, 84, 192)"}}><b> ici.</b></a>
+                       </p>
+
     async function onSubmitUserForVerification (data)  {
         //
         console.log('eeee',location.country);
@@ -49,38 +55,51 @@ const SubscriptionModal = () => {
 
             data.country = location.country
             dispatch(activateSpinner())
-            console.log('data', data);
+            
             const result = await sendVerificationAndAddUser(data).unwrap();
        
             dispatch(deactivateSpinner())
-
+            console.log('result🖐🖐', result);
             if(result.success){          
-                dispatch(setUserPhone(result.userPhone))
-                navigate('/verification')
+                dispatch(setUser(result.user))
+                localStorage.setItem('wendgouser', JSON.stringify(result.user));
+                if(result.user.has_whatsapp){
+                    console.log('Hey localStorage', localStorage.getItem('wendgouser'))
+                    //navigate('/congratulation')
+                    navigate('/verification')
+                }else{
+                    navigate('/verification')
+                }
+
             }else if (result.errorId){
-                const msgToast = () => (
+                msgToast = () => (
                     <div>
-                      <p>Une erreur est survenue. Nous en sommes désolé. Veuillez nous soumettre le problème 
-                        <a href="https://m.me/wendogoHQ" style={{color: "rgb(1, 84, 192)"}}><b> ici.</b></a></p>
+                      {errorText}
                       <p>Code Erreur : {result.errorId} </p>
                     </div>
                   )
-                toast.error(msgToast, {
-                    position: "top-center",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "dark",
-                    });                
+                helper.toastError(msgToast)              
             }
             //console.log('eeee', result);
 
           } catch (error) {
             dispatch(deactivateSpinner())
             console.log('error',error);
+            
+            if(error.status === 'FETCH_ERROR'){
+                msgToast = () => (
+                    <div>
+                      <p>Veuillez verifier votre connexion internet. Ou contactez-nous  
+                         <a href="https://m.me/wendogoHQ" style={{color: "rgb(1, 84, 192)"}}><b> ici.</b></a>
+                       </p>
+                    </div>
+                  )
+            }else{
+                msgToast = () => (
+                    {errorText}
+                  )                
+            }
+            helper.toastError(msgToast)  
           }
    
         //
@@ -130,12 +149,14 @@ const SubscriptionModal = () => {
                         <div className="ne elHeadline hsSize1 lh5 elMargin0 elBGStyle0 hsTextShadow0" data-bold="inherit" style={{ textAlign: "center", fontSize: 20 }} data-gramm="false"> Entrez votre prénom, nom et numéro whatsapp pour vous inscrire à la waitinglist. </div>
                     </div>
                     <div className="de elInputWrapper de-input-block elAlign_center elMargin0 ui-droppable de-editable" type="name" style={{ marginTop: 30, outline: "none", cursor: "pointer" }} data-element-theme="customized">
-                        <input type="name" placeholder="Votre Prénom" name="firstname" {...register("firstname", { required: true, minLength: 3,  pattern: /^[a-zA-Z]+$/  })} className="elInput elInput100 elAlign_left elInputMid elInputStyl0 elInputBG1 elInputI0 elInputIBlack elInputIRight cleanSqueeze required0 elInputBR0 garlic-auto-save" data-type="extra" 
+                        <input type="name" placeholder="Votre Prénom" name="firstname" {...register("firstname", { required: true, minLength: 3, maxLength:46,  pattern: /^[a-zA-ZÀ-ÿ-]+(?:\s(?:d[eu']|l[ea']|van\sder\s|de\s)?[a-zA-ZÀ-ÿ-]+)*$/  })} 
+                                className="elInput elInput100 elAlign_left elInputMid elInputStyl0 elInputBG1 elInputI0 elInputIBlack elInputIRight cleanSqueeze required0 elInputBR0 garlic-auto-save" 
+                                data-type="extra" 
                                 style={{ fontSize: 22, borderColor: errors.firstname ? "red" : "#0154c0", borderWidth: 2 }} />
                         {errors.firstname && <p className='input-error'>Le prénom est requis et doit être valide</p>}
                     </div>
                     <div className="de elInputWrapper de-input-block elAlign_center elMargin0 ui-droppable de-editable" type="name" style={{ marginTop: 30, outline: "none", cursor: "pointer" }} data-element-theme="customized">
-                        <input type="name" placeholder="Votre Nom" name="lastname" {...register("lastname", { required: true, minLength: 3, pattern: /^[a-zA-Z]+$/ })} className="elInput elInput100 elAlign_left elInputMid elInputStyl0 elInputBG1 elInputI0 elInputIBlack elInputIRight cleanSqueeze required0 elInputBR0 garlic-auto-save" data-type="extra" 
+                        <input type="name" placeholder="Votre Nom" name="lastname" {...register("lastname", { required: true, minLength: 3,  maxLength:46, pattern: /^[a-zA-ZÀ-ÿ-]+(?:\s(?:d[eu']|l[ea']|van\sder\s|de\s)?[a-zA-ZÀ-ÿ-]+)*$/ })} className="elInput elInput100 elAlign_left elInputMid elInputStyl0 elInputBG1 elInputI0 elInputIBlack elInputIRight cleanSqueeze required0 elInputBR0 garlic-auto-save" data-type="extra" 
                         style={{ fontSize: 22, borderColor: errors.lastname ? "red" : "#0154c0", borderWidth: 2 }} />
                         {errors.lastname && <p className='input-error'>Le nom est requis et doit être valide</p>}
                     </div>
