@@ -9,6 +9,7 @@ import helper from '../utils/Helper';
 import {  ToastContainer } from 'react-toastify';
 import {useSendVerificationAndAddUserMutation} from '../store/apis/userApi'
 import { setUser } from '../redux/userslice';
+import FooterSingleRow from '../components/FooterSingleRow';
 
 const VerificationWhatsapp = () => {
     const length = 6
@@ -233,6 +234,10 @@ return (
             </div>
             </div>
         </div>
+        <div className="force_FooterSingleRow_to_bottom">
+          <FooterSingleRow/>
+        </div>
+        
     </div>
     )
 }

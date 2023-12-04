@@ -527,7 +527,7 @@ function HomePage(){
                     </div>
                     <div className="section-2 section-9 wf-section">
                       <div className="pre-title">Comment ça marche</div>
-                      <h1 className="center-text">Votre visa en 6 étapes</h1>
+                      <h1 className="center-text center-text1">Votre visa en 6 étapes</h1>
                       <div className="columns-6 w-row">
                         <div className="w-col w-col-6 w-col-stack">
                           {/* <img src="https://uploads-ssl.webflow.com/61d984790bdf2970837c8d96/62bafa7838ff242093f9d9b5_iollo-kit%402x.png" loading="lazy" width={750} sizes="(max-width: 991px) 100vw, (max-width: 1439px) 48vw, 621px" srcSet="https://uploads-ssl.webflow.com/61d984790bdf2970837c8d96/62bafa7838ff242093f9d9b5_iollo-kit%402x-p-500.png  500w,https://uploads-ssl.webflow.com/61d984790bdf2970837c8d96/62bafa7838ff242093f9d9b5_iollo-kit%402x-p-800.png  800w,https://uploads-ssl.webflow.com/61d984790bdf2970837c8d96/62bafa7838ff242093f9d9b5_iollo-kit%402x-p-1080.png  1080w,https://uploads-ssl.webflow.com/61d984790bdf2970837c8d96/62bafa7838ff242093f9d9b5_iollo-kit%402x.png  1500w" alt="" className="image-5" /> */}

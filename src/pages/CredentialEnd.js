@@ -7,6 +7,7 @@ import { useUpdateCredentialMutation } from '../store/apis/userApi';
 import { useNavigate } from "react-router-dom"
 import helper from '../utils/Helper'
 import {close} from '../redux/modalslice'
+import FooterSingleRow from '../components/FooterSingleRow';
 
 const  CredentialEnd = () => {
 
@@ -123,6 +124,9 @@ const  CredentialEnd = () => {
       console.log('error',error);
     }
   }
+  const goToPreviewsPage = () => {
+    navigate('/credentialstart')
+  }
 
   useEffect(() => {
     //console.log('data', data?.countries)
@@ -160,8 +164,23 @@ const  CredentialEnd = () => {
    <div dir="ltr">
      <div>
        <div>
-        <header className='pp-cons-1djyuxb-container_fluid' style={{display: 'initial'}}>
-            <div className="wendogo-logo" />
+        <header className='pp-cons-1djyuxb-container_fluid' style={{ maxWidth: '50rem'}}>
+          <div className='headerRowDefault pp-cons-12vsk8k-row-no_gutter'>
+            <div className="countrySelectorLeftAlign pp-cons-lcrspw-col_auto" align="left" style={{ paddingLeft: "0.25rem", paddingRight: "0.25rem", minWidth: "6.3rem" }} data-ppui="true">
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                  <button data-ppui-info="icon-button_3.4.3" onClick={() => goToPreviewsPage()} className="iconButtonHover pp-cons-1686jie-icon-button_base-tertiary" type="button" id="paypalAccountData_backButton" href="#" aria-label="Retour">
+                    <span className="pp-cons-1am46ks-svg-size_sm-icon" data-ppui-info="icons_8.13.0" aria-hidden="true" data-ppui="true">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="1em" height="1em" data-ppui="true">
+                        <path d="M9.707 17.29a1 1 0 1 1-1.414 1.414L2.3 12.711a.997.997 0 0 1 0-1.428L8.293 5.29a1 1 0 0 1 1.414 1.414l-4.293 4.293H21a1 1 0 1 1 0 2H5.414l4.293 4.293z" data-ppui="true" />
+                      </svg>
+                    </span>
+                    <span data-ppui="true" className="pp-cons-geb0bj-screenReader" />
+                  </button>
+                </div>
+              </div>
+              <div className="wendogo-logo" />
+              <div className="pp-cons-y9ni7b-col_1" align="right" style={{ paddingLeft: "0.25rem", paddingRight: "0.25rem", minWidth: "6.3rem" }} data-ppui="true" />
+            </div>
         </header>
          <main className="smsChallenge">
            <div>
@@ -170,7 +189,7 @@ const  CredentialEnd = () => {
                  <div className="elevationContainer pp-cons-0">
                    <form  onSubmit={handleSubmit(onSubmitUserInfo)} id="PageMainForm" className="signupAppContent" method="POST">
                      <fieldset style={{ border: "none", margin: 0, padding: 0 }}>
-                       <div className=" pp-cons-1jdwb3y-container_form" data-ppui-info="grid_3.2.9">
+                       <div className=" pp-cons-1jdwb3y-container_form" data-ppui-info="grid_3.2.9" style={{marginTop : 33}}>
                          <div className="pp-cons-1v26bvb-row-justify_content_center" data-ppui-info="grid_3.2.9">
                            <div className=" pp-cons-1aqxtsc-col_form_full" align="center" data-ppui="true">
                              <div className="pp-cons-ttr2i5-text_heading_sm" data-ppui-info="heading-text_6.5.1" id="paypalAccountData_createAccountHeading" style={{ marginBottom: "-0.5rem" }}>
@@ -178,13 +197,13 @@ const  CredentialEnd = () => {
                              </div>
                            </div>
                          </div>
-                         <div className="pp-cons-1v26bvb-row-justify_content_center" data-ppui-info="grid_3.2.9">
+                         {/* <div className="pp-cons-1v26bvb-row-justify_content_center" data-ppui-info="grid_3.2.9">
                            <div className=" pp-cons-1aqxtsc-col_form_full" align="center" data-ppui="true">
                              <div className="pp-cons-16jt5za-text_body" data-ppui-info="body-text_6.5.1" id="paypalAccountData_createAccountSubHeading" style={{ marginBottom: "1.5rem" }}>
                                <span className="inherit_stylesV2"> Assurez-vous que ces informations correspondent à votre pièce d'identité officielle. </span>
                              </div>
                            </div>
-                         </div>
+                         </div> */}
                        </div>
                        <div className="formFieldsContainer">
                          <div className=" pp-cons-1jdwb3y-container_form" data-ppui-info="grid_3.2.9">
@@ -261,12 +280,12 @@ const  CredentialEnd = () => {
                            <div className="pp-cons-1v26bvb-row-justify_content_center" data-ppui-info="grid_3.2.9">
                              <div className=" pp-cons-1aqxtsc-col_form_full" align="center" data-ppui="true">
                                <div className="pp-cons-1hv7ga5-text_input_base-text_body" data-ppui-info="text-input_5.1.6">
-                                 <textarea rows="10" {...register("description", { required: true, minLength: 100, maxLength:2500})} 
+                                 <textarea rows="10" {...register("description", { required: true, minLength: 200, maxLength:2500})} 
                                  className="pp-cons-16mpn99-text_input_control-text_body-label_placeholder_shown_and_not_focused-text_body" 
                                  name="description" id="paypalAccountData_description" aria-invalid="false" placeholder="Renseignez votre parcours académique et professionnel, ce que vous avez déjà intenté comme démarche, et tout autres détails utiles." 
                                  aria-labelledby="paypalAccountData_description-label" 
                                  aria-label="" type="text"  data-ppui="true"/>
-                                 {errors.description && <p className='input-error'>La description de votre projet est requise et contenir au moins 100 caractères.</p>}
+                                 {errors.description && <p className='input-error'>La description de votre projet est requise et contenir au moins 200 caractères.</p>}
                                  <label htmlFor="paypalAccountData_description" id="paypalAccountData_description-label" className="pp-cons-7nxsij-label-text_field_label_sm" data-ppui="true"> Description du projet </label>
                                </div>
                              </div>
@@ -287,25 +306,7 @@ const  CredentialEnd = () => {
            </div>
          </main>
          <div className="componentVisible">
-           <footer className="footerSingleRow undefined pp-cons-1djyuxb-container_fluid" data-ppui-info="grid_3.2.9">
-             <div className="pp-cons-1v26bvb-row-justify_content_center" data-ppui-info="grid_3.2.9" style={{ alignItems: "center" }}>
-               <div className="pp-cons-e1de2j-col_sm_12" align="center" style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", alignItems: "center" }} data-ppui="true">
-                 <span className="pp-cons-151vsl0-text_caption" data-ppui-info="caption-text_6.5.1" style={{ color: "#545d68", marginRight: "0.25rem" }}> © 2023 PayPal </span>
-                 <a className="pp-cons-19otlvw-links_base-text_body_strong-secondary-text_body_strong" data-ppui-info="links_4.3.3" href="/privacy-center" target="_blank" style={{ color: "#000000", padding: "0 0.15rem", margin: "0 0.15rem" }} rel="noreferrer noopener" pa-marked={1}>
-                   <span className="pp-cons-1dky7y7-text_caption_strong" data-ppui-info="caption-text_6.5.1" style={{ lineHeight: "1.5rem" }}> Respect de la vie privée </span>
-                 </a>
-                 <a className="pp-cons-19otlvw-links_base-text_body_strong-secondary-text_body_strong" data-ppui-info="links_4.3.3" href="/myaccount/privacy/cookiePrefs" target="_blank" style={{ color: "#000000", padding: "0 0.15rem", margin: "0 0.15rem" }} rel="noreferrer noopener" pa-marked={1}>
-                   <span className="pp-cons-1dky7y7-text_caption_strong" data-ppui-info="caption-text_6.5.1" style={{ lineHeight: "1.5rem" }}> Cookies </span>
-                 </a>
-                 <a className="pp-cons-19otlvw-links_base-text_body_strong-secondary-text_body_strong" data-ppui-info="links_4.3.3" href="/webapps/mpp/ua/legalhub-full" target="_blank" style={{ color: "#000000", padding: "0 0.15rem", margin: "0 0.15rem" }} rel="noreferrer noopener" pa-marked={1}>
-                   <span className="pp-cons-1dky7y7-text_caption_strong" data-ppui-info="caption-text_6.5.1" style={{ lineHeight: "1.5rem" }}> Contrats d'utilisation </span>
-                 </a>
-                 <a className="pp-cons-19otlvw-links_base-text_body_strong-secondary-text_body_strong" data-ppui-info="links_4.3.3" href="/webapps/helpcenter/helphub/home" target="_blank" style={{ color: "#000000", padding: "0 0.15rem", margin: "0 0.15rem" }} rel="noreferrer noopener" pa-marked={1}>
-                   <span className="pp-cons-1dky7y7-text_caption_strong" data-ppui-info="caption-text_6.5.1" style={{ lineHeight: "1.5rem" }}> Contact </span>
-                 </a>
-               </div>
-             </div>
-           </footer>
+          <FooterSingleRow/>
          </div>
         </div>
      </div>

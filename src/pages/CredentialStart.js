@@ -5,6 +5,7 @@ import { activateSpinner, deactivateSpinner } from '../redux/spinnerslice'
 import { useUpdateCredentialMutation } from '../store/apis/userApi';
 import { useNavigate } from "react-router-dom"
 import helper from '../utils/Helper';
+import FooterSingleRow from '../components/FooterSingleRow';
 
 const CredentialStart = () => {
 
@@ -18,6 +19,13 @@ const CredentialStart = () => {
   const spinnerIsActive = useSelector((state) => state.spinner.activateSpinner)
   const [updateCredential] = useUpdateCredentialMutation()
 
+  const newRef = useRef(null)
+  
+  const handleOutsideClick = (e) => {
+      if (newRef.current && !newRef.current.contains(e.target)) {
+        setCollapseSalutationOption(true)
+      }
+    };
 
   const [collapseSalutationOption, setCollapseSalutationOption] = useState(true)
   const toggleSalutationDropdown= () => {
@@ -76,6 +84,14 @@ const CredentialStart = () => {
       console.log('error',error);
     }
   }
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    }
+
+  })
  return <>
  <div id="app-element-mountpoint">
    <div dir="ltr">
@@ -99,13 +115,13 @@ const CredentialStart = () => {
                              </div>
                            </div>
                          </div>
-                         <div className="pp-cons-1v26bvb-row-justify_content_center" data-ppui-info="grid_3.2.9">
+                         {/* <div className="pp-cons-1v26bvb-row-justify_content_center" data-ppui-info="grid_3.2.9">
                            <div className=" pp-cons-1aqxtsc-col_form_full" align="center" data-ppui="true">
                              <div className="pp-cons-16jt5za-text_body" data-ppui-info="body-text_6.5.1" id="paypalAccountData_createAccountSubHeading" style={{ marginBottom: "1.5rem" }}>
                                <span className="inherit_stylesV2"> Assurez-vous que ces informations correspondent à votre pièce d'identité officielle. </span>
                              </div>
                            </div>
-                         </div>
+                         </div> */}
                        </div>
                        <div className="formFieldsContainer">
                          <div className=" pp-cons-1jdwb3y-container_form" data-ppui-info="grid_3.2.9">
@@ -124,7 +140,7 @@ const CredentialStart = () => {
                                  <label id="dropdownMenuButton_paypalAccountData_nationality-label" htmlFor="dropdownMenuButton_paypalAccountData_nationality" className="pp-cons-19ayeth-dropdown_menu_label-text_field_label_lg-active-text_field_label_sm" data-ppui="true">
                                    <span data-ppui="true">Civilité</span>
                                  </label>
-                                 <div className="pp-cons-1ewrwkf-menu_container-elevation_level3" data-ppui-info="selection-menu_3.7.4" style={{height: 147, display: (collapseSalutationOption ? 'none' : '')}}>
+                                 <div ref={newRef} className="pp-cons-1ewrwkf-menu_container-elevation_level3" data-ppui-info="selection-menu_3.7.4" style={{height: 147, display: (collapseSalutationOption ? 'none' : '')}}>
                                     <ul className="pp-cons-11r0hsg-list" id="selectionMenu_235" tabIndex={0} role="listbox" aria-hidden="false" data-ppui="true" style={{ width: 528 }}>
                                         {salutationArray.map((item,id) => {
                                           return <li onClick={() => updateSelectedSalutation(item.value)} key={id} className="pp-cons-1cuk0h4-list_item" id="smenu_item_ZA" role="option" aria-selected="false" tabIndex={-1}>
@@ -223,25 +239,7 @@ const CredentialStart = () => {
            </div>
          </main>
          <div className="componentVisible">
-           <footer className="footerSingleRow undefined pp-cons-1djyuxb-container_fluid" data-ppui-info="grid_3.2.9">
-             <div className="pp-cons-1v26bvb-row-justify_content_center" data-ppui-info="grid_3.2.9" style={{ alignItems: "center" }}>
-               <div className="pp-cons-e1de2j-col_sm_12" align="center" style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", alignItems: "center" }} data-ppui="true">
-                 <span className="pp-cons-151vsl0-text_caption" data-ppui-info="caption-text_6.5.1" style={{ color: "#545d68", marginRight: "0.25rem" }}> © 2023 PayPal </span>
-                 <a className="pp-cons-19otlvw-links_base-text_body_strong-secondary-text_body_strong" data-ppui-info="links_4.3.3" href="/privacy-center" target="_blank" style={{ color: "#000000", padding: "0 0.15rem", margin: "0 0.15rem" }} rel="noreferrer noopener" pa-marked={1}>
-                   <span className="pp-cons-1dky7y7-text_caption_strong" data-ppui-info="caption-text_6.5.1" style={{ lineHeight: "1.5rem" }}> Respect de la vie privée </span>
-                 </a>
-                 <a className="pp-cons-19otlvw-links_base-text_body_strong-secondary-text_body_strong" data-ppui-info="links_4.3.3" href="/myaccount/privacy/cookiePrefs" target="_blank" style={{ color: "#000000", padding: "0 0.15rem", margin: "0 0.15rem" }} rel="noreferrer noopener" pa-marked={1}>
-                   <span className="pp-cons-1dky7y7-text_caption_strong" data-ppui-info="caption-text_6.5.1" style={{ lineHeight: "1.5rem" }}> Cookies </span>
-                 </a>
-                 <a className="pp-cons-19otlvw-links_base-text_body_strong-secondary-text_body_strong" data-ppui-info="links_4.3.3" href="/webapps/mpp/ua/legalhub-full" target="_blank" style={{ color: "#000000", padding: "0 0.15rem", margin: "0 0.15rem" }} rel="noreferrer noopener" pa-marked={1}>
-                   <span className="pp-cons-1dky7y7-text_caption_strong" data-ppui-info="caption-text_6.5.1" style={{ lineHeight: "1.5rem" }}> Contrats d'utilisation </span>
-                 </a>
-                 <a className="pp-cons-19otlvw-links_base-text_body_strong-secondary-text_body_strong" data-ppui-info="links_4.3.3" href="/webapps/helpcenter/helphub/home" target="_blank" style={{ color: "#000000", padding: "0 0.15rem", margin: "0 0.15rem" }} rel="noreferrer noopener" pa-marked={1}>
-                   <span className="pp-cons-1dky7y7-text_caption_strong" data-ppui-info="caption-text_6.5.1" style={{ lineHeight: "1.5rem" }}> Contact </span>
-                 </a>
-               </div>
-             </div>
-           </footer>
+           <FooterSingleRow/>
          </div>
         </div>
      </div>
