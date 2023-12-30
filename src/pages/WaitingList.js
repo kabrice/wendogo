@@ -6,7 +6,7 @@ import Facebook from '../assets/social media/facebook.png'
 import Instagram from '../assets/social media/instagram.png'
 import YouTube from '../assets/social media/youtube.png'
 import TikTok from '../assets/social media/tiktok.png'
-import SocialMediaLocgo from '../assets/social_media_logo.png'
+import SocialMediaLogo from '../assets/social_media_logo.png'
 import useWindowSize from 'react-use/lib/useWindowSize'
 import Confetti from 'react-confetti'
 import Footer from '../components/Footer';
@@ -201,7 +201,7 @@ function WaitingList() {
             <div className="HeroLeft__LocationContainer-sc-1axg5uv-2 jdouVU">
               <div className="sqdklm">
                 <p className="BlocOutils__Transparency-sc-10c9hjh-2 jXRqut"> En 3 étapes, fait partir des 3 gagnants pour </p>
-                <h2 className="sldmqs"> Un accompagnement GRATUIT par un expert pour un VISA / BOURSE pour le Canada <span>🇵🇪 </span> ou la France <span>🇫🇷</span>  </h2>
+                <h2 className="sldmqs"> Un accompagnement GRATUIT par un expert pour un VISA / BOURSE pour le Canada <span>🇨🇦 </span> ou la France <span>🇫🇷</span>  </h2>
                 <p className="HeroLeft__Text-sc-1axg5uv-4 jIotQW">Voici les règles:</p>
               </div>
               <div className="flex-container">
@@ -298,7 +298,7 @@ function WaitingList() {
                 </h2>
               </div>
               <div className="de elHeadlineWrapper ui-droppable de-editable" id="headline-85770" data-de-type="headline" data-de-editing="false" data-title="headline" data-ce="true" data-trigger="none" data-animate="fade" data-delay={500} style={{ marginTop: 20, cursor: "pointer", outline: "none" }} aria-disabled="false" data-google-font="Abel">
-                <div className="ne elHeadline hsSize3 elMargin0 elBGStyle0 hsTextShadow0 deUppercase lh4 mfs_26" style={{ textAlign: "center", fontSize: 44, color: "rgb(255, 255, 255)", wordBreak: "break-word", position: "relative", zIndex: 0 }} data-bold="inherit"  spellCheck="false"> <span style={{color:'#0154c0', fontFamily: '"Pensum Pro", sans-serif'}}>Wendogo</span> : Une façon simple et revolutionnaire de demander un visa 🇵🇪🇫🇷&nbsp; </div>
+                <div className="ne elHeadline hsSize3 elMargin0 elBGStyle0 hsTextShadow0 deUppercase lh4 mfs_26" style={{ textAlign: "center", fontSize: 44, color: "rgb(255, 255, 255)", wordBreak: "break-word", position: "relative", zIndex: 0 }} data-bold="inherit"  spellCheck="false"> <span style={{color:'#0154c0', fontFamily: '"Pensum Pro", sans-serif'}}>Wendogo</span> : Une façon simple et revolutionnaire de demander un visa 🇨🇦🇫🇷&nbsp; </div>
               </div>
             </div>
           </div>
@@ -379,7 +379,7 @@ function WaitingList() {
                           <p className='iMIwlL'>Co-fondateur et Responsable Technique</p>
                           <p className='idewlL'>Ingénieur web à Paris, il possède une vaste expérience dans les processus applicatifs liés au web. 
                             <span className={(isShowMore && !isBoris) ? "show" : "hide" } > Depuis 2014 qu'il accompagne avec succès des personnes dans leur demande de visa, il a toujours été frustré par 
-                            une chose : l'opacité et le manque de transparence de plusieurs organismes de demande. Il décide alors avec Boris de créer une solution qui propose un
+                            une chose : l'opacité et le manque de transparence de plusieurs organismes de demande de visa. Il décide alors avec Boris de créer une solution qui propose un
                               service d'accompagnement simple, transparent, rapide et moins cher.
                             </span>
                             <span><Link className={"link-opacity-100 "+ ((isShowMore && !isBoris) ? "hide" : "show") }  onClick={() => handleClickShowMore(true, false)}>...Voir Plus</Link></span>
@@ -397,9 +397,9 @@ function WaitingList() {
         </div>
       </div>
       <SubscriptionModal/> 
-      <FloatingWhatsApp phoneNumber="330755097584" accountName="Wendogo" avatar={SocialMediaLocgo} statusMessage="Répond en général dans les 24h" 
-                        chatMessage={'Salut toi 🤝 \nUne question ? \nPour mieux t\'aider et pour une prompte réponse, fait ceci \n1. Présentes toi\n2. Donnes l\'objet de ton message \n3. Décris clairement ton problème 😉'}
-                        placeholder={"Racontes nous ce qui te préoccupe"} chatboxHeight={500} CSSProperties={{color:'black'}}/>
+      <FloatingWhatsApp phoneNumber="330755097584" accountName="Wendogo" avatar={SocialMediaLogo} statusMessage="Répond en général dans l'heure" 
+                        chatMessage={'Salut toi 🤝 \nSi tu as une question, suis ces étapes pour obtenir une assistance rapide :\n1. Présente toi\n2. Indique l\'objet de ton message \n3. Décris clairement ton problème 😉'}
+                        placeholder={"Racontes nous ce qui te préoccupe"} chatboxHeight={500} CSSProperties={{color:'#001435'}}/>
     </div>
     <Footer/>
   </>

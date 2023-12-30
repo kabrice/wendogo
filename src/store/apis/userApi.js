@@ -2,7 +2,7 @@ import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
 
 export const userApi = createApi({
   reducerPath: 'usersApi',
-  baseQuery: fetchBaseQuery({baseUrl: 'http://127.0.0.1:5000', prepareHeaders: (headers, { getState }) => {
+  baseQuery: fetchBaseQuery({baseUrl: 'http://62.72.18.88:8080', prepareHeaders: (headers, { getState }) => {
     headers.set('Content-Type', 'application/json')
     return headers
 }}),
@@ -52,6 +52,14 @@ export const userApi = createApi({
       }),
       invalidatesTags: ['User']
     }), 
+    updateSubscriptionStep: builder.mutation({ 
+      query: ({...body }) => ({
+        url: '/user/update/subscriptionStep',
+        method: 'PUT',
+        body
+      }),
+      invalidatesTags: ['User']
+    }), 
     deleteUser: builder.mutation({
       query: (id) => ({
         url: `/users/${id}`,
@@ -75,5 +83,6 @@ export const {
   useSendVerificationAndAddUserMutation,
   useSendCodeForVerificationMutation,
   useUpdateCredentialMutation,
+  useUpdateSubscriptionStepMutation,
   useDeleteUserMutation
 } = userApi 

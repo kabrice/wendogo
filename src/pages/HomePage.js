@@ -7,7 +7,6 @@ import SliderstylesImage1 from '../assets/Sliderstyles__Image1.png'
 import SliderstylesImage2 from '../assets/Sliderstyles__Image2.png'
 import PasseportVisa from '../assets/1000_F_154951378_oyz1BvKKnOVw92VJ05vNIk4l72WxkZaP.jpg'
 import WorldNoBorders from '../assets/AdobeStock_559662042_Preview.jpeg'
-import ParisCity from '../assets/AdobeStock_70798474_Preview.jpeg'
 import BlockCourtier1 from '../assets/group-portrait-five-african-business-colleagues-standing-row-office_484651-18709.avif'
 import BlockCourtier2 from '../assets/240_F_271683964_RV5TD7e4GN67UBFhvBvtltNO4hJ5aTQs.jpg'
 import BlockCourtier3 from '../assets/beautiful-woman-standing-front-colleagues-group-african-american-business-people-working-office-together_146671-45002.avif'
@@ -202,13 +201,13 @@ function HomePage(){
                         </span>
                         <ul className={"Navbarstyles__SubMenu "+(displaySubMenu1 ? 'lowcCT subMenu1' : '')} >
                           <li className="Navbarstyles__SubMenuFirstItem">
-                            <a tabIndex={0} className="LinkLabel__Link" href="/simulation-pret-immobilier/capacite-demprunt/">
-                              <span className="LinkLabel__Label">Visa pour la France</span>
+                            <a tabIndex={0} className="LinkLabel__Link" href="/waitinglist">
+                              <Link to='/waitinglist' className="LinkLabel__Label">Visa pour la France</Link>
                             </a>
                           </li>
                           <li>
-                            <a tabIndex={0} className="LinkLabel__Link" href="/simulation-pret-immobilier/">
-                              <span className="LinkLabel__Label">Visa pour le Canada </span>
+                            <a tabIndex={0} className="LinkLabel__Link" href="/waitinglist">
+                            <Link to='/waitinglist' className="LinkLabel__Label">Visa pour le Canada </Link>
                             </a>
                           </li>
                         </ul>
@@ -218,30 +217,25 @@ function HomePage(){
                           <span>Ressources</span>
                           <DropDownIcon style={{transform : (displaySubMenu2 ? "rotate(180deg)" : '')}}/>
                         </span>
-                        <ul id="7d517232" className={"Navbarstyles__SubMenu "+(displaySubMenu2 ? 'lowcCT subMenu2' : '')} >
+                        <ul id="7d517232" className={"Navbarstyles__SubMenu "+(displaySubMenu2 ? 'lowcCT subMenu2' : '')}>
                           <li className="Navbarstyles__SubMenuFirstItem">
-                            <a tabIndex={0} className="LinkLabel__Link" href="/recherche-immobiliere/">
+                            <a tabIndex={0} className="LinkLabel__Link" href="/work-permit-steps">
                               <span className="LinkLabel__Label">Permis de travail - Canada</span>
                             </a>
                           </li>
                           <li>
-                            <a tabIndex={0} className="LinkLabel__Link" href="/temoignages-clients/">
-                              <span className="LinkLabel__Label"> Visa et bourse d'étude </span>
+                            <a tabIndex={0} className="LinkLabel__Link" href="/scholarship-program-canada">
+                              <span className="LinkLabel__Label"> Programme de bourse d'étude </span>
                             </a>
                           </li>
                           <li>
-                            <a tabIndex={0} className="LinkLabel__Link" href="/pret-immobilier/">
-                              <span className="LinkLabel__Label"> Etapes d'une demande de visa </span>
+                            <a tabIndex={0} className="LinkLabel__Link" href="/immigrate-to-canada">
+                              <span className="LinkLabel__Label"> Comment immigrer au Canada ?</span>
                             </a>
                           </li>
                           <li>
-                            <a tabIndex={0} className="LinkLabel__Link" href="/expert-credit/">
-                              <span className="LinkLabel__Label"> Pourquoi passer par un Wendogo&nbsp;? </span>
-                            </a>
-                          </li>
-                          <li>
-                            <a tabIndex={0} className="LinkLabel__Link" href="https://faq.wendogo.fr/fr/" rel="noreferrer noopener" target="_blank">
-                              <span className="LinkLabel__Label"> FAQ </span>
+                            <a tabIndex={0} className="LinkLabel__Link" href="/study-in-france">
+                              <span className="LinkLabel__Label"> Etudier en France </span>
                             </a>
                           </li>
                         </ul>
@@ -253,12 +247,12 @@ function HomePage(){
                           </span>
                           <ul id="e75b56b9" className={"Navbarstyles__SubMenu "+(displaySubMenu3 ? 'lowcCT subMenu3' : '')}>
                           <li>
-                            <a tabIndex={0} className="LinkLabel__Link" href="/notre-service/charte-qualite/">
-                              <span className="LinkLabel__Label"> Notre charte qualité </span>
+                            <a tabIndex={0} className="LinkLabel__Link" href="/wendogo-mission">
+                              <span className="LinkLabel__Label"> Pourquoi passer par Wendogo ? </span>
                             </a>
                           </li>
                           <li>
-                            <a tabIndex={0} className="LinkLabel__Link" href="/expert-credit/expert-immobilier-comment-ca-marche/qui-sont-nos-courtiers/">
+                            <a tabIndex={0} className="LinkLabel__Link" href="/about-us">
                               <span className="LinkLabel__Label"> Qui sommes nous ? </span>
                             </a>
                           </li>
@@ -296,7 +290,9 @@ function HomePage(){
                           </svg>
                         </span>
                       </span>
-                      <span className="PrimaryButton__Label-sc-1vkvp7q-2 kVCvkJ"> Simuler mon visa </span>
+                      <Link to='/waitinglist'>
+                        <span className="PrimaryButton__Label-sc-1vkvp7q-2 kVCvkJ"> Simuler mon visa </span>
+                      </Link>
                     </button>
                   </div> 
                 </div>  
@@ -392,7 +388,9 @@ function HomePage(){
                               </svg>
                             </span>
                           </span>
-                          <span className="PrimaryButton__Label-sc-1vkvp7q-2 kVCvkJ"> Simuler mon visa </span>
+                          <Link to='/waitinglist'>
+                            <span className="PrimaryButton__Label-sc-1vkvp7q-2 kVCvkJ"> Simuler mon visa </span>
+                          </Link>
                         </button>
                       </div>
                       {browserWidth>1024 ?
@@ -537,8 +535,7 @@ function HomePage(){
                           <div className="div-block-2">
                             <div className="work__item-num">1</div>
                             <h2 className="steps">Test de chances de voyager</h2>
-                            <p className="paragraph-2"> Grâce à notre puissant simulateur, nous évaluons vos chances d'obtenir un visa. Nous jugeons donc si vous devez postuler maintenant 
-                                                        ou compléter nos recommandations personnelles pour augmenter vos chances et postuler plus tard.<a href="/plans">
+                            <p className="paragraph-2"> Grâce à notre puissant simulateur, nous évaluons vos chances d'obtenir un visa. Nous déterminons ainsi si vous devriez déposer votre demande immédiatement ou suivre nos recommandations personnalisées afin d'optimiser vos chances et ainsi commencer vos démarches.<a href="/plans">
                                 <br />
                                 <button className="PrimaryButton__Container-sc-1vkvp7q-0 iroZSn">
                                   <span className="PrimaryButton__Overlay-sc-1vkvp7q-3 sSEIO">
@@ -548,7 +545,9 @@ function HomePage(){
                                       </svg>
                                     </span>
                                   </span>
-                                  <span className="PrimaryButton__Label-sc-1vkvp7q-2 kVCvkJ"> Simuler mon visa </span>
+                                  <Link to='/waitinglist'>
+                                    <span className="PrimaryButton__Label-sc-1vkvp7q-2 kVCvkJ"> Simuler mon visa </span>
+                                  </Link>
                                 </button>
                               </a>
                             </p>
@@ -556,30 +555,30 @@ function HomePage(){
                           <div className="div-block-3">
                             <div className="work__item-num">2</div>
                             <h2 className="steps">Contrat d'accompagnement</h2>
-                            <p className="paragraph-2"> Si vous êtes éligible, vous pouvez signer l'accord pour nos services qui se fait à distance. 
-                                                        Vous bénéficierez alors d'un accompagnement personnalisé du début jusqu'à la fin de votre projet, et même plus encore. </p>
+                            <p className="paragraph-2"> En cas d'éligibilité, la souscription à nos services s'effectuer à distance par la signature d’un contrat. Vous profiterez ainsi d'un suivi personnalisé tout au long de votre projet, et au-delà. </p>
                           </div>
                           <div className="div-block-4">
                             <div className="work__item-num">3</div>
                             <h2 className="steps">Paiement</h2>
-                            <p className="paragraph-2"> Nous définissons ensemble le coût approximatif de votre projet. De cela sera déduit nos commissions prévisionnelles correspondant à 10% du coût total. 
-                                                        La moitié de cette somme est placée dans un compte bloqué au début et le reste vers la fin des démarches. 
-                                                        Nous encaissons la totalité des fonds qu'en cas de succès. Les commissions vous sont totalement remboursées s'il y'a échec, ce qui est rare! </p>
+                            <p className="paragraph-2"> Ensemble, nous établissons un devis prévisionnel, intégrant nos commissions à hauteur de 10%, exposant le coût global du projet. Après acceptation du devis, 
+                            un acompte équivalent à 30% du montant estimé doit être versé, lequel sera consigné dans un compte bloqué. En cas de réussite, le règlement du solde est exigé avant la délivrance de votre visa.
+                             En cas de refus, le remboursement intégral des fonds est effectué ; bien que les refus chez nous soient rares! </p>
                           </div>
                           <div className="div-block-7">
                             <div className="work__item-num">4</div>
                             <h2 className="steps">Dossier de candidature</h2>
-                            <p className="paragraph-2"> Nos experts ré-examinent avec vous vos documents et préparent votre dossier de candidature pour une suite efficace. </p>
+                            <p className="paragraph-2"> Nos experts ré-examinent avec vous vos documents et préparent votre dossier de candidature en vue d'une démarche efficace. </p>
                           </div>
                           <div className="div-block-7">
                             <div className="work__item-num">5</div>
                             <h2 className="steps">Suivi des démarches</h2>
-                            <p className="paragraph-2"> Accompagnement a chaque étape de votre demande de visa, incluant une assistance pour obtenir les documents gouvernementaux requis. </p>
+                            <p className="paragraph-2"> 
+Nous vous accompagnons à chaque étape de votre demande de visa, offrant une assistance complète pour l'obtention des documents gouvernementaux nécessaires. </p>
                           </div>
                           <div className="div-block-7">
                             <div className="work__item-num">6</div>
                             <h2 className="steps">Decision finale</h2>
-                            <p className="paragraph-2"> Une fois la réponse de l'ambassade tombée, nous faisons le bilan et vous donnons les derniers conseils pour la suite.</p>
+                            <p className="paragraph-2"> Après réception de la réponse de l'ambassade, nous effectuons une évaluation globale et vous prodiguons les derniers conseils pour la suite de la procédure.</p>
                           </div>
                           <img src={PasseportVisa} loading="lazy" width={750} sizes="(max-width: 479px) 320px, (max-width: 991px) 96vw, 100vw" alt="" className="image-17" />
                         </div>
@@ -587,8 +586,8 @@ function HomePage(){
                     </div>
                     {/* <div className="styles__Grid-sc-10gqksz-1 iuHviD BlocOutils__Container-sc-10c9hjh-0 fGvXyl">
                       <div className="BlocOutils__Content-sc-10c9hjh-1 jQpxOw">
-                        <p className="BlocOutils__Transparency-sc-10c9hjh-2 jXRqut"> Notre mission </p>
-                        <h2 className="BlocOutils__Title-sc-10c9hjh-3 wniqW">  Notre mission - Créer un monde sans frontières ! </h2>
+                        <p className="BlocOutils__Transparency-sc-10c9hjh-2 jXRqut"> Notre objectif </p>
+                        <h2 className="BlocOutils__Title-sc-10c9hjh-3 wniqW">  Notre objectif - Créer un monde sans frontières ! </h2>
                         <p className="BlocOutils__Description-sc-10c9hjh-4 eQpKZn"> Chacun mérite de se sentir libre et de voyager où il veut ! </p>
                         <button className="PrimaryButton__Container-sc-1vkvp7q-0 iroZSn BlocOutils__Simulate-sc-10c9hjh-5 cWIQGA">
                           <span className="PrimaryButton__Overlay-sc-1vkvp7q-3 sSEIO">
@@ -604,8 +603,8 @@ function HomePage(){
                     </div>
                     <section className="BlocParole__Bloc-sc-43i1q4-0 iRbylv">
                     <div className="BlocOutils__Content-sc-10c9hjh-1 jQpxOw">
-                        <p className="BlocOutils__Transparency-sc-10c9hjh-2 jXRqut"> Notre mission </p>
-                        <h2 className="BlocOutils__Title-sc-10c9hjh-3 wniqW"> Notre mission - Créer un monde sans frontières ! </h2>
+                        <p className="BlocOutils__Transparency-sc-10c9hjh-2 jXRqut"> Notre objectif </p>
+                        <h2 className="BlocOutils__Title-sc-10c9hjh-3 wniqW"> Notre objectif - Créer un monde sans frontières ! </h2>
                       </div>
                       <div className="BlocParole__List-sc-43i1q4-7 hGqDyH">
                         <p className="BlocParole__ListItemTitleDescription-sc-43i1q4-11 gLpqe"> Chacun mérite de se sentir libre et de voyager où il veut !</p>
@@ -632,7 +631,9 @@ function HomePage(){
                               </svg>
                             </span>
                           </span>
-                          <span className="PrimaryButton__Label-sc-1vkvp7q-2 kVCvkJ"> Simuler mon visa </span>
+                          <Link to='/waitinglist'>
+                            <span className="PrimaryButton__Label-sc-1vkvp7q-2 kVCvkJ"> Simuler mon visa </span>
+                          </Link>
                         </button>
                         {/* <h1>{countdown}</h1>
                         <h1>dd {positionLeft} - {browserWidth}</h1>
@@ -732,7 +733,7 @@ function HomePage(){
                           </picture>
                         </div>
                         <div className="Banner__Content-sc-yqcec5-3 hKeCKQ">
-                          <div className="Banner__Title-sc-yqcec5-4 zDQmH"> Notre mission - Créer un monde sans frontières ! <br/>
+                          <div className="Banner__Title-sc-yqcec5-4 zDQmH"> Notre objectif - Créer un monde sans frontières ! <br/>
                           <span className="BlocOutils__Transparency-sc-10c9hjh-2 jXRqut">Chacun mérite de se sentir libre et de voyager où il veut !</span>
                           </div>
                           <div className="Banner__ButtonContainer-sc-yqcec5-5 dGDyrc">
@@ -744,7 +745,9 @@ function HomePage(){
                                   </svg>
                                 </span>
                               </span>
-                              <span className="PrimaryButton__Label-sc-1vkvp7q-2 kVCvkJ"> Simuler mon visa </span>
+                              <Link to='/waitinglist'>
+                                <span className="PrimaryButton__Label-sc-1vkvp7q-2 kVCvkJ"> Simuler mon visa </span>
+                              </Link>
                             </button>
                             <p className="Banner__Caption-sc-yqcec5-7 elCGHz"> En 3 minutes, sans inscription&nbsp;! </p>
                           </div>

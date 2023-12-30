@@ -50,25 +50,16 @@ const Footer = () => {
                       <div className="Menus__MenuTitle-sc-1cdqyiq-2 ekhzHX"> À propos de Wendogo </div>
                       <ul className="Menus__MenuItems-sc-1cdqyiq-3 jdtBKN">
                         <li className="Menus__MenuItem-sc-1cdqyiq-4 iXcfDl">
-                          <span tabIndex={0} className="Bridge__Component-sc-18zyewx-0 fvmjWl Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> Contact </span>
+                          <span tabIndex={0} className="Bridge__Component-sc-18zyewx-0 fvmjWl Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> <a href="/wendogo-mission"> Pourquoi passer par Wendogo ?</a> </span>
                         </li>
                         <li className="Menus__MenuItem-sc-1cdqyiq-4 iXcfDl">
-                          <span tabIndex={0} className="Bridge__Component-sc-18zyewx-0 fvmjWl Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> Parrainer </span>
+                          <span tabIndex={0} className="Bridge__Component-sc-18zyewx-0 fvmjWl Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> <a href="/about-us"> Qui sommes nous ?</a> </span>
                         </li>
                         <li className="Menus__MenuItem-sc-1cdqyiq-4 iXcfDl">
-                          <a href="https://partner.wendogo.fr/devenir-partenaire/" rel="noreferrer noopener" target="_blank" className="Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> Devenir partenaire </a>
-                        </li>
-                        {/* <li className="Menus__MenuItem-sc-1cdqyiq-4 iXcfDl">
-                          <a href="/presse/" className="Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> Espace presse </a>
-                        </li> */}
-                        <li className="Menus__MenuItem-sc-1cdqyiq-4 iXcfDl">
-                          <button type="button" className="Menus__MenuItemCookies-sc-1cdqyiq-6 jUmchj"> Cookies </button>
+                          <span tabIndex={0} className="Bridge__Component-sc-18zyewx-0 fvmjWl Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> <a href="/contact"> Contact</a> </span>
                         </li>
                         <li className="Menus__MenuItem-sc-1cdqyiq-4 iXcfDl">
-                          <a href="/contenu-partenaire/" className="Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> Contenu Partenaire </a>
-                        </li>
-                        <li className="Menus__MenuItem-sc-1cdqyiq-4 iXcfDl">
-                          <a href="https://faq.wendogo.fr/fr/" rel="noreferrer noopener" target="_blank" className="Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> FAQ </a>
+                          <span tabIndex={0} className="Bridge__Component-sc-18zyewx-0 fvmjWl Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> Cookies </span>
                         </li>
                       </ul>
                     </div>
@@ -76,13 +67,13 @@ const Footer = () => {
                       <div className="Menus__MenuTitle-sc-1cdqyiq-2 ekhzHX">Fondamentaux</div>
                       <ul className="Menus__MenuItems-sc-1cdqyiq-3 jdtBKN">
                         <li className="Menus__MenuItem-sc-1cdqyiq-4 iXcfDl">
-                          <a href="/privacy/" className="Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> Respect de la vie privée </a>
+                          <a href="/wendogo-privacy" className="Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> Respect de la vie privée </a>
                         </li>
                         <li className="Menus__MenuItem-sc-1cdqyiq-4 iXcfDl">
-                          <a href="/mentions-legales/" className="Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> Mentions légales </a>
+                          <a href="/legal-notice" className="Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT">Mentions légales </a>
                         </li>
                         <li className="Menus__MenuItem-sc-1cdqyiq-4 iXcfDl">
-                          <a href="/cgu/" className="Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> CGU / CGV </a>
+                          <a href="/cgu" className="Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> CGU / CGV </a>
                         </li>
                       </ul>
                     </div>
@@ -90,22 +81,13 @@ const Footer = () => {
                       <div className="Menus__MenuTitle-sc-1cdqyiq-2 ekhzHX"> Les ressources Wendogo </div>
                       <ul className="Menus__MenuItems-sc-1cdqyiq-3 jdtBKN">
                         <li className="Menus__MenuItem-sc-1cdqyiq-4 iXcfDl">
-                          <a href="/guide/" className="Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> Permis de travail </a>
+                          <a href="/work-permit-steps" className="Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> Permis de travail - Canada </a>
                         </li>
                         <li className="Menus__MenuItem-sc-1cdqyiq-4 iXcfDl">
-                          <a href="/notre-service/app-mobile/" className="Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> Bourses d'étude </a>
+                          <a href="/scholarship-program-france" className="Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT">Programme de Bourse d'étude </a>
                         </li>
                         <li className="Menus__MenuItem-sc-1cdqyiq-4 iXcfDl">
-                          <span tabIndex={0} className="Bridge__Component-sc-18zyewx-0 fvmjWl Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> Regroupement familiale </span>
-                        </li>
-                        <li className="Menus__MenuItem-sc-1cdqyiq-4 iXcfDl">
-                          <a href="/ressources/ebook/" className="Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> Visa refusé. Que faire? </a>
-                        </li>
-                        <li className="Menus__MenuItem-sc-1cdqyiq-4 iXcfDl">
-                          <a href="/contenu-partenaire/" className="Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> Contenu Partenaire </a>
-                        </li>
-                        <li className="Menus__MenuItem-sc-1cdqyiq-4 iXcfDl">
-                          <a href="/contenu-partenaire/" className="Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> FAQ </a>
+                        <a href="/study-in-france" className="Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT">  Etudier en France </a>
                         </li>
                       </ul>
                     </div>

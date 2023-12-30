@@ -56,21 +56,29 @@ const SubscriptionModal = () => {
             data.country = location.country
             dispatch(activateSpinner())
             
-            const result = await sendVerificationAndAddUser(data).unwrap();
-       
+            const result = await sendVerificationAndAddUser(data).unwrap()
             dispatch(deactivateSpinner())
-            console.log('result🖐🖐', result);
+            console.log('result🖐🖐', result)
             if(result.success){          
                 dispatch(setUser(result.user))
-                localStorage.setItem('wendgouser', JSON.stringify(result.user));
-                if(result.user.has_whatsapp){
-                    console.log('Hey localStorage', localStorage.getItem('wendgouser'))
-                    //navigate('/congratulation')
-                    navigate('/verification')
-                }else{
-                    navigate('/verification')
-                }
-
+                //Set expiration date for verification (verification page)
+                const d1 = new Date ()
+                const d2 = new Date ( d1 );
+            
+                d2.setMinutes ( d1.getMinutes() + 10 );
+                let expirationVerifDate = (d2.toTimeString().split(' ')[0])
+                expirationVerifDate = expirationVerifDate.substring(0, expirationVerifDate.lastIndexOf(':')); 
+                helper.setLocalStorageWithExpiration('wendogouser', result.user, 600000)
+                helper.setLocalStorageWithExpiration('expirationVerifDate', expirationVerifDate, 600000)
+                //localStorage.setItem('wendogouser', JSON.stringify(result.user));
+                // if(result.user.has_whatsapp){
+                //     console.log('Hey localStorage', localStorage.getItem('wendogouser'))
+                //     navigate('/congratulation')
+                //     //navigate('/verification')
+                // }else{
+                //     navigate('/verification')
+                // }
+                navigate(result.user.subscription_step)
             }else if (result.errorId){
                 msgToast = () => (
                     <div>
@@ -96,7 +104,7 @@ const SubscriptionModal = () => {
                   )
             }else{
                 msgToast = () => (
-                    {errorText}
+                    <div>{errorText}</div>
                   )                
             }
             helper.toastError(msgToast)  
