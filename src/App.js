@@ -24,7 +24,6 @@ const App = () => {
   return (
     <div>
       <Routes>
-
         <Route path="*" element={<NotFound/>} />
         <Route exact path="/" element={<Home/>} />
         <Route path="/waitinglist" element={<WaitingList/>} />

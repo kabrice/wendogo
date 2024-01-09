@@ -1,4 +1,4 @@
-import { useState} from 'react';
+import { useState, useEffect} from 'react';
 import ScholarshipProgramFRImg from '../../assets/scholarship_program_for_france.jpeg'
 import BorisHead from '../../assets/Boris_head.jpeg'
 import QuestionsOnTopic from '../../components/QuestionsOnTopic';
@@ -7,9 +7,9 @@ import { Link } from 'react-router-dom';
 
 import Footer from '../../components/Footer';
 import HeaderMenuBar from '../../components/HeaderMenuBar';
+import { Helmet } from 'react-helmet';
+import helper from '../../utils/Helper';
 
-// import { Link } from "react-router-dom";
-// import Nav from "./Nav";
 function ScholarshipProgramFR(){
     const whatsapp =  <svg className="ButtonLinkstyles__Picto-sc-1s2ygn0-1 hkJOZg" width="24px" height="24.6350302px" viewBox="0 0 24 24.6350302" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
                         <title>whatsapp</title>
@@ -35,15 +35,25 @@ function ScholarshipProgramFR(){
 
     async function copyTextToClipboard(linkNum) {
       try {
-        await navigator.clipboard.writeText("http://localhost:3000/work-permit-steps")
+        await navigator.clipboard.writeText("https://wendogo.com/scholarship-program-france")
         setIsCopied1(linkNum === 1)
         setIsCopied2(linkNum === 2)
       } catch (error) {
         console.log('error copyTextToClipboard', error)
       }
     }  
-
+    useEffect(() => {
+      helper.loadFacebookSDK() }, [])
     return <div >
+            <Helmet>
+              <meta property="og:url"           content="https://wendogo.com/scholarship-program-france" />
+              <meta property="og:type"          content="article" />
+              <meta property="og:title"         content="Programmes de Bourses d'Études en France pour les Étudiants Étrangers" />
+              <meta property="og:description"   content="Comment financer ses études en France lorsqu’on envisage de suivre des cours dans une université à Paris ou Montpellier ? Découvrez les possibilités et les conditions pour décrocher une bourse, une aide financière et les bons plans quand on part étudier en France." />
+              <meta property="og:image"         content={ScholarshipProgramFRImg} /> 
+              <title>Programmes de Bourses d'Études en France pour les Étudiants Étrangers</title>
+              <meta name="description"          content="Comment financer ses études en France lorsqu’on envisage de suivre des cours dans une université à Paris ou Montpellier ? Découvrez les possibilités et les conditions pour décrocher une bourse, une aide financière et les bons plans quand on part étudier en France."/>
+            </Helmet>          
             <HeaderMenuBar/>
     
             <div className='container-24' style={{maxWidth: 'inherit'}}>
@@ -93,7 +103,7 @@ function ScholarshipProgramFR(){
                               <h1 size="large" className="styles__HeadingBridge-sc-6txi54-0 hzNvHf">La France ouvre ses Portes : Les Programmes de Bourses d'Études pour les Étudiants Étrangers</h1>
                             </div>
                             <div style={{float : 'right'}} className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh">
-                             <Link>Cliquer ici pour la version 🇨🇦</Link>
+                             <Link  to="/scholarship-program-canada">Cliquer ici pour la version 🇨🇦</Link>
                             </div>
                             <div style={{clear : 'both'}}></div>
                             <div className="styles__Wrapper-sc-s3dlnp-3 KKpTb">
@@ -114,21 +124,25 @@ function ScholarshipProgramFR(){
                                   <div className="SharingLinksstyles__SharingLinksDesktop-sc-13jf7g7-2 dAIRMX">
                                     <div className="SharingLinksstyles__Title-sc-13jf7g7-3 eZpqGZ"> Partager : </div>
                                     <div className="Tooltipstyles__TooltipContainer-sc-ynyslw-0 iMhBNO SharingLinksstyles__Tooltip-sc-13jf7g7-4 eUmNLd">
+                                    <Link target="_blank" to="https://api.whatsapp.com/send/?text=https://wendogo.com/scholarship-program-france" >
                                       <button className="ButtonLinkstyles__ButtonLink-sc-1s2ygn0-0 iPwlpd">
                                         {whatsapp}
                                         <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh"> 
-                                          <Link target="_blank" href="https://api.whatsapp.com/send/?text=http://localhost:3000/work-permit-steps" > WhatsApp </Link> 
+                                           WhatsApp 
                                         </div>
                                       </button>
+                                      </Link> 
                                       <div role="tooltip" className="Tooltipstyles__Tooltip-sc-ynyslw-1 hrixxN"> Partager sur WhatsApp </div>
                                     </div>
                                     <div className="Tooltipstyles__TooltipContainer-sc-ynyslw-0 iMhBNO SharingLinksstyles__Tooltip-sc-13jf7g7-4 eUmNLd">
+                                    <Link target="_blank" to="https://www.facebook.com/sharer/sharer.php?u=https://wendogo.com/scholarship-program-france" className="fb-xfbml-parse-ignore" rel="noreferrer">
                                       <button className="ButtonLinkstyles__ButtonLink-sc-1s2ygn0-0 iPwlpd">
                                         {facebook}
                                         <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh"> 
-                                        <Link target="_blank" to="https://www.facebook.com/sharer/sharer.php?u=http://localhost:3000/work-permit-steps" className="fb-xfbml-parse-ignore" rel="noreferrer">Facebook</Link>
+                                        Facebook
                                          </div>
                                       </button>
+                                      </Link>
                                       <div role="tooltip" className="Tooltipstyles__Tooltip-sc-ynyslw-1 hrixxN"> Partager sur Facebook </div>
                                     </div>
                                     <div className="Tooltipstyles__TooltipContainer-sc-ynyslw-0 iMhBNO SharingLinksstyles__Tooltip-sc-13jf7g7-4 eUmNLd" onClick={() => copyTextToClipboard(1)}>
@@ -313,21 +327,25 @@ function ScholarshipProgramFR(){
                                       <div className="SharingLinksstyles__SharingLinksDesktop-sc-13jf7g7-2 dAIRMX">
                                         <div className="SharingLinksstyles__Title-sc-13jf7g7-3 eZpqGZ"> Partager : </div>
                                         <div className="Tooltipstyles__TooltipContainer-sc-ynyslw-0 iMhBNO SharingLinksstyles__Tooltip-sc-13jf7g7-4 eUmNLd">
+                                        <Link target="_blank" to="https://api.whatsapp.com/send/?text=https://wendogo.com/scholarship-program-france" >
                                           <button className="ButtonLinkstyles__ButtonLink-sc-1s2ygn0-0 iPwlpd">
-                                            <svg height={24} viewBox="0 0 24 24" width={24} xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="ButtonLinkstyles__Picto-sc-1s2ygn0-1 hkJOZg">
-                                              <path d="M24,21H0V3H24ZM1,4.52V20H23V4.52l-11,10ZM22.09,4H1.91L12,13.17Z" />
-                                            </svg>
-                                            <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh"> <a href="https://api.whatsapp.com/send/?text=http://localhost:3000/work-permit-steps" > WhatsApp </a> </div>
+                                          {whatsapp}
+                                          <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh"> 
+                                             WhatsApp 
+                                          </div>
                                           </button>
+                                          </Link> 
                                           <div role="tooltip" className="Tooltipstyles__Tooltip-sc-ynyslw-1 hrixxN"> Partager par WhatsApp </div>
                                         </div>
                                         <div className="Tooltipstyles__TooltipContainer-sc-ynyslw-0 iMhBNO SharingLinksstyles__Tooltip-sc-13jf7g7-4 eUmNLd">
+                                        <Link target="_blank" to="https://www.facebook.com/sharer/sharer.php?u=https://wendogo.com/scholarship-program-france" className="fb-xfbml-parse-ignore" rel="noreferrer">
                                           <button className="ButtonLinkstyles__ButtonLink-sc-1s2ygn0-0 iPwlpd">
                                             {facebook}
                                             <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh"> 
-                                            <Link target="_blank" to="https://www.facebook.com/sharer/sharer.php?u=http://localhost:3000/work-permit-steps" className="fb-xfbml-parse-ignore" rel="noreferrer">Facebook</Link>
+                                            Facebook
                                             </div>
                                           </button>
+                                          </Link>
                                           <div role="tooltip" className="Tooltipstyles__Tooltip-sc-ynyslw-1 hrixxN"> Partager sur Facebook </div>
                                         </div>
                                         <div className="Tooltipstyles__TooltipContainer-sc-ynyslw-0 iMhBNO SharingLinksstyles__Tooltip-sc-13jf7g7-4 eUmNLd" onClick={() => copyTextToClipboard(2)}>

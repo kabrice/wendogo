@@ -16,7 +16,8 @@ import { Link } from 'react-router-dom';
 import SubscriptionModal from '../components/SubscriptionModal'
 import { useSelector, useDispatch } from 'react-redux'
 import {open} from '../redux/modalslice'
-
+import { Helmet } from 'react-helmet';
+import helper from '../utils/Helper';
 
 function WaitingList() {
 
@@ -38,49 +39,15 @@ function WaitingList() {
     setIShowMore(isShowMore)
   }
 
-  const loadScript = () => {
-      // let script = document.createElement("script");
-      // script.setAttribute("crossOrigin","anonymous");
-      // script.nonce = "dbGJk1T4"
-      // script.src = "https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v17.0&appId=1711396672460430&autoLogAppEvents=1";
-      // script.setAttribute("nonce","dbGJk1T4");
-      // script.type = "text/javascript";
-      // document.body.append(script);
-      let script1 = document.createElement("script");
-      script1.setAttribute("crossOrigin","anonymous");
-      script1.nonce = "8E3Mm15A"
-      script1.src = "https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v17.0&appId=1711396672460430&autoLogAppEvents=1";
-      script1.setAttribute("nonce","8E3Mm15A");
-      script1.type = "text/javascript";
-      document.body.append(script1);
-
-      window.fbAsyncInit = () => {
-        window.FB.init({
-            appId            : '1711396672460430',
-            autoLogAppEvents : true,
-            xfbml            : true,
-            version          : 'v11.0'
-        });
-      };
-      (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
-        fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
-
-  }
-
   useEffect(() => {
-    loadScript()
+    helper.loadFacebookSDK()
     const handleScroll = () => { 
       const el = myElementRef.current;
       if(el){
         setContestDivTop(el.getBoundingClientRect().top)
         
         if(-620 < contestDivTop && contestDivTop < -600){
-          console.log('totototp', contestDivTop, displayContestDigit)  
+          //console.log('totototp', contestDivTop, displayContestDigit)  
           setDisplayContestDigit(<Confetti recycle={false}  width={width} height={1400}/>)
         }
       }
@@ -109,6 +76,15 @@ function WaitingList() {
 
   return (
   <>
+    <Helmet>
+      <meta property="og:url"           content="https://wendogo.com/waitinglist" />
+      <meta property="og:type"          content="website" />
+      <meta property="og:title"         content="Wendogo" />
+      <meta property="og:description"   content="Jeu concours - Préinscription au webinar" />
+      <meta property="og:image"         content="https://wendogo.com/static/media/wendogo_jeu_concours.png?" /> 
+      <title>Wendogo</title>
+      <meta name="description"          content="Jeu concours - Préinscription au webinar"/>
+    </Helmet>
     <div className="section-21 wf-section" ref={myElementRef}>
       <div className="MenuStickystyles__StickyHeader-sc-ngpxs4-0 dWKCRV">
           <div className="MenuStickystyles__StickyContainer-sc-ngpxs4-1 evdTmz">
@@ -221,8 +197,8 @@ function WaitingList() {
                   <div>
                     <h2 className="Card__Title-sc-1qqjegm-4 bqicpW">Partage</h2>
                     <div>
-                      <div className="fb-share-button" data-href="https://wendogo.com/" data-width="200" data-type="button_count">
-                        <Link target="_blank" to="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwendogo.com%2F&amp;src=sdkpreparse" className="fb-xfbml-parse-ignore" rel="noreferrer">Partager</Link>
+                      <div className="fb-share-button" data-href="https://wendogo.com/waitinglist" data-width="200" data-type="button_count">
+                        <Link target="_blank" to="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwendogo.com%2Fwaitinglist&amp;src=sdkpreparse" className="fb-xfbml-parse-ignore" rel="noreferrer">Partager</Link>
                       </div> 
                       <p> ce jeu concours en nous tagguant.</p>
                     </div>

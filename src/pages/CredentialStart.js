@@ -10,6 +10,7 @@ import FooterSingleRow from '../components/FooterSingleRow';
 const CredentialStart = () => {
 
   const user = helper.getLocalStorageWithExpiration('wendogouser')
+  const currentDate = helper.getLocaleShortDateString(new Date())
   //const user = JSON.parse(localStorage.getItem('wendogouser'))
   console.log('useruser', user)
   const { register, handleSubmit, formState: { errors }, control } = useForm({
@@ -178,6 +179,18 @@ const CredentialStart = () => {
                                       aria-label="" type="text" autoComplete="family-name" data-ppui="true"/>
                                       {errors.lastname && <p className='input-error'>Le nom est requis et doit être valide</p>}
                                       <label htmlFor="paypalAccountData_lastName" id="paypalAccountData_lastName-label" className="pp-cons-7nxsij-label-text_field_label_sm" data-ppui="true"> Nom </label>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="pp-cons-1v26bvb-row-justify_content_center" data-ppui-info="grid_3.2.9">
+                                  <div className=" pp-cons-1aqxtsc-col_form_full" align="center" data-ppui="true">
+                                    <div className="pp-cons-1hv7ga5-text_input_base-text_body" data-ppui-info="text-input_5.1.6">
+                                      <input  {...register("birthdate", { required: true, max:currentDate, min:"1901-01-01" })} defaultValue={user.birthdate} 
+                                      className="pp-cons-16mpn99-text_input_control-text_body-label_placeholder_shown_and_not_focused-text_body" 
+                                      name="birthdate" id="paypalAccountData_birthdate" aria-invalid="false"
+                                      aria-label="" type="date" autoComplete="bday" data-ppui="true" aria-labelledby="paypalAccountData_birthdate-label" />
+                                      {errors.birthdate && <p className='input-error'>La date de naissance est requise et doit être valide</p>}
+                                      <label htmlFor="paypalAccountData_birthdate" id="paypalAccountData_birthdate-label" className="pp-cons-7nxsij-label-text_field_label_sm" data-ppui="true"> Date de naissance </label>
                                     </div>
                                   </div>
                                 </div>

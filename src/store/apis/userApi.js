@@ -2,8 +2,11 @@ import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
 
 export const userApi = createApi({
   reducerPath: 'usersApi',
-  baseQuery: fetchBaseQuery({baseUrl: 'http://62.72.18.88:8080', prepareHeaders: (headers, { getState }) => {
+  baseQuery: fetchBaseQuery({baseUrl: 'https://wendogo.online:8080', prepareHeaders: (headers, { getState }) => {
     headers.set('Content-Type', 'application/json')
+    headers.set('Access-Control-Allow-Origin', '*')
+    headers.set('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization')
+    headers.set('Access-Control-Request-Method', 'GET, POST, DELETE, PUT, OPTIONS')
     return headers
 }}),
   tagTypes: ['User'],

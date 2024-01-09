@@ -9,7 +9,8 @@ import HeaderMenuBar from '../../components/HeaderMenuBar';
 import MoneyGirl from '../../assets/capa.svg'
 import HappyWomanMoney from '../../assets/HappyWomanMoney.png'
 import DataPrivacy from '../../assets/dataprivacy.png'
-
+import SocialMediaLogo from '../../assets/wendogo_jeu_concours.png'
+import { Helmet } from 'react-helmet';
 
 function WendogoCost(){
     const whatsapp =  <svg className="ButtonLinkstyles__Picto-sc-1s2ygn0-1 hkJOZg" width="24px" height="24.6350302px" viewBox="0 0 24 24.6350302" version="1.1" xmlns="http://www.w3.org/2000/svg">
@@ -36,7 +37,7 @@ function WendogoCost(){
 
     async function copyTextToClipboard(linkNum) {
       try {
-        await navigator.clipboard.writeText("http://localhost:3000/work-permit-steps")
+        await navigator.clipboard.writeText("https://wendogo.com/work-permit-steps")
         setIsCopied1(linkNum === 1)
         setIsCopied2(linkNum === 2)
       } catch (error) {
@@ -45,6 +46,15 @@ function WendogoCost(){
     }  
     
     return <div >
+            <Helmet>
+              <meta property="og:url"           content="https://wendogo.com/wendogo-cost" />
+              <meta property="og:type"          content="article" />
+              <meta property="og:title"         content="Combien coûte Pretto ? - Wendogo" />
+              <meta property="og:description"   content="Chez Wendogo, notre prix est fixe et  nous encaissons le paiement qu'au succès. En cas d'échec vous êtes totalement remboursé. Et avant cela, tout Wendogo est gratuit !" />
+              <meta property="og:image"         content={SocialMediaLogo} /> 
+              <title>Combien coûte Pretto ? - Wendogo</title>
+              <meta name="description"          content="Chez Wendogo, notre prix est fixe et  nous encaissons le paiement qu'au succès. En cas d'échec vous êtes totalement remboursé. Et avant cela, tout Wendogo est gratuit !"/>
+            </Helmet>         
             <HeaderMenuBar/>
             <main className="styles__Main-sc-kz84w6-0 gEFmYD " style={{paddingTop: 80}}>
                 <div className="Blocsstyles__Page-sc-1q5awhx-1 dVmdSL">
@@ -82,7 +92,7 @@ function WendogoCost(){
                             <p className="styles__Block-sc-1qjc0o4-0 styles__Paragraph-sc-1qjc0o4-2 ktDrhZ bbNzRf"> Simplifier votre demande de visa, cela passe aussi par apporter plus de transparence. 
                             Chez Wendogo, notre prix est fixe et  nous encaissons le paiement qu'au succès. En cas d'échec vous êtes totalement remboursé. Et avant cela, tout Wendogo est gratuit !</p>
                         </div>
-                        <a href="https://app.pretto.fr/" className="styles__BaseTypo-sc-198xhmk-0 aPHVI styles__Button-sc-wveu9u-1 iRJUAN styles__Button-sc-1wzyvpr-0 ctdOjM">
+                        <a href="https://app.Wendogo.fr/" className="styles__BaseTypo-sc-198xhmk-0 aPHVI styles__Button-sc-wveu9u-1 iRJUAN styles__Button-sc-1wzyvpr-0 ctdOjM">
                             <span className="styles__Label-sc-wveu9u-2 hhrLkB"> Je simule mon visa </span>
                             <svg height={16} viewBox="0 0 16 16" width={16} xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="styles__Arrow-sc-wveu9u-0 jXLObB">
                             <path d="M6.3,2.5,5,3.8,9.28,8,5,12.2l1.3,1.3L11.88,8Z" />
@@ -171,7 +181,7 @@ function WendogoCost(){
                                         <div className="Tooltipstyles__TooltipContainer-sc-ynyslw-0 iMhBNO SharingLinksstyles__Tooltip-sc-13jf7g7-4 eUmNLd">
                                           <button className="ButtonLinkstyles__ButtonLink-sc-1s2ygn0-0 iPwlpd">
                                             {whatsapp}
-                                            <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh"> <a href="https://api.whatsapp.com/send/?text=http://localhost:3000/work-permit-steps" > WhatsApp </a> </div>
+                                            <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh"> <a href="https://api.whatsapp.com/send/?text=https://wendogo.com/work-permit-steps" > WhatsApp </a> </div>
                                           </button>
                                           <div role="tooltip" className="Tooltipstyles__Tooltip-sc-ynyslw-1 hrixxN"> Partager par WhatsApp </div>
                                         </div>
@@ -179,7 +189,7 @@ function WendogoCost(){
                                           <button className="ButtonLinkstyles__ButtonLink-sc-1s2ygn0-0 iPwlpd">
                                             {facebook}
                                             <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh"> 
-                                            <Link target="_blank" to="https://www.facebook.com/sharer/sharer.php?u=http://localhost:3000/work-permit-steps" className="fb-xfbml-parse-ignore" rel="noreferrer">Facebook</Link>
+                                            <Link target="_blank" to="https://www.facebook.com/sharer/sharer.php?u=https://wendogo.com/work-permit-steps" className="fb-xfbml-parse-ignore" rel="noreferrer">Facebook</Link>
                                             </div>
                                           </button>
                                           <div role="tooltip" className="Tooltipstyles__Tooltip-sc-ynyslw-1 hrixxN"> Partager sur Facebook </div>

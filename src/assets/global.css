@@ -7459,8 +7459,12 @@ input {
 .gMGCqw {
   display: block;
 }
-.deldde {
-  display: none;
+
+@media screen and (max-width: 767px) {
+	.deldde {
+		scale: 0.6;
+		margin-left: -117px; 
+	}
 }
 .epsuFN {
 	color: rgb(255, 255, 255);
@@ -17944,7 +17948,7 @@ input[type=number] {
 	display: block;
   }
   .epsuFN {
-	display: none;
+	/* display: none; */
   }
   @media screen and (min-width: 768px) {
 	.epsuFN {
@@ -18212,6 +18216,17 @@ input[type=number] {
 	  align-items: center;
 	}
   }
+  @media screen and (max-width: 479px) {
+	.kuldYh{
+		display: none;
+	}
+	.hkJOZg{
+		width: 24px !important;
+		height: 24px !important;
+		margin-right: 0px !important;
+	}
+  }
+
   @media screen and (max-width: 768px) {
 	.eZpqGZ {
 		display: none;
@@ -18388,6 +18403,12 @@ input[type=number] {
   .bVQYWs {
 	margin-left: 64px;
 	margin-right: 64px;
+  }
+  @media only screen and (max-width: 420px) {
+	.bVQYWs {
+		margin-left: 28px;
+		margin-right: 28px;
+	  }
   }
   @media only screen and (min-width: 768px) {
 	.bVQYWs {
@@ -19032,9 +19053,9 @@ input[type=number] {
 	opacity: 1;
 	visibility: visible;
   }
-  .dAIRMX {
+  /* .dAIRMX {
 	display: none;
-  }
+  } */
   @media screen and (min-width: 768px) {
 	.dAIRMX {
 	  display: flex;
@@ -19198,7 +19219,7 @@ input[type=number] {
 	  margin-bottom: 0px;
 	}
   }
-  .bVQYWs {
+  /* .bVQYWs {
 	margin-left: 64px;
 	margin-right: 64px;
   }
@@ -19206,7 +19227,7 @@ input[type=number] {
 	.bVQYWs {
 	  margin: 0px;
 	}
-  }
+  } */
   .ckwYtV {
 	font-family: "Maison Neue", sans-serif;
 	font-size: 32px;

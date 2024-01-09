@@ -8,7 +8,8 @@ import Footer from '../../components/Footer';
 import HeaderMenuBar from '../../components/HeaderMenuBar'
 import Poirier from '../../assets/Poirier.svg'
 import DataPrivacy from '../../assets/dataprivacyd.png'
-
+import SocialMediaLogo from '../../assets/wendogo_jeu_concours.png'
+import { Helmet } from 'react-helmet';
 
 function WendogoPrivacy(){
     const whatsapp =  <svg className="ButtonLinkstyles__Picto-sc-1s2ygn0-1 hkJOZg" width="24px" height="24.6350302px" viewBox="0 0 24 24.6350302" version="1.1" xmlns="http://www.w3.org/2000/svg">
@@ -35,7 +36,7 @@ function WendogoPrivacy(){
 
     async function copyTextToClipboard(linkNum) {
       try {
-        await navigator.clipboard.writeText("http://localhost:3000/work-permit-steps")
+        await navigator.clipboard.writeText("https://wendogo.com/work-permit-steps")
         setIsCopied1(linkNum === 1)
         setIsCopied2(linkNum === 2)
       } catch (error) {
@@ -44,6 +45,15 @@ function WendogoPrivacy(){
     }  
 
     return <div >
+            <Helmet>
+              <meta property="og:url"           content="https://wendogo.com/wendogo-privacy" />
+              <meta property="og:type"          content="article" />
+              <meta property="og:title"         content="Vos données - Wendogo" />
+              <meta property="og:description"   content="Choisir Wendogo, c'est nous faire confiance pour un accompagnement optimal dans vos démarches visa, mais aussi pour sécuriser vos données." />
+              <meta property="og:image"         content={SocialMediaLogo} /> 
+              <title>Vos données - Wendogo</title>
+              <meta name="description"          content="Choisir Wendogo, c'est nous faire confiance pour un accompagnement optimal dans vos démarches visa, mais aussi pour sécuriser vos données."/>
+            </Helmet>          
             <HeaderMenuBar/>
             <main className="styles__Main-sc-kz84w6-0 gEFmYD " style={{paddingTop: 80}}>
                 <div className="Blocsstyles__Page-sc-1q5awhx-1 dVmdSL">
@@ -160,7 +170,7 @@ function WendogoPrivacy(){
                                         <div className="Tooltipstyles__TooltipContainer-sc-ynyslw-0 iMhBNO SharingLinksstyles__Tooltip-sc-13jf7g7-4 eUmNLd">
                                           <button className="ButtonLinkstyles__ButtonLink-sc-1s2ygn0-0 iPwlpd">
                                             {whatsapp}
-                                            <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh"> <a href="https://api.whatsapp.com/send/?text=http://localhost:3000/work-permit-steps" > WhatsApp </a> </div>
+                                            <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh"> <a href="https://api.whatsapp.com/send/?text=https://wendogo.com/work-permit-steps" > WhatsApp </a> </div>
                                           </button>
                                           <div role="tooltip" className="Tooltipstyles__Tooltip-sc-ynyslw-1 hrixxN"> Partager par WhatsApp </div>
                                         </div>
@@ -168,7 +178,7 @@ function WendogoPrivacy(){
                                           <button className="ButtonLinkstyles__ButtonLink-sc-1s2ygn0-0 iPwlpd">
                                             {facebook}
                                             <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh"> 
-                                            <Link target="_blank" to="https://www.facebook.com/sharer/sharer.php?u=http://localhost:3000/work-permit-steps" className="fb-xfbml-parse-ignore" rel="noreferrer">Facebook</Link>
+                                            <Link target="_blank" to="https://www.facebook.com/sharer/sharer.php?u=https://wendogo.com/work-permit-steps" className="fb-xfbml-parse-ignore" rel="noreferrer">Facebook</Link>
                                             </div>
                                           </button>
                                           <div role="tooltip" className="Tooltipstyles__Tooltip-sc-ynyslw-1 hrixxN"> Partager sur Facebook </div>

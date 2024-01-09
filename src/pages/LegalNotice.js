@@ -3,11 +3,13 @@ import EdgarHead from '../assets/edgar_head.jpeg'
 //import {ReactComponent as ExpertMan} from '../assets/ExpertMan1.svg'
 
 import { Link } from 'react-router-dom';
+import WendogoLogo from '../assets/wendogo_logo.svg'
 import SocialMediaLogo from '../assets/social_media_logo.png'
 import Footer from '../components/Footer';
 import HeaderMenuBar from '../components/HeaderMenuBar';
 import CoffeeCup from '../assets/coffeecup.jpeg'
 import { FloatingWhatsApp } from 'react-floating-whatsapp';
+import { Helmet } from 'react-helmet';
 
 function LegalNotice(){
     const whatsapp =  <svg className="ButtonLinkstyles__Picto-sc-1s2ygn0-1 hkJOZg" width="24px" height="24.6350302px" viewBox="0 0 24 24.6350302" version="1.1" xmlns="http://www.w3.org/2000/svg">
@@ -34,7 +36,7 @@ function LegalNotice(){
 
     async function copyTextToClipboard(linkNum) {
       try {
-        await navigator.clipboard.writeText("http://localhost:3000/work-permit-steps")
+        await navigator.clipboard.writeText("https://wendogo.com/work-permit-steps")
         setIsCopied1(linkNum === 1)
         setIsCopied2(linkNum === 2)
       } catch (error) {
@@ -44,6 +46,15 @@ function LegalNotice(){
 
     
     return <div >
+            <Helmet>
+              <meta property="og:url"           content="https://wendogo.com/legal-notice" />
+              <meta property="og:type"          content="article" />
+              <meta property="og:title"         content="Mentions légales - Wendogo" />
+              <meta property="og:description"   content="Consultez ici les mentions légales de Wendogo." />
+              <meta property="og:image"         content={SocialMediaLogo} /> 
+              <title>Mentions légales - Wendogo</title>
+              <meta name="description"          content="Consultez ici les mentions légales de Wendogo."/>
+            </Helmet>
             <HeaderMenuBar/>
             <main className="styles__Main-sc-kz84w6-0 gEFmYD"  style={{paddingTop: 80}}>
                       <div className="Defautstyles__Page-sc-1tnudyr-2 kiMqjH">

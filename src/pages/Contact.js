@@ -1,7 +1,7 @@
 import { useState} from 'react';
 import EdgarHead from '../assets/edgar_head.jpeg'
 //import {ReactComponent as ExpertMan} from '../assets/ExpertMan1.svg'
-
+import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import SocialMediaLogo from '../assets/social_media_logo.png'
 import Footer from '../components/Footer';
@@ -34,7 +34,7 @@ function Contact(){
 
     async function copyTextToClipboard(linkNum) {
       try {
-        await navigator.clipboard.writeText("http://localhost:3000/work-permit-steps")
+        await navigator.clipboard.writeText("https://wendogo.com/work-permit-steps")
         setIsCopied1(linkNum === 1)
         setIsCopied2(linkNum === 2)
       } catch (error) {
@@ -44,6 +44,15 @@ function Contact(){
 
     
     return <div >
+            <Helmet>
+              <meta property="og:url"           content="https://wendogo.com/contact" />
+              <meta property="og:type"          content="article" />
+              <meta property="og:title"         content="Contact - Wendogo" />
+              <meta property="og:description"   content="Contactez nous ici." />
+              <meta property="og:image"         content={SocialMediaLogo} /> 
+              <title>Contact - Wendogo</title>
+              <meta name="description"          content="Contactez nous ici."/>
+            </Helmet>
             <HeaderMenuBar/>
             <main className="styles__Main-sc-kz84w6-0 gEFmYD gEFmYD1" style={{paddingTop: 80}}>
                       <div className="styles__Wrapper-sc-gk465i-0 cddtql">
