@@ -45,7 +45,7 @@ function WorkPermitStep(){
 
     useEffect(() => {
       helper.loadFacebookSDK() }, [])   
-    return <div >
+    return <div className="klmqdo">
             <Helmet>
               <meta property="og:url"           content="https://wendogo.com/work-permit-steps" />
               <meta property="og:type"          content="article" />
@@ -123,7 +123,7 @@ function WorkPermitStep(){
                                     <Link target="_blank" to="https://api.whatsapp.com/send/?text=https://wendogo.com/work-permit-steps" >
                                         <button className="ButtonLinkstyles__ButtonLink-sc-1s2ygn0-0 iPwlpd">
                                           {whatsapp}
-                                          <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh"> 
+                                          <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh kmzeo"> 
                                             WhatsApp 
                                           </div>
                                         </button>
@@ -134,7 +134,7 @@ function WorkPermitStep(){
                                       <Link target="_blank" to="https://www.facebook.com/sharer/sharer.php?u=https://wendogo.com/work-permit-steps" className="fb-xfbml-parse-ignore" rel="noreferrer">
                                       <button className="ButtonLinkstyles__ButtonLink-sc-1s2ygn0-0 iPwlpd">
                                         {facebook}
-                                        <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh"> 
+                                        <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh kmzeo"> 
                                         Facebook
                                          </div>
                                       </button>
@@ -146,7 +146,7 @@ function WorkPermitStep(){
                                         <svg height={24} viewBox="0 0 24 24" width={24} xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="ButtonLinkstyles__Picto-sc-1s2ygn0-1 hkJOZg">
                                           <path d="M14.85,11.92a4.06,4.06,0,0,0-1-1.75,4,4,0,0,0-5.66,0l-5,5a4,4,0,0,0,5.66,5.66L12.67,17H13a5.86,5.86,0,0,0,1.19-.12L9.53,21.54a5,5,0,0,1-7.07-7.07l5-5a5,5,0,0,1,7.07,0,4.93,4.93,0,0,1,1.11,1.67Zm-5.7.15a4.1,4.1,0,0,0,1,1.76,4,4,0,0,0,5.66,0l5-5a4,4,0,1,0-5.66-5.66L11.33,7H11a5.86,5.86,0,0,0-1.19.12l4.66-4.66a5,5,0,0,1,7.07,7.07l-5,5a5,5,0,0,1-7.07,0,4.74,4.74,0,0,1-1.11-1.68Z" />
                                         </svg>
-                                        <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh"> Lien </div>
+                                        <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh kmzeo"> Lien </div>
                                       </button>
                                       <div role="tooltip" className="Tooltipstyles__Tooltip-sc-ynyslw-1 hrixxN"> 
                                       
@@ -308,7 +308,7 @@ function WorkPermitStep(){
                                           <Link target="_blank" to="https://api.whatsapp.com/send/?text=https://wendogo.com/work-permit-steps" >
                                             <button className="ButtonLinkstyles__ButtonLink-sc-1s2ygn0-0 iPwlpd">
                                               {whatsapp}
-                                              <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh"> 
+                                              <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh kmzeo"> 
                                                 WhatsApp 
                                               </div>
                                             </button>
@@ -319,7 +319,7 @@ function WorkPermitStep(){
                                           <Link target="_blank" to="https://www.facebook.com/sharer/sharer.php?u=https://wendogo.com/work-permit-steps" className="fb-xfbml-parse-ignore" rel="noreferrer">
                                             <button className="ButtonLinkstyles__ButtonLink-sc-1s2ygn0-0 iPwlpd">
                                               {facebook}
-                                              <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh"> 
+                                              <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh kmzeo"> 
                                               Facebook
                                               </div>
                                             </button>
@@ -331,7 +331,7 @@ function WorkPermitStep(){
                                             <svg height={24} viewBox="0 0 24 24" width={24} xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="ButtonLinkstyles__Picto-sc-1s2ygn0-1 hkJOZg">
                                               <path d="M14.85,11.92a4.06,4.06,0,0,0-1-1.75,4,4,0,0,0-5.66,0l-5,5a4,4,0,0,0,5.66,5.66L12.67,17H13a5.86,5.86,0,0,0,1.19-.12L9.53,21.54a5,5,0,0,1-7.07-7.07l5-5a5,5,0,0,1,7.07,0,4.93,4.93,0,0,1,1.11,1.67Zm-5.7.15a4.1,4.1,0,0,0,1,1.76,4,4,0,0,0,5.66,0l5-5a4,4,0,1,0-5.66-5.66L11.33,7H11a5.86,5.86,0,0,0-1.19.12l4.66-4.66a5,5,0,0,1,7.07,7.07l-5,5a5,5,0,0,1-7.07,0,4.74,4.74,0,0,1-1.11-1.68Z" />
                                             </svg>
-                                            <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh"> Lien </div>
+                                            <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh kmzeo"> Lien </div>
                                           </button>
                                           <div role="tooltip" className="Tooltipstyles__Tooltip-sc-ynyslw-1 hrixxN"> 
                                           

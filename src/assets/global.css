@@ -18217,8 +18217,12 @@ input[type=number] {
 	}
   }
   @media screen and (max-width: 479px) {
-	.kuldYh{
+	.kmzeo{
 		display: none;
+	}
+	.klmqdo{
+		overflow-y: scroll;
+		overflow-x: hidden;
 	}
 	.hkJOZg{
 		width: 24px !important;

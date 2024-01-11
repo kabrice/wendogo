@@ -96,7 +96,7 @@ function CGU(){
                         <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> Les principaux services proposés aux UTILISATEURS sont&nbsp;: - Des informations relatives aux demandes de visa, - La collecte des données nécessaires à l’analyse pour l'obtention de visa, - L’analyse de demandes de visa, - Des simulateurs de demande de visa, comportant des Taux d'acception Effectifs Globaux (TAEG). </p>
                       </div>
                       <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
-                        <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> Le logement de simulation de visa permettent </p>
+                        <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> Le logiciel de simulation de visa permettent </p>
                       </div>
                       <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
                         <ul className="TextList-sc-100qkuv-0 enKgYQ">
