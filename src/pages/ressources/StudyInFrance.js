@@ -134,14 +134,14 @@ function StudyInFrance(){
                                       <div role="tooltip" className="Tooltipstyles__Tooltip-sc-ynyslw-1 hrixxN"> Partager sur WhatsApp </div>
                                     </div>
                                     <div className="Tooltipstyles__TooltipContainer-sc-ynyslw-0 iMhBNO SharingLinksstyles__Tooltip-sc-13jf7g7-4 eUmNLd">
-                                    <Link target="_blank" to="https://www.facebook.com/sharer/sharer.php?u=https://wendogo.com/study-in-france" className="fb-xfbml-parse-ignore" rel="noreferrer">
+                                    <div onClick={() => helper.openFacebookOnPopup('study-in-france')} className="fb-xfbml-parse-ignore" rel="noreferrer">
                                       <button className="ButtonLinkstyles__ButtonLink-sc-1s2ygn0-0 iPwlpd">
                                         {facebook}
                                         <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh kmzeo"> 
                                         Facebook
                                          </div>
                                       </button>
-                                      </Link>
+                                      </div>
                                       <div role="tooltip" className="Tooltipstyles__Tooltip-sc-ynyslw-1 hrixxN"> Partager sur Facebook </div>
                                     </div>
                                     <div className="Tooltipstyles__TooltipContainer-sc-ynyslw-0 iMhBNO SharingLinksstyles__Tooltip-sc-13jf7g7-4 eUmNLd" onClick={() => copyTextToClipboard(1)}>
@@ -287,14 +287,14 @@ function StudyInFrance(){
                                           <div role="tooltip" className="Tooltipstyles__Tooltip-sc-ynyslw-1 hrixxN"> Partager par WhatsApp </div>
                                         </div>
                                         <div className="Tooltipstyles__TooltipContainer-sc-ynyslw-0 iMhBNO SharingLinksstyles__Tooltip-sc-13jf7g7-4 eUmNLd">
-                                        <Link target="_blank" to="https://www.facebook.com/sharer/sharer.php?u=https://wendogo.com/study-in-france" className="fb-xfbml-parse-ignore" rel="noreferrer">
+                                        <div onClick={() => helper.openFacebookOnPopup('study-in-france')} className="fb-xfbml-parse-ignore" rel="noreferrer">
                                           <button className="ButtonLinkstyles__ButtonLink-sc-1s2ygn0-0 iPwlpd">
                                             {facebook}
                                             <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh kmzeo"> 
                                             Facebook
                                             </div>
                                           </button>
-                                          </Link>
+                                          </div>
                                           <div role="tooltip" className="Tooltipstyles__Tooltip-sc-ynyslw-1 hrixxN"> Partager sur Facebook </div>
                                         </div>
                                         <div className="Tooltipstyles__TooltipContainer-sc-ynyslw-0 iMhBNO SharingLinksstyles__Tooltip-sc-13jf7g7-4 eUmNLd" onClick={() => copyTextToClipboard(2)}>

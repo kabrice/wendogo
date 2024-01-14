@@ -130,7 +130,11 @@ const helper = {
         f = f.replace(/dd/, z(d));
         f = f.replace(/d/, d);
         return f;
-      }
+      },
+      openFacebookOnPopup: function(relativPath){
+        window.open('https://www.facebook.com/sharer/sharer.php?u=https://wendogo.com/'+relativPath, 'facebook-share-dialog', 'width=650,height=650')
+
+      },
 }
 
 export default helper;

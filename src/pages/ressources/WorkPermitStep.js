@@ -42,334 +42,333 @@ function WorkPermitStep(){
         console.log('error copyTextToClipboard', error)
       }
     }  
-
     useEffect(() => {
       helper.loadFacebookSDK() }, [])   
-    return <div className="klmqdo">
-            <Helmet>
-              <meta property="og:url"           content="https://wendogo.com/work-permit-steps" />
-              <meta property="og:type"          content="article" />
-              <meta property="og:title"         content="Guide complet pour obtenir votre permis de travail au Canada" />
-              <meta property="og:description"   content="Découvrez comment obtenir votre permis de travail pour travailler au Canada. Démarches, astuces et conseils pratiques pour réussir votre projet d'immigration." />
-              <meta property="og:image"         content={WorkPermitStep} /> 
-              <title>Guide complet pour obtenir votre permis de travail au Canada</title>
-              <meta name="description"          content="Découvrez comment obtenir votre permis de travail pour travailler au Canada. Démarches, astuces et conseils pratiques pour réussir votre projet d'immigration."/>
-            </Helmet>       
-            <HeaderMenuBar/>    
-            <div className='container-24' style={{maxWidth: 'inherit'}}>
-              <div style={{ outline: "none" }} tabIndex={-1} id="gatsby-focus-wrapper">
-                <div>
+      return <div className="klmqdo">
+              <Helmet>
+                <meta property="og:url"           content="https://wendogo.com/work-permit-steps" />
+                <meta property="og:type"          content="article" />
+                <meta property="og:title"         content="Guide complet pour obtenir votre permis de travail au Canada" />
+                <meta property="og:description"   content="Découvrez comment obtenir votre permis de travail pour travailler au Canada. Démarches, astuces et conseils pratiques pour réussir votre projet d'immigration." />
+                <meta property="og:image"         content={WorkPermitStep} /> 
+                <title>Guide complet pour obtenir votre permis de travail au Canada</title>
+                <meta name="description"          content="Découvrez comment obtenir votre permis de travail pour travailler au Canada. Démarches, astuces et conseils pratiques pour réussir votre projet d'immigration."/>
+              </Helmet>       
+              <HeaderMenuBar/>    
+              <div className='container-24' style={{maxWidth: 'inherit'}}>
+                <div style={{ outline: "none" }} tabIndex={-1} id="gatsby-focus-wrapper">
+                  <div>
 
-                  <div className="styles__BreadcrumbContainer-sc-kz84w6-2 djdJxZ">
-                    <div className="styles__Wrapper-sc-gk465i-0 fiWVzr styles__Wrapper-sc-kz84w6-1 jmYZrD">
-                      <div className="styles__Breadcrumb-sc-kz84w6-3 iMqwwN">
-                        <div>
-                          <ol aria-label="Breadcrumb" className="styles__Breadcrumb-sc-k0ssrw-0 hoUFOh" style={{listStyle : 'none'}}>
-                            <li className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__Item-sc-k0ssrw-2 iNCHhD">
-                              <a href="/" className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__ItemLink-sc-k0ssrw-3 fleJZl"> Accueil </a>
-                            </li>
-                            <li className="styles__PictoContainer-sc-k0ssrw-5 ffQWyI">
-                              <svg height={16} viewBox="0 0 16 16" width={16} xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="styles__Picto-sc-k0ssrw-6 hrBFSt">
-                                <path d="M6.3,2.5,5,3.8,9.28,8,5,12.2l1.3,1.3L11.88,8Z" />
-                              </svg>
-                            </li>
-                            <li className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__Item-sc-k0ssrw-2 iNCHhD">
-                              <div aria-current="Permis de travail" className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__Title-sc-k0ssrw-4 gwJOSc">Permis de travail <span>🇨🇦</span></div>
-                            </li>
-                          </ol>
-                          <ol aria-label="none" className="styles__Breadcrumb-sc-k0ssrw-0 styles__HiddenBreadcrumb-sc-k0ssrw-1 hoUFOh jKdNmR">
-                            <li className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__Item-sc-k0ssrw-2 iNCHhD">
-                              <div className="styles__BaseTypo-sc-198xhmk-0 djwbck"> Accueil </div>
-                            </li>
-                            <li className="styles__PictoContainer-sc-k0ssrw-5 ffQWyI">
-                              <svg height={16} viewBox="0 0 16 16" width={16} xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="styles__Picto-sc-k0ssrw-6 hrBFSt">
-                                <path d="M6.3,2.5,5,3.8,9.28,8,5,12.2l1.3,1.3L11.88,8Z" />
-                              </svg>
-                            </li>
-                            <li className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__Item-sc-k0ssrw-2 iNCHhD">
-                              <div className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__Title-sc-k0ssrw-4 gwJOSc">Permis de travail <span>🇨🇦</span></div>
-                            </li>
-                          </ol>
+                    <div className="styles__BreadcrumbContainer-sc-kz84w6-2 djdJxZ">
+                      <div className="styles__Wrapper-sc-gk465i-0 fiWVzr styles__Wrapper-sc-kz84w6-1 jmYZrD">
+                        <div className="styles__Breadcrumb-sc-kz84w6-3 iMqwwN">
+                          <div>
+                            <ol aria-label="Breadcrumb" className="styles__Breadcrumb-sc-k0ssrw-0 hoUFOh" style={{listStyle : 'none'}}>
+                              <li className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__Item-sc-k0ssrw-2 iNCHhD">
+                                <a href="/" className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__ItemLink-sc-k0ssrw-3 fleJZl"> Accueil </a>
+                              </li>
+                              <li className="styles__PictoContainer-sc-k0ssrw-5 ffQWyI">
+                                <svg height={16} viewBox="0 0 16 16" width={16} xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="styles__Picto-sc-k0ssrw-6 hrBFSt">
+                                  <path d="M6.3,2.5,5,3.8,9.28,8,5,12.2l1.3,1.3L11.88,8Z" />
+                                </svg>
+                              </li>
+                              <li className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__Item-sc-k0ssrw-2 iNCHhD">
+                                <div aria-current="Permis de travail" className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__Title-sc-k0ssrw-4 gwJOSc">Permis de travail <span>🇨🇦</span></div>
+                              </li>
+                            </ol>
+                            <ol aria-label="none" className="styles__Breadcrumb-sc-k0ssrw-0 styles__HiddenBreadcrumb-sc-k0ssrw-1 hoUFOh jKdNmR">
+                              <li className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__Item-sc-k0ssrw-2 iNCHhD">
+                                <div className="styles__BaseTypo-sc-198xhmk-0 djwbck"> Accueil </div>
+                              </li>
+                              <li className="styles__PictoContainer-sc-k0ssrw-5 ffQWyI">
+                                <svg height={16} viewBox="0 0 16 16" width={16} xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="styles__Picto-sc-k0ssrw-6 hrBFSt">
+                                  <path d="M6.3,2.5,5,3.8,9.28,8,5,12.2l1.3,1.3L11.88,8Z" />
+                                </svg>
+                              </li>
+                              <li className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__Item-sc-k0ssrw-2 iNCHhD">
+                                <div className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__Title-sc-k0ssrw-4 gwJOSc">Permis de travail <span>🇨🇦</span></div>
+                              </li>
+                            </ol>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <main className="styles__Main-sc-kz84w6-0 gEFmYD">
-                    <div className="Defautstyles__Page-sc-1tnudyr-2 kiMqjH">
-                      <div className="Defautstyles__Main-sc-1tnudyr-1 fqCHqA">
-                        <div className="Defautstyles__Header-sc-1tnudyr-0 hAkdZW">
-                          <div className="styles__Hero-sc-s3dlnp-0 gMynSv">
-                            <div className="styles__Title-sc-s3dlnp-2 iUyMl">
-                              <h1 size="large" className="styles__HeadingBridge-sc-6txi54-0 hzNvHf"> Permis de travail au Canada : Les étapes importantes </h1>
-                            </div>
-                            <div className="styles__Wrapper-sc-s3dlnp-3 KKpTb">
-                              <div className="BlocAuthorStartstyles__BlocAuthorStart-sc-176st2l-0 oTIGB">
-                                <div className="AuthorInfosstyles__AuthorInfos-sc-1v2nwgf-0 kVLKSc">
-                                  <div className="Avatarstyles__AvatarContainer-sc-168giry-2 glDTmS">
-                                    <div className="Avatarstyles__Avatar-sc-168giry-0 eYtuGP AuthorInfosstyles__Avatar-sc-1v2nwgf-1 etCUXw">
-                                      <picture><img alt="avatar" height={46} loading="lazy" src={BorisHead} width={46} className="Avatarstyles__Image-sc-168giry-1 gNAMaq" />
-                                      </picture>
-                                    </div>
-                                  </div>
-                                  <div className="AuthorInfosstyles__AuthorInformation-sc-1v2nwgf-2 gPPLmh">
-                                    <div className="AuthorInfosstyles__Title-sc-1v2nwgf-3 hpWifG"> Boris Guiffot </div>
-                                    <div className="AuthorInfosstyles__SubTitle-sc-1v2nwgf-4 KkeWN"> Mis à jour le 27 nov. 2023 </div>
-                                  </div>
-                                </div>
-                                <div className="SharingLinksstyles__SharingLinks-sc-13jf7g7-0 cuaEfY">
-                                  <div className="SharingLinksstyles__SharingLinksDesktop-sc-13jf7g7-2 dAIRMX">
-                                    <div className="SharingLinksstyles__Title-sc-13jf7g7-3 eZpqGZ"> Partager : </div>
-                                    <div className="Tooltipstyles__TooltipContainer-sc-ynyslw-0 iMhBNO SharingLinksstyles__Tooltip-sc-13jf7g7-4 eUmNLd">
-                                    <Link target="_blank" to="https://api.whatsapp.com/send/?text=https://wendogo.com/work-permit-steps" >
-                                        <button className="ButtonLinkstyles__ButtonLink-sc-1s2ygn0-0 iPwlpd">
-                                          {whatsapp}
-                                          <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh kmzeo"> 
-                                            WhatsApp 
-                                          </div>
-                                        </button>
-                                      </Link>
-                                      <div role="tooltip" className="Tooltipstyles__Tooltip-sc-ynyslw-1 hrixxN"> Partager sur WhatsApp </div>
-                                    </div>
-                                    <div className="Tooltipstyles__TooltipContainer-sc-ynyslw-0 iMhBNO SharingLinksstyles__Tooltip-sc-13jf7g7-4 eUmNLd">
-                                      <Link target="_blank" to="https://www.facebook.com/sharer/sharer.php?u=https://wendogo.com/work-permit-steps" className="fb-xfbml-parse-ignore" rel="noreferrer">
-                                      <button className="ButtonLinkstyles__ButtonLink-sc-1s2ygn0-0 iPwlpd">
-                                        {facebook}
-                                        <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh kmzeo"> 
-                                        Facebook
-                                         </div>
-                                      </button>
-                                      </Link>
-                                      <div role="tooltip" className="Tooltipstyles__Tooltip-sc-ynyslw-1 hrixxN"> Partager sur Facebook </div>
-                                    </div>
-                                    <div className="Tooltipstyles__TooltipContainer-sc-ynyslw-0 iMhBNO SharingLinksstyles__Tooltip-sc-13jf7g7-4 eUmNLd" onClick={() => copyTextToClipboard(1)}>
-                                      <button className="ButtonLinkstyles__ButtonLink-sc-1s2ygn0-0 iPwlpd">
-                                        <svg height={24} viewBox="0 0 24 24" width={24} xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="ButtonLinkstyles__Picto-sc-1s2ygn0-1 hkJOZg">
-                                          <path d="M14.85,11.92a4.06,4.06,0,0,0-1-1.75,4,4,0,0,0-5.66,0l-5,5a4,4,0,0,0,5.66,5.66L12.67,17H13a5.86,5.86,0,0,0,1.19-.12L9.53,21.54a5,5,0,0,1-7.07-7.07l5-5a5,5,0,0,1,7.07,0,4.93,4.93,0,0,1,1.11,1.67Zm-5.7.15a4.1,4.1,0,0,0,1,1.76,4,4,0,0,0,5.66,0l5-5a4,4,0,1,0-5.66-5.66L11.33,7H11a5.86,5.86,0,0,0-1.19.12l4.66-4.66a5,5,0,0,1,7.07,7.07l-5,5a5,5,0,0,1-7.07,0,4.74,4.74,0,0,1-1.11-1.68Z" />
-                                        </svg>
-                                        <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh kmzeo"> Lien </div>
-                                      </button>
-                                      <div role="tooltip" className="Tooltipstyles__Tooltip-sc-ynyslw-1 hrixxN"> 
-                                      
-                                      {isCopied1 ? 'Lien copié' : 'Copier le lien'} </div>
-                                    </div>
-                                  </div>
-                                </div>
+                    <main className="styles__Main-sc-kz84w6-0 gEFmYD">
+                      <div className="Defautstyles__Page-sc-1tnudyr-2 kiMqjH">
+                        <div className="Defautstyles__Main-sc-1tnudyr-1 fqCHqA">
+                          <div className="Defautstyles__Header-sc-1tnudyr-0 hAkdZW">
+                            <div className="styles__Hero-sc-s3dlnp-0 gMynSv">
+                              <div className="styles__Title-sc-s3dlnp-2 iUyMl">
+                                <h1 size="large" className="styles__HeadingBridge-sc-6txi54-0 hzNvHf"> Permis de travail au Canada : Les étapes importantes </h1>
                               </div>
-                            </div>
-                            <picture>
-                              <img alt="Permis de travail : comment déterminer votre projet ?" loading="lazy" src={WorkPermit} className="styles__Image-sc-s3dlnp-1 oBito" />
-                            </picture>
-                          </div>
-                        </div>
-                        <div id="main">
-                          <div className="styles__Content-sc-1b5sr4l-4 euNroP">
-                            <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
-                              <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> 
-                                    Obtenir un permis de travail au Canada implique plusieurs étapes. Voici un guide détaillé pour vous aider dans ce processus :</p>
-                            </div>
-                            <div className="styles__Block-sc-1b5sr4l-5 styles__BlockHeading-sc-1b5sr4l-8 lhYawK lngqIb">
-                              <h2 id="quel-type-de-logement-acheter-maison-ou-appartementnbsp" size="large" format="default" className="styles__SubHeading-sc-xwwv8k-0 PVMuW"> 1 - Déterminer le type de permis de travail  </h2>
-                            </div>
-                            <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
-                              <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> Avant de commencer le processus, identifiez le type de permis de travail dont vous avez besoin. Il existe plusieurs catégories de permis de travail au Canada, notamment le permis de travail ouvert et le permis de travail fermé à un employeur.</p>
-                            </div>
-                            <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
-                              <ul className="TextList-sc-100qkuv-0 enKgYQ">
-                                <li>Un permis de travail fermé</li>
-                              </ul>
-                            </div>
-                            <div className="styles__Block-sc-1b5sr4l-5 lhYawK"><p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv">Un permis de travail fermé vous autorise à travailler pour UN ET UNIQUE EMPLOYEUR au Canada, clairement défini avant votre départ au Canada et inscrit sur votre permis de travail. C'est auprès de cet employeur que vous effectuerez les démarches qui vous permettront d'obtenir un permis de travail canadien. Une fois au Canada, 
-                                                                            vous ne pourrez travailler pour aucun autre employeur sans avoir au préalable modifié les conditions de votre permis de travail. </p></div>
-
-                            <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
-                              <ul className="TextList-sc-100qkuv-0 enKgYQ">
-                                <li>Un permis de travail ouvert</li>
-                              </ul>
-                            </div>
-                            <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
-                              <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv">Un permis de travail ouvert vous permet de travailler pour N'IMPORTE QUEL EMPLOYEUR au Canada. Vous pouvez trouver du travail avant de partir au Canada si vous le souhaitez ou attendre d'y être pour être plus proactif et pouvoir créer un réseau professionnel. Vous pouvez changer d'employeur, de domaine professionnel et de ville/province canadienne quand vous le souhaitez 
-                                                    (certains permis ouverts peuvent vous restreindre à travailler dans une province canadienne spécifique), sans avoir à en informer qui que ce soit ni à entreprendre aucune démarche. </p>
-                            </div>
-                            <div className="styles__Block-sc-1b5sr4l-5 styles__BlockHeading-sc-1b5sr4l-8 lhYawK lngqIb">
-                              <h2 id="quel-type-de-logement-acheter-maison-ou-appartementnbsp" size="large" format="default" className="styles__SubHeading-sc-xwwv8k-0 PVMuW"> 
-                                2 - Trouver un employeur au Canada </h2>
-                            </div>
-                            <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
-                              <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> 
-                                Pour obtenir un permis de travail spécifique à un employeur, vous devez d'abord trouver un employeur au Canada prêt à vous embaucher. Le processus peut varier en fonction de l'industrie et de la province.
-                              </p>
-                            </div>
-                            <div className="styles__Block-sc-1b5sr4l-5 styles__BlockHeading-sc-1b5sr4l-8 lhYawK lngqIb">
-                              <h2 id="quel-type-de-logement-acheter-maison-ou-appartementnbsp" size="large" format="default" className="styles__SubHeading-sc-xwwv8k-0 PVMuW"> 
-                                3 - L'employeur obtient une Étude d'impact sur le marché du travail (EIMT) 
-                                </h2>
-                            </div>
-                            <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
-                              <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> 
-                              L'employeur doit obtenir une Étude d'impact sur le marché du travail (EIMT) auprès d'Emploi et Développement social Canada (EDSC). Cela prouve que l'embauche d'un travailleur étranger n'aura pas d'effets négatifs sur le marché du travail canadien.
-                              </p>
-                            </div>
-                            <div className="styles__Block-sc-1b5sr4l-5 styles__BlockHeading-sc-1b5sr4l-8 lhYawK lngqIb">
-                              <h2 id="quel-type-de-logement-acheter-maison-ou-appartementnbsp" size="large" format="default" className="styles__SubHeading-sc-xwwv8k-0 PVMuW"> 
-                                4 - Lettre d'offre d'emploi 
-                                </h2>
-                            </div>
-                            <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
-                              <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> 
-                              Une fois l'EIMT approuvée, l'employeur doit vous fournir une lettre d'offre d'emploi. Cette lettre doit contenir des détails sur le poste, le salaire, les conditions de travail, etc
-                                                </p>
-                            </div>
-                            <div className="styles__Block-sc-1b5sr4l-5 styles__BlockHeading-sc-1b5sr4l-8 lhYawK lngqIb">
-                              <h2 id="quel-type-de-logement-acheter-maison-ou-appartementnbsp" size="large" format="default" className="styles__SubHeading-sc-xwwv8k-0 PVMuW"> 
-                                5 - Demande de permis de travail
-                                </h2>
-                            </div>
-                            <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
-                              <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> 
-                              Avec la lettre d'offre d'emploi, vous pouvez maintenant présenter une demande de permis de travail. Vous pouvez le faire en ligne sur le site Web d'Immigration, Réfugiés et Citoyenneté Canada (IRCC).
-                                                                  </p>
-                            </div>
-                            <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
-                              <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> 
-                              La demande de permis de travail coûte 155 CAD. Vous devez également fournir les documents suivants :</p>
-                            </div>
-                            <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
-                              <ul className="TextList-sc-100qkuv-0 enKgYQ">
-                                <li>Votre passeport valide</li>
-                                <li>Photos d'identité</li>
-                                <li>Votre formulaire d'offre d'emploi rempli par votre employeur</li>
-                                <li>Une preuve de votre qualification pour l'emploi proposé</li>
-                                <li>Une preuve de vos compétences linguistiques</li>
-                                <li>Une preuve de vos fonds suffisants pour subvenir à vos besoins pendant votre séjour au Canada</li>
-                              </ul>
-                            </div>
-                            <div className="styles__Block-sc-1b5sr4l-5 styles__BlockHeading-sc-1b5sr4l-8 lhYawK lngqIb">
-                              <h2 id="quel-type-de-logement-acheter-maison-ou-appartementnbsp" size="large" format="default" className="styles__SubHeading-sc-xwwv8k-0 PVMuW"> 
-                                6 - Examen médical et vérification des antécédents criminels
-                                </h2>
-                            </div>
-                            <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
-                              <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> 
-                              Certains demandeurs de permis de travail peuvent être tenus de passer un examen médical et de fournir une vérification des antécédents criminels. Assurez-vous de suivre toutes les exigences.
-                                                                                    </p>
-                            </div>
-                            <div className="styles__Block-sc-1b5sr4l-5 styles__BlockHeading-sc-1b5sr4l-8 lhYawK lngqIb">
-                              <h2 id="quel-type-de-logement-acheter-maison-ou-appartementnbsp" size="large" format="default" className="styles__SubHeading-sc-xwwv8k-0 PVMuW"> 
-                                7 - Réception du permis de travail
-                                </h2>
-                            </div>
-                            <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
-                              <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> 
-                              Le gouvernement canadien traitera votre demande de permis de travail. La durée du traitement varie en fonction du type de permis de travail que vous demandez.
-                              Si votre demande est approuvée, vous recevrez un permis de travail. Vous pouvez alors voyager au Canada et commencer à travailler.
-                                                                                                      </p>
-                            </div>
-                            <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
-                              <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> 
-                              Les délais de traitement des demandes de permis de travail varient en fonction du type de permis que vous demandez.</p>
-                            </div>
-                            <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
-                              <ul className="TextList-sc-100qkuv-0 enKgYQ">
-                                <li>Permis de travail ouvert : 3 mois</li>
-                                <li>Permis de travail lié à un employeur : 2 à 6 mois</li>
-                                <li>Permis de travail postdiplôme : 2 à 6 mois</li>
-                              </ul>
-                            </div>
-                            <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
-                              <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> 
-                              On vous souhaite bonne chance dans vos démarches pour obtenir un permis de travail au Canada !</p>
-                            </div>
-                          </div>
-                          <div className="styles__Footer-sc-ifmuzk-5 bBEUGj">
-                            <div className="styles__FooterComponent-sc-ifmuzk-6 cbSMYG">
-                              <div className="styles__FooterDivider-sc-ifmuzk-7 kJSAnk">
-                                <div className="styles__Divider-sc-31h1xy-0 fAxSIQ" />
-                              </div>
-                              <div className="styles__Author-sc-ifmuzk-3 SbOJi">
-                                <div className="BlocAuthorEndstyles__BlocAuthorEnd-sc-1vpghvk-0 GXTeA">
-                                  <div className="BlocAuthorEndstyles__Update-sc-1vpghvk-1 ducFrV"> Mis à jour le 27 nov. 2023 </div>
-                                  <div className="BlocAuthorEndstyles__Content-sc-1vpghvk-2 ejbaUW">
-                                    <div className="AuthorInfosstyles__AuthorInfos-sc-1v2nwgf-0 kVLKSc">
-                                      <div className="Avatarstyles__AvatarContainer-sc-168giry-2 glDTmS">
-                                        <div className="Avatarstyles__Avatar-sc-168giry-0 eYtuGP AuthorInfosstyles__Avatar-sc-1v2nwgf-1 etCUXw">
-                                          <picture> <img alt="avatar" height={46} loading="lazy" src={BorisHead} width={46} className="Avatarstyles__Image-sc-168giry-1 gNAMaq" />
-                                          </picture>
-                                        </div>
-                                      </div>
-                                      <div className="AuthorInfosstyles__AuthorInformation-sc-1v2nwgf-2 gPPLmh">
-                                        <div className="AuthorInfosstyles__Title-sc-1v2nwgf-3 hpWifG"> Boris Guiffot </div>
-                                        <div className="AuthorInfosstyles__SubTitle-sc-1v2nwgf-4 gdZZXb"> Expert en immigration </div>
+                              <div className="styles__Wrapper-sc-s3dlnp-3 KKpTb">
+                                <div className="BlocAuthorStartstyles__BlocAuthorStart-sc-176st2l-0 oTIGB">
+                                  <div className="AuthorInfosstyles__AuthorInfos-sc-1v2nwgf-0 kVLKSc">
+                                    <div className="Avatarstyles__AvatarContainer-sc-168giry-2 glDTmS">
+                                      <div className="Avatarstyles__Avatar-sc-168giry-0 eYtuGP AuthorInfosstyles__Avatar-sc-1v2nwgf-1 etCUXw">
+                                        <picture><img alt="avatar" height={46} loading="lazy" src={BorisHead} width={46} className="Avatarstyles__Image-sc-168giry-1 gNAMaq" />
+                                        </picture>
                                       </div>
                                     </div>
-                                    <div className="SharingLinksstyles__SharingLinks-sc-13jf7g7-0 cuaEfY">
-                                      <div className="SharingLinksstyles__SharingLinksDesktop-sc-13jf7g7-2 dAIRMX">
-                                        <div className="SharingLinksstyles__Title-sc-13jf7g7-3 eZpqGZ"> Partager : </div>
-                                        <div className="Tooltipstyles__TooltipContainer-sc-ynyslw-0 iMhBNO SharingLinksstyles__Tooltip-sc-13jf7g7-4 eUmNLd">
-                                          <Link target="_blank" to="https://api.whatsapp.com/send/?text=https://wendogo.com/work-permit-steps" >
-                                            <button className="ButtonLinkstyles__ButtonLink-sc-1s2ygn0-0 iPwlpd">
-                                              {whatsapp}
-                                              <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh kmzeo"> 
-                                                WhatsApp 
-                                              </div>
-                                            </button>
-                                          </Link> 
-                                          <div role="tooltip" className="Tooltipstyles__Tooltip-sc-ynyslw-1 hrixxN"> Partager par WhatsApp </div>
-                                        </div>
-                                        <div className="Tooltipstyles__TooltipContainer-sc-ynyslw-0 iMhBNO SharingLinksstyles__Tooltip-sc-13jf7g7-4 eUmNLd">
-                                          <Link target="_blank" to="https://www.facebook.com/sharer/sharer.php?u=https://wendogo.com/work-permit-steps" className="fb-xfbml-parse-ignore" rel="noreferrer">
-                                            <button className="ButtonLinkstyles__ButtonLink-sc-1s2ygn0-0 iPwlpd">
-                                              {facebook}
-                                              <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh kmzeo"> 
-                                              Facebook
-                                              </div>
-                                            </button>
-                                          </Link>
-                                          <div role="tooltip" className="Tooltipstyles__Tooltip-sc-ynyslw-1 hrixxN"> Partager sur Facebook </div>
-                                        </div>
-                                        <div className="Tooltipstyles__TooltipContainer-sc-ynyslw-0 iMhBNO SharingLinksstyles__Tooltip-sc-13jf7g7-4 eUmNLd" onClick={() => copyTextToClipboard(2)}>
+                                    <div className="AuthorInfosstyles__AuthorInformation-sc-1v2nwgf-2 gPPLmh">
+                                      <div className="AuthorInfosstyles__Title-sc-1v2nwgf-3 hpWifG"> Boris Guiffot </div>
+                                      <div className="AuthorInfosstyles__SubTitle-sc-1v2nwgf-4 KkeWN"> Mis à jour le 27 nov. 2023 </div>
+                                    </div>
+                                  </div>
+                                  <div className="SharingLinksstyles__SharingLinks-sc-13jf7g7-0 cuaEfY">
+                                    <div className="SharingLinksstyles__SharingLinksDesktop-sc-13jf7g7-2 dAIRMX">
+                                      <div className="SharingLinksstyles__Title-sc-13jf7g7-3 eZpqGZ"> Partager : </div>
+                                      <div className="Tooltipstyles__TooltipContainer-sc-ynyslw-0 iMhBNO SharingLinksstyles__Tooltip-sc-13jf7g7-4 eUmNLd">
+                                      <Link target="_blank" to="https://wa.me/send/?text=https://wendogo.com/work-permit-steps" >
                                           <button className="ButtonLinkstyles__ButtonLink-sc-1s2ygn0-0 iPwlpd">
-                                            <svg height={24} viewBox="0 0 24 24" width={24} xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="ButtonLinkstyles__Picto-sc-1s2ygn0-1 hkJOZg">
-                                              <path d="M14.85,11.92a4.06,4.06,0,0,0-1-1.75,4,4,0,0,0-5.66,0l-5,5a4,4,0,0,0,5.66,5.66L12.67,17H13a5.86,5.86,0,0,0,1.19-.12L9.53,21.54a5,5,0,0,1-7.07-7.07l5-5a5,5,0,0,1,7.07,0,4.93,4.93,0,0,1,1.11,1.67Zm-5.7.15a4.1,4.1,0,0,0,1,1.76,4,4,0,0,0,5.66,0l5-5a4,4,0,1,0-5.66-5.66L11.33,7H11a5.86,5.86,0,0,0-1.19.12l4.66-4.66a5,5,0,0,1,7.07,7.07l-5,5a5,5,0,0,1-7.07,0,4.74,4.74,0,0,1-1.11-1.68Z" />
-                                            </svg>
-                                            <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh kmzeo"> Lien </div>
+                                            {whatsapp}
+                                            <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh kmzeo"> 
+                                              WhatsApp 
+                                            </div>
                                           </button>
-                                          <div role="tooltip" className="Tooltipstyles__Tooltip-sc-ynyslw-1 hrixxN"> 
-                                          
-                                          {isCopied2 ? 'Lien copié' : 'Copier le lien'} </div>
-                                        </div>
+                                        </Link>
+                                        <div role="tooltip" className="Tooltipstyles__Tooltip-sc-ynyslw-1 hrixxN"> Partager sur WhatsApp </div>
+                                      </div>
+                                      <div className="Tooltipstyles__TooltipContainer-sc-ynyslw-0 iMhBNO SharingLinksstyles__Tooltip-sc-13jf7g7-4 eUmNLd">
+                                        <span onClick={() => helper.openFacebookOnPopup('work-permit-steps')} className="fb-xfbml-parse-ignore" rel="noreferrer">
+                                          <button className="ButtonLinkstyles__ButtonLink-sc-1s2ygn0-0 iPwlpd">
+                                            {facebook}
+                                            <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh kmzeo"> 
+                                            Facebook
+                                            </div>
+                                          </button>
+                                        </span>
+                                        <div role="tooltip" className="Tooltipstyles__Tooltip-sc-ynyslw-1 hrixxN"> Partager sur Facebook </div>
+                                      </div>
+                                      <div className="Tooltipstyles__TooltipContainer-sc-ynyslw-0 iMhBNO SharingLinksstyles__Tooltip-sc-13jf7g7-4 eUmNLd" onClick={() => copyTextToClipboard(1)}>
+                                        <button className="ButtonLinkstyles__ButtonLink-sc-1s2ygn0-0 iPwlpd">
+                                          <svg height={24} viewBox="0 0 24 24" width={24} xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="ButtonLinkstyles__Picto-sc-1s2ygn0-1 hkJOZg">
+                                            <path d="M14.85,11.92a4.06,4.06,0,0,0-1-1.75,4,4,0,0,0-5.66,0l-5,5a4,4,0,0,0,5.66,5.66L12.67,17H13a5.86,5.86,0,0,0,1.19-.12L9.53,21.54a5,5,0,0,1-7.07-7.07l5-5a5,5,0,0,1,7.07,0,4.93,4.93,0,0,1,1.11,1.67Zm-5.7.15a4.1,4.1,0,0,0,1,1.76,4,4,0,0,0,5.66,0l5-5a4,4,0,1,0-5.66-5.66L11.33,7H11a5.86,5.86,0,0,0-1.19.12l4.66-4.66a5,5,0,0,1,7.07,7.07l-5,5a5,5,0,0,1-7.07,0,4.74,4.74,0,0,1-1.11-1.68Z" />
+                                          </svg>
+                                          <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh kmzeo"> Lien </div>
+                                        </button>
+                                        <div role="tooltip" className="Tooltipstyles__Tooltip-sc-ynyslw-1 hrixxN"> 
+                                        
+                                        {isCopied1 ? 'Lien copié' : 'Copier le lien'} </div>
                                       </div>
                                     </div>
                                   </div>
-                                  <div className="BlocAuthorEndstyles__Text-sc-1vpghvk-3 dxlmwf"> Spécialisé dans les demandes de visa depuis quelques années, Boris Guiffot est aujourd'hui en charge d'une équipe d'experts en immigration. Il accompagne notamment les camerounais dans leur demande visa pour la France et le Canada. </div>
                                 </div>
+                              </div>
+                              <picture>
+                                <img alt="Permis de travail : comment déterminer votre projet ?" loading="lazy" src={WorkPermit} className="styles__Image-sc-s3dlnp-1 oBito" />
+                              </picture>
+                            </div>
+                          </div>
+                          <div id="main">
+                            <div className="styles__Content-sc-1b5sr4l-4 euNroP">
+                              <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
+                                <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> 
+                                      Obtenir un permis de travail au Canada implique plusieurs étapes. Voici un guide détaillé pour vous aider dans ce processus :</p>
+                              </div>
+                              <div className="styles__Block-sc-1b5sr4l-5 styles__BlockHeading-sc-1b5sr4l-8 lhYawK lngqIb">
+                                <h2 id="quel-type-de-logement-acheter-maison-ou-appartementnbsp" size="large" format="default" className="styles__SubHeading-sc-xwwv8k-0 PVMuW"> 1 - Déterminer le type de permis de travail  </h2>
+                              </div>
+                              <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
+                                <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> Avant de commencer le processus, identifiez le type de permis de travail dont vous avez besoin. Il existe plusieurs catégories de permis de travail au Canada, notamment le permis de travail ouvert et le permis de travail fermé à un employeur.</p>
+                              </div>
+                              <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
+                                <ul className="TextList-sc-100qkuv-0 enKgYQ">
+                                  <li>Un permis de travail fermé</li>
+                                </ul>
+                              </div>
+                              <div className="styles__Block-sc-1b5sr4l-5 lhYawK"><p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv">Un permis de travail fermé vous autorise à travailler pour UN ET UNIQUE EMPLOYEUR au Canada, clairement défini avant votre départ au Canada et inscrit sur votre permis de travail. C'est auprès de cet employeur que vous effectuerez les démarches qui vous permettront d'obtenir un permis de travail canadien. Une fois au Canada, 
+                                                                              vous ne pourrez travailler pour aucun autre employeur sans avoir au préalable modifié les conditions de votre permis de travail. </p></div>
+
+                              <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
+                                <ul className="TextList-sc-100qkuv-0 enKgYQ">
+                                  <li>Un permis de travail ouvert</li>
+                                </ul>
+                              </div>
+                              <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
+                                <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv">Un permis de travail ouvert vous permet de travailler pour N'IMPORTE QUEL EMPLOYEUR au Canada. Vous pouvez trouver du travail avant de partir au Canada si vous le souhaitez ou attendre d'y être pour être plus proactif et pouvoir créer un réseau professionnel. Vous pouvez changer d'employeur, de domaine professionnel et de ville/province canadienne quand vous le souhaitez 
+                                                      (certains permis ouverts peuvent vous restreindre à travailler dans une province canadienne spécifique), sans avoir à en informer qui que ce soit ni à entreprendre aucune démarche. </p>
+                              </div>
+                              <div className="styles__Block-sc-1b5sr4l-5 styles__BlockHeading-sc-1b5sr4l-8 lhYawK lngqIb">
+                                <h2 id="quel-type-de-logement-acheter-maison-ou-appartementnbsp" size="large" format="default" className="styles__SubHeading-sc-xwwv8k-0 PVMuW"> 
+                                  2 - Trouver un employeur au Canada </h2>
+                              </div>
+                              <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
+                                <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> 
+                                  Pour obtenir un permis de travail spécifique à un employeur, vous devez d'abord trouver un employeur au Canada prêt à vous embaucher. Le processus peut varier en fonction de l'industrie et de la province.
+                                </p>
+                              </div>
+                              <div className="styles__Block-sc-1b5sr4l-5 styles__BlockHeading-sc-1b5sr4l-8 lhYawK lngqIb">
+                                <h2 id="quel-type-de-logement-acheter-maison-ou-appartementnbsp" size="large" format="default" className="styles__SubHeading-sc-xwwv8k-0 PVMuW"> 
+                                  3 - L'employeur obtient une Étude d'impact sur le marché du travail (EIMT) 
+                                  </h2>
+                              </div>
+                              <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
+                                <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> 
+                                L'employeur doit obtenir une Étude d'impact sur le marché du travail (EIMT) auprès d'Emploi et Développement social Canada (EDSC). Cela prouve que l'embauche d'un travailleur étranger n'aura pas d'effets négatifs sur le marché du travail canadien.
+                                </p>
+                              </div>
+                              <div className="styles__Block-sc-1b5sr4l-5 styles__BlockHeading-sc-1b5sr4l-8 lhYawK lngqIb">
+                                <h2 id="quel-type-de-logement-acheter-maison-ou-appartementnbsp" size="large" format="default" className="styles__SubHeading-sc-xwwv8k-0 PVMuW"> 
+                                  4 - Lettre d'offre d'emploi 
+                                  </h2>
+                              </div>
+                              <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
+                                <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> 
+                                Une fois l'EIMT approuvée, l'employeur doit vous fournir une lettre d'offre d'emploi. Cette lettre doit contenir des détails sur le poste, le salaire, les conditions de travail, etc
+                                                  </p>
+                              </div>
+                              <div className="styles__Block-sc-1b5sr4l-5 styles__BlockHeading-sc-1b5sr4l-8 lhYawK lngqIb">
+                                <h2 id="quel-type-de-logement-acheter-maison-ou-appartementnbsp" size="large" format="default" className="styles__SubHeading-sc-xwwv8k-0 PVMuW"> 
+                                  5 - Demande de permis de travail
+                                  </h2>
+                              </div>
+                              <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
+                                <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> 
+                                Avec la lettre d'offre d'emploi, vous pouvez maintenant présenter une demande de permis de travail. Vous pouvez le faire en ligne sur le site Web d'Immigration, Réfugiés et Citoyenneté Canada (IRCC).
+                                                                    </p>
+                              </div>
+                              <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
+                                <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> 
+                                La demande de permis de travail coûte 155 CAD. Vous devez également fournir les documents suivants :</p>
+                              </div>
+                              <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
+                                <ul className="TextList-sc-100qkuv-0 enKgYQ">
+                                  <li>Votre passeport valide</li>
+                                  <li>Photos d'identité</li>
+                                  <li>Votre formulaire d'offre d'emploi rempli par votre employeur</li>
+                                  <li>Une preuve de votre qualification pour l'emploi proposé</li>
+                                  <li>Une preuve de vos compétences linguistiques</li>
+                                  <li>Une preuve de vos fonds suffisants pour subvenir à vos besoins pendant votre séjour au Canada</li>
+                                </ul>
+                              </div>
+                              <div className="styles__Block-sc-1b5sr4l-5 styles__BlockHeading-sc-1b5sr4l-8 lhYawK lngqIb">
+                                <h2 id="quel-type-de-logement-acheter-maison-ou-appartementnbsp" size="large" format="default" className="styles__SubHeading-sc-xwwv8k-0 PVMuW"> 
+                                  6 - Examen médical et vérification des antécédents criminels
+                                  </h2>
+                              </div>
+                              <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
+                                <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> 
+                                Certains demandeurs de permis de travail peuvent être tenus de passer un examen médical et de fournir une vérification des antécédents criminels. Assurez-vous de suivre toutes les exigences.
+                                                                                      </p>
+                              </div>
+                              <div className="styles__Block-sc-1b5sr4l-5 styles__BlockHeading-sc-1b5sr4l-8 lhYawK lngqIb">
+                                <h2 id="quel-type-de-logement-acheter-maison-ou-appartementnbsp" size="large" format="default" className="styles__SubHeading-sc-xwwv8k-0 PVMuW"> 
+                                  7 - Réception du permis de travail
+                                  </h2>
+                              </div>
+                              <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
+                                <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> 
+                                Le gouvernement canadien traitera votre demande de permis de travail. La durée du traitement varie en fonction du type de permis de travail que vous demandez.
+                                Si votre demande est approuvée, vous recevrez un permis de travail. Vous pouvez alors voyager au Canada et commencer à travailler.
+                                                                                                        </p>
+                              </div>
+                              <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
+                                <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> 
+                                Les délais de traitement des demandes de permis de travail varient en fonction du type de permis que vous demandez.</p>
+                              </div>
+                              <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
+                                <ul className="TextList-sc-100qkuv-0 enKgYQ">
+                                  <li>Permis de travail ouvert : 3 mois</li>
+                                  <li>Permis de travail lié à un employeur : 2 à 6 mois</li>
+                                  <li>Permis de travail postdiplôme : 2 à 6 mois</li>
+                                </ul>
+                              </div>
+                              <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
+                                <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> 
+                                On vous souhaite bonne chance dans vos démarches pour obtenir un permis de travail au Canada !</p>
                               </div>
                             </div>
-                            <div className="styles__FooterComponent-sc-ifmuzk-6 cbSMYG">
-                              <div className="styles__FooterDivider-sc-ifmuzk-7 kJSAnk">
-                                <div className="styles__Divider-sc-31h1xy-0 fAxSIQ" />
-                              </div>
-                              <div className="Snackbarstyles__Container-sc-1eftkyq-0 bCFlYr styles__StyledSnackbar-sc-reeitb-9 fEroGA" />
-                              <div className="styles__HeaderCommentContainer-sc-reeitb-1 bzqaJA">
-                                <div className="styles__HeaderCommentDescriptionContainer-sc-reeitb-2 evOnbn">
-                                  <h3 className="styles__Title-sc-reeitb-4 ckwYtV"> Des questions sur le sujet ? </h3>
-                                  <h3 className="styles__Description-sc-reeitb-5 eYrYZq"> Envoyez les nous et ça sera un plaisir d'y répondre à notre prochain webinaire. </h3>
+                            <div className="styles__Footer-sc-ifmuzk-5 bBEUGj">
+                              <div className="styles__FooterComponent-sc-ifmuzk-6 cbSMYG">
+                                <div className="styles__FooterDivider-sc-ifmuzk-7 kJSAnk">
+                                  <div className="styles__Divider-sc-31h1xy-0 fAxSIQ" />
                                 </div>
-                                <button className="Buttonstyles__Button-sc-vsowxm-1 cnoACk styles__StyledButton-sc-reeitb-3 bVQYWs">
-                                  <span className="Buttonstyles__Label-sc-vsowxm-2 kGIufm"> Envoyer ma question </span>
-                                </button>
+                                <div className="styles__Author-sc-ifmuzk-3 SbOJi">
+                                  <div className="BlocAuthorEndstyles__BlocAuthorEnd-sc-1vpghvk-0 GXTeA">
+                                    <div className="BlocAuthorEndstyles__Update-sc-1vpghvk-1 ducFrV"> Mis à jour le 27 nov. 2023 </div>
+                                    <div className="BlocAuthorEndstyles__Content-sc-1vpghvk-2 ejbaUW">
+                                      <div className="AuthorInfosstyles__AuthorInfos-sc-1v2nwgf-0 kVLKSc">
+                                        <div className="Avatarstyles__AvatarContainer-sc-168giry-2 glDTmS">
+                                          <div className="Avatarstyles__Avatar-sc-168giry-0 eYtuGP AuthorInfosstyles__Avatar-sc-1v2nwgf-1 etCUXw">
+                                            <picture> <img alt="avatar" height={46} loading="lazy" src={BorisHead} width={46} className="Avatarstyles__Image-sc-168giry-1 gNAMaq" />
+                                            </picture>
+                                          </div>
+                                        </div>
+                                        <div className="AuthorInfosstyles__AuthorInformation-sc-1v2nwgf-2 gPPLmh">
+                                          <div className="AuthorInfosstyles__Title-sc-1v2nwgf-3 hpWifG"> Boris Guiffot </div>
+                                          <div className="AuthorInfosstyles__SubTitle-sc-1v2nwgf-4 gdZZXb"> Expert en immigration </div>
+                                        </div>
+                                      </div>
+                                      <div className="SharingLinksstyles__SharingLinks-sc-13jf7g7-0 cuaEfY">
+                                        <div className="SharingLinksstyles__SharingLinksDesktop-sc-13jf7g7-2 dAIRMX">
+                                          <div className="SharingLinksstyles__Title-sc-13jf7g7-3 eZpqGZ"> Partager : </div>
+                                          <div className="Tooltipstyles__TooltipContainer-sc-ynyslw-0 iMhBNO SharingLinksstyles__Tooltip-sc-13jf7g7-4 eUmNLd">
+                                            <Link target="_blank" to="https://api.whatsapp.com/send/?text=https://wendogo.com/work-permit-steps" >
+                                              <button className="ButtonLinkstyles__ButtonLink-sc-1s2ygn0-0 iPwlpd">
+                                                {whatsapp}
+                                                <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh kmzeo"> 
+                                                  WhatsApp 
+                                                </div>
+                                              </button>
+                                            </Link> 
+                                            <div role="tooltip" className="Tooltipstyles__Tooltip-sc-ynyslw-1 hrixxN"> Partager par WhatsApp </div>
+                                          </div>
+                                          <div className="Tooltipstyles__TooltipContainer-sc-ynyslw-0 iMhBNO SharingLinksstyles__Tooltip-sc-13jf7g7-4 eUmNLd">
+                                            <div onClick={() => helper.openFacebookOnPopup('work-permit-steps')}  className="fb-xfbml-parse-ignore" rel="noreferrer">
+                                              <button className="ButtonLinkstyles__ButtonLink-sc-1s2ygn0-0 iPwlpd">
+                                                {facebook}
+                                                <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh kmzeo"> 
+                                                Facebook
+                                                </div>
+                                              </button>
+                                            </div>
+                                            <div role="tooltip" className="Tooltipstyles__Tooltip-sc-ynyslw-1 hrixxN"> Partager sur Facebook </div>
+                                          </div>
+                                          <div className="Tooltipstyles__TooltipContainer-sc-ynyslw-0 iMhBNO SharingLinksstyles__Tooltip-sc-13jf7g7-4 eUmNLd" onClick={() => copyTextToClipboard(2)}>
+                                            <button className="ButtonLinkstyles__ButtonLink-sc-1s2ygn0-0 iPwlpd">
+                                              <svg height={24} viewBox="0 0 24 24" width={24} xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="ButtonLinkstyles__Picto-sc-1s2ygn0-1 hkJOZg">
+                                                <path d="M14.85,11.92a4.06,4.06,0,0,0-1-1.75,4,4,0,0,0-5.66,0l-5,5a4,4,0,0,0,5.66,5.66L12.67,17H13a5.86,5.86,0,0,0,1.19-.12L9.53,21.54a5,5,0,0,1-7.07-7.07l5-5a5,5,0,0,1,7.07,0,4.93,4.93,0,0,1,1.11,1.67Zm-5.7.15a4.1,4.1,0,0,0,1,1.76,4,4,0,0,0,5.66,0l5-5a4,4,0,1,0-5.66-5.66L11.33,7H11a5.86,5.86,0,0,0-1.19.12l4.66-4.66a5,5,0,0,1,7.07,7.07l-5,5a5,5,0,0,1-7.07,0,4.74,4.74,0,0,1-1.11-1.68Z" />
+                                              </svg>
+                                              <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh kmzeo"> Lien </div>
+                                            </button>
+                                            <div role="tooltip" className="Tooltipstyles__Tooltip-sc-ynyslw-1 hrixxN"> 
+                                            
+                                            {isCopied2 ? 'Lien copié' : 'Copier le lien'} </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div className="BlocAuthorEndstyles__Text-sc-1vpghvk-3 dxlmwf"> Spécialisé dans les demandes de visa depuis quelques années, Boris Guiffot est aujourd'hui en charge d'une équipe d'experts en immigration. Il accompagne notamment les camerounais dans leur demande visa pour la France et le Canada. </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="styles__FooterComponent-sc-ifmuzk-6 cbSMYG">
+                                <div className="styles__FooterDivider-sc-ifmuzk-7 kJSAnk">
+                                  <div className="styles__Divider-sc-31h1xy-0 fAxSIQ" />
+                                </div>
+                                <div className="Snackbarstyles__Container-sc-1eftkyq-0 bCFlYr styles__StyledSnackbar-sc-reeitb-9 fEroGA" />
+                                <div className="styles__HeaderCommentContainer-sc-reeitb-1 bzqaJA">
+                                  <div className="styles__HeaderCommentDescriptionContainer-sc-reeitb-2 evOnbn">
+                                    <h3 className="styles__Title-sc-reeitb-4 ckwYtV"> Des questions sur le sujet ? </h3>
+                                    <h3 className="styles__Description-sc-reeitb-5 eYrYZq"> Envoyez les nous et ça sera un plaisir d'y répondre à notre prochain webinaire. </h3>
+                                  </div>
+                                  <button className="Buttonstyles__Button-sc-vsowxm-1 cnoACk styles__StyledButton-sc-reeitb-3 bVQYWs">
+                                    <span className="Buttonstyles__Label-sc-vsowxm-2 kGIufm"> Envoyer ma question </span>
+                                  </button>
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </main>
+                    </main>
+                  </div>
                 </div>
+                
               </div>
-              
+              <Footer/>                    
             </div>
-            <Footer/>                    
-          </div>
 
 }
 
