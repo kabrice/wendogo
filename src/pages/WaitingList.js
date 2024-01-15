@@ -109,7 +109,7 @@ function WaitingList() {
 
           <div id="w-node-_86446a7b-4a26-be4d-ff64-4aef4b8a7f77-59ce9515">
             <Birthday/>
-            <h2 className="h2" style={{'color': 'white'}}>Le simulateur Wendogo arrive sur vos écrans le 1er octobre</h2>
+            <h2 className="h2" style={{'color': 'white'}}>Le simulateur Wendogo arrive sur vos écrans le 27 Avril</h2>
             <p style={{'color': 'white'}} className="BlocOutils__Description-sc-10c9hjh-4 eQpKZn">En attendant, enregistrez-vous sur notre waitinglist et soyez les premiers à être 
                           notifiés de son lancement.</p>
               <a to='/waitinglist' className="ButtonNavbar__Button"  onClick={() => dispatch(open())}>
@@ -254,7 +254,7 @@ function WaitingList() {
         <h3 style={{color:'white', fontSize: '22px'}}>Les gagnants seront annoncés le </h3>
         <h2 className="nvidsoe">
           <p>
-            <span>Vendredi 04 Novembre 2023 à 17h</span>
+            <span>Samedi 27 Avril 2024 à 21h30</span>
             <span>, lors du webinar 👇 (il faut s'inscrire 😉)</span>
           </p>
         </h2>
@@ -268,7 +268,7 @@ function WaitingList() {
               <div className="de elHeadlineWrapper ui-droppable de-editable" id="tmp_subheadline-87108" data-de-type="headline" data-de-editing="false" data-title="sub-headline" data-ce="true" data-trigger="none" data-animate="fade" data-delay={500} data-gramm="false" style={{ marginTop: 15, outline: "none", cursor: "pointer" }} aria-disabled="false">
                 <h2 className="ne elHeadline hsSize2 lh3 elMargin0 elBGStyle0 hsTextShadow0 deCapitalize" data-bold="inherit" data-gramm="false"  spellCheck="false"> Participez En Ligne À Notre <b>Conférence de lancement de votre App</b>  <div>
                     <u>
-                      <b>Samedi 6 Octobre À 20h30 (Yaoundé)</b>
+                      <b>Samedi 27 avril À 20h30 (Yaoundé)</b>
                     </u> .
                   </div>
                 </h2>
@@ -295,7 +295,7 @@ function WaitingList() {
                   </div>
                   <div className="de elHeadlineWrapper ui-droppable de-editable" id="tmp_headline1-75536-155" data-de-type="headline" data-de-editing="false" data-title="headline" data-ce="true" data-trigger="none" data-animate="fade" data-delay={500} style={{ marginTop: 5, outline: "none", cursor: "pointer", fontFamily: "Abel, Helvetica, sans-serif !important" }} data-google-font="Abel" aria-disabled="false">
                     <h1 className="Card__Title-sc-1qqjegm-4 bqicpW">
-                      Mercredi 6 Septembre
+                      Mercredi 27 avril
                     </h1>
                   </div>
                   <div className="de elHeadlineWrapper ui-droppable de-editable" id="tmp_subheadline-28019-185" data-de-type="headline" data-de-editing="false" data-title="sub-headline" data-ce="true" data-trigger="none" data-animate="fade" data-delay={500} data-gramm="false" style={{ marginTop: 0, outline: "none", cursor: "pointer" }} aria-disabled="false">
@@ -373,7 +373,7 @@ function WaitingList() {
         </div>
       </div>
       <SubscriptionModal/> 
-      <FloatingWhatsApp phoneNumber="330755097584" accountName="Wendogo" avatar={SocialMediaLogo} statusMessage="Répond en général dans l'heure" 
+      <FloatingWhatsApp phoneNumber="330745493086" accountName="Wendogo" avatar={SocialMediaLogo} statusMessage="Répond en général dans l'heure" 
                         chatMessage={'Salut toi 🤝 \nSi tu as une question, suis ces étapes pour obtenir une assistance rapide :\n1. Présente toi\n2. Indique l\'objet de ton message \n3. Décris clairement ton problème 😉'}
                         placeholder={"Racontes nous ce qui te préoccupe"} chatboxHeight={500} CSSProperties={{color:'#001435'}}/>
     </div>

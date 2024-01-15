@@ -116,7 +116,7 @@ function StudyInFrance(){
                                   </div>
                                   <div className="AuthorInfosstyles__AuthorInformation-sc-1v2nwgf-2 gPPLmh">
                                     <div className="AuthorInfosstyles__Title-sc-1v2nwgf-3 hpWifG"> Edgar Kamdem </div>
-                                    <div className="AuthorInfosstyles__SubTitle-sc-1v2nwgf-4 KkeWN"> Mis à jour le 27 nov. 2023 </div>
+                                    <div className="AuthorInfosstyles__SubTitle-sc-1v2nwgf-4 KkeWN"> Mis à jour le 15 jan. 2024 </div>
                                   </div>
                                 </div>
                                 <div className="SharingLinksstyles__SharingLinks-sc-13jf7g7-0 cuaEfY">
@@ -258,7 +258,7 @@ function StudyInFrance(){
                               </div>
                               <div className="styles__Author-sc-ifmuzk-3 SbOJi">
                                 <div className="BlocAuthorEndstyles__BlocAuthorEnd-sc-1vpghvk-0 GXTeA">
-                                  <div className="BlocAuthorEndstyles__Update-sc-1vpghvk-1 ducFrV"> Mis à jour le 27 nov. 2023 </div>
+                                  <div className="BlocAuthorEndstyles__Update-sc-1vpghvk-1 ducFrV"> Mis à jour le 15 jan. 2024 </div>
                                   <div className="BlocAuthorEndstyles__Content-sc-1vpghvk-2 ejbaUW">
                                     <div className="AuthorInfosstyles__AuthorInfos-sc-1v2nwgf-0 kVLKSc">
                                       <div className="Avatarstyles__AvatarContainer-sc-168giry-2 glDTmS">

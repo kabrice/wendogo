@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCalendarCheck } from '@fortawesome/free-solid-svg-icons';
 import { FloatingWhatsApp } from 'react-floating-whatsapp'
 import SocialMediaLogo from '../assets/social_media_logo.png'
-import Reminder from '../assets/twenty-four.png'
+import Reminder from '../assets/twenty-seven.png'
 import Question from '../assets/question.png'
 import Computer from '../assets/laptop.png'
 import { useNavigate } from "react-router-dom"
@@ -48,7 +48,7 @@ const Congratulation = () => {
                 <div className="col-inner bgCover  noBorder borderSolid border3px cornersAll radius0 shadow0 P0-top P0-bottom P0H noTopMargin" style={{ padding: "0 10px" }}>
                     <div className="de elHeadlineWrapper ui-droppable de-editable" id="tmp_headline1-40033-131-170" data-de-type="headline" data-de-editing="false" data-title="headline" data-ce="true" data-trigger="none" data-animate="fade" data-delay={500} style={{ marginTop: 0, outline: "none", cursor: "pointer", fontFamily: "Montserrat, Helvetica, sans-serif !important" }} data-google-font="Montserrat" aria-disabled="false">
                     <div className="Card__Text-sc-1qqjegm-5 iOmyQf" style={{ textAlign: "center", fontSize: 18, color: "white", borderColor: "rgb(214, 187, 135)", wordBreak: "break-word", position: "relative", zIndex: 0 }} data-bold="inherit" data-gramm="false" spellCheck="false" data-mci-spellchecked="true"> 
-                    Félicitations ! Vous êtes enregistré à la waitinglist, et votre inscription à la conférence est confirmée <p> POUR CE <b>DIMANCHE 5 NOVEMBRE À 20H30</b> (HEURE DE PARIS). </p>
+                    Félicitations ! Vous êtes enregistré à la waitinglist, et votre inscription à la conférence est confirmée <p> POUR CE <b>SAMEDI 27 AVRIL À 20H30</b> (HEURE DE YAOUNDE). </p>
                     </div>
                     </div>
                 </div>
@@ -69,7 +69,7 @@ const Congratulation = () => {
                     <div className="de elHeadlineWrapper ui-droppable de-editable" id="tmp_headline1-40033-131-170-187" data-de-type="headline" data-de-editing="false" data-title="headline" data-ce="true" data-trigger="none" data-animate="fade" data-delay={500} style={{ marginTop: 0, outline: "none", cursor: "pointer", fontFamily: "Montserrat, Helvetica, sans-serif !important" }} data-google-font="Montserrat" aria-disabled="false">
                     <h1 className="ne elHeadline hsSize3 lh4 elMargin0 elBGStyle0 hsTextShadow0 mfs_16" style={{ textAlign: "center", fontSize: 18, color: "white", borderColor: "rgb(214, 187, 135)", wordBreak: "break-word", position: "relative", zIndex: 0 }} data-bold="inherit" data-gramm="false" spellCheck="false"> 
                     FÉLICITATIONS !&nbsp; <div> VOTRE INSCRIPTION EST CONFIRMÉE <div>
-                            <b>DIMANCHE 5 NOVEMBRE À 20H30</b>&nbsp;
+                            <b>SAMEDI 27 AVRIL À 20H30</b>&nbsp;
                         </div>
                         </div>
                     </h1>
@@ -128,7 +128,7 @@ const Congratulation = () => {
                                 <div className="ne elHeadline hsSize1 lh5 elMargin0 elBGStyle0 hsTextShadow0 padding15" data-bold="inherit" style={{ textAlign: "center", color: "#001435", fontSize: 20 }} data-gramm="false"> Ajoutez un rappel dans votre agenda. </div>
                                 </div>
                                 <div className="de elBTN elAlign_center elMargin0 ui-droppable de-editable" id="button-34906" data-de-type="button" data-de-editing="false" data-title="button" data-ce="false" data-trigger="none" data-animate="fade" data-delay={500} style={{ marginTop: 20, outline: "none", cursor: "pointer", fontFamily: '"Open Sans", Helvetica, sans-serif !important' }} aria-disabled="false" data-element-theme="customized" data-google-font="Open+Sans">
-                                <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&dates=20231105T193000Z%2F20231105T213000Z&details=D%C3%A9couvrez%20comment%20lancer%20votre%20business%20gr%C3%A2ce%20%C3%A0%20l%27intelligence%20artificielle.%0A%0A-%20Pourquoi%20l%E2%80%99intelligence%20artificielle%20peut%20aujourd%27hui%20permettre%20%C3%A0%20n%27importe%20qui%20de%20lancer%20un%20business%20%C3%A0%20succ%C3%A8s.%0A-%20Comment%20exploiter%20cette%20opportunit%C3%A9%20pour%20vous%20lancer%20en%20tant%20que%20freelance%2C%20coach%20ou%20cr%C3%A9er%20votre%20agence.%0A-%20Les%20outils%20d%E2%80%99IA%20%C3%A0%20conna%C3%AEtre%20imp%C3%A9rativement%20pour%20d%C3%A9cupler%20votre%20productivit%C3%A9.%0A%0ARendez-vous%20%C3%A0%2020h30%20sur%20ce%20lien%20%F0%9F%91%89%20https%3A%2F%2Fgo.mindeo.com%2Fconference-business-nov23-prelive&location=https%3A%2F%2Fgo.mindeo.com%2Fconference-business-nov23-prelive&text=Conf%C3%A9rence%20Business%3A%20Comment%20Lancer%20votre%20Business%20gr%C3%A2ce%20%C3%A0%20l%27intelligence%20artificielle" className="elButton elButtonSize1 elButtonColor1 elButtonPadding2 elBtnVP_10 elButtonCorner60 elButtonFluid elButtonTxtColor1 elBTN_b_none elButtonShadowFlatHighlight elBTNone elButtonBlock elBtnHP_15" style={{ color: "white", background: "#0154c0", fontSize: 16 }} rel="noopener noreferrer" target="_blank" id="undefined-610">
+                                <a href="https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=M2U3MzJkNGlvZTZvOTdjNmNmdTFza21pOXQgaGVsbG8ud2VuZG9nb0Bt&tmsrc=hello.wendogo%40gmail.com" className="elButton elButtonSize1 elButtonColor1 elButtonPadding2 elBtnVP_10 elButtonCorner60 elButtonFluid elButtonTxtColor1 elBTN_b_none elButtonShadowFlatHighlight elBTNone elButtonBlock elBtnHP_15" style={{ color: "white", background: "#0154c0", fontSize: 16 }} rel="noopener noreferrer" target="_blank" id="undefined-610">
                                 <span className="elButtonMain">
                                     <FontAwesomeIcon icon={faCalendarCheck} />
                                     {/* <i className="fa_prepended far fa-calendar-check" /> */}
@@ -305,7 +305,7 @@ const Congratulation = () => {
             </div>
         </div>
         </div>
-        <FloatingWhatsApp phoneNumber="330755097584" accountName="Wendogo" avatar={SocialMediaLogo} statusMessage="Répond en général dans l'heure" 
+        <FloatingWhatsApp phoneNumber="330745493086" accountName="Wendogo" avatar={SocialMediaLogo} statusMessage="Répond en général dans l'heure" 
                             chatMessage={'Salut toi 🤝 \nSi tu as une question, suis ces étapes pour obtenir une assistance rapide :\n1. Présente toi\n2. Indique l\'objet de ton message \n3. Décris clairement ton problème 😉'}
                             placeholder={"Racontes nous ce qui te préoccupe"} chatboxHeight={500} CSSProperties={{color:'#001435'}}/>
         </>

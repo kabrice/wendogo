@@ -36,7 +36,7 @@ function CGU(){
                   <div id="main">
                     <div className="styles__Content-sc-1b5sr4l-4 euNroP">
                       <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
-                        <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> Version-2023-001 </p>
+                        <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> Version-2024-001 </p>
                       </div>
                       <div className="styles__Block-sc-1b5sr4l-5 styles__BlockHeading-sc-1b5sr4l-8 lhYawK lngqIb">
                         <h2 id="preambule" size="large" className="styles__SubHeading-sc-xwwv8k-0 PVMuW" format="default"> Préambule </h2>
