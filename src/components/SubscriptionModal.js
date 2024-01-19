@@ -144,7 +144,7 @@ const SubscriptionModal = () => {
                     </div>
                     <div className="de elHeadlineWrapper ui-droppable de-editable" id="tmp_subheadline-22378" data-de-type="headline" data-de-editing="false" data-title="sub-headline" data-ce="true" data-trigger="none" data-animate="fade" data-delay={500} data-gramm="false" style={{ marginTop: 0, outline: "none", cursor: "pointer" }}>
                         <h2 className="ne elHeadline hsSize2 lh3 elMargin0 elBGStyle0 hsTextShadow0 mfs_20 denormalnone22" style={{ textAlign: "center", fontSize: 22, wordBreak: "break-word", position: "relative", zIndex: 0 }} data-bold="inherit" data-gramm="false" spellCheck="false">
-                        <b>Mercredi 6 Septembre à 20h30&nbsp;</b>
+                        <b>Samedi 27 Avril à 20h30&nbsp;</b>
                         <div>(Heure de Yaoundé)</div>
                         </h2>
                     </div>
@@ -157,14 +157,14 @@ const SubscriptionModal = () => {
                         <div className="ne elHeadline hsSize1 lh5 elMargin0 elBGStyle0 hsTextShadow0" data-bold="inherit" style={{ textAlign: "center", fontSize: 20 }} data-gramm="false"> Entrez votre prénom, nom et numéro whatsapp pour vous inscrire à la waitinglist. </div>
                     </div>
                     <div className="de elInputWrapper de-input-block elAlign_center elMargin0 ui-droppable de-editable" type="name" style={{ marginTop: 30, outline: "none", cursor: "pointer" }} data-element-theme="customized">
-                        <input type="name" placeholder="Votre Prénom" name="firstname" {...register("firstname", { required: true, minLength: 3, maxLength:46,  pattern: /^[a-zA-ZÀ-ÿ-]+(?:\s(?:d[eu']|l[ea']|van\sder\s|de\s)?[a-zA-ZÀ-ÿ-]+)*$/  })} 
+                        <input type="name" placeholder="Votre Prénom" name="firstname" {...register("firstname", { required: true, minLength: 3, maxLength:46,  pattern: /^[a-zA-ZÀ-ÿ-]+(?:\s(?:d[eu']|l[ea']|van\sder\s|de\s)?[a-zA-ZÀ-ÿ-]+)*\s*$/  })} 
                                 className="elInput elInput100 elAlign_left elInputMid elInputStyl0 elInputBG1 elInputI0 elInputIBlack elInputIRight cleanSqueeze required0 elInputBR0 garlic-auto-save" 
                                 data-type="extra" 
                                 style={{ fontSize: 22, borderColor: errors.firstname ? "red" : "#0154c0", borderWidth: 2 }} />
                         {errors.firstname && <p className='input-error'>Le prénom est requis et doit être valide</p>}
                     </div>
                     <div className="de elInputWrapper de-input-block elAlign_center elMargin0 ui-droppable de-editable" type="name" style={{ marginTop: 30, outline: "none", cursor: "pointer" }} data-element-theme="customized">
-                        <input type="name" placeholder="Votre Nom" name="lastname" {...register("lastname", { required: true, minLength: 3,  maxLength:46, pattern: /^[a-zA-ZÀ-ÿ-]+(?:\s(?:d[eu']|l[ea']|van\sder\s|de\s)?[a-zA-ZÀ-ÿ-]+)*$/ })} className="elInput elInput100 elAlign_left elInputMid elInputStyl0 elInputBG1 elInputI0 elInputIBlack elInputIRight cleanSqueeze required0 elInputBR0 garlic-auto-save" data-type="extra" 
+                        <input type="name" placeholder="Votre Nom" name="lastname" {...register("lastname", { required: true, minLength: 3,  maxLength:46, pattern: /^[a-zA-ZÀ-ÿ-]+(?:\s(?:d[eu']|l[ea']|van\sder\s|de\s)?[a-zA-ZÀ-ÿ-]+)*\s*$/ })} className="elInput elInput100 elAlign_left elInputMid elInputStyl0 elInputBG1 elInputI0 elInputIBlack elInputIRight cleanSqueeze required0 elInputBR0 garlic-auto-save" data-type="extra" 
                         style={{ fontSize: 22, borderColor: errors.lastname ? "red" : "#0154c0", borderWidth: 2 }} />
                         {errors.lastname && <p className='input-error'>Le nom est requis et doit être valide</p>}
                     </div>

@@ -51,7 +51,7 @@ function LegalNotice(){
               <meta property="og:type"          content="article" />
               <meta property="og:title"         content="Mentions légales - Wendogo" />
               <meta property="og:description"   content="Consultez ici les mentions légales de Wendogo." />
-              <meta property="og:image"         content={SocialMediaLogo} /> 
+              <meta property="og:image"         content={'https://wendogo.com'+SocialMediaLogo} /> 
               <title>Mentions légales - Wendogo</title>
               <meta name="description"          content="Consultez ici les mentions légales de Wendogo."/>
             </Helmet>

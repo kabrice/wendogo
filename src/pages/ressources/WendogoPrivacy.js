@@ -50,7 +50,7 @@ function WendogoPrivacy(){
               <meta property="og:type"          content="article" />
               <meta property="og:title"         content="Vos données - Wendogo" />
               <meta property="og:description"   content="Choisir Wendogo, c'est nous faire confiance pour un accompagnement optimal dans vos démarches visa, mais aussi pour sécuriser vos données." />
-              <meta property="og:image"         content={SocialMediaLogo} /> 
+              <meta property="og:image"         content={'https://wendogo.com'+SocialMediaLogo} /> 
               <title>Vos données - Wendogo</title>
               <meta name="description"          content="Choisir Wendogo, c'est nous faire confiance pour un accompagnement optimal dans vos démarches visa, mais aussi pour sécuriser vos données."/>
             </Helmet>          

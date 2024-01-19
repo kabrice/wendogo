@@ -560,7 +560,8 @@ const  CredentialEnd = () => {
                                             aria-label="" type="text"  data-ppui="true" onChange={e => setDescriptionValueCount(e.target.value.length)}/>
                                             {descriptionValueCount && <p>{descriptionValueCount} caractère{descriptionValueCount>1 && 's'}</p>}
                                             {errors.description && <p className='input-error'>La description de votre projet est requise et contenir et respecter la limite de 200 à 2500 caractères.</p>}
-                                            {descriptionValueCount <1 && <label htmlFor="paypalAccountData_description" id="paypalAccountData_description-label" className="pp-cons-7nxsij-label-text_field_label_sm" data-ppui="true"> Description du projet </label>}
+                                            {descriptionValueCount <1 && <label htmlFor="paypalAccountData_description" id="paypalAccountData_description-label" className="pp-cons-7nxsij-label-text_field_label_sm" data-ppui="true"> Description du projet de voyage*</label>}
+                                            {!descriptionValueCount && <i>(*) Cliquer dans la zone de texte pour plus de détails</i>}            
                                           </div>
                                         </div>
                                       </div>

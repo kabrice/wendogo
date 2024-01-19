@@ -18,7 +18,7 @@ function CGU(){
               <meta property="og:type"          content="article" />
               <meta property="og:title"         content="CGU / CGV - Wendogo" />
               <meta property="og:description"   content="Conditions Générales d'Utilisation (CGU) de Wendogo, agissant en qualité d'agence de visa." />
-              <meta property="og:image"         content={SocialMediaLogo} /> 
+              <meta property="og:image"         content={'https://wendogo.com'+SocialMediaLogo} /> 
               <title>CGU / CGV - Wendogo</title>
               <meta name="description"          content="Conditions Générales d'Utilisation (CGU) de Wendogo, agissant en qualité d'agence de visa."/>
             </Helmet>      

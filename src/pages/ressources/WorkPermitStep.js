@@ -50,7 +50,7 @@ function WorkPermitStep(){
                 <meta property="og:type"          content="article" />
                 <meta property="og:title"         content="Guide complet pour obtenir votre permis de travail au Canada" />
                 <meta property="og:description"   content="Découvrez comment obtenir votre permis de travail pour travailler au Canada. Démarches, astuces et conseils pratiques pour réussir votre projet d'immigration." />
-                <meta property="og:image"         content={WorkPermitStep} /> 
+                <meta property="og:image"         content={'https://wendogo.com'+WorkPermit} /> 
                 <title>Guide complet pour obtenir votre permis de travail au Canada</title>
                 <meta name="description"          content="Découvrez comment obtenir votre permis de travail pour travailler au Canada. Démarches, astuces et conseils pratiques pour réussir votre projet d'immigration."/>
               </Helmet>       

@@ -53,7 +53,7 @@ function WendogoMission(){
               <meta property="og:type"          content="article" />
               <meta property="og:title"         content="Notre mission - Vous accompagner de A(chat) à Z(en) - Wendogo" />
               <meta property="og:description"   content="Démarches administratives, rendez-vous à l'ambassade et chances de voyager forment un parcours du combattant. Wendogo vous accompagne jusqu’à l’aboutissement de votre projet." />
-              <meta property="og:image"         content={SocialMediaLogo} /> 
+              <meta property="og:image"         content={'https://wendogo.com'+SocialMediaLogo} /> 
               <title>Notre mission - Vous accompagner de A(chat) à Z(en) - Wendogo</title>
               <meta name="description"          content="Démarches administratives, rendez-vous à l'ambassade et chances de voyager forment un parcours du combattant. Wendogo vous accompagne jusqu’à l’aboutissement de votre projet."/>
             </Helmet>        

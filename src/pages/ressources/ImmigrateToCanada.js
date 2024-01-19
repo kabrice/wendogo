@@ -52,7 +52,7 @@ function ImmigrateToCanada(){
               <meta property="og:type"          content="article" />
               <meta property="og:title"         content="9 façons d'immigrer au Canada en 2024" />
               <meta property="og:description"   content="Immigrer au Canada peut s'avérer compliqué. On vous presente les différents modes d'immigration afin de mieux vous préparer." />
-              <meta property="og:image"         content={ImmigrateToCanadaImg} /> 
+              <meta property="og:image"         content={'https://wendogo.com'+ImmigrateToCanadaImg} /> 
               <title>9 façons d'immigrer au Canada en 2024</title>
               <meta name="description"          content="Immigrer au Canada peut s'avérer compliqué. On vous presente les différents modes d'immigration afin de mieux vous préparer."/>
             </Helmet>        

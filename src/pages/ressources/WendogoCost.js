@@ -51,7 +51,7 @@ function WendogoCost(){
               <meta property="og:type"          content="article" />
               <meta property="og:title"         content="Combien coûte Pretto ? - Wendogo" />
               <meta property="og:description"   content="Chez Wendogo, notre prix est fixe et  nous encaissons le paiement qu'au succès. En cas d'échec vous êtes totalement remboursé. Et avant cela, tout Wendogo est gratuit !" />
-              <meta property="og:image"         content={SocialMediaLogo} /> 
+              <meta property="og:image"         content={'https://wendogo.com'+SocialMediaLogo} /> 
               <title>Combien coûte Pretto ? - Wendogo</title>
               <meta name="description"          content="Chez Wendogo, notre prix est fixe et  nous encaissons le paiement qu'au succès. En cas d'échec vous êtes totalement remboursé. Et avant cela, tout Wendogo est gratuit !"/>
             </Helmet>         

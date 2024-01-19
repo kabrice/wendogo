@@ -53,7 +53,7 @@ function AboutUs(){
               <meta property="og:type"          content="article" />
               <meta property="og:title"         content="Qui sont vos conseillers ? - Wendogo" />
               <meta property="og:description"   content="Vous avez besoin de demander un visa mais vous hésitez à passer par une agence ? Wendogo vous donne les bonnes raisons de passer par l'un de ses conseillers." />
-              <meta property="og:image"         content={SocialMediaLogo} /> 
+              <meta property="og:image"         content={'https://wendogo.com'+SocialMediaLogo} /> 
               <title>Qui sont vos conseillers ? - Wendogo</title>
               <meta name="description"          content="Vous avez besoin de demander un visa mais vous hésitez à passer par une agence ? Wendogo vous donne les bonnes raisons de passer par l'un de ses conseillers."/>
             </Helmet>         
@@ -149,7 +149,7 @@ function AboutUs(){
                               <div>
                                 <div className="BlockquoteItem__EntryTitle-sc-1vut18p-3 dtrzsL"> Nos conseillers prennent la mesure de votre projet. </div>
                                 <div className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__Content-sc-1qjc0o4-1 cLBZMY BlockquoteItem__EntryText-sc-1vut18p-4 gtHqOe">
-                                  <p className="styles__Block-sc-1qjc0o4-0 styles__Paragraph-sc-1qjc0o4-2 ktDrhZ bbNzRf"> Véritables partenaires impliqués dans votre projet, ils savent combien ce visa pour vous, et vous accompagnent depuis l'initialisation de vos démarches jusqu’à l'obtention de votre visa.</p>
+                                  <p className="styles__Block-sc-1qjc0o4-0 styles__Paragraph-sc-1qjc0o4-2 ktDrhZ bbNzRf"> Véritables partenaires impliqués dans votre projet, ils savent combien ce visa compte pour vous, et vous accompagnent depuis l'initialisation de vos démarches jusqu’à l'obtention de votre visa.</p>
                                 </div>
                               </div>
                             </div>
@@ -173,7 +173,7 @@ function AboutUs(){
                                 </svg>
                               </div>
                               <div>
-                                <div className="BlockquoteItem__EntryTitle-sc-1vut18p-3 dtrzsL"> Nos courtiers sont vos copilotes. </div>
+                                <div className="BlockquoteItem__EntryTitle-sc-1vut18p-3 dtrzsL"> Nos conseillers sont vos copilotes. </div>
                                 <div className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__Content-sc-1qjc0o4-1 cLBZMY BlockquoteItem__EntryText-sc-1vut18p-4 gtHqOe">
                                   <p className="styles__Block-sc-1qjc0o4-0 styles__Paragraph-sc-1qjc0o4-2 ktDrhZ bbNzRf"> Un projet de demande de visa étant aussi excitant que stressant, nous mettons un point d’honneur à l’accompagnement.  Transparent et à l’écoute, votre Expert immigration veille à vous impliquer dans chacune des étapes du dossier. Il vous épaule tel un copilote, dans votre prise de décision.</p>
                                 </div>

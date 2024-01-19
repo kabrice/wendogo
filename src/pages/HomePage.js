@@ -10,7 +10,7 @@ import WorldNoBorders from '../assets/AdobeStock_559662042_Preview.jpeg'
 import BlockCourtier1 from '../assets/group-portrait-five-african-business-colleagues-standing-row-office_484651-18709.avif'
 import BlockCourtier2 from '../assets/240_F_271683964_RV5TD7e4GN67UBFhvBvtltNO4hJ5aTQs.jpg'
 import BlockCourtier3 from '../assets/beautiful-woman-standing-front-colleagues-group-african-american-business-people-working-office-together_146671-45002.avif'
-import SocialMediaLogo from '../assets/wendogo_jeu_concours.png'
+import SocialMediaLogo from '../assets/social_media_logo.png'
 // Import svg
 import {ReactComponent as WendogoLogo} from '../assets/wendogo_logo.svg'
 import  {ReactComponent as DropDownIcon} from '../assets/dropdown_icon.svg'
@@ -277,7 +277,7 @@ function HomePage(){
               <meta property="og:type"          content="website" />
               <meta property="og:title"         content="Wendogo" />
               <meta property="og:description"   content="Expert en ligne pour vos demandes de visa" />
-              <meta property="og:image"         content={SocialMediaLogo} /> 
+              <meta property="og:image"         content={'https://wendogo.com'+SocialMediaLogo} /> 
               <title>Wendogo</title>
               <meta name="description"          content="Expert en ligne pour vos demandes de visa"/>
             </Helmet>

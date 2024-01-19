@@ -50,7 +50,7 @@ function ScholarshipProgramCA(){
               <meta property="og:type"          content="article" />
               <meta property="og:title"         content="Programmes de Bourses d'Études au Canada pour les Étudiants Étrangers" />
               <meta property="og:description"   content="Comment financer ses études au Canada lorsqu’on envisage de suivre des cours dans une université à Toronto ou dans un collège québécois ? Découvrez les possibilités et les conditions pour décrocher une bourse, une aide financière et les bons plans quand on part étudier au Canada." />
-              <meta property="og:image"         content={ScholarshipProgramCAImg} /> 
+              <meta property="og:image"         content={'https://wendogo.com'+ScholarshipProgramCAImg} /> 
               <title>Programmes de Bourses d'Études au Canada pour les Étudiants Étrangers</title>
               <meta name="description"          content="Comment financer ses études au Canada lorsqu’on envisage de suivre des cours dans une université à Toronto ou dans un collège québécois ? Découvrez les possibilités et les conditions pour décrocher une bourse, une aide financière et les bons plans quand on part étudier au Canada."/>
             </Helmet>        

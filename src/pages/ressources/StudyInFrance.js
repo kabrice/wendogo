@@ -50,7 +50,7 @@ function StudyInFrance(){
               <meta property="og:type"          content="article" />
               <meta property="og:title"         content="Comment postuler pour étudier dans une université en France" />
               <meta property="og:description"   content="Pour être admis dans une université en France, vous devez remplir plusieurs conditions. Dans cet article, nous allons voir les étapes à franchir pour être admis dans une université publique ou privée en France en tant qu’étranger en 2024." />
-              <meta property="og:image"         content={StudyInFranceImg} /> 
+              <meta property="og:image"         content={'https://wendogo.com'+StudyInFranceImg} /> 
               <title>Comment postuler pour étudier dans une université en France</title>
               <meta name="description"          content="Pour être admis dans une université en France, vous devez remplir plusieurs conditions. Dans cet article, nous allons voir les étapes à franchir pour être admis dans une université publique ou privée en France en tant qu’étranger en 2024."/>
             </Helmet>        

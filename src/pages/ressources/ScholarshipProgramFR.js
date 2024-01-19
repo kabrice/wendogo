@@ -50,7 +50,7 @@ function ScholarshipProgramFR(){
               <meta property="og:type"          content="article" />
               <meta property="og:title"         content="Programmes de Bourses d'Études en France pour les Étudiants Étrangers" />
               <meta property="og:description"   content="Comment financer ses études en France lorsqu’on envisage de suivre des cours dans une université à Paris ou Montpellier ? Découvrez les possibilités et les conditions pour décrocher une bourse, une aide financière et les bons plans quand on part étudier en France." />
-              <meta property="og:image"         content={ScholarshipProgramFRImg} /> 
+              <meta property="og:image"         content={'https://wendogo.com'+ScholarshipProgramFRImg} /> 
               <title>Programmes de Bourses d'Études en France pour les Étudiants Étrangers</title>
               <meta name="description"          content="Comment financer ses études en France lorsqu’on envisage de suivre des cours dans une université à Paris ou Montpellier ? Découvrez les possibilités et les conditions pour décrocher une bourse, une aide financière et les bons plans quand on part étudier en France."/>
             </Helmet>          

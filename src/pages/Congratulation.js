@@ -95,7 +95,7 @@ const Congratulation = () => {
                     <div className="st__titleSection css-s8u2ug-row" data-ppui-info="grid_3.2.9">
                         <div className="css-1nhh7rf-col" data-ppui="true">
                         <h1 className="css-1aq3bmv-text_heading_lg" data-ppui-info="heading-text_6.5.1"> IMPORTANT ! </h1>
-                        <div className=" css-16jt5za-text_body" data-ppui-info="body-text_6.5.1"> Vous allez recevoir dans quelques minutes par e-mail ou WhatsApp votre lien personnel pour vous connecter à la conférence. </div>
+                        <div className=" css-16jt5za-text_body" data-ppui-info="body-text_6.5.1"> Sous 24 heures, vous recevrez par e-mail ou WhatsApp votre lien personnel vous permettant de vous connecter à la conférence. </div>
                         </div>
                     </div>
                 </div>
