@@ -1,0 +1,45 @@
+import React, { useState} from 'react';
+import SETextInput from "../../components/SimulationEngine/SETextInput";
+import { useDispatch, useSelector } from 'react-redux'
+import {setStep} from '../../redux/simulationStepSlice';
+import helper from '../../utils/Helper';
+import {SIMULATION_ENGINE_STEPS} from '../../utils/Constants'
+
+const DegreeExactName = () => {
+
+
+    const dispatch = useDispatch()
+    let user = helper.getLocalStorageWithExpiration('wendogouser')
+    const [degreeExactNameValue, setDegreeExactNameValue] = useState(user?.degreeExactNameValue || '');
+    const simulationStepGlobal = useSelector((state) => state.simulationStep);
+    const isInUniversityGlobal = useSelector((state) => state.userLevelSlice.isInUniversity)
+
+    const handleChange = (e) => {
+        const inputValue = e.target.value;
+        setDegreeExactNameValue(inputValue);
+        updateWendogouser(SIMULATION_ENGINE_STEPS.DEGREE_EXACT_NAME, inputValue)
+    };   
+
+    const handleContinue = () => {
+        updateWendogouser(isInUniversityGlobal ? SIMULATION_ENGINE_STEPS.PROGRAM_DOMAIN : SIMULATION_ENGINE_STEPS.CLASS_REPETITION, degreeExactNameValue)
+    }
+
+    const updateWendogouser = (simulationStep, degreeExactNameValue) => {
+        dispatch(setStep(simulationStep)) 
+        let updatedUser = {...user, simulationStep, degreeExactNameValue, date: new Date().toISOString()}
+         // Cas exceptionnel : ProgramDomain est null, car on veut clean cette valeur dans l'etape suivante
+        if(user.degreeExactNameValue !== degreeExactNameValue ){
+            updatedUser = {...updatedUser, programDomainObj:null}
+        }
+        helper.setLocalStorageWithExpiration('wendogouser', updatedUser, false)         
+    }
+
+    return (
+        <SETextInput title="Intitulé exact du diplôme" tip=" Veuillez vous assurer de bien écrire l'intitulé de ce diplôme, 
+                                                             car l'algorithme l'utilisera pour vous proposer les écoles les plus adaptées à votre profil."
+                    handleChange={handleChange} value={degreeExactNameValue} inputLength={255} 
+                   handleContinue={handleContinue} showContinueBtn={simulationStepGlobal === SIMULATION_ENGINE_STEPS.DEGREE_EXACT_NAME}/>
+    );
+}
+
+export default DegreeExactName;

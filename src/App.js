@@ -19,12 +19,18 @@ import Contact from "./pages/Contact";
 import LegalNotice from "./pages/LegalNotice";
 import CGU from "./pages/CGU";
 import NotFound from "./pages/NotFound";
+import Error from "./pages/Error";
+import SimulationHome from "./pages/SimulationHome";
+import SimulationCountrySelection from "./pages/SimulationCountrySelection";
+import SimulationEngine from "./pages/SimulationEngine";
+import Appointment from "./pages/Appointment";
 
 const App = () => {
   return (
     <div>
       <Routes>
         <Route path="*" element={<NotFound/>} />
+        <Route path="/error" element={<Error/>} />
         <Route exact path="/" element={<Home/>} />
         <Route path="/waitinglist" element={<WaitingList/>} />
         <Route path="/verification" element={<VerificationWhatsapp/>} />
@@ -43,6 +49,10 @@ const App = () => {
         <Route path="/contact" element={<Contact/>} />
         <Route path="/legal-notice" element={<LegalNotice/>} />
         <Route path="/cgu" element={<CGU/>} />
+        <Route path="/simulation/home" element={<SimulationHome/>} />
+        <Route path="/simulation/select/country" element={<SimulationCountrySelection/>} />
+        <Route path="/simulation/engine" element={<SimulationEngine/>} />
+        <Route path="/simulation/appointment" element={<Appointment/>} />
       </Routes>
       <Spinner/>
     </div>

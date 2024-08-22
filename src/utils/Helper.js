@@ -1,4 +1,6 @@
 import {  toast } from 'react-toastify';
+import {ERROR_TEXT} from './Constants.js'
+import _ from 'lodash'
 
 const helper = {
     toastSuccess: function(message){
@@ -43,8 +45,9 @@ const helper = {
         let result  = {
             data : value
         }
-    
+        //console.log('before expirationTime', expirationTime)
         if(expirationTime){
+            //console.log('after expirationTime', expirationTime)
         // set the expiry 
         // from the current date
         result.expireTime = Date.now() + expirationTime;
@@ -63,7 +66,7 @@ const helper = {
             
             // if the entry is expired
             // remove the entry and return null
-            if(result.expireTime <= Date.now()){
+            if(result.expireTime && result.expireTime <= Date.now()){
                 window.localStorage.removeItem(key);
                 return null;
             }  
@@ -75,11 +78,13 @@ const helper = {
         // if the key does not have value
         return null;
     },
-    redirectionAtInit(user, currentPagePath) {
-        //console.log('🥰 ' , currentPagePath, user.subscription_step)
-        if(!user || (currentPagePath !== user.subscription_step)){
+    redirectionAtInit(user, currentPagePath, redirectPath='/waitinglist'){
+      console.log('redirectionAtInit 🥰 ' , user)
+        console.log('redirectionAtInit 🥰 ' , currentPagePath, user.subscription_step, redirectPath)
+        if(!user || !(user.subscription_step).startsWith(currentPagePath)){
+          console.log('redirectionAtInit ERROR')
             // navigate('/waitinglist')
-            document.location.href='/waitinglist'; 
+            document.location.href=redirectPath; 
             return false
         }
         console.log('user' , user)
@@ -135,6 +140,63 @@ const helper = {
         window.open('https://www.facebook.com/sharer/sharer.php?u=https://wendogo.com/'+relativPath, 'facebook-share-dialog', 'width=650,height=650')
 
       },
+      triggerToastError: function(error, errorText=ERROR_TEXT){
+        let msgToast
+        if(error.status === 'FETCH_ERROR'){
+            msgToast = () => (
+                <div>
+                  <p>Veuillez verifier votre connexion internet. Ou contactez-nous  
+                     <a href="https://m.me/wendogoHQ" style={{color: "rgb(1, 84, 192)"}}><b> ici.</b></a>
+                   </p>
+                </div>
+              )
+        }else{
+            msgToast = () => (
+                <div>{errorText}</div>
+              )                
+        }
+        this.toastError(msgToast)          
+      },
+      addOutsideClick: function(handleOutsideClickFunc) {
+        document.addEventListener("mousedown", handleOutsideClickFunc);
+        return () => {
+          document.removeEventListener("mousedown", handleOutsideClickFunc);
+        }
+      },
+      updateWendogouserCookie: function(callback, user, simulationStep, simulationStepValue){
+        callback()
+        let updatedUser = {...user, simulationStep, simulationStepValue:simulationStepValue, date: new Date().toISOString()}
+        helper.setLocalStorageWithExpiration('wendogouser', updatedUser, false)    
+      },
+      isTargetContainsIgnoreClass: function(target){
+        const ignoreDivs = document.querySelectorAll('.ignore-outside-click');
+        let isIgnored = false;
+        ignoreDivs.forEach((div) => {
+          if (div.contains(target)) {
+            isIgnored = true;
+          }
+        });
+        return isIgnored;
+      },
+      updateBAC : function(educationLevel, downgradedYear) {
+        // Extract the last character from the education level string
+        let lastCharacter = _.last(_.toArray(educationLevel));
+
+        // Convert the last character to an integer and subtract the specified number of years
+        let updatedNumber = parseInt(lastCharacter, 10) - downgradedYear;
+
+        // Handle different cases based on the value of updatedNumber
+        if (updatedNumber === 0) {
+          return 'du BAC et Terminale';
+        } else if (updatedNumber === -1) {
+          return 'BAC-1 (Classe de Première)';
+        } else if (updatedNumber <= -2) {
+          return 'BAC-2 (Classe de Seconde)';
+        } else {
+          // Return the updated BAC level if it's greater than -2
+          return `BAC+${updatedNumber}`;
+        }
+    } 
 }
 
-export default helper;
+export default helper

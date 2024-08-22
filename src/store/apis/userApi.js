@@ -1,14 +1,8 @@
-import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
+import {createApi, fetchBaseQuery, REST_API_PARAMS} from './init.js'
 
 export const userApi = createApi({
   reducerPath: 'usersApi',
-  baseQuery: fetchBaseQuery({baseUrl: 'https://wendogo.online:8080', prepareHeaders: (headers, { getState }) => {
-    headers.set('Content-Type', 'application/json')
-    headers.set('Access-Control-Allow-Origin', '*')
-    headers.set('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization')
-    headers.set('Access-Control-Request-Method', 'GET, POST, DELETE, PUT, OPTIONS')
-    return headers
-}}),
+  baseQuery: fetchBaseQuery(REST_API_PARAMS),
   tagTypes: ['User'],
   endpoints: (builder) => ({
     user: builder.query({
@@ -17,17 +11,17 @@ export const userApi = createApi({
     }),
     addUser: builder.mutation({
       query: (user) => ({
-        url: '/users',
+        url: '/user/add',
         method: 'POST',
         body: user
       }),
       invalidatesTags: ['User']
     }),
     updateUser: builder.mutation({ 
-      query: ({id, ...rest}) => ({
-        url: `/users/${id}`,
-        method: 'PUT',
-        body: rest
+      query: ({...body }) => ({
+        url: `/user/edit`,
+        method: 'PATCH',
+        body
       }),
       invalidatesTags: ['User']
     }),
@@ -71,7 +65,7 @@ export const userApi = createApi({
       invalidatesTags: ['User']
     }),
     countries: builder.query({
-      query: (countryIso2) => `/countries/${countryIso2}`,
+      query: (countryIso2) => `/countries/cities/${countryIso2}`,
       method: 'GET',
       providesTags: ['User']
     })

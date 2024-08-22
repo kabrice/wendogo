@@ -1,13 +1,7 @@
-import { useState} from 'react';
-import EdgarHead from '../assets/edgar_head.jpeg'
-//import {ReactComponent as ExpertMan} from '../assets/ExpertMan1.svg'
 
-import { Link } from 'react-router-dom';
 import SocialMediaLogo from '../assets/social_media_logo.png'
 import Footer from '../components/Footer';
 import HeaderMenuBar from '../components/HeaderMenuBar';
-import CoffeeCup from '../assets/coffeecup.jpeg'
-import { FloatingWhatsApp } from 'react-floating-whatsapp';
 import { Helmet } from 'react-helmet';
 
 function CGU(){

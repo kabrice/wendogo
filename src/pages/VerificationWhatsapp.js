@@ -15,7 +15,7 @@ const VerificationWhatsapp = () => {
     const length = 6
     const [code, setCode] = useState([...Array(length)].map(() => ""));
     const inputs = useRef([]);
-    const [loading, setLoading] = useState(false);
+    const [loading] = useState(false);
     const spinnerIsActive = useSelector((state) => state.spinner.activateSpinner)
     //const user = useSelector((state) => state.user.user)
     //console.log('user', user)

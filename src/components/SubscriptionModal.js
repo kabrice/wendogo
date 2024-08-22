@@ -28,8 +28,8 @@ const SubscriptionModal = () => {
     const newRef = useRef(null)
 
     const handleOutsideClick = (e) => {
-        if (newRef.current && !newRef.current.contains(e.target)) {
-            
+        if (newRef.current && !newRef.current.contains(e.target) && !helper.isTargetContainsIgnoreClass(e.target)) {
+            console.log('outside click SubscriptionModal')
             dispatch(close())
         }
       };
@@ -69,7 +69,7 @@ const SubscriptionModal = () => {
                 let expirationVerifDate = (d2.toTimeString().split(' ')[0])
                 expirationVerifDate = expirationVerifDate.substring(0, expirationVerifDate.lastIndexOf(':')); 
                 helper.setLocalStorageWithExpiration('wendogouser', result.user, 600000)
-                helper.setLocalStorageWithExpiration('expirationVerifDate', expirationVerifDate, 600000)
+                helper.setLocalStorageWithExpiration('expirationVerifDate', expirationVerifDate, 600000) // get the expiration date of the code got from the server (use in VerificationWhatsapp)
                 //localStorage.setItem('wendogouser', JSON.stringify(result.user));
                 // if(result.user.has_whatsapp){
                 //     console.log('Hey localStorage', localStorage.getItem('wendogouser'))

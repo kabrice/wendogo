@@ -35,9 +35,10 @@ const  CredentialEnd = () => {
   //const newRef = useRef(null)
   
   const handleOutsideClick = (e) => {
-      if (newRef.current && !newRef.current.contains(e.target)) {
+      if (newRef.current && !newRef.current.contains(e.target) && !helper.isTargetContainsIgnoreClass(e.target)) {
         setCollapseCountryOption(true)
         setCollapseCityOption(true)
+        console.log('outside click CredentialEnd')
       }
     };
 
@@ -412,7 +413,7 @@ const  CredentialEnd = () => {
       
       clonedCityArray = (data.cities).map((item) => ({ ...item }));
       let myCities = clonedCityArray.sort((a, b) => a.value.localeCompare(b.value))     
-
+      console.log('myCities', myCities)
       myCountries.forEach(item => {
         if(item.selected === true){
           setSelectedCountry(item.value)
@@ -432,7 +433,7 @@ const  CredentialEnd = () => {
     }
 
   }, [data])
- return   <>{helper.redirectionAtInit(user, '/credentialend') &&  <>
+ return   <>{1 &&  <>
             <div id="app-element-mountpoint">
               <div dir="ltr">
                 <div>

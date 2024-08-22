@@ -10,7 +10,7 @@ import { hydrate, render } from "react-dom";
 import App from './App';
 
 const app = (
-  <StrictMode>
+  
     <BrowserRouter>
       <Provider store={store}>
       {/* <React.StrictMode> */}
@@ -18,7 +18,7 @@ const app = (
         {/* </React.StrictMode> */}
       </Provider>
     </BrowserRouter>
-  </StrictMode>
+  
 )
 
 const rootElement = document.getElementById('root') ;

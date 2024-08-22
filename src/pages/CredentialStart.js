@@ -23,8 +23,9 @@ const CredentialStart = () => {
   const newRef = useRef(null)
   
   const handleOutsideClick = (e) => {
-      if (newRef.current && !newRef.current.contains(e.target)) {
+      if (newRef.current && !newRef.current.contains(e.target) && !helper.isTargetContainsIgnoreClass(e.target)) {
         setCollapseSalutationOption(true)
+        console.log('outside click CredentialStart')
       }
     };
 
