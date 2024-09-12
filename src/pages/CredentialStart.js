@@ -25,7 +25,7 @@ const CredentialStart = () => {
   const handleOutsideClick = (e) => {
       if (newRef.current && !newRef.current.contains(e.target) && !helper.isTargetContainsIgnoreClass(e.target)) {
         setCollapseSalutationOption(true)
-        console.log('outside click CredentialStart')
+        //console.log('Outside click CredentialStart')
       }
     };
 
@@ -96,7 +96,7 @@ const CredentialStart = () => {
     }
 
   })
- return <>{helper.redirectionAtInit(user, '/credentialstart') && 
+ return <>{/*helper.redirectionAtInit(user, '/credentialstart') && */
       <div id="app-element-mountpoint">
         <div dir="ltr">
           <div>

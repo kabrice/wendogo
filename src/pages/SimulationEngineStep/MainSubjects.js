@@ -53,7 +53,7 @@ const MainSubjects = () => {
 
     return (<>   
         {data?.hasOwnProperty('best_match') && 
-                <SEAutoSuggestListInput title={titleWhenNoMatch} 
+                <SEAutoSuggestListInput title={titleWhenNoMatch}  id={'MAIN_SUBJECTS'}
                                     tip="Pour une meilleure suggestion de l'algorithme, soyez le plus précis possible. En cas de priorités égales, classez à votre convenance."
                                     messageError="Vous devez obligatoirement saisir 03 unités d'enseignement."
                                     mainValues={mainSubjects}

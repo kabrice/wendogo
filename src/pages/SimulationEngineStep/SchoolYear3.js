@@ -12,7 +12,8 @@ const SchoolYear3 = () => {
 
     let user = helper.getLocalStorageWithExpiration('wendogouser')
     const currentYear = new Date().getFullYear();
-    const isInUniversityGlobal = useSelector((state) => state.userLevelSlice.isInUniversity)
+    const isInUniversityGlobal = useSelector((state) => state.university.active)
+    //const isInUniversity = user.hasOwnProperty("schoolLevelSelected") ? (user.schoolLevelSelected === 'Supérieur') : isInUniversityGlobal
 
     const dispatch = useDispatch()
     const { data, error, isLoading } = useGetSchoolYearsQuery();
@@ -26,7 +27,7 @@ const SchoolYear3 = () => {
     const handleOutsideClick = (e) => {
         if (newRef.current && !newRef.current.contains(e.target) && !helper.isTargetContainsIgnoreClass(e.target)) {
           setCollapseYearOption(true)
-          console.log('outside click SchoolYear3')
+          //console.log('Outside click SchoolYear3')
         }
       };
 
@@ -59,8 +60,8 @@ const SchoolYear3 = () => {
 
     }, [data, error, isLoading ])
 
-    const handleContinue = () => {
-        updateWendogouser(isInUniversityGlobal ? SIMULATION_ENGINE_STEPS.RECENT_DEGREE : SIMULATION_ENGINE_STEPS.DEGREE_EXACT_NAME, {...selectedSchoolYear3, validated: true})
+    const handleContinue = () => { 
+       updateWendogouser(isInUniversityGlobal ? SIMULATION_ENGINE_STEPS.RECENT_DEGREE : SIMULATION_ENGINE_STEPS.DEGREE_EXACT_NAME, {...selectedSchoolYear3, validated: true})
     }
 
     const updateWendogouser = (simulationStep, selectedSchoolYear3) => {

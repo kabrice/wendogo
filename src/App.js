@@ -24,6 +24,7 @@ import SimulationHome from "./pages/SimulationHome";
 import SimulationCountrySelection from "./pages/SimulationCountrySelection";
 import SimulationEngine from "./pages/SimulationEngine";
 import Appointment from "./pages/Appointment";
+import SimulationResult from "./pages/SimulationResult";
 
 const App = () => {
   return (
@@ -53,6 +54,7 @@ const App = () => {
         <Route path="/simulation/select/country" element={<SimulationCountrySelection/>} />
         <Route path="/simulation/engine" element={<SimulationEngine/>} />
         <Route path="/simulation/appointment" element={<Appointment/>} />
+        <Route path="/simulation/result" element={<SimulationResult/>} />
       </Routes>
       <Spinner/>
     </div>

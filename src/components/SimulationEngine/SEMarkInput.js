@@ -136,7 +136,8 @@ const customTheme = (outerTheme) =>
 
 const SEMarkInput = (props) => {
 
-  const { title, urlFragment, tip, subject, setSubject, setIsReadMode, setReferenceInc, referenceInc, setSubjectList, subjectList, subjectWeightSystem, markSystem  } = props;
+  const { title, urlFragment, tip, subject, setSubject, setIsReadMode, setReferenceInc, referenceInc, 
+          setSubjectList, subjectList, subjectWeightSystem, markSystem, id } = props;
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
   const [stopSearch, setStopSearch] = useState(true)
@@ -155,7 +156,7 @@ const SEMarkInput = (props) => {
 
   const handleOutsideClick = (e) => { 
     if (newRef.current && !newRef.current.contains(e.target) && suggestions?.length > 0 && !helper.isTargetContainsIgnoreClass(e.target)) {
-        console.log('outside click SEMarkInput')
+        //console.log('Outside click SEMarkInput')
         setBusy(false);
         reinitializeInput(false)
         setFocused(false); 
@@ -325,7 +326,7 @@ const SEMarkInput = (props) => {
 }
 
   return (
-    <div className={`FieldWrapper TextField ${focused ? 'focused' : ''} `} >
+    <div className={`FieldWrapper TextField ${focused ? 'focused' : ''} fade-animation fade-slow-enter-done`} >
       <div className={`FieldView DaisyFieldView TextField COORD_PRE ${focused ? 'focused' : ''}`}>
       <div className="css-4x6az7 eu4oa1w0">
         <div className="css-kr67x6 eu4oa1w0">
@@ -350,11 +351,11 @@ const SEMarkInput = (props) => {
                               MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated 
                               MuiInputLabel-sizeMedium MuiInputLabel-outlined css-${( bindInput?.value?.length>0) ? '4fvunh' : '1kjrkh1'}-MuiFormLabel-root-MuiInputLabel-root
                               ${(bindInput?.value?.length>0) && ' MuiInputLabel-shrink MuiFormLabel-filled'}`} data-shrink="false" 
-                              htmlFor="SEARCH_SUBJECT" id="SEARCH_SUBJECT-label" style={{zIndex: 1, color : `${(bindInput?.value?.length>0 && focused) ? 'rgb(78, 97, 116)' : (!subject.label.validated ? '#ff3535' : '')}`}}> Matière </label>
+                              htmlFor="SEARCH_SUBJECT" id={`${id}-label`} style={{zIndex: 1, color : `${(bindInput?.value?.length>0 && focused) ? 'rgb(78, 97, 116)' : (!subject.label.validated ? '#ff3535' : '')}`}}> Matière </label>
               {/* <h1>{bindInput?.value?.length+' '+focused}</h1> */}
               <div className={`AutoSuggest-inputWrapper ${(suggestions?.length>0 || isBusy)  ? 'not-empty ' : ''}`}>
               {<div className='Input ' style={{height: 80, border: 'none', borderEndEndRadius : (suggestions?.length>0 || isBusy) ? 0 : 16, borderEndStartRadius: (suggestions?.length>0 || isBusy) ? 0 : 16 }}>
-                  <input  type="text" {...bindInput}   id="SEARCH_SUBJECT" name="9026b80" value={bindInput.value /*|| subject.label.value*/} 
+                  <input  type="text" {...bindInput}   id={`${id}`} name="9026b80" value={bindInput.value /*|| subject.label.value*/} 
                           tabIndex={6} maxLength={1000} autoComplete="off" 
                           style={{zIndex: 10, padding: '15px 30px'  }} 
                           onMouseDown={() => {setSubject({...subject, label: {validated : true, value: subject.label.value}}); setStopSearch(false); setFocused(true);}}

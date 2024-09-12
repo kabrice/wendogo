@@ -26,9 +26,9 @@ const HasWonAward = () => {
 
     const handleHasWonAward = (val) => {
         setHasWonAward(val);
-        updateWendogouser(SIMULATION_ENGINE_STEPS.HAS_WON_AWARD, val)
+        console.log('hasWonAward handleHasWonAward', val, SIMULATION_ENGINE_STEPS.AWARD_DETAILS)
+        updateWendogouser(val ? SIMULATION_ENGINE_STEPS.AWARD_DETAILS : SIMULATION_ENGINE_STEPS.HAS_WORK_EXPERIENCE, val)
     };
-    
     
     const updateWendogouser = (simulationStep, hasWonAward) => {
         dispatch(setStep(simulationStep)) 
@@ -37,10 +37,12 @@ const HasWonAward = () => {
     }
 
     const handleContinue = () => {
+        console.log('hasWonAward handleContinue', hasWonAward, SIMULATION_ENGINE_STEPS.AWARD_DETAILS)
+        updateWendogouser(hasWonAward ? SIMULATION_ENGINE_STEPS.AWARD_DETAILS : SIMULATION_ENGINE_STEPS.HAS_WORK_EXPERIENCE, hasWonAward)
         //Todo updateWendogouser(, hasWonAward)
     }
 
-    return (<SEYesNo title={`Avez-vous obtenu une recompense en ${formattedString} depuis ${oldestSchoolYear}`} 
+    return (<SEYesNo title={`Avez-vous obtenu une recompense en ${formattedString} depuis ${oldestSchoolYear}`} id="HAS_WON_AWARD"
                     tip="Cela peut être un prix académique, sportif, artistique ou de toute autre nature, à condition qu'il puisse être justifié par un document officiel."
                     yes={hasWonAward} handleYes={handleHasWonAward} handleContinue={handleContinue} 
                     showContinueBtn={simulationStepGlobal === SIMULATION_ENGINE_STEPS.HAS_WON_AWARD} />);

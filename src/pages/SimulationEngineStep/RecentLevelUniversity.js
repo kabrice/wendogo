@@ -24,7 +24,7 @@ const RecentLevelUniversity = () => {
     const handleOutsideClick = (e) => {
         if (newRef.current && !newRef.current.contains(e.target) && !helper.isTargetContainsIgnoreClass(e.target)) {
           setCollapseBacOption(true)
-          console.log('outside click RecentLevelUniversity')
+          //console.log('Outside click RecentLevelUniversity')
         }
       };
 
@@ -32,7 +32,7 @@ const RecentLevelUniversity = () => {
         setCollapseBacOption(!collapseBacOption)
     }
     const updateSelectedBac = (item) => {
-        console.log('item', item)
+        //console.log('item', item)
         setUniversityLevelSelected({name : item.name, validated: true})
         setCollapseBacOption(true)
         setFieldDefault(false)

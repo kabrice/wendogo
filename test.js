@@ -1,151 +1,116 @@
-import SEReportCard from '../../components/SimulationEngine/SEReportCard';
-import SEMarkInput from '../../components/SimulationEngine/SEMarkInput';
-import { useState, useEffect, useRef} from 'react';
-import { useGetLevelValuesQuery } from '../../store/apis/levelValueApi';
-import { activateSpinner, deactivateSpinner } from '../../redux/spinnerslice' 
-import { useDispatch, useSelector } from 'react-redux'
-import {setStep} from '../../redux/simulationStepSlice';
-import helper from '../../utils/Helper';
+import React, { useState } from 'react';
+import DateInput from './SEDateInput'; // Assuming the DateInput component is in the same directory
+import ButtonLarge from '../ButtonLarge';
 import { set } from 'lodash';
-import {SIMULATION_ENGINE_STEPS} from '../../utils/Constants'
-import ButtonLarge from '../../components/ButtonLarge';
 
-const ReportCard3 = () => {
-    const dispatch = useDispatch()
-    let user = helper.getLocalStorageWithExpiration('wendogouser') 
-    const [programDomainObj, setProgramDomainObj] = useState(user?.programDomainObj || null)
-    console.log('programDomainObj', programDomainObj?.name)
-    const [urlFragment] = useState('/levelvalue/search/');
-    const simulationStepGlobal = useSelector((state) => state.simulationStep);
-    const titleWhenNoMatch = `Veuillez renseigner une nouvelle matière, le ${user.academicYearHeadDetails3.subjectWeightSystem.name.toLowerCase()}, la note et le rang obtenu.`; 
-    const { data, error, isLoading } = useGetLevelValuesQuery({userid : '1', externalLevelValueInput : user?.degreeExactNameValue});
-    const [subject1, setSubject1] = useState({reference: 0, label: {value: '', validated: true}, weight: {value: '', validated: true}, 
-                                            mark: {value: '', validated: true}, rank: {value: '', validated: true}})
-    const [subject2, setSubject2] = useState({reference: 0, label: {value: '', validated: true}, weight: {value: '', validated: true}, 
-                                            mark: {value: '', validated: true}, rank: {value: '', validated: true}})     
-    const [subject3, setSubject3] = useState({reference: 0, label: {value: '', validated: true}, weight: {value: '', validated: true}, 
-                                            mark: {value: '', validated: true}, rank: {value: '', validated: true}})  
-     const [subject4, setSubject4] = useState({reference: 0, label: {value: '', validated: true}, weight: {value: '', validated: true}, 
-                                            mark: {value: '', validated: true}, rank: {value: '', validated: true}})                                                                                                                                
-    const [subjectList1, setSubjectList1] = useState([])
-    const [referenceInc1, setReferenceInc1] = useState(0)
-    const [subjectList2, setSubjectList2] = useState([])
-    const [referenceInc2, setReferenceInc2] = useState(0)
-    const [subjectList3, setSubjectList3] = useState([])
-    const [referenceInc3, setReferenceInc3] = useState(0)
-    const [subjectList4, setSubjectList4] = useState([])
-    const [referenceInc4, setReferenceInc4] = useState(0)
-    const [isReadMode1, setIsReadMode1] = useState(true)
-    const [isReadMode2, setIsReadMode2] = useState(true)
-    const [isReadMode3, setIsReadMode3] = useState(true)
-    const [isReadMode4, setIsReadMode4] = useState(true)
+const SE2DateInput = (props) => {
+    const {
+        title, showContinueBtn, tip,
+        startDay, setStartDay, startMonth, setStartMonth, startYear, setStartYear,
+        endDay, setEndDay, endMonth, setEndMonth, endYear, setEndYear,
+        sendFormattedDateResultToParent, validated
+    } = props;
 
- 
-    const updateWendogouser = (simulationStep, programDomainObj) => {
-        dispatch(setStep(simulationStep)) 
-        let updatedUser = {...user, simulationStep, programDomainObj, date: new Date().toISOString()}
-        helper.setLocalStorageWithExpiration('wendogouser', updatedUser, false)         
-    } 
+    const [isStartDateValid, setIsStartDateValid] = useState(false || validated);
+    const [isEndDateValid, setIsEndDateValid] = useState(false || validated);
+    const [isButtonClicked, setIsButtonClicked] = useState(false);
+    const [startDate] = useState(`${startYear}-${startMonth?.padStart(2, '0')}-${startDay?.padStart(2, '0')}`);
+    const [endDate] = useState(`${endYear}-${endMonth?.padStart(2, '0')}-${endDay?.padStart(2, '0')}`);
 
-    const handleContinue = () => {
-        console.log('OK')
-    }
+    const isDateInRange = (day, month, year, minDate, maxDate) => {
+        const date = new Date(year, month - 1, day);
+        const isDateInRange = date >= minDate && date <= maxDate;
+        setIsStartDateValid(true);
+            setIsEndDateValid(true);
+        if(!isDateInRange) {
+            setIsStartDateValid(false);
+            setIsEndDateValid(false);
+        }
+        return isDateInRange;
+    };
 
-    return (<>
-        {(isReadMode1 && isReadMode2 && isReadMode3 && isReadMode4) && <div className="FieldWrapper">
-            <div className="FieldView field-valid">
+    const [isStartDateInRange] = useState(isDateInRange(startDay, startMonth, startYear, new Date('1970-01-01'), new Date()));
+    const [isEndDateInRange] = useState(isDateInRange(endDay, endMonth, endYear, new Date('1970-01-01'), new Date()));
+    const handleButtonClick = () => { 
+
+        if (isStartDateValid || isEndDateValid) {
+            const formattedStartDate = `${startDay.padStart(2, '0')}/${startMonth.padStart(2, '0')}/${startYear}`;
+            const formattedEndDate = `${endDay.padStart(2, '0')}/${endMonth.padStart(2, '0')}/${endYear}`;
+            sendFormattedDateResultToParent({ startDate: isStartDateValid ? formattedStartDate : null, endDate:  isEndDateValid ? formattedEndDate : null, validated: true });
+        } else {
+            console.error('Dates are out of range or invalid.');
+        }
+    };
+
+    const voidFunction = () => {
+        return null;
+    };
+
+    return (
+        <div id="PRI_DON_NAISS-wrapper" className="FieldWrapper DateInputField PRI_DON_NAISS">
+            <div className="FieldView DaisyFieldView DateInputField PRI_DON_NAISS">
                 <div className="FieldView-flex-container">
-                    <label className="Label">{`Veuillez renseigner toutes les matières par ${user.academicYearHeadDetails3.academicYearOrganization.name.toLowerCase()} pour l'année ${user.schoolYearSelected.name}.`}</label>
+                    <label className="Label">{title}</label>
                 </div>
-                <div className="DrawerAnimation" />
-
-                {isReadMode1 && <SEReportCard   
-                                    header= {`${user.schoolYearSelected.name} - ${user.academicYearHeadDetails3.academicYearOrganization.name} N°1  - ${user.academicYearHeadDetails3.schoolName}`}
-                                    subheader={`${user.degreeSelected.name} en ${user.degreeExactNameValue}`}
-                                    subjectList = {subjectList1}
-                                    subject = {subject1}
-                                    setSubject = {setSubject1}
-                                    setIsReadMode = {setIsReadMode1}
-                                    setSubjectList = {setSubjectList1}  />}  
-                {isReadMode2 && <SEReportCard   
-                                    header= {`${user.schoolYearSelected.name} - ${user.academicYearHeadDetails3.academicYearOrganization.name} N°1  - ${user.academicYearHeadDetails3.schoolName}`}
-                                    subheader={`${user.degreeSelected.name} en ${user.degreeExactNameValue}`}
-                                    subjectList = {subjectList2}
-                                    subject = {subject2}
-                                    setSubject = {setSubject2}
-                                    setIsReadMode = {setIsReadMode2}
-                                    setSubjectList = {setSubjectList2}  />}     
-                {isReadMode3 && <SEReportCard   
-                                    header= {`${user.schoolYearSelected.name} - ${user.academicYearHeadDetails3.academicYearOrganization.name} N°1  - ${user.academicYearHeadDetails3.schoolName}`}
-                                    subheader={`${user.degreeSelected.name} en ${user.degreeExactNameValue}`}
-                                    subjectList = {subjectList3}
-                                    subject = {subject3}
-                                    setSubject = {setSubject3}
-                                    setIsReadMode = {setIsReadMode3}
-                                    setSubjectList = {setSubjectList3}  />}     
-                {isReadMode4 && <SEReportCard   
-                                    header= {`${user.schoolYearSelected.name} - ${user.academicYearHeadDetails3.academicYearOrganization.name} N°1  - ${user.academicYearHeadDetails3.schoolName}`}
-                                    subheader={`${user.degreeSelected.name} en ${user.degreeExactNameValue}`}
-                                    subjectList = {subjectList4}
-                                    subject = {subject4}
-                                    setSubject = {setSubject4}
-                                    setIsReadMode = {setIsReadMode4}
-                                    setSubjectList = {setSubjectList4}  />}                                                                             
-                <ButtonLarge  name="Continuer" handleContinue={  handleContinue } />
+                <div className="Tip">
+                    <div>{tip}</div>
+                </div>
+                <div className="app-row app-field" style={{ display: 'flex' }}>
+                    <div className="app-col-xs-12 app-col-sm-12 app-col-md-12 Field">
+                        {'depart '+endDay+' '+endMonth+' '+endYear}
+                        <DateInput
+                            label="Date de départ"
+                            day={endDay}
+                            setDay={setEndDay}
+                            month={endMonth}
+                            setMonth={setEndMonth}
+                            year={endYear}
+                            setYear={setEndYear}
+                            setIsButtonClicked={setIsButtonClicked}
+                            isButtonClicked={isButtonClicked}
+                            validated={validated}
+                            onValidChange={setIsEndDateValid}
+                        />
+                    </div>
+                    <div className="app-col-xs-12 app-col-sm-12 app-col-md-12 Field">
+                        {'arrivée '+startDay+' '+startMonth+' '+startYear}
+                        <DateInput
+                            label="Date d'arrivée"
+                            day={startDay}
+                            setDay={setStartDay}
+                            month={startMonth}
+                            setMonth={setStartMonth}
+                            year={startYear}
+                            setYear={setStartYear}
+                            setIsButtonClicked={setIsButtonClicked}
+                            isButtonClicked={isButtonClicked}
+                            validated={validated}
+                            onValidChange={setIsStartDateValid}
+                        />
+                    </div>
+                </div>
+                {' == '+isStartDateValid+' == '+isEndDateValid+' == '+isButtonClicked}
+                {((!isStartDateValid || !isEndDateValid )   && isButtonClicked) && (
+                    <div className="Error">
+                        <span className="Icon error-icon icon-lesfurets icon-system-alert" /> Veuillez entrer des dates valides.
+                    </div>
+                )}
+                {showContinueBtn && (
+                    <ButtonLarge
+                        name="Continuer"
+                        handleContinue={() => {
+                            setIsButtonClicked(true);
+                            if (isStartDateValid && isEndDateValid) {
+                                handleButtonClick();
+                            } else {
+                                voidFunction();
+                            }
+                        }}
+                    />
+                )}
             </div>
-        </div>}
-        {/* <SEMarkInput title="Moyenne de l'année scolaire la plus récente" showTip={true} tip="Veuillez renseigner votre moyenne générale de l'année scolaire la plus récente." /> */}
-                          
-        {(!isReadMode1 || !isReadMode2 || !isReadMode3 || !isReadMode4) && <SEMarkInput title={titleWhenNoMatch} 
-                                    tip="Le rang est facultatif. Si inexistant, laissez un vide."
-                                    subjectWeightSystem={user.academicYearHeadDetails3.subjectWeightSystem.name}
-                                    markSystem={user.academicYearHeadDetails3.markSystem.name}
-                                    setIsReadMode = {setIsReadMode1}
-                                    urlFragment ={urlFragment}
-                                    subject={subject1}
-                                    setSubject={setSubject1}
-                                    showContinueBtn={1} 
-                                    setReferenceInc={setReferenceInc1}
-                                    referenceInc={referenceInc1}
-                                    setSubjectList={setSubjectList1} />}
-        {(!isReadMode1 || !isReadMode2 || !isReadMode3 || !isReadMode4) && <SEMarkInput title={titleWhenNoMatch} 
-                                    tip="Le rang est facultatif. Si inexistant, laissez un vide."
-                                    subjectWeightSystem={user.academicYearHeadDetails3.subjectWeightSystem.name}
-                                    markSystem={user.academicYearHeadDetails3.markSystem.name}
-                                    setIsReadMode = {setIsReadMode2}
-                                    urlFragment ={urlFragment}
-                                    subject={subject2}
-                                    setSubject={setSubject2}
-                                    showContinueBtn={1} 
-                                    setReferenceInc={setReferenceInc2}
-                                    referenceInc={referenceInc2}
-                                    setSubjectList={setSubjectList2} />}
-       {(!isReadMode1 || !isReadMode2 || !isReadMode3 || !isReadMode4) && <SEMarkInput title={titleWhenNoMatch} 
-                                    tip="Le rang est facultatif. Si inexistant, laissez un vide."
-                                    subjectWeightSystem={user.academicYearHeadDetails3.subjectWeightSystem.name}
-                                    markSystem={user.academicYearHeadDetails3.markSystem.name}
-                                    setIsReadMode = {setIsReadMode3}
-                                    urlFragment ={urlFragment}
-                                    subject={subject3}
-                                    setSubject={setSubject3}
-                                    showContinueBtn={1} 
-                                    setReferenceInc={setReferenceInc3}
-                                    referenceInc={referenceInc3}
-                                    setSubjectList={setSubjectList3} />}       
-       {(!isReadMode1 || !isReadMode2 || !isReadMode3 || !isReadMode4) && <SEMarkInput title={titleWhenNoMatch} 
-                                    tip="Le rang est facultatif. Si inexistant, laissez un vide."
-                                    subjectWeightSystem={user.academicYearHeadDetails3.subjectWeightSystem.name}
-                                    markSystem={user.academicYearHeadDetails3.markSystem.name}
-                                    setIsReadMode = {setIsReadMode4}
-                                    urlFragment ={urlFragment}
-                                    subject={subject4}
-                                    setSubject={setSubject4}
-                                    showContinueBtn={1} 
-                                    setReferenceInc={setReferenceInc4}
-                                    referenceInc={referenceInc4}
-                                    setSubjectList={setSubjectList4} />}                                                                                             
-        </>
+        </div>
     );
 };
 
-export default ReportCard3;
+export default SE2DateInput;

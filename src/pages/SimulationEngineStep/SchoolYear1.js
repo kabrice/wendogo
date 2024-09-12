@@ -19,6 +19,7 @@ const SchoolYear1 = () => {
     const [collapseYearOption, setCollapseYearOption] = useState(true)
     const [fieldDefault, setFieldDefault] = useState(true)
     const simulationStepGlobal = useSelector((state) => state.simulationStep);
+    const isInUniversityGlobal = useSelector((state) => state.university.active)
 
     const handleOutsideClick = (e) => {
         if (newRef.current && !newRef.current.contains(e.target) && !helper.isTargetContainsIgnoreClass(e.target)) {
@@ -64,7 +65,7 @@ const SchoolYear1 = () => {
     }
 
   return (
-         <SEDropDownList title={`Votre ${helper.updateBAC(user.universityLevelSelected.name, 2)} correspond à quelle année scolaire ?`} newRef={newRef} collapseOption={collapseYearOption} fieldDefault={fieldDefault} items={schoolYears1} 
+         <SEDropDownList title={`Votre ${helper.updateBAC(isInUniversityGlobal, user, 2)} correspond à quelle année scolaire ?`} newRef={newRef} collapseOption={collapseYearOption} fieldDefault={fieldDefault} items={schoolYears1} 
                          itemSelected={selectedSchoolYear1} toggleDropdown={toggleYearDropdown} updateSelected={updateSelectedYear}
                          handleContinue={handleContinue} showContinueBtn={simulationStepGlobal === SIMULATION_ENGINE_STEPS.SCHOOL_YEAR1}
                           />    

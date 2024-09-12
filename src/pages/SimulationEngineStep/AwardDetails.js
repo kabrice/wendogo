@@ -2,18 +2,16 @@ import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useCountriesQuery } from '../../store/apis/userApi';
 import { useGetSpokenLanguagesQuery } from '../../store/apis/spokenLanguageApi'; 
-import { useGetSchoolYearsQuery } from '../../store/apis/schoolYearApi';
-import { useGetSubjectWeightSystemsQuery } from '../../store/apis/subjectWeightSystemApi';
+import { useGetSchoolYearsQuery } from '../../store/apis/schoolYearApi'; 
 import { activateSpinner, deactivateSpinner } from '../../redux/spinnerslice';
 import { setStep } from '../../redux/simulationStepSlice';
 import helper from '../../utils/Helper';
 import SELabel from '../../components/SimulationEngine/SELabel';
-import SEDropDownList from '../../components/SimulationEngine/SEDropDownList';
-import SETextArea from '../../components/SimulationEngine/SETextArea';
-import ButtonLarge from '../../components/ButtonLarge';
-import SESmallAlertMessage from '../../components/SimulationEngine/SESmallAlertMessage';
+import SEDropDownList from '../../components/SimulationEngine/SEDropDownList'; 
+import ButtonLarge from '../../components/ButtonLarge'; 
 import SETextInput from '../../components/SimulationEngine/SETextInput';
-import { SIMULATION_ENGINE_STEPS } from '../../utils/Constants'; 
+import { SIMULATION_ENGINE_STEPS } from '../../utils/Constants';  
+import SETextArea from '../../components/SimulationEngine/SETextArea';
 
 const honourTypes = [
     { id: 1, name: 'None', validated: false },
@@ -41,9 +39,8 @@ const AwardDetails = () => {
     const [selectedSpokenLanguage, setSelectedSpokenLanguage] = useState(user?.academicYearHeadDetails3?.spokenLanguage || user?.award?.spokenLanguage || { name: '', validated: false });
     const [selectedHonourType, setSelectedHonourType] = useState(user?.award?.honourType || { id: 1, name: 'None', validated: false });
     const [collapseHonourTypeOption, setCollapseHonourTypeOption] = useState(true);
-    const [awardName, setAwardName] = useState(user?.award?.AwardName || '');
-    const [rankValue, setRankValue] = useState(user?.award?.rank || '');
-    const [rank, setRank] = useState(user?.award?.rank || '');
+    const [awardName, setAwardName] = useState(user?.award?.awardName || '');
+    const [rankValue, setRankValue] = useState(user?.award?.rank || ''); 
     const [award, setAward] = useState(user?.award || {});
     const [selectedAwardYear, setSelectedAwardYear] = useState(user?.award?.year ||  {name : (user?.selectedSchoolYear3?.name-2).toString(), validated: false});
     const [collapseAwardYearOption, setCollapseAwardYearOption] = useState(true);
@@ -60,31 +57,38 @@ const AwardDetails = () => {
     const { data: spokenLanguages, error: spokenLanguagesError, isLoading: spokenLanguagesIsLoading } = useGetSpokenLanguagesQuery();
     const { data: awardYears, error: awardYearsError, isLoading: awardYearsIsLoading } = useGetSchoolYearsQuery(); 
 
-    const doesValueValid = () => {
+    const doesAwardNameIsValid = (awardName) => {
         return awardName !== undefined && awardName && awardName.trim().length >= 10 && /[a-zA-Z].*[a-zA-Z]/.test(awardName);
     }
       
-    const [valid, setValid] = useState(doesValueValid() || awardName === '');
+    const [validAwardName, setValidAwardName] = useState(doesAwardNameIsValid(awardName) || awardName === '');
+
+    const doesRankIsValid = () => {
+        const rank = parseInt(rankValue, 10);
+        return (rankValue === '' || (rankValue !== '' && rank >= 1 && rank <= 1000));
+    }
+      
+    const [validRank, setValidRank] = useState(doesRankIsValid());
 
     const updateSelectedAwardYear = (item) => {
         setSelectedAwardYear({ ...item, validated: true });
         setCollapseAwardYearOption(true); 
         setAward({ ...award, year: { ...item, validated: true } })
-        updateWendogouser(SIMULATION_ENGINE_STEPS.HAS_WON_AWARD, award)
+        updateWendogouser(SIMULATION_ENGINE_STEPS.AWARD_DETAILS, award)
     };
 
     const updateSelectedCountry = (item) => {
         setSelectedCountry({ ...item, validated: true });
         setCollapseCountryOption(true);   
         setAward({ ...award, country: { ...item, validated: true } })
-        updateWendogouser(SIMULATION_ENGINE_STEPS.HAS_WON_AWARD, award)
+        updateWendogouser(SIMULATION_ENGINE_STEPS.AWARD_DETAILS, award)
     };
 
     const updateSelectedCity = (item) => {
         setSelectedCity({ ...item, validated: true });
         setCollapseCityOption(true);   
         setAward({ ...award, city: { ...item, validated: true } }) 
-        updateWendogouser(SIMULATION_ENGINE_STEPS.HAS_WON_AWARD, award)
+        updateWendogouser(SIMULATION_ENGINE_STEPS.AWARD_DETAILS, award)
     };
 
     const updateSelectedSpokenLanguage = (item) => {
@@ -92,7 +96,7 @@ const AwardDetails = () => {
         setCollapseSpokenLanguageOption(true);  
         //award.spokenLanguage = { ...item, validated: true };
         setAward({ ...award, spokenLanguage: { ...item, validated: true } })
-        updateWendogouser(SIMULATION_ENGINE_STEPS.HAS_WON_AWARD, award)
+        updateWendogouser(SIMULATION_ENGINE_STEPS.AWARD_DETAILS, award)
     }; 
 
     const handleChangeAwardName = (e) => {
@@ -100,8 +104,8 @@ const AwardDetails = () => {
         setAwardName(inputValue); 
         //console.log('handleChangeAwardName', award)
         //award.AwardName = inputValue;
-        setAward({ ...award, AwardName: inputValue })
-        updateWendogouser(SIMULATION_ENGINE_STEPS.HAS_WON_AWARD, award)
+        setAward({ ...award, awardName: inputValue })
+        updateWendogouser(SIMULATION_ENGINE_STEPS.AWARD_DETAILS, award)
         
     };
 
@@ -111,7 +115,7 @@ const AwardDetails = () => {
         //console.log('handleChangeRank', award)
         //award.rank = inputValue;
         setAward({ ...award, rank: inputValue })
-        updateWendogouser(SIMULATION_ENGINE_STEPS.HAS_WON_AWARD, award)
+        updateWendogouser(SIMULATION_ENGINE_STEPS.AWARD_DETAILS, award)
     };
 
     const updateSelectedHonourType = (item) => {
@@ -119,7 +123,7 @@ const AwardDetails = () => {
         setCollapseHonourTypeOption(true);
         //award.honourType = { ...item, validated: true };
         setAward({ ...award, honourType: { ...item, validated: true } })
-        updateWendogouser(SIMULATION_ENGINE_STEPS.HAS_WON_AWARD, award)
+        updateWendogouser(SIMULATION_ENGINE_STEPS.AWARD_DETAILS, award)
     };
 
     useEffect(() => {
@@ -208,15 +212,16 @@ const AwardDetails = () => {
         helper.setLocalStorageWithExpiration('wendogouser', updatedUser, false);
     };
 
-    const voidFunction = () => { return null;}
-
     const handleContinue = () => {
-        updateWendogouser(SIMULATION_ENGINE_STEPS.CLASS_REPETITION, award)
-    }
+        const newAward = { ...award, year : selectedAwardYear, country: selectedCountry, city: selectedCity, 
+                            spokenLanguage: selectedSpokenLanguage, honourType: selectedHonourType, awardName: awardName, rank: rankValue };
+        updateWendogouser(SIMULATION_ENGINE_STEPS.HAS_WORK_EXPERIENCE, newAward)
+    } 
 
+    const voidFunction = () => { return null;}
     return (
         <div style={{margin: '0 0 35px'}}>
-            <SELabel title={'Veuillez fournir tous les caractéristiques relatifs à cette distinction.'} tip={'Si la donnée est absente.'}/>
+            <SELabel title={'Veuillez fournir tous les caractéristiques relatifs à cette distinction.'}  />
 
             {awardYears && (
                 <SEDropDownList
@@ -276,24 +281,31 @@ const AwardDetails = () => {
 
             <SETextArea
                 placeholderText="Veuillez indiquer la dénomination officielle de cette distinction."
+                id="AWARD_NAME"
                 isPartOfInputGroup={true}
                 value={awardName}
-                valid={valid} 
-                setValid={setValid}
-                doesValueValid={doesValueValid}
+                valid={validAwardName} 
+                setValid={setValidAwardName}
+                onClickOutside={doesAwardNameIsValid}
+                //doesValueValid={doesAwardNameIsValid}
                 handleChange={handleChangeAwardName}/>
     
             <SETextInput 
                 handleChange={handleChangeRank} 
+                autoComplete="on"
+                id="RANK"
                 value={rankValue} 
+                valid={validRank}
+                setValid={setValidRank}
+                doesValueValid={doesRankIsValid}
                 inputLength={255} 
                 isPartOfInputGroup={true}
                 inputGroupBlockTitle={`Saisissez votre classement, si applicable.`}/>
 
-            {showError && <SESmallAlertMessage type="error" content="Vous n'avez saisi aucune valeur." />}
+            {/* {showError && <SESmallAlertMessage type="error" content="Vous n'avez saisi aucune valeur." />} */}
             {showContinueBtn &&            
                                 <div className="FieldView DaisyFieldView field-default SelectField VEH_USA_KILOM" style={{ margin: 0 }}>
-                                    <ButtonLarge name="Continuer" handleContinue={valid ? handleContinue : voidFunction}/>
+                                    <ButtonLarge name="Continuer" handleContinue={(validRank && validAwardName) ? handleContinue : voidFunction}/>
                                 </div>}
 
         </div>

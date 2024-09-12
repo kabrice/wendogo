@@ -30,7 +30,7 @@ const ResidentCountry = () => {
     const handleOutsideClick = (e) => {
         if (newRef.current && !newRef.current.contains(e.target) && !helper.isTargetContainsIgnoreClass(e.target)) {
           setCollapseCountryOption(true)
-          console.log('outside click ResidentCountry')
+          //console.log('Outside click ResidentCountry')
         }
     };
 
@@ -39,7 +39,7 @@ const ResidentCountry = () => {
     }
     const updateSelectedCountry = (item) => {
         console.log('item', item)  
-        setSelectedCountry({ ...item, id: undefined, validated: true })
+        setSelectedCountry({ ...item,  validated: true })
         setCollapseCountryOption(true)
         setFieldDefault(false)
         let isFrancophoneCountryVal = FRANCOPHONE_COUNTRIES.some(country => country.code_iso2 === item.iso2)
@@ -68,7 +68,7 @@ const ResidentCountry = () => {
             
             _.forEach(data, (item) => {
                 if(item.default === true && !user?.selectedCountry){
-                    setSelectedCountry({ ...item, id: undefined });
+                    setSelectedCountry({ ...item });
                     setIsFrancophoneCountry(FRANCOPHONE_COUNTRIES.some(country => country.code_iso2 === item.iso2))
                 }
             });

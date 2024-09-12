@@ -38,7 +38,7 @@ const  CredentialEnd = () => {
       if (newRef.current && !newRef.current.contains(e.target) && !helper.isTargetContainsIgnoreClass(e.target)) {
         setCollapseCountryOption(true)
         setCollapseCityOption(true)
-        console.log('outside click CredentialEnd')
+        //console.log('Outside click CredentialEnd')
       }
     };
 
@@ -409,10 +409,10 @@ const  CredentialEnd = () => {
     let clonedCityArray = []
     if(data){
       clonedCountryArray = (data.countries).map((item) => ({ ...item }));
-      let myCountries = clonedCountryArray.sort((a, b) => a.value.localeCompare(b.value))
+      let myCountries = clonedCountryArray.sort((a, b) => a?.value?.localeCompare(b?.value))
       
       clonedCityArray = (data.cities).map((item) => ({ ...item }));
-      let myCities = clonedCityArray.sort((a, b) => a.value.localeCompare(b.value))     
+      let myCities = clonedCityArray.sort((a, b) => a?.value?.localeCompare(b.value))     
       console.log('myCities', myCities)
       myCountries.forEach(item => {
         if(item.selected === true){

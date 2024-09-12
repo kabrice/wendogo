@@ -2,7 +2,7 @@ import { useState, CSSProperties, useEffect } from "react";
 import ClipLoader from "react-spinners/ClipLoader";
 import { useSelector } from 'react-redux'
 
-const override: CSSProperties = {
+const override = {
   display: "block",
   margin: "0 auto",
   borderColor: "0154c0",
@@ -16,7 +16,7 @@ const Spinner = () =>  {
   //const openModal = useSelector((state) => state.subsModal.open)
   
   useEffect(() => {
-    console.log('===>', spinner)
+    //console.log('===>', spinner)
     if(spinner){
         handlePageScrollAndClickEvent("hidden")
     }else{

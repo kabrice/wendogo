@@ -104,7 +104,8 @@ const AcademicYearHeadDetails2 = () => {
 
     const handleContinue = () => {  
         console.log('user?.reportCard2', user?.reportCard2)
-        updateWendogouser(SIMULATION_ENGINE_STEPS.REPORT_CARD2, academicYearHeadDetails2, showWarning ? null : user?.reportCard2)
+        let updatedAcademicYearHeadDetails2 = { ...academicYearHeadDetails2, city: selectedCity, country: selectedCountry, markSystem: selectedMarkSystem, spokenLanguage: selectedSpokenLanguage, subjectWeightSystem: selectedSubjectWeightSystem, academicYearOrganization: selectedAcademicYearOrganization, schoolName }
+        updateWendogouser(SIMULATION_ENGINE_STEPS.REPORT_CARD2, updatedAcademicYearHeadDetails2, showWarning ? null : user?.reportCard2)
         if (showWarning) {
             setShowWarning(false);
         }

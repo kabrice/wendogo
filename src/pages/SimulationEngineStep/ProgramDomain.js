@@ -54,7 +54,7 @@ const ProgramDomain = () => {
 
     return (<>   
         {data?.hasOwnProperty('best_match') && 
-                <SEAutoSuggestInput title={titleWhenNoMatch} 
+                <SEAutoSuggestInput title={titleWhenNoMatch} id='PROGRAM_DOMAIN'
                                     tip="Par exemple, des formations en droit civil, droit des affaires ou droit des contrats s'inscrivent dans le domaine d'études du droit."
                                     messageError="Un domaine d'études doit être sélectionné"
                                     matchingValue={programDomainObj || data.best_match}

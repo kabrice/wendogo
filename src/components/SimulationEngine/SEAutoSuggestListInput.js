@@ -8,7 +8,7 @@ import { set } from 'lodash';
 
 const SEAutoSuggestListInput = (props) => {
 
-  const { title, urlFragment, handleChange, handleContinue, showContinueBtn, tip, messageError, mainValues, setMainValues } = props;
+  const { title, urlFragment, handleChange, handleContinue, showContinueBtn, tip, messageError, mainValues, setMainValues,id } = props;
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
   const [stopSearch, setStopSearch] = useState(mainValues.length>2)
@@ -27,7 +27,7 @@ const SEAutoSuggestListInput = (props) => {
 
   const handleOutsideClick = (e) => { 
     if (newRef.current && !newRef.current.contains(e.target) && suggestions?.length > 0 && !helper.isTargetContainsIgnoreClass(e.target)) {
-        console.log('outside click SEAutoSuggestListInput')
+        //console.log('Outside click SEAutoSuggestListInput')
         setBusy(false);
         reinitializeInput(false)
         setFocused(false); 
@@ -110,7 +110,7 @@ const SEAutoSuggestListInput = (props) => {
     //setBusy(true);
   }
   return (
-    <div className={`FieldWrapper TextField ${focused ? 'focused' : ''} `} >
+    <div className={`fade-animation fade-slow-enter-done FieldWrapper TextField ${focused ? 'focused' : ''} `} >
       <div className={`FieldView DaisyFieldView TextField COORD_PRE ${focused ? 'focused' : ''}`}>
         <div className="FieldView-flex-container">
           <label className="Label">{title}</label>
@@ -124,7 +124,7 @@ const SEAutoSuggestListInput = (props) => {
               <div className={`AutoSuggest-inputWrapper field-error ${(suggestions?.length>0 || isBusy)  ? 'not-empty ' : ''}`}>
               {!stopSearch && <div className={`Input ${(focused || isBusy) ? 'focused' : 'field-error'}`}>
                   <input  type="text" {...bindInput} placeholder={`Entrez votre${currentPriorityInput>0 ? (currentPriorityInput===1 ? ' 2ème' : ' 3ème') : ''} matière la plus significative`} 
-                          id="COORD_COMMUNE" name="9026b80" value={bindInput.value} 
+                          id={id} name={id} value={bindInput.value} 
                           tabIndex={6} maxLength={1000} autoComplete="off"/>
                           {bindInput?.value?.length>0 && 
                               <span className="Input-symbol" onClick={reinitializeInput}>

@@ -2,15 +2,19 @@ import React, { useState } from "react";
 import SELevelRail from "../../components/SimulationEngine/SELevelRail";
 import { useDispatch, useSelector } from 'react-redux'
 import {setStep} from '../../redux/simulationStepSlice';
+import {setProgress} from "../../redux/progressBarStepSlice";
 import helper from '../../utils/Helper';
-import {SIMULATION_ENGINE_STEPS} from '../../utils/Constants'
+import {SIMULATION_ENGINE_STEPS, PROGRESS_BAR_STEPS} from '../../utils/Constants'
 
 const FrenchLevel = () => {
 
     const dispatch = useDispatch()
     let user = helper.getLocalStorageWithExpiration('wendogouser')
     const simulationStepGlobal = useSelector((state) => state.simulationStep);
+    const progressBarStep = useSelector((state) => state.progressBarStep);
     const [selectedFrenchLevel, setSelectedFrenchLevel] = useState(user?.selectedFrenchLevel || 20)
+    const showContinueBtn = (simulationStepGlobal === SIMULATION_ENGINE_STEPS.FRENCH_LEVEL) || (progressBarStep === PROGRESS_BAR_STEPS.GENERALITES_SUR_LES_VISAS_ET_LES_ETUDES)
+
     const frenchLevels = [
         {
             value: 0,
@@ -56,19 +60,22 @@ const FrenchLevel = () => {
         return `${value} - C2`;
       }
 
-      const updateWendogouser = (simulationStep, selectedFrenchLevel) => {
+      const updateWendogouser = (simulationStep, selectedFrenchLevel, progressBarStep=PROGRESS_BAR_STEPS.GENERALITES_SUR_LES_VISAS_ET_LES_ETUDES) => {
         dispatch(setStep(simulationStep)) 
-        let updatedUser = {...user, simulationStep, selectedFrenchLevel, date: new Date().toISOString()}
+        dispatch(setProgress(progressBarStep)) 
+        let updatedUser = {...user, simulationStep, selectedFrenchLevel, progressBarStep, date: new Date().toISOString()}
         helper.setLocalStorageWithExpiration('wendogouser', updatedUser, false)         
       }
 
       const handleContinue = () => {
-        console.log('selectedFrenchLevel === 😍😍 ', selectedFrenchLevel, SIMULATION_ENGINE_STEPS.IS_YEAR_3_RESULTS_AVAILABLE)
-        updateWendogouser(SIMULATION_ENGINE_STEPS.IS_YEAR_3_RESULTS_AVAILABLE, selectedFrenchLevel)
+        //console.log('selectedFrenchLevel === 😍😍 ', selectedFrenchLevel, SIMULATION_ENGINE_STEPS.IS_YEAR_3_RESULTS_AVAILABLE)
+        updateWendogouser(SIMULATION_ENGINE_STEPS.IS_YEAR_3_RESULTS_AVAILABLE, selectedFrenchLevel, PROGRESS_BAR_STEPS.BULLETIN_LE_PLUS_RECENT)
+        window.location.hash = ""
+        window.location.hash = "form/GENERALITES_SUR_LES_VISAS_ET_LES_ETUDES";
       }
   return (
     <SELevelRail title="Comment évaluer votre niveau de langue française ?" arialLabel="French Level" defaultValue={selectedFrenchLevel}  handleChange={handleChange}
-                 marks={frenchLevels} step = {20} valuetext={valuetext} valueLabelFormat={valueLabelFormat} handleContinue={handleContinue} showContinueBtn={simulationStepGlobal === SIMULATION_ENGINE_STEPS.FRENCH_LEVEL} />
+                 marks={frenchLevels} step = {20} valuetext={valuetext} valueLabelFormat={valueLabelFormat} handleContinue={handleContinue} showContinueBtn={showContinueBtn} />
   );
 }
 

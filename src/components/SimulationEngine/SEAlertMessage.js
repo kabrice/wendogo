@@ -12,7 +12,7 @@ const SEAlertMessage = (props) => {
                     <div className="MegaTip-icon">
                         {icon}
                     </div>
-                    <div className="MegaTip-content">
+                    <div className="MegaTip-content" >
                         <div className="Stack stackColumn" style={{ flexDirection: "column", padding: 0, alignItems: "stretch", justifyContent: "center" }}>
                             <div className="Stack-child" style={{ paddingTop: 8 }}>
                                 <div className="Heading s isWeak MegaTip-title">
@@ -66,7 +66,7 @@ const SEAlertMessage = (props) => {
     };
 
     return (
-        <div className="FieldView DaisyFieldView undefined field-default SelectField VEH_USA_KILOM">
+        <div className="FieldView DaisyFieldView undefined field-default SelectField VEH_USA_KILOM fade-animation fade-slow-enter-done">
             <div className="app-row app-field">
                 <div className="app-col-xs-12 app-col-sm-12 app-col-md-12 Field">
                     <div className={`MegaTip ${isError ? 'MegaTip-error-color' : 'MegaTip-normal-color'}`}>

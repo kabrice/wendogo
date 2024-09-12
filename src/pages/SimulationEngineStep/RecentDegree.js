@@ -24,9 +24,9 @@ const RecentDegree = () => {
 
     const handleOutsideClick = (e) => {
         if (newRef.current && !newRef.current.contains(e.target) && !helper.isTargetContainsIgnoreClass(e.target)) {
-            //console.log('outside click')
+            ////console.log('Outside click')
           setCollapseDegreeOption(true)
-          console.log('outside click RecentDegree')
+          //console.log('Outside click RecentDegree')
         }
       };
 

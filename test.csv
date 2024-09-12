@@ -1,0 +1,29 @@
+-Pas de matière pour la 1ere école *===> à ignorer pour l'instant*
+-50,B--G,ME *===> G : Gestion, ME : Management des entreprises*
+-75,D--PhF *===> Corrigé, erreur!*
+--90,E--ArtF *===> Corrigé, erreur!* 
+--60,B--Ig *===> Informatique de gestion*
+--115,F--L, Hg *===> Littérature, Histoire/Geographie*
+--150,A G--Mg *===> Gestion. Ignorer les Mg, qui veut tout simplement dire qu'on met l'accent sur la moyenne générale*
+--155,H, Ec, S, AQ30 *===>  Ec= Ecologie, S=Sciences, AQ30 ne veut rien dire, j'ai effacé*
+---Svt:"Sciences de la Terre,Science de la vie"/Sciences de la Terre et des Planètes Environnement *===> tu peux tout simplement garder: Sciences de la Terre,Science de la vie*
+--140,H--AG186 *===> ne veut rien dire, j'ai effacé*
+--185,AR--AH191 *===> ne veut rien dire, j'ai effacé*
+---275,J--Hg *===> Histoire/Geographie*
+--300,J--L, Hg *===> déjà dis*
+---401,N--AF *===> Corrigé, ne pas tenir compte*
+---415,N--Map *===> Map= Mathématiques Appliquées*
+--435,O--Shs *===> Sciences humaines et sociales*
+--450,O--H *===> H = Histoire*
+--630,AQ--Ge *===> Géologie*
+--655,Z--AA661 *===>  ne veut rien dire, j'ai effacé*
+--680,AA--AI *===> c'est Al= Allemand*
+---685,AA--Es *===> Es = Espagnol*
+---720,AZ--AM731 *===> ne veut rien dire, j'ai effacé*
+--705,AJ--Sh *===> j'ai effacé la formation*
+-740,AN--Bu *===> Bureautique*
+--815,AS,Lv1 *===> Langue vivante 1*
+---810,AR,Bi,LV *===> Remplacé par Bg*
+---880,AX--Si *===> Si = Science de l'ingénieur*
+--925,AY--B *===> changer en Bg pour biologie*
+---205,AH--Sn *===> Science du Numérique*

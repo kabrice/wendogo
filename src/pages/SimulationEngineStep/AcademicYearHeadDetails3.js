@@ -12,7 +12,7 @@ const AcademicYearHeadDetails3 = () => {
 
     let user = helper.getLocalStorageWithExpiration('wendogouser');
     const dispatch = useDispatch();
-    //console.log('user AcademicYearHeadDetails3', user)
+    ////console.log('user AcademicYearHeadDetails3', user)
     const [selectedCountry, setSelectedCountry] = useState(user?.academicYearHeadDetails3?.country || user?.selectedCountry || { name: '',  validated: false });
     const [collapseCountryOption, setCollapseCountryOption] = useState(true);
     const [selectedCity, setSelectedCity] = useState(user?.academicYearHeadDetails3?.city || { name: '', validated: false });
@@ -33,7 +33,7 @@ const AcademicYearHeadDetails3 = () => {
 
     // Redux state selectors
     const simulationStepGlobal = useSelector((state) => state.simulationStep);
-    //console.log('simulationStepGlobal XXXXX', user?.academicYearHeadDetails3)
+    ////console.log('simulationStepGlobal XXXXX', user?.academicYearHeadDetails3)
     // Update functions for dropdowns
 
     const updateSelectedCountry = (item) => {
@@ -49,7 +49,7 @@ const AcademicYearHeadDetails3 = () => {
         setCollapseCityOption(true);  
         //academicYearHeadDetails3.city = { ...item, validated: true };
         setAcademicYearHeadDetails3({ ...academicYearHeadDetails3, city: { ...item, validated: true } })
-        //console.log('setSelectedCity', academicYearHeadDetails3)
+        ////console.log('setSelectedCity', academicYearHeadDetails3)
         updateWendogouser(SIMULATION_ENGINE_STEPS.ACADEMIC_YEAR_HEAD_DETAILS3, academicYearHeadDetails3)
     };
 
@@ -70,7 +70,7 @@ const AcademicYearHeadDetails3 = () => {
         // Update the academicYearHeadDetails3 object and local storage
         //academicYearHeadDetails3.markSystem = { ...item, validated: true };
         setAcademicYearHeadDetails3({ ...academicYearHeadDetails3, markSystem: { ...item, validated: true } })
-        console.log('academicYearHeadDetails3 markSystem', academicYearHeadDetails3)
+        //console.log('academicYearHeadDetails3 markSystem', academicYearHeadDetails3)
         updateWendogouser(SIMULATION_ENGINE_STEPS.ACADEMIC_YEAR_HEAD_DETAILS3, academicYearHeadDetails3);
     };
     
@@ -78,23 +78,22 @@ const AcademicYearHeadDetails3 = () => {
     const updateSelectedSubjectWeightSystem = (item) => {
         setSelectedSubjectWeightSystem({ ...item, validated: true });
         setCollapseSubjectWeightSystemOption(true)
-        //academicYearHeadDetails3.subjectWeightSystem = { ...item, validated: true }
-        setAcademicYearHeadDetails3({ ...academicYearHeadDetails3, subjectWeightSystem: { ...item, validated: true } })
-        console.log('academicYearHeadDetails3 subjectWeightSystem', academicYearHeadDetails3)
-        updateWendogouser(SIMULATION_ENGINE_STEPS.ACADEMIC_YEAR_HEAD_DETAILS3, academicYearHeadDetails3)
+        const newAcademicYearHeadDetails = { ...academicYearHeadDetails3, subjectWeightSystem: { ...item, validated: true } }
+        setAcademicYearHeadDetails3(newAcademicYearHeadDetails)
+        updateWendogouser(SIMULATION_ENGINE_STEPS.ACADEMIC_YEAR_HEAD_DETAILS3, newAcademicYearHeadDetails)
     };
 
     const updateSelectedAcademicYearOrganization = (item) => {
         setSelectedAcademicYearOrganization({ ...item, validated: true });
         setCollapseAcademicYearOrganizationOption(true);
-        console.log('academicYearHeadDetails3 academicYearOrganization before', academicYearHeadDetails3)
-        setAcademicYearHeadDetails3({ ...academicYearHeadDetails3, academicYearOrganization: { ...item, validated: true } })
-        //academicYearHeadDetails3.academicYearOrganization = { ...item, validated: true }
-        console.log('academicYearHeadDetails3 academicYearOrganization', academicYearHeadDetails3)
-        updateWendogouser(SIMULATION_ENGINE_STEPS.ACADEMIC_YEAR_HEAD_DETAILS3, academicYearHeadDetails3)
+        //console.log('🥳👆 item', item)
+        const newAcademicYearHeadDetails = { ...academicYearHeadDetails3, academicYearOrganization: { ...item, validated: true } }
+        setAcademicYearHeadDetails3(newAcademicYearHeadDetails)
+        updateWendogouser(SIMULATION_ENGINE_STEPS.ACADEMIC_YEAR_HEAD_DETAILS3, newAcademicYearHeadDetails)
     };
 
     const updateSelectedSpokenLanguage = (item) => {
+        //console.log('🥳👆 updateSelectedSpokenLanguage item', item)
         setSelectedSpokenLanguage({ ...item, validated: true });
         setCollapseSpokenLanguageOption(true);  
         //academicYearHeadDetails3.spokenLanguage = { ...item, validated: true };
@@ -105,7 +104,7 @@ const AcademicYearHeadDetails3 = () => {
     const handleChangeSchoolName = (e) => {
         const inputValue = e.target.value
         setSchoolName(inputValue); 
-        //console.log('handleChangeSchoolName', academicYearHeadDetails3)
+        ////console.log('handleChangeSchoolName', academicYearHeadDetails3)
         //academicYearHeadDetails3.schoolName = inputValue;
         setAcademicYearHeadDetails3({ ...academicYearHeadDetails3, schoolName: inputValue })
         updateWendogouser(SIMULATION_ENGINE_STEPS.ACADEMIC_YEAR_HEAD_DETAILS3, academicYearHeadDetails3)
@@ -113,8 +112,11 @@ const AcademicYearHeadDetails3 = () => {
     };
 
     const handleContinue = () => {  
-        console.log('user?.reportCard3', user?.reportCard3)
-        updateWendogouser(SIMULATION_ENGINE_STEPS.REPORT_CARD3, academicYearHeadDetails3, showWarning ? null : user?.reportCard3)
+        //console.log('🥺 XXX', {selectedCity, selectedCountry, selectedMarkSystem, selectedSpokenLanguage, selectedSubjectWeightSystem, selectedAcademicYearOrganization})
+        let updatedAcademicYearHeadDetails3 = { ...academicYearHeadDetails3, city: selectedCity, country: selectedCountry, markSystem: selectedMarkSystem, 
+                                                spokenLanguage: selectedSpokenLanguage, subjectWeightSystem: selectedSubjectWeightSystem, 
+                                                academicYearOrganization: selectedAcademicYearOrganization, schoolName }
+        updateWendogouser(SIMULATION_ENGINE_STEPS.REPORT_CARD3, updatedAcademicYearHeadDetails3, showWarning ? null : user?.reportCard3)
         if (showWarning) {
             setShowWarning(false);
         }

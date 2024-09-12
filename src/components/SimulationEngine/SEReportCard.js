@@ -48,7 +48,7 @@ const SEReportCard = (props) => {
         setSubjectList(prevList => prevList.filter(subject => subject.reference !== reference));
     }
     return (
-        <div className="app-col-xs-12 app-col-sm-8 app-col-md-8 Field" style={{ padding: '15px 0 0 0'}}>
+        <div className="app-col-xs-12 app-col-sm-8 app-col-md-8 Field fade-animation fade-slow-enter-done" style={{ padding: '15px 0 0 0'}}>
         <div className="css-1g9mw2i">
             <span className="css-8u2krs">
                 <div className="css-u74ql7" />

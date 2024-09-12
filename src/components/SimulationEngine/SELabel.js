@@ -9,7 +9,7 @@ const SELabel = (props) => {
    
  
   return (
-    <div className={`FieldWrapper TextField`}>
+    <div className={`FieldWrapper TextField fade-animation fade-slow-enter-done`}>
       <div className={`FieldView DaisyFieldView TextField COORD_PRE`} style={{margin : 0}}>
         <div className="FieldView-flex-container">
           <label className="Label">{title}</label>

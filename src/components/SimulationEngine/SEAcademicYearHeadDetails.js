@@ -53,11 +53,13 @@ const SEAcademicYearHeadDetails = (props) => {
     const { data: markSystems, error: markSystemsError, isLoading: markSystemsIsLoading } = useGetMarkSystemsQuery();
     const { data: subjectWeightSystems, error: subjectWeightSystemsError, isLoading: subjectWeightSystemsIsLoading } = useGetSubjectWeightSystemsQuery();
 
-    const doesValueValid = () => {
+    const doesValueValid = (schoolName) => {
+        console.log('schoolName', schoolName,  schoolName !== undefined, schoolName.trim().length >= 10, /[a-zA-Z].*[a-zA-Z]/.test(schoolName));
+        console.log('schoolNamexxx', schoolName !== undefined && schoolName && schoolName.trim().length >= 10 && /[a-zA-Z].*[a-zA-Z]/.test(schoolName));
         return schoolName !== undefined && schoolName && schoolName.trim().length >= 10 && /[a-zA-Z].*[a-zA-Z]/.test(schoolName);
     }
       
-    const [valid, setValid] = useState(doesValueValid() || schoolName === '');
+    const [valid, setValid] = useState(doesValueValid(schoolName) || schoolName === '');
 
     useEffect(() => {
         
@@ -143,27 +145,27 @@ const SEAcademicYearHeadDetails = (props) => {
     const handleOutsideClick = (e) => {
         if (newRefCountry.current && !newRefCountry.current.contains(e.target) && !helper.isTargetContainsIgnoreClass(e.target)) {
             setCollapseCountryOption(true);
-            console.log('Outside click on ResidentCountry');
+            //console.log('Outside click on ResidentCountry');
         }
         if (newRefCity.current && !newRefCity.current.contains(e.target) && !helper.isTargetContainsIgnoreClass(e.target)) {
             setCollapseCityOption(true);
-            console.log('Outside click on ResidentCity');
+            //console.log('Outside click on ResidentCity');
         }
         if (newRefSpokenLanguage.current && !newRefSpokenLanguage.current.contains(e.target) && !helper.isTargetContainsIgnoreClass(e.target)) {
             setCollapseSpokenLanguageOption(true);
-            console.log('Outside click on SpokenLanguage');
+            //console.log('Outside click on SpokenLanguage');
         }
         if (newRefAcademicYearOrganization.current && !newRefAcademicYearOrganization.current.contains(e.target) && !helper.isTargetContainsIgnoreClass(e.target)) {
             setCollapseAcademicYearOrganizationOption(true);
-            console.log('Outside click on AcademicYearOrganization');
+            //console.log('Outside click on AcademicYearOrganization');
         }
         if (newRefMarkSystem.current && !newRefMarkSystem.current.contains(e.target) && !helper.isTargetContainsIgnoreClass(e.target)) {
             setCollapseMarkSystemOption(true);
-            console.log('Outside click on MarkSystem');
+            //console.log('Outside click on MarkSystem');
         }
         if (newRefSubjectWeightSystem.current && !newRefSubjectWeightSystem.current.contains(e.target) && !helper.isTargetContainsIgnoreClass(e.target)) {
             setCollapseSubjectWeightSystemOption(true);
-            console.log('Outside click on SubjectWeightSystem');
+            //console.log('Outside click on SubjectWeightSystem');
         }
 
     };
@@ -212,7 +214,8 @@ const SEAcademicYearHeadDetails = (props) => {
                 value={schoolName}
                 valid={valid}
                 setValid={setValid}
-                doesValueValid={doesValueValid}
+                onClickOutside={doesValueValid}
+                //doesValueValid={doesValueValid}
                 handleChange={handleChangeSchoolName}/>
 
             {spokenLanguages && (

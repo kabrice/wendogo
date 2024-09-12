@@ -2,6 +2,7 @@
 import { useState, useEffect} from 'react';
 import { useGetDegreesQuery } from '../../store/apis/degreeApi';
 import { activateSpinner, deactivateSpinner } from '../../redux/spinnerslice'
+import { activatePremiereClass, deactivatePremiereClass } from '../../redux/premiereClassSlice';
 import SESelectionList from '../../components/SimulationEngine/SESelectionList';
 import _ from 'lodash'
 import { useDispatch, useSelector } from 'react-redux'
@@ -45,9 +46,14 @@ function RecentLevelHighSchool() {
     }, [data, error, isLoading ])
     
     const handleHSLevelSelection = (item) => {
-        //console.log('item', item)
+        console.log('item', item)
         setHSLevelSelected(item.id)
         updateWendogouser(SIMULATION_ENGINE_STEPS.SCHOOL_YEAR3, item.id)
+        if(item.id === 'deg00002'){
+            dispatch(activatePremiereClass())
+        }else{
+            dispatch(deactivatePremiereClass())
+        }
     }
 
     const handleContinue = () => {

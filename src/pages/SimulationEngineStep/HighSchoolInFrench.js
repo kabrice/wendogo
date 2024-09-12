@@ -27,7 +27,7 @@ const HighSchoolInFrench = () => {
         updateWendogouser(SIMULATION_ENGINE_STEPS.FRENCH_TEST, isHighSchoolInFrench)
     }
 
-    return (<SEYesNo  title="Est-ce que vous avez effectué la totalité de vos études secondaires en langue française ?" 
+    return (<SEYesNo  title="Est-ce que vous avez effectué la totalité de vos études secondaires en langue française ?" id="HIGH_SCHOOL_IN_FRENCH"
                     yes={isHighSchoolInFrench} handleYes={handleIsHighSchoolInFrench} handleContinue={handleContinue} showContinueBtn={simulationStepGlobal === SIMULATION_ENGINE_STEPS.HIGH_SCHOOL_IN_FRENCH} />);
 }
 

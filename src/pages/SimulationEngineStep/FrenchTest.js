@@ -27,9 +27,9 @@ const FrenchTest = () => {
         updateWendogouser(SIMULATION_ENGINE_STEPS.FRENCH_LEVEL, haveDoneFrenchTest)
     }
 
-    return (<SEYesNo title="Avez-vous passé un test de langue française, comme le DELF ?" 
-                    yes={haveDoneFrenchTest} handleYes={handleHaveDoneFrenchTest} handleContinue={handleContinue} 
-                    showContinueBtn={simulationStepGlobal === SIMULATION_ENGINE_STEPS.FRENCH_TEST} />);
+    return (<SEYesNo title="Avez-vous passé un test de langue française, comme le DELF ?" id="FRENCH_TEST"
+                     yes={haveDoneFrenchTest} handleYes={handleHaveDoneFrenchTest} handleContinue={handleContinue} 
+                     showContinueBtn={simulationStepGlobal === SIMULATION_ENGINE_STEPS.FRENCH_TEST} />);
 }
 
 export default FrenchTest;

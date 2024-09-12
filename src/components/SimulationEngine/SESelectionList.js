@@ -4,7 +4,7 @@ function SESelectionList(props){
     const {title, items, itemSelected, handleItemSelection, handleContinue, showContinueBtn} = props;
 
   return (
-    <div id="VEH_DTL_POSSESSION-wrapper" className="FieldWrapper RadioField VEH_DTL_POSSESSION field-valid  ">
+    <div id="VEH_DTL_POSSESSION-wrapper" className="FieldWrapper RadioField VEH_DTL_POSSESSION field-valid  fade-animation fade-slow-enter-done">
         <div className="FieldView DaisyFieldView undefined field-valid RadioField VEH_DTL_POSSESSION ">
                 <div className="FieldView-flex-container">
                     <label className="Label ">{title}</label>

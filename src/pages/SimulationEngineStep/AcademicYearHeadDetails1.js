@@ -19,6 +19,7 @@ const AcademicYearHeadDetails1 = () => {
     const [collapseCityOption, setCollapseCityOption] = useState(true);  
     const [selectedSpokenLanguage, setSelectedSpokenLanguage] = useState(user?.academicYearHeadDetails1?.spokenLanguage || user?.academicYearHeadDetails2?.country || { name: '', validated: false });
     const [collapseSpokenLanguageOption, setCollapseSpokenLanguageOption] = useState(true);
+    console.log('user.academicYearHeadDetails2.academicYearOrganization', user?.academicYearHeadDetails2?.academicYearOrganization)
     const [selectedAcademicYearOrganization, setSelectedAcademicYearOrganization] = useState(user?.academicYearHeadDetails1?.academicYearOrganization || user?.academicYearHeadDetails2?.academicYearOrganization ||{ name: '', validated: false });
     const [collapseAcademicYearOrganizationOption, setCollapseAcademicYearOrganizationOption] = useState(true);
     const [selectedMarkSystem, setSelectedMarkSystem] = useState(user?.academicYearHeadDetails1?.markSystem || user?.academicYearHeadDetails2?.markSystem || { name: '', validated: false });
@@ -104,7 +105,8 @@ const AcademicYearHeadDetails1 = () => {
 
     const handleContinue = () => {  
         console.log('user?.reportCard1', user?.reportCard1)
-        updateWendogouser(SIMULATION_ENGINE_STEPS.REPORT_CARD1, academicYearHeadDetails1, showWarning ? null : user?.reportCard1)
+        let updatedAcademicYearHeadDetails1 = { ...academicYearHeadDetails1, city: selectedCity, country: selectedCountry, markSystem: selectedMarkSystem, spokenLanguage: selectedSpokenLanguage, subjectWeightSystem: selectedSubjectWeightSystem, academicYearOrganization: selectedAcademicYearOrganization, schoolName }
+        updateWendogouser(SIMULATION_ENGINE_STEPS.REPORT_CARD1, updatedAcademicYearHeadDetails1, showWarning ? null : user?.reportCard1)
         if (showWarning) {
             setShowWarning(false);
         }

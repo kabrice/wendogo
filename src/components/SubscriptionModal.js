@@ -29,7 +29,7 @@ const SubscriptionModal = () => {
 
     const handleOutsideClick = (e) => {
         if (newRef.current && !newRef.current.contains(e.target) && !helper.isTargetContainsIgnoreClass(e.target)) {
-            console.log('outside click SubscriptionModal')
+            //console.log('Outside click SubscriptionModal')
             dispatch(close())
         }
       };

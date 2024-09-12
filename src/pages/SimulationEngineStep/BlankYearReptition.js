@@ -12,19 +12,23 @@ const BlankYearReptition = () => {
     let user = helper.getLocalStorageWithExpiration('wendogouser')
 
     const simulationStepGlobal = useSelector((state) => state.simulationStep);
+    const isInUniversityGlobal = useSelector((state) => state.university.active)
+
     const [blankYearRepetitionNumber, setblankYearRepetitionNumber] = useState(user?.blankYearRepetitionNumber || 0)
     
     const handleIncrement = () => {
         console.log('handleIncrement')
-        setblankYearRepetitionNumber(blankYearRepetitionNumber + 1);
-        updateWendogouser(SIMULATION_ENGINE_STEPS.BLANK_YEAR_REPETITION, blankYearRepetitionNumber + 1)
+        const newBlankYearRepetitionNumber = blankYearRepetitionNumber + 1;
+        setblankYearRepetitionNumber(newBlankYearRepetitionNumber);
+        updateWendogouser(SIMULATION_ENGINE_STEPS.BLANK_YEAR_REPETITION, newBlankYearRepetitionNumber)
     };
 
     const handleDecrement = () => {
         console.log('handleDecrement')
         if (blankYearRepetitionNumber > 0) {
-            setblankYearRepetitionNumber(blankYearRepetitionNumber - 1);
-            updateWendogouser(SIMULATION_ENGINE_STEPS.BLANK_YEAR_REPETITION, blankYearRepetitionNumber - 1)
+            const newBlankYearRepetitionNumber = blankYearRepetitionNumber - 1;
+            setblankYearRepetitionNumber(newBlankYearRepetitionNumber);
+            updateWendogouser(SIMULATION_ENGINE_STEPS.BLANK_YEAR_REPETITION, newBlankYearRepetitionNumber)
         }
     };
 
@@ -41,19 +45,28 @@ const BlankYearReptition = () => {
         let updatedUser = {...user, simulationStep, blankYearRepetitionNumber, date: new Date().toISOString()}
         helper.setLocalStorageWithExpiration('wendogouser', updatedUser, false)         
     }
-
-    const getValidLevelRepetitionStart = (user) => {
-        let bacNumber = user.universityLevelSelected.name.slice(-1)
-
-        if(bacNumber>=3){
-            return '+'+(bacNumber-2)
+    
+    const getValidLevelRepetitionStartText = (user) => {
+        let bacNumber = 0
+        if(isInUniversityGlobal){
+            bacNumber = user.universityLevelSelected.name.slice(-1) 
+        }else if(user.hsLevelSelected === 'deg00002'){
+            bacNumber = -2
+        }else if(user.hsLevelSelected === 'deg00003'){
+            bacNumber = -1
         }
-        return ''
+        if(bacNumber===-1 || bacNumber===-2){
+            return 'la classe de seconde'
+        }
+        if(bacNumber>=3){
+            return 'BAC+'+(bacNumber-2)
+        }
+        return 'le BAC'
     }
-
+    
     return (
         <NumberSelection number={blankYearRepetitionNumber} handleIncrement={handleIncrement} handleDecrement={handleDecrement} 
-                         title1={`Depuis BAC${getValidLevelRepetitionStart(user)}, combien d'années n'avez-vous pas été scolarisé ou avez-vous eu une interruption dans vos études`} 
+                         title1={`Depuis ${getValidLevelRepetitionStartText(user)}, combien d'années n'avez-vous pas été scolarisé ou avez-vous eu une interruption dans vos études`} 
                          title2="Nombre d'années blanches" handleContinue={handleContinue} showContinueBtn={simulationStepGlobal === SIMULATION_ENGINE_STEPS.BLANK_YEAR_REPETITION} 
                          modalTitle = "Quelques critères d'inéligibilité Campus France" modalParagraphs={CAMPUS_FRANCE_CRITERIA} modalIcon={<QuestionMark className="FrancoisImg image"/>} 
                          modalIsLiTag={true} displayQuestionTooltip={true} specialTextModal="* Critères valables dans la majorité des pays francophones."/>

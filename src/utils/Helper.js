@@ -79,15 +79,15 @@ const helper = {
         return null;
     },
     redirectionAtInit(user, currentPagePath, redirectPath='/waitinglist'){
-      console.log('redirectionAtInit 🥰 ' , user)
-        console.log('redirectionAtInit 🥰 ' , currentPagePath, user.subscription_step, redirectPath)
+      //console.log('redirectionAtInit 🥰 ' , user)
+        //console.log('redirectionAtInit 🥰 ' , currentPagePath, user.subscription_step, redirectPath)
         if(!user || !(user.subscription_step).startsWith(currentPagePath)){
           console.log('redirectionAtInit ERROR')
             // navigate('/waitinglist')
             document.location.href=redirectPath; 
             return false
         }
-        console.log('user' , user)
+       // console.log('user' , user)
         return true
     },
     loadFacebookSDK: function(){
@@ -178,20 +178,31 @@ const helper = {
         });
         return isIgnored;
       },
-      updateBAC : function(educationLevel, downgradedYear) {
+      updateBAC : function(isInUniversityGlobal, user, downgradedYear) {
+        // Un peu contradictoire avec ce qui est dit dans la base de données, mais ici c'est juste pour le design 
+        let educationLevel
+        if(isInUniversityGlobal){
+          educationLevel = user.universityLevelSelected.name
+        }else if(user.hsLevelSelected === 'deg00002'){ // Première
+          educationLevel = 'BAC-1'
+        }else if(user.hsLevelSelected === 'deg00003'){ // Terminale
+          educationLevel = 'BAC-0'
+        }
         // Extract the last character from the education level string
-        let lastCharacter = _.last(_.toArray(educationLevel));
-
+        let lastTwoCharacters = _.takeRight(educationLevel, 2).join('');
+        
         // Convert the last character to an integer and subtract the specified number of years
-        let updatedNumber = parseInt(lastCharacter, 10) - downgradedYear;
-
+        let updatedNumber = parseInt(lastTwoCharacters, 10) - downgradedYear;
+        console.log('updatedNumberlastCharacter', {educationLevel, lastTwoCharacters, updatedNumber})
         // Handle different cases based on the value of updatedNumber
-        if (updatedNumber === 0) {
-          return 'du BAC et Terminale';
+        if(updatedNumber === 1){
+          return 'du diplôme du Baccalauréat et BAC+1';
+        }else if (updatedNumber === 0) {
+          return 'de Terminale';
         } else if (updatedNumber === -1) {
-          return 'BAC-1 (Classe de Première)';
+          return 'de la classe de Première (ou équivalent)';
         } else if (updatedNumber <= -2) {
-          return 'BAC-2 (Classe de Seconde)';
+          return 'de la classe de Seconde (ou équivalent)';
         } else {
           // Return the updated BAC level if it's greater than -2
           return `BAC+${updatedNumber}`;

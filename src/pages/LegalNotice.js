@@ -201,7 +201,7 @@ function LegalNotice(){
                         </div>
                         </div>
                       </div>
-                    </main>
+            </main>
             <Footer/>                    
           </div>
 

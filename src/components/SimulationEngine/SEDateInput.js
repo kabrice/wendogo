@@ -4,50 +4,62 @@ import ButtonLarge from "../ButtonLarge";
 
 const SEDateInput = (props) => {
 
-    const { title, handleDayChange, handleMonthChange, handleYearChange, showContinueBtn, 
-            tip, day, setDay, month, setMonth, year, setYear, sendFormattedDateResultToParent } = props;
+    const { title, handleDayChange, handleMonthChange, handleYearChange, showContinueBtn, id,
+            tip, day, setDay, month, setMonth, year, setYear, sendFormattedDateResultToParent, validated } = props;
 
- 
-    const [valid, setValid] = useState(false);
+    const [valid, setValid] = useState(validated);
     const [focused, setFocused] = useState(true);
 
     const newRef = useRef(null);
-    console.log('validxxx', valid)
+
     const handleFocus = () => {
         setFocused(true);
-        setValid(false);
+        setValid(true);
     };
+    const handleBlur = (e) => {
+        const { name, value } = e.target;
+        let newDay = day;
+        let newMonth = month;
+        let newYear = year;
 
-    const handleBlur = () => {
-        if (!day && !month && !year) {
-            setFocused(true);
-        } else{
-            // Add leading zeros to day and month if necessary
-            setDay(day.padStart(2, '0'));
-            setMonth(month.padStart(2, '0'));
-            console.log('day00', day)
-            if(['0', '00'].includes(day)){
-                setDay('');
-                setValid(false);
+        if (name.includes('day')) {
+            newDay = value.padStart(2, '0');
+            if (['0', '00'].includes(newDay)) newDay = '';
+            setDay(newDay);
+        } else if (name.includes('month')) {
+            newMonth = value.padStart(2, '0');
+            if (['0', '00'].includes(newMonth)) newMonth = '';
+            setMonth(newMonth);
+        } else if (name.includes('year')) {
+            newYear = value;
+            if (newYear.length === 2) {
+                newYear = parseInt(newYear) >= 20 ? `19${newYear}` : `20${newYear}`;
+            } else if (newYear.length === 1) {
+                newYear = `200${newYear}`;
             }
-            if(['0', '00'].includes(month)){
-                setMonth('');
-                setValid(false);
-            }
-            // Prefix year based on its value
-            if (year.length === 2) {
-                if (parseInt(year) >= 20) {
-                    setYear(`19${year}`);
-                } else {
-                    setYear(`20${year}`);
-                }
-            }
-            if (year.length === 1) {
-                setYear(`200${year}`);
-            }
+            setYear(newYear);
+        }
+
+        // Validate the date with the updated values
+        if(newDay && newMonth && newYear){
+            validateDate(newDay, newMonth, newYear);
         }
     };
 
+    const validateDate = (day, month, year) => {
+        const inputDate = new Date(`${year}-${month}-${day}`);
+        const minDate = new Date('1970-01-01');
+        const currentDate = new Date();
+        const maxDate = new Date(currentDate.getFullYear() - 14, currentDate.getMonth(), currentDate.getDate());
+        console.log('data', {inputDate, minDate, maxDate});
+        if (inputDate >= minDate && inputDate <= maxDate) {
+            console.log('valid');
+            setValid(true);
+        } else {
+            console.log('invalid');
+            setValid(false);
+        }
+    };
 
     const handleButtonClick = () => {
         if (day && month && year) {
@@ -55,8 +67,13 @@ const SEDateInput = (props) => {
             const formattedMonth = month.padStart(2, '0');
             const formattedYear = year.length === 2 ? (parseInt(year) >= 20 ? `19${year}` : `20${year}`) : year;
             const date = `${formattedDay}/${formattedMonth}/${formattedYear}`;
-            sendFormattedDateResultToParent(date)
-            console.log(date);
+            
+            validateDate(formattedDay, formattedMonth, formattedYear);
+
+            if (valid) {
+                sendFormattedDateResultToParent(date);
+                console.log(date);
+            }
         } else {
             setValid(false);
         }
@@ -65,39 +82,36 @@ const SEDateInput = (props) => {
     const handleOutsideClick = (e) => {
         if (newRef.current && !newRef.current.contains(e.target) && !helper.isTargetContainsIgnoreClass(e.target)) {
             setFocused(false);
-        if (day && month && year) {
-            setValid(true);
-          } else {
-            setValid(false);
-          }
-          console.log('outside click SEDateInput')
+            if (day && month && year) {
+                setValid(true);
+            } else {
+                setValid(false);
+            }
         }
-      };
+    };
       
     useEffect(() => {
-    helper.addOutsideClick(handleOutsideClick)
-    })
+        helper.addOutsideClick(handleOutsideClick);
+    }, []);
 
     const voidFunction = () => {
         return null;
-        }
+    };
 
     return (
-        <div id="PRI_DON_NAISS-wrapper" className={`FieldWrapper DateInputField PRI_DON_NAISS ${focused ? 'focused' : ''} ${valid ? 'field-valid' : 'field-error'}`}>
+        <div id={`${id}-wrapper`} className={`FieldWrapper DateInputField PRI_DON_NAISS ${focused ? 'focused' : ''} ${valid ? 'field-valid' : 'field-error'} fade-animation fade-slow-enter-done`}>
             <div className={`FieldView DaisyFieldView DateInputField PRI_DON_NAISS ${focused ? 'focused' : ''}`}>
                 <div className="FieldView-flex-container">
                     <label className="Label">{title}</label>
                 </div>
-                <div className="Tip  ">
-                    <div>{tip} </div>
+                <div className="Tip">
+                    <div>{tip}</div>
                 </div>
-                <div className="DrawerAnimation" style={{ height: 0 }}>
-                    <div />
-                </div>
+                <div className="DrawerAnimation" style={{ height: 0 }}/> 
                 <div className="app-row app-field">
                     <div className="app-col-xs-12 app-col-sm-12 app-col-md-12 Field">
-                        <div id="PRI_DON_NAISS" className="Date">
-                            <div className={` Date-labels ${focused ? 'focused' : ''} ${valid ? 'field-valid' : 'field-error'}`}>
+                        <div id={`${id}`} className="Date">
+                            <div className={`Date-labels ${focused ? 'focused' : ''} ${valid ? 'field-valid' : 'field-error'}`}>
                                 <span style={{ width: "30%", textAlign: "center" }}>Jour</span>
                                 <span style={{ width: "30%", textAlign: "center" }}>Mois</span>
                                 <span style={{ width: "40%", textAlign: "center" }}>Année</span>
@@ -110,7 +124,7 @@ const SEDateInput = (props) => {
                                     pattern="[0-9]*"
                                     name="PRI_DON_NAISS-day"
                                     placeholder="JJ"
-                                    id="PRI_DON_NAISS-day"
+                                    id={`${id}-day`}
                                     maxLength={2}
                                     size={2}
                                     min="1"
@@ -129,7 +143,7 @@ const SEDateInput = (props) => {
                                     pattern="[0-9]*"
                                     name="PRI_DON_NAISS-month"
                                     placeholder="MM"
-                                    id="PRI_DON_NAISS-month"
+                                    id={`${id}-month`}
                                     maxLength={2}
                                     min="1"
                                     size={2}
@@ -148,7 +162,7 @@ const SEDateInput = (props) => {
                                     pattern="[0-9]*"
                                     name="PRI_DON_NAISS-year"
                                     placeholder="AAAA"
-                                    id="PRI_DON_NAISS-year"
+                                    id={`${id}-year`}
                                     maxLength={4}
                                     min="1"
                                     size={4}
@@ -163,11 +177,12 @@ const SEDateInput = (props) => {
                         </div>
                     </div>
                 </div>
-                {(!valid && !focused)  && (
+                {(!valid && !focused) && (
                     <div className="Error">
                         <span className="Icon error-icon icon-lesfurets icon-system-alert" /> Veuillez entrer une date valide
                     </div>
                 )}
+                {/* {' '+valid} */}
                 {showContinueBtn && <ButtonLarge name="Continuer" handleContinue={valid ? handleButtonClick : voidFunction} />}
             </div>
         </div>

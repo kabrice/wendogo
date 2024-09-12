@@ -4,13 +4,13 @@ import RecentLevelUniversity from "./RecentLevelUniversity";
 import helper from '../../utils/Helper';
 
 const RecentLevel = () => {
-    let user = helper.getLocalStorageWithExpiration('wendogouser')
-    const isInUniversityGlobal = useSelector((state) => state.userLevelSlice.isInUniversity)
+    //let user = helper.getLocalStorageWithExpiration('wendogouser')
+    const isInUniversityGlobal = useSelector((state) => state.university.active)
 
-    const isInUniversity = user.hasOwnProperty("schoolLevelSelected") ? (user.schoolLevelSelected === 'Supérieur') : isInUniversityGlobal
+    //const isInUniversity = user.hasOwnProperty("schoolLevelSelected") ? (user.schoolLevelSelected === 'Supérieur') : isInUniversityGlobal
     return (
         <>
-            {isInUniversity ? <RecentLevelUniversity /> : <RecentLevelHighSchool />}
+            {isInUniversityGlobal ? <RecentLevelUniversity /> : <RecentLevelHighSchool />}
         </>
     );
   }

@@ -3,9 +3,10 @@ import SEReportCard from '../../components/SimulationEngine/SEReportCard';
 import SEMarkInput from '../../components/SimulationEngine/SEMarkInput'; 
 import { useDispatch, useSelector } from 'react-redux';
 import { setStep } from '../../redux/simulationStepSlice';
+import {setProgress} from "../../redux/progressBarStepSlice";
 import helper from '../../utils/Helper';
 import ButtonLarge from '../../components/ButtonLarge';
-import {SIMULATION_ENGINE_STEPS} from '../../utils/Constants'
+import {SIMULATION_ENGINE_STEPS, PROGRESS_BAR_STEPS} from '../../utils/Constants'
 import SESmallAlertMessage from '../../components/SimulationEngine/SESmallAlertMessage';
 import _ from 'lodash';
 
@@ -13,7 +14,12 @@ const ReportCard1 = () => {
     const dispatch = useDispatch();
     const user = helper.getLocalStorageWithExpiration('wendogouser'); 
     const periodNumber = user.academicYearHeadDetails1.academicYearOrganization?.name === 'Trimestre' ? 4 : 3;
+
     const simulationStepGlobal = useSelector(state => state.simulationStep);
+    const progressBarStep = useSelector((state) => state.progressBarStep); 
+    const showContinueBtn = (simulationStepGlobal === SIMULATION_ENGINE_STEPS.REPORT_CARD1) || (progressBarStep === PROGRESS_BAR_STEPS.BULLETIN_N_2) 
+    const [continueButtonClicked, setContinueButtonClicked] = useState(false); 
+
     const [subjectStates, setSubjectStates] = useState(Array(periodNumber).fill().map(() => ({ reference: 0, label: { value: '', validated: true }, weight: { value: '', validated: true }, mark: { value: '', validated: true }, rank: { value: '', validated: true } })));
     const [subjectLists, setSubjectLists] = useState( user.reportCard1 ? 
                                                       user.reportCard1 :
@@ -24,22 +30,25 @@ const ReportCard1 = () => {
     const [showError, setShowError] = useState(false);
     const titleMarkInput = `Veuillez renseigner une nouvelle matière, le ${user.academicYearHeadDetails1.subjectWeightSystem?.name?.toLowerCase()}, la note et le rang obtenu `;
 
-    const showContinueBtn = simulationStepGlobal === SIMULATION_ENGINE_STEPS.REPORT_CARD1;
     const handleContinue = () => { 
         const reportCardExistsAndNotEmpty =  subjectLists && !_.every(user.reportCard1, _.isEmpty);
-
+        setContinueButtonClicked(true);
         if ( reportCardExistsAndNotEmpty) {
             setShowError(false);
-            updateWendogouser(SIMULATION_ENGINE_STEPS.HAS_WON_AWARD, subjectLists)
+            console.log('🥳 XXXX', subjectLists)
+            updateWendogouser(SIMULATION_ENGINE_STEPS.HAS_WON_AWARD, subjectLists, PROGRESS_BAR_STEPS.PARCOURS_ACADEMIQUE_ET_PROFESSIONNEL)   
+            window.location.hash = ""
+            window.location.hash = "form/PARCOURS_ACADEMIQUE_ET_PROFESSIONNEL";
         } else{
             setShowError(true);
         }
        
     }
 
-    const updateWendogouser = (simulationStep, reportCard1) => {
+    const updateWendogouser = (simulationStep, reportCard1, progressBarStep=PROGRESS_BAR_STEPS.BULLETIN_N_2) => {
         dispatch(setStep(simulationStep)) 
-        let updatedUser = {...user, simulationStep, reportCard1, date: new Date().toISOString()}
+        dispatch(setProgress(progressBarStep)) 
+        let updatedUser = {...user, simulationStep, reportCard1, progressBarStep, date: new Date().toISOString()}
         helper.setLocalStorageWithExpiration('wendogouser', updatedUser, false)         
     }
 
@@ -50,7 +59,7 @@ const ReportCard1 = () => {
                     key={index}
                     header={ index < (subjectLists.length-1)  ?
                         `${user.selectedSchoolYear1?.name} - ${user.academicYearHeadDetails1.academicYearOrganization?.name} N°${index + 1} - ${user.academicYearHeadDetails1.schoolName}` :
-                        'Autre Session.'}
+                        'Autre Session'}
                     // subheader={index < (subjectLists.length-1)  ? `${user.degreeSelected?.name} en ${user.degreeExactNameValue}` : ''}
                     subjectList={list} 
                     setSubject={newSubject => {
@@ -83,10 +92,11 @@ const ReportCard1 = () => {
             (!isReadModes[index]) && (
                 <SEMarkInput
                     key={index}
+                    id={'SEMarkInput'+index}
                     title={titleMarkInput+ `pour `+
                         (index < (subjectLists.length-1)  ?
                         `le ${user.academicYearHeadDetails1.academicYearOrganization.name.toLowerCase()} n°${index + 1} de l'année ${user.selectedSchoolYear1.name}.` :
-                        'une autre session.')}
+                        'une Autre Session')}
                     tip="Le rang est facultatif. Si inexistant, laissez un vide."
                     subjectWeightSystem={user.academicYearHeadDetails1.subjectWeightSystem.name}
                     markSystem={user.academicYearHeadDetails1.markSystem.name}
@@ -122,7 +132,7 @@ const ReportCard1 = () => {
     );
  
     useEffect(() => {
-        if(showContinueBtn  || isReadModes.some(mode => mode === false) || isCancelModes.some(mode => mode === true)){
+        if(continueButtonClicked  || isReadModes.some(mode => mode === false) || isCancelModes.some(mode => mode === true)){
             updateWendogouser(SIMULATION_ENGINE_STEPS.REPORT_CARD1, subjectLists);
             setIsCancelModes(Array(periodNumber).fill(false));
             setShowError(false);

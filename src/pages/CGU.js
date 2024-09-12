@@ -262,7 +262,7 @@ function CGU(){
                       <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
                         <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> L’OPÉRATEUR dispose du droit de mettre à jour et modifier à tout moment les présentes CGV-CGU à tout moment, notamment pour les adapter à toute évolution législative, réglementaire, ou professionnelle. </p>
                       </div>
-                      <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
+                      <div className="styles__Block-sc-1b5sr4l-5 lhYawK" id="TEST">
                         <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> Les CGV-CGU applicables sont celles en vigueur au moment de l’utilisation du site internet par l’UTILISATEUR. </p>
                       </div>
                       <div className="styles__Block-sc-1b5sr4l-5 styles__BlockHeading-sc-1b5sr4l-8 lhYawK lngqIb">

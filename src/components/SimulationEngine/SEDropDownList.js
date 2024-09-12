@@ -21,7 +21,7 @@ function SEDropDownList(props) {
                 {/* <div className="DrawerAnimation" style={{ height: 0 }}>
                 <div />
                 </div> */}
-                <div className="app-row app-field">
+                <div className="app-row app-field fade-animation fade-slow-enter-done">
                     <div className="app-col-xs-12 app-col-sm-8 app-col-md-8 Field ignore-outside-click" ref={newRef}>
                         <div id="Select-VEH_USA_KILOM" className={"Select undefined isBordered VEH_USA_KILOM icon-lesfurets after icon-system-arrow-more field-" + (itemSelected.validated ? "valid " : "default ") + (collapseOption ? "arrowNotToggled up" : "focused arrowToggled up ") } data-testid="VEH_USA_KILOM">
                             <div className="Select-text" style={{ color: itemSelected.validated ? '#0154c0' : '#4e6174', fontSize: '15px', padding: '0 0 0 30px', margin : '10px 0 -10px 0', display : isPartOfInputGroup ? '' : 'none' }}>{inputGroupBlockTitle}</div>

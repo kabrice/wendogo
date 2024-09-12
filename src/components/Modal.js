@@ -8,7 +8,7 @@ const Modal = (props) => {
     const handleOutsideClick = (e) => {
         if (newRefModal.current && !newRefModal.current.contains(e.target) && !helper.isTargetContainsIgnoreClass(e.target)) {
             hideShowModal(false)
-            console.log('outside click Modal')
+            //console.log('Outside click Modal')
         }
       };
 
@@ -34,12 +34,14 @@ const Modal = (props) => {
                     <div className="Heading m"> {title}</div>
                     <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
                       {firstParagraphs && firstParagraphs.map((paragraph, index) => (
-                            <p key={index}>{paragraph}</p>
+                            <p key={index} dangerouslySetInnerHTML={{ __html: paragraph }} />
+                            // <p >{paragraph}</p>
                             ))}
                        { isLiTag &&
                         <ul className="TextList-sc-100qkuv-0 enKgYQ">
                           {paragraphs.map((paragraph, index) => (
                             <li key={index}>{paragraph}</li>
+                            
                             ))}
                         </ul>}
                         { !isLiTag &&
