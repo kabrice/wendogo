@@ -10,11 +10,14 @@ const QuestionsOnTopic = () => {
             <div className="styles__HeaderCommentContainer-sc-reeitb-1 bzqaJA">
             <div className="styles__HeaderCommentDescriptionContainer-sc-reeitb-2 evOnbn">
                 <h3 className="styles__Title-sc-reeitb-4 ckwYtV"> Des questions sur le sujet ? </h3>
-                <h3 className="styles__Description-sc-reeitb-5 eYrYZq"> Envoyez les nous et on y répondra avec plaisir (à notre prochain webinaire). </h3>
+                <h3 className="styles__Description-sc-reeitb-5 eYrYZq"> Envoyez les nous et on y répondra avec plaisir. </h3>
             </div>
-            <button className="Buttonstyles__Button-sc-vsowxm-1 cnoACk styles__StyledButton-sc-reeitb-3 bVQYWs">
-                <span className="Buttonstyles__Label-sc-vsowxm-2 kGIufm"><a href='mailto:hello@wendogo.com?body=Nom :%0DPrénom :%0DContact :%0D%0DMA QUESTION 👇🏾'>Envoyer ma question </a> </span>
+            <button 
+                className="Buttonstyles__Button-sc-vsowxm-1 cnoACk styles__StyledButton-sc-reeitb-3 bVQYWs"
+                onClick={() => window.location.href = 'mailto:hello@wendogo.com?body=Nom :%0DPrénom :%0DContact :%0D%0DMA QUESTION 👇🏾'}>
+                <span className="Buttonstyles__Label-sc-vsowxm-2 kGIufm">Envoyer ma question</span>
             </button>
+
             </div>
         </div>
     )

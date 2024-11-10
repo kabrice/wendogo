@@ -26,6 +26,9 @@ import {useUpdateUserMutation} from '../store/apis/userApi'
 import { activateSpinner, deactivateSpinner } from '../redux/spinnerslice'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import KeepInTouch from './ressources/KeepInTouch';
+
+
 function SimulationCountrySelection(){
   
     let user = helper.getLocalStorageWithExpiration('wendogouser')
@@ -33,8 +36,14 @@ function SimulationCountrySelection(){
     const [updateUser] = useUpdateUserMutation();
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    async function handleCountrySelection(countryIso2) {
+
+    async function handleCountrySelection(event, countryIso2) {
+      event.preventDefault();
       //let user = helper.getLocalStorageWithExpiration('wendogouser')
+      if(countryIso2 === 'CA'){
+        setIsKeepInTouch(true)
+        return
+      }
       try {
           dispatch(activateSpinner())
           user = {
@@ -45,15 +54,56 @@ function SimulationCountrySelection(){
           const response = await updateUser(user)
           console.log('### SimulationCountrySelection response', response) 
           dispatch(deactivateSpinner())
-          helper.setLocalStorageWithExpiration('wendogouser', user, false)
-          navigate('/simulation/engine?country='+countryIso2)
+          helper.setLocalStorageWithExpiration('wendogouser', user)
+          navigate('/simulation/engine?country=' + countryIso2);
+          //window.location.href = '/simulation/engine?country='+countryIso2
         } catch (error) {
           helper.triggerToastError(error)
         }
     }
-
+    const [isKeepInTouch, setIsKeepInTouch] = useState(false);
+    const [isErrorPage, setIsErrorPage] = useState(false);
     return  <>{helper.redirectionAtInit(user, '/simulation/select/country', '/simulation/home') && <div>     
               <HeaderMenuLoginBar/>
+              {isErrorPage ?
+                <main className="styles__Main-sc-kz84w6-0 gEFmYD" style={{ paddingTop: 280 }}>
+                        <div className="styles__Wrapper-sc-gk465i-0 fiWVzr">
+                            <div className="styles__Hero-sc-s3dlnp-0 gMynSv">
+                                <div className="styles__Title-sc-s3dlnp-2 eWHDTF">
+                                    <h1 size="large" className="styles__HeadingBridge-sc-6txi54-0 hzNvHf">
+                                        Désolé, une erreur s'est produite. Veuillez réessayer plus tard ou nous contacter.
+                                    </h1>
+                                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '10px' }}>
+                                        <button
+                                            onClick={() => window.location.reload()}
+                                            style={{ width: '15.3%', height: 20, margin: '10px' }}
+                                            className="CTA button primary xlarge userValidation"
+                                            title=""
+                                            data-trackingprefix=""
+                                            data-testid="DaisyFieldView-continuer-VEH_DTL_POSSESSION"
+                                        >
+                                            Recharger
+                                        </button>
+                                        <button
+                                            onClick={() => window.location.href = 'mailto:hello@wendogo.com'}
+                                            style={{ width: '21.7%', height: 20, margin: '10px' }}
+                                            className="CTA button primary xlarge userValidation"
+                                            title=""
+                                            data-trackingprefix=""
+                                            data-testid="DaisyFieldView-continuer-VEH_DTL_POSSESSION"
+                                        >
+                                            Nous contacter
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </main> :
+                    (isKeepInTouch ? <KeepInTouch setIsError={setIsErrorPage}  
+                                             setIsKeepInTouch={setIsKeepInTouch}
+                                             title = "Simulateur visa Canada - Bientôt disponible | Inscrivez-vous à la liste prioritaire et soyez informé(e) en avant-première de son lancement"
+                                             typeRequest="VISA_CANADA"
+                                             /> :
               <div className="" id="AppWrapper">
                 <div className="MuiBox-root css-0" data-testid="hpTopLayer">
                   <div className="MuiBox-root css-0" style={{ background: "#0154c0" }}>
@@ -71,7 +121,10 @@ function SimulationCountrySelection(){
                             <div className="MuiStack-root css-j7qwjs">
                               <div className="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-sljwc1">
                                 <div className="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-1 css-1vad3iu" >
-                                  <span className="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineNone ButtonProduct css-1av9as7" style={{textDecoration:'none'}} title="Simulez une demande de visa pour la France" data-testid="hpTopLayerButtonProduct-emprunteur" onClick={()=>handleCountrySelection('FR')}>
+                                  <Link to={`/simulation/engine?country=FR`} className="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineNone ButtonProduct css-1av9as7" style={{textDecoration:'none'}} title="Simulez une demande de visa pour la France" data-testid="hpTopLayerButtonProduct-emprunteur"   onClick={(e) => {
+                                          e.preventDefault(); // Prevent immediate navigation
+                                          handleCountrySelection(e, 'FR');
+                                        }}>
                                     <div className="MuiStack-root css-2gjs0d">
                                       <div className="MuiStack-root css-w1kzse">
                                         <div className="MuiBox-root css-68zbsl">
@@ -88,10 +141,10 @@ function SimulationCountrySelection(){
                                         </div>
                                       </div>
                                     </div>
-                                  </span>
+                                  </Link>
                                 </div>
                                 <div className="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-1 css-1vad3iu">
-                                  <span className="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineNone ButtonProduct css-1av9as7" title="Simulez une demande de visa pour le Canada" style={{textDecoration:'none'}} data-testid="hpTopLayerButtonProduct-energie" onClick={()=>handleCountrySelection('CA')}>
+                                  <span className="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineNone ButtonProduct css-1av9as7" title="Simulez une demande de visa pour le Canada" style={{textDecoration:'none'}} data-testid="hpTopLayerButtonProduct-energie" onClick={(e)=>handleCountrySelection(e, 'CA')}>
                                     <div className="MuiStack-root css-2gjs0d">
                                       <div className="MuiStack-root css-w1kzse">
                                         <div className="MuiBox-root css-68zbsl">
@@ -139,7 +192,7 @@ function SimulationCountrySelection(){
                                 </svg>
                                 </div>
                               </div>
-                              <p className="MuiTypography-root MuiTypography-body1 MuiTypography-paragraph css-1889afe"> Simulation basée sur <b>+400</b> paramètres</p>
+                              <p className="MuiTypography-root MuiTypography-body1 MuiTypography-paragraph css-1889afe"> Simulation basée sur <b>600+</b> tokens</p>
                             </div>
                           </div>
                         </div>
@@ -222,7 +275,7 @@ function SimulationCountrySelection(){
                   </div>
                 </div>
               </div>
-              </div>
+              </div>)}
               <Footer/>                    
           </div>}</>
 

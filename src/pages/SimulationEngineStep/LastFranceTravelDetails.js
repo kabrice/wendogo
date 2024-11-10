@@ -29,11 +29,11 @@ const LastFranceTravelDetails = () => {
     const updateWendogouser = (simulationStep, frenchTravelDate) => {
         dispatch(setStep(simulationStep)) 
         let updatedUser = {...user, simulationStep, frenchTravelDate, date: new Date().toISOString()}
-        helper.setLocalStorageWithExpiration('wendogouser', updatedUser, false)         
+        helper.setLocalStorageWithExpiration('wendogouser', updatedUser)         
     }
 
     return (
-        <SE2DateInput title="Quand a eu lieu votre dernier voyage en France ?" tip="Veuillez saisir les dates d'arrivée et de départ du séjour le plus récent." 
+        <SE2DateInput title="Quand a eu lieu votre dernier voyage d'an l'espace Schengen ?" tip="Veuillez saisir les dates d'arrivée et de départ du séjour le plus récent." 
                         isButtonClicked={isButtonClicked} setIsButtonClicked={setIsButtonClicked}
                       showContinueBtn={simulationStepGlobal === SIMULATION_ENGINE_STEPS.LAST_FRANCE_TRAVEL_DETAILS} startDay={startDay} setStartDay={setStartDay} startMonth={startMonth} 
                       setStartMonth={setStartMonth} startYear={startYear} setStartYear={setStartYear} endDay={endDay} 

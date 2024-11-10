@@ -353,7 +353,8 @@ function WorkPermitStep(){
                                     <h3 className="styles__Title-sc-reeitb-4 ckwYtV"> Des questions sur le sujet ? </h3>
                                     <h3 className="styles__Description-sc-reeitb-5 eYrYZq"> Envoyez les nous et ça sera un plaisir d'y répondre à notre prochain webinaire. </h3>
                                   </div>
-                                  <button className="Buttonstyles__Button-sc-vsowxm-1 cnoACk styles__StyledButton-sc-reeitb-3 bVQYWs">
+                                  <button className="Buttonstyles__Button-sc-vsowxm-1 cnoACk styles__StyledButton-sc-reeitb-3 bVQYWs"
+                                           onClick={() => window.location.href = 'mailto:hello@wendogo.com?body=Nom :%0DPrénom :%0DContact :%0D%0DMA QUESTION 👇🏾'}>
                                     <span className="Buttonstyles__Label-sc-vsowxm-2 kGIufm"> Envoyer ma question </span>
                                   </button>
                                 </div>

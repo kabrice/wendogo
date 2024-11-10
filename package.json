@@ -21,17 +21,21 @@
     "json-server": "^0.17.3",
     "libphonenumber-js": "^1.11.7",
     "lodash": "^4.17.21",
+    "lucide-react": "^0.453.0",
     "mui-tel-input": "^5.1.2",
-    "react": "^18.2.0",
+    "next": "^15.0.3",
+    "puppeteer": "^23.7.1",
+    "react": "^18.3.1",
     "react-confetti": "^6.1.0",
     "react-copy-to-clipboard": "^5.1.0",
     "react-detect-click-outside": "^1.1.7",
-    "react-dom": "^18.2.0",
+    "react-dom": "^18.3.1",
     "react-floating-whatsapp": "^5.0.8",
     "react-helmet": "^6.1.0",
     "react-helmet-async": "^2.0.4",
     "react-hook-form": "^7.47.0",
     "react-ipgeolocation": "^1.4.0",
+    "react-lazyload": "^3.2.1",
     "react-phone-input-2": "^2.15.1",
     "react-phone-number-input": "^3.3.6",
     "react-places-autocomplete": "^7.3.0",
@@ -47,11 +51,12 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "postinstall": "puppeteer install",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "postbuild": "react-snap"
+    "postbuild": "PUPPETEER_EXECUTABLE_PATH= react-snap"
   },
   "eslintConfig": {
     "extends": [
@@ -70,5 +75,12 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "reactSnap": {
+    "puppeteerArgs": [
+      "--no-sandbox",
+      "--disable-setuid-sandbox"
+    ],
+    "puppeteerTimeout": 90000
   }
 }

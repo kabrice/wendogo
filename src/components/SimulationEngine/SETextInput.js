@@ -27,13 +27,14 @@ const SETextInput = (props) => {
   useEffect(() => {
     // Function to handle click events
     const handleClickOutside = (event) => {
-      if (newRef.current && !newRef.current.contains(event.target) && !helper.isTargetContainsIgnoreClass(event.target) && onClickOutside) {
-         
+      console.log('OUF 😱 TextInput  '+newRef.current, !newRef.current.contains(event.target), !helper.isTargetContainsIgnoreClass(event.target), onClickOutside);   
+      if (newRef.current && !newRef.current.contains(event.target) && !helper.isTargetContainsIgnoreClass(event.target) && onClickOutside) {      
+        //alert('OUF 😱 TextInput  '+focused);   
         setFocused(false); 
         setValid( onClickOutside(value));
       }
     };
-
+    
     // Add event listener for clicks
     document.addEventListener('mousedown', handleClickOutside);
 
@@ -71,6 +72,8 @@ const SETextInput = (props) => {
         switch (type) {
           case 'email':
             return 'email'; 
+          case 'number':
+            return 'number';
           default:
             return 'text'; // Return null or a default icon if needed
         }
@@ -111,6 +114,7 @@ const SETextInput = (props) => {
             </div>
           </div>
         </div>
+        {/* <h2>{'Input= '+valid+' === '+focused}</h2> */}
         {(!valid && !focused) && (
           <div className="Error">
             <span className="Icon error-icon icon-lesfurets icon-system-alert" /> Veuillez entrer un texte valide

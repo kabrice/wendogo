@@ -72,7 +72,7 @@ const WorkExperienceDetails = () => {
     const updateWendogouser = (simulationStep, workExperience) => {
         dispatch(setStep(simulationStep));
         const updatedUser = { ...user, simulationStep, workExperience, date: new Date().toISOString() };
-        helper.setLocalStorageWithExpiration('wendogouser', updatedUser, false);
+        helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
     };
 
     const handleContinue = () => {
@@ -108,9 +108,9 @@ const WorkExperienceDetails = () => {
 
     return (
         <div style={{ margin: '0 0 35px' }}>
-            <SELabel title="Donnez quelques renseignements sur cette expérience professionnelle" />
+            <SELabel title="Donnez quelques renseignements sur cette expérience" />
             <SETextArea
-                placeholderText="Résumé succinct de cette expérience professionnelle."
+                placeholderText="Résumé succinct de cette expérience."
                 id="DESCRIPTION"
                 isPartOfInputGroup={true}
                 value={description}

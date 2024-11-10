@@ -1,11 +1,12 @@
 import ButtonLarge from "../ButtonLarge";
 import {React, useState} from "react";
 import Modal from "../Modal";
+import SvgConstant from "../../utils/SvgConstant";
 
 const SEYesNo = (props) => {
 
     const {yes, handleYes, title, handleContinue, showContinueBtn, tip, modalTitle, modalFirstParagraphs, 
-            modalParagraphs, modalIcon, modalIsLiTag, displayQuestionTooltip, specialTextModal, id } = props;
+            modalParagraphs, modalIcon, modalIsLiTag, displayQuestionTooltip, specialTextModal, id, svgConstantName } = props;
     const [showModal, setShowModal] = useState(false)
 
     const hideShowModal = (show) => {
@@ -23,7 +24,7 @@ const SEYesNo = (props) => {
     }}>
                 <div className="FieldView DaisyFieldView undefined field-valid RadioField PRI_DON_AUTRE_VEH ">
                 <div className="FieldView-flex-container">
-                    <label className="Label ">{title}</label>
+                    <label className="Label ">{svgConstantName && SvgConstant.getSvg(svgConstantName)} {title}</label>
                     {displayQuestionTooltip && 
                                     <div id="daisy-tooltip-PRI_HIS_NBR_SIN" className="PopinTooltip">
                                         <button type="button" className="PopinTooltip-button-open" onClick={() => hideShowModal(true)}>

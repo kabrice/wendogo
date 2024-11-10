@@ -84,9 +84,9 @@ function Contact(){
                             </h3>
                             <p className="styles__Link-sc-1wbd6gj-4 hAcmtb"> <a href="https://m.me/wendogoHQ" >Écrivez nous, nous vous répondons en quelques minutes</a> </p>
                             <h3 format="default" size="medium" className="styles__SubHeading-sc-xwwv8k-0 cDPnHw">
-                              <a href="https://wa.me/+33755097584" rel="nofollow">
+                              <a href="https://wa.me/+33668156073" rel="nofollow">
                                 <span className="styles__Title-sc-1wbd6gj-3 jatQYR">
-                                  <span className="styles__Icon-sc-goa033-0 blniyO" /> WHATSAPP <br/>+33 7 45 49 30 86 </span>
+                                  <span className="styles__Icon-sc-goa033-0 blniyO" /> WHATSAPP <br/>+33 6 68 15 60 73</span>
                               </a>
                             </h3>
                           </div>

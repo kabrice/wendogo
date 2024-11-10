@@ -34,7 +34,7 @@ const PassportDetails = () => {
         dispatch(setStep(simulationStep)) 
         dispatch(setProgress(progressBarStep)) 
         let updatedUser = {...user, simulationStep, passportDetails, progressBarStep, date: new Date().toISOString()}
-        helper.setLocalStorageWithExpiration('wendogouser', updatedUser, false)         
+        helper.setLocalStorageWithExpiration('wendogouser', updatedUser)         
         window.location.hash = ""
         window.location.hash = "form/COORDONNEES";
     }

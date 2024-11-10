@@ -46,12 +46,32 @@ const SEDateInput = (props) => {
         }
     };
 
+    // const validateDate = (day, month, year) => {
+    //     const inputDate = new Date(`${year}-${month}-${day}`);
+    //     const minDate = new Date('1970-01-01');
+    //     const currentDate = new Date();
+    //     const maxDate = new Date(currentDate.getFullYear() - 14, currentDate.getMonth(), currentDate.getDate());
+    //     console.log('data', {inputDate, minDate, maxDate});
+    //     if (inputDate >= minDate && inputDate <= maxDate) {
+    //         console.log('valid');
+    //         setValid(true);
+    //     } else {
+    //         console.log('invalid');
+    //         setValid(false);
+    //     }
+    // };
     const validateDate = (day, month, year) => {
         const inputDate = new Date(`${year}-${month}-${day}`);
         const minDate = new Date('1970-01-01');
         const currentDate = new Date();
         const maxDate = new Date(currentDate.getFullYear() - 14, currentDate.getMonth(), currentDate.getDate());
-        console.log('data', {inputDate, minDate, maxDate});
+        
+        // Check if inputDate is valid (not NaN)
+        if (isNaN(inputDate.getTime())) {
+            setValid(false);
+            return;
+        }
+        
         if (inputDate >= minDate && inputDate <= maxDate) {
             console.log('valid');
             setValid(true);
@@ -82,17 +102,40 @@ const SEDateInput = (props) => {
     const handleOutsideClick = (e) => {
         if (newRef.current && !newRef.current.contains(e.target) && !helper.isTargetContainsIgnoreClass(e.target)) {
             setFocused(false);
-            if (day && month && year) {
-                setValid(true);
-            } else {
+            console.log('😍 outside click', day, month, year);
+            
+            // If any field is empty
+            if (!day || !month || !year) {
                 setValid(false);
+                return;
             }
+            
+            // If all fields are filled, validate the date
+            const formattedDay = day.padStart(2, '0');
+            const formattedMonth = month.padStart(2, '0');
+            const formattedYear = year.length === 2 ? 
+                (parseInt(year) >= 20 ? `19${year}` : `20${year}`) : 
+                year;
+                
+            validateDate(formattedDay, formattedMonth, formattedYear);
         }
     };
+
+    // const handleOutsideClick = (e) => {
+    //     if (newRef.current && !newRef.current.contains(e.target) && !helper.isTargetContainsIgnoreClass(e.target)) {
+    //         setFocused(false);
+    //         console.log('😍 outside click', day, month, year);
+    //         if (day && month && year) {
+    //             setValid(true);
+    //         } else {
+    //             setValid(false);
+    //         }
+    //     }
+    // };
       
     useEffect(() => {
         helper.addOutsideClick(handleOutsideClick);
-    }, []);
+    }, [setValid, setFocused, day, month, year]);
 
     const voidFunction = () => {
         return null;
@@ -177,6 +220,7 @@ const SEDateInput = (props) => {
                         </div>
                     </div>
                 </div>
+                {/* <h1>{'+++ '+valid +' +++ '+focused}</h1> */}
                 {(!valid && !focused) && (
                     <div className="Error">
                         <span className="Icon error-icon icon-lesfurets icon-system-alert" /> Veuillez entrer une date valide

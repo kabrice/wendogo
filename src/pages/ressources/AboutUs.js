@@ -2,6 +2,7 @@ import { useState} from 'react';
 import EdgarHead from '../../assets/edgar_head.jpeg'
 import QuestionsOnTopic from '../../components/QuestionsOnTopic';
 //import {ReactComponent as ExpertMan} from '../../assets/ExpertMan1.svg'
+import OptimizedImage from '../../components/OptimizedImage';
 
 import { Link } from 'react-router-dom';
 
@@ -97,7 +98,8 @@ function AboutUs(){
                         </div>
                         <div className="styles__ImageContainer-sc-1wzyvpr-5 fWJBuN">
                         <picture>
-                            <img alt={ExpertMan}  className="styles__Image-sc-1wzyvpr-4 dJhJuV" loading="lazy" src={ExpertMan} style={{width : 260, height : 'auto'}} />
+                            <OptimizedImage alt={ExpertMan}  loading="lazy" src={ExpertMan} className="styles__Image-sc-1wzyvpr-4 dJhJuV" style={{width : 260, height : 'auto'}} />
+                            {/* <img alt={ExpertMan}  className="styles__Image-sc-1wzyvpr-4 dJhJuV" loading="lazy" src={ExpertMan} style={{width : 260, height : 'auto'}} /> */}
                         </picture>
                         </div>
                         <div className="styles__Container-sc-1fi1lc5-0 hJzdEq styles__ReasonToBelieve-sc-1wzyvpr-9 flTAYH">
@@ -134,7 +136,8 @@ function AboutUs(){
                                 <div className="RowCarouselstyles__Title-sc-sn9bq-3 dMQEOm"> Vos conseillers Wendogo seront vos meilleurs alliés </div>
                               </div>
                               <picture>
-                                <img alt="Programme de bourses d'étude : comment déterminer votre projet ?" loading="lazy" src={WendogoTeam} className="styles__Image-sc-s3dlnp-1 oBito" />
+                                <OptimizedImage alt="Programme de bourses d'étude : comment déterminer votre projet ?" loading="lazy" src={WendogoTeam} className="styles__Image-sc-s3dlnp-1 oBito" />
+                                {/* <img alt="Programme de bourses d'étude : comment déterminer votre projet ?" loading="lazy" src={WendogoTeam} className="styles__Image-sc-s3dlnp-1 oBito" /> */}
                               </picture>
                             </div>
                           </div>
@@ -198,7 +201,9 @@ function AboutUs(){
                                     <div className="AuthorInfosstyles__AuthorInfos-sc-1v2nwgf-0 kVLKSc">
                                       <div className="Avatarstyles__AvatarContainer-sc-168giry-2 glDTmS">
                                         <div className="Avatarstyles__Avatar-sc-168giry-0 eYtuGP AuthorInfosstyles__Avatar-sc-1v2nwgf-1 etCUXw">
-                                          <picture> <img alt="avatar" height={46} loading="lazy" src={EdgarHead} width={46} className="Avatarstyles__Image-sc-168giry-1 gNAMaq" />
+                                          <picture>
+                                            <OptimizedImage alt="avatar" height={46} loading="lazy" src={EdgarHead} width={46} className="Avatarstyles__Image-sc-168giry-1 gNAMaq" />
+                                             {/* <img alt="avatar" height={46} loading="lazy" src={EdgarHead} width={46} className="Avatarstyles__Image-sc-168giry-1 gNAMaq" /> */}
                                           </picture>
                                         </div>
                                       </div>

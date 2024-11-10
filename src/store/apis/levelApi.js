@@ -8,8 +8,12 @@ export const levelApi = createApi({
         getLevels: builder.query({
             query: () => `/level/highschools`,
             providesTags: ['Level']
-          })
+          }),
+        getDegreesByBacId: builder.query({
+            query: (bacId) => `/level/degrees/${bacId}`,
+            providesTags: ['Level']
+          }),
     })
 })
 
-export const { useGetLevelsQuery } = levelApi
+export const { useGetLevelsQuery, useGetDegreesByBacIdQuery } = levelApi

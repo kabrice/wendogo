@@ -55,9 +55,9 @@ const AcademicYearHeadDetails3 = () => {
 
     const updateSelectedMarkSystem = (item) => {
         const originalMarkSystemName = initialMarkSystemNameRef.current;
-        const reportCardExistsAndNotEmpty = user?.reportCard3 && !_.every(user.reportCard3, _.isEmpty);
+        const isReportCardsValid = user?.reportCard3 && !_.every(user.reportCard3, _.isEmpty);
 
-        if (item?.name !== originalMarkSystemName && reportCardExistsAndNotEmpty) {
+        if (item?.name !== originalMarkSystemName && isReportCardsValid) {
             setShowWarning(true);
         } else if (item?.name === originalMarkSystemName) {
             setShowWarning(false);
@@ -124,8 +124,8 @@ const AcademicYearHeadDetails3 = () => {
 
     const updateWendogouser = (simulationStep, academicYearHeadDetails3, reportCard3 = user?.reportCard3) => {
         dispatch(setStep(simulationStep));
-        let updatedUser = { ...user, simulationStep, academicYearHeadDetails3, reportCard3, date: new Date().toISOString() };
-        helper.setLocalStorageWithExpiration('wendogouser', updatedUser, false);
+        let updatedUser = { ...user, simulationStep, academicYearHeadDetails3, reportCard3, isResult2Available:false, date: new Date().toISOString() };
+        helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
     };
     
     

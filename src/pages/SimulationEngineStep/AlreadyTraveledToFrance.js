@@ -20,14 +20,14 @@ const AlreadyTraveledToFrance = () => {
     const updateWendogouser = (simulationStep, alreadyTraveledToFrance) => {
         dispatch(setStep(simulationStep)) 
         let updatedUser = {...user, simulationStep, alreadyTraveledToFrance, date: new Date().toISOString()}
-        helper.setLocalStorageWithExpiration('wendogouser', updatedUser, false)         
+        helper.setLocalStorageWithExpiration('wendogouser', updatedUser)         
     }
 
     const handleContinue = () => {
         updateWendogouser(alreadyTraveledToFrance? SIMULATION_ENGINE_STEPS.LAST_FRANCE_TRAVEL_DETAILS : SIMULATION_ENGINE_STEPS.HAS_PASSEPORT, alreadyTraveledToFrance)
     }
 
-    return (<SEYesNo title={`Vous êtes-vous déjà rendu en France ?`} id="ALREADY_TRAVELED_TO_FRANCE"
+    return (<SEYesNo title={`Vous êtes-vous déjà rendu en France ou dans l'espace Schengen ?`} id="ALREADY_TRAVELED_TO_FRANCE"
                     yes={alreadyTraveledToFrance} handleYes={handleAlreadyTraveledToFrance} handleContinue={handleContinue} 
                     showContinueBtn={simulationStepGlobal === SIMULATION_ENGINE_STEPS.ALREADY_TRAVELED_TO_FRANCE} />);
 }

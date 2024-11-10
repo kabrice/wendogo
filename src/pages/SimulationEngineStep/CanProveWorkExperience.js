@@ -21,7 +21,7 @@ const CanProveWorkExperience = () => {
     const updateWendogouser = (simulationStep, canProveWorkExperience) => {
         dispatch(setStep(simulationStep)) 
         let updatedUser = {...user, simulationStep, canProveWorkExperience, date: new Date().toISOString()}
-        helper.setLocalStorageWithExpiration('wendogouser', updatedUser, false)         
+        helper.setLocalStorageWithExpiration('wendogouser', updatedUser)         
     }
 
     const handleContinue = () => {

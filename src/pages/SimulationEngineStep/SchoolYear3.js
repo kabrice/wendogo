@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef} from 'react';
 import { useGetSchoolYearsQuery } from '../../store/apis/schoolYearApi';
 import { activateSpinner, deactivateSpinner } from '../../redux/spinnerslice'
+import { activateErrorPage, deactivateErrorPage } from '../../redux/errorPageSlice';
 import helper from '../../utils/Helper';
 import _ from 'lodash'
 import SEDropDownList from '../../components/SimulationEngine/SEDropDownList';
@@ -48,12 +49,15 @@ const SchoolYear3 = () => {
             dispatch(activateSpinner())
         }
         if(error){
-            console.log('error', error)
-            document.location.href='/error'
+            console.error('🛑 error', error)
+            dispatch(deactivateSpinner()) 
+            dispatch(activateErrorPage())
         }
         if (data) {
             dispatch(deactivateSpinner())
-            setSchoolYears3(data)
+            dispatch(deactivateErrorPage())
+            let clonedData = _.cloneDeep(data);
+            setSchoolYears3(clonedData.reverse());
         }
 
         helper.addOutsideClick(handleOutsideClick)
@@ -61,13 +65,20 @@ const SchoolYear3 = () => {
     }, [data, error, isLoading ])
 
     const handleContinue = () => { 
+        
        updateWendogouser(isInUniversityGlobal ? SIMULATION_ENGINE_STEPS.RECENT_DEGREE : SIMULATION_ENGINE_STEPS.DEGREE_EXACT_NAME, {...selectedSchoolYear3, validated: true})
     }
 
     const updateWendogouser = (simulationStep, selectedSchoolYear3) => {
         dispatch(setStep(simulationStep)) 
+        if (!selectedSchoolYear3.id) {
+            const foundYear = _.find(schoolYears3, { name: selectedSchoolYear3.name });
+            if (foundYear) {
+                selectedSchoolYear3.id = foundYear.id;
+            }
+        }
         let updatedUser = {...user, simulationStep, selectedSchoolYear3, date: new Date().toISOString()}
-        helper.setLocalStorageWithExpiration('wendogouser', updatedUser, false)         
+        helper.setLocalStorageWithExpiration('wendogouser', updatedUser)         
     }
 
   return (

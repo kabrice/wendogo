@@ -64,17 +64,18 @@ const FrenchLevel = () => {
         dispatch(setStep(simulationStep)) 
         dispatch(setProgress(progressBarStep)) 
         let updatedUser = {...user, simulationStep, selectedFrenchLevel, progressBarStep, date: new Date().toISOString()}
-        helper.setLocalStorageWithExpiration('wendogouser', updatedUser, false)         
+        helper.setLocalStorageWithExpiration('wendogouser', updatedUser)         
       }
 
       const handleContinue = () => {
         //console.log('selectedFrenchLevel === 😍😍 ', selectedFrenchLevel, SIMULATION_ENGINE_STEPS.IS_YEAR_3_RESULTS_AVAILABLE)
+        //helper.setLocalStorageWithExpiration('wendogouser', testUser,false);
         updateWendogouser(SIMULATION_ENGINE_STEPS.IS_YEAR_3_RESULTS_AVAILABLE, selectedFrenchLevel, PROGRESS_BAR_STEPS.BULLETIN_LE_PLUS_RECENT)
         window.location.hash = ""
         window.location.hash = "form/GENERALITES_SUR_LES_VISAS_ET_LES_ETUDES";
       }
   return (
-    <SELevelRail title="Comment évaluer votre niveau de langue française ?" arialLabel="French Level" defaultValue={selectedFrenchLevel}  handleChange={handleChange}
+    <SELevelRail id={'FRENCH_LEVEL'} title="Comment évaluer votre niveau de langue française ?" arialLabel="French Level" defaultValue={selectedFrenchLevel}  handleChange={handleChange}
                  marks={frenchLevels} step = {20} valuetext={valuetext} valueLabelFormat={valueLabelFormat} handleContinue={handleContinue} showContinueBtn={showContinueBtn} />
   );
 }

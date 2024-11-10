@@ -48,7 +48,7 @@ const Email = () => {
     const updateWendogouser = (simulationStep, email) => {
         dispatch(setStep(simulationStep));
         let updatedUser = { ...user, simulationStep, email, date: new Date().toISOString() };
-        helper.setLocalStorageWithExpiration('wendogouser', updatedUser, false);
+        helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
     };
 
     return ( 

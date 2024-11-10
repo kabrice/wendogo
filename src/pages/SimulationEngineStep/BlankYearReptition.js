@@ -33,17 +33,17 @@ const BlankYearReptition = () => {
     };
 
     const handleContinue = () => {
-        if(blankYearRepetitionNumber >=2){
-            updateWendogouser(SIMULATION_ENGINE_STEPS.BLANK_YEAR_REPETITION_WARNING, blankYearRepetitionNumber)
-        }else{
-            updateWendogouser(SIMULATION_ENGINE_STEPS.COULD_PAY_TUITION, blankYearRepetitionNumber)
-        }
+        // if(blankYearRepetitionNumber >=2){
+        //     updateWendogouser(SIMULATION_ENGINE_STEPS.BLANK_YEAR_REPETITION_WARNING, blankYearRepetitionNumber)
+        // }else{
+        updateWendogouser(SIMULATION_ENGINE_STEPS.COULD_PAY_TUITION, blankYearRepetitionNumber)
+        //}
     }
 
     const updateWendogouser = (simulationStep, blankYearRepetitionNumber) => {
         dispatch(setStep(simulationStep)) 
         let updatedUser = {...user, simulationStep, blankYearRepetitionNumber, date: new Date().toISOString()}
-        helper.setLocalStorageWithExpiration('wendogouser', updatedUser, false)         
+        helper.setLocalStorageWithExpiration('wendogouser', updatedUser)         
     }
     
     const getValidLevelRepetitionStartText = (user) => {

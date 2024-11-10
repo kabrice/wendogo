@@ -100,21 +100,21 @@ const SEAutoSuggestInput = (props) => {
               {!stopSearch && <div className={`Input ${(focused || isBusy) ? 'focused' : 'field-error'}`}>
                   <input  type="text" {...bindInput} placeholder="Domaine d'études" id={id} name={id} value={bindInput.value} 
                           tabIndex={6} maxLength={1000} autoComplete="off"/>
-                          {bindInput?.value?.length>0 && 
-                              <span className="Input-symbol" onClick={reinitializeInput}>
-                                <svg width="17px" height="17px" viewBox="0 0 17 17" xversion="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
-                                  <title>noun-multiply-665717</title>
-                                  <g id="Page-1" stroke="none" strokeWidth={1} fill="none" fillRule="evenodd" strokeLinecap="round" strokeLinejoin="round">
-                                    <g id="noun-multiply-665717" transform="translate(0.500000, 0.500000)" stroke={`${(focused || isBusy) ? '#0154C0' : '#ff3535'}`}>
-                                      <g id="Group" transform="translate(4.945168, 4.945168)" strokeWidth={3}>
-                                        <line x1={0} y1="0.000204692577" x2="6.10966405" y2="6.10966405" id="Path" />
-                                        <line x1={0} y1="6.10945936" x2="6.10966405" y2={0} id="Path" />
-                                      </g>
-                                      <circle id="Oval" cx={8} cy={8} r={8} />
-                                    </g>
-                                  </g>
-                                </svg>
-                              </span>}
+                  {bindInput?.value?.length>0 && 
+                      <span className="Input-symbol" onClick={reinitializeInput}>
+                        <svg width="17px" height="17px" viewBox="0 0 17 17" xversion="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+                          <title>noun-multiply-665717</title>
+                          <g id="Page-1" stroke="none" strokeWidth={1} fill="none" fillRule="evenodd" strokeLinecap="round" strokeLinejoin="round">
+                            <g id="noun-multiply-665717" transform="translate(0.500000, 0.500000)" stroke={`${(focused || isBusy) ? '#0154C0' : '#ff3535'}`}>
+                              <g id="Group" transform="translate(4.945168, 4.945168)" strokeWidth={3}>
+                                <line x1={0} y1="0.000204692577" x2="6.10966405" y2="6.10966405" id="Path" />
+                                <line x1={0} y1="6.10945936" x2="6.10966405" y2={0} id="Path" />
+                              </g>
+                              <circle id="Oval" cx={8} cy={8} r={8} />
+                            </g>
+                          </g>
+                        </svg>
+                      </span>}
                 </div>}
               {stopSearch && <div className="AutoSuggest suggestion-tag TextFieldContainer isBordered">
                 <div className="AutoSuggest-inputWrapper  ">

@@ -2,6 +2,7 @@
 import { useState, useEffect} from 'react';
 import { useGetDegreesQuery } from '../../store/apis/degreeApi';
 import { activateSpinner, deactivateSpinner } from '../../redux/spinnerslice'
+import { activateErrorPage, deactivateErrorPage } from '../../redux/errorPageSlice';
 import { activatePremiereClass, deactivatePremiereClass } from '../../redux/premiereClassSlice';
 import SESelectionList from '../../components/SimulationEngine/SESelectionList';
 import _ from 'lodash'
@@ -30,12 +31,15 @@ function RecentLevelHighSchool() {
             dispatch(activateSpinner())
         }
         if(error){
-            document.location.href='/error'
+            console.error('🛑 error', error)
+            dispatch(deactivateSpinner()) 
+            dispatch(activateErrorPage())
         }
         if (data) {
             const filteredData = data.filter(value => value.id === "deg00002" || value.id === "deg00003");
             
             dispatch(deactivateSpinner())
+            dispatch(deactivateErrorPage())
             _.forEach(filteredData, (value) => {
                 if(value.code === "Tle"){
                     setHSLevelSelected(user?.hsLevelSelected || value.id)
@@ -61,10 +65,33 @@ function RecentLevelHighSchool() {
     }
 
     const updateWendogouser = (simulationStep, hsLevelSelected) => {
-        dispatch(setStep(simulationStep)) 
-        let updatedUser = {...user, simulationStep, hsLevelSelected, date: new Date().toISOString()}
-        helper.setLocalStorageWithExpiration('wendogouser', updatedUser, false)         
-    }
+        dispatch(setStep(simulationStep));
+    
+        // Initialize common fields
+        let updatedUser = {
+            ...user,
+            simulationStep,
+            hsLevelSelected,
+            universityLevelSelected: null,
+            date: new Date().toISOString()
+        };
+    
+        // Iterate through report cards and update if needed
+        const reportCards = ['reportCard3', 'reportCard2', 'reportCard1'];
+        for (const reportCard of reportCards) {
+            if (user[reportCard] && Array.isArray(user[reportCard]) && user[reportCard].length > 0) {
+                user[reportCard][user[reportCard].length - 1] = [];
+                updatedUser = {
+                    ...updatedUser,
+                    [reportCard]: user[reportCard]
+                };
+                break; // Stop after the first match
+            }
+        }
+    
+        helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
+    };
+    
 
   return (
     <SESelectionList title="Quel est votre niveau scolaire actuel ?" items={hsLevels} itemSelected={hsLevelSelected} handleItemSelection={handleHSLevelSelection} 

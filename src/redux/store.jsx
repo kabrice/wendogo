@@ -5,7 +5,7 @@ import { leadstatusApi } from '../store/apis/leadstatusApi'
 import { leadApi } from '../store/apis/leadApi'
 import spinnerReducer from './spinnerslice'
 import universityReducer from './universitySlice'
-import userLevelSlice from './userLevelSlice'
+import errorPageSlice from './errorPageSlice'
 import userReducer from './userslice'
 import premiereClassSlice from './premiereClassSlice'
 import { visaTypeApi } from '../store/apis/visaTypeApi'
@@ -22,6 +22,8 @@ import { academicYearOrganizationApi } from '../store/apis/academicYearOrganizat
 import { markSystemApi } from '../store/apis/markSystemApi'
 import { subjectWeightSystemApi } from '../store/apis/subjectWeightSystemApi'
 import { nationalityApi } from '../store/apis/nationalityApi'
+import { schoolApi } from '../store/apis/schoolApi'
+import { majorApi } from '../store/apis/majorApi'
 
 export const store = configureStore({
   reducer: {
@@ -30,6 +32,7 @@ export const store = configureStore({
     premiereClass : premiereClassSlice,
     user: userReducer,
     simulationStep: simulationStepSlice,
+    errorPage: errorPageSlice,
     university: universityReducer,
     progressBarStep: progressBarStepSlice,
     [userApi.reducerPath]: userApi.reducer,
@@ -47,7 +50,9 @@ export const store = configureStore({
     [academicYearOrganizationApi.reducerPath]: academicYearOrganizationApi.reducer,
     [markSystemApi.reducerPath]: markSystemApi.reducer,
     [subjectWeightSystemApi.reducerPath]: subjectWeightSystemApi.reducer,
-    [nationalityApi.reducerPath]: nationalityApi.reducer
+    [nationalityApi.reducerPath]: nationalityApi.reducer,
+    [schoolApi.reducerPath]: schoolApi.reducer,
+    [majorApi.reducerPath]: majorApi.reducer
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(userApi.middleware)
                                           .concat(leadstatusApi.middleware)
@@ -64,4 +69,6 @@ export const store = configureStore({
                                           .concat(markSystemApi.middleware)
                                           .concat(subjectWeightSystemApi.middleware)
                                           .concat(nationalityApi.middleware)
+                                          .concat(schoolApi.middleware)
+                                          .concat(majorApi.middleware)
 })

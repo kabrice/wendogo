@@ -35,6 +35,7 @@ function getCountryDetails(countryCodeName, countryCodeList) {
 const SETextInputPhone = (props) => {
   const {
     title,
+    id,
     handleChange,
     value, // Initial phone number value
     inputLength,
@@ -48,37 +49,50 @@ const SETextInputPhone = (props) => {
     type,
     onClickOutside,
     countryCodeName,
+    setCountryIso2,
   } = props;
-  console.log('valueddd', value);
+  //console.log('valueddd', value);
   const [focused, setFocused] = useState(true);
   const newRef = useRef(null);
   const [collapseOption, setCollapseOption] = useState(true);
   const [itemSelected, setItemSelected] = useState(getCountryDetails(countryCodeName, COUNTRY_CODES));
-  
+  console.log('valuexx', value);
   // Initialize inputValue with dial code and value from props
   const [inputValue, setInputValue] = useState(`${value || ''}`);
 
   useEffect(() => {
     // Handle clicks outside the component
     const handleClickOutside = (event) => {
-      if (newRef.current && !newRef.current.contains(event.target) && !helper.isTargetContainsIgnoreClass(event.target) && onClickOutside) {
-        setCollapseOption(true);
-        setFocused(false);
-        setValid(onClickOutside(inputValue));
-      }
+        if (newRef.current && 
+            !newRef.current.contains(event.target) && 
+            !helper.isTargetContainsIgnoreClass(event.target)) {
+            
+            setCollapseOption(true);
+            setFocused(false);
+
+            // Add safety checks for onClickOutside
+            if (typeof onClickOutside === 'function') {
+                const validationResult = onClickOutside(inputValue);
+                // Ensure we only set valid state if we got a boolean result
+                if (typeof validationResult === 'boolean') {
+                    setValid(validationResult);
+                }
+            }
+        }
     };
 
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+        document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [onClickOutside, inputValue]);
+}, [onClickOutside, inputValue, valid, setValid]);
 
   const toggleDropdown = () => {
     setCollapseOption(!collapseOption);
   };
 
   const updateSelected = (item) => {
+    console.log('item xx', item);
     const updatedItem = {
       ...item,
       validated: true,
@@ -90,6 +104,7 @@ const SETextInputPhone = (props) => {
     // When a new country is selected, replace the dial code in the input
     const currentValue = inputValue.replace(itemSelected.dialCodeNumber, '');
     setInputValue(`${updatedItem.dialCodeNumber}${currentValue}`);
+    setCountryIso2(updatedItem.code);
     setCollapseOption(true);
   };
 
@@ -135,83 +150,40 @@ const SETextInputPhone = (props) => {
   };
 
   return (
-    <div className={`FieldWrapper TextField ${focused ? 'focused' : ''} ${valid ? 'field-valid' : (focused ? '' : 'field-error')} fade-animation fade-slow-enter-done`}>
-      <div className={`FieldView DaisyFieldView field-default SelectField VEH_USA_KILOM ${focused ? 'focused' : ''}`} style={isPartOfInputGroup && { margin: 0 }}>
-        {!isPartOfInputGroup && (
-          <>
-            <div className="FieldView-flex-container">
-              <label className="Label">{title}</label>
-            </div>
-            <div className="Tip">
-              {tip?.length > 0 && <div>{tip}</div>}
-            </div>
-          </>
-        )}
-        <div className="app-row app-field">
-          <div className="app-col-xs-12 app-col-sm-8 app-col-md-8 Field ignore-outside-click" style={{ display: 'flex' }} ref={newRef}>
-            <div
-              id="Select-VEH_USA_KILOM"
-              className={`Select undefined isBordered VEH_USA_KILOM icon-lesfurets after icon-system-arrow-more field-${itemSelected.validated ? "valid" : "default"} ${collapseOption ? "arrowNotToggled up" : "focused arrowToggled up"}`}
-              data-testid="VEH_USA_KILOM"
-              style={{ width: '30%', marginRight: '5%', padding: '0 10px' }}
-            >
-              <div className="Select-text" style={{ color: itemSelected.validated ? '#0154c0' : '#4e6174', fontSize: '15px', padding: '0 0 0 30px', margin: '10px 0 -10px 0', display: isPartOfInputGroup ? '' : 'none' }}>
-                {inputGroupBlockTitle}
-              </div>
-              <div className="Select-text phone-padding" tabIndex={8} onClick={toggleDropdown} >
-                <span className="Select-text-placeholder">{itemSelected.flag}</span>
-              </div>
-              {!collapseOption && (
-                <>
-                  <div className="Select-separator up" />
-                  <div className="slide-animation slide-fast-enter-done">
-                    <div className="Select-elements List-elements not-empty up">
-                      {COUNTRY_CODES.map((item) => (
-                        <div
-                          key={item.code}
-                          className={`Select-element List-element icon-lesfurets icon-arrow-right after SuggestionLabel ${itemSelected.dialCode === item.dialCode ? "selected" : ""}`}
-                          onClick={() => updateSelected(item)}
-                          style={{ padding: '20px' }}
-                        >
-                          <span>{item.dialCode}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </>
-              )}
-            </div>
-            <div className={`Input textField ${focused ? 'focused' : ''} ${valid ? 'field-valid' : (focused ? '' : 'field-error')}`} style={{ width: '70%' }}>
-              <input
-                type="tel"
-                autoComplete="on"
-                id="phone"
-                name="phone"
-                maxLength={inputLength}
-                value={inputValue}
-                onChange={handleInputChange}
-                onFocus={handleFocus}
-                onKeyDown={handleKeyDown}
-                placeholder={inputGroupBlockTitle ? inputGroupBlockTitle : 'Entrez le texte ici'}
-              />
-              {type && (
-                <span className="Input-symbol" style={{ paddingLeft: 0 }}>
+<div className={`FieldWrapper TextField ${focused ? 'focused' : ''} ${valid ? 'field-valid' : (focused ? '' : 'field-error')} fade-animation fade-slow-enter-done`}>
+	<div className={`FieldView DaisyFieldView field-default SelectField VEH_USA_KILOM ${focused ? 'focused' : ''}`} style={isPartOfInputGroup && { margin: 0 }}> {!isPartOfInputGroup && (
+		<>
+			<div className="FieldView-flex-container">
+				<label className="Label">{title}</label>
+			</div>
+			<div className="Tip"> {tip?.length > 0 &&
+				<div>{tip}</div>} </div>
+			</> )}
+			<div className="app-row app-field">
+				<div className="app-col-xs-12 app-col-sm-8 app-col-md-8 Field ignore-outside-click" style={{ display: 'flex' }} ref={newRef}>
+					<div className={`Select select-phone-whatsapp isBordered VEH_USA_KILOM icon-lesfurets after icon-system-arrow-more field-${itemSelected.validated ? "valid" : "default"} ${collapseOption ? "arrowNotToggled up" : "focused arrowToggled up"}`} style={{ width: '30%', marginRight: '5%', padding: '0 10px' }}>
+						{/* <div className="Select-text" style={{ color: itemSelected.validated ? '#0154c0' : '#4e6174', fontSize: '15px', padding: '0 0 0 30px', margin: '10px 0 -10px 0', display: isPartOfInputGroup ? 'none' : 'none' }}> {inputGroupBlockTitle} </div> */}
+						<div className="Select-text phone-padding" tabIndex={8} onClick={toggleDropdown}> <span className="Select-text-placeholder">{itemSelected.flag}</span> </div> {!collapseOption && (
+						<>
+							<div className="Select-separator up" />
+							<div className="slide-animation slide-fast-enter-done">
+								<div className="Select-elements List-elements not-empty up"> {COUNTRY_CODES.map((item) => (
+									<div key={item.code} className={`Select-element List-element icon-lesfurets icon-arrow-right after SuggestionLabel ${itemSelected.dialCode===item.dialCode ? "selected" : ""}`} onClick={()=> updateSelected(item)} style={{ padding: '20px' }} > <span>{item.dialCode}</span> </div> ))} </div>
+							</div>
+							</> )} </div>
+					<div className={`Input textField ${focused ? 'focused' : ''} ${valid ? 'field-valid' : (focused ? '' : 'field-error')}`} style={{ width: '70%' }}>
+						<input id={id ? id : 'phone'} type="tel" autoComplete="on" name="phone" maxLength={inputLength} value={inputValue} onChange={handleInputChange} onFocus={handleFocus} onKeyDown={handleKeyDown} placeholder={inputGroupBlockTitle ? inputGroupBlockTitle : 'Entrez le texte ici'} /> {type && ( <span className="Input-symbol" style={{ paddingLeft: 0 }}>
                   <span className="Icon icon-lesfurets icon-system-mail">
                     {whatsappSVG}
-                  </span>
-                </span>
-              )}
-            </div>
-          </div>
-        </div>
-        {(!valid && !focused) && (
-          <div className="Error">
-            <span className="Icon error-icon icon-lesfurets icon-system-alert" /> Veuillez entrer un numéro whatsapp valide.
-          </div>
-        )}
-        {showContinueBtn && <ButtonLarge name="Continuer" handleContinue={valid ? handleContinue : voidFunction} />}
-      </div>
-    </div>
+                  </span> </span> )} </div>
+				</div>
+			</div>
+      {/* <h2>{'Input= '+valid+' === '+focused}</h2> */}
+
+       {(!valid && !focused) && (
+			<div className="Error"> <span className="Icon error-icon icon-lesfurets icon-system-alert" /> Veuillez entrer un numéro whatsapp valide. </div> )} {showContinueBtn &&
+			<ButtonLarge name="Continuer" handleContinue={valid ? handleContinue : voidFunction} />} </div>
+</div>
   );
 };
 

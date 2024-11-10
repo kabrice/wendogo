@@ -50,7 +50,7 @@ const BirthDate = () => {
     const updateWendogouser = (simulationStep, birthDate) => {
         dispatch(setStep(simulationStep));
         let updatedUser = { ...user, simulationStep, birthDate, date: new Date().toISOString() };
-        helper.setLocalStorageWithExpiration('wendogouser', updatedUser, false);
+        helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
     };
 
     const handleContinue = (birthDate) => { 
@@ -59,7 +59,7 @@ const BirthDate = () => {
     } 
 
     return (<SEDateInput title="Quelle est votre date de naissance ?" id="BIRTHDATE"
-                         validated={initialBirthDate.validated} 
+                         validated={initialBirthDate.validated || simulationStepGlobal > SIMULATION_ENGINE_STEPS.BIRTHDATE} 
                          day={day} month={month} year={year} setDay={setDay} setMonth={setMonth} setYear={setYear}
                          handleDayChange={handleDayChange} handleMonthChange={handleMonthChange} handleYearChange={handleYearChange} 
                          showContinueBtn={simulationStepGlobal === SIMULATION_ENGINE_STEPS.BIRTHDATE}

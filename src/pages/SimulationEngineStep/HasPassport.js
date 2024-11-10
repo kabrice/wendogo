@@ -21,7 +21,7 @@ const HasPassport = () => {
 
     const handleHasPassport = (val) => {
         setHasPassport(val);
-        updateWendogouser(hasPassport? SIMULATION_ENGINE_STEPS.PASSEPORT_DETAILS : SIMULATION_ENGINE_STEPS.SALUTATION, val)
+        updateWendogouser(val? SIMULATION_ENGINE_STEPS.PASSEPORT_DETAILS : SIMULATION_ENGINE_STEPS.SALUTATION, val)
     };
 
     const updateWendogouser = (simulationStep, hasPassport) => {
@@ -33,7 +33,7 @@ const HasPassport = () => {
             dispatch(setProgress(PROGRESS_BAR_STEPS.COORDONNEES)) 
             updatedUser = {...user, simulationStep, hasPassport, progressBarStep: PROGRESS_BAR_STEPS.COORDONNEES,  date: new Date().toISOString()}   
         }
-        helper.setLocalStorageWithExpiration('wendogouser', updatedUser, false)         
+        helper.setLocalStorageWithExpiration('wendogouser', updatedUser)         
     }
 
     const handleContinue = () => {

@@ -33,15 +33,15 @@ const HasWorkExperience = () => {
     const updateWendogouser = (simulationStep, hasWorkExperience) => {
         dispatch(setStep(simulationStep)) 
         let updatedUser = {...user, simulationStep, hasWorkExperience, date: new Date().toISOString()}
-        helper.setLocalStorageWithExpiration('wendogouser', updatedUser, false)         
+        helper.setLocalStorageWithExpiration('wendogouser', updatedUser)         
     }
 
     const handleContinue = () => { 
         updateWendogouser(hasWorkExperience ? SIMULATION_ENGINE_STEPS.WORK_EXPERIENCE_DETAILS : SIMULATION_ENGINE_STEPS.ENGLISH_LEVEL, hasWorkExperience)
     }
 
-    return (<SEYesNo title={`Avez-vous une expérience professionnel en ${formattedString} depuis ${oldestSchoolYear-2}`} 
-                    id="HAS_WORK_EXPERIENCE"
+    return (<SEYesNo title={`Avez-vous une expérience professionnelle ou extrascolaire en ${formattedString} depuis ${oldestSchoolYear-2}`} 
+                    id="HAS_WORK_EXPERIENCE" svgConstantName="WORK_EXPERIENCE"
                     yes={hasWorkExperience} handleYes={handleHasWorkExperience} handleContinue={handleContinue} 
                     showContinueBtn={simulationStepGlobal === SIMULATION_ENGINE_STEPS.HAS_WORK_EXPERIENCE} />);
 }

@@ -68,7 +68,23 @@ export const userApi = createApi({
       query: (countryIso2) => `/countries/cities/${countryIso2}`,
       method: 'GET',
       providesTags: ['User']
-    })
+    }),
+    updateAndGetStudentSimulationResult: builder.mutation({ 
+      query: ({...body }) => ({
+        url: '/user/generate/courses',
+        method: 'PUT',
+        body
+      }),
+      invalidatesTags: ['User']
+    }), 
+    updateCreateUser: builder.mutation({
+      query: ({...body }) => ({
+        url: '/user/update/create',
+        method: 'PUT',
+        body
+      }),
+      invalidatesTags: ['User']
+    }),
   })
 }) 
 
@@ -81,5 +97,7 @@ export const {
   useSendCodeForVerificationMutation,
   useUpdateCredentialMutation,
   useUpdateSubscriptionStepMutation,
-  useDeleteUserMutation
+  useDeleteUserMutation, 
+  useUpdateAndGetStudentSimulationResultMutation,
+  useUpdateCreateUserMutation
 } = userApi 

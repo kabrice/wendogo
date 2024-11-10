@@ -55,9 +55,9 @@ const AcademicYearHeadDetails2 = () => {
 
     const updateSelectedMarkSystem = (item) => {
         const originalMarkSystemName = initialMarkSystemNameRef.current;
-        const reportCardExistsAndNotEmpty = user?.reportCard2 && !_.every(user.reportCard2, _.isEmpty);
+        const isReportCardsValid = user?.reportCard2 && !_.every(user.reportCard2, _.isEmpty);
 
-        if (item?.name !== originalMarkSystemName && reportCardExistsAndNotEmpty) {
+        if (item?.name !== originalMarkSystemName && isReportCardsValid) {
             setShowWarning(true);
         } else if (item?.name === originalMarkSystemName) {
             setShowWarning(false);
@@ -104,6 +104,7 @@ const AcademicYearHeadDetails2 = () => {
 
     const handleContinue = () => {  
         console.log('user?.reportCard2', user?.reportCard2)
+
         let updatedAcademicYearHeadDetails2 = { ...academicYearHeadDetails2, city: selectedCity, country: selectedCountry, markSystem: selectedMarkSystem, spokenLanguage: selectedSpokenLanguage, subjectWeightSystem: selectedSubjectWeightSystem, academicYearOrganization: selectedAcademicYearOrganization, schoolName }
         updateWendogouser(SIMULATION_ENGINE_STEPS.REPORT_CARD2, updatedAcademicYearHeadDetails2, showWarning ? null : user?.reportCard2)
         if (showWarning) {
@@ -113,8 +114,14 @@ const AcademicYearHeadDetails2 = () => {
 
     const updateWendogouser = (simulationStep, academicYearHeadDetails2, reportCard2 = user?.reportCard2) => {
         dispatch(setStep(simulationStep));
-        let updatedUser = { ...user, simulationStep, academicYearHeadDetails2, reportCard2, date: new Date().toISOString() };
-        helper.setLocalStorageWithExpiration('wendogouser', updatedUser, false);
+        let mainSubjects = user?.mainSubjects;
+        //console.log('user?.isResult3Available ooo', user?.isResult3Available)
+        if (!user.isResult3Available) { 
+            mainSubjects = null;
+        }
+        //console.log('mainSubjects ooo', mainSubjects)
+        let updatedUser = { ...user, simulationStep, academicYearHeadDetails2, reportCard2,isResult1Available:false,mainSubjects, date: new Date().toISOString() };
+        helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
     };
     
     

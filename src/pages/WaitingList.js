@@ -358,8 +358,8 @@ function WaitingList() {
                             une chose : l'opacité et le manque de transparence de plusieurs organismes de demande de visa. Il décide alors avec Boris de créer une solution qui propose un
                               service d'accompagnement simple, transparent, rapide et moins cher.
                             </span>
-                            <span><Link className={"link-opacity-100 "+ ((isShowMore && !isBoris) ? "hide" : "show") }  onClick={() => handleClickShowMore(true, false)}>...Voir Plus</Link></span>
-                            <span><Link className={"link-opacity-100 "+ ((isShowMore && !isBoris) ? "show" : "hide") }  onClick={() => handleClickShowMore(false, false)}> Voir Moins</Link></span>
+                            <span><Link className={"link-opacity-100 "+ ((isShowMore && !isBoris) ? "hide" : "show") }  onClick={() => handleClickShowMore(true,false)}>...Voir Plus</Link></span>
+                            <span><Link className={"link-opacity-100 "+ ((isShowMore && !isBoris) ? "show" : "hide") }  onClick={() => handleClickShowMore(false,false)}> Voir Moins</Link></span>
                           </p>
                         </div>
                       </div>

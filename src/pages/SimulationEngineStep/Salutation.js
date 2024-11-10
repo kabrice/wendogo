@@ -25,7 +25,7 @@ function Salutation() {
     const updateWendogouser = (simulationStep, salutation) => {
         dispatch(setStep(simulationStep)) 
         let updatedUser = {...user, simulationStep, salutation, date: new Date().toISOString()}
-        helper.setLocalStorageWithExpiration('wendogouser', updatedUser, false)         
+        helper.setLocalStorageWithExpiration('wendogouser', updatedUser)         
     }
 
     const monsieurSVG =  <svg width="61px" height="66.75px" viewBox="0 0 61 66.75" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">

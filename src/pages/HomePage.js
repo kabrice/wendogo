@@ -34,6 +34,7 @@ import { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
 import Footer from '../components/Footer';
+import OptimizedImage from '../components/OptimizedImage';
 // import { Link } from "react-router-dom";
 // import Nav from "./Nav";
 function HomePage(){
@@ -201,13 +202,13 @@ function HomePage(){
                         </span>
                         <ul className={"Navbarstyles__SubMenu "+(displaySubMenu1 ? 'lowcCT subMenu1' : '')} >
                           <li className="Navbarstyles__SubMenuFirstItem">
-                            <a tabIndex={0} className="LinkLabel__Link" href="/waitinglist">
-                              <span to='/waitinglist' className="LinkLabel__Label">Visa pour la France</span>
+                            <a tabIndex={0} className="LinkLabel__Link" href="/simulation/home">
+                              <span to='/simulation/home' className="LinkLabel__Label">Visa pour la France</span>
                             </a>
                           </li>
                           <li>
-                            <a tabIndex={0} className="LinkLabel__Link" href="/waitinglist">
-                            <span to='/waitinglist' className="LinkLabel__Label">Visa pour le Canada </span>
+                            <a tabIndex={0} className="LinkLabel__Link" href="/simulation/home">
+                            <span to='/simulation/home' className="LinkLabel__Label">Visa pour le Canada </span>
                             </a>
                           </li>
                         </ul>
@@ -259,7 +260,7 @@ function HomePage(){
                         </ul>
                       </li>
                       <li className="Navbarstyles__MenuButtonItems-sc-mi7mu3-6 eonXWL">
-                        <Link to='/waitinglist' className="ButtonLogin__Button"> Se connecter </Link>
+                        {/* <Link to='/waitinglist' className="ButtonLogin__Button"> Se connecter </Link> */}
                         <Link to='/simulation/home' className="ButtonNavbar__Button">
                           <span className="ButtonNavbar__Label"> Simuler mon visa </span>
                           <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className="ButtonNavbar__Arrow">
@@ -284,9 +285,9 @@ function HomePage(){
             <div className="main" style={{background: 'black'}}> 
               <Swiper className="mySwiper swiper-h" spaceBetween={50} pagination={{ clickable: true, }} modules={[Pagination, Autoplay]} speed={1000}
                     loop={true} autoplay={{delay: 2000,  disableOnInteraction: false, pauseOnMouseEnter: true}}>   
-                <SwiperSlide><img src={backgroundImg1} alt="" /></SwiperSlide>
-                <SwiperSlide><img src={backgroundImg2} alt="" /></SwiperSlide>
-                <SwiperSlide><img src={backgroundImg3} alt="" /></SwiperSlide>
+                <SwiperSlide><OptimizedImage src={backgroundImg1} alt="homepageImage" /></SwiperSlide>
+                <SwiperSlide><OptimizedImage src={backgroundImg2} alt="homepageImage" /></SwiperSlide>
+                <SwiperSlide><OptimizedImage src={backgroundImg3} alt="homepageImage" /></SwiperSlide>
                 <div className="main-screen__row">
                    <div className="main-screen__content">
                     <h1 className="HeroLeft__Title-sc-1axg5uv-3 jDYqud">Demandez un visa pour la France ou le Canada plus simplement.</h1>
@@ -339,7 +340,7 @@ function HomePage(){
                           </div>
                           <div className="Card__TextContainer-sc-1qqjegm-3 ezVybs">
                             <div className="Card__Title-sc-1qqjegm-4 bqicpW">Tarifs</div>
-                            <p className="Card__Text-sc-1qqjegm-5 iOmyQf"> Outils et conseils gratuits. Nous n'encaissons le paiement qu’au succès. </p>
+                            <p className="Card__Text-sc-1qqjegm-5 iOmyQf"> Outils et conseils gratuits. Nous n'encaissons véritablement le paiement qu’au succès. </p>
                           </div>
                         </div>
                         <div className="Card__Container-sc-1qqjegm-0 bSzjhs">
@@ -568,9 +569,11 @@ function HomePage(){
                             <div className="div-block-4">
                               <div className="work__item-num">3</div>
                               <h2 className="steps">Paiement</h2>
-                              <p className="paragraph-2"> Ensemble, nous établissons un devis prévisionnel, intégrant nos commissions à hauteur de 10%, exposant le coût global du projet. Après acceptation du devis, 
-                              un acompte équivalent à 30% du montant estimé doit être versé, lequel sera consigné dans un compte bloqué. En cas de réussite, le règlement du solde est exigé avant la délivrance de votre visa.
-                              En cas de refus, le remboursement intégral des fonds est effectué ; bien que les refus chez nous soient rares! </p>
+                              <p className="paragraph-2"> 
+                                {/* Ensemble, nous établissons un devis prévisionnel, intégrant nos commissions à hauteur de 10%, exposant le coût global du projet. Après acceptation du devis, */}
+                                Après signature du contrat,            
+                              un acompte équivalent à 50% du montant estimé doit être versé, lequel sera consigné dans un compte bloqué. En cas de réussite, le règlement du solde est exigé avant la délivrance de votre visa.
+                              En cas de refus, le remboursement intégral des fonds est effectué ! </p>
                             </div>
                             <div className="div-block-7">
                               <div className="work__item-num">4</div>

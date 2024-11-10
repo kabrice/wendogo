@@ -47,7 +47,7 @@ const CouldPayTuition = () => {
     const updateWendogouser = (simulationStep, couldPayTuition) => {
         dispatch(setStep(simulationStep)) 
         let updatedUser = {...user, simulationStep, couldPayTuition, date: new Date().toISOString()}
-        helper.setLocalStorageWithExpiration('wendogouser', updatedUser, false)         
+        helper.setLocalStorageWithExpiration('wendogouser', updatedUser)         
     }
 
     const handleContinue = () => {

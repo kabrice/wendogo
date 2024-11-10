@@ -17,7 +17,7 @@ const IsResult2Available = () => {
 
     const progressBarStep = useSelector((state) => state.progressBarStep); 
 
-    const [isResult2Available, setIsResult2Available] = useState('isResult2Available' in user ? user.isResult2Available : true)
+    const [isResult2Available, setIsResult2Available] = useState('reportCard2' in user ? user.isResult2Available : true)
 
     const showContinueBtn = (simulationStepGlobal === SIMULATION_ENGINE_STEPS.IS_YEAR_2_RESULTS_AVAILABLE) || 
                                    (!user?.isResult2Available && (progressBarStep === PROGRESS_BAR_STEPS.BULLETIN_N_1)) 
@@ -31,14 +31,14 @@ const IsResult2Available = () => {
         dispatch(setStep(simulationStep)) 
         let updatedUser
         if(isResult2Available){
-            updatedUser = {...user, simulationStep, isResult2Available, date: new Date().toISOString()} 
+            updatedUser = {...user, simulationStep, isResult2Available, selectedSchoolYear1:null, date: new Date().toISOString()} 
         } else {   
             let nextProgressBarStep = isInPremiereClassGlobal? PROGRESS_BAR_STEPS.PARCOURS_ACADEMIQUE_ET_PROFESSIONNEL : PROGRESS_BAR_STEPS.BULLETIN_N_2
             console.log('nextProgressBarStep', nextProgressBarStep)
             dispatch(setProgress(nextProgressBarStep)) 
-            updatedUser = {...user, simulationStep, isResult2Available, progressBarStep: nextProgressBarStep,  date: new Date().toISOString()}   
+            updatedUser = {...user, simulationStep, isResult2Available, progressBarStep: nextProgressBarStep,  selectedSchoolYear1:null, selectedSchoolYear2:null,  date: new Date().toISOString()}   
         }
-        helper.setLocalStorageWithExpiration('wendogouser', updatedUser, false)         
+        helper.setLocalStorageWithExpiration('wendogouser', updatedUser)         
     }
  
     const handleContinue = () => {
@@ -49,6 +49,7 @@ const IsResult2Available = () => {
     }
 
     return (<SEYesNo title={`Vos relevés académiques ${helper.updateBAC(isInUniversityGlobal, user, 1)} sont-ils disponibles ?`} 
+                    tip="Considérer uniquement les bulletins des années validées."
                     yes={isResult2Available} handleYes={handleIsResult2Available} handleContinue={handleContinue} 
                     showContinueBtn={showContinueBtn} 
                     id="IS_YEAR_3_RESULTS_AVAILABLE" />);

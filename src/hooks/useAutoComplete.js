@@ -18,6 +18,7 @@ export default function useAutoComplete({ delay = 1000, source, onChange }) {
     const [isBusy, setBusy] = useState(false)
     const [selectedIndex, setSelectedIndex] = useState(-1)
     const [textValue, setTextValue] = useState("")
+    //console.log('textValue', textValue)
 
     function delayInvoke(cb) {
         if (myTimeout) {
@@ -48,6 +49,7 @@ export default function useAutoComplete({ delay = 1000, source, onChange }) {
     }
 
     function onTextChange(searchTerm) {
+        //console.log('searchTerm', searchTerm)
         setBusy(true)
         setTextValue(searchTerm)
         clearSuggestions();
@@ -125,5 +127,6 @@ export default function useAutoComplete({ delay = 1000, source, onChange }) {
         suggestions,
         setSuggestions,
         selectedIndex,
+        setTextValue, // Expose setTextValue
     }
 }

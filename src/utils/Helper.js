@@ -1,6 +1,14 @@
 import {  toast } from 'react-toastify';
 import {ERROR_TEXT} from './Constants.js'
 import _ from 'lodash'
+import { get } from 'lodash';
+
+
+const EXPIRATION_TIMES = {
+  ONE_HOUR: 60*60*1000,
+  ONE_DAY: 24*60*60*1000,
+  ONE_WEEK: 7*24*60*60*1000
+};
 
 const helper = {
     toastSuccess: function(message){
@@ -39,23 +47,15 @@ const helper = {
             theme: "dark",
             }); 
     },
-    setLocalStorageWithExpiration: function(key, value, expirationTime = 10*60*1000) {
-        // store the value as the object
-        // along with the expiry date
-        let result  = {
-            data : value
-        }
-        //console.log('before expirationTime', expirationTime)
-        if(expirationTime){
-            //console.log('after expirationTime', expirationTime)
-        // set the expiry 
-        // from the current date
-        result.expireTime = Date.now() + expirationTime;
-        }
-        
-        // stringify the result
-        // and the data in original storage
-        localStorage.setItem(key, JSON.stringify(result));
+    setLocalStorageWithExpiration: function(key, value, customExpirationTime = null) {
+      const defaultExpiration = EXPIRATION_TIMES.ONE_DAY;
+      
+      let result = {
+          data: value,
+          expireTime: Date.now() + (customExpirationTime || defaultExpiration)
+      };
+      
+      localStorage.setItem(key, JSON.stringify(result));
     },
     getLocalStorageWithExpiration(key) {
         // get the parsed value of the given key
@@ -78,10 +78,10 @@ const helper = {
         // if the key does not have value
         return null;
     },
-    redirectionAtInit(user, currentPagePath, redirectPath='/waitinglist'){
+    redirectionAtInit(user, currentPagePath, redirectPath='/simulation/home'){
       //console.log('redirectionAtInit 🥰 ' , user)
         //console.log('redirectionAtInit 🥰 ' , currentPagePath, user.subscription_step, redirectPath)
-        if(!user || !(user.subscription_step).startsWith(currentPagePath)){
+        if(!user || !(user.subscription_step)?.startsWith(currentPagePath)){
           console.log('redirectionAtInit ERROR')
             // navigate('/waitinglist')
             document.location.href=redirectPath; 
@@ -166,7 +166,7 @@ const helper = {
       updateWendogouserCookie: function(callback, user, simulationStep, simulationStepValue){
         callback()
         let updatedUser = {...user, simulationStep, simulationStepValue:simulationStepValue, date: new Date().toISOString()}
-        helper.setLocalStorageWithExpiration('wendogouser', updatedUser, false)    
+        helper.setLocalStorageWithExpiration('wendogouser', updatedUser)    
       },
       isTargetContainsIgnoreClass: function(target){
         const ignoreDivs = document.querySelectorAll('.ignore-outside-click');
@@ -207,7 +207,70 @@ const helper = {
           // Return the updated BAC level if it's greater than -2
           return `BAC+${updatedNumber}`;
         }
-    } 
+    },
+    getMostRecentBacId : function(user) {
+      const hsLevelSelected = user?.hsLevelSelected;
+      if (hsLevelSelected === 'deg00003' || hsLevelSelected === 'deg00002') {
+          return `bac0000${hsLevelSelected.slice(-1)}`;
+      }
+      return user?.universityLevelSelected?.id;
+    },
+    universityTermIsComplete : function(subjectLists) {
+      const filledArraysCount = subjectLists.filter(list => list.length > 0).length;
+      return filledArraysCount >= 2;
+    },
+    isApplyingForMaster : function(user, subjectLists, level) {
+      let mostRecentBacId = helper.getMostRecentBacId(user); 
+      let bac_year = parseInt(mostRecentBacId.slice(-1))
+      let currentBacId = 'bac0000'+(bac_year-level)
+      console.log('🥳 mostRecentBacId', mostRecentBacId, bac_year, currentBacId)
+      if(currentBacId>'bac00005' || (currentBacId === 'bac00006' && helper.universityTermIsComplete(subjectLists))){
+          return true
+      }else{
+          return false
+      }
+    },
+    getRecentReportCard: function(userData, period){
+      // Helper function to check if array has baccalaureat subjects
+      const hasBaccalaureat = (array) => {
+        return array.some(subject => subject.isBaccalaureat === true);
+      };
+    
+      // Helper function to adjust references to start at 1
+      const adjustReferences = (array) => {
+        return array.map((subject, index) => ({
+          ...subject,
+          reference: index + 1
+        }));
+      };
+    
+      // Helper function to get valid arrays from a report card
+      const getValidArrays = (reportCard) => {
+        // Return empty array if reportCard is null or empty
+        if (!reportCard || !Array.isArray(reportCard) || reportCard.length === 0) {
+          return [];
+        }
+    
+        // Filter out empty arrays and arrays with baccalaureat subjects
+        return reportCard
+          .filter(arr => Array.isArray(arr) && arr.length > 0 && !hasBaccalaureat(arr));
+      };
+    
+      // Start with requested period and continue up to period 3
+      for (let currentPeriod = period; currentPeriod <= 3; currentPeriod++) {
+        //Todo : get method here remove with item, check it later
+        const reportCard = get(userData, `reportCard${currentPeriod}`, []);
+        console.log('🥳 reportCard', reportCard)
+        const validArrays = getValidArrays(reportCard);
+    
+        if (validArrays.length > 0) {
+          // Return the most recent (last) valid array with adjusted references
+          return adjustReferences(validArrays[validArrays.length - 1]);
+        }
+      }
+    
+      return [];
+    }    
 }
 
 export default helper

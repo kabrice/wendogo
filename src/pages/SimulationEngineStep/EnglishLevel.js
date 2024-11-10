@@ -59,14 +59,14 @@ const EnglishLevel = () => {
       const updateWendogouser = (simulationStep, selectedEnglishLevel) => {
         dispatch(setStep(simulationStep)) 
         let updatedUser = {...user, simulationStep, selectedEnglishLevel, date: new Date().toISOString()}
-        helper.setLocalStorageWithExpiration('wendogouser', updatedUser, false)         
+        helper.setLocalStorageWithExpiration('wendogouser', updatedUser)         
       }
 
       const handleContinue = () => {  
-        updateWendogouser(selectedEnglishLevel >= 40 ? SIMULATION_ENGINE_STEPS.CAN_JUSTIFY_ENGLISH_LEVEL : SIMULATION_ENGINE_STEPS.OTHER_LANGUAGE_LEVEL, selectedEnglishLevel)
+        updateWendogouser(selectedEnglishLevel >= 40 ? SIMULATION_ENGINE_STEPS.CAN_JUSTIFY_ENGLISH_LEVEL : SIMULATION_ENGINE_STEPS.OTHER_SPOKEN_LANGUAGE, selectedEnglishLevel)
       }
   return (
-    <SELevelRail title="Comment évaluer votre niveau en anglais ?" arialLabel="English Level" defaultValue={selectedEnglishLevel}  
+    <SELevelRail id={'ENGLISH_LEVEL'} title="Comment évaluer votre niveau en anglais ?" arialLabel="English Level" defaultValue={selectedEnglishLevel}  svgConstantName="ENGLISH"
                  handleChange={handleChange} marks={EnglishLevels} step = {20} valuetext={valuetext} valueLabelFormat={valueLabelFormat} 
                  handleContinue={handleContinue} showContinueBtn={simulationStepGlobal === SIMULATION_ENGINE_STEPS.ENGLISH_LEVEL} />
   );

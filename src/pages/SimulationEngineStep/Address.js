@@ -15,12 +15,12 @@ const Address = () => {
 
     const validateAddress = (addressName) => {
         const rules = [
-            { regex: /^[a-zA-Z0-9\s]+$/, error: "Seules les lettres, les chiffres et les espaces sont autorisés." },
-            { regex: /^.{10,255}$/, error: "Le contenu doit être compris entre 10 et 255 caractères." },
-            { regex: /^(?!.*\s{2,}).*$/, error: "Aucun espace consécutif n'est autorisé." },
+            { regex: /^[a-zA-Z0-9\sÀ-ÿ,'.;-]+$/gm, error: "Seules les lettres, les chiffres et les espaces sont autorisés." },
+            { regex: /^[\s\S]{10,255}$/, error: "Le contenu doit être compris entre 10 et 255 caractères." },
+            { regex: /^(?!.*[^\S\n]{2,})[\s\S]*$/, error: "Aucun espace consécutif n'est autorisé." },
             // Add more rules as needed
         ];
-
+        console.log('addressName', addressName);
         for (let rule of rules) {
             if (!rule.regex.test(addressName)) {
                 setErrorMessage(rule.error);
@@ -51,7 +51,7 @@ const Address = () => {
     const updateWendogouser = (simulationStep, address) => {
         dispatch(setStep(simulationStep));
         let updatedUser = { ...user, simulationStep, address, date: new Date().toISOString() };
-        helper.setLocalStorageWithExpiration('wendogouser', updatedUser, false);
+        helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
     };
 
     return ( 

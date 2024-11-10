@@ -6,6 +6,7 @@ import { useGetAcademicYearOrganizationsQuery } from '../../store/apis/academicY
 import { useGetMarkSystemsQuery } from '../../store/apis/markSystemApi';
 import { useGetSubjectWeightSystemsQuery } from '../../store/apis/subjectWeightSystemApi';
 import { activateSpinner, deactivateSpinner } from '../../redux/spinnerslice';
+import { activateErrorPage, deactivateErrorPage } from '../../redux/errorPageSlice';
 import helper from '../../utils/Helper';
 import SELabel from './SELabel';
 import SEDropDownList from './SEDropDownList';
@@ -62,18 +63,20 @@ const SEAcademicYearHeadDetails = (props) => {
     const [valid, setValid] = useState(doesValueValid(schoolName) || schoolName === '');
 
     useEffect(() => {
-        
+        console.log('IN SEAcademicYearHeadDetails useEffect');
         if (isLoading || spokenLanguagesIsLoading || academicYearOrganizationsIsLoading || markSystemsIsLoading || subjectWeightSystemsIsLoading) {
             dispatch(activateSpinner());
         }
 
         if (error || spokenLanguagesError || academicYearOrganizationsError || markSystemsError || subjectWeightSystemsError) {
             console.error('Error:', error || spokenLanguagesError || academicYearOrganizationsError || markSystemsError || subjectWeightSystemsError);
-            document.location.href = '/error';
+            dispatch(deactivateSpinner()) 
+            dispatch(activateErrorPage())
         }
         //console.log('IN SEAcademicYearHeadDetails useEffect');
         if (data) {
-            dispatch(deactivateSpinner());
+            dispatch(deactivateSpinner()) 
+            dispatch(deactivateErrorPage())
             const sortedCountries = data.countries.map((item) => ({ ...item })).sort((a, b) => a.name.localeCompare(b.name));
             setCountries(sortedCountries);
             //console.log('IN sortedCountries useEffect', sortedCountries);
@@ -88,9 +91,11 @@ const SEAcademicYearHeadDetails = (props) => {
         }
        
         if(spokenLanguages){
+            console.log('spokenLanguages', spokenLanguages);
+            console.log('selectedCountry', selectedCountry);
             const selectedCountrySpokenLanguage = spokenLanguages.find(language => language.id === selectedCountry.most_popular_spoken_language_id);
             if (selectedCountrySpokenLanguage) {
-                setSelectedSpokenLanguage({ name: selectedCountrySpokenLanguage.name });
+                setSelectedSpokenLanguage({ name: selectedCountrySpokenLanguage.name, id: selectedCountrySpokenLanguage.id });
             }  
         }
         if(!showContinueBtn){
@@ -135,7 +140,7 @@ const SEAcademicYearHeadDetails = (props) => {
 
         helper.addOutsideClick(handleOutsideClick);
 
-        
+        console.log('OUT SEAcademicYearHeadDetails useEffect', academicYearOrganizations);
     }, [data, error, isLoading, 
         spokenLanguages, spokenLanguagesError, spokenLanguagesIsLoading, 
         academicYearOrganizations, academicYearOrganizationsError, academicYearOrganizationsIsLoading, 

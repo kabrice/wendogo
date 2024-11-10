@@ -72,7 +72,7 @@ const SE2DateInput = (props) => {
     };
     
     return (
-        <div id="PRI_DON_NAISS-wrapper" className="FieldWrapper DateInputField PRI_DON_NAISS">
+        <div id="PRI_DON_NAISS-wrapper" className="FieldWrapper DateInputField PRI_DON_NAISS fade-in">
             <div className="FieldView DaisyFieldView DateInputField PRI_DON_NAISS" >
                 {title?.length > 0 && (
                     <div className="FieldView-flex-container">

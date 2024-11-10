@@ -12,7 +12,7 @@ const DegreeExactName = () => {
     let user = helper.getLocalStorageWithExpiration('wendogouser')
     const [degreeExactNameValue, setDegreeExactNameValue] = useState(user?.degreeExactNameValue || '');
     const simulationStepGlobal = useSelector((state) => state.simulationStep);
-    const isInUniversityGlobal = useSelector((state) => state.university.active)
+    //const isInUniversityGlobal = useSelector((state) => state.university.active)
 
     const doesValueValid = (degreeExactNameValue) => {
         return degreeExactNameValue !== undefined && degreeExactNameValue.trim().length >= 3 && /[a-zA-Z].*[a-zA-Z]/.test(degreeExactNameValue);
@@ -27,7 +27,8 @@ const DegreeExactName = () => {
     };   
 
     const handleContinue = () => {
-        updateWendogouser(isInUniversityGlobal ? SIMULATION_ENGINE_STEPS.PROGRAM_DOMAIN : SIMULATION_ENGINE_STEPS.MAIN_SUBJECTS, degreeExactNameValue)
+        //updateWendogouser(isInUniversityGlobal ? SIMULATION_ENGINE_STEPS.CLASS_REPETITION : SIMULATION_ENGINE_STEPS.MAIN_SUBJECTS, degreeExactNameValue)
+        updateWendogouser( SIMULATION_ENGINE_STEPS.CLASS_REPETITION, degreeExactNameValue)
     }
 
     const updateWendogouser = (simulationStep, degreeExactNameValue) => {
@@ -37,11 +38,11 @@ const DegreeExactName = () => {
         if(user.degreeExactNameValue !== degreeExactNameValue ){
             updatedUser = {...updatedUser, programDomainObj:null}
         }
-        helper.setLocalStorageWithExpiration('wendogouser', updatedUser, false)         
+        helper.setLocalStorageWithExpiration('wendogouser', updatedUser)         
     }
 
     return (
-        <SETextInput title="Intitulé exact du diplôme" tip=" Veuillez vous assurer de bien écrire l'intitulé de ce diplôme, 
+        <SETextInput title="Intitulé exact du diplôme ou du programme suivi" tip=" Veuillez vous assurer de bien écrire l'intitulé de ce diplôme, 
                                                              car l'algorithme l'utilisera pour vous proposer les écoles les plus adaptées à votre profil."
                     handleChange={handleChange} value={degreeExactNameValue} inputLength={255} 
                     autoComplete="off"

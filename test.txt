@@ -1,0 +1,160 @@
+I have this variable in reactjs 
+majorDetails = [
+    {
+        "domain_id": "dom0011",
+        "domain_name": "Médecine et santé",
+        "major_id": "maj0095",
+        "subdomain_id": "sub0115",
+        "subdomain_name": "Médecine "
+    },
+    {
+        "domain_id": "dom0011",
+        "domain_name": "Médecine et santé",
+        "major_id": "maj0097",
+        "subdomain_id": "sub0135",
+        "subdomain_name": "Santé Publique "
+    },
+    {
+        "domain_id": "dom0007",
+        "domain_name": "Droit",
+        "major_id": "maj0140",
+        "subdomain_id": "sub0089",
+        "subdomain_name": "Droit public "
+    },
+    {
+        "domain_id": "dom0007",
+        "domain_name": "Droit",
+        "major_id": "maj0141",
+        "subdomain_id": "sub0089",
+        "subdomain_name": "Droit public "
+    },
+    {
+        "domain_id": "dom0008",
+        "domain_name": "Informatique",
+        "major_id": "maj0146",
+        "subdomain_id": "sub0095",
+        "subdomain_name": "Informatique "
+    },
+    {
+        "domain_id": "dom0014",
+        "domain_name": "Science de l'ingénieur",
+        "major_id": "maj0172",
+        "subdomain_id": "sub0145",
+        "subdomain_name": "Aéronautique "
+    },
+    {
+        "domain_id": "dom0019",
+        "domain_name": "Sciences humaines et sociales",
+        "major_id": "maj0195",
+        "subdomain_id": "sub0227",
+        "subdomain_name": "Sociologie "
+    },
+    {
+        "domain_id": "dom0019",
+        "domain_name": "Sciences humaines et sociales",
+        "major_id": "maj0203",
+        "subdomain_id": "sub0227",
+        "subdomain_name": "Sociologie "
+    },
+        {
+        "domain_id": "dom0019",
+        "domain_name": "Sciences humaines et sociales",
+        "major_id": "maj0209",
+        "subdomain_id": "sub0227",
+        "subdomain_name": "Sociologie "
+    }
+]
+I want many things to do with this variable
+
+1.First 
+I want you to build a function to generate a new variable based on that in this form //domain (id and name) as parents and subdomain (id and name) with related major_ids (in array) as children
+ newMajorDetails = [
+    {
+        "domain_id": "dom0011",
+        "domain_name": "Médecine et santé",
+        "children": [
+            {
+                "major_ids": ["maj0095"],
+                "subdomain_id": "sub0115",
+                "subdomain_name": "Médecine "
+            },
+            {
+                "major_ids": ["maj0097"],
+                "subdomain_id": "sub0135",
+                "subdomain_name": "Santé Publique "
+            }
+        ]
+    },
+    {
+        "domain_id": "dom0007",
+        "domain_name": "Droit",
+        "children": [
+            {
+                "major_ids": ["maj0140", "maj0141"],
+                "subdomain_id": "sub0089",
+                "subdomain_name": "Droit public "
+            }
+        ]
+    },
+    {
+        "domain_id": "dom0008",
+        "domain_name": "Informatique",
+        "children": [
+            {
+                "major_ids": ["maj0146"],
+                "subdomain_id": "sub0095",
+                "subdomain_name": "Informatique "
+            }
+        ]
+    },
+    {
+        "domain_id": "dom0014",
+        "domain_name": "Science de l'ingénieur",
+        "children": [
+            {
+                "major_ids": ["maj0172"],
+                "subdomain_id": "sub0145",
+                "subdomain_name": "Aéronautique "
+            }
+        ]
+    },
+    {
+        "domain_id": "dom0019",
+        "domain_name": "Sciences humaines et sociales",
+        "children": [
+            {
+                "major_ids": ["maj0195", "maj0203", "maj0209"],
+                "subdomain_id": "sub0227",
+                "subdomain_name": "Sociologie "
+            }
+        ]
+    }
+]
+
+2.Second : a map based on the new variable generated  a list of html 
+    newMajorDetails.map((domain) => (
+        <div className="Stack-child" style={{ paddingTop: 15 }} key={domain.domain_id} onClick={revealChildren(domain.domain_id)}>
+            <div className="Accordion">
+                <div className="Stack pushLastItem stackRow " style={{ flexDirection: "row", padding: 0, alignItems: "center" }}>
+                    <div className="Stack-child" style={{ paddingLeft: 0 }}>
+                        <div className="Stack  stackRow " style={{ flexDirection: "row", padding: 0, alignItems: "stretch" }}>
+                            <div className="Stack-child" style={{ paddingLeft: 0 }}>
+                                <div className="Checkbox FilterCheckbox after  no-margin" data-testid="filter-checkbox-assistance_accident">
+                                    <label htmlFor= {domain.domain_name} className="Checkbox-label  "> {domain.domain_name} </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="Stack-child" style={{ paddingLeft: 0 }}>
+                        <div className="icon-wrapper" style={{ color: "rgb(172, 186, 200)" }}>
+                            <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" width="30px" height="30px">
+                                <path d="M27.785 15.75l-.562-.53a.829.829 0 00-1.123 0l-6.592 6.226-6.59-6.226a.823.823 0 00-1.124 0l-.561.53a.721.721 0 000 1.061l7.714 7.286c.149.141.35.22.561.22a.82.82 0 00.563-.22l7.714-7.286a.73.73 0 00.233-.531.73.73 0 00-.233-.53" fillRule="evenodd" /> </svg>
+                        </div>
+                    </div>
+                </div>
+              {selectedDomainId=domain.domain_id &&  domain.children.map((subdomain) => (
+                <FormGroup style={{marginLeft: 10}} key = {subdomain.subdomain_id} onClick={displayCoursesFromMajor(subdomain.major_id)}> 
+                    <FormControlLabel control={ <Checkbox checked={selectedDomainId=domain.domain_id && selectedSubdomainId=subdomain.subdomain_id} />} label={subdomain.subdomain_name} /> 
+                </FormGroup>)))}
+            </div>
+        </div>)))

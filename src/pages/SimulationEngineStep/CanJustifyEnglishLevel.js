@@ -20,7 +20,7 @@ const CanJustifyEnglishLevel = () => {
     const updateWendogouser = (simulationStep, canJustifyEnglishLevel) => {
         dispatch(setStep(simulationStep)) 
         let updatedUser = {...user, simulationStep, canJustifyEnglishLevel, date: new Date().toISOString()}
-        helper.setLocalStorageWithExpiration('wendogouser', updatedUser, false)         
+        helper.setLocalStorageWithExpiration('wendogouser', updatedUser)         
     }
 
     const handleContinue = () => {

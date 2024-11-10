@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef} from 'react';
 import { useGetSchoolYearsQuery } from '../../store/apis/schoolYearApi';
 import { activateSpinner, deactivateSpinner } from '../../redux/spinnerslice'
+import { activateErrorPage, deactivateErrorPage } from '../../redux/errorPageSlice';
 import helper from '../../utils/Helper';
 import _ from 'lodash'
 import SEDropDownList from '../../components/SimulationEngine/SEDropDownList';
@@ -43,12 +44,24 @@ const SchoolYear2 = () => {
             dispatch(activateSpinner())
         }
         if(error){
-            console.log('error', error)
-            document.location.href='/error'
+            console.error('🛑 error', error)
+            dispatch(deactivateSpinner()) 
+            dispatch(activateErrorPage())
         }
         if (data) {
             dispatch(deactivateSpinner())
-            setSchoolYears2(data)
+            dispatch(deactivateErrorPage())
+            const selectedSchoolYear3 = user?.selectedSchoolYear3
+            let clonedData = _.cloneDeep(data);
+            if (selectedSchoolYear3) {
+                clonedData = _.cloneDeep(data);
+                const index = _.findIndex(clonedData, { id: selectedSchoolYear3.id });
+                if (index !== -1) {
+                    clonedData.splice(index);
+                }
+                
+            } 
+            setSchoolYears2(clonedData.reverse());
         }
 
         helper.addOutsideClick(handleOutsideClick)
@@ -62,7 +75,7 @@ const SchoolYear2 = () => {
     const updateWendogouser = (simulationStep, selectedSchoolYear2) => {
         dispatch(setStep(simulationStep)) 
         let updatedUser = {...user, simulationStep, selectedSchoolYear2, date: new Date().toISOString()}
-        helper.setLocalStorageWithExpiration('wendogouser', updatedUser, false)         
+        helper.setLocalStorageWithExpiration('wendogouser', updatedUser)         
     }
 
   return (

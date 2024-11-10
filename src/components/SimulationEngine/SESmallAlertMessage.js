@@ -21,11 +21,11 @@ const customTheme = (outerTheme) =>
     });
 
 const SESmallAlertMessage = (props) => {
-    const { type, content } = props;
+    const { type, content, width } = props;
     const outerTheme = useTheme();
  
     return (
-            <Stack sx={{ width: '65.2%', borderRadius: '16px' }} spacing={2}> 
+            <Stack sx={{ width: width ? width : '65.2%', borderRadius: '16px' }} spacing={2}> 
                 <ThemeProvider theme={customTheme(outerTheme)}>  
                     <Alert severity={type}>{content}</Alert> 
                 </ThemeProvider>

@@ -84,12 +84,12 @@ function HeaderMenuBar(){
                         </span>
                         <ul className={"Navbarstyles__SubMenu "+(displaySubMenu1 ? 'lowcCT subMenu1' : '')} style={{backgroundColor : 'white'}}>
                           <li className="Navbarstyles__SubMenuFirstItem">
-                            <a tabIndex={0} className="LinkLabel__Link" href="/waitinglist">
+                            <a tabIndex={0} className="LinkLabel__Link" href="/simulation/home">
                               <span className="LinkLabel__Label">Visa pour la France</span>
                             </a>
                           </li>
                           <li>
-                            <a tabIndex={0} className="LinkLabel__Link" href="/waitinglist">
+                            <a tabIndex={0} className="LinkLabel__Link" href="/simulation/home">
                               <span className="LinkLabel__Label">Visa pour le Canada</span>
                             </a>
                           </li>
@@ -143,7 +143,7 @@ function HeaderMenuBar(){
                       </li>
                       <li className="Navbarstyles__MenuButtonItems-sc-mi7mu3-6 eonXWL">
                         {/* <Link to='/waitinglist' className="ButtonLogin__Button"> Se connecter </Link> */}
-                        <Link to='/waitinglist' className="ButtonNavbar__Button">
+                        <Link to='/simulation/home' className="ButtonNavbar__Button">
                           <span className="ButtonNavbar__Label"> Simuler mon visa </span>
                           <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className="ButtonNavbar__Arrow">
                             <path d="M15.3,11.17l-2.51-2.49,1.18-1.18,4.53,4.5-4.53,4.5-1.18-1.18,2.51-2.49H5.5v-1.66H15.3Z" />

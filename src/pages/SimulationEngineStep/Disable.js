@@ -21,7 +21,7 @@ const Disable = () => {
     const updateWendogouser = (simulationStep, disable) => {
         dispatch(setStep(simulationStep)) 
         let updatedUser = {...user, simulationStep, disable, date: new Date().toISOString()}
-        helper.setLocalStorageWithExpiration('wendogouser', updatedUser, false)         
+        helper.setLocalStorageWithExpiration('wendogouser', updatedUser)         
     }
 
     const handleContinue = () => {

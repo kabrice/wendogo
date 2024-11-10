@@ -1,19 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import SECheckBox from '../../components/SimulationEngine/SECheckBox';
-import ButtonLarge from '../../components/ButtonLarge';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
+import React, { useState } from 'react'; 
+import ButtonLarge from '../../components/ButtonLarge'; 
+import SESmallAlertMessage from '../../components/SimulationEngine/SESmallAlertMessage';
+import helper from '../../utils/Helper';
+import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'
 
 const Validation = () => {
 
     const [isCheck, setIsCheck] = useState(false);
+    const [isAlert, setIsAlert] = useState(false);
+
+    let user = helper.getLocalStorageWithExpiration('wendogouser')
+    const navigate = useNavigate()
 
     const handleCheck = () => {
         setIsCheck(!isCheck);
     }
 
     const handleContinue = () => {
-        console.log('Continue')
+       if(isCheck){
+        let updatedUser = {...user, 'simulationResults':null, 'schoolDetails': null, 'majorDetails': null, date: new Date().toISOString()}
+        helper.setLocalStorageWithExpiration('wendogouser', updatedUser)   
+        navigate(`/simulation/result#view/SCORE_DETAILLE`, { replace: true })
+
+       // window.location.href = '/simulation/result#view/SCORE_DETAILLE';
+       }else{
+            setIsAlert(true);
+       }
     }
 
     const goToCGU = () => { 
@@ -44,27 +57,27 @@ const Validation = () => {
                                 <div className="Stack-child  " style={{ paddingLeft: 0 }}>
                                 <div className="Checkbox  after field-valid " data-testid="">
                                     <input type="checkbox" name="COORD_CGU_VALIDATION" id="COORD_CGU_VALIDATION" tabIndex={7} defaultValue="COORD_CGU_VALIDATION" />
-                                    <button type="button" role="checkbox" aria-checked="true" onClick={() => handleCheck()} 
+                                    <Link type="button" role="checkbox" aria-checked="true" onClick={(e) => {e.preventDefault(); handleCheck()}} 
                                             className={`Checkbox-tick icon-lesfurets icon-system-check ${isCheck && 'ticked'} active `}>
                                         {isCheck && <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" height="20" width="20">
                                             <path d="M12.098 20.161a1.5 1.5 0 00-2.196 2.045l4.953 5.316a1.5 1.5 0 002.176.02l13.048-13.5a1.5 1.5 0 00-2.158-2.084L15.972 24.32l-3.874-4.16z" fillRule="evenodd" fill='#ffffff'></path>
                                         </svg>}
-                                    </button>
+                                    </Link>
                                     <label htmlFor="COORD_CGU_VALIDATION" className="Checkbox-label  active">
                                     <div>
                                         <div id="cgu" className="Text ">
                                         <div> J'accepte les&nbsp; <span className="toggle-modal" onClick={() => goToCGU()}> Conditions Générales d'Utilisation </span> &nbsp;et d'être contacté par nos partenaires Assurance Auto&nbsp;si je demande à être mis en relation pour faire des économies et protéger ma voiture. </div>
                                         </div>
+                                        
+                                    <div style={{marginTop: 10}}>
+                                    {isAlert && <SESmallAlertMessage type="error" content="Veuillez accepter les conditions générales d'utilisation" />}
+                                    </div>
                                     </div>
                                     </label>
-                                    <div className="CguModal-wrapper" />
                                 </div>
                                 </div>
                             </div>
-                            </div> 
-                            
-                            {/* <SECheckBox title={`J'accepte les&nbsp; <span className="toggle-modal"> Conditions Générales d'Utilisation </span> &nbsp;et d'être contacté par nos partenaires Assurance Auto&nbsp;si je demande à être mis en relation pour faire des économies et protéger ma voiture. `} />
-                         */}
+                            </div>  
                         </div>
                         </div>
                     </div>

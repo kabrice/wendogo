@@ -4,6 +4,7 @@ import { useCountriesQuery } from '../../store/apis/userApi';
 import { useGetSpokenLanguagesQuery } from '../../store/apis/spokenLanguageApi'; 
 import { useGetSchoolYearsQuery } from '../../store/apis/schoolYearApi'; 
 import { activateSpinner, deactivateSpinner } from '../../redux/spinnerslice';
+import { activateErrorPage, deactivateErrorPage } from '../../redux/errorPageSlice';
 import { setStep } from '../../redux/simulationStepSlice';
 import helper from '../../utils/Helper';
 import SELabel from '../../components/SimulationEngine/SELabel';
@@ -12,6 +13,7 @@ import ButtonLarge from '../../components/ButtonLarge';
 import SETextInput from '../../components/SimulationEngine/SETextInput';
 import { SIMULATION_ENGINE_STEPS } from '../../utils/Constants';  
 import SETextArea from '../../components/SimulationEngine/SETextArea';
+import _ from 'lodash';
 
 const honourTypes = [
     { id: 1, name: 'None', validated: false },
@@ -133,11 +135,14 @@ const AwardDetails = () => {
         }
 
         if (error || spokenLanguagesError || awardYearsError) { 
-            document.location.href = '/error';
+            console.error('🛑 error', error)
+            dispatch(deactivateSpinner()) 
+            dispatch(activateErrorPage())
         }
         //console.log('IN AwardDetails useEffect');
         if (data) {
-            dispatch(deactivateSpinner());
+            dispatch(deactivateSpinner()) 
+            dispatch(deactivateErrorPage())
             const sortedCountries = data.countries.map((item) => ({ ...item })).sort((a, b) => a.name.localeCompare(b.name));
             setCountries(sortedCountries);
             //console.log('IN sortedCountries useEffect', sortedCountries);
@@ -154,7 +159,7 @@ const AwardDetails = () => {
         if(spokenLanguages){
             const selectedCountrySpokenLanguage = spokenLanguages.find(language => language.id === selectedCountry.most_popular_spoken_language_id);
             if (selectedCountrySpokenLanguage) {
-                setSelectedSpokenLanguage({ name: selectedCountrySpokenLanguage.name });
+                setSelectedSpokenLanguage({ name: selectedCountrySpokenLanguage.name, id: selectedCountrySpokenLanguage.id });
             }  
         }
         if(!showContinueBtn){
@@ -209,7 +214,7 @@ const AwardDetails = () => {
     const updateWendogouser = (simulationStep, award) => {
         dispatch(setStep(simulationStep));
         let updatedUser = { ...user, simulationStep, award, date: new Date().toISOString() };
-        helper.setLocalStorageWithExpiration('wendogouser', updatedUser, false);
+        helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
     };
 
     const handleContinue = () => {
@@ -227,7 +232,7 @@ const AwardDetails = () => {
                 <SEDropDownList
                     newRef={newRefAwardYear}
                     collapseOption={collapseAwardYearOption}
-                    items={awardYears}
+                    items={(_.cloneDeep(awardYears)).reverse()}
                     itemSelected={selectedAwardYear}
                     toggleDropdown={toggleAwardYearDropdown}
                     updateSelected={updateSelectedAwardYear}
@@ -293,6 +298,7 @@ const AwardDetails = () => {
             <SETextInput 
                 handleChange={handleChangeRank} 
                 autoComplete="on"
+                type="number"
                 id="RANK"
                 value={rankValue} 
                 valid={validRank}

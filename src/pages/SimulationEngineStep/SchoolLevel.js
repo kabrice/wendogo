@@ -32,7 +32,7 @@ function SchoolLevel() {
         dispatch(setStep(simulationStep)) 
         let updatedUser = {...user, simulationStep, schoolLevelSelected, date: new Date().toISOString()}
         setShowContinueBtn(false)    
-        helper.setLocalStorageWithExpiration('wendogouser', updatedUser, false)         
+        helper.setLocalStorageWithExpiration('wendogouser', updatedUser)         
     }
 
     const superieurSVG =  <svg width="64.3499068px" height="60px" viewBox="0 0 64.3499068 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">

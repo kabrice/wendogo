@@ -91,7 +91,7 @@ function WendogoPrivacy(){
                             <p className="styles__Block-sc-1qjc0o4-0 styles__Paragraph-sc-1qjc0o4-2 ktDrhZ bbNzRf"> Choisir Wendogo, c'est nous faire confiance pour un accompagnement optimal dans vos démarches visa, 
                             mais aussi pour sécuriser vos données. Indispensables et sensibles, on vous explique en quoi les informations et documents que vous nous transmettez sont utiles à votre projet, et comment on les protège.</p>
                         </div>
-                        <a href="https://app.pretto.fr/" className="styles__BaseTypo-sc-198xhmk-0 aPHVI styles__Button-sc-wveu9u-1 iRJUAN styles__Button-sc-1wzyvpr-0 ctdOjM">
+                        <a href="/simulation/home" className="styles__BaseTypo-sc-198xhmk-0 aPHVI styles__Button-sc-wveu9u-1 iRJUAN styles__Button-sc-1wzyvpr-0 ctdOjM">
                             <span className="styles__Label-sc-wveu9u-2 hhrLkB"> Je simule mon visa </span>
                             <svg height={16} viewBox="0 0 16 16" width={16} xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="styles__Arrow-sc-wveu9u-0 jXLObB">
                             <path d="M6.3,2.5,5,3.8,9.28,8,5,12.2l1.3,1.3L11.88,8Z" />

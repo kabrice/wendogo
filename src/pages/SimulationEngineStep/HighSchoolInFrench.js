@@ -20,7 +20,7 @@ const HighSchoolInFrench = () => {
     const updateWendogouser = (simulationStep, isFrancophone) => {
         dispatch(setStep(simulationStep)) 
         let updatedUser = {...user, simulationStep, isFrancophone, date: new Date().toISOString()}
-        helper.setLocalStorageWithExpiration('wendogouser', updatedUser, false)         
+        helper.setLocalStorageWithExpiration('wendogouser', updatedUser)         
     }
 
     const handleContinue = () => {

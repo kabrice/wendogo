@@ -47,7 +47,10 @@ const OtherSpokenLanguage = () => {
         setSelectedOtherSpokenLanguage({ ...item, validated: true })
         setCollapseOtherSpokenLanguageOption(true)
         setFieldDefault(false)
-        updateWendogouser(selectedOtherSpokenLanguage.id === 'none' ? SIMULATION_ENGINE_STEPS.ALREADY_TRAVELED_TO_FRANCE : SIMULATION_ENGINE_STEPS.OTHER_LANGUAGE_LEVEL, {...item, validated : true})
+        // console.log('🥳🥳🥳 item', item )
+        // console.log('🥳🥳🥳 selectedOtherSpokenLanguage', selectedOtherSpokenLanguage.id , selectedOtherSpokenLanguage.id === 'none' )
+
+        updateWendogouser(item.id === 'none' ? SIMULATION_ENGINE_STEPS.ALREADY_TRAVELED_TO_FRANCE : SIMULATION_ENGINE_STEPS.OTHER_LANGUAGE_LEVEL, {...item, validated : true})
         //updateWendogouser(SIMULATION_ENGINE_STEPS.OTHER_LANGUAGE_LEVEL, {...item, validated: true}) 
     }
 
@@ -59,6 +62,7 @@ const OtherSpokenLanguage = () => {
         updateWendogouser(selectedOtherSpokenLanguage.id === 'none' ? SIMULATION_ENGINE_STEPS.ALREADY_TRAVELED_TO_FRANCE : SIMULATION_ENGINE_STEPS.OTHER_LANGUAGE_LEVEL, {...selectedOtherSpokenLanguage, validated: true})
     }
     const updateWendogouser = (simulationStep, selectedOtherSpokenLanguage) => {
+        console.log('🥳 selectedOtherSpokenLanguage', selectedOtherSpokenLanguage.id , selectedOtherSpokenLanguage.id === 'none' , simulationStep, selectedOtherSpokenLanguage)
         dispatch(setStep(simulationStep)) 
         let updatedUser
         if(selectedOtherSpokenLanguage.id !== 'none'){
@@ -69,7 +73,7 @@ const OtherSpokenLanguage = () => {
             window.location.hash = ""
             window.location.hash = "form/INFORMATIONS_VOYAGE";
         }
-        helper.setLocalStorageWithExpiration('wendogouser', updatedUser, false)         
+        helper.setLocalStorageWithExpiration('wendogouser', updatedUser)         
     }
 
   return (

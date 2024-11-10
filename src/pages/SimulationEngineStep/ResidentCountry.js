@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef} from 'react';
 import { activateSpinner, deactivateSpinner } from '../../redux/spinnerslice'
+import { activateErrorPage, deactivateErrorPage } from '../../redux/errorPageSlice';
 import { useGetCountriesQuery } from '../../store/apis/countryApi';
 import helper from '../../utils/Helper';
 import _ from 'lodash'
@@ -54,12 +55,14 @@ const ResidentCountry = () => {
             dispatch(activateSpinner())
         }
         if(error){
-            console.log('error', error)
-            document.location.href='/error'
+            console.error('🛑 error', error)
+            dispatch(deactivateSpinner()) 
+            dispatch(activateErrorPage())
         }
         if (data) {
             //console.log('country data', data)
             dispatch(deactivateSpinner())
+            dispatch(deactivateErrorPage())
             let clonedCountryArray = [...data]
             clonedCountryArray = clonedCountryArray.map((item) => ({ ...item }));
             const sortedClonedCountryArray = clonedCountryArray.sort((a, b) => a.name.localeCompare(b.name));
@@ -79,13 +82,24 @@ const ResidentCountry = () => {
     }, [data, error, isLoading ])
 
     const handleContinue = () => {
-        updateWendogouser(SIMULATION_ENGINE_STEPS.HIGH_SCHOOL_IN_FRENCH, {...selectedCountry, validated : true}, isFrancophoneCountry)
+        console.log('selectedCountry', selectedCountry)
+        let nextStep = SIMULATION_ENGINE_STEPS.HIGH_SCHOOL_IN_FRENCH
+        let isIneligibleForCampusFrance = false
+        if(selectedCountry.iso2 === 'SN' ){
+            if( (["bac00005"].includes(user.universityLevelSelected.id) && ["deg00008", "deg00011", "deg00012"].user.degreeSelected.id) || 
+                ["bac00004", "bac00007"].includes(user.universityLevelSelected.id)){
+            console.log('isIneligibleForCampusFrance', selectedCountry)
+                nextStep = SIMULATION_ENGINE_STEPS.CAMPUS_FRANCE_INELIGIBILITY         
+                isIneligibleForCampusFrance = true   
+            } 
+        }
+        updateWendogouser(nextStep, {...selectedCountry, validated : true}, isIneligibleForCampusFrance, isFrancophoneCountry)
     }
 
-    const updateWendogouser = (simulationStep, selectedCountry, isFrancophone) => {
+    const updateWendogouser = (simulationStep, selectedCountry, isIneligibleForCampusFrance, isFrancophone) => {
         dispatch(setStep(simulationStep)) 
-        let updatedUser = {...user, simulationStep, selectedCountry, isFrancophone, isFrancophoneCountry:isFrancophone, date: new Date().toISOString()}
-        helper.setLocalStorageWithExpiration('wendogouser', updatedUser, false)         
+        let updatedUser = {...user, simulationStep, selectedCountry, isFrancophone, isIneligibleForCampusFrance, isFrancophoneCountry:isFrancophone, date: new Date().toISOString()}
+        helper.setLocalStorageWithExpiration('wendogouser', updatedUser)         
     }
 
   return (<>{countries  && 

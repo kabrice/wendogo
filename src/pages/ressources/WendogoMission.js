@@ -94,7 +94,7 @@ function WendogoMission(){
                             <p className="styles__Block-sc-1qjc0o4-0 styles__Paragraph-sc-1qjc0o4-2 ktDrhZ bbNzRf"> Transparence, expertise et implication: Wendogo, c’est l'agence de visa en ligne qui vous accompagne 
                             de A à Z pour une préparation optimale de votre demande de visa.</p>
                         </div>
-                        <a href="https://app.pretto.fr/" className="styles__BaseTypo-sc-198xhmk-0 aPHVI styles__Button-sc-wveu9u-1 iRJUAN styles__Button-sc-1wzyvpr-0 ctdOjM">
+                        <a href="/simulation/home" className="styles__BaseTypo-sc-198xhmk-0 aPHVI styles__Button-sc-wveu9u-1 iRJUAN styles__Button-sc-1wzyvpr-0 ctdOjM">
                             <span className="styles__Label-sc-wveu9u-2 hhrLkB"> Je simule mon visa </span>
                             <svg height={16} viewBox="0 0 16 16" width={16} xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="styles__Arrow-sc-wveu9u-0 jXLObB">
                             <path d="M6.3,2.5,5,3.8,9.28,8,5,12.2l1.3,1.3L11.88,8Z" />
@@ -139,7 +139,7 @@ function WendogoMission(){
                         la puissance des meilleurs outils sur le marché à l'accompagnement engagé de nos experts en immigration. Avec Wendogo,
                         <strong className="styles__Strong-sc-1qjc0o4-5 flAqX"> demandez votre visa sans vous arracher les cheveux </strong> . </p>
                         </div>
-                        <a className="styles__BaseTypo-sc-198xhmk-0 aPHVI styles__Button-sc-wveu9u-1 iRJUAN styles__Button-sc-1x6pdn2-0 eaWMjN" href="/pret-immobilier/">
+                        <a className="styles__BaseTypo-sc-198xhmk-0 aPHVI styles__Button-sc-wveu9u-1 iRJUAN styles__Button-sc-1x6pdn2-0 eaWMjN" href="/simulation/home">
                         <span className="styles__Label-sc-wveu9u-2 hhrLkB"> Simulez votre demande </span>
                         <svg height={16} viewBox="0 0 16 16" width={16} xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="styles__Arrow-sc-wveu9u-0 jXLObB">
                             <path d="M6.3,2.5,5,3.8,9.28,8,5,12.2l1.3,1.3L11.88,8Z" />

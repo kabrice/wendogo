@@ -12,10 +12,19 @@ export const leadApi = createApi({
         body: lead
       }),
       invalidatesTags: ['Lead']
-    })
+    }), 
+    updateClicksAndProjectMessageByUserId: builder.mutation({
+      query: ({...body }) => ({
+        url: `/lead/update/clicks`,
+        method: 'PUT',
+        body: body
+      }),
+      invalidatesTags: ['Lead']
+    }),
   })
 }) 
 
 export const {
-  useAddLeadMutation
+  useAddLeadMutation,
+  useUpdateClicksAndProjectMessageByUserIdMutation
 } = leadApi 

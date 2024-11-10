@@ -33,7 +33,7 @@ const HasWonAward = () => {
     const updateWendogouser = (simulationStep, hasWonAward) => {
         dispatch(setStep(simulationStep)) 
         let updatedUser = {...user, simulationStep, hasWonAward, date: new Date().toISOString()}
-        helper.setLocalStorageWithExpiration('wendogouser', updatedUser, false)         
+        helper.setLocalStorageWithExpiration('wendogouser', updatedUser)         
     }
 
     const handleContinue = () => {
@@ -44,7 +44,7 @@ const HasWonAward = () => {
 
     return (<SEYesNo title={`Avez-vous obtenu une recompense en ${formattedString} depuis ${oldestSchoolYear}`} id="HAS_WON_AWARD"
                     tip="Cela peut être un prix académique, sportif, artistique ou de toute autre nature, à condition qu'il puisse être justifié par un document officiel."
-                    yes={hasWonAward} handleYes={handleHasWonAward} handleContinue={handleContinue} 
+                    yes={hasWonAward} handleYes={handleHasWonAward} handleContinue={handleContinue} svgConstantName="AWARD"
                     showContinueBtn={simulationStepGlobal === SIMULATION_ENGINE_STEPS.HAS_WON_AWARD} />);
 }
 

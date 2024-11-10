@@ -26,7 +26,7 @@ const CanJustifyOtherLanguage = () => {
         dispatch(setStep(simulationStep)) 
         dispatch(setProgress(progressBarStep)) 
         let updatedUser = {...user, simulationStep, canJustifyOtherLanguage, progressBarStep, date: new Date().toISOString()}
-        helper.setLocalStorageWithExpiration('wendogouser', updatedUser, false)         
+        helper.setLocalStorageWithExpiration('wendogouser', updatedUser)         
     }
 
     const handleContinue = () => {
