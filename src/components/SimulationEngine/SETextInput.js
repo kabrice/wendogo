@@ -27,7 +27,7 @@ const SETextInput = (props) => {
   useEffect(() => {
     // Function to handle click events
     const handleClickOutside = (event) => {
-      console.log('OUF 😱 TextInput  '+newRef.current, !newRef.current.contains(event.target), !helper.isTargetContainsIgnoreClass(event.target), onClickOutside);   
+      //console.log('OUF 😱 TextInput  '+newRef.current, !newRef.current.contains(event.target), !helper.isTargetContainsIgnoreClass(event.target), onClickOutside);   
       if (newRef.current && !newRef.current.contains(event.target) && !helper.isTargetContainsIgnoreClass(event.target) && onClickOutside) {      
         //alert('OUF 😱 TextInput  '+focused);   
         setFocused(false); 
@@ -120,7 +120,7 @@ const SETextInput = (props) => {
             <span className="Icon error-icon icon-lesfurets icon-system-alert" /> Veuillez entrer un texte valide
           </div>
         )}
-        {showContinueBtn && <ButtonLarge name="Continuer" handleContinue={valid ? handleContinue : voidFunction} />}
+        {showContinueBtn && <ButtonLarge name="Continuer" handleContinue={valid ? handleContinue : voidFunction} uniqueId={`${id}-continue-btn`}/>}
       </div>
     </div>
   );

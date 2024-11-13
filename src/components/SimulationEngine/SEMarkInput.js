@@ -160,6 +160,16 @@ const SEMarkInput = (props) => {
   const newRef = useRef(null)
   const [showTPCheckBox, setShowTPCheckBox] = useState(false);
 
+  const [localMark, setLocalMark] = useState(subject.mark.value || '');
+  const [localWeight, setLocalWeight] = useState(subject.weight.value || '');
+  const [localRank, setLocalRank] = useState(subject.rank.value || '');
+  
+  useEffect(() => {
+    setLocalMark(subject.mark.value || '');
+      setLocalWeight(subject.weight.value || '');
+      setLocalRank(subject.rank.value || '');
+  }, [subject]);
+
   const handleChangeTPCheckbox = (event) => {
     setShowTPCheckBox(event.target.checked);
   };
@@ -269,6 +279,18 @@ const SEMarkInput = (props) => {
     };
   }, [isFirstRender, subject?.label?.value, setTextValue])
 
+  useEffect(() => {
+    setLocalMark(subject.mark.value || '');
+  }, [subject.mark.value]);
+
+  useEffect(() => {
+    setLocalWeight(subject.weight.value || '');
+  }, [subject.weight.value]);
+
+  useEffect(() => {
+      setLocalRank(subject.rank.value || '');
+  }, [subject.rank.value]);
+
   const toSentenceCase = (str) => {
     if (!str) return str;
     return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
@@ -340,8 +362,7 @@ const SEMarkInput = (props) => {
         ...subject, 
         label: {
           ...subject.label, 
-          validated: true,
-          valueIn20: convertToSur20(subject.label.value, effectiveMarkSystem),
+          validated: true, 
           value: bindInput.value
         }
       });
@@ -360,7 +381,9 @@ const SEMarkInput = (props) => {
 
     // Convert mark to decimal and validate (mark <= 20 and mark > 0)
     //console.log('updatedSubject.mark.value', updatedSubject  )
-    updatedSubject.mark.value = markSystemIsNumeric ? updatedSubject.mark.value?.replace(',', '.')?.replace(/^0+/, '') : updatedSubject.mark.value?.trim()?.toUpperCase() 
+    updatedSubject.mark.value = markSystemIsNumeric ? 
+        localMark.replace(',', '.').replace(/^0+/, '') : 
+        localMark.trim().toUpperCase();
     
     let mark = updatedSubject.mark.value;
     let isValidMark = false;
@@ -539,32 +562,126 @@ const SEMarkInput = (props) => {
         <Box sx={{  marginLeft: '-15px', position: 'relative', minHeight: '1px', ...(windowWidth > 764 && { paddingRight: '15px', paddingLeft: '15px' })  }} 
              className={windowWidth <= 764 ? 'app-row app-field' : ''}>
             <ThemeProvider theme={customTheme(outerTheme)}>
-                <TextField error={!subject.mark.validated} 
-                             id = 'Note'
-                            defaultValue={subject.mark.value}
-                            onMouseDown={e => { setSubject({...subject, mark: {value : e.target.value, validated: true}})}} 
-                            helperText={!subject.mark.validated && `${markSystemIsNumeric ? 'La valeur saisie est incorrecte. Elle doit être un decimal et dans le bon système de notation.' : 'La valeur saisie est incorrecte. Elle doit être de la forme : A+, A, A-...E, F.'}`} 
-                            onChange={(e) => { setSubject({...subject, mark: {value : e.target.value, valueIn20: convertToSur20(e.target.value, effectiveMarkSystem), validated: true}})}} 
-                            label="Note" type={markSystemIsNumeric ? 'number' : 'text'} inputProps={{ autoComplete: 'off' }} className={windowWidth <= 764 ? 'app-col-xs-12' : ''}/>               
-                <TextField error={!subject.weight.validated} 
-                            id={subjectWeightSystem} 
-                            defaultValue={subject.weight.value}
-                            onMouseDown={e => { setSubject({...subject, weight: {value : e.target.value, validated: true}})}} 
-                            helperText={!subject.weight.validated && "La valeur saisie est incorrecte. Elle doit être un nombre entier."} 
-                            onChange={(e) => { console.log(' e.target.value',  e.target.value); setSubject({...subject, weight: {value : e.target.value, validated: true}})}} 
-                            label={subjectWeightSystem} type="number" inputProps={{ autoComplete: 'off' }} className={windowWidth <= 764 ? 'app-col-xs-12' : ''}/>
-                {!isBacReportCard && <TextField error={!subject.rank.validated} 
-                            id="Rang"
-                            defaultValue={subject.rank.value}
-                            onMouseDown={e => { setSubject({...subject, rank: {value : e.target.value, validated: true}})}} 
-                            helperText={!subject.rank.validated && "La valeur saisie est incorrecte. Elle doit être un nombre entier."} 
-                            onChange={(e) => { setSubject({...subject, rank: {value : e.target.value, validated: true}})}} 
-                            label="Rang" type="number" inputProps={{ autoComplete: 'off' }} className={windowWidth <= 764 ? 'app-col-xs-12' : ''}/>}
-                  <FormControlLabel
-                      sx={{ margin: '0 0 10px -7px', width: '100%' }}
-                      control={<Checkbox checked={showTPCheckBox} onChange={handleChangeTPCheckbox} sx={{ color: '#acbac8', borderWidth: '1px' }} />}
-                      label="Travaux Pratiques (TP) ?"
-                  />
+                <TextField 
+                    error={!subject.mark.validated} 
+                    id='Note'
+                    value={localMark}
+                    onFocus={() => {
+                        setSubject({
+                            ...subject, 
+                            mark: {
+                                value: localMark,
+                                valueIn20: convertToSur20(localMark, effectiveMarkSystem),
+                                validated: true
+                            }
+                        });
+                    }}
+                    helperText={!subject.mark.validated && 
+                        `${markSystemIsNumeric 
+                            ? 'La valeur saisie est incorrecte. Elle doit être un decimal et dans le bon système de notation.' 
+                            : 'La valeur saisie est incorrecte. Elle doit être de la forme : A+, A, A-...E, F.'}`
+                    } 
+                    onChange={(e) => {
+                        const newValue = e.target.value;
+                        setLocalMark(newValue);
+                        setSubject({
+                            ...subject, 
+                            mark: {
+                                value: newValue,
+                                valueIn20: convertToSur20(newValue, effectiveMarkSystem),
+                                validated: true
+                            }
+                        });
+                    }}
+                    label="Note" 
+                    type={markSystemIsNumeric ? 'number' : 'text'} 
+                    inputProps={{ 
+                        autoComplete: 'off',
+                        step: markSystemIsNumeric ? '0.01' : undefined,
+                        min: markSystemIsNumeric ? '0' : undefined,
+                        max: markSystemIsNumeric ? 
+                            effectiveMarkSystem === MARK_SYSTEM.SUR_6 ? '6' :
+                            effectiveMarkSystem === MARK_SYSTEM.SUR_10 ? '10' :
+                            effectiveMarkSystem === MARK_SYSTEM.SUR_20 ? '20' :
+                            effectiveMarkSystem === MARK_SYSTEM.SUR_100 ? '100' : undefined
+                            : undefined
+                    }} 
+                    className={windowWidth <= 764 ? 'app-col-xs-12' : ''}
+                />
+
+                <TextField 
+                    error={!subject.weight.validated} 
+                    id={subjectWeightSystem} 
+                    value={localWeight}
+                    onFocus={() => {
+                        setSubject({
+                            ...subject, 
+                            weight: {
+                                value: localWeight,
+                                validated: true
+                            }
+                        });
+                    }}
+                    helperText={!subject.weight.validated && "La valeur saisie est incorrecte. Elle doit être un nombre entier."} 
+                    onChange={(e) => {
+                        const newValue = e.target.value;
+                        setLocalWeight(newValue);
+                        setSubject({
+                            ...subject, 
+                            weight: {
+                                value: newValue,
+                                validated: true
+                            }
+                        });
+                    }}
+                    label={subjectWeightSystem} 
+                    type="number" 
+                    inputProps={{ 
+                        autoComplete: 'off',
+                        min: '0',
+                        max: '1000',
+                        step: '1'
+                    }} 
+                    className={windowWidth <= 764 ? 'app-col-xs-12' : ''}
+                />
+
+                {!isBacReportCard && (
+                    <TextField 
+                        error={!subject.rank.validated} 
+                        id="Rang"
+                        value={localRank}
+                        onFocus={() => {
+                            setSubject({
+                                ...subject, 
+                                rank: {
+                                    value: localRank,
+                                    validated: true
+                                }
+                            });
+                        }}
+                        helperText={!subject.rank.validated && "La valeur saisie est incorrecte. Elle doit être un nombre entier."} 
+                        onChange={(e) => {
+                            const newValue = e.target.value;
+                            setLocalRank(newValue);
+                            setSubject({
+                                ...subject, 
+                                rank: {
+                                    value: newValue,
+                                    validated: true
+                                }
+                            });
+                        }}
+                        label="Rang" 
+                        type="number" 
+                        inputProps={{ 
+                            autoComplete: 'off',
+                            min: '0',
+                            max: '1000',
+                            step: '1'
+                        }} 
+                        className={windowWidth <= 764 ? 'app-col-xs-12' : ''}
+                    />
+                )}
             </ThemeProvider>
         </Box>
         <ButtonLarge notStandard={windowWidth > 764}  name="Enregistrer les modifications" handleContinue={  validateInput } />

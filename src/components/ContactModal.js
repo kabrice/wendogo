@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import SETextArea from './SimulationEngine/SETextArea';
 import helper from '../utils/Helper';
-import { Link } from 'react-router-dom';
-import {ReactComponent as Hostess}  from '../assets/simulation_icons/hostess.svg'; 
+import Link from 'next/link';
+import Hostess  from '../assets/simulation_icons/hostess.svg'; 
 import { useUpdateClicksAndProjectMessageByUserIdMutation } from '../store/apis/leadApi';
 import { activateSpinner, deactivateSpinner } from '../redux/spinnerslice';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { Loader2 } from "lucide-react";
+import { setUser } from '../redux/userSlice';
 
 const ContactModal = ({ 
   isOpen,  
@@ -17,10 +19,39 @@ const ContactModal = ({
     displayWhatsappButton,
     setIsErrorPage
 }) => {
+
+  const user = useSelector((state) => state.user); 
+  const dispatch = useDispatch()
+  const [isLoading, setIsLoading] = useState(true); 
+  const [message, setMessage] = useState('');
+  const [displayEmailOption, setDisplayEmailOption] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [valid, setValid] = useState(true);  
+
+  useEffect(() => {
+    const initializeUserData = () => {
+      try {
+        if (user) {
+          //
+          setMessage(user.projectMessage || '');
+          setDisplayEmailOption(!!user.email);
+        }
+      } catch (error) {
+        console.error('Error loading user data:', error);
+        setIsErrorPage(true);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (isOpen) {
+      initializeUserData();
+    }
+  }, [isOpen, setIsErrorPage]);
   
-  let user = helper.getLocalStorageWithExpiration('wendogouser');  
-  const [message, setMessage] = useState(user?.projectMessage || '');
-  const [displayEmailOption, setDisplayEmailOption] = useState(user?.email ? true : false);
+  //let user = helper.getLocalStorageWithExpiration('wendogouser');  
+  //const [message, setMessage] = useState(user?.projectMessage || '');
+  //const [displayEmailOption, setDisplayEmailOption] = useState(user?.email ? true : false);
   const whatsappMessage = encodeURIComponent(`${message}`);
   const wendogoNumber = '+33668156073';
   const whatsappUrl = `https://wa.me/${wendogoNumber.replace('+', '')}?text=${whatsappMessage}`;
@@ -28,10 +59,10 @@ const ContactModal = ({
   const emailBody = encodeURIComponent(message);
   const emailUrl = `mailto:contact@example.com?subject=${emailSubject}&body=${emailBody}`;
 
-  const [errorMessage, setErrorMessage] = useState('');
-  const [valid, setValid] = useState(true);
+  //const [errorMessage, setErrorMessage] = useState('');
+  //const [valid, setValid] = useState(true);
   
-  const dispatch = useDispatch()
+  
   const [updateClicksAndProjectMessageByUserId] = useUpdateClicksAndProjectMessageByUserIdMutation();
 
     // const goBackToSimulationEngine = () => {
@@ -50,7 +81,7 @@ const ContactModal = ({
   const updateClicksNumberProjectMessageByUserId = async () => {
 
     try {
-        const response = await updateClicksAndProjectMessageByUserId({userId: user.userId, projectMessage: message});
+        const response = await updateClicksAndProjectMessageByUserId({userId: user?.userId, projectMessage: message});
         if (response.data) {
             console.log('updateClicksNumberProjectMessageByUserId', response.data);
         }
@@ -107,10 +138,36 @@ const ContactModal = ({
     setMessage(message);
     updateWendogouser(message);
    };
+    // const updateWendogouser = (projectMessage) => {
+    //     let updatedUser = { ...user, projectMessage, date: new Date().toISOString() };
+    //     helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
+    // };
     const updateWendogouser = (projectMessage) => {
-        let updatedUser = { ...user, projectMessage, date: new Date().toISOString() };
-        helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
-    };
+        if (user) {
+            const updatedUser = { 
+            ...user, 
+            projectMessage, 
+            date: new Date().toISOString() 
+            };
+            dispatch(setUser(updatedUser));
+            helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
+            //dispatch(setUser(updatedUser));
+        }
+        };
+
+   // Show nothing if modal is not open
+   if (!isOpen) return null;
+
+   // Show loading state
+   if (isLoading) {
+    
+     return (
+        <div className="flex items-center justify-center min-h-[200px]">
+            <Loader2 className="w-8 h-8 animate-spin" />
+        </div>
+     );
+   }  
+
 
   const handleCloseButton = () => {
     setOpenContactModal(false);
@@ -147,8 +204,8 @@ const ContactModal = ({
                                             </div>
                                             <div className="Stack-child  " style={{ paddingLeft: 0 }}>
                                                 <div className="Box   " style={{ padding: "30px 30px 0px", maxWidth: 500, marginLeft: "auto", marginRight: "auto", borderWidth: "initial", borderStyle: "none", borderColor: "initial" }}>
-                                                    <div className="Heading s isWeak  white" style={{lineHeight: '2.5rem',}}> Merci {user.firstname}, Wendogo s'engage à vous contacter <span> au <span data-cs-mask="true"> {user.phoneNumberFormatted.name} {displayEmailOption && `ou par e-mail à ${user.email}`}</span> </span>
-                                                        <Link type="button" style={{marginLeft: 10}}  to="/simulation/engine?country=FR#form/COORDONNEES">
+                                                    <div className="Heading s isWeak  white" style={{lineHeight: '2.5rem',}}> Merci {user?.firstname}, Wendogo s'engage à vous contacter <span> au <span data-cs-mask="true"> {user?.phoneNumberFormatted.name} {displayEmailOption && `ou par e-mail à ${user?.email}`}</span> </span>
+                                                        <Link type="button" style={{marginLeft: 10}}  href="/simulation/engine?country=FR#form/COORDONNEES">
                                                             <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="25px" height="24.9987469px" viewBox="0 0 25 24.9987469" version="1.1">
                                                                 <title>Group</title>
                                                                 <g id="Page-1" stroke="none" strokeWidth={1} fill="none" fillRule="evenodd" >
@@ -263,7 +320,7 @@ const ContactModal = ({
                                                 <div className="Box   " style={{ padding: "30px 30px 0px", maxWidth: 500, marginLeft: "auto", marginRight: "auto", borderWidth: "initial", borderStyle: "none", borderColor: "initial" }}>
                                                     <div className="Heading s isWeak  " style={{lineHeight: '2rem'}}> 
 
-                                                    <h1 size="large" className="styles__HeadingBridge-sc-6txi54-0 hzNvHf" style={{color: 'rgb(42, 55, 117)', textAlign: 'center' }}>À bientôt {user.firstname}!</h1>
+                                                    <h1 size="large" className="styles__HeadingBridge-sc-6txi54-0 hzNvHf" style={{color: 'rgb(42, 55, 117)', textAlign: 'center' }}>À bientôt {user?.firstname}!</h1>
 
                                                     </div>
                                                 </div>

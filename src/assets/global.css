@@ -23018,4 +23018,54 @@ border-color: initial;
   }
   /*  ContactModal Container Styles END */
   
+/* Regular CSS version */
+.flex {
+	display: flex;
+  }
   
+  .items-center {
+	align-items: center;
+  }
+  
+  .justify-center {
+	justify-content: center;
+  }
+  
+  .min-h-\[100px\] {
+	min-height: 100px;
+  }
+  
+  .h-8 {
+	height: 2rem; /* 32px */
+  }
+  
+  .w-8 {
+	width: 2rem; /* 32px */
+  }
+  
+  .animate-spin {
+	animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+	from {
+	  transform: rotate(0deg);
+	}
+	to {
+	  transform: rotate(360deg);
+	}
+  }
+  
+  .text-primary {
+	color: var(--primary-color); /* Assuming you have a primary color variable defined */
+	/* Or you can use a specific color like: */
+	/* color: #3B82F6; */ /* Default Tailwind primary blue */
+  }
+  
+  /* If you need the SVG styles specifically */
+  .loader2-icon {
+	stroke-width: 2;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	fill: none;
+  }

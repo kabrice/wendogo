@@ -1,10 +1,10 @@
 
-import {ReactComponent as WendogoLogoIcon} from '../assets/wendogo_logo_paperplane_blue.svg'
-import  {ReactComponent as DropDownIcon} from '../assets/dropdown_icon.svg'
+import WendogoLogoIcon from '../assets/wendogo_logo_paperplane_blue.svg'
+import  DropDownIcon from '../assets/dropdown_icon.svg'
 
 
 import { useEffect, useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 function HeaderMenuBar(){
 
@@ -59,7 +59,7 @@ function HeaderMenuBar(){
 <nav className={"dWKCRV kebTzo"} style={{top : 0, color: 'inherit', backgroundColor : 'white'}}>
               <div className={"Navbarstyles__Navigation2 jigKlE"}>
                 <div className="Navbarstyles__Navigation3">
-                    <Link to="/" className="Logostyles__LogoLink-sc-10zpnfr-0 jJHAoQ">
+                    <Link href="/" className="Logostyles__LogoLink-sc-10zpnfr-0 jJHAoQ">
                       <WendogoLogoIcon/>
                   </Link>
                   <button aria-label="Ouvrir le menu" tabIndex={0} type="button" className="Navbarstyles__BurgerButton" onClick={() => handleClickBurgerButton()}>
@@ -142,8 +142,8 @@ function HeaderMenuBar(){
                         </ul>
                       </li>
                       <li className="Navbarstyles__MenuButtonItems-sc-mi7mu3-6 eonXWL">
-                        {/* <Link to='/waitinglist' className="ButtonLogin__Button"> Se connecter </Link> */}
-                        <Link to='/simulation/home' className="ButtonNavbar__Button">
+                        {/* <Link href='/waitinglist' className="ButtonLogin__Button"> Se connecter </Link> */}
+                        <Link href='/simulation/home' className="ButtonNavbar__Button">
                           <span className="ButtonNavbar__Label"> Simuler mon visa </span>
                           <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className="ButtonNavbar__Arrow">
                             <path d="M15.3,11.17l-2.51-2.49,1.18-1.18,4.53,4.5-4.53,4.5-1.18-1.18,2.51-2.49H5.5v-1.66H15.3Z" />

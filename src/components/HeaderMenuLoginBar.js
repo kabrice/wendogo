@@ -1,10 +1,10 @@
 
-import {ReactComponent as WendogoLogoIcon} from '../assets/wendogo_logo_paperplane_blue.svg'
-import  {ReactComponent as DropDownIcon} from '../assets/dropdown_icon.svg'
+import WendogoLogoIcon from '../assets/wendogo_logo_paperplane_blue.svg'
+import  DropDownIcon from '../assets/dropdown_icon.svg'
 
 
 import { useEffect, useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 function HeaderMenuLoginBar(){
 
@@ -58,7 +58,7 @@ function HeaderMenuLoginBar(){
     return (
           <div className="NavBar-sc-10rxn4k-0 gHRjdu">
             <div className="LogosContainer-sc-10rxn4k-1 iBooYb">
-            <Link to="/" className="Logostyles__LogoLink-sc-10zpnfr-0 jJHAoQ">
+            <Link href="/" className="Logostyles__LogoLink-sc-10zpnfr-0 jJHAoQ">
                       <WendogoLogoIcon/>
                   </Link>
             </div>

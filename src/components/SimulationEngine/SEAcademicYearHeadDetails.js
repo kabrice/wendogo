@@ -13,8 +13,9 @@ import SEDropDownList from './SEDropDownList';
 import SETextArea from './SETextArea';
 import SENumberSelection from './SENumberSelection';
 import ButtonLarge from '../ButtonLarge';
-import { update } from 'lodash';
+import { isError, update } from 'lodash';
 import SESmallAlertMessage from './SESmallAlertMessage';
+//import { isCustomErrorPage } from 'next/dist/build/utils';
 
 const SEAcademicYearHeadDetails = (props) => {
     const { title, tip, showWarning, selectedYear,
@@ -31,7 +32,8 @@ const SEAcademicYearHeadDetails = (props) => {
             selectedSubjectWeightSystem, setSelectedSubjectWeightSystem,
             collapseSubjectWeightSystemOption, setCollapseSubjectWeightSystemOption,
             updateSelectedCountry, updateSelectedCity, updateSelectedSpokenLanguage, updateSelectedAcademicYearOrganization, updateSelectedMarkSystem, updateSelectedSubjectWeightSystem,
-            schoolName, handleChangeSchoolName, handleContinue, showContinueBtn
+            schoolName, handleChangeSchoolName, handleContinue, showContinueBtn,
+            spokenLanguages, academicYearOrganizations, markSystems, subjectWeightSystems,isErrorPage
             } = props;
 
     const dispatch = useDispatch();
@@ -49,10 +51,10 @@ const SEAcademicYearHeadDetails = (props) => {
  
     // Queries 
     const { data, error, isLoading } = useCountriesQuery(selectedCountry.iso2);
-    const { data: spokenLanguages, error: spokenLanguagesError, isLoading: spokenLanguagesIsLoading } = useGetSpokenLanguagesQuery();
-    const { data: academicYearOrganizations, error: academicYearOrganizationsError, isLoading: academicYearOrganizationsIsLoading } = useGetAcademicYearOrganizationsQuery();
-    const { data: markSystems, error: markSystemsError, isLoading: markSystemsIsLoading } = useGetMarkSystemsQuery();
-    const { data: subjectWeightSystems, error: subjectWeightSystemsError, isLoading: subjectWeightSystemsIsLoading } = useGetSubjectWeightSystemsQuery();
+    // const { data: spokenLanguages, error: spokenLanguagesError, isLoading: spokenLanguagesIsLoading } = useGetSpokenLanguagesQuery();
+    // const { data: academicYearOrganizations, error: academicYearOrganizationsError, isLoading: academicYearOrganizationsIsLoading } = useGetAcademicYearOrganizationsQuery();
+    // const { data: markSystems, error: markSystemsError, isLoading: markSystemsIsLoading } = useGetMarkSystemsQuery();
+    // const { data: subjectWeightSystems, error: subjectWeightSystemsError, isLoading: subjectWeightSystemsIsLoading } = useGetSubjectWeightSystemsQuery();
 
     const doesValueValid = (schoolName) => {
         console.log('schoolName', schoolName,  schoolName !== undefined, schoolName.trim().length >= 10, /[a-zA-Z].*[a-zA-Z]/.test(schoolName));
@@ -64,12 +66,12 @@ const SEAcademicYearHeadDetails = (props) => {
 
     useEffect(() => {
         console.log('IN SEAcademicYearHeadDetails useEffect');
-        if (isLoading || spokenLanguagesIsLoading || academicYearOrganizationsIsLoading || markSystemsIsLoading || subjectWeightSystemsIsLoading) {
+        if (isLoading ) {
             dispatch(activateSpinner());
         }
 
-        if (error || spokenLanguagesError || academicYearOrganizationsError || markSystemsError || subjectWeightSystemsError) {
-            console.error('Error:', error || spokenLanguagesError || academicYearOrganizationsError || markSystemsError || subjectWeightSystemsError);
+        if (error  || isErrorPage) {
+            //console.error('Error:', error || spokenLanguagesError || academicYearOrganizationsError || markSystemsError || subjectWeightSystemsError);
             dispatch(deactivateSpinner()) 
             dispatch(activateErrorPage())
         }
@@ -142,10 +144,10 @@ const SEAcademicYearHeadDetails = (props) => {
 
         console.log('OUT SEAcademicYearHeadDetails useEffect', academicYearOrganizations);
     }, [data, error, isLoading, 
-        spokenLanguages, spokenLanguagesError, spokenLanguagesIsLoading, 
-        academicYearOrganizations, academicYearOrganizationsError, academicYearOrganizationsIsLoading, 
-        markSystems, markSystemsError, markSystemsIsLoading, 
-        subjectWeightSystems, subjectWeightSystemsError, subjectWeightSystemsIsLoading]);
+        spokenLanguages,
+        academicYearOrganizations,  
+        markSystems, 
+        subjectWeightSystems]);
 
     const handleOutsideClick = (e) => {
         if (newRefCountry.current && !newRefCountry.current.contains(e.target) && !helper.isTargetContainsIgnoreClass(e.target)) {
@@ -278,7 +280,7 @@ const SEAcademicYearHeadDetails = (props) => {
                                           Remettez la valeur précédente pour annuler l'action.`}/>}
              {showContinueBtn &&            
                                 <div className="FieldView DaisyFieldView field-default SelectField VEH_USA_KILOM" style={{ margin: 0 }}>
-                                    <ButtonLarge name="Continuer" handleContinue={valid ? handleContinue : voidFunction}/>
+                                    <ButtonLarge name="Continuer" handleContinue={valid ? handleContinue : voidFunction} uniqueId={`${title}-continue-btn`}/>
                                 </div>}
 
         </div>

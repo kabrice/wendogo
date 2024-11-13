@@ -2,16 +2,28 @@ import React, { useState, useRef, useEffect } from 'react';
 import helper from '../../utils/Helper';
 import ButtonLarge from "../ButtonLarge"; 
 import { COUNTRY_CODES } from '../../utils/CountryCodes';
-
+import 'flag-icons/css/flag-icons.min.css'
 // Utility Functions
 function extractDialCode(dialCode) {
   const match = dialCode.match(/^[^\d\+]+(\+\d+)/);
   return match ? match[1] : '';
 }
 
-function extractFirstIcon(dialCode) {
-  const match = dialCode.match(/^([^\d\+]+)/);
-  return match ? match[0] : '';
+//remove Emoji
+function removeEmoji(dialCode) {
+  return dialCode.replace(/[\u{1F600}-\u{1F64F}]/gu, '');
+}
+
+// function getCountryFlag(dialCode='') {
+//   const match = dialCode.match(/^([^\d\+]+)/);
+//   return match ? match[0] : '';
+// }
+
+function getCountryFlag({ countryCode = '' }) {
+  console.log('dialCodesszsxx ', countryCode);
+  if (!countryCode) return null; // Return null if countryCode is not provided
+  console.log('countryCodexx ', countryCode);
+  return <span className={`fi fi-${countryCode.toLowerCase()}`} style={{fontSize: 16}}></span>;
 }
 
 function getCountryDetails(countryCodeName, countryCodeList) {
@@ -19,13 +31,11 @@ function getCountryDetails(countryCodeName, countryCodeList) {
   const country = countryCodeList.find(item => item.code.toLowerCase() === lowerCaseCodeName);
 
   if (country) {
-    const flag = extractFirstIcon(country.dialCode);
-    const dialCodeNumber = extractDialCode(country.dialCode);
     return {
       ...country,
       validated: true,
-      flag,
-      dialCodeNumber,
+      flag: getCountryFlag({ countryCode: country.code }),
+      dialCodeNumber: extractDialCode(country.dialCode),
     };
   }
   return null;
@@ -55,10 +65,13 @@ const SETextInputPhone = (props) => {
   const [focused, setFocused] = useState(true);
   const newRef = useRef(null);
   const [collapseOption, setCollapseOption] = useState(true);
-  const [itemSelected, setItemSelected] = useState(getCountryDetails(countryCodeName, COUNTRY_CODES));
+  const [itemSelected, setItemSelected] = useState(
+    getCountryDetails(countryCodeName, COUNTRY_CODES) || { validated: false, flag: null, dialCodeNumber: '' }
+  );
+  
   console.log('valuexx', value);
   // Initialize inputValue with dial code and value from props
-  const [inputValue, setInputValue] = useState(`${value || ''}`);
+  const [inputValue, setInputValue] = useState(`${value || itemSelected?.dialCode || ''}`);
 
   useEffect(() => {
     // Handle clicks outside the component
@@ -92,21 +105,20 @@ const SETextInputPhone = (props) => {
   };
 
   const updateSelected = (item) => {
-    console.log('item xx', item);
     const updatedItem = {
       ...item,
       validated: true,
-      flag: extractFirstIcon(item.dialCode),
-      dialCodeNumber: extractDialCode(item.dialCode),
+      flag: getCountryFlag({ countryCode: item.code }),
+      dialCodeNumber: item.dialCode,
     };
     setItemSelected(updatedItem);
-
-    // When a new country is selected, replace the dial code in the input
-    const currentValue = inputValue.replace(itemSelected.dialCodeNumber, '');
+  
+    const currentValue = inputValue.replace(itemSelected.dialCodeNumber || '', '');
     setInputValue(`${updatedItem.dialCodeNumber}${currentValue}`);
     setCountryIso2(updatedItem.code);
     setCollapseOption(true);
   };
+  
 
   const handleInputChange = (e) => {
     const currentValue = e.target.value;
@@ -163,16 +175,23 @@ const SETextInputPhone = (props) => {
 				<div className="app-col-xs-12 app-col-sm-8 app-col-md-8 Field ignore-outside-click" style={{ display: 'flex' }} ref={newRef}>
 					<div className={`Select select-phone-whatsapp isBordered VEH_USA_KILOM icon-lesfurets after icon-system-arrow-more field-${itemSelected.validated ? "valid" : "default"} ${collapseOption ? "arrowNotToggled up" : "focused arrowToggled up"}`} style={{ width: '30%', marginRight: '5%', padding: '0 10px' }}>
 						{/* <div className="Select-text" style={{ color: itemSelected.validated ? '#0154c0' : '#4e6174', fontSize: '15px', padding: '0 0 0 30px', margin: '10px 0 -10px 0', display: isPartOfInputGroup ? 'none' : 'none' }}> {inputGroupBlockTitle} </div> */}
-						<div className="Select-text phone-padding" tabIndex={8} onClick={toggleDropdown}> <span className="Select-text-placeholder">{itemSelected.flag}</span> </div> {!collapseOption && (
+						<div className="Select-text phone-padding" tabIndex={8} onClick={toggleDropdown}> <span className="Select-text-placeholder">{itemSelected.flag || 'none'}</span> </div> {!collapseOption && (
 						<>
 							<div className="Select-separator up" />
 							<div className="slide-animation slide-fast-enter-done">
 								<div className="Select-elements List-elements not-empty up"> {COUNTRY_CODES.map((item) => (
-									<div key={item.code} className={`Select-element List-element icon-lesfurets icon-arrow-right after SuggestionLabel ${itemSelected.dialCode===item.dialCode ? "selected" : ""}`} onClick={()=> updateSelected(item)} style={{ padding: '20px' }} > <span>{item.dialCode}</span> </div> ))} </div>
+									<div key={item.code} 
+                    className={`Select-element List-element icon-lesfurets icon-arrow-right after SuggestionLabel ${itemSelected.dialCode===item.dialCode ? "selected" : ""}`}
+                     onClick={()=> updateSelected(item)} style={{ padding: '20px', display: 'flex', flexDirection: 'row', alignItems: 'center' }} > 
+                              {getCountryFlag({ countryCode: item.code })}
+                              <span>{item.dialCode}</span>
+                            </div> ))} 
+                    </div>
 							</div>
 							</> )} </div>
 					<div className={`Input textField ${focused ? 'focused' : ''} ${valid ? 'field-valid' : (focused ? '' : 'field-error')}`} style={{ width: '70%' }}>
-						<input id={id ? id : 'phone'} type="tel" autoComplete="on" name="phone" maxLength={inputLength} value={inputValue} onChange={handleInputChange} onFocus={handleFocus} onKeyDown={handleKeyDown} placeholder={inputGroupBlockTitle ? inputGroupBlockTitle : 'Entrez le texte ici'} /> {type && ( <span className="Input-symbol" style={{ paddingLeft: 0 }}>
+						<input id={id ? id : 'phone'} type="tel" autoComplete="on" name="phone" maxLength={inputLength} value={inputValue} onChange={handleInputChange} onFocus={handleFocus} onKeyDown={handleKeyDown} placeholder={inputGroupBlockTitle ? inputGroupBlockTitle : 'Entrez le texte ici'} /> 
+                {type && ( <span className="Input-symbol" style={{ paddingLeft: 0 }}>
                   <span className="Icon icon-lesfurets icon-system-mail">
                     {whatsappSVG}
                   </span> </span> )} </div>
@@ -182,7 +201,7 @@ const SETextInputPhone = (props) => {
 
        {(!valid && !focused) && (
 			<div className="Error"> <span className="Icon error-icon icon-lesfurets icon-system-alert" /> Veuillez entrer un numéro whatsapp valide. </div> )} {showContinueBtn &&
-			<ButtonLarge name="Continuer" handleContinue={valid ? handleContinue : voidFunction} />} </div>
+			<ButtonLarge name="Continuer" handleContinue={valid ? handleContinue : voidFunction} uniqueId={`${id}-continue-btn`}/>} </div>
 </div>
   );
 };

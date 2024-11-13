@@ -227,7 +227,7 @@ const SEDateInput = (props) => {
                     </div>
                 )}
                 {/* {' '+valid} */}
-                {showContinueBtn && <ButtonLarge name="Continuer" handleContinue={valid ? handleButtonClick : voidFunction} />}
+                {showContinueBtn && <ButtonLarge name="Continuer" handleContinue={valid ? handleButtonClick : voidFunction} uniqueId={`${id}-continue-btn`} />}
             </div>
         </div>
     );

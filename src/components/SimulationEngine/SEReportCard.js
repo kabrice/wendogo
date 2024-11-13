@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import ButtonLarge from "../ButtonLarge";
 import SESmallAlertMessage from './SESmallAlertMessage';
-import  {ReactComponent as DropDownIcon} from '../../assets/dropdown_icon.svg'
+import  DropDownIcon from '../../assets/dropdown_icon.svg'
 import { get, set } from 'lodash';
 import helper from '../../utils/Helper';
 
 const SEReportCard = (props) => {
 
-    const {  header, subheader, subjectList,  setSubject, setIsReadMode, setIsCancelModes, setSubjectList, disPlayBacTitle, subjectWeightSystem, userData, period, displayReportCardList, setDisplayReportCardList } = props;
+    const {  header, subheader, subjectList,  setSubject, setIsReadMode, setIsCancelModes, setSubjectList, disPlayBacTitle, subjectWeightSystem, user, period, displayReportCardList, setDisplayReportCardList } = props;
     const [subjectsToDeleteReference, setSubjectsToDeleteReference] = useState([]);
     const [deleteTimers, setDeleteTimers] = useState({}); // Track timers for each subject
     const [subjectListReachLimit, setSubjectListReachLimit] = useState(false);
@@ -76,7 +76,7 @@ const SEReportCard = (props) => {
 
     const duplicateReportTermFromLastOne = () => {
         //const lastReportCard = subjectList[subjectList.length - 2];
-        const lastReportCard = helper.getRecentReportCard(userData, period)
+        const lastReportCard = helper.getRecentReportCard(user, period)
         console.log('lastReportCard', lastReportCard)
         console.log('sub', subjectList)
         // update setSubjectList with lastReportCard data
@@ -85,13 +85,13 @@ const SEReportCard = (props) => {
         }
     } 
     
-    const checkIfReportCardExist = (userData, period) => { 
+    const checkIfReportCardExist = (user, period) => { 
         // Check if the report card for the period and period above exists and at least one of them is not empty
         // for example, if period is 1, check if reportCard1, reportCard2, reportCard3 exists and at least one of them is not empty. If all doesn't exist, return false or if all exists and all are empty, return false
         // for example, if period is 2, check if reportCard2 and reportCard3 exists  and at least one of them is not empty. If all doesn't exist, return false or if all exists and all are empty, return false
         // for example, if period is 3, check if reportCard3 exists and  is not empty. If it doesn't exist, return false or if it exists and is empty, return false
         
-        let reportCard = helper.getRecentReportCard(userData, period)
+        let reportCard = helper.getRecentReportCard(user, period)
         console.log('reportCardxx', reportCard, period)
         if(reportCard.length > 0){
             return true
@@ -119,7 +119,7 @@ const SEReportCard = (props) => {
                         <div className='title-rc'>{header}</div>
                         <div className="svg-group-rc" style={{ display: 'flex', alignItems: 'center', marginLeft: 'auto' }}>
                             
-                            {((subjectList.length===0) && !disPlayBacTitle && checkIfReportCardExist(userData, period))&& <div   className='duplicate-report-card' onClick={() => duplicateReportTermFromLastOne()}>
+                            {((subjectList.length===0) && !disPlayBacTitle && checkIfReportCardExist(user, period))&& <div   className='duplicate-report-card' onClick={() => duplicateReportTermFromLastOne()}>
                                 <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink"  viewBox="0 0 90.7659 97.9493" version="1.1" className='Navbarstyles__MenuItemArrow'>
                                     <title>Shape</title>
                                     <g id="Page-1" stroke="none" strokeWidth={1} fill="none" fillRule="evenodd">

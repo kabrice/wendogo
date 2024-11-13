@@ -2,6 +2,7 @@ import {  toast } from 'react-toastify';
 import {ERROR_TEXT} from './Constants.js'
 import _ from 'lodash'
 import { get } from 'lodash';
+//import { useRouter } from 'next/router';
 
 
 const EXPIRATION_TIMES = {
@@ -48,16 +49,19 @@ const helper = {
             }); 
     },
     setLocalStorageWithExpiration: function(key, value, customExpirationTime = null) {
-      const defaultExpiration = EXPIRATION_TIMES.ONE_DAY;
-      
-      let result = {
-          data: value,
-          expireTime: Date.now() + (customExpirationTime || defaultExpiration)
-      };
-      
-      localStorage.setItem(key, JSON.stringify(result));
+      if (typeof window !== "undefined") {
+        const defaultExpiration = EXPIRATION_TIMES.ONE_DAY;
+        
+        let result = {
+            data: value,
+            expireTime: Date.now() + (customExpirationTime || defaultExpiration)
+        };
+        
+        localStorage.setItem(key, JSON.stringify(result));
+      }
     },
     getLocalStorageWithExpiration(key) {
+      if (typeof window !== "undefined") { 
         // get the parsed value of the given key
         let result = JSON.parse(localStorage.getItem(key));
         
@@ -77,18 +81,22 @@ const helper = {
         
         // if the key does not have value
         return null;
+      }
     },
-    redirectionAtInit(user, currentPagePath, redirectPath='/simulation/home'){
-      //console.log('redirectionAtInit 🥰 ' , user)
-        //console.log('redirectionAtInit 🥰 ' , currentPagePath, user.subscription_step, redirectPath)
-        if(!user || !(user.subscription_step)?.startsWith(currentPagePath)){
+    redirectionAtInit(router, user, currentPagePath, redirectPath='/simulation/home'){ 
+      if(!user || !(user?.subscription_step)?.startsWith(currentPagePath)){
           console.log('redirectionAtInit ERROR')
-            // navigate('/waitinglist')
-            document.location.href=redirectPath; 
-            return false
-        }
-       // console.log('user' , user)
-        return true
+          if (typeof window !== 'undefined') {
+              // Client-side navigation
+              if (router && router.push) {
+                  router.push(redirectPath);
+              } else {
+                  window.location.href = redirectPath;
+              }
+          }
+          return false;
+      }
+      return true;
     },
     loadFacebookSDK: function(){
         let script1 = document.createElement("script");
@@ -182,10 +190,10 @@ const helper = {
         // Un peu contradictoire avec ce qui est dit dans la base de données, mais ici c'est juste pour le design 
         let educationLevel
         if(isInUniversityGlobal){
-          educationLevel = user.universityLevelSelected.name
-        }else if(user.hsLevelSelected === 'deg00002'){ // Première
+          educationLevel = user?.universityLevelSelected.name
+        }else if(user?.hsLevelSelected === 'deg00002'){ // Première
           educationLevel = 'BAC-1'
-        }else if(user.hsLevelSelected === 'deg00003'){ // Terminale
+        }else if(user?.hsLevelSelected === 'deg00003'){ // Terminale
           educationLevel = 'BAC-0'
         }
         // Extract the last character from the education level string
@@ -230,7 +238,7 @@ const helper = {
           return false
       }
     },
-    getRecentReportCard: function(userData, period){
+    getRecentReportCard: function(user, period){
       // Helper function to check if array has baccalaureat subjects
       const hasBaccalaureat = (array) => {
         return array.some(subject => subject.isBaccalaureat === true);
@@ -259,7 +267,7 @@ const helper = {
       // Start with requested period and continue up to period 3
       for (let currentPeriod = period; currentPeriod <= 3; currentPeriod++) {
         //Todo : get method here remove with item, check it later
-        const reportCard = get(userData, `reportCard${currentPeriod}`, []);
+        const reportCard = get(user, `reportCard${currentPeriod}`, []);
         console.log('🥳 reportCard', reportCard)
         const validArrays = getValidArrays(reportCard);
     

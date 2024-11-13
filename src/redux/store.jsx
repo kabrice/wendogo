@@ -6,7 +6,7 @@ import { leadApi } from '../store/apis/leadApi'
 import spinnerReducer from './spinnerslice'
 import universityReducer from './universitySlice'
 import errorPageSlice from './errorPageSlice'
-import userReducer from './userslice'
+import userReducer, { setUser } from './userSlice';
 import premiereClassSlice from './premiereClassSlice'
 import { visaTypeApi } from '../store/apis/visaTypeApi'
 import {schoolYearApi} from '../store/apis/schoolYearApi'
@@ -23,7 +23,8 @@ import { markSystemApi } from '../store/apis/markSystemApi'
 import { subjectWeightSystemApi } from '../store/apis/subjectWeightSystemApi'
 import { nationalityApi } from '../store/apis/nationalityApi'
 import { schoolApi } from '../store/apis/schoolApi'
-import { majorApi } from '../store/apis/majorApi'
+import { majorApi } from '../store/apis/majorApi'  
+import helper from '../utils/Helper';
 
 export const store = configureStore({
   reducer: {
@@ -72,3 +73,9 @@ export const store = configureStore({
                                           .concat(schoolApi.middleware)
                                           .concat(majorApi.middleware)
 })
+// Initialize store with local storage data
+const userData = helper.getLocalStorageWithExpiration('wendogouser');
+if (userData) {
+    console.log('🚀 userData:', userData);
+    store.dispatch(setUser(userData));
+}

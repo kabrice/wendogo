@@ -5,7 +5,7 @@ function SEDropDownList(props) {
     const { title, newRef, collapseOption, fieldDefault, items, itemSelected, toggleDropdown, updateSelected, handleContinue, showContinueBtn, tip, showTip, isPartOfInputGroup, inputGroupBlockTitle } = props;
     
     return (
-        <div id="VEH_USA_KILOM-wrapper" className="FieldWrapper SelectField VEH_USA_KILOM field-default">
+        <div className="FieldWrapper SelectField VEH_USA_KILOM field-default">
             <div className="FieldView DaisyFieldView  field-default SelectField VEH_USA_KILOM" style={isPartOfInputGroup && {margin: 0}}>
                 {!isPartOfInputGroup
                 
@@ -46,7 +46,7 @@ function SEDropDownList(props) {
                         </div>
                     </div>
                 </div>
-                {!inputGroupBlockTitle && showContinueBtn && <ButtonLarge name="Continuer" handleContinue={handleContinue} />}
+                {!inputGroupBlockTitle && showContinueBtn && <ButtonLarge name="Continuer" handleContinue={handleContinue} uniqueId={`${title}-continue-btn`}  />}
             </div>
         </div>
     );

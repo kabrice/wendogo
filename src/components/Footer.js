@@ -1,17 +1,20 @@
 import React from 'react';
-import {ReactComponent as WendogoLogo} from '../assets/wendogo_logo.svg'
-import ParisCity from '../assets/AdobeStock_70798474_Preview.jpeg'
+import WendogoLogo from '../assets/wendogo_logo.svg'
+import ParisCity from '../assets/AdobeStock_Paris.jpeg'
 import OptimizedImage from './OptimizedImage';
+import Image from 'next/image';
+ 
 
 const Footer = () => {
     return (
 <div className="Footer__Container-sc-1adny8q-0 fThLJG styles__Footer-sc-kz84w6-4 icxpqI">
-                  <OptimizedImage src={ParisCity} alt="ParisCity" className="kldsmk" /> 
+                  <Image src={ParisCity} alt="ParisCity" className="kldsmk" /> 
                   <hr className="Divider-sc-1qii385-0 Footer__Divider-sc-1adny8q-2 iyJAir jUFmLt" />
                   <div className="Footer__Legal-sc-1adny8q-3 AgRYh">
+                    {/* <Image src={WendogoLogo} alt="WendogoLogo" className="dssdsd" /> */}
                     <WendogoLogo className="dssdsd"/>
                     <div data-nosnippet="true">
-                      <p className="LegalSocial__Disclaimer-sc-v4d14j-4 kiQXRg"> Wendogo Consulting  est une société par actions simplifiée, immatriculée au RCS en tant 
+                      <p className="LegalSocial__Disclaimer-sc-v4d14j-4 kiQXRg"> Wendogo Consulting  est une société par actions simplifiée, immatriculée à l'ORIAS en tant 
                                   que conseil en systemes et logiciels informatiques sous le numéro 497 933 408, dont le siège social est situé 50 avenue des Champs-Elysees 75008 Paris. Un contrat vous engage et doit être respecté. Vérifiez vos capacités financières avant de vous engager. </p>
                     </div>
                     <ul className="LegalSocial__SocialLinks-sc-v4d14j-2 bwSQCq">

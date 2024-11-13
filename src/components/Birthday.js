@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Countdown from './Countdown';
 // import githubLogo from './githubLogo.svg';
-// import { Link } from 'react-router-dom';
+// import Link from 'next/link';
 
 const Birthday = ({ name, day, month }) => {
   // useState Hooks

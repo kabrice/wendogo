@@ -14,7 +14,7 @@ function SENumberSelection(props) {
         setShowModal(show)
     }
 
-    return         <div id="PRI_HIS_NBR_SIN-wrapper" className="FieldWrapper StepperField PRI_HIS_NBR_SIN field-valid fade-animation fade-slow-enter-done ">
+    return         <div className="FieldWrapper StepperField PRI_HIS_NBR_SIN field-valid fade-animation fade-slow-enter-done ">
                         <div className="FieldView DaisyFieldView undefined field-valid StepperField PRI_HIS_NBR_SIN ">
                             <div className="FieldView-flex-container">
                                 <label className="Label "> {title1}</label> 
@@ -41,7 +41,7 @@ function SENumberSelection(props) {
                                     </div>
                                 </div>
                             </div>
-                            {showContinueBtn && <ButtonLarge name="Continuer" handleContinue={handleContinue} />}
+                            {showContinueBtn && <ButtonLarge name="Continuer" handleContinue={handleContinue} uniqueId={`${title1}-continue-btn`}/>}
                         </div>
                     </div>
 }

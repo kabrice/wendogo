@@ -18,18 +18,22 @@
     "axios": "^1.5.1",
     "bootstrap": "^5.2.3",
     "express": "^4.18.2",
+    "flag-icons": "^7.2.3",
     "json-server": "^0.17.3",
     "libphonenumber-js": "^1.11.7",
     "lodash": "^4.17.21",
     "lucide-react": "^0.453.0",
     "mui-tel-input": "^5.1.2",
     "next": "^15.0.3",
+    "next-images": "^1.8.5",
+    "next-navigation": "^1.0.6",
     "puppeteer": "^23.7.1",
     "react": "^18.3.1",
     "react-confetti": "^6.1.0",
     "react-copy-to-clipboard": "^5.1.0",
     "react-detect-click-outside": "^1.1.7",
     "react-dom": "^18.3.1",
+    "react-error-boundary": "^4.1.2",
     "react-floating-whatsapp": "^5.0.8",
     "react-helmet": "^6.1.0",
     "react-helmet-async": "^2.0.4",
@@ -51,12 +55,14 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "postinstall": "puppeteer install",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "postbuild": "PUPPETEER_EXECUTABLE_PATH= react-snap"
+    "clean": "rm -rf .next && rm -rf node_modules/.cache",
+    "dev:clean": "npm run clean && npm run dev",
+    "build:clean": "npm run clean && npm run build",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "structure": "node ./file-structure-script.js"
   },
   "eslintConfig": {
     "extends": [
@@ -82,5 +88,10 @@
       "--disable-setuid-sandbox"
     ],
     "puppeteerTimeout": 90000
+  },
+  "devDependencies": {
+    "@svgr/webpack": "^8.1.0",
+    "critters": "^0.0.23",
+    "file-loader": "^6.2.0"
   }
 }

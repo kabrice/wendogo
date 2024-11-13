@@ -74,7 +74,7 @@ const SEAlertMessage = (props) => {
                     </div>
                 </div>
             </div>
-            {showContinueBtn && <ButtonLarge name="Continuer" />}
+            {showContinueBtn && <ButtonLarge name="Continuer" uniqueId={`${title}-continue-btn`}/>}
         </div>
     );
 }

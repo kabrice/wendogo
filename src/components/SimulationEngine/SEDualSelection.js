@@ -7,7 +7,7 @@ const SEDualSelection = (props) => {
 
 
     return (
-        <div id="VEH_DTL_POSSESSION-wrapper" className="FieldWrapper RadioField VEH_DTL_POSSESSION field-valid fade-animation fade-slow-enter-done ">
+        <div className="FieldWrapper RadioField VEH_DTL_POSSESSION field-valid fade-animation fade-slow-enter-done ">
                                             <div className="FieldView DaisyFieldView undefined field-valid RadioField VEH_DTL_POSSESSION ">
                 <div id="PRI_INF_SEXE-wrapper" className="FieldWrapper RadioField PRI_INF_SEXE field-valid  ">
                 <div className="FieldView DaisyFieldView undefined field-valid RadioField PRI_INF_SEXE " style={{marginBottom: 0}}>
@@ -44,7 +44,7 @@ const SEDualSelection = (props) => {
                     </div>
                 </div>
                 </div>
-                {showContinueBtn && <ButtonLarge name="Continuer" handleContinue={handleContinue} />}
+                {showContinueBtn && <ButtonLarge name="Continuer" handleContinue={handleContinue} uniqueId={`${title}-continue-btn`}/>}
                 </div>
             </div>
       );

@@ -5,10 +5,10 @@ import PhoneInput,{ isPossiblePhoneNumber } from 'react-phone-number-input'
 import fr from 'react-phone-number-input/locale/fr'
 import { useSelector, useDispatch } from 'react-redux'
 import {close} from '../redux/modalslice'
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import {useSendVerificationAndAddUserMutation} from '../store/apis/userApi'
 import useGeoLocation from "react-ipgeolocation"
-import { useNavigate } from "react-router-dom"
+import { useRouter } from 'next/router'
 import  { useForm, Controller }  from  "react-hook-form"
 import { activateSpinner, deactivateSpinner } from '../redux/spinnerslice';
 import { ToastContainer, toast } from 'react-toastify';
@@ -36,7 +36,7 @@ const SubscriptionModal = () => {
     const location = useGeoLocation();
     //console.log('eeee',location.country);
     const [sendVerificationAndAddUser] = useSendVerificationAndAddUserMutation()
-    const navigate = useNavigate()
+    const router = useRouter()
     const { register, handleSubmit, formState: { errors }, control } = useForm({
         // use mode to specify the event that triggers each input field 
         mode: "onBlur"
@@ -71,14 +71,14 @@ const SubscriptionModal = () => {
                 helper.setLocalStorageWithExpiration('wendogouser', result.user, 600000)
                 helper.setLocalStorageWithExpiration('expirationVerifDate', expirationVerifDate, 600000) // get the expiration date of the code got from the server (use in VerificationWhatsapp)
                 //localStorage.setItem('wendogouser', JSON.stringify(result.user));
-                // if(result.user.has_whatsapp){
+                // if(result.user?.has_whatsapp){
                 //     console.log('Hey localStorage', localStorage.getItem('wendogouser'))
-                //     navigate('/congratulation')
-                //     //navigate('/verification')
+                //     router.push('/congratulation')
+                //     //router.push('/verification')
                 // }else{
-                //     navigate('/verification')
+                //     router.push('/verification')
                 // }
-                navigate(result.user.subscription_step)
+                router.push(result.user?.subscription_step)
             }else if (result.errorId){
                 msgToast = () => (
                     <div>

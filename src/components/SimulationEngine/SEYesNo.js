@@ -1,5 +1,5 @@
 import ButtonLarge from "../ButtonLarge";
-import {React, useState} from "react";
+import {React, useState, useCallback} from "react";
 import Modal from "../Modal";
 import SvgConstant from "../../utils/SvgConstant";
 
@@ -14,7 +14,13 @@ const SEYesNo = (props) => {
     setShowModal(show)
     }
 
-    return <div  id={id} className="FieldWrapper RadioField PRI_DON_AUTRE_VEH field-valid fade-animation fade-slow-enter-done" 
+    const onContinueClick = useCallback((e) => {
+        e.preventDefault();
+        //e.stopPropagation();
+        handleContinue();
+    }, [handleContinue]);
+
+    return <div  id={id+'0'} className="FieldWrapper RadioField PRI_DON_AUTRE_VEH field-valid fade-animation fade-slow-enter-done" 
     style={{ transitionTimingFunction: 'ease-out',
         transitionProperty: 'width',
         transitionuration: '2s', 
@@ -26,7 +32,7 @@ const SEYesNo = (props) => {
                 <div className="FieldView-flex-container">
                     <label className="Label ">{svgConstantName && SvgConstant.getSvg(svgConstantName)} {title}</label>
                     {displayQuestionTooltip && 
-                                    <div id="daisy-tooltip-PRI_HIS_NBR_SIN" className="PopinTooltip">
+                                    <div  className="PopinTooltip">
                                         <button type="button" className="PopinTooltip-button-open" onClick={() => hideShowModal(true)}>
                                             <div className="Tooltip-picto">?</div>
                                         </button>
@@ -44,7 +50,7 @@ const SEYesNo = (props) => {
                     <div className="app-col-xs-12 app-col-sm-12 app-col-md-12 Field">
                         <div className="ButtonField ">
                             <div className="ButtonField-Block button-field-true-PRI_DON_AUTRE_VEH app-col-xs-6 app-col-sm-4 app-col-md-4" onClick={()=>handleYes(true)}>
-                            <input type="radio" id={id} name={id} className="checkbox-field" tabIndex={4} defaultValue="true" style={{ display: "none" }} />
+                            <input type="radio" id={id+'1'} name={id+'1'} className="checkbox-field" tabIndex={4} defaultValue="true" style={{ display: "none" }} />
                             <div className={"Button ButtonField-Block-Button ButtonField-value-true noIcon field-valid "+(yes ? "isActive" : "")} tabIndex={0}>    
                                 <label className="Button-label"> Oui </label>
                                 {!yes  && <div className="radio-tick icon-lesfurets " />}
@@ -53,8 +59,8 @@ const SEYesNo = (props) => {
                                 </div>}
                             </div>
                             </div>
-                            <div className="ButtonField-Block button-field-false-PRI_DON_AUTRE_VEH app-col-xs-6 app-col-sm-4 app-col-md-4"onClick={()=>handleYes(false)}>
-                            <input type="radio" id={id} name={id} className="checkbox-field" tabIndex={5} defaultValue="false" defaultChecked="" style={{ display: "none" }} />
+                            <div className="ButtonField-Block button-field-false-PRI_DON_AUTRE_VEH app-col-xs-6 app-col-sm-4 app-col-md-4" onClick={()=>handleYes(false)}>
+                            <input type="radio" id={id+'2'} name={id+'2'} className="checkbox-field" tabIndex={5} defaultValue="false" defaultChecked="" style={{ display: "none" }} />
                             <div className={"Button ButtonField-Block-Button ButtonField-value-false noIcon field-valid "+(!yes ? "isActive" : "")} tabIndex={0}>
                                 <label className="Button-label" > Non </label>
                                 {yes  && <div className="radio-tick icon-lesfurets " />}
@@ -65,7 +71,7 @@ const SEYesNo = (props) => {
                             </div>
                         </div>
                     </div>
-                    {showContinueBtn && <ButtonLarge name="Continuer" handleContinue={handleContinue} />}
+                    {showContinueBtn && <ButtonLarge name="Continuer" handleContinue={onContinueClick} uniqueId={`${id}-continue-btn`}/>}
                 </div>
                 </div>
             </div>
