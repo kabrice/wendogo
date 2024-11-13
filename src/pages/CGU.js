@@ -2,12 +2,12 @@
 import SocialMediaLogo from '../assets/social_media_logo.png'
 import Footer from '../components/Footer';
 import HeaderMenuBar from '../components/HeaderMenuBar';
-import { Helmet } from 'react-helmet';
+import Head from 'next/head';
 
 function CGU(){
     
     return <div >
-            <Helmet>
+            <Head>
               <meta property="og:url"           content="https://wendogo.com/cgu" />
               <meta property="og:type"          content="article" />
               <meta property="og:title"         content="CGU / CGV - Wendogo" />
@@ -15,7 +15,7 @@ function CGU(){
               <meta property="og:image"         content={'https://wendogo.com'+SocialMediaLogo} /> 
               <title>CGU / CGV - Wendogo</title>
               <meta name="description"          content="Conditions Générales d'Utilisation (CGU) de Wendogo, agissant en qualité d'agence de visa."/>
-            </Helmet>      
+            </Head>      
             <HeaderMenuBar/>
             <main className="styles__Main-sc-kz84w6-0 gEFmYD" style={{paddingTop: 80}}>
               <div className="Defautstyles__Page-sc-1tnudyr-2 kiMqjH">

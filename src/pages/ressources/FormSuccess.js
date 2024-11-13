@@ -1,55 +1,84 @@
 import { useState, useEffect } from 'react'; 
-import helper from '../../utils/Helper';
-import SELabel from '../../components/SimulationEngine/SELabel';
-import SETextArea from '../../components/SimulationEngine/SETextArea';
-import SETextInput from '../../components/SimulationEngine/SETextInput';
-import ButtonLarge from '../../components/ButtonLarge';
-import { parsePhoneNumber } from 'libphonenumber-js';
-import useGeoLocation from "react-ipgeolocation"
-import SESmallAlertMessage from '../../components/SimulationEngine/SESmallAlertMessage';
-import Firstname from '../SimulationEngineStep/Firstname'
-import Lastname from '../SimulationEngineStep/Lastname'
-import PhoneNumber from '../SimulationEngineStep/PhoneNumber'
-import Email from '../SimulationEngineStep/Email'
-import SETextInputPhone from '../../components/SimulationEngine/SETextInputPhone';
-import { set } from 'lodash';
-import {ReactComponent as Hostess}  from '../../assets/simulation_icons/hostess.svg'; 
+import helper from '../../utils/Helper'; 
+import Hostess  from '../../assets/simulation_icons/hostess.svg'; 
+import { Loader2 } from "lucide-react";
 
 const FormSuccess = (props) => {
 
-    let user = helper.getLocalStorageWithExpiration('wendogouser')   
+    const [user, setUserData] = useState(null);
     const [deviceType, setDeviceType] = useState('lg');
-    const [browserWidth, setBrowserWidth] = useState(window.innerWidth); 
+    const [isLoading, setIsLoading] = useState(true);
+    const [browserWidth, setBrowserWidth] = useState(window.innerWidth);
 
-    //console.log('currentSimulationStep 🥳', currentSimulationStep)
+
+    // Handle user data loading
     useEffect(() => {
-        //helper.addOutsideClick(handleOutsideClick)
-         
-        const handleResize = () => {
-            const browserWidth = window.innerWidth;
-            //console.log('browserWidth', browserWidth)
-            if (browserWidth>1200) {
-                setDeviceType('lg'); 
+        let mounted = true;
+
+        const initializeUserData = () => {
+            try {
+                const user = helper.getLocalStorageWithExpiration('wendogouser');
+                if (mounted) {
+                    setUserData(user);
+                    setIsLoading(false);
+                }
+            } catch (error) {
+                console.error('Error loading user data:', error);
+                if (mounted) {
+                    setIsLoading(false);
+                }
             }
-            if (browserWidth>991 && browserWidth <= 1200) {
-                setDeviceType('md'); 
-            } 
-            if (browserWidth>765 && browserWidth <= 990) {
-                setDeviceType('sm');
-            }  
-            if (browserWidth <= 764) {
-                setDeviceType('xs');
-            } 
         };
-        
-        handleResize();
+
+        initializeUserData();
+
+        return () => {
+            mounted = false;
+        };
+    }, []);
+
+    // Handle responsive layout
+    useEffect(() => {
+        const handleResize = () => {
+            const width = window.innerWidth;
+            if (width > 1200) {
+                setDeviceType('lg');
+            } else if (width > 991 && width <= 1200) {
+                setDeviceType('md');
+            } else if (width > 765 && width <= 990) {
+                setDeviceType('sm');
+            } else {
+                setDeviceType('xs');
+            }
+            setBrowserWidth(width);
+        };
+
         window.addEventListener('resize', handleResize);
+        handleResize(); // Initial call
+
         return () => {
             window.removeEventListener('resize', handleResize);
         };
+    }, []);
 
+    if (isLoading) {
+        return (
+            <div className="flex items-center justify-center min-h-[200px]">
+                <Loader2 className="w-8 h-8 animate-spin" />
+            </div>
+        );
+    }
 
-    }, [browserWidth]);
+    if (!user) {
+        return (
+            <div className="flex items-center justify-center min-h-screen">
+                <div className="text-center p-4">
+                    <p>Erreur de chargement des données. Veuillez réessayer.</p>
+                </div>
+            </div>
+        );
+    }
+
 
    
 
@@ -79,7 +108,7 @@ const FormSuccess = (props) => {
                                                 <div className="Box   " style={{ padding: "30px 30px 0px", maxWidth: 500, marginLeft: "auto", marginRight: "auto", borderWidth: "initial", borderStyle: "none", borderColor: "initial" }}>
                                                     <div className="Heading s isWeak  " style={{lineHeight: '2rem'}}> 
 
-                                                    <h1 size="large" className="styles__HeadingBridge-sc-6txi54-0 hzNvHf" style={{color: 'rgb(42, 55, 117)', textAlign: 'center' }}>À bientôt {user.firstname}!</h1>
+                                                    <h1 size="large" className="styles__HeadingBridge-sc-6txi54-0 hzNvHf" style={{color: 'rgb(42, 55, 117)', textAlign: 'center' }}>À bientôt {user?.firstname}!</h1>
 
                                                     </div>
                                                 </div>

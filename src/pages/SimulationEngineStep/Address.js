@@ -4,23 +4,42 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setStep } from '../../redux/simulationStepSlice';
 import helper from '../../utils/Helper';
 import { SIMULATION_ENGINE_STEPS } from '../../utils/Constants';
+import { Loader2 } from "lucide-react";
+import { setUser } from '../../redux/userSlice'; 
 
 const Address = () => {
+    const [isLoading, setIsLoading] = useState(true);
+    const user = useSelector((state) => state.user);
     const dispatch = useDispatch();
-    let user = helper.getLocalStorageWithExpiration('wendogouser');
-    const [addressName, setAddressName] = useState(user?.address?.name || '');
     const simulationStepGlobal = useSelector((state) => state.simulationStep);
+
+    // Initialize states with defaults
+    const [addressName, setAddressName] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
-    const [valid, setValid] = useState(user?.address?.validated);
+    const [valid, setValid] = useState(false);
+
+    // Load user data on component mount
+    useEffect(() => {
+        const loadUserData = () => {
+            
+            if (user) {
+                
+                setAddressName(user?.address?.name || '');
+                setValid(user?.address?.validated || false);
+            }
+            setIsLoading(false);
+        };
+
+        loadUserData();
+    }, []);
 
     const validateAddress = (addressName) => {
         const rules = [
             { regex: /^[a-zA-Z0-9\sÀ-ÿ,'.;-]+$/gm, error: "Seules les lettres, les chiffres et les espaces sont autorisés." },
             { regex: /^[\s\S]{10,255}$/, error: "Le contenu doit être compris entre 10 et 255 caractères." },
             { regex: /^(?!.*[^\S\n]{2,})[\s\S]*$/, error: "Aucun espace consécutif n'est autorisé." },
-            // Add more rules as needed
         ];
-        console.log('addressName', addressName);
+
         for (let rule of rules) {
             if (!rule.regex.test(addressName)) {
                 setErrorMessage(rule.error);
@@ -31,28 +50,56 @@ const Address = () => {
         return true;
     };
 
-    // Validate addressName on change and set the error message
+    // Validate addressName on change
     useEffect(() => {
-        setValid(validateAddress(addressName));
-    }, [addressName]);
+        if (!isLoading) {
+            setValid(validateAddress(addressName));
+        }
+    }, [addressName, isLoading]);
+
+    const updateWendogouser = (simulationStep, address) => {
+        if (!user) return;
+
+        dispatch(setStep(simulationStep));
+        const updatedUser = { 
+            ...user, 
+            simulationStep, 
+            address, 
+            date: new Date().toISOString() 
+        };
+        helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
+        dispatch(setUser(updatedUser));
+    };
 
     const handleChange = (e) => {
-        const addressName = e.target.value;
-        setAddressName(addressName);
-        updateWendogouser(SIMULATION_ENGINE_STEPS.ADDRESS, {name : addressName, validated: false});
+        const newAddressName = e.target.value;
+        setAddressName(newAddressName);
+        updateWendogouser(SIMULATION_ENGINE_STEPS.ADDRESS, {
+            name: newAddressName, 
+            validated: false
+        });
     };
 
     const handleContinue = () => {
         if (valid) {
-            updateWendogouser(SIMULATION_ENGINE_STEPS.VALIDATION, {name : addressName, validated: true});
+            updateWendogouser(SIMULATION_ENGINE_STEPS.VALIDATION, {
+                name: addressName, 
+                validated: true
+            });
         }
     };
 
-    const updateWendogouser = (simulationStep, address) => {
-        dispatch(setStep(simulationStep));
-        let updatedUser = { ...user, simulationStep, address, date: new Date().toISOString() };
-        helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
-    };
+    if (isLoading) {
+        return <div className="flex items-center justify-center min-h-[200px]">
+                    <Loader2 className="w-8 h-8 animate-spin" />
+               </div>; 
+    }
+
+    if (!user) {
+        return <div className="flex items-center justify-center min-h-[200px]">
+                    <Loader2 className="w-8 h-8 animate-spin" />
+               </div>; 
+    }
 
     return ( 
         <SETextArea

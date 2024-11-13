@@ -7,16 +7,16 @@ import SocialMediaLogo from '../assets/social_media_logo.png'
 import Reminder from '../assets/twenty-seven.png'
 import Question from '../assets/question.png'
 import Computer from '../assets/laptop.png'
-import { useNavigate } from "react-router-dom"
+import { useRouter } from 'next/router'
 import Confetti from 'react-confetti'
 import useWindowSize from 'react-use/lib/useWindowSize'
 import FooterSingleRow from '../components/FooterSingleRow';
 
 const Congratulation = () => {
-    const navigate = useNavigate()
+    const router = useRouter()
 
     const goToHomePage= () => {
-    navigate('/')
+    router.push('/')
     }
     const { width, height } = useWindowSize()
     const [opacityStyle, setOpacityStyle] = useState({ opacity: 0 })

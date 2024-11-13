@@ -1,40 +1,70 @@
-
-import { useState } from "react";
-//import { isInHighSchool, isInUniversity } from "../../redux/userLevelSlice";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import { activateUniversity, deactivateUniversity } from '../../redux/universitySlice';
-import ButtonLarge from "../../components/ButtonLarge";
-import { useDispatch, useSelector } from 'react-redux'
-import helper from '../../utils/Helper';
-import {setStep} from '../../redux/simulationStepSlice';
-import {SIMULATION_ENGINE_STEPS} from '../../utils/Constants'
+import { setStep } from '../../redux/simulationStepSlice';
+import { SIMULATION_ENGINE_STEPS } from '../../utils/Constants';
 import SEDualSelection from "../../components/SimulationEngine/SEDualSelection";
+import helper from '../../utils/Helper';
+import { setUser } from '../../redux/userSlice';
+import { Loader2 } from "lucide-react";
 
 function SchoolLevel() {
+    const dispatch = useDispatch();
+    
+    // Core states
+    const [isInitializing, setIsInitializing] = useState(true);
+    const user = useSelector((state) => state.user);
+    const [schoolLevelSelected, setSchoolLevelSelected] = useState('Supérieur');
+    const [showContinueBtn, setShowContinueBtn] = useState(false);
 
-    let user = helper.getLocalStorageWithExpiration('wendogouser')
+    // Initialize user data
+    useEffect(() => {
+        const initializeData = () => {
+            
+            if (!user) return;
 
-    const dispatch = useDispatch()
-    const [schoolLevelSelected, setSchoolLevelSelected] = useState(user?.schoolLevelSelected || 'Supérieur')  
-    const [showContinueBtn, setShowContinueBtn] = useState(user.simulationStep === SIMULATION_ENGINE_STEPS.SCHOOL_LEVEL)
+            
+            setSchoolLevelSelected(user?.schoolLevelSelected || 'Supérieur');
+            setShowContinueBtn(user?.simulationStep === SIMULATION_ENGINE_STEPS.SCHOOL_LEVEL);
+            
+            // Set initial university state
+            if (user?.schoolLevelSelected === 'Supérieur') {
+                dispatch(activateUniversity());
+            } else {
+                dispatch(deactivateUniversity());
+            }
+            
+            setIsInitializing(false);
+        };
+
+        initializeData();
+    }, [dispatch]);
 
     const handleSchoolLevelSelection = (item) => {
-        console.log('handleSchoolLevelSelection', item)
-        dispatch(item === 'Supérieur' ? activateUniversity() : deactivateUniversity())
-        setSchoolLevelSelected(item)
-        updateWendogouser(SIMULATION_ENGINE_STEPS.RECENT_CLASS_LEVEL, item)
-        
-    }
-    const handleContinue = () => { 
-        updateWendogouser(SIMULATION_ENGINE_STEPS.RECENT_CLASS_LEVEL, schoolLevelSelected)
-    }
+        setSchoolLevelSelected(item);
+        dispatch(item === 'Supérieur' ? activateUniversity() : deactivateUniversity());
+        updateWendogouser(SIMULATION_ENGINE_STEPS.RECENT_CLASS_LEVEL, item);
+    };
+
+    const handleContinue = () => {
+        updateWendogouser(SIMULATION_ENGINE_STEPS.RECENT_CLASS_LEVEL, schoolLevelSelected);
+    };
 
     const updateWendogouser = (simulationStep, schoolLevelSelected) => {
-        dispatch(setStep(simulationStep)) 
-        let updatedUser = {...user, simulationStep, schoolLevelSelected, date: new Date().toISOString()}
-        setShowContinueBtn(false)    
-        helper.setLocalStorageWithExpiration('wendogouser', updatedUser)         
-    }
+        const updatedUser = {
+            ...user,
+            simulationStep,
+            schoolLevelSelected,
+            date: new Date().toISOString()
+        };
+        
+        helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
+        dispatch(setUser(updatedUser));
+        setShowContinueBtn(false);
+        dispatch(setStep(simulationStep));
+    };
 
+    // SVG icons
     const superieurSVG =  <svg width="64.3499068px" height="60px" viewBox="0 0 64.3499068 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
                                 <title>noun-university-6599176</title>
                                 <g id="Page-1" stroke="none" strokeWidth={1} fill="none" fillRule="evenodd">
@@ -56,14 +86,30 @@ function SchoolLevel() {
                                 </g>
                             </g>
                             </svg>
-         const icons = [
-            { label: "Lycée", svg: lyceeSVG },
-            { label: "Supérieur", svg: superieurSVG },
-        ];
-  return (
-    <SEDualSelection title="Quel est votre dégré d'enseignement le plus récent ?"  valueSelected={schoolLevelSelected} handleValueSelected={handleSchoolLevelSelection}  handleContinue={handleContinue} icons={icons} showContinueBtn={showContinueBtn} />
-  );
 
+    const icons = [
+        { label: "Lycée", svg: lyceeSVG },
+        { label: "Supérieur", svg: superieurSVG },
+    ];
+
+    if (isInitializing) {
+        return (
+            <div className="flex items-center justify-center min-h-[200px]">
+                <Loader2 className="w-8 h-8 animate-spin" />
+            </div>
+        );
+    }
+
+    return (
+        <SEDualSelection 
+            title="Quel est votre degré d'enseignement le plus récent ?"
+            valueSelected={schoolLevelSelected}
+            handleValueSelected={handleSchoolLevelSelection}
+            handleContinue={handleContinue}
+            icons={icons}
+            showContinueBtn={showContinueBtn}
+        />
+    );
 }
 
 export default SchoolLevel;

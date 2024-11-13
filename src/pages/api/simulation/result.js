@@ -1,23 +1,24 @@
 import React from 'react'; 
-import Footer from '../components/Footer';
-import HeaderMenuBarOnlyWithLogo from '../components/HeaderMenuBarOnlyWithLogo';
+import Footer from '../../../components/Footer';
+import HeaderMenuBarOnlyWithLogo from '../../../components/HeaderMenuBarOnlyWithLogo';
 import FormGroup from '@mui/material/FormGroup';
-import {ReactComponent as LocationIcon} from '../assets/location-353.svg';
+import LocationIcon from '../assets/location-353.svg';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox'; 
-import helper from '../utils/Helper';
+import helper from '../../../utils/Helper';
 import { useEffect, useState, useCallback, useMemo, useRef} from 'react'; 
 import _, { set } from 'lodash'
-import { useGetSchoolDetailsFromSchoolIdsMutation } from '../store/apis/schoolApi';
-import { useGetMajorDetailsFromMajorIdsMutation } from '../store/apis/majorApi';
-import {useUpdateAndGetStudentSimulationResultMutation} from '../store/apis/userApi';
-import { activateSpinner, deactivateSpinner } from '../redux/spinnerslice';
+import { useGetSchoolDetailsFromSchoolIdsMutation } from '../../../store/apis/schoolApi';
+import { useGetMajorDetailsFromMajorIdsMutation } from '../../../store/apis/majorApi';
+import {useUpdateAndGetStudentSimulationResultMutation} from '../../../store/apis/userApi';
+import { activateSpinner, deactivateSpinner } from '../../../redux/spinnerslice';
 import { useDispatch, useSelector } from 'react-redux'
-import OptimizedImage from '../components/OptimizedImage'; 
-import SimulationResultWaiting from '../components/SimulationResultWaiting'; 
-import ServicePricingCard from '../components/ServicePricingCard';
-import ContactModal from '../components/ContactModal'; 
-import { Link } from 'react-router-dom';
+import OptimizedImage from '../../../components/OptimizedImage'; 
+import SimulationResultWaiting from '../../../components/SimulationResultWaiting'; 
+import ServicePricingCard from '../../../components/ServicePricingCard';
+import ContactModal from '../../../components/ContactModal'; 
+import Link from 'next/link';
+import { Loader2 } from "lucide-react";
 
 const SessionExpiredAlert = () => {
 
@@ -35,7 +36,7 @@ const SessionExpiredAlert = () => {
                     <p> Pour votre sécurité, votre session a été déconnectée en raison d'une période d'inactivité. </p>
                     <p style={{ marginTop: '0.5rem' }}> Veuillez recommencer pour continuer à utiliser l'application. </p>
                 </div>
-                <Link to='/simulation/home' style={{ width: '100%', padding: '0.75rem 1rem', backgroundColor: '#0154c0', color: 'white', border: 'none', borderRadius: '6px', fontSize: '1rem', fontWeight: '500', cursor: 'pointer', transition: 'background-color 0.2s', }} onMouseOver={(e)=> e.target.style.backgroundColor = '#0143a0'} onMouseOut={(e) => e.target.style.backgroundColor = '#0154c0'} > 
+                <Link href='/simulation/home' style={{ width: '100%', padding: '0.75rem 1rem', backgroundColor: '#0154c0', color: 'white', border: 'none', borderRadius: '6px', fontSize: '1rem', fontWeight: '500', cursor: 'pointer', transition: 'background-color 0.2s', }} onMouseOver={(e)=> e.target.style.backgroundColor = '#0143a0'} onMouseOut={(e) => e.target.style.backgroundColor = '#0154c0'} > 
                     Recommencer </Link>
             </div>
         </div>
@@ -43,63 +44,81 @@ const SessionExpiredAlert = () => {
     );
   };
 
-const useInitialDataLoad = () => {
+  const useInitialDataLoad = () => {
     const [user, setUser] = useState(null);
     const [evaluationResults, setEvaluationResults] = useState(null);
     const [displayValidCourses, setDisplayValidCourses] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [isError, setIsError] = useState(false);
-    //window.location.hash = 'view/SCORE_DETAILLE';
-    const [displayMonOrientation, setDisplayMonOrientation] = useState(false)
+    const [displayMonOrientation, setDisplayMonOrientation] = useState(false);
     const [isSessionExpired, setIsSessionExpired] = useState(false);
-
     const [getStudentSimulationResult] = useUpdateAndGetStudentSimulationResultMutation();
   
     useEffect(() => {
+      let mounted = true;
+
       const initializeData = async () => {
         try {
-          // First, get user data from localStorage
+          // Get localStorage data first
           const userData = helper.getLocalStorageWithExpiration('wendogouser');
           
-          setUser(userData);
-  
+          // Only proceed if component is still mounted
+          if (!mounted) return;
+
           if (!userData) {
             setIsSessionExpired(true);
             setIsLoading(false);
             return;
           }
-  
-          // Then, fetch evaluation results
-          //dispatch(activateSpinner());
-          setIsLoading(true);  
-            //helper.setLocalStorageWithExpiration('wendogouser', testUser,false);   
-            //helper.setLocalStorageWithExpiration('wendogouser', {...userData, date: new Date().toISOString() });
-          let simulationResults
-          if(userData?.simulationResults) {
-             simulationResults = userData.simulationResults;
-            setEvaluationResults(userData.simulationResults);
-          }else{
-             simulationResults = await getStudentSimulationResult(userData).unwrap(); 
-        
-            console.log('simulationResults xx', simulationResults)   
-            
-            setEvaluationResults(simulationResults);
-            helper.setLocalStorageWithExpiration('wendogouser', {...userData, 'userId': simulationResults?.user_id,  'simulationResults': simulationResults, date: new Date().toISOString() });
-           }
-          setDisplayValidCourses(simulationResults?.valid_courses?.length > 0);
+
+          // Set user data
+          setUser(userData);
+
+          let simulationResults;
           
-  
+          // Check for existing simulation results
+          if (userData?.simulationResults) {
+            simulationResults = userData.simulationResults;
+          } else {
+            // Fetch new simulation results if none exist
+            simulationResults = await getStudentSimulationResult(userData).unwrap();
+            
+            // Save results to localStorage
+            if (mounted) {
+              helper.setLocalStorageWithExpiration('wendogouser', {
+                ...userData, 
+                'userId': simulationResults?.user_id,
+                'simulationResults': simulationResults, 
+                date: new Date().toISOString()
+              });
+            }
+          }
+
+          // Only update state if component is still mounted
+          if (mounted) {
+            setEvaluationResults(simulationResults);
+            setDisplayValidCourses(simulationResults?.valid_courses?.length > 0);
+          }
+
         } catch (error) {
           console.error('Error initializing data:', error);
-          setIsError(true);
+          if (mounted) {
+            setIsError(true);
+          }
         } finally {
-          setIsLoading(false);
-          //dispatch(deactivateSpinner());
+          if (mounted) {
+            setIsLoading(false);
+          }
         }
       };
-  
+
       initializeData();
-    }, []); // Empty dependency array means this runs once on mount
+
+      // Cleanup function to prevent memory leaks
+      return () => {
+        mounted = false;
+      };
+    }, []); // Empty dependency array for single execution
   
     return {
       user,
@@ -112,7 +131,7 @@ const useInitialDataLoad = () => {
       displayMonOrientation,
       setDisplayMonOrientation
     };
-  };
+};
 
 const SimulationResult = () => {
 
@@ -361,7 +380,7 @@ const SimulationResult = () => {
         const warnings = [];
          //console.log('user oooo ', user)
 
-        //Example : user.selectedSchoolYear3.name =2023
+        //Example : user?.selectedSchoolYear3.name =2023
         // if user?.selectedSchoolYear3?.name<todayYear-1, push a message to the warning array
         const todayYear = new Date().getFullYear();
         if (user?.selectedSchoolYear3?.name < todayYear -1) {

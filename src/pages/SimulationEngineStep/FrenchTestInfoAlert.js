@@ -1,5 +1,5 @@
 import SEAlertMessage from "../../components/SimulationEngine/SEAlertMessage";
-import {ReactComponent as FrenchTestSvg} from './../../assets/simulation_icons/french_test.svg'
+import FrenchTestSvg from './../../assets/simulation_icons/french_test.svg'
 
 const FrenchTestInfoAlert = () => {
   return (

@@ -3,13 +3,16 @@ import { useUserQuery } from '../store/apis/userApi';
 import { useSelector, useDispatch } from 'react-redux'
 import  { useForm, Controller }  from  "react-hook-form"
 import {useSendCodeForVerificationMutation} from '../store/apis/userApi'
-import { useNavigate } from "react-router-dom"
+import { useRouter } from 'next/router'
 import { activateSpinner, deactivateSpinner } from '../redux/spinnerslice'
 import helper from '../utils/Helper';
 import {  ToastContainer } from 'react-toastify';
 import {useSendVerificationAndAddUserMutation} from '../store/apis/userApi'
-import { setUser } from '../redux/userslice';
+import { setUser } from '../redux/userSlice';
 import FooterSingleRow from '../components/FooterSingleRow';
+import { Loader2 } from "lucide-react";
+import { setUser } from '../../redux/userSlice';
+
 
 const VerificationWhatsapp = () => {
     const length = 6
@@ -17,7 +20,7 @@ const VerificationWhatsapp = () => {
     const inputs = useRef([]);
     const [loading] = useState(false);
     const spinnerIsActive = useSelector((state) => state.spinner.activateSpinner)
-    //const user = useSelector((state) => state.user.user)
+    //const user = useSelector((state) => state.user?.user)
     //console.log('user', user)
     let user = helper.getLocalStorageWithExpiration('wendogouser')
     const [expirationVerifDate, setExpirationVerifDate] = useState(helper.getLocalStorageWithExpiration('expirationVerifDate'));
@@ -25,7 +28,7 @@ const VerificationWhatsapp = () => {
     const [sendVerificationCode] = useSendVerificationAndAddUserMutation()
 
     //const {data, error, isLoading, isSuccess} = useUsersQuery()
-    const navigate = useNavigate()
+    const router = useRouter()
 
     const userPhone= (user?.phone)?.slice(0, 5) + (user?.phone)?.slice(5)?.replace(/.(?=..)/g, '*')
     const country = user?.country
@@ -63,11 +66,11 @@ const VerificationWhatsapp = () => {
     const {handleSubmit, formState: { errors }, control } = useForm()
     async function onSubmitUserVerificationCode (data) {
         let verificationCode = Object.values(data).flat().join('')
-        console.log('verificationCode',  verificationCode, {phone : user.phone, code: verificationCode})
+        console.log('verificationCode',  verificationCode, {phone : user?.phone, code: verificationCode})
         try {
             dispatch(activateSpinner())
             console.log('data', data);
-            const result = await sendCodeForVerification({phone : user.phone, code: verificationCode}).unwrap();
+            const result = await sendCodeForVerification({phone : user?.phone, code: verificationCode}).unwrap();
        
             dispatch(deactivateSpinner())
 
@@ -76,7 +79,7 @@ const VerificationWhatsapp = () => {
                 if(result.verify){
                     helper.toastSuccess('Votre numéro whatsapp a été vérifié avec succès')
                     helper.setLocalStorageWithExpiration('wendogouser', result.user, 600000)
-                    navigate(result.user.subscription_step)
+                    router.push(result.user?.subscription_step)
                 }else{
                   setFailToVerify(true)
                 }
@@ -133,7 +136,7 @@ const VerificationWhatsapp = () => {
             if(result.success){          
                 dispatch(setUser(result.user))
 
-                if(!result.user.has_whatsapp){
+                if(!result.user?.has_whatsapp){
                     localStorage.clear()
                     helper.toastSuccess('Un code de vérification vous a été renvoyé')
                     const d1 = new Date ()

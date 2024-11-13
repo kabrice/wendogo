@@ -1,87 +1,161 @@
-import { useState, useEffect, useRef} from 'react';  
-import _ from 'lodash'
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import SEDropDownList from '../../components/SimulationEngine/SEDropDownList';
-import { useDispatch, useSelector } from 'react-redux'
-import {setStep} from '../../redux/simulationStepSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { setStep } from '../../redux/simulationStepSlice';
 import { setProgress } from "../../redux/progressBarStepSlice";
+import { Loader2 } from "lucide-react";
 import helper from '../../utils/Helper';
-import {SIMULATION_ENGINE_STEPS, PROGRESS_BAR_STEPS} from '../../utils/Constants'
+import { SIMULATION_ENGINE_STEPS, PROGRESS_BAR_STEPS } from '../../utils/Constants';
+import { setUser } from '../../redux/userSlice';
 
-const otherSpokenLanguages = [
-    {id: 'none', name: 'None', validated: false},
-    {id: 'spl00004', name: 'Espagnol', validated: false},
-    {id: 'spl00035', name: 'Allemand', validated: false},
-    {id: 'spl00036', name: 'Italien', validated: false}, 
-    {id: 'spl00026', name: 'Russe', validated: false}
+const OTHER_SPOKEN_LANGUAGES = [
+    { id: 'none', name: 'None', validated: false },
+    { id: 'spl00004', name: 'Espagnol', validated: false },
+    { id: 'spl00035', name: 'Allemand', validated: false },
+    { id: 'spl00036', name: 'Italien', validated: false },
+    { id: 'spl00026', name: 'Russe', validated: false }
+];
 
-]
+const DEFAULT_LANGUAGE = { id: 'none', name: 'None', validated: false };
 
 const OtherSpokenLanguage = () => {
-
-    let user = helper.getLocalStorageWithExpiration('wendogouser') 
-    const dispatch = useDispatch() 
-    const [selectedOtherSpokenLanguage, setSelectedOtherSpokenLanguage] = useState(user?.selectedOtherSpokenLanguage || {id: 'none', name: 'None', validated: false})
-    const newRef = useRef(null)
-    const [collapseOtherSpokenLanguageOption, setCollapseOtherSpokenLanguageOption] = useState(true)
-    const [fieldDefault, setFieldDefault] = useState(true)
-
+    const [isLoading, setIsLoading] = useState(true);
+    const user = useSelector((state) => state.user);
+    const dispatch = useDispatch();
+    
+    // Redux selectors
     const simulationStepGlobal = useSelector((state) => state.simulationStep);
-    const progressBarStep = useSelector((state) => state.progressBarStep); 
-  
-    const showContinueBtn = (simulationStepGlobal === SIMULATION_ENGINE_STEPS.OTHER_SPOKEN_LANGUAGE) || 
-                                   ((!user?.selectedOtherSpokenLanguage || selectedOtherSpokenLanguage.id ==='none')  
-                                         && (progressBarStep === PROGRESS_BAR_STEPS.PARCOURS_ACADEMIQUE_ET_PROFESSIONNEL)) 
+    const progressBarStep = useSelector((state) => state.progressBarStep);
 
-    const handleOutsideClick = (e) => {
-        if (newRef.current && !newRef.current.contains(e.target) && !helper.isTargetContainsIgnoreClass(e.target)) {
-          setCollapseOtherSpokenLanguageOption(true)
-          //console.log('Outside click OtherSpokenLanguage')
+    // Local state
+    const [selectedOtherSpokenLanguage, setSelectedOtherSpokenLanguage] = useState(DEFAULT_LANGUAGE);
+    const [collapseOtherSpokenLanguageOption, setCollapseOtherSpokenLanguageOption] = useState(true);
+    const [fieldDefault, setFieldDefault] = useState(true);
+
+    // Refs
+    const newRef = useRef(null);
+
+    // Load user data on component mount
+    useEffect(() => {
+        const loadUserData = () => {
+            try {
+                
+                if (user) {
+                    
+                    setSelectedOtherSpokenLanguage(user?.selectedOtherSpokenLanguage || DEFAULT_LANGUAGE);
+                }
+            } catch (error) {
+                console.error('Error loading user data:', error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        loadUserData();
+    }, []);
+
+    // Handle outside clicks
+    useEffect(() => {
+        const handleOutsideClick = (e) => {
+            if (newRef.current && 
+                !newRef.current.contains(e.target) && 
+                !helper.isTargetContainsIgnoreClass(e.target)) {
+                setCollapseOtherSpokenLanguageOption(true);
+            }
+        };
+
+        return helper.addOutsideClick(handleOutsideClick);
+    }, []);
+
+    // Memoized values
+    const showContinueBtn = useMemo(() => 
+        (simulationStepGlobal === SIMULATION_ENGINE_STEPS.OTHER_SPOKEN_LANGUAGE) || 
+        ((!user?.selectedOtherSpokenLanguage || selectedOtherSpokenLanguage.id === 'none') && 
+         (progressBarStep === PROGRESS_BAR_STEPS.PARCOURS_ACADEMIQUE_ET_PROFESSIONNEL)),
+    [simulationStepGlobal, progressBarStep, user?.selectedOtherSpokenLanguage, selectedOtherSpokenLanguage.id]);
+
+    const updateWendogouser = useCallback((simulationStep, language) => {
+        if (!user) return;
+
+        dispatch(setStep(simulationStep));
+
+        const updatedUser = {
+            ...user,
+            simulationStep,
+            selectedOtherSpokenLanguage: language,
+            ...(language.id === 'none' && {
+                progressBarStep: PROGRESS_BAR_STEPS.INFORMATIONS_VOYAGE
+            }),
+            date: new Date().toISOString()
+        };
+
+        if (language.id === 'none') {
+            dispatch(setProgress(PROGRESS_BAR_STEPS.INFORMATIONS_VOYAGE));
+            if (typeof window !== 'undefined') {
+                window.location.hash = "";
+                window.location.hash = "form/INFORMATIONS_VOYAGE";
+            }
         }
-      };
 
-    const toggleOtherSpokenLanguageDropdown= () => { 
-        setCollapseOtherSpokenLanguageOption(!collapseOtherSpokenLanguageOption)
+        helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
+        dispatch(setUser(updatedUser));
+    }, [dispatch, user]);
+
+    const toggleOtherSpokenLanguageDropdown = useCallback(() => {
+        setCollapseOtherSpokenLanguageOption(prev => !prev);
+    }, []);
+
+    const updateSelectedOtherSpokenLanguage = useCallback((item) => {
+        const validatedItem = { ...item, validated: true };
+        setSelectedOtherSpokenLanguage(validatedItem);
+        setCollapseOtherSpokenLanguageOption(true);
+        setFieldDefault(false);
+
+        const nextStep = item.id === 'none'
+            ? SIMULATION_ENGINE_STEPS.ALREADY_TRAVELED_TO_FRANCE
+            : SIMULATION_ENGINE_STEPS.OTHER_LANGUAGE_LEVEL;
+
+        updateWendogouser(nextStep, validatedItem);
+    }, [updateWendogouser]);
+
+    const handleContinue = useCallback(() => {
+        const nextStep = selectedOtherSpokenLanguage.id === 'none'
+            ? SIMULATION_ENGINE_STEPS.ALREADY_TRAVELED_TO_FRANCE
+            : SIMULATION_ENGINE_STEPS.OTHER_LANGUAGE_LEVEL;
+
+        updateWendogouser(nextStep, { ...selectedOtherSpokenLanguage, validated: true });
+    }, [selectedOtherSpokenLanguage, updateWendogouser]);
+
+    if (isLoading) {
+        return (
+            <div className="flex items-center justify-center min-h-[100px]">
+                <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            </div>
+        );
     }
 
-    const updateSelectedOtherSpokenLanguage = (item) => { 
-        setSelectedOtherSpokenLanguage({ ...item, validated: true })
-        setCollapseOtherSpokenLanguageOption(true)
-        setFieldDefault(false)
-        // console.log('🥳🥳🥳 item', item )
-        // console.log('🥳🥳🥳 selectedOtherSpokenLanguage', selectedOtherSpokenLanguage.id , selectedOtherSpokenLanguage.id === 'none' )
-
-        updateWendogouser(item.id === 'none' ? SIMULATION_ENGINE_STEPS.ALREADY_TRAVELED_TO_FRANCE : SIMULATION_ENGINE_STEPS.OTHER_LANGUAGE_LEVEL, {...item, validated : true})
-        //updateWendogouser(SIMULATION_ENGINE_STEPS.OTHER_LANGUAGE_LEVEL, {...item, validated: true}) 
+    if (!user) {
+        return (
+            <div className="flex items-center justify-center min-h-[100px] text-red-500">
+                Error loading user data
+            </div>
+        );
     }
 
-    useEffect(() => { 
-        helper.addOutsideClick(handleOutsideClick)
-    }, [])
-
-    const handleContinue = () => {
-        updateWendogouser(selectedOtherSpokenLanguage.id === 'none' ? SIMULATION_ENGINE_STEPS.ALREADY_TRAVELED_TO_FRANCE : SIMULATION_ENGINE_STEPS.OTHER_LANGUAGE_LEVEL, {...selectedOtherSpokenLanguage, validated: true})
-    }
-    const updateWendogouser = (simulationStep, selectedOtherSpokenLanguage) => {
-        console.log('🥳 selectedOtherSpokenLanguage', selectedOtherSpokenLanguage.id , selectedOtherSpokenLanguage.id === 'none' , simulationStep, selectedOtherSpokenLanguage)
-        dispatch(setStep(simulationStep)) 
-        let updatedUser
-        if(selectedOtherSpokenLanguage.id !== 'none'){
-            updatedUser = {...user, simulationStep, selectedOtherSpokenLanguage, date: new Date().toISOString()} 
-        } else {   
-            dispatch(setProgress(PROGRESS_BAR_STEPS.INFORMATIONS_VOYAGE)) 
-            updatedUser = {...user, simulationStep, selectedOtherSpokenLanguage, progressBarStep: PROGRESS_BAR_STEPS.INFORMATIONS_VOYAGE,  date: new Date().toISOString()}   
-            window.location.hash = ""
-            window.location.hash = "form/INFORMATIONS_VOYAGE";
-        }
-        helper.setLocalStorageWithExpiration('wendogouser', updatedUser)         
-    }
-
-  return (
-         <SEDropDownList title="Choisissez une autre langue que vous maîtrisez" newRef={newRef} collapseOption={collapseOtherSpokenLanguageOption} 
-                         fieldDefault={fieldDefault} items={otherSpokenLanguages} itemSelected={selectedOtherSpokenLanguage} toggleDropdown={toggleOtherSpokenLanguageDropdown} 
-                         updateSelected={updateSelectedOtherSpokenLanguage} handleContinue={handleContinue} showContinueBtn={showContinueBtn}
-                          />    
-  );
-}
+    return (
+        <SEDropDownList 
+            title="Choisissez une autre langue que vous maîtrisez"
+            newRef={newRef}
+            collapseOption={collapseOtherSpokenLanguageOption}
+            fieldDefault={fieldDefault}
+            items={OTHER_SPOKEN_LANGUAGES}
+            itemSelected={selectedOtherSpokenLanguage}
+            toggleDropdown={toggleOtherSpokenLanguageDropdown}
+            updateSelected={updateSelectedOtherSpokenLanguage}
+            handleContinue={handleContinue}
+            showContinueBtn={showContinueBtn}
+        />
+    );
+};
 
 export default OtherSpokenLanguage;

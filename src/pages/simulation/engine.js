@@ -1,96 +1,194 @@
 import { useState, useEffect, useRef} from 'react';
-import EdgarHead from '../assets/edgar_head.jpeg'
-//import {ReactComponent as ExpertMan} from '../assets/ExpertMan1.svg'
+// import EdgarHead from '../assets/edgar_head.jpeg'
+//import ExpertMan} from '../assets/ExpertMan1.svg'
 
-import { Link } from 'react-router-dom';
-import FlightSimilution from '../assets/simulation_icons/aeroplane_simulation.png'
-import FooterSingleRow from '../components/FooterSingleRow';
-import HeaderMenuLoginBar from '../components/HeaderMenuLoginBar';
-import SvgSpriteGen from '../assets/simulation_icons/svg-sprite.gen.svg'
-import VisaType from './SimulationEngineStep/VisaType'
-import SchoolLevel from './SimulationEngineStep/SchoolLevel';
-import SchoolYear3 from './SimulationEngineStep/SchoolYear3';
-import helper from '../utils/Helper';
-import {CAMPUS_FRANCE_CRITERIA, SIMULATION_ENGINE_STEPS, PROGRESS_BAR_STEPS} from '../utils/Constants'
-import RecentLevel from './SimulationEngineStep/RecentLevel';
-import ClassRepetition from './SimulationEngineStep/ClassRepetition';
-import BlankYearReptition from './SimulationEngineStep/BlankYearReptition';
-import CouldPayTuition from './SimulationEngineStep/CouldPayTuition';
-import ResidentCountry from './SimulationEngineStep/ResidentCountry';
-import HighSchoolInFrench from './SimulationEngineStep/HighSchoolInFrench';
-import FrenchTest from './SimulationEngineStep/FrenchTest';
-import FrenchTestInfoAlert from './SimulationEngineStep/FrenchTestInfoAlert';
-import FrenchLevel from './SimulationEngineStep/FrenchLevel';
-import RecentDegree from './SimulationEngineStep/RecentDegree';
-import DegreeExactName from './SimulationEngineStep/DegreeExactName';
-import { useUpdateUserMutation } from '../store/apis/userApi';
+import Link from 'next/link';
+// import FlightSimilution from '../../assets/simulation_icons/aeroplane_simulation.png'
+import FooterSingleRow from '../../components/FooterSingleRow';
+import HeaderMenuLoginBar from '../../components/HeaderMenuLoginBar';
+import SvgSpriteGen from '../../assets/simulation_icons/svg-sprite.gen.svg'
+import VisaType from '../SimulationEngineStep/VisaType'
+import SchoolLevel from '../SimulationEngineStep/SchoolLevel';
+import SchoolYear3 from '../SimulationEngineStep/SchoolYear3';
+import helper from '../../utils/Helper';
+import {CAMPUS_FRANCE_CRITERIA, SIMULATION_ENGINE_STEPS, PROGRESS_BAR_STEPS} from '../../utils/Constants'
+import RecentLevel from '../SimulationEngineStep/RecentLevel';
+import ClassRepetition from '../SimulationEngineStep/ClassRepetition';
+import BlankYearReptition from '../SimulationEngineStep/BlankYearReptition';
+import CouldPayTuition from '../SimulationEngineStep/CouldPayTuition';
+import ResidentCountry from '../SimulationEngineStep/ResidentCountry';
+import HighSchoolInFrench from '../SimulationEngineStep/HighSchoolInFrench';
+import FrenchTest from '../SimulationEngineStep/FrenchTest';
+import FrenchTestInfoAlert from '../SimulationEngineStep/FrenchTestInfoAlert';
+import FrenchLevel from '../SimulationEngineStep/FrenchLevel';
+import RecentDegree from '../SimulationEngineStep/RecentDegree';
+import DegreeExactName from '../SimulationEngineStep/DegreeExactName';
+// import { useUpdateUserMutation } from '../../store/apis/userApi';
 import { useDispatch, useSelector } from 'react-redux'
-import { setStep } from '../redux/simulationStepSlice';
-import { setProgress } from '../redux/progressBarStepSlice';
-import { activateUniversity, deactivateUniversity } from '../redux/universitySlice';
-import ClassRepetitionWarningAlert from './SimulationEngineStep/ClassRepetitionWarningAlert';
-import BlankYearReptitionAlert from './SimulationEngineStep/BlankYearReptitionAlert';
-import SEAlertMessage from '../components/SimulationEngine/SEAlertMessage';
-import {ReactComponent as IconEconomy} from '../assets/simulation_icons/perplexe_icon.svg'
-import CampusFranceInegibilityAlert from './SimulationEngineStep/CampusFranceInegibilityAlert';
-import MainSubjects from './SimulationEngineStep/MainSubjects';
-import ProgramDomain from './SimulationEngineStep/ProgramDomain';
-import IsResult3Available from './SimulationEngineStep/IsResult3Available';
-import AcademicYearHeadDetails3 from './SimulationEngineStep/AcademicYearHeadDetails3';
-import ReportCard3 from './SimulationEngineStep/ReportCard3';
-import IsResult2Available from './SimulationEngineStep/IsResult2Available';
-import SchoolYear2 from './SimulationEngineStep/SchoolYear2';
-import AcademicYearHeadDetails2 from './SimulationEngineStep/AcademicYearHeadDetails2';
-import ReportCard2 from './SimulationEngineStep/ReportCard2';
-import IsResult1Available from './SimulationEngineStep/IsResult1Available';
-import SchoolYear1 from './SimulationEngineStep/SchoolYear1';
-import AcademicYearHeadDetails1 from './SimulationEngineStep/AcademicYearHeadDetails1';
-import ReportCard1 from './SimulationEngineStep/ReportCard1';
-import HasWonAward from './SimulationEngineStep/HasWonAward';
-import AwardDetails from './SimulationEngineStep/AwardDetails';
-import HasWorkExperience from './SimulationEngineStep/HasWorkExperience';
-import WorkExperienceDetails from './SimulationEngineStep/WorkExperienceDetails';
-import CanProveWorkExperience from './SimulationEngineStep/CanProveWorkExperience';
-import EnglishLevel from './SimulationEngineStep/EnglishLevel';
-import CanJustifyEnglishLevel from './SimulationEngineStep/CanJustifyEnglishLevel';
-import OtherSpokenLanguage from './SimulationEngineStep/OtherSpokenLanguage';
-import OtherLanguageLevel from './SimulationEngineStep/OtherLanguageLevel';
-import CanJustifyOtherLanguage from './SimulationEngineStep/CanJustifyOtherLanguage';
-import AlreadyTraveledToFrance from './SimulationEngineStep/AlreadyTraveledToFrance';
-import LastFranceTravelDetails from './SimulationEngineStep/LastFranceTravelDetails';
-import HasPassport from './SimulationEngineStep/HasPassport';
-import PassportDetails from './SimulationEngineStep/PassportDetails';
-import Salutation from './SimulationEngineStep/Salutation';
-import BirthDate from './SimulationEngineStep/BirthDate';
-import Firstname from './SimulationEngineStep/Firstname';
-import Lastname from './SimulationEngineStep/Lastname';
-import Nationality from './SimulationEngineStep/Nationality';
-import Disable from './SimulationEngineStep/Disable';
-import Email from './SimulationEngineStep/Email';
-import PhoneNumber from './SimulationEngineStep/PhoneNumber';
-import Address from './SimulationEngineStep/Address';
-import Validation from './SimulationEngineStep/Validation';
+import { setStep } from '../../redux/simulationStepSlice';
+import { setProgress } from '../../redux/progressBarStepSlice';
+import { activateUniversity, deactivateUniversity } from '../../redux/universitySlice';
+import ClassRepetitionWarningAlert from '../SimulationEngineStep/ClassRepetitionWarningAlert';
+import BlankYearReptitionAlert from '../SimulationEngineStep/BlankYearReptitionAlert';
+import SEAlertMessage from '../../components/SimulationEngine/SEAlertMessage';
+import IconEconomy from '../../assets/simulation_icons/perplexe_icon.svg'
+import CampusFranceInegibilityAlert from '../SimulationEngineStep/CampusFranceInegibilityAlert';
+import MainSubjects from '../SimulationEngineStep/MainSubjects';
+import ProgramDomain from '../SimulationEngineStep/ProgramDomain';
+import IsResult3Available from '../SimulationEngineStep/IsResult3Available';
+import AcademicYearHeadDetails3 from '../SimulationEngineStep/AcademicYearHeadDetails3';
+import ReportCard3 from '../SimulationEngineStep/ReportCard3';
+import IsResult2Available from '../SimulationEngineStep/IsResult2Available';
+import SchoolYear2 from '../SimulationEngineStep/SchoolYear2';
+import AcademicYearHeadDetails2 from '../SimulationEngineStep/AcademicYearHeadDetails2';
+import ReportCard2 from '../SimulationEngineStep/ReportCard2';
+import IsResult1Available from '../SimulationEngineStep/IsResult1Available';
+import SchoolYear1 from '../SimulationEngineStep/SchoolYear1';
+import AcademicYearHeadDetails1 from '../SimulationEngineStep/AcademicYearHeadDetails1';
+import ReportCard1 from '../SimulationEngineStep/ReportCard1';
+import HasWonAward from '../SimulationEngineStep/HasWonAward';
+import AwardDetails from '../SimulationEngineStep/AwardDetails';
+import HasWorkExperience from '../SimulationEngineStep/HasWorkExperience';
+import WorkExperienceDetails from '../SimulationEngineStep/WorkExperienceDetails';
+import CanProveWorkExperience from '../SimulationEngineStep/CanProveWorkExperience';
+import EnglishLevel from '../SimulationEngineStep/EnglishLevel';
+import CanJustifyEnglishLevel from '../SimulationEngineStep/CanJustifyEnglishLevel';
+import OtherSpokenLanguage from '../SimulationEngineStep/OtherSpokenLanguage';
+import OtherLanguageLevel from '../SimulationEngineStep/OtherLanguageLevel';
+import CanJustifyOtherLanguage from '../SimulationEngineStep/CanJustifyOtherLanguage';
+import AlreadyTraveledToFrance from '../SimulationEngineStep/AlreadyTraveledToFrance';
+import LastFranceTravelDetails from '../SimulationEngineStep/LastFranceTravelDetails';
+import HasPassport from '../SimulationEngineStep/HasPassport';
+import PassportDetails from '../SimulationEngineStep/PassportDetails';
+import Salutation from '../SimulationEngineStep/Salutation';
+import BirthDate from '../SimulationEngineStep/BirthDate';
+import Firstname from '../SimulationEngineStep/Firstname';
+import Lastname from '../SimulationEngineStep/Lastname';
+import Nationality from '../SimulationEngineStep/Nationality';
+import Disable from '../SimulationEngineStep/Disable';
+import Email from '../SimulationEngineStep/Email';
+import PhoneNumber from '../SimulationEngineStep/PhoneNumber';
+import Address from '../SimulationEngineStep/Address';
+import Validation from '../SimulationEngineStep/Validation';
 import _ from 'lodash';
-import { activatePremiereClass, deactivatePremiereClass } from '../redux/premiereClassSlice';
-import { useNavigate } from 'react-router-dom'
+import { activatePremiereClass, deactivatePremiereClass } from '../../redux/premiereClassSlice';
+import { useRouter } from 'next/router'
+import { fetchDataForSimulationEngine } from '../../utils/serverSideFetchers/dataSEFetchers'; 
+import { activateSpinner, deactivateSpinner } from '../../redux/spinnerslice';
+import { Loader2 } from "lucide-react";
+import { setUser } from '../../redux/userSlice';
 
-function SimulationEngine(){
+export async function getServerSideProps() {
+    const { spokenLanguages, academicYearOrganizations, markSystems, schoolYears, subjectWeightSystems, universityLevels, degrees, isErrorPage} = await fetchDataForSimulationEngine();
 
-    const dispatch = useDispatch()
-    let user = helper.getLocalStorageWithExpiration('wendogouser')
-    const newRefModal = useRef(null)
-    const navigate = useNavigate()
-    
-    dispatch(setStep(user?.simulationStep ? user.simulationStep : SIMULATION_ENGINE_STEPS.VISA_TYPE))
-    dispatch(setProgress(user?.progressBarStep ? user.progressBarStep : PROGRESS_BAR_STEPS.GENERALITES_SUR_LES_VISAS_ET_LES_ETUDES))
-    dispatch(user?.schoolLevelSelected === 'Supérieur' ? activateUniversity() : deactivateUniversity())
-    dispatch(user?.hsLevelSelected === 'deg00002' ? activatePremiereClass() : deactivatePremiereClass())
-    if(!user){
-       // document.location.href = '/simulation/home'
-        navigate('/simulation/home')
-        //helper.redirectionAtInit(user, '/simulation/engine', '/simulation/home')
+    return {
+        props: { spokenLanguages, academicYearOrganizations, markSystems, schoolYears, subjectWeightSystems, universityLevels, degrees, isErrorPage },
+    };
+}
+
+
+
+const SimulationEngine = ({ spokenLanguages, academicYearOrganizations, markSystems, schoolYears, subjectWeightSystems, universityLevels, degrees, isErrorPage }) => {
+    //console.log('uuu', { spokenLanguages, academicYearOrganizations, markSystems, schoolYears, subjectWeightSystems, universityLevels, degrees, isErrorPage })
+    const user = useSelector((state) => state.user); 
+    const dispatch = useDispatch();
+    const router = useRouter();
+    //const user = useSelector((state) => state.user);
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [deviceType, setDeviceType] = useState('lg');
+    const [browserWidth, setBrowserWidth] = useState(0);
+    const [isModalOpened, setIsModalOpened] = useState(false);
+    const newRefModal = useRef(null); 
+    const [isLoading, setIsLoading] = useState(true);
+    const currentSimulationStep = useSelector((state) => state.simulationStep);
+    const currentProgressBarStep = useSelector((state) => state.progressBarStep);
+    const isInUniversityGlobal = useSelector((state) => state.university.active);
+    const isInPremiereClassGlobal = useSelector((state) => state.premiereClass.active);
+    const hasErrorPage = useSelector((state) => state.errorPage.active);
+
+    useEffect(() => {
+        const initializeData = async () => {
+            try {
+                //
+                
+                if (!user) {
+                    router.push('/simulation/home');
+                    return;
+                }
+ 
+                dispatch(setStep(user?.simulationStep ?? SIMULATION_ENGINE_STEPS.VISA_TYPE));
+                dispatch(setProgress(user?.progressBarStep ?? PROGRESS_BAR_STEPS.GENERALITES_SUR_LES_VISAS_ET_LES_ETUDES));
+                dispatch(user?.schoolLevelSelected === 'Supérieur' ? activateUniversity() : deactivateUniversity());
+                dispatch(user?.hsLevelSelected === 'deg00002' ? activatePremiereClass() : deactivatePremiereClass());
+            } catch (error) {
+                console.error('Error initializing data:', error);
+                // Handle error appropriately
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        initializeData();
+    }, [dispatch, router]);
+
+
+    useEffect(() => {
+        const handleResize = () => {
+            const width = window.innerWidth;
+            setBrowserWidth(width);
+            
+            if (width > 1200) {
+                setDeviceType('lg');
+                setIsModalOpened(false);
+            } else if (width > 991) {
+                setDeviceType('md');
+                setIsModalOpened(false);
+            } else if (width > 765) {
+                setDeviceType('sm');
+            } else {
+                setDeviceType('xs');
+            }
+        };
+
+        handleResize(); // Initial call
+        window.addEventListener('resize', handleResize);
+        
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    // Handle modal effects
+    useEffect(() => {
+        if (isModalOpened) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+    }, [isModalOpened]);
+
+    // Handle outside click for modal
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if (newRefModal.current && !newRefModal.current.contains(e.target)) {
+                setIsModalOpened(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
+
+    if (isLoading) {
+        //dispatch(activateSpinner());
+        return (
+            <div className="flex items-center justify-center min-h-[200px]">
+                <Loader2 className="w-8 h-8 animate-spin" />
+            </div>
+        );
     }
-    //dispatch(setStep(user.simulationStep))
+    //dispatch(deactivateSpinner());
+    if (!user) {
+        return null;
+    }
 
     const STEPS = {
         VISA_TYPE: SIMULATION_ENGINE_STEPS.VISA_TYPE,
@@ -173,15 +271,15 @@ function SimulationEngine(){
 
 
     //console.log('progressBarStep ===', user?.progressBarStep)
-    const [deviceType, setDeviceType] = useState('lg')
-    const [browserWidth, setBrowserWidth] = useState(0) 
-    const [isModalOpened, setIsModalOpened] = useState(false)
+    // const [deviceType, setDeviceType] = useState('lg')
+    // const [browserWidth, setBrowserWidth] = useState(0) 
+    // const [isModalOpened, setIsModalOpened] = useState(false)
     
-    const currentSimulationStep = useSelector((state) => state.simulationStep);
-    const currentProgressBarStep = useSelector((state) => state.progressBarStep);
-    const isInUniversityGlobal = useSelector((state) => state.university.active)
-    const isInPremiereClassGlobal = useSelector((state) => state.premiereClass.active)
-    const isErrorPage = useSelector((state) => state.errorPage.active)
+    //const currentSimulationStep = useSelector((state) => state.simulationStep);
+    //const currentProgressBarStep = useSelector((state) => state.progressBarStep);
+    //const isInUniversityGlobal = useSelector((state) => state.university.active)
+    //const isInPremiereClassGlobal = useSelector((state) => state.premiereClass.active)
+    //const hasErrorPage = useSelector((state) => state.errorPage.active)
 
     // Conditionally remove or re-add the BULLETIN_N_2 step    
     if (isInPremiereClassGlobal) {
@@ -199,46 +297,51 @@ function SimulationEngine(){
     }
     
     //console.log('currentSimulationStep 🥳', currentSimulationStep)
-    useEffect(() => {
-        helper.addOutsideClick(handleClickOutsideOfModal)
+    // useEffect(() => {
+    //     helper.addOutsideClick(handleClickOutsideOfModal)
 
-        const handleResize = () => {
-            const browserWidth = window.innerWidth;
-            //console.log('browserWidth', browserWidth)
-            if (browserWidth>1200) {
-                setDeviceType('lg');
-                setIsModalOpened(false)
-            }
-            if (browserWidth>991 && browserWidth <= 1200) {
-                setDeviceType('md');
-                setIsModalOpened(false)
-            } 
-            if (browserWidth>765 && browserWidth <= 990) {
-                setDeviceType('sm');
-            }  
-            if (browserWidth <= 764) {
-                setDeviceType('xs');
-            } 
-        };
+    //     const handleResize = () => {
+    //         const browserWidth = window.innerWidth;
+    //         //console.log('browserWidth', browserWidth)
+    //         if (browserWidth>1200) {
+    //             setDeviceType('lg');
+    //             setIsModalOpened(false)
+    //         }
+    //         if (browserWidth>991 && browserWidth <= 1200) {
+    //             setDeviceType('md');
+    //             setIsModalOpened(false)
+    //         } 
+    //         if (browserWidth>765 && browserWidth <= 990) {
+    //             setDeviceType('sm');
+    //         }  
+    //         if (browserWidth <= 764) {
+    //             setDeviceType('xs');
+    //         } 
+    //     };
 
-        handleResize();
+    //     handleResize();
         
-        if (isModalOpened) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = 'auto';
-        }
-        window.addEventListener('resize', handleResize);
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
+    //     if (isModalOpened) {
+    //         document.body.style.overflow = 'hidden';
+    //     } else {
+    //         document.body.style.overflow = 'auto';
+    //     }
+    //     window.addEventListener('resize', handleResize);
+    //     return () => {
+    //         window.removeEventListener('resize', handleResize);
+    //     };
         
-    }, [browserWidth, isModalOpened]);
+    // }, [browserWidth, isModalOpened]);
 
     const handleProgressBarStep = (stepId) => { 
-        dispatch(setProgress(stepId))
-        let updatedUser = {...user, progressBarStep: stepId, date: new Date().toISOString()}
-        helper.setLocalStorageWithExpiration('wendogouser', updatedUser)
+        const updatedUser = {
+            ...user,
+            progressBarStep: stepId,
+            date: new Date().toISOString(),
+        };
+        dispatch(setUser(updatedUser));
+        helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
+        dispatch(setProgress(stepId)) 
         setIsModalOpened(false)
     }
     const getCurrentProgressBarStepTitle = () => {
@@ -371,10 +474,11 @@ function SimulationEngine(){
                                 );
                             }
                         };
-    return <>{helper.redirectionAtInit(user, '/simulation/engine', '/simulation/home') && 
+    return <>{
+        helper.redirectionAtInit(router, user, '/simulation/engine', '/simulation/home') && 
             <div>   
               <HeaderMenuLoginBar/>
-               {isErrorPage ?
+               {(hasErrorPage || isErrorPage) ?
                 <main className="styles__Main-sc-kz84w6-0 gEFmYD" style={{ paddingTop: 280 }}>
                         <div className="styles__Wrapper-sc-gk465i-0 fiWVzr">
                             <div className="styles__Hero-sc-s3dlnp-0 gMynSv">
@@ -448,49 +552,58 @@ function SimulationEngine(){
                                             <div id="form/GENERALITES_SUR_LES_VISAS_ET_LES_ETUDES">
                                                 {<VisaType/>}
                                                 {currentSimulationStep >= STEPS.SCHOOL_LEVEL && <SchoolLevel/>}
-                                                {currentSimulationStep >= STEPS.RECENT_CLASS_LEVEL && <RecentLevel/>}
-                                                {currentSimulationStep >= STEPS.SCHOOL_YEAR3 && <SchoolYear3/>}
-                                                {/* {'isInUniversityGlobal '+isInUniversityGlobal} */}
+                                                
+                                                {currentSimulationStep >= STEPS.RECENT_CLASS_LEVEL && <RecentLevel degrees={degrees} universityLevels={universityLevels} isErrorPage={isErrorPage}  />}
+                                                {currentSimulationStep >= STEPS.SCHOOL_YEAR3 && <SchoolYear3/>} 
                                                 {isInUniversityGlobal && currentSimulationStep >= STEPS.RECENT_DEGREE && <RecentDegree/>}
                                                 {currentSimulationStep >= STEPS.DEGREE_EXACT_NAME && <DegreeExactName/>}
-                                                {currentSimulationStep >= STEPS.CLASS_REPETITION && <ClassRepetition/>}
-                                                {/* {currentSimulationStep >= STEPS.CLASS_REPETITION_WARNING && <ClassRepetitionWarningAlert/>} */}
-                                                {currentSimulationStep >= STEPS.BLANK_YEAR_REPETITION && <BlankYearReptition/>}
-                                                {/* {currentSimulationStep >= STEPS.BLANK_YEAR_REPETITION_WARNING && <BlankYearReptitionAlert/>}   */}
-                                                {currentSimulationStep >= STEPS.COULD_PAY_TUITION && <CouldPayTuition/>}
-                                                {/* {currentSimulationStep >= STEPS.COULD_PAY_TUITION_WARNING && <CouldPayTuitionWarningAlert/>} */}
+                                                {currentSimulationStep >= STEPS.CLASS_REPETITION && <ClassRepetition/>} 
+                                                {currentSimulationStep >= STEPS.BLANK_YEAR_REPETITION && <BlankYearReptition/>} 
+                                                {currentSimulationStep >= STEPS.COULD_PAY_TUITION && <CouldPayTuition/>} 
                                                 {currentSimulationStep >= STEPS.RESIDENT_COUNTRY && <ResidentCountry/>}
+                                                {/* {'hhXXh '+(currentSimulationStep >= STEPS.CAMPUS_FRANCE_INELIGIBILITY)} */}
                                                 {currentSimulationStep >= STEPS.CAMPUS_FRANCE_INELIGIBILITY && <CampusFranceInegibilityAlert/>}
                                                 {currentSimulationStep >= STEPS.HIGH_SCHOOL_IN_FRENCH && <HighSchoolInFrench/>}
                                                 {currentSimulationStep >= STEPS.FRENCH_TEST && <FrenchTest/>}
-                                                {currentSimulationStep >= STEPS.FRENCH_TEST && !(user.isFrancophone && user.isFrancophoneCountry) && <FrenchTestInfoAlert/>}
+                                                {currentSimulationStep >= STEPS.FRENCH_TEST && !(user?.isFrancophone && user?.isFrancophoneCountry) && <FrenchTestInfoAlert/>}
                                                 {currentSimulationStep >= STEPS.FRENCH_LEVEL && <FrenchLevel/>} 
                                             </div>
                                         }
+                                        {/* {'currentProgressBarStep '+currentProgressBarStep+' '+PROGRESS_BAR_STEPS.BULLETIN_LE_PLUS_RECENT} */}
                                         
                                         { currentProgressBarStep === PROGRESS_BAR_STEPS.BULLETIN_LE_PLUS_RECENT &&
                                             <div id="form/BULLETIN_LE_PLUS_RECENT"  >
                                                 {currentSimulationStep >= STEPS.IS_YEAR_3_RESULTS_AVAILABLE && <IsResult3Available/>}
-                                                {user.isResult3Available && 
+                                                {user?.isResult3Available && 
                                                     <>
-                                                        {currentSimulationStep >= STEPS.ACADEMIC_YEAR_HEAD_DETAILS3 && <AcademicYearHeadDetails3/>} 
+                                                        {currentSimulationStep >= STEPS.ACADEMIC_YEAR_HEAD_DETAILS3 && <AcademicYearHeadDetails3 spokenLanguages={spokenLanguages} 
+                                                                                                                                                 academicYearOrganizations={academicYearOrganizations} 
+                                                                                                                                                markSystems={markSystems} 
+                                                                                                                                                subjectWeightSystems={subjectWeightSystems} 
+                                                                                                                                                isErrorPage={isErrorPage}/>} 
                                                         {currentSimulationStep >= STEPS.REPORT_CARD3 && <ReportCard3/>}
                                                         {(isInUniversityGlobal && currentSimulationStep >= STEPS.PROGRAM_DOMAIN) && <ProgramDomain/>}
                                                         {currentSimulationStep >= STEPS.MAIN_SUBJECTS && <MainSubjects/>}
                                                     </>} 
                                             </div>
                                         }
+                                        
                                         {currentProgressBarStep === PROGRESS_BAR_STEPS.BULLETIN_N_1 &&
                                             <div id="form/BULLETIN_N_1">
                                                 {currentSimulationStep >= STEPS.IS_YEAR_2_RESULTS_AVAILABLE && <IsResult2Available/>}
                                                 {
-                                                    user.isResult2Available &&
-                                                    <>
+                                                    user?.isResult2Available &&
+                                                    <> 
+
                                                         {currentSimulationStep >= STEPS.SCHOOL_YEAR2 && <SchoolYear2/>}
-                                                        {currentSimulationStep >= STEPS.ACADEMIC_YEAR_HEAD_DETAILS2 && <AcademicYearHeadDetails2/>}
+                                                        {currentSimulationStep >= STEPS.ACADEMIC_YEAR_HEAD_DETAILS2 && <AcademicYearHeadDetails2 spokenLanguages={spokenLanguages} 
+                                                                                                                                                 academicYearOrganizations={academicYearOrganizations} 
+                                                                                                                                                markSystems={markSystems} 
+                                                                                                                                                subjectWeightSystems={subjectWeightSystems} 
+                                                                                                                                                isErrorPage={isErrorPage}/>} 
                                                         {currentSimulationStep >= STEPS.REPORT_CARD2 && <ReportCard2/>}
-                                                        {/* <h3>{'KK '+!user.isResult3Available+ ' '+ isInUniversityGlobal+' '+currentSimulationStep+' '+STEPS.PROGRAM_DOMAIN_BAC_N_1}</h3> */}
-                                                        {!user.isResult3Available && 
+                                                        {/* <h3>{'KK '+!user?.isResult3Available+ ' '+ isInUniversityGlobal+' '+currentSimulationStep+' '+STEPS.PROGRAM_DOMAIN_BAC_N_1}</h3> */}
+                                                        {!user?.isResult3Available && 
                                                             <>
                                                                 {(isInUniversityGlobal && currentSimulationStep >= STEPS.PROGRAM_DOMAIN_BAC_N_1) && <ProgramDomain/>}
                                                                 {currentSimulationStep >= STEPS.MAIN_SUBJECTS_BAC_N_1 && <MainSubjects/>}
@@ -503,12 +616,16 @@ function SimulationEngine(){
                                             <div id="form/BULLETIN_N_2"> 
                                                 {currentSimulationStep >= STEPS.IS_YEAR_1_RESULTS_AVAILABLE && <IsResult1Available/>}
                                                 {
-                                                    user.isResult1Available &&
+                                                    user?.isResult1Available &&
                                                     <>
                                                         {currentSimulationStep >= STEPS.SCHOOL_YEAR1 && <SchoolYear1/>}
-                                                        {currentSimulationStep >= STEPS.ACADEMIC_YEAR_HEAD_DETAILS1 && <AcademicYearHeadDetails1/>}
+                                                        {currentSimulationStep >= STEPS.ACADEMIC_YEAR_HEAD_DETAILS1 && <AcademicYearHeadDetails1 spokenLanguages={spokenLanguages} 
+                                                                                                                                                 academicYearOrganizations={academicYearOrganizations} 
+                                                                                                                                                markSystems={markSystems} 
+                                                                                                                                                subjectWeightSystems={subjectWeightSystems} 
+                                                                                                                                                isErrorPage={isErrorPage}/>} 
                                                         {currentSimulationStep >= STEPS.REPORT_CARD1 && <ReportCard1/>}
-                                                        {!user.isResult2Available &&
+                                                        {!user?.isResult2Available &&
                                                             <>
                                                                 {(isInUniversityGlobal && currentSimulationStep >= STEPS.PROGRAM_DOMAIN_BAC_N_2) && <ProgramDomain/>}
                                                                 {currentSimulationStep >= STEPS.MAIN_SUBJECTS_BAC_N_2 && <MainSubjects/>}
@@ -522,10 +639,10 @@ function SimulationEngine(){
                                         {currentProgressBarStep === PROGRESS_BAR_STEPS.PARCOURS_ACADEMIQUE_ET_PROFESSIONNEL &&
                                             <div id="form/PARCOURS_ACADEMIQUE_ET_PROFESSIONNEL">
                                                 {currentSimulationStep >= STEPS.HAS_WON_AWARD && <HasWonAward/>}
-                                                {currentSimulationStep >= STEPS.AWARD_DETAILS && user.hasWonAward && <AwardDetails/>}
+                                                {currentSimulationStep >= STEPS.AWARD_DETAILS && user?.hasWonAward && <AwardDetails spokenLanguages={spokenLanguages} schoolYears={schoolYears} isErrorPage={isErrorPage}/>}
                                                 {currentSimulationStep >=STEPS.HAS_WORK_EXPERIENCE && <HasWorkExperience/>}
-                                                {currentSimulationStep >=STEPS.WORK_EXPERIENCE_DETAILS && user.hasWorkExperience && <WorkExperienceDetails/>}
-                                                {currentSimulationStep >=STEPS.CAN_PROVE_WORK_EXPERIENCE && user.hasWorkExperience && <CanProveWorkExperience/>}
+                                                {currentSimulationStep >=STEPS.WORK_EXPERIENCE_DETAILS && user?.hasWorkExperience && <WorkExperienceDetails/>}
+                                                {currentSimulationStep >=STEPS.CAN_PROVE_WORK_EXPERIENCE && user?.hasWorkExperience && <CanProveWorkExperience/>}
                                                 {currentSimulationStep >=STEPS.ENGLISH_LEVEL && <EnglishLevel/>}
                                                 {currentSimulationStep >=STEPS.CAN_JUSTIFY_ENGLISH_LEVEL && <CanJustifyEnglishLevel/>}
                                                 {currentSimulationStep >=STEPS.OTHER_SPOKEN_LANGUAGE && <OtherSpokenLanguage/>}
@@ -536,9 +653,9 @@ function SimulationEngine(){
                                         {currentProgressBarStep === PROGRESS_BAR_STEPS.INFORMATIONS_VOYAGE &&
                                             <div id="form/INFORMATIONS_VOYAGE">
                                                 {currentSimulationStep >=STEPS.ALREADY_TRAVELED_TO_FRANCE && <AlreadyTraveledToFrance/>}
-                                                {currentSimulationStep >=STEPS.LAST_FRANCE_TRAVEL_DETAILS && user.alreadyTraveledToFrance && <LastFranceTravelDetails/>}
+                                                {currentSimulationStep >=STEPS.LAST_FRANCE_TRAVEL_DETAILS && user?.alreadyTraveledToFrance && <LastFranceTravelDetails/>}
                                                 {currentSimulationStep >=STEPS.HAS_PASSEPORT && <HasPassport/>}
-                                                {currentSimulationStep >=STEPS.PASSEPORT_DETAILS && user.hasPassport && <PassportDetails/>}
+                                                {currentSimulationStep >=STEPS.PASSEPORT_DETAILS && user?.hasPassport && <PassportDetails/>}
                                             </div>
                                         }
                                         {currentProgressBarStep === PROGRESS_BAR_STEPS.COORDONNEES &&
@@ -573,7 +690,7 @@ function SimulationEngine(){
                                                                             return <div key={index} className={`Stack-child ${(currentProgressBarStep !== step.id && currentSimulationStep < step.completedStep) ? 'not-clickable' : ''}`} style={{ paddingTop: 20 }}>
                                                                                 {/* {'step.id '+step.id+' currentProgressBarStep== '+currentProgressBarStep+' currentSimulationStep== '+currentSimulationStep+' step.completedStep== '+step.completedStep} */}
                                                                                 <Link className={`${(currentProgressBarStep !== step.id && currentSimulationStep < step.completedStep) ? 'not-clickable' : ''}`} 
-                                                                                    to={`/simulation/engine?country=FR#form/${step.reference}`} onClick={(e) => {e.preventDefault();handleProgressBarStep(step.id)}}>
+                                                                                    href={`/simulation/engine?country=FR#form/${step.reference}`} onClick={(e) => {e.preventDefault();handleProgressBarStep(step.id)}}>
                                                                                     <div className="Stack  stackRow " style={{ flexDirection: "row", padding: 0, alignItems: "center" }}>
                                                                                     <div className="Stack-child  " style={{ paddingLeft: 10 }}>
                                                                                         <div className={`CheckProgressBar ${currentProgressBarStep === step.id ? 'BackgroundCircle' : ''}`}>
@@ -610,7 +727,7 @@ function SimulationEngine(){
                                                                     {progressBarSteps.map((step, index) => {
                                                                         return <div key={index} className={`Stack-child ${(currentProgressBarStep !== step.id && currentSimulationStep < step.completedStep) ? 'not-clickable' : ''}`} style={{ paddingTop: 20 }}>
                                                                             <Link className={`${(currentProgressBarStep !== step.id && currentSimulationStep < step.completedStep) ? 'not-clickable' : ''}`}
-                                                                                to={`/simulation/engine?country=FR#form/${step.reference}`} onClick={(e) => {e.preventDefault();handleProgressBarStep(step.id)}}>
+                                                                                href={`/simulation/engine?country=FR#form/${step.reference}`} onClick={(e) => {e.preventDefault();handleProgressBarStep(step.id)}}>
                                                                                 <div className="Stack  stackRow " style={{ flexDirection: "row", padding: 0, alignItems: "center" }}>
                                                                                 <div className="Stack-child  " style={{ paddingLeft: 10 }}>
                                                                                     <div className={`CheckProgressBar ${currentProgressBarStep === step.id ? 'BackgroundCircle' : ''}`}>
@@ -674,8 +791,13 @@ function SimulationEngine(){
                                 <div className="Reassurance trois-titre-text">
                                     <div className="Reassurance-item">
                                         <div className="Reassurance-icon">
-                                        <svg className="SvgIcon">
-                                            <use xlinkHref={SvgSpriteGen+'#icon-quote-blue'} />
+                                        <svg id="icon-quote-blue" viewBox="0 0 120 120" className="SvgIcon">
+                                            <g id="icon/large/quote/icon-quote-blue" stroke="none" strokeWidth={1} fill="none" fillRule="evenodd">
+                                                <g id="icon/large/quote/blue" transform="translate(20 8)">
+                                                    <path d="M16.153 80.389a4.483 4.483 0 014.476 4.49c0 2.479-2.005 4.488-4.476 4.488a4.483 4.483 0 01-4.478-4.489c0-2.48 2.005-4.49 4.478-4.49zm18.96 0a4.482 4.482 0 014.477 4.49c0 2.479-2.003 4.488-4.476 4.488a4.483 4.483 0 01-4.477-4.489c0-2.48 2.004-4.49 4.477-4.49zm18.962 0a4.483 4.483 0 014.477 4.49c0 2.479-2.004 4.488-4.477 4.488a4.483 4.483 0 01-4.477-4.489c0-2.48 2.004-4.49 4.477-4.49zM35.021 11.646c7.956 0 14.406 6.468 14.406 14.445 0 7.979-6.45 14.445-14.406 14.445-7.957 0-14.406-6.466-14.406-14.445 0-7.977 6.449-14.445 14.406-14.445zm5.081 9.459l-6.85 6.868-3.658-3.668-2.257 2.262 5.915 5.932 9.107-9.132-2.257-2.262z" id="Combined-Shape" fill="#0154c0" />
+                                                    <path d="M59.08 17.614c5.844 0 10.673 4.32 10.673 9.676v65.945c0 5.357-4.829 9.677-10.673 9.677H11.676c-5.846 0-10.677-4.32-10.677-9.677V50.842c0-.661.535-1.198 1.195-1.198s1.194.537 1.194 1.198v42.393c0 3.97 3.704 7.281 8.288 7.281H59.08c4.582 0 8.284-3.312 8.284-7.28V27.29c0-3.969-3.702-7.28-8.284-7.28h-8.4c-.66 0-1.194-.537-1.194-1.198 0-.662.534-1.198 1.194-1.198h8.4zM56.928 69.01c.657 0 1.19.536 1.19 1.197 0 .662-.533 1.198-1.19 1.198H12.724c-.657 0-1.19-.536-1.19-1.198 0-.661.533-1.197 1.19-1.197h44.204zm.034-7.194c.65 0 1.176.536 1.176 1.198 0 .661-.526 1.197-1.176 1.197h-8.398c-.65 0-1.176-.536-1.176-1.197 0-.662.527-1.198 1.176-1.198h8.398zm-14.38 0a1.2 1.2 0 011.202 1.198 1.2 1.2 0 01-1.203 1.197H12.737a1.2 1.2 0 01-1.203-1.197 1.2 1.2 0 011.203-1.198h29.844zM36.69 50.254c.982 0 1.778.805 1.778 1.797 0 .992-.796 1.796-1.778 1.796H13.967a1.787 1.787 0 01-1.777-1.796c0-.992.796-1.797 1.777-1.797H36.69zm-18.173-32.64c.66 0 1.195.536 1.195 1.198 0 .661-.535 1.197-1.195 1.197h-6.842c-4.583 0-8.286 3.312-8.286 7.281v13.19c0 .66-.535 1.197-1.195 1.197S1 41.14 1 40.479V27.29c0-5.356 4.83-9.676 10.675-9.676h6.842zM57.69 24.8c3.164 0 5.8 2.357 5.8 5.316 0 .662-.534 1.198-1.194 1.198-.66 0-1.194-.536-1.194-1.198 0-1.57-1.51-2.921-3.412-2.921-.66 0-1.195-.536-1.195-1.198 0-.661.535-1.197 1.195-1.197z" id="Combined-Shape" fill="#617994" fillRule="nonzero" />
+                                                    <path d="M86.138 24.788l-8.81 2.366M74.52 4.784l-5.617 7.203m-14.382-2.81L53.825.057" id="Combined-Shape" stroke="#0154c0" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /> </g>
+                                            </g>
                                         </svg>
                                         </div>
                                         <div className="Reassurance-content">
@@ -685,8 +807,13 @@ function SimulationEngine(){
                                     </div>
                                     <div className="Reassurance-item">
                                         <div className="Reassurance-icon">
-                                        <svg className="SvgIcon">
-                                            <use xlinkHref={SvgSpriteGen+'#icon-locker-blue'} />
+                                        <svg id="icon-locker-blue" viewBox="0 0 120 120" className="SvgIcon">
+                                            <g id="icon/large/locker/icon-locker-blue" stroke="none" strokeWidth={1} fill="none" fillRule="evenodd">
+                                                <g id="icon/large/locker/blue" transform="translate(17 9)">
+                                                    <path d="M43.425 21.558c9.32 0 16.877 7.508 16.877 16.768v10.18h7.835c3.318 0 6.028 2.692 6.028 5.988v31.14c0 9.225-7.592 16.767-16.877 16.767H27.15c-9.285 0-16.877-7.542-16.877-16.767V74.256c0-.662.54-1.198 1.206-1.198.665 0 1.205.536 1.205 1.198v11.378c0 7.902 6.512 14.372 14.466 14.372h30.137c7.953 0 14.466-6.47 14.466-14.372v-31.14c0-1.973-1.63-3.593-3.617-3.593H16.302c-1.987 0-3.617 1.62-3.617 3.593v5.989c0 .661-.54 1.197-1.205 1.197a1.202 1.202 0 01-1.206-1.197v-5.989c0-3.296 2.71-5.988 6.028-5.988h9.04v-10.18c0-9.228 7.59-16.768 16.877-16.768h1.206zm21.698 59.884c.666 0 1.206.536 1.206 1.198 0 6.59-5.422 11.976-12.055 11.976a1.202 1.202 0 01-1.205-1.197c0-.662.54-1.198 1.205-1.198 5.302 0 9.644-4.314 9.644-9.581 0-.662.54-1.198 1.205-1.198zm0-8.983c.999 0 1.809.804 1.809 1.797 0 .993-.81 1.796-1.809 1.796a1.802 1.802 0 01-1.808-1.796c0-.993.81-1.797 1.808-1.797zM43.425 26.35h-1.206c-6.624 0-12.054 5.395-12.054 11.977v10.18h25.314v-10.18c0-6.614-5.397-11.977-12.054-11.977z" id="Combined-Shape" fill="#617994" fillRule="nonzero" />
+                                                    <path d="M42.22 60.483c3.329 0 6.027 2.681 6.027 5.988 0 2.455-1.487 4.565-3.616 5.49v8.283a2.41 2.41 0 01-2.247 2.39l-.165.006a2.41 2.41 0 01-2.41-2.396v-8.283c-2.13-.924-3.617-3.035-3.617-5.49 0-3.307 2.698-5.988 6.027-5.988z" id="Combined-Shape" fill="#0154c0" />
+                                                    <path d="M0 28.454l8.476 2.257L0 28.454zm86.833 1.198l-8.476 2.256 8.476-2.256zM43.425 0v8.384V0zm-28.63 8.183l5.406 6.868-5.405-6.868zm58.448 0l-5.406 6.868 5.406-6.868z" id="Shape" stroke="#0154c0" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /> </g>
+                                            </g>
                                         </svg>
                                         </div>
                                         <div className="Reassurance-content">
@@ -696,8 +823,16 @@ function SimulationEngine(){
                                     </div>
                                     <div className="Reassurance-item">
                                         <div className="Reassurance-icon">
-                                        <svg className="SvgIcon">
-                                            <use xlinkHref={SvgSpriteGen+'#icon-wallet-blue'}/>
+                                        <svg id="icon-wallet-blue" viewBox="0 0 120 120" className="SvgIcon">
+                                            <g id="Icon-large" stroke="none" strokeWidth={1} fill="none" fillRule="evenodd">
+                                                <g id="icon/-large/wallet/icon-wallet-blue">
+                                                    <g id="icon/-large/wallet/blue" transform="translate(20 15)">
+                                                        <path d="M73.27 12.82l6.3-3.64M42.92 8l-2-7m17 7l2-8" id="Combined-Shape" stroke="#0154c0" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+                                                        <rect id="Rectangle" fill="#0154c0" x={61} y="63.95" width="18.93" height={13} rx={4} />
+                                                        <path d="M40.2 13.52v.06a6 6 0 011.51.19l12.4 3.24 5.92 1.54 7.8 2a6 6 0 014.29 7.32l-4.278 17.228.96-.028a7 7 0 017.198 7v10.881l.137.004a5 5 0 014.783 4.995v5a5 5 0 01-4.92 5v8.95c0 5.523-4.477 10-10 10H10c-5.523 0-10-4.477-10-10V76.2a1 1 0 012 0v10.7a8 8 0 008 8h56a8 8 0 008-8v-8.95h-9.01a5 5 0 01-5-5v-5a5 5 0 015-5 1 1 0 010 2 3 3 0 00-3 3v5a3 3 0 003 3h10.93a3 3 0 003-3v-5a3 3 0 00-3-3h-6.09a1 1 0 010-2H74V52.07a5 5 0 00-5.14-5L7 48.89c-.322 0-.636-.01-.94-.032L5 48.9a4.978 4.978 0 01-3-1v20.44a1 1 0 01-2 0V45.89c0-.412.029-.664.117-.91A5 5 0 015 38.9l19.356-1.968.524-11.592a4.83 4.83 0 014.81-4.6l.21-.08 3.706.171L34.39 18a6 6 0 015.81-4.48zM37 84.15a1.5 1.5 0 010 3H10a1.5 1.5 0 010-3h27zm6.5 0a1.5 1.5 0 110 3 1.5 1.5 0 010-3zm-3.3-68.63a4 4 0 00-3.88 3l-7.44 26.89 36.38-.94.77-.39 4.15-16.7a4 4 0 00-2.85-4.91l-7.81-2-5.92-1.57-12.4-3.23a3.76 3.76 0 00-1-.13v-.02zM17.96 42.142h-.102l-11.97.83a.75.75 0 00.002 1.496h.102l11.97-.83a.75.75 0 00.097-1.483l-.099-.013zM29.82 22.65h-.13v.09a2.84 2.84 0 00-2.81 2.68l-.508 11.306 2.915-.296L33.06 22.8l-3.241-.15z" id="Combined-Shape" fill="#627A93" fillRule="nonzero" />
+                                                        <path d="M48.93 25.3c7.72.017 13.97 6.28 13.97 14 .01 1.805-.33 3.594-1 5.27l-25.64.66a13.85 13.85 0 01-1.33-5.93c0-7.732 6.268-14 14-14zm3.338 6.214c-1.652 0-3.92 1.372-5.488 3.948-.952 0-1.764.168-2.576.14-.728 0-.98.252-.56.812.308.392 1.036.896 2.268.84-.112.308-.196.644-.196.84-.504.056-1.036.112-1.568.084-.644 0-.896.28-.504.812.308.392.98.84 2.1.784.252 1.26 1.064 2.128 2.436 2.66.448.168.924.252 1.456.252 1.204 0 2.352-.504 3.024-1.344.532-.7.756-1.54.364-2.044-.336-.476-.588-.504-.924.056-.84 1.4-2.268 2.24-3.192 1.932-.588-.196-.868-.812-.784-1.848.504-.056 1.008-.084 1.428-.056.672.056.924-.252.56-.784-.252-.364-.56-.784-1.596-.84l.364-.812c.644-.056 1.288-.112 1.876-.084.728.028.896-.308.616-.728-.224-.336-.56-.7-1.4-.84 1.204-1.456 2.632-2.436 3.052-2.156.196.112-.112.756-.448 1.4-.28.56-.588 1.456-.588 1.876 0 .588.308 1.064.812 1.4.616.364.868.14 1.064-.336.084-.28.308-.728.532-1.092.56-1.036 1.12-2.016.672-2.968-.308-.56-.812-1.12-1.624-1.652-.308-.196-.7-.252-1.176-.252z" id="Combined-Shape" fill="#0154c0" /> </g>
+                                                </g>
+                                            </g>
                                         </svg>
                                         </div>
                                         <div className="Reassurance-content">

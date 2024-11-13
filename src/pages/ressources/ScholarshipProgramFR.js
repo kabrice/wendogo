@@ -3,11 +3,11 @@ import ScholarshipProgramFRImg from '../../assets/scholarship_program_for_france
 import BorisHead from '../../assets/Boris_head.jpeg'
 import QuestionsOnTopic from '../../components/QuestionsOnTopic';
 
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 import Footer from '../../components/Footer';
 import HeaderMenuBar from '../../components/HeaderMenuBar';
-import { Helmet } from 'react-helmet';
+import Head from 'next/head';
 import helper from '../../utils/Helper';
 
 function ScholarshipProgramFR(){
@@ -45,7 +45,7 @@ function ScholarshipProgramFR(){
     useEffect(() => {
       helper.loadFacebookSDK() }, [])
     return <div  className="klmqdo">
-            <Helmet>
+            <Head>
               <meta property="og:url"           content="https://wendogo.com/scholarship-program-france" />
               <meta property="og:type"          content="article" />
               <meta property="og:title"         content="Programmes de Bourses d'Études en France pour les Étudiants Étrangers" />
@@ -53,7 +53,7 @@ function ScholarshipProgramFR(){
               <meta property="og:image"         content={'https://wendogo.com'+ScholarshipProgramFRImg} /> 
               <title>Programmes de Bourses d'Études en France pour les Étudiants Étrangers</title>
               <meta name="description"          content="Comment financer ses études en France lorsqu’on envisage de suivre des cours dans une université à Paris ou Montpellier ? Découvrez les possibilités et les conditions pour décrocher une bourse, une aide financière et les bons plans quand on part étudier en France."/>
-            </Helmet>          
+            </Head>          
             <HeaderMenuBar/>
     
             <div className='container-24' style={{maxWidth: 'inherit'}}>
@@ -103,7 +103,7 @@ function ScholarshipProgramFR(){
                               <h1 size="large" className="styles__HeadingBridge-sc-6txi54-0 hzNvHf">La France ouvre ses Portes : Les Programmes de Bourses d'Études pour les Étudiants Étrangers</h1>
                             </div>
                             <div style={{float : 'right'}} className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh">
-                             <Link  to="/scholarship-program-canada">Cliquer ici pour la version 🇨🇦</Link>
+                             <Link  href="/scholarship-program-canada">Cliquer ici pour la version 🇨🇦</Link>
                             </div>
                             <div style={{clear : 'both'}}></div>
                             <div className="styles__Wrapper-sc-s3dlnp-3 KKpTb">
@@ -124,7 +124,7 @@ function ScholarshipProgramFR(){
                                   <div className="SharingLinksstyles__SharingLinksDesktop-sc-13jf7g7-2 dAIRMX">
                                     <div className="SharingLinksstyles__Title-sc-13jf7g7-3 eZpqGZ"> Partager : </div>
                                     <div className="Tooltipstyles__TooltipContainer-sc-ynyslw-0 iMhBNO SharingLinksstyles__Tooltip-sc-13jf7g7-4 eUmNLd">
-                                    <Link target="_blank" to="https://api.whatsapp.com/send/?text=https://wendogo.com/scholarship-program-france" >
+                                    <Link target="_blank" href="https://api.whatsapp.com/send/?text=https://wendogo.com/scholarship-program-france" >
                                       <button className="ButtonLinkstyles__ButtonLink-sc-1s2ygn0-0 iPwlpd">
                                         {whatsapp}
                                         <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh kmzeo"> 
@@ -327,7 +327,7 @@ function ScholarshipProgramFR(){
                                       <div className="SharingLinksstyles__SharingLinksDesktop-sc-13jf7g7-2 dAIRMX">
                                         <div className="SharingLinksstyles__Title-sc-13jf7g7-3 eZpqGZ"> Partager : </div>
                                         <div className="Tooltipstyles__TooltipContainer-sc-ynyslw-0 iMhBNO SharingLinksstyles__Tooltip-sc-13jf7g7-4 eUmNLd">
-                                        <Link target="_blank" to="https://api.whatsapp.com/send/?text=https://wendogo.com/scholarship-program-france" >
+                                        <Link target="_blank" href="https://api.whatsapp.com/send/?text=https://wendogo.com/scholarship-program-france" >
                                           <button className="ButtonLinkstyles__ButtonLink-sc-1s2ygn0-0 iPwlpd">
                                           {whatsapp}
                                           <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh kmzeo"> 

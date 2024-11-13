@@ -1,15 +1,15 @@
 import { useState} from 'react';
 import EdgarHead from '../assets/edgar_head.jpeg'
-//import {ReactComponent as ExpertMan} from '../assets/ExpertMan1.svg'
+//import ExpertMan} from '../assets/ExpertMan1.svg'
 
-import { Link } from 'react-router-dom';
-import WendogoLogo from '../assets/wendogo_logo.svg'
+import Link from 'next/link';
+// import WendogoLogo from '../assets/wendogo_logo.svg'
 import SocialMediaLogo from '../assets/social_media_logo.png'
 import Footer from '../components/Footer';
 import HeaderMenuBar from '../components/HeaderMenuBar';
-import CoffeeCup from '../assets/coffeecup.jpeg'
-import { FloatingWhatsApp } from 'react-floating-whatsapp';
-import { Helmet } from 'react-helmet';
+// import CoffeeCup from '../assets/coffeecup.jpeg'
+// import { FloatingWhatsApp } from 'react-floating-whatsapp';
+import Head from 'next/head';
 
 function LegalNotice(){
     const whatsapp =  <svg className="ButtonLinkstyles__Picto-sc-1s2ygn0-1 hkJOZg" width="24px" height="24.6350302px" viewBox="0 0 24 24.6350302" version="1.1" xmlns="http://www.w3.org/2000/svg">
@@ -46,7 +46,7 @@ function LegalNotice(){
 
     
     return <div >
-            <Helmet>
+            <Head>
               <meta property="og:url"           content="https://wendogo.com/legal-notice" />
               <meta property="og:type"          content="article" />
               <meta property="og:title"         content="Mentions légales - Wendogo" />
@@ -54,7 +54,7 @@ function LegalNotice(){
               <meta property="og:image"         content={'https://wendogo.com'+SocialMediaLogo} /> 
               <title>Mentions légales - Wendogo</title>
               <meta name="description"          content="Consultez ici les mentions légales de Wendogo."/>
-            </Helmet>
+            </Head>
             <HeaderMenuBar/>
             <main className="styles__Main-sc-kz84w6-0 gEFmYD"  style={{paddingTop: 80}}>
                       <div className="Defautstyles__Page-sc-1tnudyr-2 kiMqjH">

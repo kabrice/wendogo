@@ -1,40 +1,105 @@
-import React, { useState, useRef} from "react";
+import React, { useState, useRef, useEffect} from "react";
 import SEAcademicYearHeadDetails from "../../components/SimulationEngine/SEAcademicYearHeadDetails";
 import { useDispatch, useSelector } from 'react-redux';
 import { setStep } from '../../redux/simulationStepSlice';
 import helper from '../../utils/Helper';
 import { SIMULATION_ENGINE_STEPS } from '../../utils/Constants'; 
 import _ from "lodash";
-
+import { Loader2 } from "lucide-react";
+import { setUser } from '../../redux/userSlice';
 
 // Entête de l'année scolaire la plus recente
-const AcademicYearHeadDetails2 = () => {
+const AcademicYearHeadDetails2 = ({spokenLanguages, academicYearOrganizations, markSystems, subjectWeightSystems, isErrorPage}) => {
 
-    let user = helper.getLocalStorageWithExpiration('wendogouser');
+    const user = useSelector((state) => state.user); 
+    const [isLoading, setIsLoading] = useState(true); 
     const dispatch = useDispatch();
-    //console.log('user AcademicYearHeadDetails2', user)
-    const [selectedCountry, setSelectedCountry] = useState(user?.academicYearHeadDetails2?.country || user?.academicYearHeadDetails3?.country || user?.selectedCountry || { name: '',  validated: false });
-    const [collapseCountryOption, setCollapseCountryOption] = useState(true);
-    const [selectedCity, setSelectedCity] = useState(user?.academicYearHeadDetails2?.city || user?.academicYearHeadDetails3?.country || { name: '', validated: false });
-    const [collapseCityOption, setCollapseCityOption] = useState(true);  
-    const [selectedSpokenLanguage, setSelectedSpokenLanguage] = useState(user?.academicYearHeadDetails2?.spokenLanguage || user?.academicYearHeadDetails3?.country || { name: '', validated: false });
-    const [collapseSpokenLanguageOption, setCollapseSpokenLanguageOption] = useState(true);
-    const [selectedAcademicYearOrganization, setSelectedAcademicYearOrganization] = useState(user?.academicYearHeadDetails2?.academicYearOrganization || user?.academicYearHeadDetails3?.academicYearOrganization ||{ name: '', validated: false });
-    const [collapseAcademicYearOrganizationOption, setCollapseAcademicYearOrganizationOption] = useState(true);
-    const [selectedMarkSystem, setSelectedMarkSystem] = useState(user?.academicYearHeadDetails2?.markSystem || user?.academicYearHeadDetails3?.markSystem || { name: '', validated: false });
-    const [collapseMarkSystemOption, setCollapseMarkSystemOption] = useState(true);
-    const [selectedSubjectWeightSystem, setSelectedSubjectWeightSystem] = useState(user?.academicYearHeadDetails2?.subjectWeightSystem || user?.academicYearHeadDetails3?.subjectWeightSystem || { name: '', validated: false });
-    const [collapseSubjectWeightSystemOption, setCollapseSubjectWeightSystemOption] = useState(true);
-    const [schoolName, setSchoolName] = useState(user?.academicYearHeadDetails2?.schoolName || user?.academicYearHeadDetails3?.schoolName || '');
+
+    // Initialize state with null values
+    const [selectedCountry, setSelectedCountry] = useState(null);
+    const [selectedCity, setSelectedCity] = useState(null);
+    const [selectedSpokenLanguage, setSelectedSpokenLanguage] = useState(null);
+    const [selectedAcademicYearOrganization, setSelectedAcademicYearOrganization] = useState(null);
+    const [selectedMarkSystem, setSelectedMarkSystem] = useState(null);
+    const [selectedSubjectWeightSystem, setSelectedSubjectWeightSystem] = useState(null);
+    const [schoolName, setSchoolName] = useState('');
     const [showWarning, setShowWarning] = useState(false);
-    const [academicYearHeadDetails2, setAcademicYearHeadDetails2] = useState(user?.academicYearHeadDetails2 || user?.academicYearHeadDetails3 || {});
+    const [academicYearHeadDetails2, setAcademicYearHeadDetails2] = useState(null);
+
+    // Collapse states
+    const [collapseCountryOption, setCollapseCountryOption] = useState(true);
+    const [collapseCityOption, setCollapseCityOption] = useState(true);
+    const [collapseSpokenLanguageOption, setCollapseSpokenLanguageOption] = useState(true);
+    const [collapseAcademicYearOrganizationOption, setCollapseAcademicYearOrganizationOption] = useState(true);
+    const [collapseMarkSystemOption, setCollapseMarkSystemOption] = useState(true);
+    const [collapseSubjectWeightSystemOption, setCollapseSubjectWeightSystemOption] = useState(true);
+
+    const initialMarkSystemNameRef = useRef(null);
+    const simulationStepGlobal = useSelector((state) => state.simulationStep);
+
+
+    //let user = helper.getLocalStorageWithExpiration('wendogouser');
+    //const dispatch = useDispatch();
+    //console.log('user AcademicYearHeadDetails2', user)
+    // const [selectedCountry, setSelectedCountry] = useState(user?.academicYearHeadDetails2?.country || user?.academicYearHeadDetails3?.country || user?.selectedCountry || { name: '',  validated: false });
+    // const [collapseCountryOption, setCollapseCountryOption] = useState(true);
+    // const [selectedCity, setSelectedCity] = useState(user?.academicYearHeadDetails2?.city || user?.academicYearHeadDetails3?.country || { name: '', validated: false });
+    // const [collapseCityOption, setCollapseCityOption] = useState(true);  
+    // const [selectedSpokenLanguage, setSelectedSpokenLanguage] = useState(user?.academicYearHeadDetails2?.spokenLanguage || user?.academicYearHeadDetails3?.country || { name: '', validated: false });
+    // const [collapseSpokenLanguageOption, setCollapseSpokenLanguageOption] = useState(true);
+    // const [selectedAcademicYearOrganization, setSelectedAcademicYearOrganization] = useState(user?.academicYearHeadDetails2?.academicYearOrganization || user?.academicYearHeadDetails3?.academicYearOrganization ||{ name: '', validated: false });
+    // const [collapseAcademicYearOrganizationOption, setCollapseAcademicYearOrganizationOption] = useState(true);
+    // const [selectedMarkSystem, setSelectedMarkSystem] = useState(user?.academicYearHeadDetails2?.markSystem || user?.academicYearHeadDetails3?.markSystem || { name: '', validated: false });
+    // const [collapseMarkSystemOption, setCollapseMarkSystemOption] = useState(true);
+    // const [selectedSubjectWeightSystem, setSelectedSubjectWeightSystem] = useState(user?.academicYearHeadDetails2?.subjectWeightSystem || user?.academicYearHeadDetails3?.subjectWeightSystem || { name: '', validated: false });
+    // const [collapseSubjectWeightSystemOption, setCollapseSubjectWeightSystemOption] = useState(true);
+    // const [schoolName, setSchoolName] = useState(user?.academicYearHeadDetails2?.schoolName || user?.academicYearHeadDetails3?.schoolName || '');
+    // const [showWarning, setShowWarning] = useState(false);
+    // const [academicYearHeadDetails2, setAcademicYearHeadDetails2] = useState(user?.academicYearHeadDetails2 || user?.academicYearHeadDetails3 || {});
     // Use useRef to store the initial markSystem name
-    const initialMarkSystemNameRef = useRef(user?.academicYearHeadDetails2?.markSystem?.name);
+    //const initialMarkSystemNameRef = useRef(user?.academicYearHeadDetails2?.markSystem?.name);
 
     // Redux state selectors
-    const simulationStepGlobal = useSelector((state) => state.simulationStep);
+    //const simulationStepGlobal = useSelector((state) => state.simulationStep);
     //console.log('simulationStepGlobal XXXXX', user?.academicYearHeadDetails2)
     // Update functions for dropdowns
+
+    // Load user data on component mount
+    useEffect(() => {
+        const loadUserData = () => { 
+            if (user) {
+                //
+                
+                // Initialize all state values based on user
+                setSelectedCountry(user?.academicYearHeadDetails2?.country || user?.academicYearHeadDetails3?.country || user?.selectedCountry || { name: '', validated: false });
+                setSelectedCity(user?.academicYearHeadDetails2?.city || user?.academicYearHeadDetails3?.city || { name: '', validated: false });
+                setSelectedSpokenLanguage(user?.academicYearHeadDetails2?.spokenLanguage || user?.academicYearHeadDetails3?.spokenLanguage || { name: '', validated: false });
+                setSelectedAcademicYearOrganization(user?.academicYearHeadDetails2?.academicYearOrganization || user?.academicYearHeadDetails3?.academicYearOrganization || { name: '', validated: false });
+                setSelectedMarkSystem(user?.academicYearHeadDetails2?.markSystem || user?.academicYearHeadDetails3?.markSystem || { name: '', validated: false });
+                setSelectedSubjectWeightSystem(user?.academicYearHeadDetails2?.subjectWeightSystem || user?.academicYearHeadDetails3?.subjectWeightSystem || { name: '', validated: false });
+                setSchoolName(user?.academicYearHeadDetails2?.schoolName || user?.academicYearHeadDetails3?.schoolName || '');
+                setAcademicYearHeadDetails2(user?.academicYearHeadDetails2 || user?.academicYearHeadDetails3 || {});
+                
+                initialMarkSystemNameRef.current = user?.academicYearHeadDetails2?.markSystem?.name;
+            }
+            setIsLoading(false);
+        };
+
+        loadUserData();
+    }, []);
+
+    const updateWendogouser = (simulationStep, academicYearHeadDetails2, reportCard2 = user?.reportCard2) => {
+        if (!user) return;
+        
+        dispatch(setStep(simulationStep));
+        let mainSubjects = user?.mainSubjects;
+        if (!user.isResult3Available) { 
+            mainSubjects = null;
+        }
+        let updatedUser = { ...user, simulationStep, academicYearHeadDetails2, reportCard2, isResult1Available:false, mainSubjects, date: new Date().toISOString() };
+        helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
+        dispatch(setUser(updatedUser));
+    };
 
     const updateSelectedCountry = (item) => {
         setSelectedCountry({ ...item, validated: true });
@@ -112,19 +177,29 @@ const AcademicYearHeadDetails2 = () => {
         }
     };
 
-    const updateWendogouser = (simulationStep, academicYearHeadDetails2, reportCard2 = user?.reportCard2) => {
-        dispatch(setStep(simulationStep));
-        let mainSubjects = user?.mainSubjects;
-        //console.log('user?.isResult3Available ooo', user?.isResult3Available)
-        if (!user.isResult3Available) { 
-            mainSubjects = null;
-        }
-        //console.log('mainSubjects ooo', mainSubjects)
-        let updatedUser = { ...user, simulationStep, academicYearHeadDetails2, reportCard2,isResult1Available:false,mainSubjects, date: new Date().toISOString() };
-        helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
-    };
+    // const updateWendogouser = (simulationStep, academicYearHeadDetails2, reportCard2 = user?.reportCard2) => {
+    //     dispatch(setStep(simulationStep));
+    //     let mainSubjects = user?.mainSubjects;
+    //     //console.log('user?.isResult3Available ooo', user?.isResult3Available)
+    //     if (!user.isResult3Available) { 
+    //         mainSubjects = null;
+    //     }
+    //     //console.log('mainSubjects ooo', mainSubjects)
+    //     let updatedUser = { ...user, simulationStep, academicYearHeadDetails2, reportCard2,isResult1Available:false,mainSubjects, date: new Date().toISOString() };
+    //     helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
+    // };
     
-    
+    if (isLoading) {
+        return <div className="flex items-center justify-center min-h-[200px]">
+                    <Loader2 className="w-8 h-8 animate-spin" />
+               </div>; 
+    }
+
+    if (!user) {
+        return <div className="flex items-center justify-center min-h-[200px]">
+                    <Loader2 className="w-8 h-8 animate-spin" />
+               </div>; 
+    }
     return (
         <SEAcademicYearHeadDetails 
             title={`Informations au début de l'année académique ${user.selectedSchoolYear2.name}`}
@@ -167,6 +242,7 @@ const AcademicYearHeadDetails2 = () => {
             handleChangeSchoolName={handleChangeSchoolName}
             handleContinue={handleContinue}
             showContinueBtn={simulationStepGlobal === SIMULATION_ENGINE_STEPS.ACADEMIC_YEAR_HEAD_DETAILS2}
+            spokenLanguages={spokenLanguages} academicYearOrganizations={academicYearOrganizations} markSystems={markSystems} subjectWeightSystems={subjectWeightSystems} isErrorPage={isErrorPage}
         />
     );
 }

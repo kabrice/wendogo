@@ -4,54 +4,87 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setStep } from '../../redux/simulationStepSlice';
 import helper from '../../utils/Helper';
 import { SIMULATION_ENGINE_STEPS } from '../../utils/Constants';
+import { Loader2 } from "lucide-react";
+import { setUser } from '../../redux/userSlice';
 
 const Email = () => {
+    const [isLoading, setIsLoading] = useState(true);
+    const user = useSelector((state) => state.user);
     const dispatch = useDispatch();
-    let user = helper.getLocalStorageWithExpiration('wendogouser');
-    const [email, setEmail] = useState(user?.email || '');
     const simulationStepGlobal = useSelector((state) => state.simulationStep);
+    
+    // Local state
+    const [email, setEmail] = useState('');
+    const [valid, setValid] = useState(true); // Initially true for empty state
 
-    // Improved email validation function
-    const doesValid = (email) => {
-        console.log('email', email);
-        if (!email || (email?.trim() === '')) {
-            // Set valid to true if the email is empty
+    // Load user data on component mount
+    useEffect(() => {
+        const loadUserData = () => {
+            
+            if (user) {
+                
+                const initialEmail = user?.email || '';
+                setEmail(initialEmail);
+                setValid(doesValid(initialEmail));
+            }
+            setIsLoading(false);
+        };
+
+        loadUserData();
+    }, []);
+
+    const doesValid = (emailValue) => {
+        if (!emailValue || emailValue.trim() === '') {
             return true;
         }
-        // Regex for email validation
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email?.trim());
+        return emailRegex.test(emailValue.trim());
     };
 
-    const [valid, setValid] = useState(doesValid());
+    const updateWendogouser = (simulationStep, emailValue) => {
+        if (!user) return;
 
-    // Update validity when email changes
-    // useEffect(() => {
-    //     setValid(doesValid());
-    // }, [email]);
+        dispatch(setStep(simulationStep));
+        const updatedUser = {
+            ...user,
+            simulationStep,
+            email: emailValue,
+            date: new Date().toISOString()
+        };
+        helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
+        dispatch(setUser(updatedUser));
+    };
 
     const handleChange = (e) => {
-        const email = e.target.value;
-        setValid(doesValid());
-        setEmail(email);
-        if (doesValid()) {
-            updateWendogouser(SIMULATION_ENGINE_STEPS.EMAIL, email);
+        const newEmail = e.target.value;
+        setEmail(newEmail);
+        const isValid = doesValid(newEmail);
+        setValid(isValid);
+        
+        if (isValid) {
+            updateWendogouser(SIMULATION_ENGINE_STEPS.EMAIL, newEmail);
         }
     };
 
     const handleContinue = () => {
-        if (doesValid()) {
+        if (doesValid(email)) {
             updateWendogouser(SIMULATION_ENGINE_STEPS.WHATSAPP_NUMBER, email);
         }
     };
 
-    const updateWendogouser = (simulationStep, email) => {
-        dispatch(setStep(simulationStep));
-        let updatedUser = { ...user, simulationStep, email, date: new Date().toISOString() };
-        helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
-    };
+    if (isLoading) {
+        return <div className="flex items-center justify-center min-h-[200px]">
+                      <Loader2 className="w-8 h-8 animate-spin" />
+                </div>; 
+    }
 
-    return ( 
+    if (!user) {
+        return <div className="flex items-center justify-center min-h-[200px]">
+                      <Loader2 className="w-8 h-8 animate-spin" />
+                </div>; 
+    }
+
+    return (
         <SETextInput
             title="Quelle est votre adresse email ?"
             id="EMAIL"
@@ -63,7 +96,7 @@ const Email = () => {
             valid={valid}
             autoComplete="off"
             setValid={setValid}
-            onClickOutside={doesValid}
+            onClickOutside={() => setValid(doesValid(email))}
             handleContinue={handleContinue}
             showContinueBtn={simulationStepGlobal === SIMULATION_ENGINE_STEPS.EMAIL}
         />

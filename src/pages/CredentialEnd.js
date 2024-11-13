@@ -5,10 +5,13 @@ import  { useForm, Controller }  from  "react-hook-form"
 import { activateSpinner, deactivateSpinner } from '../redux/spinnerslice'
 import { useUpdateCredentialMutation } from '../store/apis/userApi';
 import { useUpdateSubscriptionStepMutation } from '../store/apis/userApi';
-import { useNavigate } from "react-router-dom"
+import { useRouter } from 'next/router'
 import helper from '../utils/Helper'
 import {close} from '../redux/modalslice'
 import FooterSingleRow from '../components/FooterSingleRow';
+import { Loader2 } from "lucide-react";
+import { setUser } from '../../redux/userSlice';
+
 
 const  CredentialEnd = () => {
 
@@ -17,12 +20,12 @@ const  CredentialEnd = () => {
                               <path fillRule="evenodd" d="M19.62 6.207a1 1 0 0 1 .185 1.402L11.37 18.603a1.01 1.01 0 0 1-1.525.09l-4.996-5.13a1 1 0 1 1 1.433-1.396l4.198 4.311 7.74-10.086a1 1 0 0 1 1.402-.185z" clipRule="evenodd" data-ppui="true" />
                           </svg>
                         </span>)
-  //const user = useSelector((state) => state.user.user)
+  //const user = useSelector((state) => state.user?.user)
   const user = helper.getLocalStorageWithExpiration('wendogouser')
 
-  const {data} = useCountriesQuery(user.country)
+  const {data} = useCountriesQuery(user?.country)
   //let countries = data.countries
-  //console.log('countries', user.country,  data?.countries)
+  //console.log('countries', user?.country,  data?.countries)
   const { register, handleSubmit, formState: { errors } } = useForm({
     // use mode to specify the event that triggers each input field 
     mode: "onBlur"
@@ -94,7 +97,7 @@ const  CredentialEnd = () => {
     setCityArray(clonedCityArray)
   }
 
-  const navigate = useNavigate()
+  const router = useRouter()
 
   //const newRef = useRef(null)
   const dispatch = useDispatch()
@@ -351,9 +354,9 @@ const  CredentialEnd = () => {
       "Zimbabwe": "ZW"
     }
   
-    data = {...data, ...{country : countryList[selectedCountry], city : selectedCity, phone : user.phone}}
-    user.occupation = data.occupation
-    user.description = data.description
+    data = {...data, ...{country : countryList[selectedCountry], city : selectedCity, phone : user?.phone}}
+    user?.occupation = data.occupation
+    user?.description = data.description
     helper.setLocalStorageWithExpiration('wendogouser', user, 3*60*60*1000)
     console.log('data onSubmitUserInfo', data)
     try {
@@ -363,7 +366,7 @@ const  CredentialEnd = () => {
       if(result.success){   
         console.log('credentialend 👍👍', result)  
         helper.setLocalStorageWithExpiration('wendogouser', result.user, 5*60*1000)   
-        navigate(result?.user?.subscription_step)
+        router.push(result?.user?.subscription_step)
       }else if (result.errorId){
           const msgToast = () => (
               <div>
@@ -382,11 +385,11 @@ const  CredentialEnd = () => {
   async function goToCredentialStartPage()  {
     try {
       dispatch(activateSpinner())
-      const result = await updateSubscriptionStep({subscriptionStep : '/credentialstart', phone : user.phone}).unwrap();
+      const result = await updateSubscriptionStep({subscriptionStep : '/credentialstart', phone : user?.phone}).unwrap();
       dispatch(deactivateSpinner())
       if(result.success){   
         helper.setLocalStorageWithExpiration('wendogouser', result.user, 10*60*1000)
-        navigate(result?.user?.subscription_step)
+        router.push(result?.user?.subscription_step)
       }else if (result.errorId){
           const msgToast = () => (
               <div>
@@ -541,7 +544,7 @@ const  CredentialEnd = () => {
                                       <div className="pp-cons-1v26bvb-row-justify_content_center" data-ppui-info="grid_3.2.9">
                                         <div className=" pp-cons-1aqxtsc-col_form_full" align="center" data-ppui="true">
                                           <div className="pp-cons-1hv7ga5-text_input_base-text_body" data-ppui-info="text-input_5.1.6">
-                                            <input  {...register("occupation", { required: true, minLength: 5, maxLength:46})} defaultValue={user.occupation} 
+                                            <input  {...register("occupation", { required: true, minLength: 5, maxLength:46})} defaultValue={user?.occupation} 
                                             className="pp-cons-16mpn99-text_input_control-text_body-label_placeholder_shown_and_not_focused-text_body" 
                                             name="occupation" id="paypalAccountData_occupation" aria-invalid="false" placeholder="Que faites-vous actuellement dans la vie." aria-labelledby="paypalAccountData_occupation-label"
                                               aria-label="" type="text"  data-ppui="true"/>
@@ -554,7 +557,7 @@ const  CredentialEnd = () => {
                                       <div className="pp-cons-1v26bvb-row-justify_content_center" data-ppui-info="grid_3.2.9">
                                         <div className=" pp-cons-1aqxtsc-col_form_full" align="center" data-ppui="true">
                                           <div className="pp-cons-1hv7ga5-text_input_base-text_body" data-ppui-info="text-input_5.1.6">
-                                            <textarea rows="10" {...register("description", { required: true, minLength: 200, maxLength:2500})} defaultValue={user.description}
+                                            <textarea rows="10" {...register("description", { required: true, minLength: 200, maxLength:2500})} defaultValue={user?.description}
                                             className="pp-cons-16mpn99-text_input_control-text_body-label_placeholder_shown_and_not_focused-text_body" 
                                             name="description" id="paypalAccountData_description" aria-invalid="false" placeholder="IMPORTANT : Décrivez ici votre parcours académique et professionnel, ce que vous avez déjà intenté comme démarche, toutes questions sur l'immagration ou demande de visa; et tout autres détails utiles." 
                                             aria-labelledby="paypalAccountData_description-label" 

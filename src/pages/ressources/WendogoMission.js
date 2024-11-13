@@ -2,16 +2,16 @@ import { useState} from 'react';
 import EdgarHead from '../../assets/edgar_head.jpeg'
 import QuestionsOnTopic from '../../components/QuestionsOnTopic';
 
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 import Footer from '../../components/Footer';
 import HeaderMenuBar from '../../components/HeaderMenuBar';
 import HappyGirl from '../../assets/happyGirl.png'
 import Mentorship from '../../assets/mentorship.png'
 import OurPromise from '../../assets/OurPromise.png'
-import { useNavigate } from "react-router-dom";
+import { useRouter } from 'next/router';
 import SocialMediaLogo from '../../assets/wendogo_jeu_concours.png'
-import { Helmet } from 'react-helmet';
+import Head from 'next/head';
 
 function WendogoMission(){
     const whatsapp =  <svg className="ButtonLinkstyles__Picto-sc-1s2ygn0-1 hkJOZg" width="24px" height="24.6350302px" viewBox="0 0 24 24.6350302" version="1.1" xmlns="http://www.w3.org/2000/svg">
@@ -48,7 +48,7 @@ function WendogoMission(){
 
     
     return <div >
-            <Helmet>
+            <Head>
               <meta property="og:url"           content="https://wendogo.com/wendogo-mission" />
               <meta property="og:type"          content="article" />
               <meta property="og:title"         content="Notre mission - Vous accompagner de A(chat) à Z(en) - Wendogo" />
@@ -56,7 +56,7 @@ function WendogoMission(){
               <meta property="og:image"         content={'https://wendogo.com'+SocialMediaLogo} /> 
               <title>Notre mission - Vous accompagner de A(chat) à Z(en) - Wendogo</title>
               <meta name="description"          content="Démarches administratives, rendez-vous à l'ambassade et chances de voyager forment un parcours du combattant. Wendogo vous accompagne jusqu’à l’aboutissement de votre projet."/>
-            </Helmet>        
+            </Head>        
             <HeaderMenuBar/>
             <main className="styles__Main-sc-kz84w6-0 gEFmYD " style={{paddingTop: 80}}>
                 <div className="Blocsstyles__Page-sc-1q5awhx-1 dVmdSL">
@@ -269,7 +269,7 @@ function WendogoMission(){
                                           <button className="ButtonLinkstyles__ButtonLink-sc-1s2ygn0-0 iPwlpd">
                                             {facebook}
                                             <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh"> 
-                                            <Link target="_blank" to="https://www.facebook.com/sharer/sharer.php?u=https://wendogo.com/work-permit-steps" className="fb-xfbml-parse-ignore" rel="noreferrer">Facebook</Link>
+                                            <Link target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://wendogo.com/work-permit-steps" className="fb-xfbml-parse-ignore" rel="noreferrer">Facebook</Link>
                                             </div>
                                           </button>
                                           <div role="tooltip" className="Tooltipstyles__Tooltip-sc-ynyslw-1 hrixxN"> Partager sur Facebook </div>

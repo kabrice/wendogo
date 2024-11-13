@@ -1,98 +1,157 @@
-import { useState, useEffect, useRef} from 'react';
-import { useGetSchoolYearsQuery } from '../../store/apis/schoolYearApi';
-import { activateSpinner, deactivateSpinner } from '../../redux/spinnerslice'
+import { useState, useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { activateSpinner, deactivateSpinner } from '../../redux/spinnerslice';
 import { activateErrorPage, deactivateErrorPage } from '../../redux/errorPageSlice';
-import helper from '../../utils/Helper';
-import _ from 'lodash'
+import { setStep } from '../../redux/simulationStepSlice';
+import { SIMULATION_ENGINE_STEPS } from '../../utils/Constants';
 import SEDropDownList from '../../components/SimulationEngine/SEDropDownList';
-import { useDispatch, useSelector } from 'react-redux'
-import {setStep} from '../../redux/simulationStepSlice';
-import {SIMULATION_ENGINE_STEPS} from '../../utils/Constants'
+import helper from '../../utils/Helper';
+import { setUser } from '../../redux/userSlice';
+import { Loader2 } from "lucide-react";
+import _ from 'lodash';
 
-const SchoolYear1 = () => {
+const SchoolYear1 = ({ schoolYears, isErrorPage }) => {
+    const dispatch = useDispatch();
+    
+    // Core states
+    const [isInitializing, setIsInitializing] = useState(true);
+    const user = useSelector((state) => state.user);
+    const [schoolYears1, setSchoolYears1] = useState([]);
+    const [selectedSchoolYear1, setSelectedSchoolYear1] = useState(null);
+    
+    // UI states
+    const [collapseYearOption, setCollapseYearOption] = useState(true);
+    const [fieldDefault, setFieldDefault] = useState(true);
+    
+    // Refs and Selectors
+    const newRef = useRef(null);
+    const simulationStepGlobal = useSelector(state => state.simulationStep);
+    const isInUniversityGlobal = useSelector(state => state.university.active);
 
-    let user = helper.getLocalStorageWithExpiration('wendogouser')
-    const dispatch = useDispatch()
-    const { data, error, isLoading } = useGetSchoolYearsQuery();
-    const [schoolYears1, setSchoolYears1] = useState([])
-    const [selectedSchoolYear1, setSelectedSchoolYear1] = useState(user?.selectedSchoolYear1 ||  {name : (user.selectedSchoolYear3.name-2).toString(), validated: false})
-    const newRef = useRef(null)
-    const [collapseYearOption, setCollapseYearOption] = useState(true)
-    const [fieldDefault, setFieldDefault] = useState(true)
-    const simulationStepGlobal = useSelector((state) => state.simulationStep);
-    const isInUniversityGlobal = useSelector((state) => state.university.active)
-
-    const handleOutsideClick = (e) => {
-        if (newRef.current && !newRef.current.contains(e.target) && !helper.isTargetContainsIgnoreClass(e.target)) {
-          setCollapseYearOption(true) 
-        }
-      };
-
-    const toggleYearDropdown= () => {
-        setCollapseYearOption(!collapseYearOption)
-    }
-    const updateSelectedYear = (item) => {
-        setSelectedSchoolYear1({ ...item, validated: true })
-        setCollapseYearOption(true)
-        setFieldDefault(false)
-        updateWendogouser(SIMULATION_ENGINE_STEPS.ACADEMIC_YEAR_HEAD_DETAILS1, {...item, validated: true})
-    }
-
+    // Initialize user data and state
     useEffect(() => {
-        if(isLoading){
-            dispatch(activateSpinner())
+        const initializeData = () => {
+            
+            if (!user) return;
+
+            
+            setSelectedSchoolYear1(
+                user?.selectedSchoolYear1 || 
+                { name: (user?.selectedSchoolYear3.name - 2).toString(), validated: false }
+            );
+            setIsInitializing(false);
+        };
+
+        initializeData();
+    }, []);
+
+    // Handle schoolYears data and error states
+    useEffect(() => {
+        if (isErrorPage) {
+            console.error('🛑 error SchoolYear1:', isErrorPage);
+            dispatch(activateErrorPage());
+            return;
         }
-        if(error){
-            console.error('🛑 error', error)
-            dispatch(deactivateSpinner()) 
-            dispatch(activateErrorPage())
+
+        if (schoolYears && user) {
+            dispatch(deactivateSpinner());
+            dispatch(deactivateErrorPage());
+
+            const processSchoolYears = () => {
+                let filteredYears = _.cloneDeep(schoolYears);
+
+                if (user?.selectedSchoolYear2) {
+                    filteredYears = _.dropRightWhile(
+                        filteredYears,
+                        item => parseInt(item.name, 10) >= parseInt(user.selectedSchoolYear2.name, 10)
+                    );
+                } else if (!user?.selectedSchoolYear2 && user?.selectedSchoolYear3) {
+                    const yearBeforeSelected3 = (parseInt(user.selectedSchoolYear3.name, 10) - 2).toString();
+                    filteredYears = _.filter(
+                        filteredYears,
+                        item => parseInt(item.name, 10) <= parseInt(yearBeforeSelected3, 10)
+                    );
+                }
+
+                const reversedYears = filteredYears.reverse();
+
+                if (!user?.selectedSchoolYear1 && reversedYears.length > 0) {
+                    const mostRecentYear = _.maxBy(reversedYears, item => parseInt(item.name, 10));
+                    setSelectedSchoolYear1({ ...mostRecentYear, validated: false });
+                }
+
+                setSchoolYears1(reversedYears);
+            };
+
+            processSchoolYears();
         }
-        if (data) {
-            dispatch(deactivateSpinner())
-            dispatch(deactivateErrorPage())
-            let clonedData = _.cloneDeep(data); // Clone the data to avoid mutation
-    
-            if (user?.selectedSchoolYear2 && user?.selectedSchoolYear2 !== null) {
-                // If selectedSchoolYear2 exists and is not null
-                clonedData = _.dropRightWhile(clonedData, (item) => parseInt(item.name, 10) >= parseInt(user?.selectedSchoolYear2.name, 10)); // Compare using the year in `name`
-            } else if (!user?.selectedSchoolYear2 && user?.selectedSchoolYear3 && user?.selectedSchoolYear3 !== null) {
-                // If selectedSchoolYear2 is null but selectedSchoolYear3 exists and is not null
-                const yearBeforeSelected3 = (parseInt(user?.selectedSchoolYear3.name, 10) - 2).toString(); // Get the year before selectedSchoolYear3
-                clonedData = _.filter(clonedData, (item) => parseInt(item.name, 10) <= parseInt(yearBeforeSelected3, 10)); // Keep only the years up to (selectedSchoolYear3 - 1)
-            } 
-        
-            setSchoolYears1(clonedData.reverse()); // Set the filtered school years
-                // If selectedSchoolYear1 is not set, set it to the most recent year from clonedData
-            if (!user?.selectedSchoolYear1 && clonedData.length > 0) {
-                const mostRecentYear = _.maxBy(clonedData, (item) => parseInt(item.name, 10)); // Get the most recent year
-                setSelectedSchoolYear1({ ...mostRecentYear, validated: false }); // Set selectedSchoolYear1 with the most recent year
+    }, [schoolYears, isErrorPage, user, dispatch]);
+
+    // Handle outside clicks
+    useEffect(() => {
+        const handleOutsideClick = (e) => {
+            if (newRef.current && 
+                !newRef.current.contains(e.target) && 
+                !helper.isTargetContainsIgnoreClass(e.target)) {
+                setCollapseYearOption(true);
             }
-    
-            setSchoolYears1(clonedData);
-        }
+        };
 
-        helper.addOutsideClick(handleOutsideClick)
+        return helper.addOutsideClick(handleOutsideClick);
+    }, []);
 
+    const toggleYearDropdown = () => setCollapseYearOption(prev => !prev);
 
-    }, [data, isLoading, error]);
-    
+    const updateSelectedYear = (item) => {
+        const updatedYear = { ...item, validated: true };
+        setSelectedSchoolYear1(updatedYear);
+        setCollapseYearOption(true);
+        setFieldDefault(false);
+        updateWendogouser(SIMULATION_ENGINE_STEPS.ACADEMIC_YEAR_HEAD_DETAILS1, updatedYear);
+    };
 
     const handleContinue = () => {
-        updateWendogouser(SIMULATION_ENGINE_STEPS.ACADEMIC_YEAR_HEAD_DETAILS1, {...selectedSchoolYear1, validated: true})
-    }
+        updateWendogouser(
+            SIMULATION_ENGINE_STEPS.ACADEMIC_YEAR_HEAD_DETAILS1,
+            { ...selectedSchoolYear1, validated: true }
+        );
+    };
 
     const updateWendogouser = (simulationStep, selectedSchoolYear1) => {
-        dispatch(setStep(simulationStep)) 
-        let updatedUser = {...user, simulationStep, selectedSchoolYear1, date: new Date().toISOString()}
-        helper.setLocalStorageWithExpiration('wendogouser', updatedUser)         
+        const updatedUser = {
+            ...user,
+            simulationStep,
+            selectedSchoolYear1,
+            date: new Date().toISOString()
+        };
+        
+        helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
+        dispatch(setUser(updatedUser));
+        dispatch(setStep(simulationStep));
+    };
+
+    if (isInitializing) {
+        return (
+            <div className="flex items-center justify-center min-h-[200px]">
+                <Loader2 className="w-8 h-8 animate-spin" />
+            </div>
+        );
     }
 
-  return (
-         <SEDropDownList title={`Votre ${helper.updateBAC(isInUniversityGlobal, user, 2)} correspond à quelle année scolaire ?`} newRef={newRef} collapseOption={collapseYearOption} fieldDefault={fieldDefault} items={schoolYears1} 
-                         itemSelected={selectedSchoolYear1} toggleDropdown={toggleYearDropdown} updateSelected={updateSelectedYear}
-                         handleContinue={handleContinue} showContinueBtn={simulationStepGlobal === SIMULATION_ENGINE_STEPS.SCHOOL_YEAR1}
-                          />    
-  );
-}
+    return (
+        <SEDropDownList 
+            title={`Votre ${helper.updateBAC(isInUniversityGlobal, user, 2)} correspond à quelle année scolaire ?`}
+            newRef={newRef}
+            collapseOption={collapseYearOption}
+            fieldDefault={fieldDefault}
+            items={schoolYears1}
+            itemSelected={selectedSchoolYear1}
+            toggleDropdown={toggleYearDropdown}
+            updateSelected={updateSelectedYear}
+            handleContinue={handleContinue}
+            showContinueBtn={simulationStepGlobal === SIMULATION_ENGINE_STEPS.SCHOOL_YEAR1}
+        />
+    );
+};
 
 export default SchoolYear1;

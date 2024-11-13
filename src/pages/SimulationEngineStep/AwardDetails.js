@@ -14,6 +14,8 @@ import SETextInput from '../../components/SimulationEngine/SETextInput';
 import { SIMULATION_ENGINE_STEPS } from '../../utils/Constants';  
 import SETextArea from '../../components/SimulationEngine/SETextArea';
 import _ from 'lodash';
+import { Loader2 } from "lucide-react";
+import { setUser } from '../../redux/userSlice';
 
 const honourTypes = [
     { id: 1, name: 'None', validated: false },
@@ -21,56 +23,171 @@ const honourTypes = [
     { id: 3, name: 'Mention bien', validated: false },
     { id: 4, name: 'Mention assez bien', validated: false }
 ];
+const AwardDetails = ({ spokenLanguages, schoolYears, isErrorPage }) => {
 
-const AwardDetails = () => {
-
-    let user = helper.getLocalStorageWithExpiration('wendogouser');
+    const [isLoading, setIsLoading] = useState(true);
+    const user = useSelector((state) => state.user);
     const dispatch = useDispatch();
-
-    const [showError, setShowError] = useState(false);
     const simulationStepGlobal = useSelector((state) => state.simulationStep);
-    const showContinueBtn = simulationStepGlobal === SIMULATION_ENGINE_STEPS.AWARD_DETAILS;
-    
+
     // State variables
     const [countries, setCountries] = useState(null);
     const [cities, setCities] = useState(null);
-    const [selectedCountry, setSelectedCountry] = useState(user?.academicYearHeadDetails3?.country || user?.award?.country || user?.selectedCountry || { name: '',  validated: false });
-    const [collapseCountryOption, setCollapseCountryOption] = useState(true);
-    const [selectedCity, setSelectedCity] = useState(user?.academicYearHeadDetails3?.city || user?.award?.city || { name: '', validated: false });
-    const [collapseCityOption, setCollapseCityOption] = useState(true);  
-    const [selectedSpokenLanguage, setSelectedSpokenLanguage] = useState(user?.academicYearHeadDetails3?.spokenLanguage || user?.award?.spokenLanguage || { name: '', validated: false });
-    const [selectedHonourType, setSelectedHonourType] = useState(user?.award?.honourType || { id: 1, name: 'None', validated: false });
-    const [collapseHonourTypeOption, setCollapseHonourTypeOption] = useState(true);
-    const [awardName, setAwardName] = useState(user?.award?.awardName || '');
-    const [rankValue, setRankValue] = useState(user?.award?.rank || ''); 
-    const [award, setAward] = useState(user?.award || {});
-    const [selectedAwardYear, setSelectedAwardYear] = useState(user?.award?.year ||  {name : (user?.selectedSchoolYear3?.name-2).toString(), validated: false});
-    const [collapseAwardYearOption, setCollapseAwardYearOption] = useState(true);
-    const [collapseSpokenLanguageOption, setCollapseSpokenLanguageOption] = useState(true);
+    const [selectedCountry, setSelectedCountry] = useState(null);
+    const [selectedCity, setSelectedCity] = useState(null);
+    const [selectedSpokenLanguage, setSelectedSpokenLanguage] = useState(null);
+    const [selectedHonourType, setSelectedHonourType] = useState(null);
+    const [selectedAwardYear, setSelectedAwardYear] = useState(null);
+    const [awardName, setAwardName] = useState('');
+    const [rankValue, setRankValue] = useState('');
+    const [award, setAward] = useState(null);
 
+    // Collapse states
+    const [collapseCountryOption, setCollapseCountryOption] = useState(true);
+    const [collapseCityOption, setCollapseCityOption] = useState(true);
+    const [collapseSpokenLanguageOption, setCollapseSpokenLanguageOption] = useState(true);
+    const [collapseHonourTypeOption, setCollapseHonourTypeOption] = useState(true);
+    const [collapseAwardYearOption, setCollapseAwardYearOption] = useState(true);
+
+    // Validation states
+    const [validAwardName, setValidAwardName] = useState(true);
+    const [validRank, setValidRank] = useState(true);
+
+    // Refs
     const newRefCountry = useRef(null);
     const newRefCity = useRef(null);
     const newRefSpokenLanguage = useRef(null);
     const newRefAwardYear = useRef(null);
-    const newRefHonourType = useRef(null); 
- 
-    // Queries 
-    const { data, error, isLoading } = useCountriesQuery(selectedCountry.iso2);
-    const { data: spokenLanguages, error: spokenLanguagesError, isLoading: spokenLanguagesIsLoading } = useGetSpokenLanguagesQuery();
-    const { data: awardYears, error: awardYearsError, isLoading: awardYearsIsLoading } = useGetSchoolYearsQuery(); 
+    const newRefHonourType = useRef(null);
 
+    // Query
+    const { data, error, isLoading: isCountriesLoading } = useCountriesQuery(selectedCountry?.iso2);
+
+    useEffect(() => {
+        const loadUserData = () => {
+            
+            if (user) {
+                
+                
+                // Initialize states from user
+                setSelectedCountry(user?.academicYearHeadDetails3?.country || user?.award?.country || user?.selectedCountry || { name: '', validated: false });
+                setSelectedCity(user?.academicYearHeadDetails3?.city || user?.award?.city || { name: '', validated: false });
+                setSelectedSpokenLanguage(user?.academicYearHeadDetails3?.spokenLanguage || user?.award?.spokenLanguage || { name: '', validated: false });
+                setSelectedHonourType(user?.award?.honourType || { id: 1, name: 'None', validated: false });
+                setAwardName(user?.award?.awardName || '');
+                setRankValue(user?.award?.rank || '');
+                setAward(user?.award || {});
+
+                // Initialize award year
+                if (user?.selectedSchoolYear3?.name) {
+                    const initialAwardYear = {
+                        name: (user.selectedSchoolYear3.name - 2).toString(),
+                        validated: false
+                    };
+                    setSelectedAwardYear(user?.award?.year || initialAwardYear);
+                }
+            }
+            setIsLoading(false);
+        };
+
+        loadUserData();
+    }, []);
+
+    // Queries 
+    //const { data, error, isLoading } = useCountriesQuery(selectedCountry.iso2); 
+    const awardYears = schoolYears;
+
+    useEffect(() => {
+        if (isCountriesLoading) {
+            dispatch(activateSpinner());
+        }
+
+        if (error || isErrorPage) {
+            dispatch(deactivateSpinner());
+            dispatch(activateErrorPage());
+        }
+
+        if (data) {
+            dispatch(deactivateSpinner());
+            dispatch(deactivateErrorPage());
+            
+            const sortedCountries = [...data.countries].sort((a, b) => a.name.localeCompare(b.name));
+            const sortedCities = [...data.cities_new].sort((a, b) => a.name.localeCompare(b.name));
+            
+            setCountries(sortedCountries);
+            setCities(sortedCities);
+
+            // Set default city if needed
+            if (!selectedCity?.validated) {
+                const defaultCity = sortedCities.find(city => city.default);
+                if (defaultCity) {
+                    setSelectedCity(defaultCity);
+                }
+            }
+        }
+
+        // Set spoken language based on country
+        if (spokenLanguages && selectedCountry?.most_popular_spoken_language_id) {
+            const countryLanguage = spokenLanguages.find(
+                lang => lang.id === selectedCountry.most_popular_spoken_language_id
+            );
+            if (countryLanguage) {
+                setSelectedSpokenLanguage({
+                    name: countryLanguage.name,
+                    id: countryLanguage.id
+                });
+            }
+        }
+
+        // Set initial award year if available
+        if (!showContinueBtn && awardYears && user?.selectedSchoolYear3?.name) {
+            const selectedAwardYearInit = awardYears.find(
+                year => year.name === (user.selectedSchoolYear3.name - 2).toString()
+            );
+            if (selectedAwardYearInit) {
+                setSelectedAwardYear({ ...selectedAwardYearInit, validated: true });
+                updateSelectedAwardYear(selectedAwardYearInit);
+            }
+        }
+
+        if (spokenLanguages || awardYears) {
+            dispatch(deactivateSpinner());
+        }
+    }, [data, error, isCountriesLoading, spokenLanguages, isErrorPage, awardYears, selectedCountry]);
+    
     const doesAwardNameIsValid = (awardName) => {
-        return awardName !== undefined && awardName && awardName.trim().length >= 10 && /[a-zA-Z].*[a-zA-Z]/.test(awardName);
-    }
+        return awardName !== undefined && 
+               awardName && 
+               awardName.trim().length >= 10 && 
+               /[a-zA-Z].*[a-zA-Z]/.test(awardName);
+    };
       
-    const [validAwardName, setValidAwardName] = useState(doesAwardNameIsValid(awardName) || awardName === '');
+    //const [validAwardName, setValidAwardName] = useState(doesAwardNameIsValid(awardName) || awardName === '');
 
     const doesRankIsValid = () => {
         const rank = parseInt(rankValue, 10);
         return (rankValue === '' || (rankValue !== '' && rank >= 1 && rank <= 1000));
-    }
+    };
       
-    const [validRank, setValidRank] = useState(doesRankIsValid());
+    const updateWendogouser = (simulationStep, award) => {
+        if (!user) return;
+
+        dispatch(setStep(simulationStep));
+        const updatedUser = { 
+            ...user, 
+            simulationStep, 
+            award, 
+            date: new Date().toISOString() 
+        };
+        helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
+        dispatch(setUser(updatedUser));
+    };
+    // Click handlers
+    useEffect(() => {
+        if (!isLoading) {
+            return helper.addOutsideClick(handleOutsideClick);
+        }
+    }, [isLoading]);    
 
     const updateSelectedAwardYear = (item) => {
         setSelectedAwardYear({ ...item, validated: true });
@@ -128,63 +245,6 @@ const AwardDetails = () => {
         updateWendogouser(SIMULATION_ENGINE_STEPS.AWARD_DETAILS, award)
     };
 
-    useEffect(() => {
-        
-        if (isLoading || spokenLanguagesIsLoading || awardYearsIsLoading) {
-            dispatch(activateSpinner());
-        }
-
-        if (error || spokenLanguagesError || awardYearsError) { 
-            console.error('🛑 error', error)
-            dispatch(deactivateSpinner()) 
-            dispatch(activateErrorPage())
-        }
-        //console.log('IN AwardDetails useEffect');
-        if (data) {
-            dispatch(deactivateSpinner()) 
-            dispatch(deactivateErrorPage())
-            const sortedCountries = data.countries.map((item) => ({ ...item })).sort((a, b) => a.name.localeCompare(b.name));
-            setCountries(sortedCountries);
-            //console.log('IN sortedCountries useEffect', sortedCountries);
-            const sortedCities = data.cities_new.map((item) => ({ ...item })).sort((a, b) => a.name.localeCompare(b.name));
-            setCities(sortedCities);
-            //console.log('IN sortedCities setSelectedCity', selectedCity.name);
-            sortedCities.forEach((item) => {
-                if (item.default && !selectedCity.validated) {
-                    setSelectedCity(item);
-                }
-            });
-        }
-       
-        if(spokenLanguages){
-            const selectedCountrySpokenLanguage = spokenLanguages.find(language => language.id === selectedCountry.most_popular_spoken_language_id);
-            if (selectedCountrySpokenLanguage) {
-                setSelectedSpokenLanguage({ name: selectedCountrySpokenLanguage.name, id: selectedCountrySpokenLanguage.id });
-            }  
-        }
-        if(!showContinueBtn){
-            helper.addOutsideClick(handleOutsideClick);
-            return;
-        }
-
-        if (awardYears) {
-            const selectedAwardYearInit = awardYears.find(year => year.name === (user.selectedSchoolYear3.name-2).toString());
-            setSelectedAwardYear({ ...selectedAwardYearInit, validated: true }); 
-            updateSelectedAwardYear(selectedAwardYearInit);
-        }
-
-
-        if (spokenLanguages || awardYears) { 
-            dispatch(deactivateSpinner());
-        }
-
-        helper.addOutsideClick(handleOutsideClick);
-
-        
-    }, [data, error, isLoading, 
-        spokenLanguages, spokenLanguagesError, spokenLanguagesIsLoading, 
-        awardYears, awardYearsError, awardYearsIsLoading,]);
-
     const handleOutsideClick = (e) => {
         if(newRefAwardYear.current && !newRefAwardYear.current.contains(e.target) && !helper.isTargetContainsIgnoreClass(e.target)){
             setCollapseAwardYearOption(true);
@@ -210,19 +270,25 @@ const AwardDetails = () => {
     const toggleCityDropdown = () => setCollapseCityOption(!collapseCityOption);
     const toggleAwardYearDropdown = () => setCollapseAwardYearOption(!collapseAwardYearOption);
 
-
-    const updateWendogouser = (simulationStep, award) => {
-        dispatch(setStep(simulationStep));
-        let updatedUser = { ...user, simulationStep, award, date: new Date().toISOString() };
-        helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
-    };
-
     const handleContinue = () => {
         const newAward = { ...award, year : selectedAwardYear, country: selectedCountry, city: selectedCity, 
                             spokenLanguage: selectedSpokenLanguage, honourType: selectedHonourType, awardName: awardName, rank: rankValue };
         updateWendogouser(SIMULATION_ENGINE_STEPS.HAS_WORK_EXPERIENCE, newAward)
     } 
 
+    if (isLoading) {
+        return <div className="flex items-center justify-center min-h-[200px]">
+                    <Loader2 className="w-8 h-8 animate-spin" />
+               </div>; 
+    }
+
+    if (!user) {
+        return <div className="flex items-center justify-center min-h-[200px]">
+                    <Loader2 className="w-8 h-8 animate-spin" />
+               </div>; 
+    }
+
+    const showContinueBtn = simulationStepGlobal === SIMULATION_ENGINE_STEPS.AWARD_DETAILS;
     const voidFunction = () => { return null;}
     return (
         <div style={{margin: '0 0 35px'}}>
@@ -311,7 +377,7 @@ const AwardDetails = () => {
             {/* {showError && <SESmallAlertMessage type="error" content="Vous n'avez saisi aucune valeur." />} */}
             {showContinueBtn &&            
                                 <div className="FieldView DaisyFieldView field-default SelectField VEH_USA_KILOM" style={{ margin: 0 }}>
-                                    <ButtonLarge name="Continuer" handleContinue={(validRank && validAwardName) ? handleContinue : voidFunction}/>
+                                    <ButtonLarge name="Continuer" handleContinue={(validRank && validAwardName) ? handleContinue : voidFunction} uniqueId={`${Award}-continue-btn`}/>
                                 </div>}
 
         </div>

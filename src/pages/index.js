@@ -12,15 +12,16 @@ import BlockCourtier2 from '../assets/240_F_271683964_RV5TD7e4GN67UBFhvBvtltNO4h
 import BlockCourtier3 from '../assets/beautiful-woman-standing-front-colleagues-group-african-american-business-people-working-office-together_146671-45002.avif'
 import SocialMediaLogo from '../assets/social_media_logo.png'
 // Import svg
-import {ReactComponent as WendogoLogo} from '../assets/wendogo_logo.svg'
-import  {ReactComponent as DropDownIcon} from '../assets/dropdown_icon.svg'
-import {ReactComponent as FeatureDistance} from '../assets/features-distance-1.svg'
-import {ReactComponent as FeatureImplication} from '../assets/features-implication-4.svg'
-import {ReactComponent as FeatureNoStress} from '../assets/features-no-stress-4.svg'
-import {ReactComponent as FeaturePrice} from '../assets/features-price-2.svg'
-import {ReactComponent as FeatureProfessional} from '../assets/features-professional-4.svg'
-import {ReactComponent as FeatureTransparence} from '../assets/features-transparence-4.svg'
-import { Helmet } from 'react-helmet';
+import WendogoLogo from '../assets/wendogo_logo.svg'
+import  DropDownIcon from '../assets/dropdown_icon.svg'
+import FeatureDistance from '../assets/features-distance-1.svg'
+import FeatureImplication from '../assets/features-implication-4.svg'
+import FeatureNoStress from '../assets/features-no-stress-4.svg'
+import FeaturePrice from '../assets/features-price-2.svg'
+import FeatureProfessional from '../assets/features-professional-4.svg'
+import FeatureTransparence from '../assets/features-transparence-4.svg'
+import Image from 'next/image';
+import Head from 'next/head';
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
@@ -31,11 +32,12 @@ import "swiper/css/effect-fade";
 // import required modules
 import { Pagination, Autoplay } from "swiper";
 import { useEffect, useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
+// import Head from 'next/head'
 
 import Footer from '../components/Footer';
 import OptimizedImage from '../components/OptimizedImage';
-// import { Link } from "react-router-dom";
+// import Link from 'next/link';
 // import Nav from "./Nav";
 function HomePage(){
 
@@ -168,17 +170,36 @@ function HomePage(){
       }
     }, [browserWidth, widthBanner, positionLeft,countdown])    
 
-    //const navigate = useNavigate()
+    //const router = useRouter()
     // const goToWaitingList = () => {
-    //   navigate('/waitinglist', { replace: true })
+    //   router.push('/waitinglist', { replace: true })
     // }
 
-    return <div >
+    return (
+      <>
+      <Head>
+        <title>Wendogo - Expert en ligne pour vos demandes de visa</title>
+        <meta
+          name="description"
+          content="Wendogo is your trusted online expert for visa applications."
+        />
+        <meta property="og:title" content="Wendogo - Your Visa Expert" />
+        <meta
+          property="og:description"
+          content="Expert en ligne pour vos demandes de visa."
+        />
+        <meta
+          property="og:image"
+          content="https://wendogo.com/static/media/wendogo_jeu_concours.png"
+        />
+      </Head>
+        <div >
             <nav className={"Navbarstyles__Navigation1 "+(scrollTop>900 ? "fBUtVg" : "kebTzo")}>
               <div className={"Navbarstyles__Navigation2 "+(scrollTop>900 ? "jBwgPO" : "jigKlE")}>
                 <div className="Navbarstyles__Navigation3">
                   <a aria-current="page" aria-label="Aller à l'accueil" className="Navbarstyles__LogoLink" href="/" >
-                    <WendogoLogo className={scrollTop>900 ? "WendogoLogoText" : ""}/>
+                  {/* <Image src={WendogoLogo}  className={scrollTop>900 ? "WendogoLogoText" : ""} alt='WendogoLogo'/> */}
+                    <WendogoLogo className={scrollTop>900 ? "WendogoLogoText" : ""} alt='WendogoLogo'/>
                   </a>
                   <button aria-label="Ouvrir le menu" tabIndex={0} type="button" className="Navbarstyles__BurgerButton" onClick={() => handleClickBurgerButton()}>
                     <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="Navbarstyles__BurgerButtonIcon">
@@ -197,18 +218,18 @@ function HomePage(){
                       </li>
                       <li aria-expanded="false" role="menuitem" tabIndex={0} className="Navbarstyles__MenuItem Navbarstyles__MenuItem-common">
                         <span className="Navbarstyles__MenuItemLabel" onClick={() => toggleNavSubMenu1()}>
-                          <span>Simuler mon visa</span>
-                          <DropDownIcon style={{transform : (displaySubMenu1 ? "rotate(180deg)" : '')}}/>
+                          <span>Simuler mon visa</span> 
+                          <DropDownIcon className="Navbarstyles__MenuItemArrow" style={{transform : (displaySubMenu1 ? "rotate(180deg)" : '')}}/>
                         </span>
                         <ul className={"Navbarstyles__SubMenu "+(displaySubMenu1 ? 'lowcCT subMenu1' : '')} >
                           <li className="Navbarstyles__SubMenuFirstItem">
                             <a tabIndex={0} className="LinkLabel__Link" href="/simulation/home">
-                              <span to='/simulation/home' className="LinkLabel__Label">Visa pour la France</span>
+                              <span href='/simulation/home' className="LinkLabel__Label">Visa pour la France</span>
                             </a>
                           </li>
                           <li>
                             <a tabIndex={0} className="LinkLabel__Link" href="/simulation/home">
-                            <span to='/simulation/home' className="LinkLabel__Label">Visa pour le Canada </span>
+                            <span href='/simulation/home' className="LinkLabel__Label">Visa pour le Canada </span>
                             </a>
                           </li>
                         </ul>
@@ -216,7 +237,8 @@ function HomePage(){
                       <li aria-expanded="false" aria-controls="7d517232" role="menuitem" tabIndex={0} className="Navbarstyles__MenuItem Navbarstyles__MenuItem-common">
                         <span className="Navbarstyles__MenuItemLabel" onClick={() => toggleNavSubMenu2()}>
                           <span>Ressources</span>
-                          <DropDownIcon style={{transform : (displaySubMenu2 ? "rotate(180deg)" : '')}}/>
+                          {/* <Image src={DropDownIcon} style={{transform : (displaySubMenu2 ? "rotate(180deg)" : '')}} alt='DropDownIcon'/> */}
+                          <DropDownIcon  className="Navbarstyles__MenuItemArrow"  style={{transform : (displaySubMenu2 ? "rotate(180deg)" : '')}}/>
                         </span>
                         <ul id="7d517232" className={"Navbarstyles__SubMenu "+(displaySubMenu2 ? 'lowcCT subMenu2' : '')}>
                           <li className="Navbarstyles__SubMenuFirstItem">
@@ -244,7 +266,9 @@ function HomePage(){
                       <li aria-expanded="false" aria-controls="e75b56b9" role="menuitem" tabIndex={0} className="Navbarstyles__MenuItem Navbarstyles__MenuItem-common">
                           <span className="Navbarstyles__MenuItemLabel" onClick={() => toggleNavSubMenu3()}>
                             <span>À propos</span>
-                            <DropDownIcon style={{transform : (displaySubMenu3 ? "rotate(180deg)" : '')}}/>
+                            {/* <Image src={DropDownIcon} style={{transform : (displaySubMenu3 ? "rotate(180deg)" : '')}}  alt='DropDownIcon'/> */}
+                            <DropDownIcon  className="Navbarstyles__MenuItemArrow"  style={{transform : (displaySubMenu3 ? "rotate(180deg)" : '')}}/>
+                            {/* <DropDownIcon /> */}
                           </span>
                           <ul id="e75b56b9" className={"Navbarstyles__SubMenu "+(displaySubMenu3 ? 'lowcCT subMenu3' : '')}>
                           <li>
@@ -260,8 +284,8 @@ function HomePage(){
                         </ul>
                       </li>
                       <li className="Navbarstyles__MenuButtonItems-sc-mi7mu3-6 eonXWL">
-                        {/* <Link to='/waitinglist' className="ButtonLogin__Button"> Se connecter </Link> */}
-                        <Link to='/simulation/home' className="ButtonNavbar__Button">
+                        {/* <Link href='/waitinglist' className="ButtonLogin__Button"> Se connecter </Link> */}
+                        <Link href='/simulation/home' className="ButtonNavbar__Button">
                           <span className="ButtonNavbar__Label"> Simuler mon visa </span>
                           <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className="ButtonNavbar__Arrow">
                             <path d="M15.3,11.17l-2.51-2.49,1.18-1.18,4.53,4.5-4.53,4.5-1.18-1.18,2.51-2.49H5.5v-1.66H15.3Z" />
@@ -273,7 +297,7 @@ function HomePage(){
                 </div>
               </div>
             </nav>
-            <Helmet>
+            <Head>
               <meta property="og:url"           content="https://wendogo.com/" />
               <meta property="og:type"          content="website" />
               <meta property="og:title"         content="Wendogo" />
@@ -281,13 +305,13 @@ function HomePage(){
               <meta property="og:image"         content={'https://wendogo.com/'+SocialMediaLogo} /> 
               <title>Wendogo</title>
               <meta name="description"          content="Expert en ligne pour vos demandes de visa"/>
-            </Helmet>
+            </Head>
             <div className="main" style={{background: 'black'}}> 
               <Swiper className="mySwiper swiper-h" spaceBetween={50} pagination={{ clickable: true, }} modules={[Pagination, Autoplay]} speed={1000}
                     loop={true} autoplay={{delay: 2000,  disableOnInteraction: false, pauseOnMouseEnter: true}}>   
-                <SwiperSlide><OptimizedImage src={backgroundImg1} alt="homepageImage" /></SwiperSlide>
-                <SwiperSlide><OptimizedImage src={backgroundImg2} alt="homepageImage" /></SwiperSlide>
-                <SwiperSlide><OptimizedImage src={backgroundImg3} alt="homepageImage" /></SwiperSlide>
+                <SwiperSlide><Image src={backgroundImg1} alt="homepageImage1"  /></SwiperSlide>
+                <SwiperSlide><Image src={backgroundImg2} alt="homepageImage2" /></SwiperSlide>
+                <SwiperSlide><Image src={backgroundImg3} alt="homepageImage3" /></SwiperSlide>
                 <div className="main-screen__row">
                    <div className="main-screen__content">
                     <h1 className="HeroLeft__Title-sc-1axg5uv-3 jDYqud">Demandez un visa pour la France ou le Canada plus simplement.</h1>
@@ -300,7 +324,7 @@ function HomePage(){
                           </svg>
                         </span>
                       </span>
-                      <Link to='/simulation/home'>
+                      <Link href='/simulation/home'>
                         <span className="PrimaryButton__Label-sc-1vkvp7q-2 kVCvkJ"> Simuler mon visa </span>
                       </Link>
                     </button>
@@ -328,6 +352,7 @@ function HomePage(){
                         <div className="Card__Container-sc-1qqjegm-0 bSzjhs">
                           <div className="Card__CheckContainer-sc-1qqjegm-1 ffwQEH">
                             <FeatureDistance/>
+                            {/* <Image src={FeatureDistance} alt='FeatureDistance'/> */}
                           </div>
                           <div className="Card__TextContainer-sc-1qqjegm-3 ezVybs">
                             <div className="Card__Title-sc-1qqjegm-4 bqicpW">Nous travaillons à distance</div>
@@ -337,6 +362,7 @@ function HomePage(){
                         <div className="Card__Container-sc-1qqjegm-0 bSzjhs">
                           <div className="Card__CheckContainer-sc-1qqjegm-1 ffwQEH">
                            <FeaturePrice/>
+                           {/* <Image src={FeaturePrice} alt='FeaturePrice'/> */}
                           </div>
                           <div className="Card__TextContainer-sc-1qqjegm-3 ezVybs">
                             <div className="Card__Title-sc-1qqjegm-4 bqicpW">Tarifs</div>
@@ -346,6 +372,7 @@ function HomePage(){
                         <div className="Card__Container-sc-1qqjegm-0 bSzjhs">
                           <div className="Card__CheckContainer-sc-1qqjegm-1 ffwQEH">
                             <FeatureNoStress/>
+                            {/* <Image src={FeatureNoStress} alt='FeatureNoStress'/> */}
                           </div>
                           <div className="Card__TextContainer-sc-1qqjegm-3 ezVybs">
                             <div className="Card__Title-sc-1qqjegm-4 bqicpW">No Stress</div>
@@ -358,6 +385,7 @@ function HomePage(){
                       <div className="BlocRTB__Container-sc-15u9ccm-1 kSXqSI">
                         <div className="Card__Container-sc-1qqjegm-0 bSzjhs mkxwco">
                           <div className="Card__CheckContainer-sc-1qqjegm-1 ffwQEH">
+                            {/* <Image src={FeatureTransparence} alt='FeatureTransparence'/> */}
                             <FeatureTransparence/>
                           </div>
                           <div className="Card__TextContainer-sc-1qqjegm-3 ezVybs">
@@ -367,6 +395,7 @@ function HomePage(){
                         </div>
                         <div className="Card__Container-sc-1qqjegm-0 bSzjhs">
                           <div className="Card__CheckContainer-sc-1qqjegm-1 ffwQEH">
+                            {/* <Image src={FeatureProfessional} alt='FeatureProfessional'/> */}
                             <FeatureProfessional/>
                           </div>
                           <div className="Card__TextContainer-sc-1qqjegm-3 ezVybs">
@@ -377,6 +406,7 @@ function HomePage(){
                         <div className="Card__Container-sc-1qqjegm-0 bSzjhs">
                           <div className="Card__CheckContainer-sc-1qqjegm-1 ffwQEH">
                             <FeatureImplication/>
+                            {/* <Image src={FeatureImplication} alt='FeatureImplication'/> */}
                           </div>
                           <div className="Card__TextContainer-sc-1qqjegm-3 ezVybs">
                             <div className="Card__Title-sc-1qqjegm-4 bqicpW">Implication</div>
@@ -398,7 +428,7 @@ function HomePage(){
                                 </svg>
                               </span>
                             </span>
-                            <Link to='/simulation/home'>
+                            <Link href='/simulation/home'>
                               <span className="PrimaryButton__Label-sc-1vkvp7q-2 kVCvkJ"> Simuler mon visa </span>
                             </Link>
                           </button>
@@ -409,12 +439,12 @@ function HomePage(){
                             <picture>
                               <source type="image/webp" srcSet={SliderstylesImage1} />
                               <source srcSet={SliderstylesImage1} />
-                              <img className={"Sliderstyles__Image-sc-jd0rgd-7 "+ (isLeftArrow ? "kCpYFv" : "CtOpC") } src={SliderstylesImage1} alt="" />
+                              <Image className={"Sliderstyles__Image-sc-jd0rgd-7 "+ (isLeftArrow ? "kCpYFv" : "CtOpC") } src={SliderstylesImage1} alt="" />
                             </picture>
                             <picture>
                               <source type="image/webp" srcSet={SliderstylesImage2} />
                               <source srcSet={SliderstylesImage2} />
-                              <img className={"Sliderstyles__Image-sc-jd0rgd-7 "+ (!isLeftArrow ? "kCpYFv" : "CtOpC") } src={SliderstylesImage2} alt="" />
+                              <Image className={"Sliderstyles__Image-sc-jd0rgd-7 "+ (!isLeftArrow ? "kCpYFv" : "CtOpC") } src={SliderstylesImage2} alt="" />
                             </picture>
                           </div>
                           <div className="Laptop__Content-sc-1henh52-2 bwEaWU">
@@ -472,12 +502,12 @@ function HomePage(){
                             <picture>
                               <source type="image/webp" srcSet={SliderstylesImage1} />
                               <source srcSet={SliderstylesImage1} />
-                              <img className={"Sliderstyles__Image-sc-jd0rgd-7 "+ (isLeftArrow ? "kCpYFv" : "CtOpC") } src={SliderstylesImage1} alt="" />
+                              <Image className={"Sliderstyles__Image-sc-jd0rgd-7 "+ (isLeftArrow ? "kCpYFv" : "CtOpC") } src={SliderstylesImage1} alt="" />
                             </picture>
                             <picture>
                               <source type="image/webp" srcSet={SliderstylesImage2} />
                               <source srcSet={SliderstylesImage2} />
-                              <img className={"Sliderstyles__Image-sc-jd0rgd-7 "+ (!isLeftArrow ? "kCpYFv" : "CtOpC") } src={SliderstylesImage2} alt="" />
+                              <Image className={"Sliderstyles__Image-sc-jd0rgd-7 "+ (!isLeftArrow ? "kCpYFv" : "CtOpC") } src={SliderstylesImage2} alt="" />
                             </picture>
                           </div>
                             <button aria-label="Suivant" type="button" onClick={() => handleClickArrow(false)} className="ArrowButton__Container-sc-11aiclo-3 doTHWK Sliderstyles__Next-sc-jd0rgd-3 jZecqw" disabled={!isLeftArrow}>
@@ -521,12 +551,12 @@ function HomePage(){
                                     <picture>
                                       <source type="image/webp" srcSet={SliderstylesImage1} />
                                       <source srcSet={SliderstylesImage1} />
-                                      <img className={"Sliderstyles__Image-sc-jd0rgd-7 "+ (isLeftArrow ? "kCpYFv" : "CtOpC") } src={SliderstylesImage1} alt="" />
+                                      <Image className={"Sliderstyles__Image-sc-jd0rgd-7 "+ (isLeftArrow ? "kCpYFv" : "CtOpC") } src={SliderstylesImage1} alt="" />
                                     </picture>
                                     <picture>
                                       <source type="image/webp" srcSet={SliderstylesImage2} />
                                       <source srcSet={SliderstylesImage2} />
-                                      <img className={"Sliderstyles__Image-sc-jd0rgd-7 "+ (!isLeftArrow ? "kCpYFv" : "CtOpC") } src={SliderstylesImage2} alt="" />
+                                      <Image className={"Sliderstyles__Image-sc-jd0rgd-7 "+ (!isLeftArrow ? "kCpYFv" : "CtOpC") } src={SliderstylesImage2} alt="" />
                                     </picture>
                                   </div>
                                 </div>)}
@@ -538,8 +568,8 @@ function HomePage(){
                         <h1 className="center-text center-text1">Votre visa en 6 étapes</h1>
                         <div className="columns-6 w-row">
                           <div className="w-col w-col-6 w-col-stack">
-                            {/* <img src="https://uploads-ssl.webflow.com/61d984790bdf2970837c8d96/62bafa7838ff242093f9d9b5_iollo-kit%402x.png" loading="lazy" width={750} sizes="(max-width: 991px) 100vw, (max-width: 1439px) 48vw, 621px" srcSet="https://uploads-ssl.webflow.com/61d984790bdf2970837c8d96/62bafa7838ff242093f9d9b5_iollo-kit%402x-p-500.png  500w,https://uploads-ssl.webflow.com/61d984790bdf2970837c8d96/62bafa7838ff242093f9d9b5_iollo-kit%402x-p-800.png  800w,https://uploads-ssl.webflow.com/61d984790bdf2970837c8d96/62bafa7838ff242093f9d9b5_iollo-kit%402x-p-1080.png  1080w,https://uploads-ssl.webflow.com/61d984790bdf2970837c8d96/62bafa7838ff242093f9d9b5_iollo-kit%402x.png  1500w" alt="" className="image-5" /> */}
-                            <img src={PasseportVisa} loading="lazy" width={750} sizes="(max-width: 991px) 100vw, (max-width: 1439px) 48vw, 621px" alt="" className="image-5" />
+                            {/* <Image src="https://uploads-ssl.webflow.com/61d984790bdf2970837c8d96/62bafa7838ff242093f9d9b5_iollo-kit%402x.png" loading="lazy" width={750} sizes="(max-width: 991px) 100vw, (max-width: 1439px) 48vw, 621px" srcSet="https://uploads-ssl.webflow.com/61d984790bdf2970837c8d96/62bafa7838ff242093f9d9b5_iollo-kit%402x-p-500.png  500w,https://uploads-ssl.webflow.com/61d984790bdf2970837c8d96/62bafa7838ff242093f9d9b5_iollo-kit%402x-p-800.png  800w,https://uploads-ssl.webflow.com/61d984790bdf2970837c8d96/62bafa7838ff242093f9d9b5_iollo-kit%402x-p-1080.png  1080w,https://uploads-ssl.webflow.com/61d984790bdf2970837c8d96/62bafa7838ff242093f9d9b5_iollo-kit%402x.png  1500w" alt="" className="image-5" /> */}
+                            <Image src={PasseportVisa} loading="lazy" width={750} sizes="(max-width: 991px) 100vw, (max-width: 1439px) 48vw, 621px" alt="" className="image-5" />
                           </div>
                           <div className="column-19 w-col w-col-6 w-col-stack">
                             <div className="div-block-2">
@@ -555,7 +585,7 @@ function HomePage(){
                                         </svg>
                                       </span>
                                     </span>
-                                    <Link to='/simulation/home'>
+                                    <Link href='/simulation/home'>
                                       <span className="PrimaryButton__Label-sc-1vkvp7q-2 kVCvkJ"> Simuler mon visa </span>
                                     </Link>
                                   </button>
@@ -591,7 +621,7 @@ function HomePage(){
                               <h2 className="steps">Decision finale</h2>
                               <p className="paragraph-2"> Après réception de la réponse de l'ambassade, nous effectuons une évaluation globale et vous prodiguons les derniers conseils pour la suite de la procédure.</p>
                             </div>
-                            <img src={PasseportVisa} loading="lazy" width={750} sizes="(max-width: 479px) 320px, (max-width: 991px) 96vw, 100vw" alt="" className="image-17" />
+                            <Image src={PasseportVisa} loading="lazy" width={750} sizes="(max-width: 479px) 320px, (max-width: 991px) 96vw, 100vw" alt="" className="image-17" />
                           </div>
                         </div>
                       </div>
@@ -624,7 +654,7 @@ function HomePage(){
                         <picture>
                             <source type="image/webp" srcSet={WorldNoBorders} />
                             <source srcSet={WorldNoBorders} />
-                            <img className="BlocParole__Image-sc-43i1q4-5 gXGJBg" src={SliderstylesImage1} alt="" loading="lazy" size="(min-width: 1024px) 50vw, (min-width: 768px) 75vw, 100vw"/>
+                            <Image className="BlocParole__Image-sc-43i1q4-5 gXGJBg" src={SliderstylesImage1} alt="" loading="lazy" size="(min-width: 1024px) 50vw, (min-width: 768px) 75vw, 100vw"/>
                         </picture>
                       </div>
                     </section>*/}
@@ -642,7 +672,7 @@ function HomePage(){
                               </svg>
                             </span>
                           </span>
-                          <Link to='/simulation/home'>
+                          <Link href='/simulation/home'>
                             <span className="PrimaryButton__Label-sc-1vkvp7q-2 kVCvkJ"> Simuler mon visa </span>
                           </Link>
                         </button>
@@ -655,39 +685,39 @@ function HomePage(){
                           {/* <picture>
                             <source type="image/webp" srcSet="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_320/v1677667256/website/page/home/BlocCourtier-1.jpg 320w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_375/v1677667256/website/page/home/BlocCourtier-1.jpg 375w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_425/v1677667256/website/page/home/BlocCourtier-1.jpg 425w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_768/v1677667256/website/page/home/BlocCourtier-1.jpg 768w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_1024/v1677667256/website/page/home/BlocCourtier-1.jpg 1024w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_1240/v1677667256/website/page/home/BlocCourtier-1.jpg 1240w" />
                             <source srcSet="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_320/v1677667256/website/page/home/BlocCourtier-1.jpg 320w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_375/v1677667256/website/page/home/BlocCourtier-1.jpg 375w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_425/v1677667256/website/page/home/BlocCourtier-1.jpg 425w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_768/v1677667256/website/page/home/BlocCourtier-1.jpg 768w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_1024/v1677667256/website/page/home/BlocCourtier-1.jpg 1024w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_1240/v1677667256/website/page/home/BlocCourtier-1.jpg 1240w" />
-                            <img alt="" size="(min-width: 1024px) 50vw, 100vw" loading="lazy" src="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto/v1677667256/website/page/home/BlocCourtier-1.jpg" className={"Images__Image-sc-2gr022-1 "+((countdown<5 || countdown===15) ? bannerAnimationClassList[1] : "eXDVgd")} />
+                            <Image alt="" size="(min-width: 1024px) 50vw, 100vw" loading="lazy" src="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto/v1677667256/website/page/home/BlocCourtier-1.jpg" className={"Images__Image-sc-2gr022-1 "+((countdown<5 || countdown===15) ? bannerAnimationClassList[1] : "eXDVgd")} />
                           </picture> */}
                           <picture>
                             <source type="image/webp" srcSet={BlockCourtier1} />
                             <source srcSet={BlockCourtier1} />
-                            <img className={"Images__Image-sc-2gr022-1 "+((countdown<5 || countdown===15) ? bannerAnimationClassList[1] : "eXDVgd")} src={BlockCourtier1} alt="" size="(min-width: 1024px) 50vw, 100vw" loading="lazy"  />
-                            {/* <img alt="v1677658638/website/page/home/Re%CC%81sultat.png" className="Sliderstyles__Image-sc-jd0rgd-7 kCpYFv" loading="lazy" src="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto/v1677658638/website/page/home/Re%CC%81sultat.png" /> */}
+                            <Image className={"Images__Image-sc-2gr022-1 "+((countdown<5 || countdown===15) ? bannerAnimationClassList[1] : "eXDVgd")} src={BlockCourtier1} alt="" size="(min-width: 1024px) 50vw, 100vw" loading="lazy"  />
+                            {/* <Image alt="v1677658638/website/page/home/Re%CC%81sultat.png" className="Sliderstyles__Image-sc-jd0rgd-7 kCpYFv" loading="lazy" src="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto/v1677658638/website/page/home/Re%CC%81sultat.png" /> */}
                           </picture>
                         </div>
                         <div className="Images__BaseImage-sc-2gr022-2 Images__Image2-sc-2gr022-4 ioovUp kUUMLx">
                           <picture>
                             <source type="image/webp" srcSet={BlockCourtier2} />
                             <source srcSet={BlockCourtier2} />
-                            <img  className={"Images__Image-sc-2gr022-1 "+((countdown >= 5 && countdown<10) ? bannerAnimationClassList[1] : "eXDVgd")} src={BlockCourtier2} alt="" size="(min-width: 1024px) 50vw, 100vw" loading="lazy"  />
-                            {/* <img alt="v1677658638/website/page/home/Re%CC%81sultat.png" className="Sliderstyles__Image-sc-jd0rgd-7 kCpYFv" loading="lazy" src="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto/v1677658638/website/page/home/Re%CC%81sultat.png" /> */}
+                            <Image  className={"Images__Image-sc-2gr022-1 "+((countdown >= 5 && countdown<10) ? bannerAnimationClassList[1] : "eXDVgd")} src={BlockCourtier2} alt="" size="(min-width: 1024px) 50vw, 100vw" loading="lazy"  />
+                            {/* <Image alt="v1677658638/website/page/home/Re%CC%81sultat.png" className="Sliderstyles__Image-sc-jd0rgd-7 kCpYFv" loading="lazy" src="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto/v1677658638/website/page/home/Re%CC%81sultat.png" /> */}
                           </picture>
                           {/* <picture>
                             <source type="image/webp" srcSet="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_320/v1677668879/website/page/home/BlocCourtier-2.jpg 320w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_375/v1677668879/website/page/home/BlocCourtier-2.jpg 375w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_425/v1677668879/website/page/home/BlocCourtier-2.jpg 425w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_768/v1677668879/website/page/home/BlocCourtier-2.jpg 768w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_1024/v1677668879/website/page/home/BlocCourtier-2.jpg 1024w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_1240/v1677668879/website/page/home/BlocCourtier-2.jpg 1240w" />
                             <source srcSet="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_320/v1677668879/website/page/home/BlocCourtier-2.jpg 320w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_375/v1677668879/website/page/home/BlocCourtier-2.jpg 375w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_425/v1677668879/website/page/home/BlocCourtier-2.jpg 425w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_768/v1677668879/website/page/home/BlocCourtier-2.jpg 768w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_1024/v1677668879/website/page/home/BlocCourtier-2.jpg 1024w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_1240/v1677668879/website/page/home/BlocCourtier-2.jpg 1240w" />
-                            <img alt="" size="(min-width: 1024px) 50vw, 100vw" loading="lazy" src="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto/v1677668879/website/page/home/BlocCourtier-2.jpg" />
+                            <Image alt="" size="(min-width: 1024px) 50vw, 100vw" loading="lazy" src="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto/v1677668879/website/page/home/BlocCourtier-2.jpg" />
                           </picture> */}
                         </div>
                         <div className="Images__BaseImage-sc-2gr022-2 Images__Image3-sc-2gr022-5 ioovUp gaxwmL">
                           <picture>
                             <source type="image/webp" srcSet={BlockCourtier3} />
                             <source srcSet={BlockCourtier3} />
-                            <img className={"Images__Image-sc-2gr022-1 "+((countdown >= 10 && countdown<15) ? bannerAnimationClassList[1] : "eXDVgd")} src={BlockCourtier3} alt="" size="(min-width: 1024px) 50vw, 100vw" loading="lazy"  />
-                            {/* <img alt="v1677658638/website/page/home/Re%CC%81sultat.png" className="Sliderstyles__Image-sc-jd0rgd-7 kCpYFv" loading="lazy" src="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto/v1677658638/website/page/home/Re%CC%81sultat.png" /> */}
+                            <Image className={"Images__Image-sc-2gr022-1 "+((countdown >= 10 && countdown<15) ? bannerAnimationClassList[1] : "eXDVgd")} src={BlockCourtier3} alt="" size="(min-width: 1024px) 50vw, 100vw" loading="lazy"  />
+                            {/* <Image alt="v1677658638/website/page/home/Re%CC%81sultat.png" className="Sliderstyles__Image-sc-jd0rgd-7 kCpYFv" loading="lazy" src="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto/v1677658638/website/page/home/Re%CC%81sultat.png" /> */}
                           </picture>
                           {/* <picture>
                             <source type="image/webp" srcSet="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_320/v1677668879/website/page/home/BlocCourtier-3.jpg 320w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_375/v1677668879/website/page/home/BlocCourtier-3.jpg 375w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_425/v1677668879/website/page/home/BlocCourtier-3.jpg 425w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_768/v1677668879/website/page/home/BlocCourtier-3.jpg 768w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_1024/v1677668879/website/page/home/BlocCourtier-3.jpg 1024w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_1240/v1677668879/website/page/home/BlocCourtier-3.jpg 1240w" />
                             <source srcSet="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_320/v1677668879/website/page/home/BlocCourtier-3.jpg 320w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_375/v1677668879/website/page/home/BlocCourtier-3.jpg 375w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_425/v1677668879/website/page/home/BlocCourtier-3.jpg 425w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_768/v1677668879/website/page/home/BlocCourtier-3.jpg 768w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_1024/v1677668879/website/page/home/BlocCourtier-3.jpg 1024w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_1240/v1677668879/website/page/home/BlocCourtier-3.jpg 1240w" />
-                            <img alt="" size="(min-width: 1024px) 50vw, 100vw" loading="lazy" src="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto/v1677668879/website/page/home/BlocCourtier-3.jpg" className={"Images__Image-sc-2gr022-1 "+((countdown<15 && countdown>=10) ? bannerAnimationClassList[1] : "eXDVgd")} />
+                            <Image alt="" size="(min-width: 1024px) 50vw, 100vw" loading="lazy" src="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto/v1677668879/website/page/home/BlocCourtier-3.jpg" className={"Images__Image-sc-2gr022-1 "+((countdown<15 && countdown>=10) ? bannerAnimationClassList[1] : "eXDVgd")} />
                           </picture> */}
                         </div>
                       </div>
@@ -740,7 +770,7 @@ function HomePage(){
                           <picture>
                             <source type="image/webp" sizes="(min-width: 1240px) 288px, (min-width: 1024px) 25vw, (min-width: 768px) 37.5vw, 100vw" srcSet={WorldNoBorders} />
                             <source sizes="(min-width: 1240px) 288px, (min-width: 1024px) 25vw, (min-width: 768px) 37.5vw, 100vw"  srcSet={WorldNoBorders} />
-                            <img className="Banner__Image-sc-yqcec5-2 kHAXoZ" alt="v1677669144/website/page/home/BlocFooter.jpg" loading="lazy" src={SliderstylesImage1}/>
+                            <Image className="Banner__Image-sc-yqcec5-2 kHAXoZ" alt="v1677669144/website/page/home/BlocFooter.jpg" loading="lazy" src={WorldNoBorders}/>
                           </picture>
                         </div>
                         <div className="Banner__Content-sc-yqcec5-3 hKeCKQ">
@@ -756,7 +786,7 @@ function HomePage(){
                                   </svg>
                                 </span>
                               </span>
-                              <Link to='/simulation/home'>
+                              <Link href='/simulation/home'>
                                 <span className="PrimaryButton__Label-sc-1vkvp7q-2 kVCvkJ"> Simuler mon visa </span>
                               </Link>
                             </button>
@@ -769,7 +799,8 @@ function HomePage(){
                   <Footer/>
                 </section>
             </div>           
-          </div>
+          </div> </>
+  )
 
 }
 

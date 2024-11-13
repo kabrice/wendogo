@@ -1,179 +1,263 @@
 import React, { useState, useEffect } from 'react';
-import SEReportCard from '../../components/SimulationEngine/SEReportCard';
-import SEMarkInput from '../../components/SimulationEngine/SEMarkInput'; 
 import { useDispatch, useSelector } from 'react-redux';
 import { setStep } from '../../redux/simulationStepSlice';
-import {setProgress} from "../../redux/progressBarStepSlice";
+import { setProgress } from "../../redux/progressBarStepSlice";
 import helper from '../../utils/Helper';
+import { setUser } from '../../redux/userSlice';
 import ButtonLarge from '../../components/ButtonLarge';
-import {SIMULATION_ENGINE_STEPS, PROGRESS_BAR_STEPS} from '../../utils/Constants'
+import SEReportCard from '../../components/SimulationEngine/SEReportCard';
+import SEMarkInput from '../../components/SimulationEngine/SEMarkInput';
 import SESmallAlertMessage from '../../components/SimulationEngine/SESmallAlertMessage';
+import { SIMULATION_ENGINE_STEPS, PROGRESS_BAR_STEPS } from '../../utils/Constants';
+import { Loader2 } from "lucide-react";
 import _ from 'lodash';
-import { set } from 'react-hook-form';
 
 const ReportCard2 = () => {
     const dispatch = useDispatch();
-    const user = helper.getLocalStorageWithExpiration('wendogouser'); 
-    const periodNumber = user.academicYearHeadDetails2.academicYearOrganization?.name === 'Trimestre' ? 4 : 3;
-
+    const [isInitializing, setIsInitializing] = useState(true);
+    const user = useSelector((state) => state.user);
+    const [periodNumber, setPeriodNumber] = useState(0);
     const simulationStepGlobal = useSelector(state => state.simulationStep);
-    const isInPremiereClassGlobal = useSelector((state) => state.premiereClass.active)
+    const isInPremiereClassGlobal = useSelector(state => state.premiereClass.active);
+    const progressBarStep = useSelector(state => state.progressBarStep);
 
-    const [subjectStates, setSubjectStates] = useState(Array(periodNumber).fill().map(() => ({ reference: 0, isBaccalaureat: false, isPracticalWork: false, label: { value: '', validated: true }, weight: { value: '', validated: true }, mark: { value: '', validated: true }, rank: { value: '', validated: true } })));
-    const [subjectLists, setSubjectLists] = useState( user.reportCard2 ? 
-                                                      user.reportCard2 :
-                                                      Array(periodNumber).fill([]));
-    const [referenceIncs, setReferenceIncs] = useState(Array(periodNumber).fill(0));
-    const [isReadModes, setIsReadModes] = useState(Array(periodNumber).fill(true));
-    const [isCancelModes, setIsCancelModes] = useState(Array(periodNumber).fill(false));
-    const [displayReportCardList, setDisplayReportCardList] = useState(Array(periodNumber).fill(true))
+    // Initialize state
+    const [continueButtonClicked, setContinueButtonClicked] = useState(false);
+    const [subjectStates, setSubjectStates] = useState([]);
+    const [subjectLists, setSubjectLists] = useState([]);
+    const [referenceIncs, setReferenceIncs] = useState([]);
+    const [isReadModes, setIsReadModes] = useState([]);
+    const [isCancelModes, setIsCancelModes] = useState([]);
+    const [displayReportCardList, setDisplayReportCardList] = useState([]);
     const [showError, setShowError] = useState(false);
-    
-    
-
-    const progressBarStep = useSelector((state) => state.progressBarStep); 
-    const showContinueBtn = ((!user?.isResult3Available && !user?.mainSubjects) || user?.isResult3Available) && ((simulationStepGlobal === SIMULATION_ENGINE_STEPS.REPORT_CARD2) || (progressBarStep === PROGRESS_BAR_STEPS.BULLETIN_N_1) )
-    const [continueButtonClicked, setContinueButtonClicked] = useState(false); 
-
-    const mostRecentBacId = helper.getMostRecentBacId(user);
-    let bac_id = `bac0000${parseInt(mostRecentBacId.slice(-1)) - 1}`;
-    const isBaccalaureatMarkMandatory = bac_id === 'bac00004';  
-    const titleMarkInput = `Veuillez renseigner une nouvelle matière, le ${(isBaccalaureatMarkMandatory ? 'coefficient' : user.academicYearHeadDetails2.subjectWeightSystem?.name?.toLowerCase())}, la note et le rang obtenu `;
-
     const [hasEnterBaccalaureatMarksWhenMandatory, setHasEnterBaccalaureatMarksWhenMandatory] = useState(true);
+    const [applyingForMaster, setApplyingForMaster] = useState(false);
+    const [isBaccalaureatMarkMandatory, setIsBaccalaureatMarkMandatory] = useState(false);
+    const [titleMarkInput, setTitleMarkInput] = useState('');
 
-  
-    //const [mainSubjects, setMainSubjects] = useState(user?.mainSubjects);
-    const [applyingForMaster, setApplyingForMaster] = useState(user?.applyingForMaster);
-    const handleContinue = () => { 
+    // Initialize user data and states
+    useEffect(() => {
+        const initializeData = () => {
+            
+            if (!user) return;
+
+            const periods = user.academicYearHeadDetails2.academicYearOrganization?.name === 'Trimestre' ? 4 : 3;
+            setPeriodNumber(periods);
+
+            // Initialize all state arrays based on period number
+            const initialSubjectState = {
+                reference: 0,
+                isBaccalaureat: false,
+                isPracticalWork: false,
+                label: { value: '', validated: true },
+                weight: { value: '', validated: true },
+                mark: { value: '', validated: true },
+                rank: { value: '', validated: true }
+            };
+
+            setSubjectStates(Array(periods).fill(initialSubjectState));
+            setSubjectLists(user.reportCard2 || Array(periods).fill([]));
+            setReferenceIncs(Array(periods).fill(0));
+            setIsReadModes(Array(periods).fill(true));
+            setIsCancelModes(Array(periods).fill(false));
+            setDisplayReportCardList(Array(periods).fill(true));
+
+            // Calculate bac-related values
+            const mostRecentBacId = helper.getMostRecentBacId(user);
+            const bacId = `bac0000${parseInt(mostRecentBacId.slice(-1)) - 1}`;
+            const isBacMandatory = bacId === 'bac00004';
+            setIsBaccalaureatMarkMandatory(isBacMandatory);
+
+            // Set other state values
+            setApplyingForMaster(user.applyingForMaster);
+            setTitleMarkInput(`Veuillez renseigner une nouvelle matière, le ${
+                isBacMandatory ? 'coefficient' : user.academicYearHeadDetails2.subjectWeightSystem?.name?.toLowerCase()
+            }, la note et le rang obtenu `);
+
+            
+            setIsInitializing(false);
+        };
+
+        initializeData();
+    }, []);
+
+    const showContinueBtn = user && (
+        ((!user.isResult3Available && !user.mainSubjects) || user.isResult3Available) && 
+        ((simulationStepGlobal === SIMULATION_ENGINE_STEPS.REPORT_CARD2) || 
+        (progressBarStep === PROGRESS_BAR_STEPS.BULLETIN_N_1))
+    );
+
+    const handleContinue = () => {
         const reportCard = user?.reportCard2;
         const isReportCardsValid = reportCard && subjectLists && !_.every(reportCard.slice(0, -1), _.isEmpty);
         const hasBaccalaureatMarks = reportCard && (!isBaccalaureatMarkMandatory || reportCard[periodNumber - 1]?.length > 0);
-        setHasEnterBaccalaureatMarksWhenMandatory(hasBaccalaureatMarks); 
+        
+        setHasEnterBaccalaureatMarksWhenMandatory(hasBaccalaureatMarks);
         setContinueButtonClicked(true);
-        if ( isReportCardsValid && hasBaccalaureatMarks) {
-            let nextProgressBarStep = isInPremiereClassGlobal? PROGRESS_BAR_STEPS.PARCOURS_ACADEMIQUE_ET_PROFESSIONNEL : PROGRESS_BAR_STEPS.BULLETIN_N_2
-            setShowError(false);   
-            let NEXT_EFFECTIVE_STEP = SIMULATION_ENGINE_STEPS.IS_YEAR_1_RESULTS_AVAILABLE
-            if (!user.isResult3Available) { 
-                //etMainSubjects(null)
-                const isApplyingForMaster = helper.isApplyingForMaster(user, subjectLists, 1)
-                setApplyingForMaster(isApplyingForMaster)
-                NEXT_EFFECTIVE_STEP = isApplyingForMaster ? SIMULATION_ENGINE_STEPS.PROGRAM_DOMAIN_BAC_N_1 : SIMULATION_ENGINE_STEPS.MAIN_SUBJECTS_BAC_N_1
-                nextProgressBarStep = progressBarStep
-                //console.log('KOUKOU')
-            }else{           
-                window.location.hash = ""
-                window.location.hash = isInPremiereClassGlobal ? "form/PARCOURS_ACADEMIQUE_ET_PROFESSIONNEL": "form/BULLETIN_N_2";
+
+        if (isReportCardsValid && hasBaccalaureatMarks) {
+            let nextProgressBarStep = isInPremiereClassGlobal ? 
+                PROGRESS_BAR_STEPS.PARCOURS_ACADEMIQUE_ET_PROFESSIONNEL : 
+                PROGRESS_BAR_STEPS.BULLETIN_N_2;
+            setShowError(false);
+
+            let nextStep = SIMULATION_ENGINE_STEPS.IS_YEAR_1_RESULTS_AVAILABLE;
+            if (!user.isResult3Available) {
+                const isApplyingForMaster = helper.isApplyingForMaster(user, subjectLists, 1);
+                setApplyingForMaster(isApplyingForMaster);
+                nextStep = isApplyingForMaster ? 
+                    SIMULATION_ENGINE_STEPS.PROGRAM_DOMAIN_BAC_N_1 : 
+                    SIMULATION_ENGINE_STEPS.MAIN_SUBJECTS_BAC_N_1;
+                nextProgressBarStep = progressBarStep;
+            } else {
+                window.location.hash = "";
+                window.location.hash = isInPremiereClassGlobal ? 
+                    "form/PARCOURS_ACADEMIQUE_ET_PROFESSIONNEL" : 
+                    "form/BULLETIN_N_2";
             }
-            updateWendogouser(isInPremiereClassGlobal? SIMULATION_ENGINE_STEPS.HAS_WON_AWARD : NEXT_EFFECTIVE_STEP, subjectLists, nextProgressBarStep)  
-        } else{
+
+            updateWendogouser(
+                isInPremiereClassGlobal ? SIMULATION_ENGINE_STEPS.HAS_WON_AWARD : nextStep,
+                subjectLists,
+                nextProgressBarStep
+            );
+        } else {
             setShowError(true);
         }
-       
-    }
+    };
 
-    const updateWendogouser = (simulationStep, reportCard2, progressBarStep=PROGRESS_BAR_STEPS.BULLETIN_N_1) => {
-        dispatch(setStep(simulationStep)) 
-        dispatch(setProgress(progressBarStep))  
-        //console.log('applyingForMaster ', applyingForMaster, 'simulationStep', simulationStep, 'mainSubjects', mainSubjects)
-        let updatedUser = {...user, simulationStep, reportCard2, progressBarStep, applyingForMaster, date: new Date().toISOString()}
-        helper.setLocalStorageWithExpiration('wendogouser', updatedUser)         
-    }
+    const updateWendogouser = (simulationStep, reportCard2, progressBarStep = PROGRESS_BAR_STEPS.BULLETIN_N_1) => {
+        dispatch(setStep(simulationStep));
+        dispatch(setProgress(progressBarStep));
+        const updatedUser = {
+            ...user,
+            simulationStep,
+            reportCard2,
+            progressBarStep,
+            applyingForMaster,
+            date: new Date().toISOString()
+        };
+        helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
+        dispatch(setUser(updatedUser));
+    };
 
     useEffect(() => {
-        //console.log('reportCard2', showContinueBtn, isReadModes.some(mode => mode === false), isCancelModes.some(mode => mode === true))
-        if(continueButtonClicked  || isReadModes.some(mode => mode === false) || isCancelModes.some(mode => mode === true)){
+        if (continueButtonClicked || isReadModes.some(mode => !mode) || isCancelModes.some(mode => mode)) {
             updateWendogouser(SIMULATION_ENGINE_STEPS.REPORT_CARD2, subjectLists);
             setIsCancelModes(Array(periodNumber).fill(false));
             setShowError(false);
         }
-    }, [subjectLists, isReadModes]) 
+    }, [subjectLists, isReadModes]);
+
+    if (isInitializing) {
+        return (
+            <div className="flex items-center justify-center min-h-[200px]">
+                <Loader2 className="w-8 h-8 animate-spin" />
+            </div>
+        );
+    }
 
     const renderSEReportCards = () => (
         subjectLists.map((list, index) => (
-            isReadModes[index] && ( 
+            isReadModes[index] && (
                 <SEReportCard
+                    key={`report2${index}`}
                     period={2}
                     disPlayBacTitle={index === (subjectLists.length-1) && isBaccalaureatMarkMandatory}
-                    key={'report2'+index} 
-                    header={ index < (subjectLists.length-1)  ?
+                    header={index < (subjectLists.length-1) ?
                         `${user.selectedSchoolYear2?.name} - ${user.academicYearHeadDetails2.academicYearOrganization?.name} N°${index + 1} - ${user.academicYearHeadDetails2.schoolName}` :
                         (isBaccalaureatMarkMandatory ? 'Notes du Baccalauréat' : 'Autre Session')}
-                    // subheader={index < (subjectLists.length-1)  ? `${user.degreeSelected?.name} en ${user.degreeExactNameValue}` : ''}
-                    userData={user}
-                    subjectList={list} 
+                    user={user}
+                    subjectList={list}
                     subjectWeightSystem={index === (subjectLists.length-1) && isBaccalaureatMarkMandatory ? 'Coefficient' : user.academicYearHeadDetails2.subjectWeightSystem.name}
                     setSubject={newSubject => {
-                        const updatedSubjects = [...subjectStates];
-                        updatedSubjects[index] = newSubject;
-                        setSubjectStates(updatedSubjects);
+                        setSubjectStates(prev => {
+                            const updated = [...prev];
+                            updated[index] = newSubject;
+                            return updated;
+                        });
                     }}
                     setIsReadMode={newMode => {
-                        const updatedModes = [...isReadModes];
-                        updatedModes[index] = newMode;
-                        setIsReadModes(updatedModes);
+                        setIsReadModes(prev => {
+                            const updated = [...prev];
+                            updated[index] = newMode;
+                            return updated;
+                        });
                     }}
                     setIsCancelModes={newMode => {
-                        const updatedModes = [...isCancelModes];
-                        updatedModes[index] = newMode;
-                        setIsCancelModes(updatedModes);
+                        setIsCancelModes(prev => {
+                            const updated = [...prev];
+                            updated[index] = newMode;
+                            return updated;
+                        });
                     }}
                     displayReportCardList={displayReportCardList[index]}
                     setDisplayReportCardList={newDisplay => {
-                        const updatedDisplay = [...displayReportCardList];
-                        updatedDisplay[index] = newDisplay;
-                        setDisplayReportCardList(updatedDisplay);
-                    }  }
-                    setSubjectList={newList => {
-                        const updatedLists = [...subjectLists];
-                        updatedLists[index] = newList(subjectLists[index]) // cause at this point, newList is a function-
-                        setSubjectLists(updatedLists);
+                        setDisplayReportCardList(prev => {
+                            const updated = [...prev];
+                            updated[index] = newDisplay;
+                            return updated;
+                        });
                     }}
-                /> 
+                    setSubjectList={newList => {
+                        setSubjectLists(prev => {
+                            const updated = [...prev];
+                            updated[index] = newList(prev[index]);
+                            return updated;
+                        });
+                    }}
+                />
             )
         ))
     );
 
     const renderSEMarkInputs = () => (
         subjectLists.map((_, index) => (
-            (!isReadModes[index]) && (
+            !isReadModes[index] && (
                 <SEMarkInput
-                    key={index}
-                    id={'SEMarkInput'+index}
+                    key={`SEMarkInput${index}`}
+                    id={`SEMarkInput${index}`}
                     isBacReportCard={index === (subjectLists.length-1) && isBaccalaureatMarkMandatory}
-                    title={titleMarkInput+ `pour `+
-                        (index < (subjectLists.length-1)  ?
+                    title={`${titleMarkInput}pour ${
+                        index < (subjectLists.length-1) ?
                         `le ${user.academicYearHeadDetails2.academicYearOrganization.name.toLowerCase()} n°${index + 1} de l'année ${user.selectedSchoolYear2.name}.` :
-                        (isBaccalaureatMarkMandatory ? 'votre Baccalauréat' : 'Autre Session'))}
-                    tip="Le rang est facultatif. Si inexistant, laissez un vide." 
+                        (isBaccalaureatMarkMandatory ? 'votre Baccalauréat' : 'Autre Session')
+                    }`}
+                    tip="Le rang est facultatif. Si inexistant, laissez un vide."
                     subjectWeightSystem={index === (subjectLists.length-1) && isBaccalaureatMarkMandatory ? 'Coefficient' : user.academicYearHeadDetails2.subjectWeightSystem.name}
                     markSystem={user.academicYearHeadDetails2.markSystem.name}
                     setIsReadMode={newMode => {
-                        const updatedModes = [...isReadModes];
-                        updatedModes[index] = newMode;
-                        setIsReadModes(updatedModes);
+                        setIsReadModes(prev => {
+                            const updated = [...prev];
+                            updated[index] = newMode;
+                            return updated;
+                        });
                     }}
                     urlFragment='/subjectmatches/search/'
                     subject={subjectStates[index]}
                     setSubject={newSubject => {
-                        const updatedSubjects = [...subjectStates];
-                        updatedSubjects[index] = newSubject;
-                        //console.log('🥳 newSubject', updatedSubjects);
-                        setSubjectStates(updatedSubjects);
+                        setSubjectStates(prev => {
+                            const updated = [...prev];
+                            updated[index] = newSubject;
+                            return updated;
+                        });
                     }}
                     showContinueBtn={1}
                     setReferenceInc={newInc => {
-                        const updatedIncs = [...referenceIncs];
-                        updatedIncs[index] = newInc(referenceIncs[index]);
-                        setReferenceIncs(updatedIncs);
+                        setReferenceIncs(prev => {
+                            const updated = [...prev];
+                            updated[index] = newInc(prev[index]);
+                            return updated;
+                        });
                     }}
                     referenceInc={referenceIncs[index]}
                     subjectList={subjectLists[index]}
                     setSubjectList={newList => {
-                        const updatedLists = [...subjectLists];
-                        updatedLists[index] = newList(subjectLists[index]) // cause at this point, newList is a function-
-                        setSubjectLists(updatedLists);
+                        setSubjectLists(prev => {
+                            const updated = [...prev];
+                            updated[index] = newList(prev[index]);
+                            return updated;
+                        });
                     }}
                 />
             )

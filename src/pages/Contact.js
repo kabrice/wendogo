@@ -1,8 +1,8 @@
 import { useState} from 'react';
 import EdgarHead from '../assets/edgar_head.jpeg'
-//import {ReactComponent as ExpertMan} from '../assets/ExpertMan1.svg'
-import { Helmet } from 'react-helmet';
-import { Link } from 'react-router-dom';
+//import ExpertMan} from '../assets/ExpertMan1.svg'
+import Head from 'next/head';
+import Link from 'next/link';
 import SocialMediaLogo from '../assets/social_media_logo.png'
 import Footer from '../components/Footer';
 import HeaderMenuBar from '../components/HeaderMenuBar';
@@ -44,7 +44,7 @@ function Contact(){
 
     
     return <div >
-            <Helmet>
+            <Head>
               <meta property="og:url"           content="https://wendogo.com/contact" />
               <meta property="og:type"          content="article" />
               <meta property="og:title"         content="Contact - Wendogo" />
@@ -52,7 +52,7 @@ function Contact(){
               <meta property="og:image"         content={SocialMediaLogo} /> 
               <title>Contact - Wendogo</title>
               <meta name="description"          content="Contactez nous ici."/>
-            </Helmet>
+            </Head>
             <HeaderMenuBar/>
             <main className="styles__Main-sc-kz84w6-0 gEFmYD gEFmYD1" style={{paddingTop: 80}}>
                       <div className="styles__Wrapper-sc-gk465i-0 cddtql">

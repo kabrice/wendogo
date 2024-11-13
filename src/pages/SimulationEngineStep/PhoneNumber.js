@@ -1,37 +1,45 @@
 import React, { useState, useEffect } from 'react';
-import { isValidNumber, parsePhoneNumber, formatPhoneNumber } from 'libphonenumber-js';
+import { isValidNumber, parsePhoneNumberWithError, formatPhoneNumber } from 'libphonenumber-js';
 import SETextInputPhone from "../../components/SimulationEngine/SETextInputPhone";
 import { useDispatch, useSelector } from 'react-redux';
 import { setStep } from '../../redux/simulationStepSlice';
 import helper from '../../utils/Helper';
 import { SIMULATION_ENGINE_STEPS } from '../../utils/Constants';
 import { useRef } from 'react';
-import useGeoLocation from "react-ipgeolocation" 
+import useGeoLocation from "react-ipgeolocation";
+import { Loader2 } from "lucide-react";
+import { setUser } from '../../redux/userSlice';
 
 const PhoneNumber = () => {
     const dispatch = useDispatch();
-    let user = helper.getLocalStorageWithExpiration('wendogouser');
-    console.log('user.phoneNumberFormatted', user?.phoneNumberFormatted);
     const location = useGeoLocation(); 
-    const [phoneNumber, setPhoneNumber] = useState(user?.phoneNumberFormatted?.name || '');
-    const [phoneNumberFormatted, setPhoneNumberFormatted] = useState(user?.phoneNumberFormatted || {name: '', validated: false});
-    const [countryIso2, setCountryIso2] = useState(user?.country || null);
     const simulationStepGlobal = useSelector((state) => state.simulationStep);
-    const [valid, setValid] = useState(user?.phoneNumberFormatted?.validated || false);
 
-    const [isLoadingCountry, setIsLoadingCountry] = useState(!user?.country);
+    // Local state
+    const user = useSelector((state) => state.user); // Initially null until `localStorage` is accessed
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [phoneNumberFormatted, setPhoneNumberFormatted] = useState({ name: '', validated: false });
+    const [countryIso2, setCountryIso2] = useState(null);
+    const [valid, setValid] = useState(false);
+    const [isLoadingCountry, setIsLoadingCountry] = useState(true);
     const isInitialized = useRef(false); 
     const [isDataSent, setIsDataSent] = useState(false);
 
+    // Fetch user data from local storage during client-side render
     useEffect(() => {
-        // Only run country detection if not initialized
-        if (!isInitialized.current) {
+        if (user?.phoneNumberFormatted) {
+            setPhoneNumber(user.phoneNumberFormatted.name || '');
+            setPhoneNumberFormatted(user.phoneNumberFormatted || { name: '', validated: false });
+            setCountryIso2(user.country || null);
+            setValid(user.phoneNumberFormatted.validated || false);
+        }
+    }, []);
+
+    useEffect(() => {
+        if (!isInitialized.current && user) {
             const getCountry = async () => {
                 try {
-                    // Set initial loading state
                     setIsLoadingCountry(true);
-
-                    // Priority chain for country detection
                     if (user?.country) {
                         setCountryIso2(user.country);
                     } else if (!location.isLoading && location.country) {
@@ -45,12 +53,10 @@ const PhoneNumber = () => {
                             }
                         } catch (error) {
                             console.warn('Failed to get country from IP:', error);
-                            // Fallback to CM is already handled by initial state
                         }
                     }
                 } catch (error) {
                     console.error('Error in country detection:', error);
-                    // Keep CM as fallback
                 } finally {
                     setIsLoadingCountry(false);
                     isInitialized.current = true;
@@ -59,23 +65,17 @@ const PhoneNumber = () => {
 
             getCountry();
         }
-    }, [location.isLoading, location.country, user?.country]);
+    }, [location.isLoading, location.country, user]);
 
-    // Validate phone number based on the country code
     const doesValid = (phoneNumber) => {
-        //let phoneNumber = e ? e.target.value : phoneNumberFormatted.name;
-        console.log('phoneNumber', phoneNumber)
         if (phoneNumber.trim() === '') {
-            return false; // Consider empty input as valid
+            return false;
         }
 
         try {
-           ;
-            const phoneNumberObj = parsePhoneNumber(phoneNumber.toString(), user?.country);
-            console.log('phoneNumberObj', phoneNumberObj, phoneNumberObj.isValid());
-            let phoneNumberFormatted = {name: phoneNumberObj.number, validated: phoneNumberObj.isValid()};
-            setPhoneNumberFormatted(phoneNumberFormatted);
-            //setValid(phoneNumberObj.isValid());
+            const phoneNumberObj = parsePhoneNumberWithError(phoneNumber.toString(), user?.country);
+            const formatted = { name: phoneNumberObj.number, validated: phoneNumberObj.isValid() };
+            setPhoneNumberFormatted(formatted);
             return phoneNumberObj.isValid();
         } catch (error) {
             console.error('Error validating phone number:', error);
@@ -83,24 +83,14 @@ const PhoneNumber = () => {
         }
     };
 
-    
-
-    // Update validity when phone number or country code changes
-    // useEffect(() => {
-        
-    //     console.log('phoneNumber', phoneNumber);
-    //     setValid(doesValid());
-    // }, [phoneNumber]);
-
     const handleChange = (e) => {
         const phoneNumber = e.target.value;
         setPhoneNumber(phoneNumber);
         setValid(doesValid(phoneNumber));
-        console.log('phoneNumber', phoneNumber, phoneNumberFormatted);
-        if(phoneNumberFormatted.validated){
-            updateWendogouser(SIMULATION_ENGINE_STEPS.WHATSAPP_NUMBER, {name: phoneNumberFormatted, validated: true});
-        }else{
-            updateWendogouser(SIMULATION_ENGINE_STEPS.WHATSAPP_NUMBER, {name: phoneNumber, validated: false});
+        if (phoneNumberFormatted.validated) {
+            updateWendogouser(SIMULATION_ENGINE_STEPS.WHATSAPP_NUMBER, { name: phoneNumberFormatted, validated: true });
+        } else {
+            updateWendogouser(SIMULATION_ENGINE_STEPS.WHATSAPP_NUMBER, { name: phoneNumber, validated: false });
         }
     };
 
@@ -112,37 +102,40 @@ const PhoneNumber = () => {
 
     const updateWendogouser = (simulationStep, phoneNumberFormatted) => {
         dispatch(setStep(simulationStep));
-        let updatedUser = { ...user, simulationStep, phoneNumberFormatted, date: new Date().toISOString() };
+        const updatedUser = { ...user, simulationStep, phoneNumberFormatted, date: new Date().toISOString() };
+        dispatch(setUser(updatedUser));
         helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
     };
 
-  
     return (
         <>
-          {countryIso2 ? (
-            <SETextInputPhone
-              title="Quel est votre numéro de téléphone WhatsApp?"
-              autoComplete="on"
-              id="WHATSAPP_NUMBER"
-              tip="Si vous acceptez d'être mis en relation avec nous, ce numéro WhatsApp facilitera notre communication."
-              type="whatsapp"
-              handleChange={handleChange}
-              value={phoneNumber}
-              inputLength={15} // Adjust according to your needs
-              valid={valid}
-              onClickOutside={doesValid}
-              setValid={setValid}
-              handleContinue={handleContinue}
-              countryCodeName={countryIso2}
-              setCountryIso2={setCountryIso2}
-              showContinueBtn={simulationStepGlobal === SIMULATION_ENGINE_STEPS.WHATSAPP_NUMBER}
-            />
+          {user ? (
+            countryIso2 ? (
+              <SETextInputPhone
+                title="Quel est votre numéro de téléphone WhatsApp?"
+                autoComplete="on"
+                id="WHATSAPP_NUMBER"
+                tip="Si vous acceptez d'être mis en relation avec nous, ce numéro WhatsApp facilitera notre communication."
+                type="whatsapp"
+                handleChange={handleChange}
+                value={phoneNumber}
+                inputLength={15}
+                valid={valid}
+                onClickOutside={doesValid}
+                setValid={setValid}
+                handleContinue={handleContinue}
+                countryCodeName={countryIso2}
+                setCountryIso2={setCountryIso2}
+                showContinueBtn={simulationStepGlobal === SIMULATION_ENGINE_STEPS.WHATSAPP_NUMBER}
+              />
+            ) : (
+              <Loader2 className="animate-spin text-gray-500" size={32} />
+            )
           ) : (
-            <div>Loading...</div>
+            <Loader2 className="animate-spin text-gray-500" size={32} />
           )}
         </>
-      );
-      
+    );
 };
 
 export default PhoneNumber;

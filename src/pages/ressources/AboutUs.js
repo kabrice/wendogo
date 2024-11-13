@@ -1,10 +1,10 @@
 import { useState} from 'react';
 import EdgarHead from '../../assets/edgar_head.jpeg'
 import QuestionsOnTopic from '../../components/QuestionsOnTopic';
-//import {ReactComponent as ExpertMan} from '../../assets/ExpertMan1.svg'
+//import ExpertMan} from '../../assets/ExpertMan1.svg'
 import OptimizedImage from '../../components/OptimizedImage';
 
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 import Footer from '../../components/Footer';
 import HeaderMenuBar from '../../components/HeaderMenuBar';
@@ -12,7 +12,7 @@ import ExpertMan from '../../assets/superhero.png'
 //import WendogoTeam from '../../assets/wendogo_team-removebg.png'
 import WendogoTeam from '../../assets/wendogo_team.jpeg'
 import SocialMediaLogo from '../../assets/wendogo_jeu_concours.png'
-import { Helmet } from 'react-helmet';
+import Head from 'next/head';
 
 function AboutUs(){
     const whatsapp =  <svg className="ButtonLinkstyles__Picto-sc-1s2ygn0-1 hkJOZg" width="24px" height="24.6350302px" viewBox="0 0 24 24.6350302" version="1.1" xmlns="http://www.w3.org/2000/svg">
@@ -49,7 +49,7 @@ function AboutUs(){
 
     
     return <div >
-            <Helmet>
+            <Head>
               <meta property="og:url"           content="https://wendogo.com/about-us" />
               <meta property="og:type"          content="article" />
               <meta property="og:title"         content="Qui sont vos conseillers ? - Wendogo" />
@@ -57,7 +57,7 @@ function AboutUs(){
               <meta property="og:image"         content={'https://wendogo.com'+SocialMediaLogo} /> 
               <title>Qui sont vos conseillers ? - Wendogo</title>
               <meta name="description"          content="Vous avez besoin de demander un visa mais vous hésitez à passer par une agence ? Wendogo vous donne les bonnes raisons de passer par l'un de ses conseillers."/>
-            </Helmet>         
+            </Head>         
             <HeaderMenuBar/>
             <main className="styles__Main-sc-kz84w6-0 gEFmYD " style={{paddingTop: 80}}>
                 <div className="Blocsstyles__Page-sc-1q5awhx-1 dVmdSL">
@@ -226,7 +226,7 @@ function AboutUs(){
                                           <button className="ButtonLinkstyles__ButtonLink-sc-1s2ygn0-0 iPwlpd">
                                             {facebook}
                                             <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh"> 
-                                            <Link target="_blank" to="https://www.facebook.com/sharer/sharer.php?u=https://wendogo.com/work-permit-steps" className="fb-xfbml-parse-ignore" rel="noreferrer">Facebook</Link>
+                                            <Link target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://wendogo.com/work-permit-steps" className="fb-xfbml-parse-ignore" rel="noreferrer">Facebook</Link>
                                             </div>
                                           </button>
                                           <div role="tooltip" className="Tooltipstyles__Tooltip-sc-ynyslw-1 hrixxN"> Partager sur Facebook </div>

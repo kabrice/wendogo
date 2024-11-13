@@ -4,40 +4,77 @@ import SELabel from '../../components/SimulationEngine/SELabel';
 import SETextArea from '../../components/SimulationEngine/SETextArea';
 import SETextInput from '../../components/SimulationEngine/SETextInput';
 import ButtonLarge from '../../components/ButtonLarge';
-import { parsePhoneNumber } from 'libphonenumber-js';
+import { parsePhoneNumberWithError } from 'libphonenumber-js';
 import useGeoLocation from "react-ipgeolocation" 
 import SETextInputPhone from '../../components/SimulationEngine/SETextInputPhone'; 
 import FormSuccess from './FormSuccess';
 import { useUpdateCreateUserMutation } from '../../store/apis/userApi';
 import { useRef } from 'react';
 import { activateSpinner, deactivateSpinner } from '../../redux/spinnerslice';
-import { useDispatch } from 'react-redux'
+import { setUser } from '../../redux/userSlice';
+import { useDispatch, useSelector } from 'react-redux'
+import { Loader2 } from "lucide-react";
 
 const KeepInTouch = (props) => {
-
-    const { title, tip, setIsError, setIsKeepInTouch, typeRequest} = props;
-    let user = helper.getLocalStorageWithExpiration('wendogouser')
-
-    const location = useGeoLocation(); 
-    const dispatch = useDispatch()
-    const [countryIso2, setCountryIso2] = useState(user?.country || null);
-    let description
-    if (typeRequest === 'FLIGHT') {
-        description = user?.situationDescription
-    } else if (typeRequest === 'VISA_CANDA') {
-        description = user?.visaCanadaDescription
-    } else if (typeRequest === 'TOURISM') {
-        description = user?.tourismDescription
-    } else if (typeRequest === 'FAMILY') {
-        description = user?.familyDescription
-    }
-    const [situationDescription, setSituationDescription] = useState(description || '');
-    const [validSituationDescription, setValidSituationDescription] = useState(false);
-    const [isLoadingCountry, setIsLoadingCountry] = useState(!user?.country);
+    const user = useSelector((state) => state.user);
+    const { title, tip, setIsError, setIsKeepInTouch, typeRequest } = props;
+    const dispatch = useDispatch();
+    const location = useGeoLocation();
     const isInitialized = useRef(false);
-    const [updateCreateUser] = useUpdateCreateUserMutation();
-    const [isDataSent, setIsDataSent] = useState(false);
 
+    // Core states
+    const [isLoading, setIsLoading] = useState(true);
+    //const user = useSelector((state) => state.user);
+    const [deviceType, setDeviceType] = useState('lg');
+    const [browserWidth, setBrowserWidth] = useState(
+        typeof window !== 'undefined' ? window.innerWidth : 1200
+    );
+
+    // Form states
+    const [countryIso2, setCountryIso2] = useState(null);
+    const [isLoadingCountry, setIsLoadingCountry] = useState(true);
+    const [situationDescription, setSituationDescription] = useState('');
+    const [validSituationDescription, setValidSituationDescription] = useState(false);
+    const [firstname, setFirstname] = useState('');
+    const [validFirstName, setValidFirstName] = useState(false);
+    const [lastname, setLastname] = useState('');
+    const [validLastname, setValidLastname] = useState(false);
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [phoneNumberFormatted, setPhoneNumberFormatted] = useState({ name: '', validated: false });
+    const [validPhone, setValidPhone] = useState(false);
+    const [isDataSent, setIsDataSent] = useState(false);
+    const [errorMessageSituationDescription, setErrorMessageSituationDescription] = useState('');
+
+    // API hooks
+    const [updateCreateUser] = useUpdateCreateUserMutation();
+
+    useEffect(() => {
+        const initializeData = () => { 
+            if (!user) return false;
+
+            //
+
+            // Initialize form data from user
+            let description = '';
+            if (typeRequest === 'FLIGHT') description = user?.situationDescription;
+            else if (typeRequest === 'VISA_CANDA') description = user?.visaCanadaDescription;
+            else if (typeRequest === 'TOURISM') description = user?.tourismDescription;
+            else if (typeRequest === 'FAMILY') description = user?.familyDescription;
+
+            setSituationDescription(description || '');
+            setFirstname(user?.firstname || '');
+            setLastname(user?.lastname !== 'guest' ? user?.lastname : '' || '');
+            setPhoneNumber(user?.phoneNumberFormatted?.name || '');
+            setPhoneNumberFormatted(user?.phoneNumberFormatted || { name: '', validated: false });
+            setCountryIso2(user?.country || null);
+
+            return true;
+        };
+
+        const success = initializeData();
+        setIsLoading(!success);
+    }, [typeRequest]);
+    
     useEffect(() => {
         // Only run country detection if not initialized
         if (!isInitialized.current) {
@@ -76,11 +113,48 @@ const KeepInTouch = (props) => {
         }
     }, [location.isLoading, location.country, user?.country]);
 
+    useEffect(() => {
+        //helper.addOutsideClick(handleOutsideClick)
+        
+        setValidSituationDescription(validateSituationDescription()); 
+        const handleResize = () => {
+            const browserWidth = window.innerWidth;
+            //console.log('browserWidth', browserWidth)
+            if (browserWidth>1200) {
+                setDeviceType('lg'); 
+            }
+            if (browserWidth>991 && browserWidth <= 1200) {
+                setDeviceType('md'); 
+            } 
+            if (browserWidth>765 && browserWidth <= 990) {
+                setDeviceType('sm');
+            }  
+            if (browserWidth <= 764) {
+                setDeviceType('xs');
+            } 
+        };
+        
+        handleResize();
+        window.addEventListener('resize', handleResize);
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+
+
+    }, [browserWidth, situationDescription]);
+
+    if (isLoading) {
+        return (
+            <div className="flex items-center justify-center min-h-[200px]">
+                <Loader2 className="w-8 h-8 animate-spin text-primary" />
+            </div>
+        );
+    }
+
     const handleChangeSituationDescription = (e) => {
         setSituationDescription(e.target.value);
     }
  
-    const [errorMessageSituationDescription, setErrorMessageSituationDescription] = useState('');
     
     const validateSituationDescription = () => {
         const rules = [
@@ -128,9 +202,7 @@ const KeepInTouch = (props) => {
             return isValid;
         });
     };
-
-    const [firstname, setFirstname] = useState(user?.firstname || '');
-    const [validFirstName, setValidFirstName] = useState(false);
+ 
 
     const handleChangeFirstname = (e) => {
         const firstname = e.target.value;
@@ -144,9 +216,7 @@ const KeepInTouch = (props) => {
     const doesValidFistname = () => { 
         return doesValidName(firstname);
     } 
-
-    const [lastname, setLastname] = useState((user?.lastname !== 'guest' ? user?.lastname  : '')  || '');
-    const [validLastname, setValidLastname] = useState(false);
+ 
 
     const handleChangeLastname = (e) => {
         setLastname(e.target.value);
@@ -154,11 +224,7 @@ const KeepInTouch = (props) => {
 
     const doesValidLastname = () => {
         return doesValidName(lastname);
-    }
-
-    const [phoneNumber, setPhoneNumber] = useState(user?.phoneNumberFormatted?.name || '');
-    const [phoneNumberFormatted, setPhoneNumberFormatted] = useState(user?.phoneNumberFormatted || {name: '', validated: false});
-    const [validPhone, setValidPhone] = useState(false);
+    } 
  
     const doesValidPhone = (phoneNumber) => {
         console.log('phoneNumber', phoneNumber)
@@ -167,7 +233,7 @@ const KeepInTouch = (props) => {
         }
 
         try { 
-            const phoneNumberObj = parsePhoneNumber(phoneNumber, countryIso2);
+            const phoneNumberObj = parsePhoneNumberWithError(phoneNumber, countryIso2);
             console.log('phoneNumberObj keep in touch',countryIso2, phoneNumberObj, phoneNumberObj.isValid());
             let phoneNumberFormatted = {name: phoneNumberObj.number, validated: phoneNumberObj.isValid()};
             setPhoneNumberFormatted(phoneNumberFormatted);
@@ -185,42 +251,6 @@ const KeepInTouch = (props) => {
         setValidPhone(doesValidPhone(phoneNumber));
         console.log('phoneNumber', phoneNumber, phoneNumberFormatted); 
     };
- 
-    const [deviceType, setDeviceType] = useState('lg');
-    const [browserWidth, setBrowserWidth] = useState(window.innerWidth); 
-
-    //console.log('currentSimulationStep 🥳', currentSimulationStep)
-    useEffect(() => {
-        //helper.addOutsideClick(handleOutsideClick)
-        
-        setValidSituationDescription(validateSituationDescription());
-        //console.log('useEffect KeepInTouch', situationDescription, '-', validSituationDescription);
-        const handleResize = () => {
-            const browserWidth = window.innerWidth;
-            //console.log('browserWidth', browserWidth)
-            if (browserWidth>1200) {
-                setDeviceType('lg'); 
-            }
-            if (browserWidth>991 && browserWidth <= 1200) {
-                setDeviceType('md'); 
-            } 
-            if (browserWidth>765 && browserWidth <= 990) {
-                setDeviceType('sm');
-            }  
-            if (browserWidth <= 764) {
-                setDeviceType('xs');
-            } 
-        };
-        
-        handleResize();
-        window.addEventListener('resize', handleResize);
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-
-
-    }, [browserWidth, situationDescription]);
-
   
     const handleContinue = async () => {
         // Validation checks
@@ -239,7 +269,7 @@ const KeepInTouch = (props) => {
         }
     
         // Prepare user data
-        const userData = {
+        const user = {
             userId: user?.userId,
             firstname,
             lastname,
@@ -248,12 +278,12 @@ const KeepInTouch = (props) => {
             situationDescription,
             countryIso2: countryIso2
         };
-        //console.log('userData', userData);
+        //console.log('user', user);
         try {
             dispatch(activateSpinner());
     
             // Update/Create user
-            const response = await updateCreateUser(userData).unwrap();
+            const response = await updateCreateUser(user).unwrap();
             console.log('User updated/created successfully:', response);
     
             // Update local storage
@@ -278,7 +308,7 @@ const KeepInTouch = (props) => {
             } else if (typeRequest === 'FAMILY') {
                 updatedUser.familyDescription = situationDescription;
             }
-            
+            dispatch(setUser(updatedUser));
             helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
             setIsDataSent(true);
     

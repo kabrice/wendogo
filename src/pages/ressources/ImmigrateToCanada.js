@@ -3,12 +3,12 @@ import ImmigrateToCanadaImg from '../../assets/immigrate_to_canada.jpeg'
 import BorisHead from '../../assets/Boris_head.jpeg'
 import QuestionsOnTopic from '../../components/QuestionsOnTopic';
 
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 import Footer from '../../components/Footer';
 import HeaderMenuBar from '../../components/HeaderMenuBar';
-import { Helmet } from 'react-helmet';
-// import { Link } from "react-router-dom";
+import Head from 'next/head';
+// import Link from 'next/link';
 // import Nav from "./Nav";
 import helper from '../../utils/Helper';
 
@@ -47,7 +47,7 @@ function ImmigrateToCanada(){
     useEffect(() => {
       helper.loadFacebookSDK() }, [])
     return <div className="klmqdo">
-            <Helmet>
+            <Head>
               <meta property="og:url"           content="https://wendogo.com/immigrate-to-canada" />
               <meta property="og:type"          content="article" />
               <meta property="og:title"         content="9 façons d'immigrer au Canada en 2024" />
@@ -55,7 +55,7 @@ function ImmigrateToCanada(){
               <meta property="og:image"         content={'https://wendogo.com'+ImmigrateToCanadaImg} /> 
               <title>9 façons d'immigrer au Canada en 2024</title>
               <meta name="description"          content="Immigrer au Canada peut s'avérer compliqué. On vous presente les différents modes d'immigration afin de mieux vous préparer."/>
-            </Helmet>        
+            </Head>        
             <HeaderMenuBar/>
     
             <div className='container-24' style={{maxWidth: 'inherit'}}>
@@ -126,7 +126,7 @@ function ImmigrateToCanada(){
                                   <div className="SharingLinksstyles__SharingLinksDesktop-sc-13jf7g7-2 dAIRMX">
                                     <div className="SharingLinksstyles__Title-sc-13jf7g7-3 eZpqGZ"> Partager : </div>
                                     <div className="Tooltipstyles__TooltipContainer-sc-ynyslw-0 iMhBNO SharingLinksstyles__Tooltip-sc-13jf7g7-4 eUmNLd">
-                                    <Link target="_blank" to="https://api.whatsapp.com/send/?text=https://wendogo.com/immigrate-to-canada" >
+                                    <Link target="_blank" href="https://api.whatsapp.com/send/?text=https://wendogo.com/immigrate-to-canada" >
                                       <button className="ButtonLinkstyles__ButtonLink-sc-1s2ygn0-0 iPwlpd">
                                         {whatsapp}
                                         <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh kmzeo"> 
@@ -417,7 +417,7 @@ function ImmigrateToCanada(){
                                       <div className="SharingLinksstyles__SharingLinksDesktop-sc-13jf7g7-2 dAIRMX">
                                         <div className="SharingLinksstyles__Title-sc-13jf7g7-3 eZpqGZ"> Partager : </div>
                                         <div className="Tooltipstyles__TooltipContainer-sc-ynyslw-0 iMhBNO SharingLinksstyles__Tooltip-sc-13jf7g7-4 eUmNLd">
-                                        <Link target="_blank" to="https://api.whatsapp.com/send/?text=https://wendogo.com/immigrate-to-canada" > 
+                                        <Link target="_blank" href="https://api.whatsapp.com/send/?text=https://wendogo.com/immigrate-to-canada" > 
                                           <button className="ButtonLinkstyles__ButtonLink-sc-1s2ygn0-0 iPwlpd">
                                            {whatsapp}
                                            <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh kmzeo"> 

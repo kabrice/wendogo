@@ -3,9 +3,12 @@ import { useSelector, useDispatch } from 'react-redux'
 import  { useForm, Controller }  from  "react-hook-form"
 import { activateSpinner, deactivateSpinner } from '../redux/spinnerslice'
 import { useUpdateCredentialMutation } from '../store/apis/userApi';
-import { useNavigate } from "react-router-dom"
+import { useRouter } from 'next/router'
 import helper from '../utils/Helper';
 import FooterSingleRow from '../components/FooterSingleRow';
+import { Loader2 } from "lucide-react";
+import { setUser } from '../../redux/userSlice';
+
 
 const CredentialStart = () => {
 
@@ -52,7 +55,7 @@ const CredentialStart = () => {
     salutationArray[pos].selected = true
     setSalutationArray(salutationArray)
   }
-  const navigate = useNavigate()
+  const router = useRouter()
 
   const [displayEmailField, setDisplayEmailField] = useState(true)
   //const newRef = useRef(null)
@@ -63,7 +66,7 @@ const CredentialStart = () => {
   }
 
   async function onSubmitUserInfo (data)  {
-    data = {...data, ...{salutation : selectedSalutation, phone : user.phone}}
+    data = {...data, ...{salutation : selectedSalutation, phone : user?.phone}}
     console.log('data onSubmitUserInfo', data)
     try {
       dispatch(activateSpinner())
@@ -72,7 +75,7 @@ const CredentialStart = () => {
       if(result.success){   
         console.log('👍👍', result)     
         helper.setLocalStorageWithExpiration('wendogouser', result.user, 3*60*60*1000)
-        navigate(result.user.subscription_step)
+        router.push(result.user?.subscription_step)
       }else if (result.errorId){
           const msgToast = () => (
               <div>
@@ -161,7 +164,7 @@ const CredentialStart = () => {
                                 <div className="pp-cons-1v26bvb-row-justify_content_center" data-ppui-info="grid_3.2.9">
                                   <div className=" pp-cons-1aqxtsc-col_form_full" align="center" data-ppui="true">
                                     <div className="pp-cons-1hv7ga5-text_input_base-text_body" data-ppui-info="text-input_5.1.6">
-                                      <input  {...register("firstname", { required: true, minLength: 3, maxLength:46, pattern: /^[a-zA-ZÀ-ÿ-]+(?:\s(?:d[eu']|l[ea']|van\sder\s|de\s)?[a-zA-ZÀ-ÿ-]+)*$/ })} defaultValue={user.firstname} 
+                                      <input  {...register("firstname", { required: true, minLength: 3, maxLength:46, pattern: /^[a-zA-ZÀ-ÿ-]+(?:\s(?:d[eu']|l[ea']|van\sder\s|de\s)?[a-zA-ZÀ-ÿ-]+)*$/ })} defaultValue={user?.firstname} 
                                       className="pp-cons-16mpn99-text_input_control-text_body-label_placeholder_shown_and_not_focused-text_body" 
                                       name="firstname" id="paypalAccountData_firstName" aria-invalid="false" placeholder=" " aria-labelledby="paypalAccountData_firstName-label"
                                         aria-label="" type="text" autoComplete="given-name" data-ppui="true"/>
@@ -174,7 +177,7 @@ const CredentialStart = () => {
                                 <div className="pp-cons-1v26bvb-row-justify_content_center" data-ppui-info="grid_3.2.9">
                                   <div className=" pp-cons-1aqxtsc-col_form_full" align="center" data-ppui="true">
                                     <div className="pp-cons-1hv7ga5-text_input_base-text_body" data-ppui-info="text-input_5.1.6">
-                                      <input  {...register("lastname", { required: true, minLength: 3, maxLength:46, pattern: /^[a-zA-ZÀ-ÿ-]+(?:\s(?:d[eu']|l[ea']|van\sder\s|de\s)?[a-zA-ZÀ-ÿ-]+)*$/ })} defaultValue={user.lastname} 
+                                      <input  {...register("lastname", { required: true, minLength: 3, maxLength:46, pattern: /^[a-zA-ZÀ-ÿ-]+(?:\s(?:d[eu']|l[ea']|van\sder\s|de\s)?[a-zA-ZÀ-ÿ-]+)*$/ })} defaultValue={user?.lastname} 
                                       className="pp-cons-16mpn99-text_input_control-text_body-label_placeholder_shown_and_not_focused-text_body" 
                                       name="lastname" id="paypalAccountData_lastName" aria-invalid="false" placeholder=" " aria-labelledby="paypalAccountData_lastName-label" 
                                       aria-label="" type="text" autoComplete="family-name" data-ppui="true"/>
@@ -186,7 +189,7 @@ const CredentialStart = () => {
                                 <div className="pp-cons-1v26bvb-row-justify_content_center" data-ppui-info="grid_3.2.9">
                                   <div className=" pp-cons-1aqxtsc-col_form_full" align="center" data-ppui="true">
                                     <div className="pp-cons-1hv7ga5-text_input_base-text_body" data-ppui-info="text-input_5.1.6">
-                                      <input  {...register("birthdate", { required: true, max:currentDate, min:"1901-01-01" })} defaultValue={user.birthdate} 
+                                      <input  {...register("birthdate", { required: true, max:currentDate, min:"1901-01-01" })} defaultValue={user?.birthdate} 
                                       className="pp-cons-16mpn99-text_input_control-text_body-label_placeholder_shown_and_not_focused-text_body" 
                                       name="birthdate" id="paypalAccountData_birthdate" aria-invalid="false"
                                       aria-label="" type="date" autoComplete="bday" data-ppui="true" aria-labelledby="paypalAccountData_birthdate-label" />
@@ -202,7 +205,7 @@ const CredentialStart = () => {
                                       <input className="pp-cons-16mpn99-text_input_control-text_body-label_placeholder_shown_and_not_focused-text_body" name="email" 
                                               id="paypalAccountData_dob" aria-invalid="false" placeholder=" " aria-labelledby="paypalAccountData_dob-label" aria-label=""
                                               type="email" autoComplete="email" mask="11/11/1111" data-ppui="true" {...register("email", { required: true, minLength: 8, maxLength:46, pattern: /\S+@\S+\.\S+/ })}
-                                              defaultValue={user.email}/>
+                                              defaultValue={user?.email}/>
                                               {errors.email && <p className='input-error'>L'email est requis et doit être valide</p>}
                                       <label htmlFor="paypalAccountData_dob" id="paypalAccountData_dob-label" className="pp-cons-7nxsij-label-text_field_label_sm" data-ppui="true"> Adresse email </label>
                                     </div>

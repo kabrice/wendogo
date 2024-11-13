@@ -1,69 +1,89 @@
 import { useState} from 'react';
-import EdgarHead from '../assets/edgar_head.jpeg'
-//import {ReactComponent as ExpertMan} from '../assets/ExpertMan1.svg'
-
-import { Link } from 'react-router-dom';
-import FlightSimilution from '../assets/simulation_icons/aeroplane_simulation.png'
-import Footer from '../components/Footer';
-import HeaderMenuLoginBar from '../components/HeaderMenuLoginBar';
-import CoffeeCup from '../assets/coffeecup.jpeg'
-import { FloatingWhatsApp } from 'react-floating-whatsapp';
-import { Helmet } from 'react-helmet';
-import Marseille from '../assets/partner_logos/logo-marseille.png'
-import Toulouse from '../assets/partner_logos/logo-toulouse.jpeg'
-import AmbassadeFrance from '../assets/partner_logos/logo-ambassade_de_France_au_Brésil.svg'
-import ParisSclay from '../assets/partner_logos/logo-paris-saclay.svg'
-import CampusFrance from '../assets/partner_logos/logo-campus-france.png'
-import Sorbonne from '../assets/partner_logos/logo-sorbonne.svg'
-import UPHF from '../assets/partner_logos/logo-uphf.svg'
-import Quebec from '../assets/partner_logos/logo-Québec.png'
-import USB from '../assets/partner_logos/logo-USB-site-parallel.png'
-import Ottawa from '../assets/partner_logos/logo-université_ottawa.svg'
-import Montreal from '../assets/partner_logos/logo-Universite_de_Montreal.svg'
-import AmbassadeCanada from '../assets/partner_logos/logo-ambassade_canada.svg'
-import helper from '../utils/Helper';
-import {useUpdateUserMutation} from '../store/apis/userApi'
-import { activateSpinner, deactivateSpinner } from '../redux/spinnerslice'
-import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import KeepInTouch from './ressources/KeepInTouch';
+import Link from 'next/link';
+import FlightSimilution from '../../../assets/simulation_icons/aeroplane_simulation.png'
+import Footer from '../../../components/Footer';
+import HeaderMenuLoginBar from '../../../components/HeaderMenuLoginBar';
+import Marseille from '../../../assets/partner_logos/logo-marseille.png'
+import Toulouse from '../../../assets/partner_logos/logo-toulouse.jpeg'
+import AmbassadeFrance from '../../../assets/partner_logos/logo-ambassade_de_France_au_Brésil.svg'
+import ParisSclay from '../../../assets/partner_logos/logo-paris-saclay.svg'
+import CampusFrance from '../../../assets/partner_logos/logo-campus-france.png'
+import Sorbonne from '../../../assets/partner_logos/logo-sorbonne.svg'
+import UPHF from '../../../assets/partner_logos/logo-uphf.svg'
+import Quebec from '../../../assets/partner_logos/logo-Québec.png'
+import USB from '../../../assets/partner_logos/logo-USB-site-parallel.png'
+import Ottawa from '../../../assets/partner_logos/logo-université_ottawa.svg'
+import Montreal from '../../../assets/partner_logos/logo-Universite_de_Montreal.svg'
+import AmbassadeCanada from '../../../assets/partner_logos/logo-ambassade_canada.svg'
+import helper from '../../../utils/Helper';
+import {useUpdateUserMutation} from '../../../store/apis/userApi'
+import { activateSpinner, deactivateSpinner } from '../../../redux/spinnerslice'
+import { setUser } from '../../../redux/userSlice';
+import { useDispatch, useSelector } from 'react-redux'
+import Image from 'next/image';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router'
+import dynamic from 'next/dynamic';
+import { Loader2 } from "lucide-react";
+const KeepInTouch = dynamic(() => import('../../ressources/KeepInTouch'), {
+  loading: () => <div className="flex items-center justify-center min-h-[200px]">
+                  <Loader2 className="w-8 h-8 animate-spin" />
+                </div>
+});
 
 
 function SimulationCountrySelection(){
   
-    let user = helper.getLocalStorageWithExpiration('wendogouser')
-    const [guestUser] = useState(user);
+    const user = useSelector((state) => state.user); 
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [isKeepInTouch, setIsKeepInTouch] = useState(false);
+    const [isErrorPage, setIsErrorPage] = useState(false);
+    const router = useRouter();
+    const dispatch = useDispatch();
     const [updateUser] = useUpdateUserMutation();
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
+
+    useEffect(() => {
+      // Move localStorage access to client-side only
+      //
+      //
+      setIsLoaded(true);
+
+      // Check redirection after user data is loaded
+      if (!user || !user?.subscription_step?.startsWith('/simulation/country/selection')) {
+        router.push('/simulation/home');
+      }
+    }, [router]);
+
+    // Don't render anything until client-side data is loaded
+    if (!isLoaded) {
+      return null; // or a loading spinner
+    }
 
     async function handleCountrySelection(event, countryIso2) {
       event.preventDefault();
-      //let user = helper.getLocalStorageWithExpiration('wendogouser')
-      if(countryIso2 === 'CA'){
-        setIsKeepInTouch(true)
-        return
+      if (countryIso2 === 'CA') {
+        setIsKeepInTouch(true);
+        return;
       }
+  
       try {
-          dispatch(activateSpinner())
-          user = {
-            ...guestUser,
-            subscription_step: '/simulation/engine?country='+countryIso2
-          }
-          console.log('simulation country selection user', user)
-          const response = await updateUser(user)
-          console.log('### SimulationCountrySelection response', response) 
-          dispatch(deactivateSpinner())
-          helper.setLocalStorageWithExpiration('wendogouser', user)
-          navigate('/simulation/engine?country=' + countryIso2);
-          //window.location.href = '/simulation/engine?country='+countryIso2
-        } catch (error) {
-          helper.triggerToastError(error)
-        }
+        dispatch(activateSpinner());
+        const updatedUser = {
+          ...user,
+          subscription_step: '/simulation/engine?country=' + countryIso2
+        };
+  
+        const response = await updateUser(updatedUser);
+        dispatch(setUser(updatedUser));
+        helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
+        dispatch(deactivateSpinner());
+        router.push('/simulation/engine?country=' + countryIso2);
+      } catch (error) {
+        helper.triggerToastError(error);
+      }
     }
-    const [isKeepInTouch, setIsKeepInTouch] = useState(false);
-    const [isErrorPage, setIsErrorPage] = useState(false);
-    return  <>{helper.redirectionAtInit(user, '/simulation/select/country', '/simulation/home') && <div>     
+
+    return  <>{helper.redirectionAtInit(router, user, '/simulation/country/selection', '/simulation/home') && <div>     
               <HeaderMenuLoginBar/>
               {isErrorPage ?
                 <main className="styles__Main-sc-kz84w6-0 gEFmYD" style={{ paddingTop: 280 }}>
@@ -121,7 +141,7 @@ function SimulationCountrySelection(){
                             <div className="MuiStack-root css-j7qwjs">
                               <div className="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-sljwc1">
                                 <div className="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-1 css-1vad3iu" >
-                                  <Link to={`/simulation/engine?country=FR`} className="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineNone ButtonProduct css-1av9as7" style={{textDecoration:'none'}} title="Simulez une demande de visa pour la France" data-testid="hpTopLayerButtonProduct-emprunteur"   onClick={(e) => {
+                                  <Link href={`/simulation/engine?country=FR`} className="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineNone ButtonProduct css-1av9as7" style={{textDecoration:'none'}} title="Simulez une demande de visa pour la France" data-testid="hpTopLayerButtonProduct-emprunteur"   onClick={(e) => {
                                           e.preventDefault(); // Prevent immediate navigation
                                           handleCountrySelection(e, 'FR');
                                         }}>
@@ -170,7 +190,7 @@ function SimulationCountrySelection(){
                         <div className="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-lg-5 css-b3qpfd">
                           <div className="MuiStack-root css-qfdd9t">
                             <div className="MuiBox-root css-jodbou">
-                              <img alt="Hervé et François" data-testid="image" fetchpriority="high" width={1012} height={800} decoding="async" data-nimg={1} src={FlightSimilution} style={{ color: "transparent", maxWidth: "100%", height: "auto" }} />
+                              <Image alt="Hervé et François" data-testid="image" fetchpriority="high" width={1012} height={800} decoding="async" data-nimg={1} src={FlightSimilution} style={{ color: "transparent", maxWidth: "100%", height: "auto" }} />
                             </div>
                           </div>
                         </div>
@@ -231,47 +251,55 @@ function SimulationCountrySelection(){
                 </section>
                 <div className="slider">
                 <div className="slide-track">
-                  <div className="slide">
-                    <img src={Marseille} height="150" width="150" alt="" />
+                <div className="slide">
+                  <Image src={Marseille} height="150" width="150" alt="Marseille" />
                   </div>
                   <div className="slide">
-                    <img src={Toulouse} height="150" width="150" alt="" />
+                  <Image src={Toulouse} height="150" width="150" alt="Toulouse" />
                   </div>
                   <div className="slide">
-                    <img src={AmbassadeFrance} height="150" width="150" alt="" />
+                    <AmbassadeFrance height="150" width="150"/>
+                  {/* <Image src={AmbassadeFrance} height="150" width="150" alt="AmbassadeFrance" /> */}
                   </div>
                   <div className="slide">
-                    <img src={ParisSclay} height="150" width="150" alt="" />
+                    <ParisSclay height="150" width="150"/>
+                  {/* <Image src={ParisSclay} height="150" width="150" alt="ParisSclay" /> */}
                   </div>
                   <div className="slide">
-                    <img src={CampusFrance} height="150" width="150" alt="" />
+                  <Image src={CampusFrance} height="150" width="150" alt="CampusFrance" />
                   </div>
                   <div className="slide">
-                    <img src={Sorbonne} height="150" width="150" alt="" />
+                  {/* <Image src={Sorbonne} height="150" width="150" alt="Sorbonne" /> */}
+                  <Sorbonne height="150" width="150"/>
                   </div>
                   <div className="slide">
-                    <img src={UPHF} height="150" width="150" alt="" />
+                    <UPHF height="150" width="150"/>
+                  {/* <Image src={UPHF} height="150" width="150" alt="UPHF" /> */}
                   </div>
                   <div className="slide">
-                    <img src={Quebec} height="150" width="150" alt="" />
+                  <Image src={Quebec} height="150" width="150" alt="Quebec" />
                   </div>
                   <div className="slide">
-                    <img src={USB} height="150" width="150" alt="" />
+                  <Image src={USB} height="150" width="150" alt="USB" />
                   </div>
                   <div className="slide">
-                    <img src={Ottawa} height="150" width="150" alt="" />
+                    <Ottawa height="150" width="150"/>
+                  {/* <Image src={Ottawa} height="150" width="150" alt="Ottawa" /> */}
                   </div>
                   <div className="slide">
-                    <img src={Montreal} height="150" width="150" alt="" />
+                    <Montreal height="150" width="150"/>
+                  {/* <Image src={Montreal} height="150" width="150" alt="Montreal" /> */}
                   </div>
                   <div className="slide">
-                    <img src={AmbassadeCanada} height="150" width="150" alt="" />
+                  <AmbassadeCanada height="150" width="150"/>
+                  {/* <Image src={AmbassadeCanada} height="150" width="150" alt="AmbassadeCanada" /> */}
                   </div>
                   <div className="slide">
-                    <img src={Marseille} height="150" width="150" alt="" />
+                  <Image src={Marseille} height="150" width="150" alt="Marseille" />
                   </div>
                   <div className="slide">
-                    <img src={AmbassadeFrance} height="150" width="150" alt="" />
+                    <AmbassadeFrance height="150" width="150"/>
+                  {/* <Image src={AmbassadeFrance} height="150" width="150" alt="AmbassadeFrance" /> */}
                   </div>
                 </div>
               </div>

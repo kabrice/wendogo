@@ -3,11 +3,11 @@ import StudyInFranceImg from '../../assets/study_in_France.jpeg'
 import EdgarHead from '../../assets/edgar_head.jpeg'
 import QuestionsOnTopic from '../../components/QuestionsOnTopic';
 
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 import Footer from '../../components/Footer';
 import HeaderMenuBar from '../../components/HeaderMenuBar';
-import Helmet from 'react-helmet';
+//import Helmet from 'react-helmet';
 import helper from '../../utils/Helper';
 
 function StudyInFrance(){
@@ -45,7 +45,7 @@ function StudyInFrance(){
     useEffect(() => {
       helper.loadFacebookSDK() }, [])
     return <div className="klmqdo">
-            <Helmet>
+            <Head>
               <meta property="og:url"           content="https://wendogo.com/study-in-france" />
               <meta property="og:type"          content="article" />
               <meta property="og:title"         content="Comment postuler pour étudier dans une université en France" />
@@ -53,7 +53,7 @@ function StudyInFrance(){
               <meta property="og:image"         content={'https://wendogo.com'+StudyInFranceImg} /> 
               <title>Comment postuler pour étudier dans une université en France</title>
               <meta name="description"          content="Pour être admis dans une université en France, vous devez remplir plusieurs conditions. Dans cet article, nous allons voir les étapes à franchir pour être admis dans une université publique ou privée en France en tant qu’étranger en 2024."/>
-            </Helmet>        
+            </Head>        
             <HeaderMenuBar/>   
             <div className='container-24' style={{maxWidth: 'inherit'}}>
               <div style={{ outline: "none" }} tabIndex={-1} id="gatsby-focus-wrapper">
@@ -123,7 +123,7 @@ function StudyInFrance(){
                                   <div className="SharingLinksstyles__SharingLinksDesktop-sc-13jf7g7-2 dAIRMX">
                                     <div className="SharingLinksstyles__Title-sc-13jf7g7-3 eZpqGZ"> Partager : </div>
                                     <div className="Tooltipstyles__TooltipContainer-sc-ynyslw-0 iMhBNO SharingLinksstyles__Tooltip-sc-13jf7g7-4 eUmNLd">
-                                    <Link target="_blank" to="https://api.whatsapp.com/send/?text=https://wendogo.com/study-in-france" >
+                                    <Link target="_blank" href="https://api.whatsapp.com/send/?text=https://wendogo.com/study-in-france" >
                                       <button className="ButtonLinkstyles__ButtonLink-sc-1s2ygn0-0 iPwlpd">
                                         {whatsapp}
                                         <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh kmzeo"> 
@@ -276,7 +276,7 @@ function StudyInFrance(){
                                       <div className="SharingLinksstyles__SharingLinksDesktop-sc-13jf7g7-2 dAIRMX">
                                         <div className="SharingLinksstyles__Title-sc-13jf7g7-3 eZpqGZ"> Partager : </div>
                                         <div className="Tooltipstyles__TooltipContainer-sc-ynyslw-0 iMhBNO SharingLinksstyles__Tooltip-sc-13jf7g7-4 eUmNLd">
-                                        <Link target="_blank" to="https://api.whatsapp.com/send/?text=https://wendogo.com/study-in-france" >
+                                        <Link target="_blank" href="https://api.whatsapp.com/send/?text=https://wendogo.com/study-in-france" >
                                           <button className="ButtonLinkstyles__ButtonLink-sc-1s2ygn0-0 iPwlpd">
                                           {whatsapp}
                                           <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh kmzeo"> 

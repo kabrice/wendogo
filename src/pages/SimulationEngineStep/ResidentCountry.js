@@ -1,113 +1,208 @@
-import { useState, useEffect, useRef} from 'react';
-import { activateSpinner, deactivateSpinner } from '../../redux/spinnerslice'
+import { useState, useEffect, useRef } from 'react';
+import { useRouter } from 'next/router';
+import { activateSpinner, deactivateSpinner } from '../../redux/spinnerslice';
 import { activateErrorPage, deactivateErrorPage } from '../../redux/errorPageSlice';
 import { useGetCountriesQuery } from '../../store/apis/countryApi';
 import helper from '../../utils/Helper';
-import _ from 'lodash'
+import { setUser } from '../../redux/userSlice';
+import _ from 'lodash';
 import SEDropDownList from '../../components/SimulationEngine/SEDropDownList';
-import useGeoLocation from "react-ipgeolocation"
-import {FRANCOPHONE_COUNTRIES} from '../../utils/Constants'
-import { useDispatch, useSelector } from 'react-redux'
-import {setStep} from '../../redux/simulationStepSlice';
-import {SIMULATION_ENGINE_STEPS} from '../../utils/Constants'
+import useGeoLocation from "react-ipgeolocation";
+import { FRANCOPHONE_COUNTRIES } from '../../utils/Constants';
+import { useDispatch, useSelector } from 'react-redux';
+import { setStep } from '../../redux/simulationStepSlice';
+import { SIMULATION_ENGINE_STEPS } from '../../utils/Constants';
+import { Loader2 } from "lucide-react";
 
 const ResidentCountry = () => {
-    let user = helper.getLocalStorageWithExpiration('wendogouser')
+    const router = useRouter();
+    const dispatch = useDispatch();
+    
+    // States for loading and data
+    const [isClientLoaded, setIsClientLoaded] = useState(false);
+    const user = useSelector((state) => state.user);
+    const [countries, setCountries] = useState(null);
+    const [selectedCountry, setSelectedCountry] = useState({ name: '', validated: false });
+    const [collapseCountryOption, setCollapseCountryOption] = useState(true);
+    const [fieldDefault, setFieldDefault] = useState(true);
+    const [isFrancophoneCountry, setIsFrancophoneCountry] = useState(false);
 
-    const location = useGeoLocation();
-    const networkCountry = location.country
+    // Refs
+    const newRef = useRef(null);
 
-    const dispatch = useDispatch()
-    const { data, error, isLoading } = useGetCountriesQuery(networkCountry);
-    const [countries, setCountries] = useState(null)
-    //console.log('user', user)
-    const [selectedCountry, setSelectedCountry] = useState(user?.selectedCountry || {name : '', validated: false})
-    const newRef = useRef(null)
-    const [collapseCountryOption, setCollapseCountryOption] = useState(true)
-    const [fieldDefault, setFieldDefault] = useState(true)
-    const [isFrancophoneCountry, setIsFrancophoneCountry] = useState(user?.isFrancophoneCountry)
+    // Selectors and Queries
     const simulationStepGlobal = useSelector((state) => state.simulationStep);
+    const location = useGeoLocation();
+    const { data, error, isLoading } = useGetCountriesQuery(location.country);
 
-    const handleOutsideClick = (e) => {
-        if (newRef.current && !newRef.current.contains(e.target) && !helper.isTargetContainsIgnoreClass(e.target)) {
-          setCollapseCountryOption(true)
-          //console.log('Outside click ResidentCountry')
+    // Load user data on client side
+    useEffect(() => {
+        const loadUserData = () => {
+            
+            if (!user) {
+                router.push('/simulation/home');
+                return;
+            }
+            
+            setSelectedCountry(user?.selectedCountry || { name: '', validated: false });
+            setIsFrancophoneCountry(user?.isFrancophoneCountry);
+            setIsClientLoaded(true);
+        };
+
+        loadUserData();
+    }, [router]);
+
+    // Handle outside clicks
+    useEffect(() => {
+        const handleOutsideClick = (e) => {
+            if (newRef.current && !newRef.current.contains(e.target) && !helper.isTargetContainsIgnoreClass(e.target)) {
+                setCollapseCountryOption(true);
+            }
+        };
+
+        if (typeof window !== 'undefined') {
+            helper.addOutsideClick(handleOutsideClick);
         }
+
+        return () => {
+            if (typeof window !== 'undefined') {
+                document.removeEventListener('mousedown', handleOutsideClick);
+            }
+        };
+    }, []);
+
+    // Handle API data loading
+    useEffect(() => {
+        if (isLoading) {
+            dispatch(activateSpinner());
+            return
+        }  
+
+        dispatch(deactivateSpinner());
+
+        
+        if (error) {
+            console.error('🛑 error ResidentCountry', error);
+            dispatch(activateErrorPage());
+            return;
+        }
+
+        if (data && isClientLoaded) {
+            dispatch(deactivateErrorPage());
+            
+            const sortedCountries = [...data]
+                .map(item => ({ ...item }))
+                .sort((a, b) => a.name.localeCompare(b.name));
+            
+            setCountries(sortedCountries);
+
+            // Set default country if needed
+            if (!user?.selectedCountry) {
+                const defaultCountry = data.find(item => item.default === true);
+                if (defaultCountry) {
+                    const isFrancophone = FRANCOPHONE_COUNTRIES.some(
+                        country => country.code_iso2 === defaultCountry.iso2
+                    );
+                    setSelectedCountry({ ...defaultCountry });
+                    setIsFrancophoneCountry(isFrancophone);
+                }
+            }
+        }
+    }, [data, error, isLoading, isClientLoaded, user, dispatch]);
+
+    // Early return if not loaded
+    if (!isClientLoaded || !user) {
+        return (
+            <div className="flex items-center justify-center min-h-[200px]">
+                <Loader2 className="w-8 h-8 animate-spin" />
+            </div>
+        );
+    }
+
+    const toggleCountryDropdown = () => {
+        setCollapseCountryOption(!collapseCountryOption);
     };
 
-    const toggleCountryDropdown= () => {
-        setCollapseCountryOption(!collapseCountryOption)
-    }
     const updateSelectedCountry = (item) => {
-        console.log('item', item)  
-        setSelectedCountry({ ...item,  validated: true })
-        setCollapseCountryOption(true)
-        setFieldDefault(false)
-        let isFrancophoneCountryVal = FRANCOPHONE_COUNTRIES.some(country => country.code_iso2 === item.iso2)
-
-        setIsFrancophoneCountry(isFrancophoneCountryVal)
-        updateWendogouser(SIMULATION_ENGINE_STEPS.RESIDENT_COUNTRY, { ...item, validated: true }, isFrancophoneCountryVal)
-        console.log('selectedCountry', selectedCountry)
-    }
-
-    useEffect(() => {
-        if(isLoading){
-            dispatch(activateSpinner())
-        }
-        if(error){
-            console.error('🛑 error', error)
-            dispatch(deactivateSpinner()) 
-            dispatch(activateErrorPage())
-        }
-        if (data) {
-            //console.log('country data', data)
-            dispatch(deactivateSpinner())
-            dispatch(deactivateErrorPage())
-            let clonedCountryArray = [...data]
-            clonedCountryArray = clonedCountryArray.map((item) => ({ ...item }));
-            const sortedClonedCountryArray = clonedCountryArray.sort((a, b) => a.name.localeCompare(b.name));
-
-            setCountries(sortedClonedCountryArray)
-            
-            _.forEach(data, (item) => {
-                if(item.default === true && !user?.selectedCountry){
-                    setSelectedCountry({ ...item });
-                    setIsFrancophoneCountry(FRANCOPHONE_COUNTRIES.some(country => country.code_iso2 === item.iso2))
-                }
-            });
-        }
-
-        helper.addOutsideClick(handleOutsideClick)
-
-    }, [data, error, isLoading ])
+        const isFrancophone = FRANCOPHONE_COUNTRIES.some(
+            country => country.code_iso2 === item.iso2
+        );
+        
+        setSelectedCountry({ ...item, validated: true });
+        setCollapseCountryOption(true);
+        setFieldDefault(false);
+        setIsFrancophoneCountry(isFrancophone);
+        
+        updateWendogouser(
+            SIMULATION_ENGINE_STEPS.RESIDENT_COUNTRY,
+            { ...item, validated: true },
+            isFrancophone
+        );
+    };
 
     const handleContinue = () => {
-        console.log('selectedCountry', selectedCountry)
-        let nextStep = SIMULATION_ENGINE_STEPS.HIGH_SCHOOL_IN_FRENCH
-        let isIneligibleForCampusFrance = false
-        if(selectedCountry.iso2 === 'SN' ){
-            if( (["bac00005"].includes(user.universityLevelSelected.id) && ["deg00008", "deg00011", "deg00012"].user.degreeSelected.id) || 
-                ["bac00004", "bac00007"].includes(user.universityLevelSelected.id)){
-            console.log('isIneligibleForCampusFrance', selectedCountry)
-                nextStep = SIMULATION_ENGINE_STEPS.CAMPUS_FRANCE_INELIGIBILITY         
-                isIneligibleForCampusFrance = true   
-            } 
+        let nextStep = SIMULATION_ENGINE_STEPS.HIGH_SCHOOL_IN_FRENCH;
+        let isIneligibleForCampusFrance = false;
+
+        if (selectedCountry.iso2 === 'SN') {
+            const isIneligible = (
+                (["bac00005"].includes(user?.universityLevelSelected?.id) && 
+                ["deg00008", "deg00011", "deg00012"].includes(user?.degreeSelected?.id)) ||
+                ["bac00004", "bac00007"].includes(user?.universityLevelSelected?.id)
+            );
+
+            if (isIneligible) {
+                nextStep = SIMULATION_ENGINE_STEPS.CAMPUS_FRANCE_INELIGIBILITY;
+                isIneligibleForCampusFrance = true;
+            }
         }
-        updateWendogouser(nextStep, {...selectedCountry, validated : true}, isIneligibleForCampusFrance, isFrancophoneCountry)
-    }
+
+        updateWendogouser(
+            nextStep,
+            { ...selectedCountry, validated: true },
+            isIneligibleForCampusFrance,
+            isFrancophoneCountry
+        );
+    };
 
     const updateWendogouser = (simulationStep, selectedCountry, isIneligibleForCampusFrance, isFrancophone) => {
-        dispatch(setStep(simulationStep)) 
-        let updatedUser = {...user, simulationStep, selectedCountry, isFrancophone, isIneligibleForCampusFrance, isFrancophoneCountry:isFrancophone, date: new Date().toISOString()}
-        helper.setLocalStorageWithExpiration('wendogouser', updatedUser)         
+        const updatedUser = {
+            ...user,
+            simulationStep,
+            selectedCountry,
+            isFrancophone,
+            isIneligibleForCampusFrance,
+            isFrancophoneCountry: isFrancophone,
+            date: new Date().toISOString()
+        };
+
+        helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
+        dispatch(setUser(updatedUser));
+        dispatch(setStep(simulationStep));
+    };
+
+    if (!countries) {
+        return (
+            <div className="flex items-center justify-center min-h-[200px]">
+                <Loader2 className="w-8 h-8 animate-spin" />
+            </div>
+        );
     }
 
-  return (<>{countries  && 
-        <SEDropDownList title="Dans quel pays résidez-vous ?" newRef={newRef} collapseOption={collapseCountryOption} 
-                        fieldDefault={fieldDefault} items={countries} itemSelected={selectedCountry} 
-                        toggleDropdown={toggleCountryDropdown} updateSelected={updateSelectedCountry} 
-                        handleContinue={handleContinue} showContinueBtn={simulationStepGlobal === SIMULATION_ENGINE_STEPS.RESIDENT_COUNTRY}/>}</>
-  );
-}
+    return (
+        <SEDropDownList 
+            title="Dans quel pays résidez-vous ?" 
+            newRef={newRef}
+            collapseOption={collapseCountryOption}
+            fieldDefault={fieldDefault}
+            items={countries}
+            itemSelected={selectedCountry}
+            toggleDropdown={toggleCountryDropdown}
+            updateSelected={updateSelectedCountry}
+            handleContinue={handleContinue}
+            showContinueBtn={simulationStepGlobal === SIMULATION_ENGINE_STEPS.RESIDENT_COUNTRY}
+        />
+    );
+};
 
 export default ResidentCountry;

@@ -1,59 +1,78 @@
-import Footer from '../components/Footer';
-import HeaderMenuLoginBar from '../components/HeaderMenuLoginBar';
-import {useLeadstatusQuery} from '../store/apis/leadstatusApi';
-import _ from 'lodash';
-import { activateSpinner, deactivateSpinner } from '../redux/spinnerslice' 
-import {useAddUserMutation, useUpdateUserMutation} from '../store/apis/userApi'
-import {ReactComponent as Sh1} from '../assets/simulation_icons/sh1.svg';
-import {ReactComponent as Sh2} from '../assets/simulation_icons/sh2.svg';
-import {ReactComponent as Sh3} from '../assets/simulation_icons/sh3.svg';
-import {ReactComponent as Sh4} from '../assets/simulation_icons/sh4.svg';
-import {ReactComponent as Sh5} from '../assets/simulation_icons/sh5.svg';
-import {ReactComponent as Sh6} from '../assets/simulation_icons/sh6.svg';
-import {ReactComponent as Sh7} from '../assets/simulation_icons/sh7.svg';
-import { useDispatch } from 'react-redux'
+import Footer from '../../components/Footer';
+import HeaderMenuLoginBar from '../../components/HeaderMenuLoginBar';
+import {useLeadstatusQuery} from '../../store/apis/leadstatusApi';
+import _, { set } from 'lodash';
+import { activateSpinner, deactivateSpinner } from '../../redux/spinnerslice' 
+import {useAddUserMutation, useUpdateUserMutation} from '../../store/apis/userApi'
+import Sh1 from '../../assets/simulation_icons/sh1.svg';
+import Sh2 from '../../assets/simulation_icons/sh2.svg';
+import Sh3 from '../../assets/simulation_icons/sh3.svg';
+import Sh4 from '../../assets/simulation_icons/sh4.svg';
+import Sh5 from '../../assets/simulation_icons/sh5.svg';
+import Sh6 from '../../assets/simulation_icons/sh6.svg';
+import Sh7 from '../../assets/simulation_icons/sh7.svg';
+import { useDispatch, useSelector } from 'react-redux'
 import {useState, useEffect} from 'react';
 import useGeoLocation from "react-ipgeolocation"
-import { Link } from "react-router-dom"
-import helper from '../utils/Helper';
-import KeepInTouch from './ressources/KeepInTouch';
+import Link from 'next/link'
+import helper from '../../utils/Helper';
+import { REST_API_PARAMS } from '../../utils/Constants';
+import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
+import { Loader2 } from "lucide-react";
+import { setUser } from '../../redux/userSlice';
+const KeepInTouch = dynamic(() => import('../ressources/KeepInTouch'), {
+  loading: () => <div className="flex items-center justify-center min-h-[200px]">
+                  <Loader2 className="w-8 h-8 animate-spin" />
+                </div>
+});
 
-function SimulationHome(){
+export async function getServerSideProps() {
+  let isErrorHomePage = false;
+  try {
+      const response = await fetch(`${REST_API_PARAMS.baseUrl}/leadstatus`);
+      const leadStatus = await response.json();
+      return { props: { leadStatus, isErrorHomePage } };
+  } catch (error) {
+      console.error('Error fetching leadstatus levels:', error);
+      isErrorHomePage = true;
+      return { props: { leadStatus: [], isErrorHomePage } };
+  }
+}
+
+const SimulationHome = ({ leadStatus=[], isErrorHomePage=false }) => {
+    const [isErrorPage, setIsErrorPage] = useState(isErrorHomePage);
     const [isReady, setIsReady] = useState(false);
-    let user = helper.getLocalStorageWithExpiration('wendogouser')
-    
+    //et user = helper.getLocalStorageWithExpiration('wendogouser')
+    const router = useRouter();
     const dispatch = useDispatch()
-    const { data, error, isLoading } = useLeadstatusQuery();
+    //const { data, error, isLoading } = useLeadstatusQuery();
     
     const [sortedArray, setSortedArray] = useState([]);
     const [iconComponents] = useState([<Sh1/>, <Sh2/>, <Sh3/>, <Sh4/>, <Sh5/>, <Sh6/>, <Sh7/>]); 
-    const [isErrorPage, setIsErrorPage] = useState(false);
     const [isKeepInTouch, setIsKeepInTouch] = useState(false);
-
-    const [guestUser, setGuestUser] = useState(user);
+    const user = useSelector((state) => state.user);
     const [addUser] = useAddUserMutation();
     const [updateUser] = useUpdateUserMutation();
     const location = useGeoLocation();
 
+    useEffect(() => {
+      dispatch(deactivateSpinner());
+      
+      if(!user){
+        return;
+      }
+       
+    }, [dispatch]);
+
     // Initialize data loading
     useEffect(() => {
-      const initializeData = async () => {
-        try {
-          if(isLoading){
-            dispatch(activateSpinner())
-            return;
-          }
-      
-          if(error){
-            dispatch(deactivateSpinner()) 
-            setIsErrorPage(true)
-            return;
-          }
-
-          if (data) {
+      const initializeData = () => {
+        try { 
+          if (leadStatus) {
             dispatch(deactivateSpinner())
             setIsErrorPage(false)
-            setSortedArray(_.sortBy(data, 'order'));
+            setSortedArray(_.sortBy(leadStatus, 'order'));
             setIsReady(true);
           }
         } catch (err) {
@@ -63,7 +82,7 @@ function SimulationHome(){
       };
 
       initializeData();
-    }, [data, error, isLoading, dispatch]);
+    }, [leadStatus, dispatch]);
 
     const handleUserUpdate = async (leadstatusId) => {
       if(leadstatusId === 'lst00001'){
@@ -74,27 +93,28 @@ function SimulationHome(){
       try {
         dispatch(activateSpinner())
         
-        const userData = guestUser ? {
-          ...guestUser,
+        const updatedUser = user ? {
+          ...user,
           lead_status_id: leadstatusId,
-          subscription_step: '/simulation/select/country',
-          simulationStep: user?.simulationStep ? user.simulationStep : 1,
+          subscription_step: '/simulation/country/selection',
+          simulationStep: user?.simulationStep ? user?.simulationStep : 1,
           date: new Date().toISOString(),
         } : {
-          lastname: user?.lastname ? user.lastname :'guest',
-          phone: user?.phone ? user.phone : generateRandomString(),
-          country: user?.country ? user.country : location.country,
+          lastname: user?.lastname ? user?.lastname :'guest',
+          phone: user?.phone ? user?.phone : generateRandomString(),
+          country: user?.country ? user?.country : location.country,
           lead_status_id: leadstatusId,
-          subscription_step: '/simulation/select/country',
-          simulationStep: user?.simulationStep ? user.simulationStep : 1,
+          subscription_step: '/simulation/country/selection',
+          simulationStep: user?.simulationStep ? user?.simulationStep : 1,
           date: new Date().toISOString(),
         };
 
-        const response = await (guestUser ? updateUser(userData) : addUser(userData));
+        const response = await (user ? updateUser(updatedUser) : addUser(updatedUser));
         
-        if(response.data.status){ 
-          setGuestUser(userData);
-          helper.setLocalStorageWithExpiration('wendogouser', userData);
+        if(response.data.status){  
+          dispatch(setUser(updatedUser));
+          helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
+          router.push('/simulation/country/selection');
           return true;
         }
         return false;
@@ -116,7 +136,9 @@ function SimulationHome(){
       return (
         <div>
           <HeaderMenuLoginBar />
-          <div className="loading-state">Chargement...</div>
+            <div className="flex items-center justify-center min-h-[200px]">
+                  <Loader2 className="w-8 h-8 animate-spin" />
+              </div>
           <Footer />
         </div>
       );
@@ -125,7 +147,7 @@ function SimulationHome(){
     return (
       <div>     
         <HeaderMenuLoginBar/>
-        {isErrorPage ? (
+        {(isErrorPage || leadStatus.length<1) ? (
           <main className="styles__Main-sc-kz84w6-0 gEFmYD" style={{ paddingTop: 280 }}>
             <div className="styles__Wrapper-sc-gk465i-0 fiWVzr">
               <div className="styles__Hero-sc-s3dlnp-0 gMynSv">
@@ -134,13 +156,13 @@ function SimulationHome(){
                     Désolé, une erreur s'est produite. Veuillez réessayer plus tard ou nous contacter.
                   </h1>
                   <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '10px' }}>
-                    <Link
-                      to={window.location.pathname}
+                    <button
+                      onClick={() => router.refresh()} 
                       className="CTA button primary xlarge userValidation"
                       style={{ width: '15.3%', height: 20, margin: '10px' }}
                     >
                       Recharger
-                    </Link>
+                    </button>
                     <a
                       href="mailto:hello@wendogo.com"
                       className="CTA button primary xlarge userValidation"
@@ -172,12 +194,12 @@ function SimulationHome(){
                   {sortedArray.length > 1 && sortedArray.map((item, id) => (
                     <Link 
                       key={item.id}
-                      to="/simulation/select/country"
+                      href="/simulation/country/selection"
                       onClick={async (e) => {
                         e.preventDefault();
                         const success = await handleUserUpdate(item.id);
                         if (success) {
-                          window.location.href = '/simulation/select/country';
+                          router.push('/simulation/country/selection');
                         }
                       }}
                       className="Choice-sc-14ytia7-1 OvYpW"

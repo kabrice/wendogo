@@ -1,5 +1,5 @@
 import { React, useEffect, useState, useRef } from 'react';
-import {ReactComponent as WendogoLogoIcon} from '../assets/wendogo_logo_paperplane.svg'
+import WendogoLogoIcon from '../assets/wendogo_logo_paperplane.svg'
 import Birthday from '../components/Birthday'
 import TravelPic from '../assets/travel_pic.svg'
 import Facebook from '../assets/social media/facebook.png'
@@ -12,11 +12,11 @@ import Confetti from 'react-confetti'
 import Footer from '../components/Footer';
 import BorisBrice from '../assets/PXL_20230513_173650916.NIGHT-removebg (2).png'
 import { FloatingWhatsApp } from 'react-floating-whatsapp'
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import SubscriptionModal from '../components/SubscriptionModal'
 import { useSelector, useDispatch } from 'react-redux'
 import {open} from '../redux/modalslice'
-import { Helmet } from 'react-helmet';
+import Head from 'next/head';
 import helper from '../utils/Helper';
 
 function WaitingList() {
@@ -76,7 +76,7 @@ function WaitingList() {
 
   return (
   <>
-    <Helmet>
+    <Head>
       <meta property="og:url"           content="https://wendogo.com/waitinglist" />
       <meta property="og:type"          content="website" />
       <meta property="og:title"         content="Wendogo" />
@@ -84,11 +84,11 @@ function WaitingList() {
       <meta property="og:image"         content="https://wendogo.com/static/media/wendogo_jeu_concours.png?" /> 
       <title>Wendogo</title>
       <meta name="description"          content="Jeu concours - Préinscription au webinar"/>
-    </Helmet>
+    </Head>
     <div className="section-21 wf-section" ref={myElementRef}>
       <div className="MenuStickystyles__StickyHeader-sc-ngpxs4-0 dWKCRV">
           <div className="MenuStickystyles__StickyContainer-sc-ngpxs4-1 evdTmz">
-              <Link to="/" className="Logostyles__LogoLink-sc-10zpnfr-0 jJHAoQ">
+              <Link href="/" className="Logostyles__LogoLink-sc-10zpnfr-0 jJHAoQ">
                   <WendogoLogoIcon/>
               </Link>
               <button type="button" className="MenuStickystyles__StickyMenuButton-sc-ngpxs4-2 jspYCr">
@@ -112,9 +112,9 @@ function WaitingList() {
             <h2 className="h2" style={{'color': 'white'}}>Le simulateur Wendogo arrive sur vos écrans le 27 Avril</h2>
             <p style={{'color': 'white'}} className="BlocOutils__Description-sc-10c9hjh-4 eQpKZn">En attendant, enregistrez-vous sur notre waitinglist et soyez les premiers à être 
                           notifiés de son lancement.</p>
-              <a to='/waitinglist' className="ButtonNavbar__Button"  onClick={() => dispatch(open())}>
+              <Link href='/waitinglist' className="ButtonNavbar__Button"  onClick={() => dispatch(open())}>
                   <span className="ButtonNavbar__Label"> Pré-inscription </span>
-              </a>             
+              </Link>             
           </div>
           <div id="w-node-_4f7e79ed-2e33-7951-4dfc-71bf1fda6abb-59ce9515">
             <div className="flex-horizontal">
@@ -198,7 +198,7 @@ function WaitingList() {
                     <h2 className="Card__Title-sc-1qqjegm-4 bqicpW">Partage</h2>
                     <div>
                       <div className="fb-share-button" data-href="https://wendogo.com/waitinglist" data-width="200" data-type="button_count">
-                        <Link target="_blank" to="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwendogo.com%2Fwaitinglist&amp;src=sdkpreparse" className="fb-xfbml-parse-ignore" rel="noreferrer">Partager</Link>
+                        <Link target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwendogo.com%2Fwaitinglist&amp;src=sdkpreparse" className="fb-xfbml-parse-ignore" rel="noreferrer">Partager</Link>
                       </div> 
                       <p> ce jeu concours en nous tagguant.</p>
                     </div>
