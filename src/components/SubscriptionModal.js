@@ -1,22 +1,21 @@
 'use client';
 
 
-import { React, useState, useRef, useEffect }  from 'react';
+import { React, useRef, useEffect }  from 'react';
 import 'react-phone-number-input/style.css'
 import PhoneInput,{ isPossiblePhoneNumber } from 'react-phone-number-input'
 import fr from 'react-phone-number-input/locale/fr'
 import { useSelector, useDispatch } from 'react-redux'
-import {close} from '../redux/modalslice'
-import Link from 'next/link';
+import {close} from '../redux/modalslice' 
 import {useSendVerificationAndAddUserMutation} from '../store/apis/userApi'
 import useGeoLocation from "react-ipgeolocation"
 import { useRouter } from 'next/router'
 import  { useForm, Controller }  from  "react-hook-form"
 import { activateSpinner, deactivateSpinner } from '../redux/spinnerslice';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import helper from '../utils/Helper';
 import 'react-toastify/dist/ReactToastify.css';
-import { setUser } from '../redux/userslice';
+import { setUser } from '../redux/userSlice';
 
 const SubscriptionModal = () => {
 

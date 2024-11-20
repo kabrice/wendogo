@@ -2,9 +2,7 @@
 
 import { useSelector } from 'react-redux'
 import RecentLevelHighSchool from "./RecentLevelHighSchool";
-import RecentLevelUniversity from "./RecentLevelUniversity";
-import helper from '../../utils/Helper';
-import { setUser } from '../../redux/userSlice';
+import RecentLevelUniversity from "./RecentLevelUniversity"; 
 
 const RecentLevel = ({universityLevels, degrees, isErrorPage}) => {
     //let user = helper.getLocalStorageWithExpiration('wendogouser')

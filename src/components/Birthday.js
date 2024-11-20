@@ -86,24 +86,7 @@ const Birthday = ({ name, day, month }) => {
       }
     }, 1000);
   }, [currentYear, day, isItBday, month]);
-
-  let birth = new Date(currentYear, month - 1, day);
-  const monthNames = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ];
-  let monthBday = monthNames[birth.getMonth()];
-
+ 
   return (
       <Countdown countdownData={state} name={name} />
   );

@@ -9,7 +9,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox'; 
 import helper from '../../utils/Helper';
 import { useEffect, useState, useCallback, useMemo, useRef} from 'react'; 
-import _, { set } from 'lodash'
+import _ from 'lodash'
 import { useGetSchoolDetailsFromSchoolIdsMutation } from '../../store/apis/schoolApi';
 import { useGetMajorDetailsFromMajorIdsMutation } from '../../store/apis/majorApi';
 import {useUpdateAndGetStudentSimulationResultMutation} from '../../store/apis/userApi';
@@ -148,12 +148,7 @@ const SimulationResult = () => {
     const [browserWidth, setBrowserWidth] = useState(0)
     const [isSpecialDeviceType, setIsSpecialDeviceType] = useState(false)
    
-    const [isErrorPage, setIsErrorPage] = useState(false);
-    //const [newMajorDetails, setNewMajorDetails] = useState([]) 
-
-
-    const [invalidSchoolIds, setInvalidSchoolIds] = useState([]);
-    const [invalidMajorIds, setInvalidMajorIds] = useState([]);
+    const [isErrorPage, setIsErrorPage] = useState(false); 
     const [globalSchoolIds, setGlobalSchoolIds] = useState([]);
     const [globalMajorIds, setGlobalMajorIds] = useState([]);
     
@@ -161,21 +156,14 @@ const SimulationResult = () => {
     const [getMajorDetailsFromMajorIds] = useGetMajorDetailsFromMajorIdsMutation(); 
 
     const [schoolDetails, setSchoolDetails] = useState(null || user?.schoolDetails);
-    const [majorDetails, setMajorDetails] = useState(null || user?.majorDetails);
-    const [finalMajorDetails, setFinalMajorDetails] = useState(majorDetails);
-
-    const [selectedDomainId, setSelectedDomainId] = useState(null);
-    const [selectedSubdomainId, setSelectedSubdomainId] = useState(null);
-    const [revealChildren, setRevealChildren] = useState(false);
+    const [majorDetails, setMajorDetails] = useState(null || user?.majorDetails); 
 
     // Function to render valid or invalid courses
     //console.log('evaluationResults length', evaluationResults?.valid_courses?.length )
     const [coursesToDisplay, setCoursesToDisplay] = useState(displayValidCourses ? evaluationResults?.valid_courses : evaluationResults?.invalid_courses?.flatMap(item => item.courses || []));
-    const [finalCoursesToDisplay, setFinalCoursesToDisplay] = useState(coursesToDisplay);
-    const [checkSubdomain, setCheckSubdomain] = useState(false);
+    const [finalCoursesToDisplay, setFinalCoursesToDisplay] = useState(coursesToDisplay); 
     const [warningMessage, setWarningMessage] = useState([]);
-
-    const [activeWaitingPage, setActiveWaitingPage] = useState(false);
+ 
 
     const isDataReady = user && evaluationResults;
 
@@ -844,8 +832,7 @@ const SimulationResult = () => {
         if (!isDataReady) return;
         setExpandedDomainsMap(new Map());
     }, [displayValidCourses, isDataReady]);
-
-    const [expandedDomains, setExpandedDomains] = useState(new Set());
+ 
     const [expandedDomainsMap, setExpandedDomainsMap] = useState(new Map());
 
 
@@ -1048,10 +1035,8 @@ const SimulationResult = () => {
             <Footer />
             </>
         );
-    }   
-    const onClose = () => {
-        console.log('close')
-    }
+    }    
+    
     if(isDataReady) {
 
         return (
@@ -1173,7 +1158,7 @@ const SimulationResult = () => {
                                                             <div className="Stack  stackColumn " style={{ flexDirection: "column", padding: 0, alignItems: "stretch" }}>
                                                                 <div className="Stack-child" style={{ paddingTop: 15 }}>
                                                                     <div className="Box   " style={{ padding: "10px 0px 0px", borderWidth: "initial", borderStyle: "none", borderColor: "initial" }}>
-                                                                        <div className="Title " style={{ color: "rgb(42, 55, 117)", textAlign: "left", fontSize: "1rem", fontWeight: 500, lineHeight: "inherit", fontWeight: 900 }}> FILTRER PAR DOMAINE</div>
+                                                                        <div className="Title " style={{ color: "rgb(42, 55, 117)", textAlign: "left", fontSize: "1rem", lineHeight: "inherit", fontWeight: 900 }}> FILTRER PAR DOMAINE</div>
                                                                     </div>
                                                                 </div>
                                                                 <div className="Stack-child" style={{ paddingTop: 15 }}>

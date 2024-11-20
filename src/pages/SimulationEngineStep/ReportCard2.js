@@ -12,7 +12,7 @@ import SEMarkInput from '../../components/SimulationEngine/SEMarkInput';
 import SESmallAlertMessage from '../../components/SimulationEngine/SESmallAlertMessage';
 import { SIMULATION_ENGINE_STEPS, PROGRESS_BAR_STEPS } from '../../utils/Constants';
 import { Loader2 } from "lucide-react";
-import _, { conforms } from 'lodash';
+import _ from 'lodash';
 import SvgConstant from '../../utils/SvgConstant';
 
 const ReportCard2 = () => {

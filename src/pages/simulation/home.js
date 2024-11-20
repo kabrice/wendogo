@@ -1,9 +1,8 @@
 'use client';
 
 import Footer from '../../components/Footer';
-import HeaderMenuLoginBar from '../../components/HeaderMenuLoginBar';
-import {useLeadstatusQuery} from '../../store/apis/leadstatusApi';
-import _, { set } from 'lodash';
+import HeaderMenuLoginBar from '../../components/HeaderMenuLoginBar'; 
+import _ from 'lodash';
 import { activateSpinner, deactivateSpinner } from '../../redux/spinnerslice' 
 import {useAddUserMutation, useUpdateUserMutation} from '../../store/apis/userApi'
 import Sh1 from '../../assets/simulation_icons/sh1.svg';
@@ -23,6 +22,7 @@ import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import { Loader2 } from "lucide-react";
 import { setUser } from '../../redux/userSlice';
+
 const KeepInTouch = dynamic(() => import('../ressources/KeepInTouch'), {
   loading: () => <div className="flex items-center justify-center min-h-[200px]">
                   <Loader2 className="w-8 h-8 animate-spin" />

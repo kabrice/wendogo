@@ -1,10 +1,7 @@
 'use client';
 import { setUser } from '../../redux/userSlice';
 import { useState, useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import _ from 'lodash';
-import { activateSpinner, deactivateSpinner } from '../../redux/spinnerslice';
-import { activateErrorPage, deactivateErrorPage } from '../../redux/errorPageSlice';
+import { useDispatch, useSelector } from 'react-redux'; 
 import { setStep } from '../../redux/simulationStepSlice';
 import { SIMULATION_ENGINE_STEPS } from '../../utils/Constants';
 import SEDropDownList from '../../components/SimulationEngine/SEDropDownList';
@@ -77,11 +74,7 @@ const RecentLevelUniversity = ({ universityLevels, isErrorPage }) => {
     //setUser(updatedUser);
   };
 
-  useEffect(() => {
-    if (isErrorPage) {
-      dispatch(deactivateSpinner());
-      dispatch(activateErrorPage());
-    }
+  useEffect(() => { 
 
     return helper.addOutsideClick(handleOutsideClick);
   }, [isErrorPage, dispatch]);

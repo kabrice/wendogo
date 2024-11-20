@@ -76,7 +76,7 @@ function WorkPermitStep(){
                                 </svg>
                               </li>
                               <li className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__Item-sc-k0ssrw-2 iNCHhD">
-                                <div aria-current="Permis de travail" className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__Title-sc-k0ssrw-4 gwJOSc">Permis de travail <span>🇨🇦</span></div>
+                                <div   className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__Title-sc-k0ssrw-4 gwJOSc">Permis de travail <span>🇨🇦</span></div>
                               </li>
                             </ol>
                             <ol aria-label="none" className="styles__Breadcrumb-sc-k0ssrw-0 styles__HiddenBreadcrumb-sc-k0ssrw-1 hoUFOh jKdNmR">

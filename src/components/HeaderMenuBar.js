@@ -5,7 +5,7 @@ import WendogoLogoIcon from '../assets/wendogo_logo_paperplane_blue.svg'
 import  DropDownIcon from '../assets/dropdown_icon.svg'
 
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 function HeaderMenuBar(){

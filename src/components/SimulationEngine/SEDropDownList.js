@@ -5,7 +5,7 @@ import React from "react";
 import SvgConstant from "../../utils/SvgConstant";
 
 function SEDropDownList(props) {
-    const { title, newRef, collapseOption, fieldDefault, items, itemSelected, toggleDropdown, updateSelected, handleContinue, showContinueBtn, tip, showTip, isPartOfInputGroup, inputGroupBlockTitle, svgConstantName } = props;
+    const { title, newRef, collapseOption, items, itemSelected, toggleDropdown, updateSelected, handleContinue, showContinueBtn, tip, showTip, isPartOfInputGroup, inputGroupBlockTitle, svgConstantName } = props;
     
     return (
         <div className="FieldWrapper SelectField VEH_USA_KILOM field-default">

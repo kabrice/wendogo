@@ -10,8 +10,7 @@ import Footer from '../components/Footer';
 import HeaderMenuBar from '../components/HeaderMenuBar';
 import HappyGirl from '../assets/optimized/happyGirl.webp'
 import Mentorship from '../assets/optimized/mentorship.webp'
-import OurPromise from '../assets/optimized/OurPromise.webp'
-import { useRouter } from 'next/router';
+import OurPromise from '../assets/optimized/OurPromise.webp' 
 import SocialMediaLogo from '../assets/optimized/wendogo_jeu_concours.webp'
 import Head from 'next/head';
 import Image from 'next/image';

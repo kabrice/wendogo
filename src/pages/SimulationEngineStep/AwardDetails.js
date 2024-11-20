@@ -2,9 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useCountriesQuery } from '../../store/apis/userApi';
-import { useGetSpokenLanguagesQuery } from '../../store/apis/spokenLanguageApi'; 
-import { useGetSchoolYearsQuery } from '../../store/apis/schoolYearApi'; 
+import { useCountriesQuery } from '../../store/apis/userApi'; 
 import { activateSpinner, deactivateSpinner } from '../../redux/spinnerslice';
 import { activateErrorPage, deactivateErrorPage } from '../../redux/errorPageSlice';
 import { setStep } from '../../redux/simulationStepSlice';

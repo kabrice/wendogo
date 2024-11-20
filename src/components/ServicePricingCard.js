@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ChevronDown, Plus, Minus, ChevronUp } from 'lucide-react';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 import SvgConstant from '../utils/SvgConstant';
  
 const ServiceSection = ({ title, svg, items }) => {

@@ -4,8 +4,7 @@
 import SocialMediaLogo from '../assets/optimized/social_media_logo.webp'
 import Footer from '../components/Footer';
 import HeaderMenuBar from '../components/HeaderMenuBar';
-import Head from 'next/head';
-import Image from 'next/image';
+import Head from 'next/head'; 
 
 function CGU(){
     

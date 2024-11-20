@@ -2,8 +2,7 @@
 
 import React from 'react';
 import WendogoLogo from '../assets/wendogo_logo.svg'
-import ParisCity from '../assets/optimized/AdobeStock_Paris.webp'
-import OptimizedImage from './OptimizedImage';
+import ParisCity from '../assets/optimized/AdobeStock_Paris.webp' 
 import Image from 'next/image';
  
 

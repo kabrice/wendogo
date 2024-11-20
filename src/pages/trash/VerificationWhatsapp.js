@@ -1,20 +1,14 @@
-'use client';
-
-import React, { useState, useEffect, useRef } from 'react';
-import { useUserQuery } from '../store/apis/userApi';
+import React, { useState, useEffect, useRef } from 'react'; 
 import { useSelector, useDispatch } from 'react-redux'
 import  { useForm, Controller }  from  "react-hook-form"
-import {useSendCodeForVerificationMutation} from '../store/apis/userApi'
+import {useSendCodeForVerificationMutation} from '../../store/apis/userApi'
 import { useRouter } from 'next/router'
-import { activateSpinner, deactivateSpinner } from '../redux/spinnerslice'
-import helper from '../utils/Helper';
+import { activateSpinner, deactivateSpinner } from '../../redux/spinnerslice'
+import helper from '../../utils/Helper';
 import {  ToastContainer } from 'react-toastify';
-import {useSendVerificationAndAddUserMutation} from '../store/apis/userApi'
-import { setUser } from '../redux/userSlice';
-import FooterSingleRow from '../components/FooterSingleRow';
-import { Loader2 } from "lucide-react";
+import {useSendVerificationAndAddUserMutation} from '../../store/apis/userApi'
 import { setUser } from '../../redux/userSlice';
-
+import FooterSingleRow from '../../components/FooterSingleRow'; 
 
 const VerificationWhatsapp = () => {
     const length = 6
@@ -203,7 +197,7 @@ return (<>{ helper.redirectionAtInit(user, '/verification') &&
                       <div>
                           <div className="codeInput">
                           <div className="codeInput-resend" id="code-resend"> {" "} <div className="resend-link">
-                              <a onClick={() => resendVerificationCode()} className="ppvx_link___3-9-8 ppvx--v2___3-9-8 resend" href="#"> Renvoyer </a>
+                              <button onClick={() => resendVerificationCode()} className="ppvx_link___3-9-8 ppvx--v2___3-9-8 resend" href="#"> Renvoyer </button>
                               </div>{" "} </div>
                           <div>
                               <div className="ppvx_code-input___1-4-10 codeInput-wrapper" id="otpCode">

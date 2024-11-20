@@ -1,8 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { activateSpinner, deactivateSpinner } from '../../redux/spinnerslice';
+import { useDispatch, useSelector } from 'react-redux'; 
 import { activateErrorPage, deactivateErrorPage } from '../../redux/errorPageSlice';
 import { setStep } from '../../redux/simulationStepSlice';
 import { SIMULATION_ENGINE_STEPS } from '../../utils/Constants';
@@ -55,8 +54,7 @@ const SchoolYear1 = ({ schoolYears, isErrorPage }) => {
             return;
         }
 
-        if (schoolYears && user) {
-            dispatch(deactivateSpinner());
+        if (schoolYears && user) { 
             dispatch(deactivateErrorPage());
 
             const processSchoolYears = () => {

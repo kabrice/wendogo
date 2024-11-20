@@ -1,14 +1,9 @@
 'use client';
 
-import { useState, useEffect, useRef} from 'react';
-// import EdgarHead from '../assets/edgar_head.jpeg'
-//import ExpertMan} from '../assets/ExpertMan1.svg'
-
-import Link from 'next/link';
-// import FlightSimilution from '../../assets/simulation_icons/aeroplane_simulation.png'
+import { useState, useEffect, useRef} from 'react'; 
+import Link from 'next/link'; 
 import FooterSingleRow from '../../components/FooterSingleRow';
-import HeaderMenuLoginBar from '../../components/HeaderMenuLoginBar';
-import SvgSpriteGen from '../../assets/simulation_icons/svg-sprite.gen.svg'
+import HeaderMenuLoginBar from '../../components/HeaderMenuLoginBar'; 
 import VisaType from '../SimulationEngineStep/VisaType'
 import SchoolLevel from '../SimulationEngineStep/SchoolLevel';
 import SchoolYear3 from '../SimulationEngineStep/SchoolYear3';
@@ -24,14 +19,11 @@ import FrenchTest from '../SimulationEngineStep/FrenchTest';
 import FrenchTestInfoAlert from '../SimulationEngineStep/FrenchTestInfoAlert';
 import FrenchLevel from '../SimulationEngineStep/FrenchLevel';
 import RecentDegree from '../SimulationEngineStep/RecentDegree';
-import DegreeExactName from '../SimulationEngineStep/DegreeExactName';
-// import { useUpdateUserMutation } from '../../store/apis/userApi';
+import DegreeExactName from '../SimulationEngineStep/DegreeExactName'; 
 import { useDispatch, useSelector } from 'react-redux'
 import { setStep } from '../../redux/simulationStepSlice';
 import { setProgress } from '../../redux/progressBarStepSlice';
-import { activateUniversity, deactivateUniversity } from '../../redux/universitySlice';
-import ClassRepetitionWarningAlert from '../SimulationEngineStep/ClassRepetitionWarningAlert';
-import BlankYearReptitionAlert from '../SimulationEngineStep/BlankYearReptitionAlert';
+import { activateUniversity, deactivateUniversity } from '../../redux/universitySlice'; 
 import SEAlertMessage from '../../components/SimulationEngine/SEAlertMessage';
 import IconEconomy from '../../assets/simulation_icons/perplexe_icon.svg'
 import CampusFranceInegibilityAlert from '../SimulationEngineStep/CampusFranceInegibilityAlert';
@@ -75,8 +67,7 @@ import Validation from '../SimulationEngineStep/Validation';
 import _ from 'lodash';
 import { activatePremiereClass, deactivatePremiereClass } from '../../redux/premiereClassSlice';
 import { useRouter } from 'next/router'
-import { fetchDataForSimulationEngine } from '../../utils/serverSideFetchers/dataSEFetchers'; 
-import { activateSpinner, deactivateSpinner } from '../../redux/spinnerslice';
+import { fetchDataForSimulationEngine } from '../../utils/serverSideFetchers/dataSEFetchers';  
 import { Loader2 } from "lucide-react";
 import { setUser } from '../../redux/userSlice';
 
@@ -94,9 +85,7 @@ const SimulationEngine = ({ spokenLanguages, academicYearOrganizations, markSyst
     //console.log('uuu', { spokenLanguages, academicYearOrganizations, markSystems, schoolYears, subjectWeightSystems, universityLevels, degrees, isErrorPage })
     const user = useSelector((state) => state.user); 
     const dispatch = useDispatch();
-    const router = useRouter();
-    //const user = useSelector((state) => state.user);
-    const [isLoaded, setIsLoaded] = useState(false);
+    const router = useRouter(); 
     const [deviceType, setDeviceType] = useState('lg');
     const [browserWidth, setBrowserWidth] = useState(0);
     const [isModalOpened, setIsModalOpened] = useState(false);
@@ -269,18 +258,7 @@ const SimulationEngine = ({ spokenLanguages, academicYearOrganizations, markSyst
         {id: PROGRESS_BAR_STEPS.COORDONNEES, title: 'Coordonnées', reference : 'COORDONNEES', completedStep: STEPS.SALUTATION},
     ]
 
-
-
-    //console.log('progressBarStep ===', user?.progressBarStep)
-    // const [deviceType, setDeviceType] = useState('lg')
-    // const [browserWidth, setBrowserWidth] = useState(0) 
-    // const [isModalOpened, setIsModalOpened] = useState(false)
-    
-    //const currentSimulationStep = useSelector((state) => state.simulationStep);
-    //const currentProgressBarStep = useSelector((state) => state.progressBarStep);
-    //const isInUniversityGlobal = useSelector((state) => state.university.active)
-    //const isInPremiereClassGlobal = useSelector((state) => state.premiereClass.active)
-    //const hasErrorPage = useSelector((state) => state.errorPage.active)
+ 
 
     // Conditionally remove or re-add the BULLETIN_N_2 step    
     if (isInPremiereClassGlobal) {
@@ -290,49 +268,6 @@ const SimulationEngine = ({ spokenLanguages, academicYearOrganizations, markSyst
         // Add BULLETIN_N_2 if not already present
         progressBarSteps.splice(3, 0, bulletinN2Step);  // Insert it back at its original position (after BULLETIN_N_1)
     }
-
-    const handleClickOutsideOfModal = (e) => { 
-        if (newRefModal.current && !newRefModal.current.contains(e.target)) { 
-            setIsModalOpened(false)
-        }
-    }
-    
-    //console.log('currentSimulationStep 🥳', currentSimulationStep)
-    // useEffect(() => {
-    //     helper.addOutsideClick(handleClickOutsideOfModal)
-
-    //     const handleResize = () => {
-    //         const browserWidth = window.innerWidth;
-    //         //console.log('browserWidth', browserWidth)
-    //         if (browserWidth>1200) {
-    //             setDeviceType('lg');
-    //             setIsModalOpened(false)
-    //         }
-    //         if (browserWidth>991 && browserWidth <= 1200) {
-    //             setDeviceType('md');
-    //             setIsModalOpened(false)
-    //         } 
-    //         if (browserWidth>765 && browserWidth <= 990) {
-    //             setDeviceType('sm');
-    //         }  
-    //         if (browserWidth <= 764) {
-    //             setDeviceType('xs');
-    //         } 
-    //     };
-
-    //     handleResize();
-        
-    //     if (isModalOpened) {
-    //         document.body.style.overflow = 'hidden';
-    //     } else {
-    //         document.body.style.overflow = 'auto';
-    //     }
-    //     window.addEventListener('resize', handleResize);
-    //     return () => {
-    //         window.removeEventListener('resize', handleResize);
-    //     };
-        
-    // }, [browserWidth, isModalOpened]);
     
 
     const handleProgressBarStep = (step) => { 

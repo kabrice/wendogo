@@ -1,8 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { useGetNationalitiesQuery } from '../../store/apis/nationalityApi';
-import { activateSpinner, deactivateSpinner } from '../../redux/spinnerslice';
+import { useGetNationalitiesQuery } from '../../store/apis/nationalityApi'; 
 import { activateErrorPage, deactivateErrorPage } from '../../redux/errorPageSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { setStep } from '../../redux/simulationStepSlice';

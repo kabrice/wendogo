@@ -3,10 +3,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import helper from '../../utils/Helper';
 import ButtonLarge from "../ButtonLarge";
-import useAutoComplete from '../../hooks/useAutoComplete';
-import { useSearchLevelValuesQuery } from '../../store/apis/levelValueApi';
-import { REST_API_PARAMS } from '../../utils/Constants';
-import { set } from 'lodash';
+import useAutoComplete from '../../hooks/useAutoComplete'; 
+import { REST_API_PARAMS } from '../../utils/Constants'; 
 
 const SEAutoSuggestListInput = (props) => {
 

@@ -2,7 +2,7 @@
 
 import { React, useEffect, useState, useRef } from 'react';
 import WendogoLogoIcon from '../assets/wendogo_logo_paperplane.svg'
-import Birthday from '../components/Birthday'
+import Birthday from '../../components/Birthday'
 import TravelPic from '../assets/travel_pic.svg'
 import Facebook from '../assets/social media/facebook.png'
 import Instagram from '../assets/social media/instagram.png'
@@ -11,19 +11,20 @@ import TikTok from '../assets/social media/tiktok.png'
 import SocialMediaLogo from '../assets/social_media_logo.png'
 import useWindowSize from 'react-use/lib/useWindowSize'
 import Confetti from 'react-confetti'
-import Footer from '../components/Footer';
+import Footer from '../../components/Footer';
 import BorisBrice from '../assets/PXL_20230513_173650916.NIGHT-removebg (2).png'
 import { FloatingWhatsApp } from 'react-floating-whatsapp'
 import Link from 'next/link';
-import SubscriptionModal from '../components/SubscriptionModal'
-import { useSelector, useDispatch } from 'react-redux'
-import {open} from '../redux/modalslice'
+import SubscriptionModal from '../../components/SubscriptionModal'
+import { useDispatch } from 'react-redux'
+import {open} from '../../redux/modalslice'
 import Head from 'next/head';
-import helper from '../utils/Helper';
+import helper from '../../utils/Helper';
+import Image from 'next/image';
 
 function WaitingList() {
 
-  const openModal = useSelector((state) => state.subsModal.open)
+ 
   const dispatch = useDispatch()
 
   // const location = useLocation()
@@ -210,25 +211,25 @@ function WaitingList() {
               <div className='countdown-wrapper-sm'>
                 <div className='sm-box'>
                   <a aria-label="Wendogo sur Facebook" href="https://www.facebook.com/WendogoHQ/" rel="noreferrer noopener" target="_blank" className="LegalSocial__SocialLink-sc-v4d14j-3 GeNZR1">
-                    <img alt="" className='socialmediaicon'  src={Facebook}/>
+                    <Image alt="" className='socialmediaicon'  src={Facebook}/>
                     <span className='legend1'>@WendogoHQ</span>
                   </a>
                 </div>
                 <div className='sm-box'>
                   <a aria-label="Wendogo sur Instagram" href="https://www.instagram.com/WendogoHQ/" rel="noreferrer noopener" target="_blank" className="LegalSocial__SocialLink-sc-v4d14j-3 GeNZR1">
-                    <img alt="" className='socialmediaicon' src={Instagram}/>
+                    <Image alt="" className='socialmediaicon' src={Instagram}/>
                     <span className='legend1'>@WendogoHQ</span>
                   </a>
                 </div>
                 <div className='sm-box'>
                   <a aria-label="Wendogo sur YouTube" href="https://www.youtube.com/@WendogoHQ/" rel="noreferrer noopener" target="_blank" className="LegalSocial__SocialLink-sc-v4d14j-3 GeNZR1">
-                    <img alt="" className='socialmediaicon' src={YouTube}/>
+                    <Image alt="" className='socialmediaicon' src={YouTube}/>
                     <span className='legend1'>@WendogoHQ</span>
                   </a>
                 </div>
                 <div className='sm-box'>
                   <a aria-label="Wendogo sur TikTok" href="https://www.tiktok.com/@WendogoHQ/" rel="noreferrer noopener" target="_blank" className="LegalSocial__SocialLink-sc-v4d14j-3 GeNZR1">
-                    <img alt="" className='socialmediaicon' src={TikTok}/>
+                    <Image alt="" className='socialmediaicon' src={TikTok}/>
                     <span className='legend1'>@WendogoHQ</span>
                   </a>
                 </div>
@@ -243,7 +244,7 @@ function WaitingList() {
             <picture>
               <source type="image/webp" srcSet={TravelPic} />
               <source srcSet={TravelPic} />
-              <img alt="" size="(min-width: 1024px) 50vw, 100vw" className="Overlaystyles__Image-sc-18rcd8b-0 LXFTH" loading="lazy" src={TravelPic} />
+              <Image alt="" size="(min-width: 1024px) 50vw, 100vw" className="Overlaystyles__Image-sc-18rcd8b-0 LXFTH" loading="lazy" src={TravelPic} />
             </picture>
           </div>
         </div>
@@ -293,7 +294,7 @@ function WaitingList() {
               <div id="col-center-left-131" className="innerContent col_right ui-resizable col-md-3" data-col="center" data-trigger="none" data-animate="fade" data-delay={500} data-title="2nd column" style={{ outline: "none" }}>
                 <div className="col-inner bgCover  noBorder borderSolid border3px cornersAll radius0 shadow0 P0-top P0-bottom P0H noTopMargin xckdde" style={{ padding: "0 5px", color: 'white' }}>
                   <div className="de elImageWrapper de-image-block elMargin0 ui-droppable elAlign_center de-editable" id="tmp_image-48583-109" data-de-type="img" data-de-editing="false" data-title="image" data-ce="false" data-trigger="none" data-animate="fade" data-delay={500} style={{ marginTop: 5, outline: "none", cursor: "pointer" }} aria-disabled="false">
-                    <img src="https://go.mindeo.com/hosted/images/75/97772042ac4937a25aab9fde3d50e8/ezgif.com-gif-maker-50-.gif" className="elIMG ximg imgOpacity1" alt="" width={80} tabIndex={0} style={{display: 'inline', borderRadius: "10px"}} />
+                    <Image src="https://go.mindeo.com/hosted/images/75/97772042ac4937a25aab9fde3d50e8/ezgif.com-gif-maker-50-.gif" className="elIMG ximg imgOpacity1" alt="" width={80} tabIndex={0} style={{display: 'inline', borderRadius: "10px"}} />
                   </div>
                   <div className="de elHeadlineWrapper ui-droppable de-editable" id="tmp_headline1-75536-155" data-de-type="headline" data-de-editing="false" data-title="headline" data-ce="true" data-trigger="none" data-animate="fade" data-delay={500} style={{ marginTop: 5, outline: "none", cursor: "pointer", fontFamily: "Abel, Helvetica, sans-serif !important" }} data-google-font="Abel" aria-disabled="false">
                     <h1 className="Card__Title-sc-1qqjegm-4 bqicpW">
@@ -338,7 +339,7 @@ function WaitingList() {
                       <h1>Avec</h1>
                     </div>
                     <div className="HeroHome__HeroRight-sc-12xal5z-4 jQdQfQ azkvnx">
-                      <div className='emedep'><img src={BorisBrice}/></div>
+                      <div className='emedep'><Image src={BorisBrice} alt='somestuff'/></div>
                       <div className={(browserWidth<670 || browserWidth>960)? 'kpdiem' : 'kpdien'}>
                         <div className={'topldmq '+((isShowMore && isBoris) ? "" : 'kpdiem-p-top') }>
                           <p className="ekhdHX">Boris GUIFFOT</p>

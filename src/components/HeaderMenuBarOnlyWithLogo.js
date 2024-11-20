@@ -1,12 +1,7 @@
 'use client';
 
 
-import WendogoLogoIcon from '../assets/wendogo_logo_paperplane_blue.svg'
-import  DropDownIcon from '../assets/dropdown_icon.svg'
-import ButtonLarge from './ButtonLarge';
-
-
-import { useEffect, useState, useRef } from 'react';
+import WendogoLogoIcon from '../assets/wendogo_logo_paperplane_blue.svg' 
 import Link from 'next/link';
 
 function HeaderMenuBarOnlyWithLogo(props){

@@ -1,60 +1,13 @@
 'use client';
 
 
-import WendogoLogoIcon from '../assets/wendogo_logo_paperplane_blue.svg'
-import  DropDownIcon from '../assets/dropdown_icon.svg'
+import WendogoLogoIcon from '../assets/wendogo_logo_paperplane_blue.svg' 
 
-
-import { useEffect, useState, useRef } from 'react';
+ 
 import Link from 'next/link';
 
 function HeaderMenuLoginBar(){
-
-    const [browserWidth, setBrowserWidth] = useState(0) 
-    const [displayOverlayMenu, setDisplayOverlayMenu] = useState(false)
-    const handleClickBurgerButton = () => {
-      setDisplayOverlayMenu(!displayOverlayMenu)
-    }
-    const [displaySubMenu1, setDisplaySubMenu1] = useState(false)
-    const [displaySubMenu2, setDisplaySubMenu2] = useState(false)
-    const [displaySubMenu3, setDisplaySubMenu3] = useState(false)
-    const toggleNavSubMenu1 = () => {
-      setDisplaySubMenu1(!displaySubMenu1)
-      setDisplaySubMenu2(false)
-      setDisplaySubMenu3(false)
-    }
-    const toggleNavSubMenu2 = () => {
-      setDisplaySubMenu2(!displaySubMenu2)
-      setDisplaySubMenu1(false)
-      setDisplaySubMenu3(false)
-    }
-    const toggleNavSubMenu3 = () => {
-      setDisplaySubMenu3(!displaySubMenu3)
-      setDisplaySubMenu1(false)
-      setDisplaySubMenu2(false)
-    }
-    useEffect(() => {
-      function handleResize() {
-        setBrowserWidth(window.innerWidth)
-      }
-      
-      window.addEventListener("resize", handleResize)
-      
-      handleResize()
-      
-      return () => { 
-        window.removeEventListener("resize", handleResize)
-      }
-    }, [])
-
-    useEffect(() => {
  
-      if(browserWidth>1024){
-        setDisplaySubMenu1(false)
-        setDisplaySubMenu2(false)
-        setDisplaySubMenu3(false)        
-      }
-    }, [])
  
 
     return (

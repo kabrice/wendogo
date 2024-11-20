@@ -14,8 +14,7 @@ import { useUpdateCreateUserMutation } from '../../store/apis/userApi';
 import { useRef } from 'react';
 import { activateSpinner, deactivateSpinner } from '../../redux/spinnerslice';
 import { setUser } from '../../redux/userSlice';
-import { useDispatch, useSelector } from 'react-redux'
-import { Loader2 } from "lucide-react";
+import { useDispatch, useSelector } from 'react-redux' 
 
 const KeepInTouch = (props) => {
 

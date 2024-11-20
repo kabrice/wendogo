@@ -1,5 +1,5 @@
-import { text } from '@fortawesome/fontawesome-svg-core'
-import React, { useRef, useState, useEffect } from 'react'
+
+import  { useRef, useState, useEffect } from 'react'
 
 const KEY_CODES = {
     "DOWN": 40,

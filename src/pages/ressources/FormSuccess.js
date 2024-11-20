@@ -1,8 +1,7 @@
-import { useState, useEffect } from 'react'; 
-import helper from '../../utils/Helper'; 
+import { useState, useEffect } from 'react';  
 import Hostess  from '../../assets/simulation_icons/hostess.svg'; 
 import { Loader2 } from "lucide-react";
-import { useDispatch, useSelector } from 'react-redux';
+import {  useSelector } from 'react-redux';
 
 const FormSuccess = (props) => {
 

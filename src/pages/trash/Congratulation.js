@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCalendarCheck } from '@fortawesome/free-solid-svg-icons';
 import { FloatingWhatsApp } from 'react-floating-whatsapp'
@@ -12,7 +12,7 @@ import Computer from '../assets/laptop.png'
 import { useRouter } from 'next/router'
 import Confetti from 'react-confetti'
 import useWindowSize from 'react-use/lib/useWindowSize'
-import FooterSingleRow from '../components/FooterSingleRow';
+import FooterSingleRow from '../../components/FooterSingleRow';
 
 const Congratulation = () => {
     const router = useRouter()

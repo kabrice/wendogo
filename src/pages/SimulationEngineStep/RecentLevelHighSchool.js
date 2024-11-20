@@ -1,12 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useGetDegreesQuery } from '../../store/apis/degreeApi';
-import { activateSpinner, deactivateSpinner } from '../../redux/spinnerslice'
+import { useState, useEffect } from 'react'; 
 import { activateErrorPage, deactivateErrorPage } from '../../redux/errorPageSlice';
 import { activatePremiereClass, deactivatePremiereClass } from '../../redux/premiereClassSlice';
 import SESelectionList from '../../components/SimulationEngine/SESelectionList';
-import _ from 'lodash'
 import { useDispatch, useSelector } from 'react-redux'
 import helper from '../../utils/Helper';
 import { setUser } from '../../redux/userSlice';

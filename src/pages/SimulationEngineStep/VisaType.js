@@ -1,7 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
+import { useState, useEffect } from 'react'; 
 import { useDispatch, useSelector } from 'react-redux';
 import { useGetVisaTypesByCountryIso2Query } from '../../store/apis/visaTypeApi';
 import { activateSpinner, deactivateSpinner } from '../../redux/spinnerslice';
@@ -13,14 +12,12 @@ import KeepInTouch from '../ressources/KeepInTouch';
 import helper from '../../utils/Helper';
 import { setUser } from '../../redux/userSlice';
 import { Loader2 } from "lucide-react";
-import _ from 'lodash';
 
 /**
  * Component for selecting a visa type.
  * Handles visa selection for different countries (France, Germany, Italy, Spain)
  */
-function VisaType() {
-    const router = useRouter();
+function VisaType() { 
     const dispatch = useDispatch();
     
     // Constants

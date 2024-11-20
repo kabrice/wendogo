@@ -1,10 +1,9 @@
 'use client';
 
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import {useSelector } from 'react-redux';
 import SEAlertMessage from "../../components/SimulationEngine/SEAlertMessage";
 import IconEconomy from './../../assets/simulation_icons/icon_economy.svg';
-import helper from '../../utils/Helper';
 import { Loader2 } from "lucide-react";
 
 const CouldPayTuitionWarningAlert = () => {

@@ -2,9 +2,7 @@
 
 import { useState} from 'react';
 import EdgarHead from '../assets/optimized/edgar_head.webp'
-import QuestionsOnTopic from '../components/QuestionsOnTopic';
-//import ExpertMan} from '../assets/optimized/ExpertMan1.svg'
-import OptimizedImage from '../components/OptimizedImage';
+import QuestionsOnTopic from '../components/QuestionsOnTopic'; 
 
 import Link from 'next/link';
 

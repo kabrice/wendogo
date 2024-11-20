@@ -2,8 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import _ from "lodash";
-import { activateSpinner, deactivateSpinner } from "../../redux/spinnerslice";
+import _ from "lodash"; 
 import { activateErrorPage, deactivateErrorPage } from "../../redux/errorPageSlice";
 import { setUser } from "../../redux/userSlice";
 import { setStep } from "../../redux/simulationStepSlice";
@@ -50,11 +49,9 @@ const SchoolYear3 = ({ schoolYears, isErrorPage }) => {
 
     useEffect(() => {
         if (isErrorPage) {
-            console.error("🛑 Error in SchoolYear3:", isErrorPage);
-            dispatch(deactivateSpinner());
+            console.error("🛑 Error in SchoolYear3:", isErrorPage); 
             dispatch(activateErrorPage());
-        } else if (schoolYears) {
-            dispatch(deactivateSpinner());
+        } else if (schoolYears) { 
             dispatch(deactivateErrorPage());
             setSchoolYears3(_.cloneDeep(schoolYears).reverse());
         }

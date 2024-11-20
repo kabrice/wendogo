@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import helper from '../../utils/Helper';
-import ButtonLarge from "../ButtonLarge";
-import { set } from 'lodash';
+import ButtonLarge from "../ButtonLarge"; 
 
 const SETextInput = (props) => {
 

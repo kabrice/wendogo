@@ -3,8 +3,7 @@
 import React, { useState, useEffect } from "react";
 import SEAlertMessage from "../../components/SimulationEngine/SEAlertMessage";
 import SadEmoticonSvg from './../../assets/simulation_icons/sad_emoticon.svg';
-import helper from '../../utils/Helper';
-import { useDispatch, useSelector } from 'react-redux';
+import {useSelector } from 'react-redux';
 import { Loader2 } from "lucide-react";
 
 const ClassRepetitionWarningAlert = () => {

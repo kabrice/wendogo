@@ -7,19 +7,10 @@ import { COUNTRY_CODES } from '../../utils/CountryCodes';
 import 'flag-icons/css/flag-icons.min.css'
 // Utility Functions
 function extractDialCode(dialCode) {
-  const match = dialCode.match(/^[^\d\+]+(\+\d+)/);
+  const match = dialCode.match(/^[^\d+]+(\+\d+)/);
   return match ? match[1] : '';
 }
-
-//remove Emoji
-function removeEmoji(dialCode) {
-  return dialCode.replace(/[\u{1F600}-\u{1F64F}]/gu, '');
-}
-
-// function getCountryFlag(dialCode='') {
-//   const match = dialCode.match(/^([^\d\+]+)/);
-//   return match ? match[0] : '';
-// }
+  
 
 function getCountryFlag({ countryCode = '' }) {
   console.log('dialCodesszsxx ', countryCode);

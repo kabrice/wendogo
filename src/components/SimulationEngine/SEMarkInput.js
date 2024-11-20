@@ -1,7 +1,6 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
-import helper from '../../utils/Helper';
+import React, { useState, useRef, useEffect } from 'react'; 
 import ButtonLarge from "../ButtonLarge";
 import useAutoComplete from '../../hooks/useAutoComplete';
 import { REST_API_PARAMS } from '../../utils/Constants';
@@ -178,6 +177,27 @@ const SEMarkInput = (props) => {
     setShowTPCheckBox(event.target.checked);
   };
 
+  const { bindInput, bindOptions, bindOption, isBusy, suggestions, setSuggestions, setBusy, setTextValue} = useAutoComplete({
+    source: async (search) => {
+        try {
+            const res = await fetch(`${REST_API_PARAMS.baseUrl}${urlFragment}${search}`, {
+                mode: 'cors',
+                headers: { 'Content-Type': 'application/json' },
+            });
+            if (!res.ok) throw new Error(res.statusText);
+            const data = await res.json();
+            return data.map(d => ({ id: d.id, name: d.name }));
+        } catch (error) {
+            console.error('Autocomplete error:', error);
+            return [];
+        }
+    },
+    initialValue: subject.label.value, // Initialize with subject.label.value
+    onChange: (selectedOption) => {
+        setSubject({ ...subject, label: { value: selectedOption.label, validated: true } });
+    },
+  });
+
   const reinitializeInput = (removeTextInput = true) => {
     setSubject({...subject, label: {validated : true, value: ''}})   
      removeTextInput && bindInput.onChange({ target: { value: '' } });
@@ -218,37 +238,6 @@ const SEMarkInput = (props) => {
     };
   }, [suggestions, setBusy, setFocused]);
   
-
-  // const handleOutsideClick = (e) => { 
-  //   console.log('Outside click SEMarkInput' , newRef)
-  //   if (newRef.current && !newRef.current.contains(e.target) && suggestions?.length > 0 && !helper.isTargetContainsIgnoreClass(e.target)) {
-  //       console.log('Outside click SEMarkInput OOO' )
-  //       setBusy(false);
-  //       reinitializeInput(false)
-  //       setFocused(false); 
-  //   }
-  // }; 
-  
-  const { bindInput, bindOptions, bindOption, isBusy, suggestions, setSuggestions, setBusy, setTextValue} = useAutoComplete({
-    source: async (search) => {
-        try {
-            const res = await fetch(`${REST_API_PARAMS.baseUrl}${urlFragment}${search}`, {
-                mode: 'cors',
-                headers: { 'Content-Type': 'application/json' },
-            });
-            if (!res.ok) throw new Error(res.statusText);
-            const data = await res.json();
-            return data.map(d => ({ id: d.id, name: d.name }));
-        } catch (error) {
-            console.error('Autocomplete error:', error);
-            return [];
-        }
-    },
-    initialValue: subject.label.value, // Initialize with subject.label.value
-    onChange: (selectedOption) => {
-        setSubject({ ...subject, label: { value: selectedOption.label, validated: true } });
-    },
-});
 
   const [isFirstRender, setIsFirstRender] = useState(true);
   const [isInitialized, setIsInitialized] = useState(false);
@@ -316,11 +305,6 @@ const SEMarkInput = (props) => {
   useEffect(() => {
       setLocalRank(subject.rank.value || '');
   }, [subject.rank.value]);
-
-  const toSentenceCase = (str) => {
-    if (!str) return str;
-    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-  };
   
   const putStringTagOnOptionFromSearchInput = (index, searchInput) => {
     // Convert option to Sentence Case
@@ -525,12 +509,12 @@ const SEMarkInput = (props) => {
       <div className={`FieldView DaisyFieldView TextField COORD_PRE ${focused ? 'focused' : ''}`}>
       <div className="css-4x6az7 eu4oa1w0">
         <div className="css-kr67x6 eu4oa1w0">
-                <a title='Retour'  role="link" aria-label="Retour" data-tn-element="back-btn" data-tn-variant="element" data-tn-action-click="true" className="css-101rujo e8ju0x50" onClick={() => setIsReadMode(true)}>
+                <button title='Retour'  role="link" aria-label="Retour" data-tn-element="back-btn" data-tn-variant="element" data-tn-action-click="true" className="css-101rujo e8ju0x50" onClick={() => setIsReadMode(true)}>
                     <svg xmlns="http://www.w3.org/2000/svg" focusable="false" role="img" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true" className="css-1f4rn1b eac13zx0">
                         <path d="M20.8957 11.897c0-.5523-.4477-1-1-1H6.5173l3.245-3.245c.3906-.3906.3906-1.0238 0-1.4143-.3905-.3905-1.0237-.3905-1.4142 0l-4.9517 4.9517a.9958.9958 0 00-.2868.5964.9982.9982 0 00.2868.818l4.9515 4.9515c.3905.3905 1.0237.3905 1.4142 0 .3905-.3906.3905-1.0237 0-1.4143l-3.244-3.244h13.3776c.5523 0 1-.4477 1-1z" />
                     </svg> 
                     {/* {Retour} */}
-                </a>
+                </button>
             </div>
         </div>
         <div className="FieldView-flex-container">

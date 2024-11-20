@@ -77,7 +77,7 @@ function ScholarshipProgramCA(){
                               </svg>
                             </li>
                             <li className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__Item-sc-k0ssrw-2 iNCHhD">
-                              <div aria-current="Programme de bourses d'étude" className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__Title-sc-k0ssrw-4 gwJOSc">Programme de bourses d'étude <span>🇨🇦</span></div>
+                              <div  className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__Title-sc-k0ssrw-4 gwJOSc">Programme de bourses d'étude <span>🇨🇦</span></div>
                             </li>
                           </ol>
                           <ol aria-label="none" className="styles__Breadcrumb-sc-k0ssrw-0 styles__HiddenBreadcrumb-sc-k0ssrw-1 hoUFOh jKdNmR">

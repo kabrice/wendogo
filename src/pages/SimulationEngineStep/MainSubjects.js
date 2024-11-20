@@ -1,8 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
-import { useGetLevelValuesQuery } from '../../store/apis/levelValueApi';
-import { activateSpinner, deactivateSpinner } from '../../redux/spinnerslice';
+import { useGetLevelValuesQuery } from '../../store/apis/levelValueApi'; 
 import SEAutoSuggestListInput from '../../components/SimulationEngine/SEAutoSuggestListInput';
 import { useDispatch, useSelector } from 'react-redux';
 import { setStep } from '../../redux/simulationStepSlice';
@@ -46,7 +45,7 @@ const MainSubjects = () => {
     }, []);
 
     // API query
-    const { data, error, isLoading: isApiLoading } = useGetLevelValuesQuery(
+    const { data } = useGetLevelValuesQuery(
         user ? {
             userid: '1',
             externalLevelValueInput: user?.degreeExactNameValue

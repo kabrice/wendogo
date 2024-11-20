@@ -17,8 +17,7 @@ import { Loader2 } from "lucide-react";
 const WorkExperienceDetails = () => {
     const dispatch = useDispatch();
 
-    // Core states
-    const [isInitializing, setIsInitializing] = useState(true);
+    // Core states 
     const user = useSelector((state) => state.user);
     const simulationStepGlobal = useSelector(state => state.simulationStep);
     const showContinueBtn = simulationStepGlobal === SIMULATION_ENGINE_STEPS.WORK_EXPERIENCE_DETAILS; 

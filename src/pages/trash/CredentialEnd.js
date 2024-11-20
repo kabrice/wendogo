@@ -1,15 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useCountriesQuery } from '../../store/apis/userApi';
 import { useSelector, useDispatch } from 'react-redux'
-import  { useForm, Controller }  from  "react-hook-form"
+import  { useForm, }  from  "react-hook-form"
 import { activateSpinner, deactivateSpinner } from '../../redux/spinnerslice'
 import { useUpdateCredentialMutation } from '../../store/apis/userApi';
 import { useUpdateSubscriptionStepMutation } from '../../store/apis/userApi';
 import { useRouter } from 'next/router'
-import helper from '../../utils/Helper'
-import {close} from '../../redux/modalslice'
-import FooterSingleRow from '../../components/FooterSingleRow';
-import { Loader2 } from "lucide-react";
+import helper from '../../utils/Helper' 
+import FooterSingleRow from '../../components/FooterSingleRow'; 
 
 const  CredentialEnd = () => {
 
@@ -353,8 +351,8 @@ const  CredentialEnd = () => {
     }
   
     data = {...data, ...{country : countryList[selectedCountry], city : selectedCity, phone : user?.phone}}
-    user?.occupation = data.occupation
-    user?.description = data.description
+    // user?.occupation = data.occupation
+    // user?.description = data.description
     helper.setLocalStorageWithExpiration('wendogouser', user, 3*60*60*1000)
     console.log('data onSubmitUserInfo', data)
     try {
@@ -486,7 +484,7 @@ const  CredentialEnd = () => {
                                       {countryArray && <div className="pp-cons-1v26bvb-row-justify_content_center" data-ppui-info="grid_3.2.9">
                                         <div className=" pp-cons-1aqxtsc-col_form_full" align="center" data-ppui="true">
                                           <div className="pp-cons-80b3zl-dropdown_menu_base" id="paypalAccountData_nationality" data-ppui-info="dropdown-menu_3.4.3">
-                                            <button onClick={() => toggleCountryDropdown()} className="pp-cons-ih2vqh-dropdown_menu_button-text_field_value_sm-active" type="button" id="dropdownMenuButton_paypalAccountData_nationality" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="dropdownMenuButton_paypalAccountData_nationality-label dropdownMenuButton_paypalAccountData_nationality" autoComplete="country" aria-describedby="paypalAccountData_nationality" aria-invalid="false" placeholder="" data-ppui="true">
+                                            <button onClick={() => toggleCountryDropdown()} className="pp-cons-ih2vqh-dropdown_menu_button-text_field_value_sm-active" type="button" id="dropdownMenuButton_paypalAccountData_nationality" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="dropdownMenuButton_paypalAccountData_nationality-label dropdownMenuButton_paypalAccountData_nationality" autoComplete="country" aria-describedby="paypalAccountData_nationality" placeholder="" data-ppui="true">
                                               <span className="pp-cons-58354q-svg-size_sm-BackgroundMediumContrast-dropdown_menu_affordance_icon" data-ppui-info="icons_8.13.0" aria-hidden="true" data-ppui="true">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="1em" height="1em" data-ppui="true">
                                                   <path fillRule="evenodd" d="M4.292 8.293a1 1 0 0 1 1.414 0L12 14.586l6.293-6.293a1 1 0 0 1 1.414 1.414L12.713 16.7a1.01 1.01 0 0 1-1.428 0L4.292 9.707a1 1 0 0 1 0-1.414z" clipRule="evenodd" data-ppui="true" />
@@ -514,7 +512,7 @@ const  CredentialEnd = () => {
                                       {cityArray && <div className="pp-cons-1v26bvb-row-justify_content_center" data-ppui-info="grid_3.2.9">
                                         <div className=" pp-cons-1aqxtsc-col_form_full" align="center" data-ppui="true">
                                           <div className="pp-cons-80b3zl-dropdown_menu_base" id="paypalAccountData_nationality" data-ppui-info="dropdown-menu_3.4.3">
-                                            <button onClick={() => toggleCityDropdown()} className="pp-cons-ih2vqh-dropdown_menu_button-text_field_value_sm-active" type="button" id="dropdownMenuButton_paypalAccountData_nationality" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="dropdownMenuButton_paypalAccountData_nationality-label dropdownMenuButton_paypalAccountData_nationality" autoComplete="city" aria-describedby="paypalAccountData_nationality" aria-invalid="false" placeholder="" data-ppui="true">
+                                            <button onClick={() => toggleCityDropdown()} className="pp-cons-ih2vqh-dropdown_menu_button-text_field_value_sm-active" type="button" id="dropdownMenuButton_paypalAccountData_nationality" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="dropdownMenuButton_paypalAccountData_nationality-label dropdownMenuButton_paypalAccountData_nationality" autoComplete="city" aria-describedby="paypalAccountData_nationality" placeholder="" data-ppui="true">
                                               <span className="pp-cons-58354q-svg-size_sm-BackgroundMediumContrast-dropdown_menu_affordance_icon" data-ppui-info="icons_8.13.0" aria-hidden="true" data-ppui="true">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="1em" height="1em" data-ppui="true">
                                                   <path fillRule="evenodd" d="M4.292 8.293a1 1 0 0 1 1.414 0L12 14.586l6.293-6.293a1 1 0 0 1 1.414 1.414L12.713 16.7a1.01 1.01 0 0 1-1.428 0L4.292 9.707a1 1 0 0 1 0-1.414z" clipRule="evenodd" data-ppui="true" />
@@ -544,7 +542,7 @@ const  CredentialEnd = () => {
                                           <div className="pp-cons-1hv7ga5-text_input_base-text_body" data-ppui-info="text-input_5.1.6">
                                             <input  {...register("occupation", { required: true, minLength: 5, maxLength:46})} defaultValue={user?.occupation} 
                                             className="pp-cons-16mpn99-text_input_control-text_body-label_placeholder_shown_and_not_focused-text_body" 
-                                            name="occupation" id="paypalAccountData_occupation" aria-invalid="false" placeholder="Que faites-vous actuellement dans la vie." aria-labelledby="paypalAccountData_occupation-label"
+                                            name="occupation" id="paypalAccountData_occupation" placeholder="Que faites-vous actuellement dans la vie." aria-labelledby="paypalAccountData_occupation-label"
                                               aria-label="" type="text"  data-ppui="true"/>
                                             {errors.occupation && <p className='input-error'>La profession est requis et doit être valide.</p>}
 
@@ -557,7 +555,7 @@ const  CredentialEnd = () => {
                                           <div className="pp-cons-1hv7ga5-text_input_base-text_body" data-ppui-info="text-input_5.1.6">
                                             <textarea rows="10" {...register("description", { required: true, minLength: 200, maxLength:2500})} defaultValue={user?.description}
                                             className="pp-cons-16mpn99-text_input_control-text_body-label_placeholder_shown_and_not_focused-text_body" 
-                                            name="description" id="paypalAccountData_description" aria-invalid="false" placeholder="IMPORTANT : Décrivez ici votre parcours académique et professionnel, ce que vous avez déjà intenté comme démarche, toutes questions sur l'immagration ou demande de visa; et tout autres détails utiles." 
+                                            name="description" id="paypalAccountData_description" placeholder="IMPORTANT : Décrivez ici votre parcours académique et professionnel, ce que vous avez déjà intenté comme démarche, toutes questions sur l'immagration ou demande de visa; et tout autres détails utiles." 
                                             aria-labelledby="paypalAccountData_description-label" 
                                             aria-label="" type="text"  data-ppui="true" onChange={e => setDescriptionValueCount(e.target.value.length)}/>
                                             {descriptionValueCount && <p>{descriptionValueCount} caractère{descriptionValueCount>1 && 's'}</p>}

@@ -37,10 +37,8 @@ import { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 // import Head from 'next/head'
 
-import Footer from '../components/Footer';
-import OptimizedImage from '../components/OptimizedImage';
-// import Link from 'next/link';
-// import Nav from "./Nav";
+import Footer from '../components/Footer'; 
+
 function HomePage(){
 
     const [isLeftArrow, setIsLeftArrow] = useState(true)

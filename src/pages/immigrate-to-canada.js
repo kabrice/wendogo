@@ -79,7 +79,7 @@ function ImmigrateToCanada(){
                               </svg>
                             </li>
                             <li className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__Item-sc-k0ssrw-2 iNCHhD">
-                              <div aria-current="Programme de bourses d'étude" className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__Title-sc-k0ssrw-4 gwJOSc">9 façons d'immigrer au Canada en 2024</div>
+                              <div  className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__Title-sc-k0ssrw-4 gwJOSc">9 façons d'immigrer au Canada en 2024</div>
                             </li>
                           </ol>
                           <ol aria-label="none" className="styles__Breadcrumb-sc-k0ssrw-0 styles__HiddenBreadcrumb-sc-k0ssrw-1 hoUFOh jKdNmR">
@@ -210,7 +210,7 @@ function ImmigrateToCanada(){
                             <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
                               <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> 
                               <span>Pour les travailleurs qualifiés qui ont de l’expérience de travail à l’étranger, </span> 
-                              <span className="styles__TextLink-sc-1b5sr4l-9 bpjhgG"><a target="_blank" href="https://www.canada.ca/fr/immigration-refugies-citoyennete/services/immigrer-canada/entree-express/admissibilite/travailleurs-qualifies-federal.html">
+                              <span className="styles__TextLink-sc-1b5sr4l-9 bpjhgG"><a target="_blank" href="https://www.canada.ca/fr/immigration-refugies-citoyennete/services/immigrer-canada/entree-express/admissibilite/travailleurs-qualifies-federal.html" rel="noreferrer">
                                 il faut satisfaire les critères relatifs aux études et aux autres facteurs </a></span>                                  
                               </p>
                             </div>

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { isValidNumber, parsePhoneNumberWithError, formatPhoneNumber } from 'libphonenumber-js';
+import { parsePhoneNumberWithError } from 'libphonenumber-js';
 import SETextInputPhone from "../../components/SimulationEngine/SETextInputPhone";
 import { useDispatch, useSelector } from 'react-redux';
 import { setStep } from '../../redux/simulationStepSlice';
@@ -24,8 +24,7 @@ const PhoneNumber = () => {
     const [countryIso2, setCountryIso2] = useState(null);
     const [valid, setValid] = useState(false);
     const [isLoadingCountry, setIsLoadingCountry] = useState(true);
-    const isInitialized = useRef(false); 
-    const [isDataSent, setIsDataSent] = useState(false);
+    const isInitialized = useRef(false);  
 
     // Fetch user data from local storage during client-side render
     useEffect(() => {

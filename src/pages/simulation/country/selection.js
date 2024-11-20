@@ -1,7 +1,6 @@
 'use client';
 
-import { useState} from 'react';
-import Link from 'next/link';
+import { useState} from 'react'; 
 import FlightSimilution from '../../../assets/simulation_icons/aeroplane_simulation.png'
 import Footer from '../../../components/Footer';
 import HeaderMenuLoginBar from '../../../components/HeaderMenuLoginBar';
@@ -27,6 +26,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router'
 import dynamic from 'next/dynamic';
 import { Loader2 } from "lucide-react";
+
 const KeepInTouch = dynamic(() => import('../../ressources/KeepInTouch'), {
   loading: () => <div className="flex items-center justify-center min-h-[200px]">
                   <Loader2 className="w-8 h-8 animate-spin" />

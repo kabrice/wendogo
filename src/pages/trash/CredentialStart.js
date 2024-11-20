@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import  { useForm, Controller }  from  "react-hook-form"
+import  { useForm }  from  "react-hook-form"
 import { activateSpinner, deactivateSpinner } from '../../redux/spinnerslice'
 import { useUpdateCredentialMutation } from '../../store/apis/userApi';
 import { useRouter } from 'next/router'
 import helper from '../../utils/Helper';
-import FooterSingleRow from '../../components/FooterSingleRow';
-import { Loader2 } from "lucide-react";
+import FooterSingleRow from '../../components/FooterSingleRow'; 
 
 const CredentialStart = () => {
 
@@ -14,7 +13,7 @@ const CredentialStart = () => {
   const currentDate = helper.getLocaleShortDateString(new Date())
   //const user = JSON.parse(localStorage.getItem('wendogouser'))
   console.log('useruser', user)
-  const { register, handleSubmit, formState: { errors }, control } = useForm({
+  const { register, handleSubmit, formState: { errors } } = useForm({
     // use mode to specify the event that triggers each input field 
     mode: "onBlur"
   })
@@ -133,7 +132,7 @@ const CredentialStart = () => {
                                 <div className="pp-cons-1v26bvb-row-justify_content_center" data-ppui-info="grid_3.2.9">
                                   <div className=" pp-cons-1aqxtsc-col_form_full" align="center" data-ppui="true">
                                     <div className="pp-cons-80b3zl-dropdown_menu_base" id="paypalAccountData_nationality" data-ppui-info="dropdown-menu_3.4.3">
-                                      <button onClick={() => toggleSalutationDropdown()} className="pp-cons-ih2vqh-dropdown_menu_button-text_field_value_sm-active" type="button" id="dropdownMenuButton_paypalAccountData_nationality" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="dropdownMenuButton_paypalAccountData_nationality-label dropdownMenuButton_paypalAccountData_nationality" autoComplete="country" aria-describedby="paypalAccountData_nationality" aria-invalid="false" placeholder="" data-ppui="true">
+                                      <button onClick={() => toggleSalutationDropdown()} className="pp-cons-ih2vqh-dropdown_menu_button-text_field_value_sm-active" type="button" id="dropdownMenuButton_paypalAccountData_nationality" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="dropdownMenuButton_paypalAccountData_nationality-label dropdownMenuButton_paypalAccountData_nationality" autoComplete="country" aria-describedby="paypalAccountData_nationality" data-ppui="true">
                                         <span className="pp-cons-58354q-svg-size_sm-BackgroundMediumContrast-dropdown_menu_affordance_icon" data-ppui-info="icons_8.13.0" aria-hidden="true" data-ppui="true">
                                           <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="1em" height="1em" data-ppui="true">
                                             <path fillRule="evenodd" d="M4.292 8.293a1 1 0 0 1 1.414 0L12 14.586l6.293-6.293a1 1 0 0 1 1.414 1.414L12.713 16.7a1.01 1.01 0 0 1-1.428 0L4.292 9.707a1 1 0 0 1 0-1.414z" clipRule="evenodd" data-ppui="true" />
