@@ -13,8 +13,7 @@ import Sh5 from '../../assets/simulation_icons/sh5.svg';
 import Sh6 from '../../assets/simulation_icons/sh6.svg';
 import Sh7 from '../../assets/simulation_icons/sh7.svg';
 import { useDispatch, useSelector } from 'react-redux'
-import {useState, useEffect} from 'react';
-import useGeoLocation from "react-ipgeolocation"
+import {useState, useEffect} from 'react'; 
 import Link from 'next/link'
 import helper from '../../utils/Helper';
 import { REST_API_PARAMS } from '../../utils/Constants';
@@ -22,6 +21,8 @@ import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import { Loader2 } from "lucide-react";
 import { setUser } from '../../redux/userSlice';
+ 
+const useGeoLocation = dynamic(() => import('react-ipgeolocation'), { ssr: false });
 
 const KeepInTouch = dynamic(() => import('../ressources/KeepInTouch'), {
   loading: () => <div className="flex items-center justify-center min-h-[200px]">

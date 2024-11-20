@@ -7,7 +7,6 @@ import SETextArea from '../../components/SimulationEngine/SETextArea';
 import SETextInput from '../../components/SimulationEngine/SETextInput';
 import ButtonLarge from '../../components/ButtonLarge';
 import { parsePhoneNumberWithError } from 'libphonenumber-js';
-import useGeoLocation from "react-ipgeolocation" 
 import SETextInputPhone from '../../components/SimulationEngine/SETextInputPhone'; 
 import FormSuccess from './FormSuccess';
 import { useUpdateCreateUserMutation } from '../../store/apis/userApi';
@@ -15,6 +14,9 @@ import { useRef } from 'react';
 import { activateSpinner, deactivateSpinner } from '../../redux/spinnerslice';
 import { setUser } from '../../redux/userSlice';
 import { useDispatch, useSelector } from 'react-redux' 
+
+import dynamic from 'next/dynamic';
+const useGeoLocation = dynamic(() => import('react-ipgeolocation'), { ssr: false });
 
 const KeepInTouch = (props) => {
 
