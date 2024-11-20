@@ -63,7 +63,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "structure": "node ./file-structure-script.js"
+    "structure": "node ./file-structure-script.js",
+    "analyze": "cross-env ANALYZE=true next build"
   },
   "eslintConfig": {
     "extends": [
