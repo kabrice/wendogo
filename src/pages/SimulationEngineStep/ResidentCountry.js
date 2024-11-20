@@ -8,12 +8,13 @@ import { useGetCountriesQuery } from '../../store/apis/countryApi';
 import helper from '../../utils/Helper';
 import { setUser } from '../../redux/userSlice'; 
 import SEDropDownList from '../../components/SimulationEngine/SEDropDownList';
-import useGeoLocation from "react-ipgeolocation";
+import dynamic from 'next/dynamic';
 import { FRANCOPHONE_COUNTRIES } from '../../utils/Constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { setStep } from '../../redux/simulationStepSlice';
 import { SIMULATION_ENGINE_STEPS } from '../../utils/Constants';
 import { Loader2 } from "lucide-react";
+const useGeoLocation = dynamic(() => import('react-ipgeolocation'), { ssr: false });
 
 const ResidentCountry = () => {
     const router = useRouter();
