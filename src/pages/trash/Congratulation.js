@@ -4,9 +4,9 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCalendarCheck } from '@fortawesome/free-solid-svg-icons';
-import { FloatingWhatsApp } from 'react-floating-whatsapp'
-import SocialMediaLogo from '../assets/social_media_logo.png'
-import Reminder from '../assets/twenty-seven.png'
+// import { FloatingWhatsApp } from 'react-floating-whatsapp'
+// import SocialMediaLogo from '../social_media_logo.png'
+// import Reminder from '../assets/twenty-seven.png'
 import Question from '../assets/question.png'
 import Computer from '../assets/laptop.png'
 import { useRouter } from 'next/router'
@@ -119,7 +119,7 @@ const Congratulation = () => {
                             <div className="col-inner bgCover noBorder borderSolid border3px cornersAll shadow0 P0-top P0-bottom P0H noTopMargin radius10" style={{ padding: 0, backgroundColor: "#d6d6d6", width: "auto", marginLeft: 0, marginRight: 0 }}>
                                 <div className="de elImageWrapper de-image-block elAlign_center elMargin0 ui-droppable de-editable" id="img-20239" data-de-type="img" data-de-editing="false" data-title="image" data-ce="false" data-trigger="none" data-animate="fade" data-delay={500} style={{ marginTop: 20, outline: "none", cursor: "pointer" }} data-hide-on="" aria-disabled="false">
                                 {/* <img src={alarmClock} className="elIMG ximg" alt="" height={120} data-lazy-loading="false" tabIndex={0} /> */}
-                                <img src={Reminder} className="elIMG ximg" alt="" height={120} data-lazy-loading="false" tabIndex={0} />
+                                {/* <img src={Reminder} className="elIMG ximg" alt="" height={120} data-lazy-loading="false" tabIndex={0} /> */}
                                 </div>
                                 <div className="de elHeadlineWrapper ui-droppable de-editable" id="headline-70542" data-de-type="headline" data-de-editing="false" data-title="headline" data-ce="true" data-trigger="none" data-animate="fade" data-delay={500} style={{ marginTop: 0, outline: "none", cursor: "pointer", fontFamily: '"Open Sans", Helvetica, sans-serif !important' }} aria-disabled="false" data-google-font="Open+Sans" data-htype="content">
                                 <h1 className="ne elHeadline hsSize3 lh4 elMargin0 elBGStyle0 hsTextShadow0 padding0" style={{ textAlign: "center", fontSize: 24, color: "#001435" }} data-bold="inherit" data-gramm="false">
@@ -307,9 +307,9 @@ const Congratulation = () => {
             </div>
         </div>
         </div>
-        <FloatingWhatsApp phoneNumber="330745493086" accountName="Wendogo" avatar={SocialMediaLogo} statusMessage="Répond en général dans l'heure" 
+        {/* <FloatingWhatsApp phoneNumber="330745493086" accountName="Wendogo" avatar={SocialMediaLogo} statusMessage="Répond en général dans l'heure" 
                             chatMessage={'Salut toi 🤝 \nSi tu as une question, suis ces étapes pour obtenir une assistance rapide :\n1. Présente toi\n2. Indique l\'objet de ton message \n3. Décris clairement ton problème 😉'}
-                            placeholder={"Racontes nous ce qui te préoccupe"} chatboxHeight={500} CSSProperties={{color:'#001435'}}/>
+                            placeholder={"Racontes nous ce qui te préoccupe"} chatboxHeight={500} CSSProperties={{color:'#001435'}}/> */}
         </>
         )
 }

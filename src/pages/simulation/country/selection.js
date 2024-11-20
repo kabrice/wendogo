@@ -6,14 +6,14 @@ import Footer from '../../../components/Footer';
 import HeaderMenuLoginBar from '../../../components/HeaderMenuLoginBar';
 import Marseille from '../../../assets/partner_logos/logo-marseille.png'
 import Toulouse from '../../../assets/partner_logos/logo-toulouse.jpeg'
-import AmbassadeFrance from '../../../assets/partner_logos/logo-ambassade_de_France_au_Brésil.svg'
+import AmbassadeFrance from '../../../assets/partner_logos/logo-ambassade_de_France_au_Bresil.svg'
 import ParisSclay from '../../../assets/partner_logos/logo-paris-saclay.svg'
 import CampusFrance from '../../../assets/partner_logos/logo-campus-france.png'
 import Sorbonne from '../../../assets/partner_logos/logo-sorbonne.svg'
 import UPHF from '../../../assets/partner_logos/logo-uphf.svg'
-import Quebec from '../../../assets/partner_logos/logo-Québec.png'
+import Quebec from '../../../assets/partner_logos/logo-Quebec.png'
 import USB from '../../../assets/partner_logos/logo-USB-site-parallel.png'
-import Ottawa from '../../../assets/partner_logos/logo-université_ottawa.svg'
+import Ottawa from '../../../assets/partner_logos/logo-universite_ottawa.svg'
 import Montreal from '../../../assets/partner_logos/logo-Universite_de_Montreal.svg'
 import AmbassadeCanada from '../../../assets/partner_logos/logo-ambassade_canada.svg'
 import helper from '../../../utils/Helper';
