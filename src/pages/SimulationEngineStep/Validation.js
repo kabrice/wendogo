@@ -49,7 +49,7 @@ const Validation = () => {
             console.log('updatedUser VVVV', updatedUser);
             dispatch(setUser(updatedUser));
             helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
-            window.location.href = '/simulation/result#view/SCORE_DETAILLE';
+            router.push('/simulation/result#view/SCORE_DETAILLE');
         } else {
             setIsAlert(true);
         }

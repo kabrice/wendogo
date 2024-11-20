@@ -1,18 +1,18 @@
 'use client';
 
 import { useState} from 'react';
-import EdgarHead from '../assets/edgar_head.jpeg'
+import EdgarHead from '../assets/optimized/edgar_head.webp'
 import QuestionsOnTopic from '../components/QuestionsOnTopic';
 
 import Link from 'next/link';
 
 import Footer from '../components/Footer';
 import HeaderMenuBar from '../components/HeaderMenuBar';
-import HappyGirl from '../assets/happyGirl.png'
-import Mentorship from '../assets/mentorship.png'
-import OurPromise from '../assets/OurPromise.png'
+import HappyGirl from '../assets/optimized/happyGirl.webp'
+import Mentorship from '../assets/optimized/mentorship.webp'
+import OurPromise from '../assets/optimized/OurPromise.webp'
 import { useRouter } from 'next/router';
-import SocialMediaLogo from '../assets/wendogo_jeu_concours.png'
+import SocialMediaLogo from '../assets/optimized/wendogo_jeu_concours.webp'
 import Head from 'next/head';
 import Image from 'next/image';
 

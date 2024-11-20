@@ -98,15 +98,60 @@ const ReportCard3 = () => {
         setHasEnterBaccalaureatMarksWhenMandatory(hasBaccalaureatMarks);
         setContinueButtonClicked(true);
 
+
         if (isReportCardsValid && hasBaccalaureatMarks) {
             setShowError(false);
             setMainSubjects(null);
-            const isApplyingForMaster = helper.isApplyingForMaster(user, subjectLists, 0);
+
+            const processedSubjectLists = subjectLists.map((periodSubjects, periodIndex) => {
+                // Determine the mark system for this period
+                let effectiveMarkSystem = user.academicYearHeadDetails3.markSystem.name;
+                const isBacReportCard = (periodIndex === subjectLists.length - 1 && isBaccalaureatMarkMandatory);
+                
+                if (isBacReportCard) {
+                    effectiveMarkSystem = 'Sur 20';
+                }
+    
+                // Process each subject in the period
+                return periodSubjects.map(subject => {
+                    const currentValue = subject.mark.value;
+                    let valueIn20 = subject?.mark?.valueIn20;
+    
+                    // If valueIn20 is not set, try to convert it
+                    if (valueIn20 === null || valueIn20 === undefined) {
+                        valueIn20 = helper.convertToSur20(currentValue, effectiveMarkSystem);
+                    }
+    
+                    return {
+                        ...subject,
+                        mark: {
+                            ...subject.mark,
+                            valueIn20
+                        }
+                    };
+                });
+            });
+
+                    // Check if any marks couldn't be converted
+            const hasInvalidMarks = processedSubjectLists.some(periodSubjects =>
+                periodSubjects.some(subject => 
+                    subject.mark.value && subject.mark.valueIn20 === null
+                )
+            );
+
+            if (hasInvalidMarks) {
+                setShowError(true);
+                console.log("Certaines notes n'ont pas pu être converties sur 20. Veuillez vérifier vos notes.");
+                return;
+            }
+            setShowError(false);
+
+            const isApplyingForMaster = helper.isApplyingForMaster(user, processedSubjectLists, 0);
             setApplyingForMaster(isApplyingForMaster);
             const nextStep = isInUniversityGlobal ? 
                 SIMULATION_ENGINE_STEPS.PROGRAM_DOMAIN : 
                 SIMULATION_ENGINE_STEPS.MAIN_SUBJECTS;
-            updateWendogouser(nextStep, subjectLists);
+            updateWendogouser(nextStep, processedSubjectLists);
         } else {
             setShowError(true);
         }

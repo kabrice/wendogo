@@ -2,17 +2,17 @@
 
 
 // Import img
-import backgroundImg3 from '../assets/générique-chateau.jpg';
-import backgroundImg2 from '../assets/1000_F_534931774_iiLVveToIVDuO89bZdeLs770iR7Lnm2a.png';
+import backgroundImg3 from '../assets/optimized/générique-chateau.webp';
+import backgroundImg2 from '../assets/optimized/1000_F_534931774_iiLVveToIVDuO89bZdeLs770iR7Lnm2a.webp';
 import backgroundImg1 from '../assets/flightwallpaper.webp';
-import SliderstylesImage1 from '../assets/Sliderstyles__Image1.png'
-import SliderstylesImage2 from '../assets/Sliderstyles__Image2.png'
-import PasseportVisa from '../assets/1000_F_154951378_oyz1BvKKnOVw92VJ05vNIk4l72WxkZaP.jpg'
-import WorldNoBorders from '../assets/AdobeStock_559662042_Preview.jpeg'
+import SliderstylesImage1 from '../assets/optimized/Sliderstyles__Image1.webp'
+import SliderstylesImage2 from '../assets/optimized/Sliderstyles__Image2.webp'
+import PasseportVisa from '../assets/optimized/1000_F_154951378_oyz1BvKKnOVw92VJ05vNIk4l72WxkZaP.webp'
+import WorldNoBorders from '../assets/optimized/AdobeStock_559662042_Preview.webp'
 import BlockCourtier1 from '../assets/group-portrait-five-african-business-colleagues-standing-row-office_484651-18709.avif'
-import BlockCourtier2 from '../assets/240_F_271683964_RV5TD7e4GN67UBFhvBvtltNO4hJ5aTQs.jpg'
+import BlockCourtier2 from '../assets/optimized/240_F_271683964_RV5TD7e4GN67UBFhvBvtltNO4hJ5aTQs.webp'
 import BlockCourtier3 from '../assets/beautiful-woman-standing-front-colleagues-group-african-american-business-people-working-office-together_146671-45002.avif'
-import SocialMediaLogo from '../assets/social_media_logo.png'
+import SocialMediaLogo from '../assets/optimized/social_media_logo.webp'
 // Import svg
 import WendogoLogo from '../assets/wendogo_logo.svg'
 import  DropDownIcon from '../assets/dropdown_icon.svg'
@@ -192,7 +192,7 @@ function HomePage(){
         />
         <meta
           property="og:image"
-          content="https://wendogo.com/static/media/wendogo_jeu_concours.png"
+          content="https://wendogo.com/static/media/wendogo_jeu_concours.webp"
         />
       </Head>
         <div >
@@ -570,7 +570,7 @@ function HomePage(){
                         <h1 className="center-text center-text1">Votre visa en 6 étapes</h1>
                         <div className="columns-6 w-row">
                           <div className="w-col w-col-6 w-col-stack">
-                            {/* <Image src="https://uploads-ssl.webflow.com/61d984790bdf2970837c8d96/62bafa7838ff242093f9d9b5_iollo-kit%402x.png" loading="lazy" width={750} sizes="(max-width: 991px) 100vw, (max-width: 1439px) 48vw, 621px" srcSet="https://uploads-ssl.webflow.com/61d984790bdf2970837c8d96/62bafa7838ff242093f9d9b5_iollo-kit%402x-p-500.png  500w,https://uploads-ssl.webflow.com/61d984790bdf2970837c8d96/62bafa7838ff242093f9d9b5_iollo-kit%402x-p-800.png  800w,https://uploads-ssl.webflow.com/61d984790bdf2970837c8d96/62bafa7838ff242093f9d9b5_iollo-kit%402x-p-1080.png  1080w,https://uploads-ssl.webflow.com/61d984790bdf2970837c8d96/62bafa7838ff242093f9d9b5_iollo-kit%402x.png  1500w" alt="" className="image-5" /> */}
+                            {/* <Image src="https://uploads-ssl.webflow.com/61d984790bdf2970837c8d96/62bafa7838ff242093f9d9b5_iollo-kit%402x.webp" loading="lazy" width={750} sizes="(max-width: 991px) 100vw, (max-width: 1439px) 48vw, 621px" srcSet="https://uploads-ssl.webflow.com/61d984790bdf2970837c8d96/62bafa7838ff242093f9d9b5_iollo-kit%402x-p-500.webp  500w,https://uploads-ssl.webflow.com/61d984790bdf2970837c8d96/62bafa7838ff242093f9d9b5_iollo-kit%402x-p-800.webp  800w,https://uploads-ssl.webflow.com/61d984790bdf2970837c8d96/62bafa7838ff242093f9d9b5_iollo-kit%402x-p-1080.webp  1080w,https://uploads-ssl.webflow.com/61d984790bdf2970837c8d96/62bafa7838ff242093f9d9b5_iollo-kit%402x.webp  1500w" alt="" className="image-5" /> */}
                             <Image src={PasseportVisa} loading="lazy" width={750} sizes="(max-width: 991px) 100vw, (max-width: 1439px) 48vw, 621px" alt="" className="image-5" />
                           </div>
                           <div className="column-19 w-col w-col-6 w-col-stack">
@@ -685,15 +685,15 @@ function HomePage(){
                       <div className={"Images__Container-sc-2gr022-0 Banner__Images-sc-krte25-1 fCdAKA "+bannerAnimationClassList[0]} ref={myElementRef}>
                         <div className="Images__BaseImage-sc-2gr022-2 Images__Image1-sc-2gr022-3 ioovUp llLrAK">
                           {/* <picture>
-                            <source type="image/webp" srcSet="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_320/v1677667256/website/page/home/BlocCourtier-1.jpg 320w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_375/v1677667256/website/page/home/BlocCourtier-1.jpg 375w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_425/v1677667256/website/page/home/BlocCourtier-1.jpg 425w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_768/v1677667256/website/page/home/BlocCourtier-1.jpg 768w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_1024/v1677667256/website/page/home/BlocCourtier-1.jpg 1024w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_1240/v1677667256/website/page/home/BlocCourtier-1.jpg 1240w" />
-                            <source srcSet="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_320/v1677667256/website/page/home/BlocCourtier-1.jpg 320w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_375/v1677667256/website/page/home/BlocCourtier-1.jpg 375w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_425/v1677667256/website/page/home/BlocCourtier-1.jpg 425w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_768/v1677667256/website/page/home/BlocCourtier-1.jpg 768w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_1024/v1677667256/website/page/home/BlocCourtier-1.jpg 1024w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_1240/v1677667256/website/page/home/BlocCourtier-1.jpg 1240w" />
-                            <Image alt="" size="(min-width: 1024px) 50vw, 100vw" loading="lazy" src="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto/v1677667256/website/page/home/BlocCourtier-1.jpg" className={"Images__Image-sc-2gr022-1 "+((countdown<5 || countdown===15) ? bannerAnimationClassList[1] : "eXDVgd")} />
+                            <source type="image/webp" srcSet="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_320/v1677667256/website/page/home/BlocCourtier-1.webp 320w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_375/v1677667256/website/page/home/BlocCourtier-1.webp 375w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_425/v1677667256/website/page/home/BlocCourtier-1.webp 425w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_768/v1677667256/website/page/home/BlocCourtier-1.webp 768w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_1024/v1677667256/website/page/home/BlocCourtier-1.webp 1024w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_1240/v1677667256/website/page/home/BlocCourtier-1.webp 1240w" />
+                            <source srcSet="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_320/v1677667256/website/page/home/BlocCourtier-1.webp 320w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_375/v1677667256/website/page/home/BlocCourtier-1.webp 375w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_425/v1677667256/website/page/home/BlocCourtier-1.webp 425w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_768/v1677667256/website/page/home/BlocCourtier-1.webp 768w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_1024/v1677667256/website/page/home/BlocCourtier-1.webp 1024w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_1240/v1677667256/website/page/home/BlocCourtier-1.webp 1240w" />
+                            <Image alt="" size="(min-width: 1024px) 50vw, 100vw" loading="lazy" src="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto/v1677667256/website/page/home/BlocCourtier-1.webp" className={"Images__Image-sc-2gr022-1 "+((countdown<5 || countdown===15) ? bannerAnimationClassList[1] : "eXDVgd")} />
                           </picture> */}
                           <picture>
                             {/* <source type="image/webp" srcSet={BlockCourtier1} />
                             <source srcSet={BlockCourtier1} /> */}
                             <Image className={"Images__Image-sc-2gr022-1 "+((countdown<5 || countdown===15) ? bannerAnimationClassList[1] : "eXDVgd")} src={BlockCourtier1} alt="" size="(min-width: 1024px) 50vw, 100vw" loading="lazy"  />
-                            {/* <Image alt="v1677658638/website/page/home/Re%CC%81sultat.png" className="Sliderstyles__Image-sc-jd0rgd-7 kCpYFv" loading="lazy" src="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto/v1677658638/website/page/home/Re%CC%81sultat.png" /> */}
+                            {/* <Image alt="v1677658638/website/page/home/Re%CC%81sultat.webp" className="Sliderstyles__Image-sc-jd0rgd-7 kCpYFv" loading="lazy" src="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto/v1677658638/website/page/home/Re%CC%81sultat.webp" /> */}
                           </picture>
                         </div>
                         <div className="Images__BaseImage-sc-2gr022-2 Images__Image2-sc-2gr022-4 ioovUp kUUMLx">
@@ -701,12 +701,12 @@ function HomePage(){
                             {/* <source type="image/webp" srcSet={BlockCourtier2} />
                             <source srcSet={BlockCourtier2} /> */}
                             <Image  className={"Images__Image-sc-2gr022-1 "+((countdown >= 5 && countdown<10) ? bannerAnimationClassList[1] : "eXDVgd")} src={BlockCourtier2} alt="" size="(min-width: 1024px) 50vw, 100vw" loading="lazy"  />
-                            {/* <Image alt="v1677658638/website/page/home/Re%CC%81sultat.png" className="Sliderstyles__Image-sc-jd0rgd-7 kCpYFv" loading="lazy" src="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto/v1677658638/website/page/home/Re%CC%81sultat.png" /> */}
+                            {/* <Image alt="v1677658638/website/page/home/Re%CC%81sultat.webp" className="Sliderstyles__Image-sc-jd0rgd-7 kCpYFv" loading="lazy" src="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto/v1677658638/website/page/home/Re%CC%81sultat.webp" /> */}
                           </picture>
                           {/* <picture>
-                            <source type="image/webp" srcSet="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_320/v1677668879/website/page/home/BlocCourtier-2.jpg 320w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_375/v1677668879/website/page/home/BlocCourtier-2.jpg 375w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_425/v1677668879/website/page/home/BlocCourtier-2.jpg 425w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_768/v1677668879/website/page/home/BlocCourtier-2.jpg 768w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_1024/v1677668879/website/page/home/BlocCourtier-2.jpg 1024w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_1240/v1677668879/website/page/home/BlocCourtier-2.jpg 1240w" />
-                            <source srcSet="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_320/v1677668879/website/page/home/BlocCourtier-2.jpg 320w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_375/v1677668879/website/page/home/BlocCourtier-2.jpg 375w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_425/v1677668879/website/page/home/BlocCourtier-2.jpg 425w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_768/v1677668879/website/page/home/BlocCourtier-2.jpg 768w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_1024/v1677668879/website/page/home/BlocCourtier-2.jpg 1024w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_1240/v1677668879/website/page/home/BlocCourtier-2.jpg 1240w" />
-                            <Image alt="" size="(min-width: 1024px) 50vw, 100vw" loading="lazy" src="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto/v1677668879/website/page/home/BlocCourtier-2.jpg" />
+                            <source type="image/webp" srcSet="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_320/v1677668879/website/page/home/BlocCourtier-2.webp 320w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_375/v1677668879/website/page/home/BlocCourtier-2.webp 375w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_425/v1677668879/website/page/home/BlocCourtier-2.webp 425w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_768/v1677668879/website/page/home/BlocCourtier-2.webp 768w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_1024/v1677668879/website/page/home/BlocCourtier-2.webp 1024w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_1240/v1677668879/website/page/home/BlocCourtier-2.webp 1240w" />
+                            <source srcSet="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_320/v1677668879/website/page/home/BlocCourtier-2.webp 320w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_375/v1677668879/website/page/home/BlocCourtier-2.webp 375w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_425/v1677668879/website/page/home/BlocCourtier-2.webp 425w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_768/v1677668879/website/page/home/BlocCourtier-2.webp 768w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_1024/v1677668879/website/page/home/BlocCourtier-2.webp 1024w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_1240/v1677668879/website/page/home/BlocCourtier-2.webp 1240w" />
+                            <Image alt="" size="(min-width: 1024px) 50vw, 100vw" loading="lazy" src="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto/v1677668879/website/page/home/BlocCourtier-2.webp" />
                           </picture> */}
                         </div>
                         <div className="Images__BaseImage-sc-2gr022-2 Images__Image3-sc-2gr022-5 ioovUp gaxwmL">
@@ -714,12 +714,12 @@ function HomePage(){
                             {/* <source type="image/webp" srcSet={BlockCourtier3} />
                             <source srcSet={BlockCourtier3} /> */}
                             <Image className={"Images__Image-sc-2gr022-1 "+((countdown >= 10 && countdown<15) ? bannerAnimationClassList[1] : "eXDVgd")} src={BlockCourtier3} alt="" size="(min-width: 1024px) 50vw, 100vw" loading="lazy"  />
-                            {/* <Image alt="v1677658638/website/page/home/Re%CC%81sultat.png" className="Sliderstyles__Image-sc-jd0rgd-7 kCpYFv" loading="lazy" src="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto/v1677658638/website/page/home/Re%CC%81sultat.png" /> */}
+                            {/* <Image alt="v1677658638/website/page/home/Re%CC%81sultat.webp" className="Sliderstyles__Image-sc-jd0rgd-7 kCpYFv" loading="lazy" src="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto/v1677658638/website/page/home/Re%CC%81sultat.webp" /> */}
                           </picture>
                           {/* <picture>
-                            <source type="image/webp" srcSet="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_320/v1677668879/website/page/home/BlocCourtier-3.jpg 320w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_375/v1677668879/website/page/home/BlocCourtier-3.jpg 375w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_425/v1677668879/website/page/home/BlocCourtier-3.jpg 425w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_768/v1677668879/website/page/home/BlocCourtier-3.jpg 768w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_1024/v1677668879/website/page/home/BlocCourtier-3.jpg 1024w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_1240/v1677668879/website/page/home/BlocCourtier-3.jpg 1240w" />
-                            <source srcSet="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_320/v1677668879/website/page/home/BlocCourtier-3.jpg 320w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_375/v1677668879/website/page/home/BlocCourtier-3.jpg 375w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_425/v1677668879/website/page/home/BlocCourtier-3.jpg 425w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_768/v1677668879/website/page/home/BlocCourtier-3.jpg 768w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_1024/v1677668879/website/page/home/BlocCourtier-3.jpg 1024w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_1240/v1677668879/website/page/home/BlocCourtier-3.jpg 1240w" />
-                            <Image alt="" size="(min-width: 1024px) 50vw, 100vw" loading="lazy" src="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto/v1677668879/website/page/home/BlocCourtier-3.jpg" className={"Images__Image-sc-2gr022-1 "+((countdown<15 && countdown>=10) ? bannerAnimationClassList[1] : "eXDVgd")} />
+                            <source type="image/webp" srcSet="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_320/v1677668879/website/page/home/BlocCourtier-3.webp 320w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_375/v1677668879/website/page/home/BlocCourtier-3.webp 375w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_425/v1677668879/website/page/home/BlocCourtier-3.webp 425w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_768/v1677668879/website/page/home/BlocCourtier-3.webp 768w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_1024/v1677668879/website/page/home/BlocCourtier-3.webp 1024w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_1240/v1677668879/website/page/home/BlocCourtier-3.webp 1240w" />
+                            <source srcSet="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_320/v1677668879/website/page/home/BlocCourtier-3.webp 320w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_375/v1677668879/website/page/home/BlocCourtier-3.webp 375w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_425/v1677668879/website/page/home/BlocCourtier-3.webp 425w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_768/v1677668879/website/page/home/BlocCourtier-3.webp 768w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_1024/v1677668879/website/page/home/BlocCourtier-3.webp 1024w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_1240/v1677668879/website/page/home/BlocCourtier-3.webp 1240w" />
+                            <Image alt="" size="(min-width: 1024px) 50vw, 100vw" loading="lazy" src="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto/v1677668879/website/page/home/BlocCourtier-3.webp" className={"Images__Image-sc-2gr022-1 "+((countdown<15 && countdown>=10) ? bannerAnimationClassList[1] : "eXDVgd")} />
                           </picture> */}
                         </div>
                       </div>
@@ -772,7 +772,7 @@ function HomePage(){
                           <picture>
                             {/* <source type="image/webp" sizes="(min-width: 1240px) 288px, (min-width: 1024px) 25vw, (min-width: 768px) 37.5vw, 100vw" srcSet={WorldNoBorders} />
                             <source sizes="(min-width: 1240px) 288px, (min-width: 1024px) 25vw, (min-width: 768px) 37.5vw, 100vw"  srcSet={WorldNoBorders} /> */}
-                            <Image className="Banner__Image-sc-yqcec5-2 kHAXoZ" alt="v1677669144/website/page/home/BlocFooter.jpg" loading="lazy" src={WorldNoBorders}/>
+                            <Image className="Banner__Image-sc-yqcec5-2 kHAXoZ" alt="v1677669144/website/page/home/BlocFooter.webp" loading="lazy" src={WorldNoBorders}/>
                           </picture>
                         </div>
                         <div className="Banner__Content-sc-yqcec5-3 hKeCKQ">

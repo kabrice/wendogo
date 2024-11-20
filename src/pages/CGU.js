@@ -1,7 +1,7 @@
 'use client';
 
 
-import SocialMediaLogo from '../assets/social_media_logo.png'
+import SocialMediaLogo from '../assets/optimized/social_media_logo.webp'
 import Footer from '../components/Footer';
 import HeaderMenuBar from '../components/HeaderMenuBar';
 import Head from 'next/head';

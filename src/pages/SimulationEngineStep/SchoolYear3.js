@@ -34,6 +34,7 @@ const SchoolYear3 = ({ schoolYears, isErrorPage }) => {
     };
 
     const toggleYearDropdown = () => {
+        console.log("toggleYearDropdown", schoolYears);
         setCollapseYearOption(!collapseYearOption);
     };
 

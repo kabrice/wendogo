@@ -11,7 +11,7 @@ import { Loader2 } from "lucide-react";
 import { setUser } from '../../redux/userSlice';
 
 const FIRST_PARAGRAPHS = [`Êtes-vous en train de préparer votre demande de visa et souhaitez-vous plus d'informations sur la partie relative au garant financier ? 
-    <p>Tout d'abord, vous devez savoir que la raison la plus courante de refus de visa est la raison n°2 :</p>
+    <p>Tout d'abord, vous devez savoir que la raison la plus courante de refus de visa est la motif n°2 :</p>
     <p><strong>Vous n'avez pas fourni de preuve démontrant que vous disposez de ressources suffisantes pour couvrir les dépenses de toute nature durant votre séjour en France, ou que vous n'êtes pas en mesure d'acquérir légalement ces moyens.</strong></p>
     <p>Cette raison est utilisée lorsque l'étudiant ne présente pas suffisamment d'éléments prouvant de manière incontestable qu'il/elle disposera des ressources nécessaires (supérieures ou égales à 615 €/mois) pour au moins un an.</p>
     <p>En effet, la vie étudiante en France est coûteuse, et le consulat/ambassade ne prendra pas le risque de permettre l'entrée en France d'étudiants qui ne pourront pas étudier dans les meilleures conditions.</p>
@@ -98,7 +98,8 @@ const CouldPayTuition = () => {
             modalIcon={<QuestionMark className="FrancoisImg image" />}
             modalIsLiTag={true}
             displayQuestionTooltip={true}
-            specialTextModal="* Le simulateur Wendogo ne prend pas encore en compte les critères relatifs au garant. Cependant, si vous êtes certain d'avoir un garant qui remplit toutes ces conditions pour votre pays, cliquez sur «Oui»."
+            specialTextModal="* Le simulateur Wendogo ne prend pas encore en compte les critères relatifs au garant. Cependant, si vous êtes certain d'avoir un garant qui remplit toutes ces conditions pour votre pays, cliquez sur «Oui».
+                                Vous pourrez aussi bénéficier d'un accompagnement optimal par nos équipes si vous êtes dans un cas spécial."
             handleContinue={handleContinue}
             showContinueBtn={simulationStepGlobal === SIMULATION_ENGINE_STEPS.COULD_PAY_TUITION}
             id="COULD_PAY_TUITION"

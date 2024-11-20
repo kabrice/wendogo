@@ -1,8 +1,8 @@
 'use client';
 
 import {useState,useEffect} from 'react';
-import StudyInFranceImg from '../assets/study_in_France.jpeg'
-import EdgarHead from '../assets/edgar_head.jpeg'
+import StudyInFranceImg from '../assets/optimized/study_in_France.webp'
+import EdgarHead from '../assets/optimized/edgar_head.webp'
 import QuestionsOnTopic from '../components/QuestionsOnTopic';
 
 import Link from 'next/link';

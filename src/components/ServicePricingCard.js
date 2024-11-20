@@ -79,7 +79,7 @@ const ServicePricingCard = ({deviceType, setOpenContactModal, openContactModal, 
           {
             title: "Projet académique et professionnel structuré",
             svg: SvgConstant.getSvg('PROJET_ACADEMIQUE_ET_PROFESSIONNEL_STRUCTURE'),
-            description: "Soutien pour concevoir un projet d'études clair, cohérent et convaincant."
+            description: "Soutien pour concevoir un projet d'études clair, cohérent et convaincant. Aide pour justifier les années blanches ou de redoublement."
           },
           {
             title: "Rédaction de lettres de motivation et CV percutants",

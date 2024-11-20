@@ -1,19 +1,19 @@
 'use client';
 
 import { useState} from 'react';
-import EdgarHead from '../assets/edgar_head.jpeg'
+import EdgarHead from '../assets/optimized/edgar_head.webp'
 import QuestionsOnTopic from '../components/QuestionsOnTopic';
-//import ExpertMan} from '../assets/ExpertMan1.svg'
+//import ExpertMan} from '../assets/optimized/ExpertMan1.svg'
 import OptimizedImage from '../components/OptimizedImage';
 
 import Link from 'next/link';
 
 import Footer from '../components/Footer';
 import HeaderMenuBar from '../components/HeaderMenuBar';
-import ExpertMan from '../assets/superhero.png'
-//import WendogoTeam from '../assets/wendogo_team-removebg.png'
-import WendogoTeam from '../assets/wendogo_team.jpeg'
-import SocialMediaLogo from '../assets/wendogo_jeu_concours.png'
+import ExpertMan from '../assets/optimized/superhero.webp'
+//import WendogoTeam from '../assets/optimized/wendogo_team-removebg.png'
+import WendogoTeam from '../assets/optimized/wendogo_team.webp'
+import SocialMediaLogo from '../assets/optimized/wendogo_jeu_concours.webp'
 import Head from 'next/head';
 import Image from 'next/image';
 

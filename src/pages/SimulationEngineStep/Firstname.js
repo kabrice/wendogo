@@ -54,7 +54,8 @@ const Firstname = () => {
         );
     }
 
-    return (<>{'xx '+valid}
+    return (<>
+    {/* {'xx '+valid} */}
         <SETextInput 
             title="Quel est votre prénom ?"
             id="FIRSTNAME"

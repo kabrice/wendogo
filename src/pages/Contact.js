@@ -1,14 +1,14 @@
 'use client';
 
 import { useState} from 'react';
-import EdgarHead from '../assets/edgar_head.jpeg'
-//import ExpertMan} from '../assets/ExpertMan1.svg'
+import EdgarHead from '../assets/optimized/edgar_head.webp'
+//import ExpertMan} from '../assets/optimized/ExpertMan1.svg'
 import Head from 'next/head';
 import Link from 'next/link';
-import SocialMediaLogo from '../assets/social_media_logo.png'
+import SocialMediaLogo from '../assets/optimized/social_media_logo.webp'
 import Footer from '../components/Footer';
 import HeaderMenuBar from '../components/HeaderMenuBar';
-import CoffeeCup from '../assets/coffeecup.jpeg'
+import CoffeeCup from '../assets/optimized/coffeecup.webp'
 import { FloatingWhatsApp } from 'react-floating-whatsapp';
 import Image from 'next/image';
 

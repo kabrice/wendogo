@@ -1,8 +1,8 @@
 'use client';
 
 import { useState,useEffect} from 'react';
-import ScholarshipProgramCAImg from '../assets/scholarship_program_for_canada.jpg'
-import BorisHead from '../assets/Boris_head.jpeg'
+import ScholarshipProgramCAImg from '../assets/optimized/scholarship_program_for_canada.webp'
+import BorisHead from '../assets/optimized/Boris_head.webp'
 import QuestionsOnTopic from '../components/QuestionsOnTopic';
 
 import Link from 'next/link';
@@ -323,7 +323,7 @@ function ScholarshipProgramCA(){
                                       </div>
                                     </div>
                                   </div>
-                                  <div className="BlocAuthorEndstyles__Text-sc-1vpghvk-3 dxlmwf"> Spécialisé dans les demandes de visa depuis quelques années, Boris Guiffot est aujourd'hui en charge d'une équipe d'experts en immigration. Il accompagne notamment les camerounais dans leur demande visa pour la France et le Canada. </div>
+                                  <div className="BlocAuthorEndstyles__Text-sc-1vpghvk-3 dxlmwf"> Spécialisé dans les demandes de visa depuis quelques années, Boris Guiffot est aujourd'hui en charge d'une équipe d'experts en immigration. Il accompagne notamment des candidats dans leur demande visa pour la France et le Canada. </div>
                                 </div>
                               </div>
                             </div>

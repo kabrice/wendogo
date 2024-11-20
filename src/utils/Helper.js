@@ -10,6 +10,27 @@ const EXPIRATION_TIMES = {
   ONE_DAY: 24*60*60*1000,
   ONE_WEEK: 7*24*60*60*1000
 };
+const MARK_SYSTEM = {
+  SUR_6: 'Sur 6',
+  SUR_10: 'Sur 10',
+  SUR_20: 'Sur 20',
+  SUR_100: 'Sur 100',
+  LETTRE: 'Lettres (A+, A, B-, etc.)'
+}
+const LETTER_GRADES = {
+  'A+': 20,
+  'A': 18,
+  'A-': 17,
+  'B+': 16,
+  'B': 14,
+  'B-': 12,
+  'C+': 10,
+  'C': 8,
+  'C-': 6,
+  'D+': 5,
+  'D': 4,
+  'F': 0
+};
 
 const helper = {
     toastSuccess: function(message){
@@ -186,10 +207,10 @@ const helper = {
         this.toastError(msgToast)          
       },
       addOutsideClick: function(handleOutsideClickFunc) {
-        // document.addEventListener("mousedown", handleOutsideClickFunc);
-        // return () => {
-        //   document.removeEventListener("mousedown", handleOutsideClickFunc);
-        // }
+        document.addEventListener("mousedown", handleOutsideClickFunc);
+        return () => {
+          document.removeEventListener("mousedown", handleOutsideClickFunc);
+        }
       },
       updateWendogouserCookie: function(callback, user, simulationStep, simulationStepValue){
         callback()
@@ -298,6 +319,24 @@ const helper = {
       }
     
       return [];
+    },
+    convertToSur20:  function(value, effectiveMarkSystem){
+      //const { value, markSystem } = inputValue;
+      //console.log('convertToSur20', value, effectiveMarkSystem);
+      switch (effectiveMarkSystem) {
+          case MARK_SYSTEM.SUR_6:
+              return Math.round(((value / 6) * 20) * 100) / 100; // Convert from Sur 6 to Sur 20
+          case MARK_SYSTEM.SUR_10:
+              return Math.round(((value / 10) * 20) * 100) / 100; // Convert from Sur 10 to Sur 20
+          case MARK_SYSTEM.SUR_100:
+              return Math.round(((value / 100) * 20) * 100) / 100; // Convert from Sur 100 to Sur 20
+          case MARK_SYSTEM.LETTRE:
+              return LETTER_GRADES[value] || null; // Convert letter grades to Sur 20
+          case MARK_SYSTEM.SUR_20:
+              return Math.round(value * 100) / 100; // No conversion needed but still round
+          default:
+              return null; // Handle unknown mark systems
+      }
     }    
 }
 

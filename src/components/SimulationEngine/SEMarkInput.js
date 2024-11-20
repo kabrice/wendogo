@@ -626,7 +626,7 @@ const SEMarkInput = (props) => {
         </div> 
         {!subject.label.validated && (
           <div className="Error"  style={{ fontWeight: 400, fontSize: '0.75rem', lineHeight: 1.66, letterSpacing: '0.03333em', textAlign: 'left', marginTop: '-12px', marginRight: '14px', marginLeft: '8px' }}>
-            <span className="Icon error-icon icon-lesfurets icon-system-alert" /> {'La valeur saisie est incorrecte.'}
+            <span className="Icon error-icon icon-lesfurets icon-system-alert" /> {'La saisie est incorrecte. Ecrivez complètement les mots, sans abréviations.'}
           </div>
         )}
         <Box sx={{  marginLeft: '-15px', position: 'relative', minHeight: '1px', ...(windowWidth > 764 && { paddingRight: '15px', paddingLeft: '15px' })  }} 

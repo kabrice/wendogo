@@ -160,7 +160,7 @@ const SEReportCard = (props) => {
                                 </div>
                             </div>
                             <div className="second-block-rc">
-                            {/*Reference: <b>{subject.reference} </b>- */}{subjectWeightSystem}: <b>{subject.weight.value} </b>- Moyenne: <b>{subject.mark.value} </b>{subject.rank.value && ( <> - Rang: <b>{subject.rank.value}</b> </> )}{/* - Max:<b>15 </b>- MG:<b>7 </b>*/}
+                            {/*Reference: <b>{subject.reference} </b>- */}Moyenne: <b>{subject.mark.value} - </b>{subjectWeightSystem}: <b>{subject.weight.value} </b>{subject.rank.value && ( <> - Rang: <b>{subject.rank.value}</b> </> )}{/* - Max:<b>15 </b>- MG:<b>7 </b>*/}
                             </div>
                         </div>}
                 {/* When Deleting a subject */}

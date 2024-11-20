@@ -112,9 +112,52 @@ const ReportCard1 = () => {
             let nextStep = SIMULATION_ENGINE_STEPS.HAS_WON_AWARD;
             let nextProgressBarStep = PROGRESS_BAR_STEPS.PARCOURS_ACADEMIQUE_ET_PROFESSIONNEL;
 
+            const processedSubjectLists = subjectLists.map((periodSubjects, periodIndex) => {
+                // Determine the mark system for this period
+                let effectiveMarkSystem = user.academicYearHeadDetails1.markSystem.name;
+                const isBacReportCard = (periodIndex === subjectLists.length - 1 && isBaccalaureatMarkMandatory);
+                
+                if (isBacReportCard) {
+                    effectiveMarkSystem = 'Sur 20';
+                }
+    
+                // Process each subject in the period
+                return periodSubjects.map(subject => {
+                    const currentValue = subject.mark.value;
+                    let valueIn20 = subject?.mark?.valueIn20;
+    
+                    // If valueIn20 is not set, try to convert it
+                    if (valueIn20 === null || valueIn20 === undefined) {
+                        valueIn20 = helper.convertToSur20(currentValue, effectiveMarkSystem);
+                    }
+    
+                    return {
+                        ...subject,
+                        mark: {
+                            ...subject.mark,
+                            valueIn20
+                        }
+                    };
+                });
+            });
+
+                    // Check if any marks couldn't be converted
+            const hasInvalidMarks = processedSubjectLists.some(periodSubjects =>
+                periodSubjects.some(subject => 
+                    subject.mark.value && subject.mark.valueIn20 === null
+                )
+            );
+
+            if (hasInvalidMarks) {
+                setShowError(true);
+                console.log("Certaines notes n'ont pas pu être converties sur 20. Veuillez vérifier vos notes.");
+                return;
+            }
+            setShowError(false);
+
             if (!user?.isResult3Available && !user?.isResult2Available) {
                 setMainSubjects(null);
-                const isApplyingForMaster = helper.isApplyingForMaster(user, subjectLists, 2);
+                const isApplyingForMaster = helper.isApplyingForMaster(user, processedSubjectLists, 2);
                 setApplyingForMaster(isApplyingForMaster);
                 nextStep = isApplyingForMaster ? 
                     SIMULATION_ENGINE_STEPS.PROGRAM_DOMAIN_BAC_N_2 : 
@@ -125,7 +168,7 @@ const ReportCard1 = () => {
                 window.location.hash = "form/PARCOURS_ACADEMIQUE_ET_PROFESSIONNEL";
             }
             //console.log('NNNNN ', !user?.isResult2Available, !user?.isResult3Available, nextStep, nextProgressBarStep)
-            updateWendogouser(nextStep, subjectLists, nextProgressBarStep);
+            updateWendogouser(nextStep, processedSubjectLists, nextProgressBarStep);
         } else {
             setShowError(true);
         }

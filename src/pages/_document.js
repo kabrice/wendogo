@@ -14,14 +14,14 @@ export default function Document() {
 
         {/* Open Graph Metadata */}
         <meta property="fb:app_id" content="1711396672460430" />
-        <meta property="og:url" content="https://wendogo.com/waitinglist" />
+        <meta property="og:url" content="https://wendogo.com/" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Wendogo" />
-        <meta property="og:description" content="Expert en ligne pour vos demandes de visa" />
-        <meta property="og:image" content="https://wendogo.com/static/media/wendogo_jeu_concours.png" />
+        <meta property="og:description" content="Expert en ligne pour vos projets d'émmigration" />
+        <meta property="og:image" content="/social_media_logo.png" />
 
         {/* Apple Touch Icon */}
-        <link rel="apple-touch-icon" href="/assets/social_media_logo.png" />
+        <link rel="apple-touch-icon" href="/social_media_logo.png" />
 
         {/* CSS for Flag Icons */}
         <link

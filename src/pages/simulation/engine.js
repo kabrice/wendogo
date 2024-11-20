@@ -569,7 +569,7 @@ const SimulationEngine = ({ spokenLanguages, academicYearOrganizations, markSyst
                                                 {currentSimulationStep >= STEPS.SCHOOL_LEVEL && <SchoolLevel/>}
                                                 
                                                 {currentSimulationStep >= STEPS.RECENT_CLASS_LEVEL && <RecentLevel degrees={degrees} universityLevels={universityLevels} isErrorPage={isErrorPage}  />}
-                                                {currentSimulationStep >= STEPS.SCHOOL_YEAR3 && <SchoolYear3/>} 
+                                                {currentSimulationStep >= STEPS.SCHOOL_YEAR3 && <SchoolYear3 schoolYears={schoolYears}  isErrorPage={isErrorPage}/>} 
                                                 {isInUniversityGlobal && currentSimulationStep >= STEPS.RECENT_DEGREE && <RecentDegree/>}
                                                 {currentSimulationStep >= STEPS.DEGREE_EXACT_NAME && <DegreeExactName/>}
                                                 {currentSimulationStep >= STEPS.CLASS_REPETITION && <ClassRepetition/>} 
@@ -610,7 +610,7 @@ const SimulationEngine = ({ spokenLanguages, academicYearOrganizations, markSyst
                                                     user?.isResult2Available &&
                                                     <> 
 
-                                                        {currentSimulationStep >= STEPS.SCHOOL_YEAR2 && <SchoolYear2/>}
+                                                        {currentSimulationStep >= STEPS.SCHOOL_YEAR2 && <SchoolYear2 schoolYears={schoolYears}  isErrorPage={isErrorPage}/>}
                                                         {currentSimulationStep >= STEPS.ACADEMIC_YEAR_HEAD_DETAILS2 && <AcademicYearHeadDetails2 spokenLanguages={spokenLanguages} 
                                                                                                                                                  academicYearOrganizations={academicYearOrganizations} 
                                                                                                                                                 markSystems={markSystems} 
@@ -634,7 +634,7 @@ const SimulationEngine = ({ spokenLanguages, academicYearOrganizations, markSyst
                                                 {
                                                     user?.isResult1Available &&
                                                     <>
-                                                        {currentSimulationStep >= STEPS.SCHOOL_YEAR1 && <SchoolYear1/>}
+                                                        {currentSimulationStep >= STEPS.SCHOOL_YEAR1 && <SchoolYear1 schoolYears={schoolYears}  isErrorPage={isErrorPage}/>}
                                                         {currentSimulationStep >= STEPS.ACADEMIC_YEAR_HEAD_DETAILS1 && <AcademicYearHeadDetails1 spokenLanguages={spokenLanguages} 
                                                                                                                                                  academicYearOrganizations={academicYearOrganizations} 
                                                                                                                                                 markSystems={markSystems} 

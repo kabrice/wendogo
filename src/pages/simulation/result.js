@@ -15,13 +15,11 @@ import { useGetMajorDetailsFromMajorIdsMutation } from '../../store/apis/majorAp
 import {useUpdateAndGetStudentSimulationResultMutation} from '../../store/apis/userApi';
 import { activateSpinner, deactivateSpinner } from '../../redux/spinnerslice';
 import { setUser } from '../../redux/userSlice';
-import { useDispatch, useSelector } from 'react-redux'
-import OptimizedImage from '../../components/OptimizedImage'; 
+import { useDispatch, useSelector } from 'react-redux' 
 import SimulationResultWaiting from '../../components/SimulationResultWaiting'; 
 import ServicePricingCard from '../../components/ServicePricingCard';
 import ContactModal from '../../components/ContactModal'; 
-import Link from 'next/link';
-import { Loader2 } from "lucide-react";
+import Link from 'next/link'; 
 import Image from 'next/image';
 
 const SessionExpiredAlert = () => {
@@ -403,7 +401,7 @@ const SimulationResult = () => {
      
         // Check French level requirements 
         if (needsFrenchTest(user)) {
-            warnings.push("Il est fortement recommandé de passer un test de français pour valider votre dossier. C'est une étape importante qui permettra de confirmer votre niveau.");
+            warnings.push("Il est fortement recommandé de passer un test de français pour multiplier vos chances. C'est une étape importante qui permettra de confirmer votre niveau.");
         }
         
         // Check academic gaps
@@ -797,7 +795,7 @@ const SimulationResult = () => {
                     <circle cx={140} cy={100} r={25} stroke="#333" fill="none" strokeWidth={2} />  
                     <line x1={158} y1={118} x2={170} y2={130} stroke="#333" strokeWidth={3} strokeLinecap="round" />  
                     <line x1={125} y1={85} x2={155} y2={115} stroke="#333" strokeWidth={2} /> {/* Text */}
-                    <text x={120} y={160} textAnchor="middle" fontFamily="Arial" fontSize={14} fill="#333"> Aucune formation trouvée </text>
+                    <text x={120} y={160} textAnchor="middle" fontFamily="Arial" fontSize={14} fill="#333"> Aucune formation répertoriée </text>
                 </svg>
             </p>
             );

@@ -13,7 +13,7 @@ function Salutation() {
     const dispatch = useDispatch();
     const [isInitializing, setIsInitializing] = useState(true);
     const user = useSelector((state) => state.user);
-    const [salutationSelected, setSalutationSelected] = useState('Monsieur');
+    const [salutationSelected, setSalutationSelected] = useState(null);
 
     // Initialize user data
     useEffect(() => {
@@ -21,8 +21,8 @@ function Salutation() {
             
             if (!user) return;
 
-            
-            setSalutationSelected(user?.salutationSelected || 'Monsieur');
+            console.log('userLLLL', user);
+            setSalutationSelected(user?.salutation || 'Monsieur');
             setIsInitializing(false);
         };
 

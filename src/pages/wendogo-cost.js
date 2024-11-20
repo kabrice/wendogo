@@ -1,7 +1,7 @@
 'use client';
 
 import { useState} from 'react';
-import EdgarHead from '../assets/edgar_head.jpeg'
+import EdgarHead from '../assets/optimized/edgar_head.webp'
 import QuestionsOnTopic from '../components/QuestionsOnTopic';
 
 import Link from 'next/link';
@@ -9,8 +9,8 @@ import Link from 'next/link';
 import Footer from '../components/Footer';
 import HeaderMenuBar from '../components/HeaderMenuBar';
 import MoneyGirl from '../assets/capa.svg'
-import HappyWomanMoney from '../assets/HappyWomanMoney.png'
-import SocialMediaLogo from '../assets/wendogo_jeu_concours.png'
+import HappyWomanMoney from '../assets/optimized/HappyWomanMoney.webp'
+import SocialMediaLogo from '../assets/optimized/wendogo_jeu_concours.webp'
 import Head from 'next/head';
 import Image from 'next/image';
 
@@ -144,8 +144,8 @@ function WendogoCost(){
                           </div>
                         </div>
                         <div className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__Content-sc-1qjc0o4-1 cLBZMY">
-                          <p className="styles__Block-sc-1qjc0o4-0 styles__Paragraph-sc-1qjc0o4-2 ktDrhZ bbNzRf"> Les frais Wendogo ne sont appliqués que si le dévis proposé par votre expert vous convient et que vous acceptez l’offre. </p>
-                          <p className="styles__Block-sc-1qjc0o4-0 styles__Paragraph-sc-1qjc0o4-2 ktDrhZ bbNzRf"> Selon la nature de votre projet, votre expert peut vous soumettre un devis détaillant le coût total associé. 
+                          {/* <p className="styles__Block-sc-1qjc0o4-0 styles__Paragraph-sc-1qjc0o4-2 ktDrhZ bbNzRf"> Les frais Wendogo peuvent s'appliquer aussi sur dévis proposé par votre expert. </p> */}
+                          <p className="styles__Block-sc-1qjc0o4-0 styles__Paragraph-sc-1qjc0o4-2 ktDrhZ bbNzRf"> Selon la nature de votre projet, votre expert peut aussi vous soumettre un devis personnalisé détaillant le coût total associé à votre projet. 
                             {/*L'acceptation du devis nécessite le versement d'un acompte équivalent à <strong>30%</strong> du montant estimé.
                            En cas de réussite de votre projet, le paiement du solde est requis avant la délivrance de votre visa. En cas de refus, les fonds vous sont intégralement remboursé.*/}</p>
                         </div>

@@ -113,8 +113,52 @@ const ReportCard2 = () => {
             setShowError(false);
 
             let nextStep = SIMULATION_ENGINE_STEPS.IS_YEAR_1_RESULTS_AVAILABLE;
+
+            const processedSubjectLists = subjectLists.map((periodSubjects, periodIndex) => {
+                // Determine the mark system for this period
+                let effectiveMarkSystem = user.academicYearHeadDetails2.markSystem.name;
+                const isBacReportCard = (periodIndex === subjectLists.length - 1 && isBaccalaureatMarkMandatory);
+                
+                if (isBacReportCard) {
+                    effectiveMarkSystem = 'Sur 20';
+                }
+    
+                // Process each subject in the period
+                return periodSubjects.map(subject => {
+                    const currentValue = subject.mark.value;
+                    let valueIn20 = subject?.mark?.valueIn20;
+    
+                    // If valueIn20 is not set, try to convert it
+                    if (valueIn20 === null || valueIn20 === undefined) {
+                        valueIn20 = helper.convertToSur20(currentValue, effectiveMarkSystem);
+                    }
+    
+                    return {
+                        ...subject,
+                        mark: {
+                            ...subject.mark,
+                            valueIn20
+                        }
+                    };
+                });
+            });
+
+                    // Check if any marks couldn't be converted
+            const hasInvalidMarks = processedSubjectLists.some(periodSubjects =>
+                periodSubjects.some(subject => 
+                    subject.mark.value && subject.mark.valueIn20 === null
+                )
+            );
+
+            if (hasInvalidMarks) {
+                setShowError(true);
+                console.log("Certaines notes n'ont pas pu être converties sur 20. Veuillez vérifier vos notes.");
+                return;
+            }
+            setShowError(false);
+            
             if (!user.isResult3Available) {
-                const isApplyingForMaster = helper.isApplyingForMaster(user, subjectLists, 1);
+                const isApplyingForMaster = helper.isApplyingForMaster(user, processedSubjectLists, 1);
                 setApplyingForMaster(isApplyingForMaster);
                 nextStep = isApplyingForMaster ? 
                     SIMULATION_ENGINE_STEPS.PROGRAM_DOMAIN_BAC_N_1 : 
@@ -129,7 +173,7 @@ const ReportCard2 = () => {
 
             updateWendogouser(
                 isInPremiereClassGlobal ? SIMULATION_ENGINE_STEPS.HAS_WON_AWARD : nextStep,
-                subjectLists,
+                processedSubjectLists,
                 nextProgressBarStep
             );
         } else {
@@ -154,9 +198,10 @@ const ReportCard2 = () => {
     };
 
     useEffect(() => {
+        console.log('dddxx ', simulationStepGlobal, SIMULATION_ENGINE_STEPS.REPORT_CARD2)
         if ((continueButtonClicked || isReadModes.some(mode => !mode) || isCancelModes.some(mode => mode) || subjectLists.length > 0)
-            && (simulationStepGlobal  < SIMULATION_ENGINE_STEPS.REPORT_CARD2)) {
-       // console.log('ddd ', simulationStepGlobal, SIMULATION_ENGINE_STEPS.PROGRAM_DOMAIN_BAC_N_1, SIMULATION_ENGINE_STEPS.MAIN_SUBJECTS_BAC_N_1)
+            && (simulationStepGlobal  <= SIMULATION_ENGINE_STEPS.REPORT_CARD2)) {
+       //console.log('ddd ', simulationStepGlobal, SIMULATION_ENGINE_STEPS.PROGRAM_DOMAIN_BAC_N_1, SIMULATION_ENGINE_STEPS.MAIN_SUBJECTS_BAC_N_1)
             updateWendogouser(SIMULATION_ENGINE_STEPS.REPORT_CARD2, subjectLists);
             setIsCancelModes(Array(periodNumber).fill(false));
             setShowError(false);

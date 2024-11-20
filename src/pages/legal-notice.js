@@ -1,15 +1,15 @@
 'use client';
 
 import { useState} from 'react';
-import EdgarHead from '../assets/edgar_head.jpeg'
-//import ExpertMan} from '../assets/ExpertMan1.svg'
+import EdgarHead from '../assets/optimized/edgar_head.webp'
+//import ExpertMan} from '../assets/optimized/ExpertMan1.svg'
 
 import Link from 'next/link';
-// import WendogoLogo from '../assets/wendogo_logo.svg'
-import SocialMediaLogo from '../assets/social_media_logo.png'
+// import WendogoLogo from '../assets/optimized/wendogo_logo.svg'
+import SocialMediaLogo from '../assets/optimized/social_media_logo.webp'
 import Footer from '../components/Footer';
 import HeaderMenuBar from '../components/HeaderMenuBar';
-// import CoffeeCup from '../assets/coffeecup.jpeg'
+// import CoffeeCup from '../assets/optimized/coffeecup.jpeg'
 // import { FloatingWhatsApp } from 'react-floating-whatsapp';
 import Head from 'next/head';
 

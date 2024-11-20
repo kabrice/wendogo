@@ -1,7 +1,7 @@
 'use client';
 
 import { useState} from 'react';
-import EdgarHead from '../assets/edgar_head.jpeg'
+import EdgarHead from '../assets/optimized/edgar_head.webp'
 
 import QuestionsOnTopic from '../components/QuestionsOnTopic';
 import Link from 'next/link';
@@ -9,8 +9,8 @@ import Link from 'next/link';
 import Footer from '../components/Footer';
 import HeaderMenuBar from '../components/HeaderMenuBar'
 import Poirier from '../assets/Poirier.svg'
-import DataPrivacy from '../assets/dataprivacyd.png'
-import SocialMediaLogo from '../assets/wendogo_jeu_concours.png'
+import DataPrivacy from '../assets/optimized/dataprivacyd.webp'
+import SocialMediaLogo from '../assets/optimized/wendogo_jeu_concours.webp'
 import Head from 'next/head';
 import Image from 'next/image';
 
