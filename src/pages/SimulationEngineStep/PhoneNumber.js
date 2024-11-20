@@ -7,10 +7,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setStep } from '../../redux/simulationStepSlice';
 import helper from '../../utils/Helper';
 import { SIMULATION_ENGINE_STEPS } from '../../utils/Constants';
-import { useRef } from 'react';
-import useGeoLocation from "react-ipgeolocation";
+import { useRef } from 'react'; 
 import { Loader2 } from "lucide-react";
 import { setUser } from '../../redux/userSlice';
+import dynamic from 'next/dynamic';
+const useGeoLocation = dynamic(() => import('react-ipgeolocation'), { ssr: false });
 
 const PhoneNumber = () => {
     const dispatch = useDispatch();
