@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setStep } from '../../redux/simulationStepSlice';
@@ -10,7 +12,8 @@ import SEMarkInput from '../../components/SimulationEngine/SEMarkInput';
 import SESmallAlertMessage from '../../components/SimulationEngine/SESmallAlertMessage';
 import { SIMULATION_ENGINE_STEPS, PROGRESS_BAR_STEPS } from '../../utils/Constants';
 import { Loader2 } from "lucide-react";
-import _ from 'lodash';
+import _, { conforms } from 'lodash';
+import SvgConstant from '../../utils/SvgConstant';
 
 const ReportCard2 = () => {
     const dispatch = useDispatch();
@@ -84,7 +87,15 @@ const ReportCard2 = () => {
     const showContinueBtn = user && (
         ((!user.isResult3Available && !user.mainSubjects) || user.isResult3Available) && 
         ((simulationStepGlobal === SIMULATION_ENGINE_STEPS.REPORT_CARD2) || 
-        (progressBarStep === PROGRESS_BAR_STEPS.BULLETIN_N_1))
+        (progressBarStep === PROGRESS_BAR_STEPS.BULLETIN_N_1)) &&
+        ![SIMULATION_ENGINE_STEPS.PROGRAM_DOMAIN, 
+          SIMULATION_ENGINE_STEPS.PROGRAM_DOMAIN_BAC_N_1, 
+          SIMULATION_ENGINE_STEPS.PROGRAM_DOMAIN_BAC_N_2,
+          SIMULATION_ENGINE_STEPS.MAIN_SUBJECTS_BAC_N_1,
+          SIMULATION_ENGINE_STEPS.MAIN_SUBJECTS_BAC_N_2,
+          SIMULATION_ENGINE_STEPS.MAIN_SUBJECTS].includes(simulationStepGlobal 
+            
+          )
     );
 
     const handleContinue = () => {
@@ -137,17 +148,20 @@ const ReportCard2 = () => {
             applyingForMaster,
             date: new Date().toISOString()
         };
+        console.log('KKK ReportCard2', user)
         helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
         dispatch(setUser(updatedUser));
     };
 
     useEffect(() => {
-        if (continueButtonClicked || isReadModes.some(mode => !mode) || isCancelModes.some(mode => mode)) {
+        if ((continueButtonClicked || isReadModes.some(mode => !mode) || isCancelModes.some(mode => mode) || subjectLists.length > 0)
+            && (simulationStepGlobal  < SIMULATION_ENGINE_STEPS.REPORT_CARD2)) {
+       // console.log('ddd ', simulationStepGlobal, SIMULATION_ENGINE_STEPS.PROGRAM_DOMAIN_BAC_N_1, SIMULATION_ENGINE_STEPS.MAIN_SUBJECTS_BAC_N_1)
             updateWendogouser(SIMULATION_ENGINE_STEPS.REPORT_CARD2, subjectLists);
             setIsCancelModes(Array(periodNumber).fill(false));
             setShowError(false);
         }
-    }, [subjectLists, isReadModes]);
+    }, [subjectLists, isReadModes.some(mode => !mode), isCancelModes.some(mode => mode)]);
 
     if (isInitializing) {
         return (
@@ -162,6 +176,7 @@ const ReportCard2 = () => {
             isReadModes[index] && (
                 <SEReportCard
                     key={`report2${index}`}
+                    svgConstantName="YEAR_N_1"
                     period={2}
                     disPlayBacTitle={index === (subjectLists.length-1) && isBaccalaureatMarkMandatory}
                     header={index < (subjectLists.length-1) ?
@@ -216,6 +231,7 @@ const ReportCard2 = () => {
             !isReadModes[index] && (
                 <SEMarkInput
                     key={`SEMarkInput${index}`}
+                    svgConstantName="YEAR_N_1"
                     id={`SEMarkInput${index}`}
                     isBacReportCard={index === (subjectLists.length-1) && isBaccalaureatMarkMandatory}
                     title={`${titleMarkInput}pour ${
@@ -270,7 +286,7 @@ const ReportCard2 = () => {
                 <div className="FieldWrapper">
                     <div className="FieldView field-valid">
                         <div className="FieldView-flex-container">
-                            <label className="Label">{`Veuillez renseigner toutes les matières par ${user.academicYearHeadDetails2.academicYearOrganization?.name?.toLowerCase()} pour l'année ${user.selectedSchoolYear2.name}.`}</label>
+                            <label className="Label">{SvgConstant.getSvg('YEAR_N_1')} {` Veuillez renseigner toutes les matières par ${user.academicYearHeadDetails2.academicYearOrganization?.name?.toLowerCase()} pour l'année ${user.selectedSchoolYear2.name}.`}</label>
                         </div>
                         <div className="Tip" style={{marginBottom:'-5px'}}>
                             <span>Gagnez du temps : dupliquez                                 <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink"  viewBox="0 0 90.7659 97.9493" version="1.1" className='Navbarstyles__MenuItemArrow'>

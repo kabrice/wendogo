@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import DateInput from './DateInput';
 import ButtonLarge from '../ButtonLarge';

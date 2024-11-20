@@ -83,7 +83,8 @@ const helper = {
         return null;
       }
     },
-    redirectionAtInit(router, user, currentPagePath, redirectPath='/simulation/home'){ 
+   /* redirectionAtInit(router, user, currentPagePath, redirectPath='/simulation/home'){ 
+      console.log('redirectionAtInit xxxxx ', {router, user, currentPagePath, redirectPath})
       if(!user || !(user?.subscription_step)?.startsWith(currentPagePath)){
           console.log('redirectionAtInit ERROR')
           if (typeof window !== 'undefined') {
@@ -96,6 +97,25 @@ const helper = {
           }
           return false;
       }
+      return true;
+    },*/
+    redirectionAtInit(router, user, currentPagePath, redirectPath='/simulation/home'){ 
+      if (!user) {
+        if (typeof window !== 'undefined') {
+          router.push(redirectPath);
+        }
+        return false;
+      }
+    
+      // Only redirect if we're not already heading to a new subscription_step
+      if (!user.subscription_step?.startsWith(currentPagePath) && 
+          !user.subscription_step?.includes('/simulation/engine')) {
+        if (typeof window !== 'undefined') {
+          router.push(redirectPath);
+        }
+        return false;
+      }
+    
       return true;
     },
     loadFacebookSDK: function(){
@@ -166,10 +186,10 @@ const helper = {
         this.toastError(msgToast)          
       },
       addOutsideClick: function(handleOutsideClickFunc) {
-        document.addEventListener("mousedown", handleOutsideClickFunc);
-        return () => {
-          document.removeEventListener("mousedown", handleOutsideClickFunc);
-        }
+        // document.addEventListener("mousedown", handleOutsideClickFunc);
+        // return () => {
+        //   document.removeEventListener("mousedown", handleOutsideClickFunc);
+        // }
       },
       updateWendogouserCookie: function(callback, user, simulationStep, simulationStepValue){
         callback()

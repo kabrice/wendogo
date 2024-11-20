@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import SELevelRail from "../../components/SimulationEngine/SELevelRail";
 import { useDispatch, useSelector } from 'react-redux';
@@ -51,7 +53,11 @@ const OtherLanguageLevel = () => {
         loadUserData();
     }, []);
 
-    const updateWendogouser = useCallback((simulationStep, level) => {
+    const valueLabelFormat = (value) => {
+        return LEVEL_DESCRIPTIONS[value / 20];
+    };
+
+    const updateWendogouser = (simulationStep, level) => {
         if (!user) return;
 
         dispatch(setStep(simulationStep));
@@ -63,28 +69,22 @@ const OtherLanguageLevel = () => {
         };
         helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
         dispatch(setUser(updatedUser));
-    }, [dispatch, user]);
+    };
 
-    const valueLabelFormat = useCallback((value) => {
-        if (simulationStepGlobal === SIMULATION_ENGINE_STEPS.OTHER_LANGUAGE_LEVEL) {
-            setSelectedOtherLanguageLevel(value);
-            return LEVEL_DESCRIPTIONS[value / 20];
-        }
-    }, [simulationStepGlobal]);
-
-    const handleChange = useCallback(() => {
+    const handleChange = (event, value) => {
+        setSelectedOtherLanguageLevel(value);
         updateWendogouser(SIMULATION_ENGINE_STEPS.OTHER_LANGUAGE_LEVEL);
-    }, [updateWendogouser]);
+    } 
 
     const valuetext = useCallback((value) => `${value} - C2`, []);
 
-    const handleContinue = useCallback(() => {
+    const handleContinue = () => {
         const nextStep = selectedOtherLanguageLevel >= 40
             ? SIMULATION_ENGINE_STEPS.CAN_JUSTIFY_OTHER_LANGUAGE
             : SIMULATION_ENGINE_STEPS.ALREADY_TRAVELED_TO_FRANCE;
 
         updateWendogouser(nextStep, selectedOtherLanguageLevel);
-    }, [selectedOtherLanguageLevel, updateWendogouser]);
+    } 
 
     // Memoized title
     const title = useMemo(() => 
@@ -93,21 +93,14 @@ const OtherLanguageLevel = () => {
             : '',
     [user?.selectedOtherSpokenLanguage?.name]);
 
-    if (isLoading) {
+    if (isLoading || !user) {
         return (
             <div className="flex items-center justify-center min-h-[100px]">
                 <Loader2 className="h-8 w-8 animate-spin text-primary" />
             </div>
         );
     }
-
-    if (!user || !title) {
-        return (
-            <div className="flex items-center justify-center min-h-[100px] text-red-500">
-                Error loading user data
-            </div>
-        );
-    }
+ 
 
     return (
         <SELevelRail 

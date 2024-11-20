@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useCountriesQuery } from '../../store/apis/userApi';
@@ -16,6 +18,7 @@ import SETextArea from '../../components/SimulationEngine/SETextArea';
 import _ from 'lodash';
 import { Loader2 } from "lucide-react";
 import { setUser } from '../../redux/userSlice';
+
 
 const honourTypes = [
     { id: 1, name: 'None', validated: false },
@@ -140,20 +143,21 @@ const AwardDetails = ({ spokenLanguages, schoolYears, isErrorPage }) => {
         }
 
         // Set initial award year if available
-        if (!showContinueBtn && awardYears && user?.selectedSchoolYear3?.name) {
-            const selectedAwardYearInit = awardYears.find(
-                year => year.name === (user.selectedSchoolYear3.name - 2).toString()
-            );
-            if (selectedAwardYearInit) {
-                setSelectedAwardYear({ ...selectedAwardYearInit, validated: true });
-                updateSelectedAwardYear(selectedAwardYearInit);
-            }
+        if (isLoading || !awardYears || !user?.selectedSchoolYear3?.name) return;
+
+        const selectedAwardYearInit = awardYears.find(
+            year => year.name === (user.selectedSchoolYear3.name - 2).toString()
+        );
+        if (selectedAwardYearInit && !selectedAwardYear?.validated) {
+            setSelectedAwardYear({ ...selectedAwardYearInit, validated: true });
+            // Only set the state here, avoid calling updateSelectedAwardYear directly
+            setAward(prev => ({ ...prev, year: { ...selectedAwardYearInit, validated: true } }));
         }
 
         if (spokenLanguages || awardYears) {
             dispatch(deactivateSpinner());
         }
-    }, [data, error, isCountriesLoading, spokenLanguages, isErrorPage, awardYears, selectedCountry]);
+    }, [data, error, isCountriesLoading, spokenLanguages, isErrorPage, awardYears, selectedCountry, user?.selectedSchoolYear3?.name, isLoading]);
     
     const doesAwardNameIsValid = (awardName) => {
         return awardName !== undefined && 
@@ -190,16 +194,19 @@ const AwardDetails = ({ spokenLanguages, schoolYears, isErrorPage }) => {
     }, [isLoading]);    
 
     const updateSelectedAwardYear = (item) => {
-        setSelectedAwardYear({ ...item, validated: true });
-        setCollapseAwardYearOption(true); 
-        setAward({ ...award, year: { ...item, validated: true } })
-        updateWendogouser(SIMULATION_ENGINE_STEPS.AWARD_DETAILS, award)
+        console.log('updateSelectedAwardYear1', item)
+        setSelectedAwardYear({ ...item, validated: true, id: item.id });
+        setCollapseAwardYearOption(true);
+        setAward(prev => ({ ...prev, year: { ...item, validated: true } }));
+        updateWendogouser(SIMULATION_ENGINE_STEPS.AWARD_DETAILS, { ...award, year: { ...item, validated: true } });
     };
+    
 
     const updateSelectedCountry = (item) => {
         setSelectedCountry({ ...item, validated: true });
         setCollapseCountryOption(true);   
         setAward({ ...award, country: { ...item, validated: true } })
+                console.log('updateSelectedAwardYear2', award)
         updateWendogouser(SIMULATION_ENGINE_STEPS.AWARD_DETAILS, award)
     };
 
@@ -207,6 +214,7 @@ const AwardDetails = ({ spokenLanguages, schoolYears, isErrorPage }) => {
         setSelectedCity({ ...item, validated: true });
         setCollapseCityOption(true);   
         setAward({ ...award, city: { ...item, validated: true } }) 
+                console.log('updateSelectedAwardYear3', award)
         updateWendogouser(SIMULATION_ENGINE_STEPS.AWARD_DETAILS, award)
     };
 
@@ -215,6 +223,7 @@ const AwardDetails = ({ spokenLanguages, schoolYears, isErrorPage }) => {
         setCollapseSpokenLanguageOption(true);  
         //award.spokenLanguage = { ...item, validated: true };
         setAward({ ...award, spokenLanguage: { ...item, validated: true } })
+                console.log('updateSelectedAwardYear4', award)
         updateWendogouser(SIMULATION_ENGINE_STEPS.AWARD_DETAILS, award)
     }; 
 
@@ -224,6 +233,7 @@ const AwardDetails = ({ spokenLanguages, schoolYears, isErrorPage }) => {
         //console.log('handleChangeAwardName', award)
         //award.AwardName = inputValue;
         setAward({ ...award, awardName: inputValue })
+                console.log('updateSelectedAwardYear5', award)
         updateWendogouser(SIMULATION_ENGINE_STEPS.AWARD_DETAILS, award)
         
     };
@@ -234,6 +244,7 @@ const AwardDetails = ({ spokenLanguages, schoolYears, isErrorPage }) => {
         //console.log('handleChangeRank', award)
         //award.rank = inputValue;
         setAward({ ...award, rank: inputValue })
+                console.log('updateSelectedAwardYear6', award)
         updateWendogouser(SIMULATION_ENGINE_STEPS.AWARD_DETAILS, award)
     };
 
@@ -242,6 +253,7 @@ const AwardDetails = ({ spokenLanguages, schoolYears, isErrorPage }) => {
         setCollapseHonourTypeOption(true);
         //award.honourType = { ...item, validated: true };
         setAward({ ...award, honourType: { ...item, validated: true } })
+                console.log('updateSelectedAwardYear7', award)
         updateWendogouser(SIMULATION_ENGINE_STEPS.AWARD_DETAILS, award)
     };
 
@@ -377,7 +389,7 @@ const AwardDetails = ({ spokenLanguages, schoolYears, isErrorPage }) => {
             {/* {showError && <SESmallAlertMessage type="error" content="Vous n'avez saisi aucune valeur." />} */}
             {showContinueBtn &&            
                                 <div className="FieldView DaisyFieldView field-default SelectField VEH_USA_KILOM" style={{ margin: 0 }}>
-                                    <ButtonLarge name="Continuer" handleContinue={(validRank && validAwardName) ? handleContinue : voidFunction} uniqueId={`${Award}-continue-btn`}/>
+                                    <ButtonLarge name="Continuer" handleContinue={(validRank && validAwardName) ? handleContinue : voidFunction} uniqueId={`Award-continue-btn`}/>
                                 </div>}
 
         </div>

@@ -1,10 +1,10 @@
-import React, { useState, useRef, useEffect } from 'react';
-import helper from '../../utils/Helper';
-import ButtonLarge from "../ButtonLarge";
+'use client';
 
+import React  from 'react'; 
+import SvgConstant from "../../utils/SvgConstant";
 const SELabel = (props) => {
 
-  const { title, tip } = props;
+  const { title, tip, svgConstantName } = props;
 
    
  
@@ -12,7 +12,7 @@ const SELabel = (props) => {
     <div className={`FieldWrapper TextField fade-animation fade-slow-enter-done`}>
       <div className={`FieldView DaisyFieldView TextField COORD_PRE`} style={{margin : 0}}>
         <div className="FieldView-flex-container">
-          <label className="Label">{title}</label>
+          <label className="Label">{svgConstantName && SvgConstant.getSvg(svgConstantName)} {title}</label>
         </div>
         <div className="Tip  ">
         <div dangerouslySetInnerHTML={{ __html: tip }} />

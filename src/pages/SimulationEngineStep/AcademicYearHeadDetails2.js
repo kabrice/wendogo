@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useRef, useEffect} from "react";
 import SEAcademicYearHeadDetails from "../../components/SimulationEngine/SEAcademicYearHeadDetails";
 import { useDispatch, useSelector } from 'react-redux';
@@ -203,6 +205,7 @@ const AcademicYearHeadDetails2 = ({spokenLanguages, academicYearOrganizations, m
     return (
         <SEAcademicYearHeadDetails 
             title={`Informations au début de l'année académique ${user.selectedSchoolYear2.name}`}
+            svgConstantName="YEAR_N_1"
             tip={`Veuillez renseigner les détails de votre année académique ${user.selectedSchoolYear2.name-1}/${user.selectedSchoolYear2.name}.`}
             showWarning={showWarning}
             selectedYear={user.selectedSchoolYear2.name}

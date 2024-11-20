@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect } from 'react';
 import { useGetLevelValuesQuery } from '../../store/apis/levelValueApi';
 import { activateSpinner, deactivateSpinner } from '../../redux/spinnerslice'
@@ -33,7 +35,12 @@ const ProgramDomain = () => {
     }, []);
 
     const { data, error, isLoading } = useGetLevelValuesQuery(
-        user ? { userid: '1', externalLevelValueInput: user?.degreeExactNameValue } : skip
+        user?.degreeExactNameValue ? 
+        { userid: '1', externalLevelValueInput: user.degreeExactNameValue } 
+        : null, // Use null instead of skip
+        { 
+            skip: !user?.degreeExactNameValue // Add proper skip condition
+        }
     );
 
     let showContinueBtn = (() => {
@@ -63,10 +70,26 @@ const ProgramDomain = () => {
     }, [data, error, isLoading, dispatch]);
 
     const handleChange = (value) => {
+        const determineCurrentStep = () => {
+            if (!user?.isResult2Available && !user?.isResult3Available) {
+                return {
+                    step: SIMULATION_ENGINE_STEPS.PROGRAM_DOMAIN_BAC_N_2 
+                };
+            }
+            if (!user?.isResult3Available) { 
+                return {
+                    step: SIMULATION_ENGINE_STEPS.PROGRAM_DOMAIN_BAC_N_1 
+                }
+            }
+            return {
+                step: SIMULATION_ENGINE_STEPS.PROGRAM_DOMAIN 
+            };
+        };
+        const { step } = determineCurrentStep(); 
         setProgramDomainObj(value);
-        updateWendogouser(SIMULATION_ENGINE_STEPS.PROGRAM_DOMAIN, value);
-    };
-
+        updateWendogouser(step, value);  
+    }; 
+    
     const handleContinue = () => {
         let NEXT_EFFECTIVE_STEP;
         
@@ -87,7 +110,7 @@ const ProgramDomain = () => {
         dispatch(setUser(updatedUser));
     };
 
-    if (isInitializing) {
+    if (isInitializing  || isLoading) {
         return (
             <div className="flex items-center justify-center min-h-[200px]">
                 <Loader2 className="w-8 h-8 animate-spin" />

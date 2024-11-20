@@ -1,3 +1,5 @@
+'use client';
+
 import { useState} from 'react';
 import Link from 'next/link';
 import FlightSimilution from '../../../assets/simulation_icons/aeroplane_simulation.png'
@@ -43,16 +45,12 @@ function SimulationCountrySelection(){
     const [updateUser] = useUpdateUserMutation();
 
     useEffect(() => {
-      // Move localStorage access to client-side only
-      //
-      //
+      console.log('Current user state:', user);
+      console.log('Current subscription_step:', user?.subscription_step);
       setIsLoaded(true);
-
-      // Check redirection after user data is loaded
-      if (!user || !user?.subscription_step?.startsWith('/simulation/country/selection')) {
-        router.push('/simulation/home');
-      }
-    }, [router]);
+      // Remove the redirection check from here
+    }, []);
+    
 
     // Don't render anything until client-side data is loaded
     if (!isLoaded) {
@@ -61,25 +59,40 @@ function SimulationCountrySelection(){
 
     async function handleCountrySelection(event, countryIso2) {
       event.preventDefault();
+      
       if (countryIso2 === 'CA') {
         setIsKeepInTouch(true);
         return;
       }
-  
+    
       try {
         dispatch(activateSpinner());
+        
+        // First update the user data
         const updatedUser = {
           ...user,
           subscription_step: '/simulation/engine?country=' + countryIso2
         };
-  
-        const response = await updateUser(updatedUser);
+    
+        // Update Redux and localStorage before making the API call
         dispatch(setUser(updatedUser));
         helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
+    
+        // Make the API call
+        await updateUser(updatedUser);
+        
+        // Only redirect after everything is successful
         dispatch(deactivateSpinner());
         router.push('/simulation/engine?country=' + countryIso2);
+        
       } catch (error) {
+        dispatch(deactivateSpinner());
         helper.triggerToastError(error);
+        
+        // Optionally reset the user state if the API call fails
+        const originalUser = { ...user };
+        dispatch(setUser(originalUser));
+        helper.setLocalStorageWithExpiration('wendogouser', originalUser);
       }
     }
 
@@ -141,7 +154,7 @@ function SimulationCountrySelection(){
                             <div className="MuiStack-root css-j7qwjs">
                               <div className="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-sljwc1">
                                 <div className="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-1 css-1vad3iu" >
-                                  <Link href={`/simulation/engine?country=FR`} className="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineNone ButtonProduct css-1av9as7" style={{textDecoration:'none'}} title="Simulez une demande de visa pour la France" data-testid="hpTopLayerButtonProduct-emprunteur"   onClick={(e) => {
+                                  <div className="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineNone ButtonProduct css-1av9as7" style={{textDecoration:'none'}} title="Simulez une demande de visa pour la France" data-testid="hpTopLayerButtonProduct-emprunteur"   onClick={(e) => {
                                           e.preventDefault(); // Prevent immediate navigation
                                           handleCountrySelection(e, 'FR');
                                         }}>
@@ -161,7 +174,7 @@ function SimulationCountrySelection(){
                                         </div>
                                       </div>
                                     </div>
-                                  </Link>
+                                  </div>
                                 </div>
                                 <div className="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-1 css-1vad3iu">
                                   <span className="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineNone ButtonProduct css-1av9as7" title="Simulez une demande de visa pour le Canada" style={{textDecoration:'none'}} data-testid="hpTopLayerButtonProduct-energie" onClick={(e)=>handleCountrySelection(e, 'CA')}>

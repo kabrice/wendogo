@@ -1,5 +1,5 @@
 import { text } from '@fortawesome/fontawesome-svg-core'
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 
 const KEY_CODES = {
     "DOWN": 40,
@@ -10,14 +10,20 @@ const KEY_CODES = {
     "ENTER": 13,
 }
 
-export default function useAutoComplete({ delay = 1000, source, onChange }) {
+export default function useAutoComplete({ delay = 1000, source, onChange, initialValue = "" }) {
     
     const [myTimeout, setMyTimeOut] = useState(setTimeout(() => { }, 0))
     const listRef = useRef()
     const [suggestions, setSuggestions] = useState([])
     const [isBusy, setBusy] = useState(false)
-    const [selectedIndex, setSelectedIndex] = useState(-1)
-    const [textValue, setTextValue] = useState("")
+    const [selectedIndex, setSelectedIndex] = useState(-1) 
+    const [textValue, setTextValue] = useState(initialValue); // Initialize with the external value
+
+    useEffect(() => {
+        if (textValue === "" && initialValue) {
+            setTextValue(initialValue);
+        }
+    }, [initialValue, textValue]);
     //console.log('textValue', textValue)
 
     function delayInvoke(cb) {
@@ -39,6 +45,7 @@ export default function useAutoComplete({ delay = 1000, source, onChange }) {
     async function getSuggestions(searchTerm) {
         if (searchTerm && source) {
             const options = await source(searchTerm)
+            console.log('IIII options', options)
             setSuggestions(options)
         }
     }
@@ -116,7 +123,10 @@ export default function useAutoComplete({ delay = 1000, source, onChange }) {
         // },
         bindInput: {
             value: textValue,
-            onChange: e => onTextChange(e.target.value),
+            onChange: (e) => {
+                setTextValue(e.target.value);
+                delayInvoke(() => getSuggestions(e.target.value));
+            },
             onKeyDown
         },
         bindOptions: {

@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import WendogoLogo from '../assets/wendogo_logo.svg'
 import ParisCity from '../assets/AdobeStock_Paris.jpeg'
@@ -8,7 +10,7 @@ import Image from 'next/image';
 const Footer = () => {
     return (
 <div className="Footer__Container-sc-1adny8q-0 fThLJG styles__Footer-sc-kz84w6-4 icxpqI">
-                  <Image src={ParisCity} alt="ParisCity" className="kldsmk" /> 
+                  <Image src={ParisCity} alt="ParisCity" className="kldsmk" priority /> 
                   <hr className="Divider-sc-1qii385-0 Footer__Divider-sc-1adny8q-2 iyJAir jUFmLt" />
                   <div className="Footer__Legal-sc-1adny8q-3 AgRYh">
                     {/* <Image src={WendogoLogo} alt="WendogoLogo" className="dssdsd" /> */}

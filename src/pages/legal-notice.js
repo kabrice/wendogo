@@ -1,3 +1,5 @@
+'use client';
+
 import { useState} from 'react';
 import EdgarHead from '../assets/edgar_head.jpeg'
 //import ExpertMan} from '../assets/ExpertMan1.svg'

@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect } from "react";
 import SELevelRail from "../../components/SimulationEngine/SELevelRail";
 import { useDispatch, useSelector } from 'react-redux';
@@ -30,21 +32,22 @@ const EnglishLevel = () => {
     const user = useSelector((state) => state.user);
     const dispatch = useDispatch();
     const simulationStepGlobal = useSelector((state) => state.simulationStep);
-    const [selectedEnglishLevel, setSelectedEnglishLevel] = useState(20); // Default to A2
+    const [selectedEnglishLevel, setSelectedEnglishLevel] = useState(user?.selectedEnglishLevel); 
 
-    // Load user data on component mount
     useEffect(() => {
-        const loadUserData = () => {
-            
-            if (user) {
-                
-                setSelectedEnglishLevel(user?.selectedEnglishLevel || 20);
-            }
-            setIsLoading(false);
+      const loadUserData = () => {
+          if (user) {
+              setSelectedEnglishLevel(user?.selectedEnglishLevel || 20);
+          }
+          setIsLoading(false);
         };
-
         loadUserData();
     }, []);
+
+    function valueLabelFormat(value) {
+      return LEVEL_DESCRIPTIONS[value / 20]; // Pure formatting, no state update
+    }
+  
 
     const updateWendogouser = (simulationStep, selectedEnglishLevel) => {
         if (!user) return;
@@ -59,18 +62,15 @@ const EnglishLevel = () => {
         helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
         dispatch(setUser(updatedUser));
     };
-
-    const valueLabelFormat = (value) => {
-        if (simulationStepGlobal === SIMULATION_ENGINE_STEPS.ENGLISH_LEVEL) {
-            setSelectedEnglishLevel(value);
-            return LEVEL_DESCRIPTIONS[value / 20];
-        }
-        return '';
-    };
-
-    const handleChange = () => {
-        updateWendogouser(SIMULATION_ENGINE_STEPS.ENGLISH_LEVEL, selectedEnglishLevel);
-    };
+ 
+    const handleChange = (event, value) => {
+      console.log('valuejjj', value)
+      setSelectedEnglishLevel(value);
+      updateWendogouser(SIMULATION_ENGINE_STEPS.ENGLISH_LEVEL, value);
+    }
+  //   const handleChange = (event, value) => {
+  //     setSelectedEnglishLevel(value); // Update the state here
+  // };
 
     const valuetext = (value) => `${value} - C2`;
 
@@ -82,17 +82,13 @@ const EnglishLevel = () => {
         updateWendogouser(nextStep, selectedEnglishLevel);
     };
 
-    if (isLoading) {
-        return <div className="flex items-center justify-center min-h-[200px]">
-                      <Loader2 className="w-8 h-8 animate-spin" />
-                </div>; 
-    }
+ 
 
-    if (!user) {
-        return <div className="flex items-center justify-center min-h-[200px]">
-                      <Loader2 className="w-8 h-8 animate-spin" />
-                </div>; 
-    }
+    if (isLoading || !user) {
+      return <div className="flex items-center justify-center min-h-[200px]">
+                    <Loader2 className="w-8 h-8 animate-spin" />
+              </div>; 
+  }
 
     return (
         <SELevelRail 

@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { ChevronDown, Plus, Minus, ChevronUp } from 'lucide-react';
 import SvgConstant from '../utils/SvgConstant';

@@ -1,3 +1,5 @@
+'use client';
+
 import { useState} from 'react';
 import EdgarHead from '../assets/edgar_head.jpeg'
 //import ExpertMan} from '../assets/ExpertMan1.svg'
@@ -8,6 +10,7 @@ import Footer from '../components/Footer';
 import HeaderMenuBar from '../components/HeaderMenuBar';
 import CoffeeCup from '../assets/coffeecup.jpeg'
 import { FloatingWhatsApp } from 'react-floating-whatsapp';
+import Image from 'next/image';
 
 function Contact(){
     const whatsapp =  <svg className="ButtonLinkstyles__Picto-sc-1s2ygn0-1 hkJOZg" width="24px" height="24.6350302px" viewBox="0 0 24 24.6350302" version="1.1" xmlns="http://www.w3.org/2000/svg">
@@ -67,7 +70,7 @@ function Contact(){
                       <div className="styles__Wrapper-sc-gk465i-0 fiWVzr">
                         <div className="styles__Content-sc-1wbd6gj-0 dbnlxV">
                           <picture>
-                            <img alt="Contact" loading="lazy" src={CoffeeCup} width={320} className="styles__HeaderImage-sc-1wbd6gj-2 fqPObL" />
+                            <Image alt="Contact" loading="lazy" src={CoffeeCup} width={320} className="styles__HeaderImage-sc-1wbd6gj-2 fqPObL" />
                           </picture>
                           <div className="styles__Information-sc-1wbd6gj-5 gJwSMu">
                             <p> Nous sommes disponibles :<br /> De lundi à dimanche 24h/24. </p>

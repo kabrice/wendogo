@@ -1,15 +1,18 @@
-import { useState} from 'react';
-import EdgarHead from '../../assets/edgar_head.jpeg'
+'use client';
 
-import QuestionsOnTopic from '../../components/QuestionsOnTopic';
+import { useState} from 'react';
+import EdgarHead from '../assets/edgar_head.jpeg'
+
+import QuestionsOnTopic from '../components/QuestionsOnTopic';
 import Link from 'next/link';
 
-import Footer from '../../components/Footer';
-import HeaderMenuBar from '../../components/HeaderMenuBar'
-import Poirier from '../../assets/Poirier.svg'
-import DataPrivacy from '../../assets/dataprivacyd.png'
-import SocialMediaLogo from '../../assets/wendogo_jeu_concours.png'
+import Footer from '../components/Footer';
+import HeaderMenuBar from '../components/HeaderMenuBar'
+import Poirier from '../assets/Poirier.svg'
+import DataPrivacy from '../assets/dataprivacyd.png'
+import SocialMediaLogo from '../assets/wendogo_jeu_concours.png'
 import Head from 'next/head';
+import Image from 'next/image';
 
 function WendogoPrivacy(){
     const whatsapp =  <svg className="ButtonLinkstyles__Picto-sc-1s2ygn0-1 hkJOZg" width="24px" height="24.6350302px" viewBox="0 0 24 24.6350302" version="1.1" xmlns="http://www.w3.org/2000/svg">
@@ -99,7 +102,7 @@ function WendogoPrivacy(){
                         </a>
                         </div>
                         <div className="styles__ImageContainer-sc-1wzyvpr-5 fWJBuN">
-                          <img alt={DataPrivacy}  className="styles__Image-sc-1wzyvpr-4 dJhJuV" loading="lazy" src={DataPrivacy} style={{width : 'auto', height : 400}} />
+                          <Image alt={DataPrivacy}  className="styles__Image-sc-1wzyvpr-4 dJhJuV" loading="lazy" src={DataPrivacy} style={{width : 'auto', height : 400}} />
                         </div>
                         <div className="styles__Container-sc-1fi1lc5-0 hJzdEq styles__ReasonToBelieve-sc-1wzyvpr-9 flTAYH">
                         <div className="styles__CurrentPromise-sc-1fi1lc5-1 cNjmnK">
@@ -130,14 +133,17 @@ function WendogoPrivacy(){
                       <div className="styles__ContentWrapper-sc-1x6pdn2-1 UkXxP">
                         <h2 className="styles__BaseTypo-sc-198xhmk-0 czksA-D styles__Title-sc-1x6pdn2-10 bSmDAY"> Vous pouvez utiliser Wendogo sereinement</h2>
                         <div className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__Content-sc-1qjc0o4-1 cLBZMY">
-                          <p className="styles__Block-sc-1qjc0o4-0 styles__Paragraph-sc-1qjc0o4-2 ktDrhZ bbNzRf"> Une demande de visa implique un grand nombre d'informations personnelles : identité, profession, revenus...
+                          <p className="styles__Block-sc-1qjc0o4-0 styles__Paragraph-sc-1qjc0o4-2 ktDrhZ bbNzRf"> Une demande de visa implique un grand nombre d'informations personnelles : identité, situation sociale...
                            Celles-ci sont indispensables pour que nos équipes et nos algorithmes puissent évaluer la viabilité de votre projet et vous accompagner dans les meilleures conditions. </p>
                           <p className="styles__Block-sc-1qjc0o4-0 styles__Paragraph-sc-1qjc0o4-2 ktDrhZ bbNzRf"> Vous nous faites confiance pour vous accompagner, à 
                           nous de <u> faire le maximum pour sécuriser vos données.</u> Et nous nous engageons évidemment à ne les utiliser que pour le bien de votre projet.</p>
                         </div>
                       </div>
                       <div className="styles__ImageWrapper-sc-1x6pdn2-6 cdwedw">
-                        <img src={Poirier} width={320}  alt={Poirier} className="styles__Image-sc-1x6pdn2-5 hjnNVa" style={{height: 'auto'}} loading="lazy" />
+                        {/* <img alt="Poirier" className="styles__Image-sc-1x6pdn2-5 hjnNVa" src={Poirier} style={{height: 'auto'}} /> */}
+                        <div  className="styles__Image-sc-1x6pdn2-5 hjnNVa" >
+                          <Poirier style={{height: 'auto'}} className="styles__Image-sc-1x6pdn2-5 hjnNVa"  />
+                        </div>
                       </div>
                     </div>
                     <div className="styles__Grid-sc-10gqksz-1 iuHviD">
@@ -155,7 +161,7 @@ function WendogoPrivacy(){
                                     <div className="AuthorInfosstyles__AuthorInfos-sc-1v2nwgf-0 kVLKSc">
                                       <div className="Avatarstyles__AvatarContainer-sc-168giry-2 glDTmS">
                                         <div className="Avatarstyles__Avatar-sc-168giry-0 eYtuGP AuthorInfosstyles__Avatar-sc-1v2nwgf-1 etCUXw">
-                                          <picture> <img alt="avatar" height={46} loading="lazy" src={EdgarHead} width={46} className="Avatarstyles__Image-sc-168giry-1 gNAMaq" />
+                                          <picture> <Image alt="avatar" height={46} loading="lazy" src={EdgarHead} width={46} className="Avatarstyles__Image-sc-168giry-1 gNAMaq" />
                                           </picture>
                                         </div>
                                       </div>

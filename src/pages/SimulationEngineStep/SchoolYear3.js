@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import _ from "lodash";
@@ -57,8 +59,7 @@ const SchoolYear3 = ({ schoolYears, isErrorPage }) => {
         }
 
         // Add and clean up outside click listener
-        helper.addOutsideClick(handleOutsideClick);
-        return () => helper.removeOutsideClick(handleOutsideClick);
+        return helper.addOutsideClick(handleOutsideClick);
     }, [schoolYears, isErrorPage, dispatch]);
 
     const handleContinue = () => {
@@ -84,6 +85,7 @@ const SchoolYear3 = ({ schoolYears, isErrorPage }) => {
     return (
         <SEDropDownList
             title="Cela correspond à quelle année scolaire ?"
+            svgConstantName="YEAR_N"
             newRef={newRef}
             collapseOption={collapseYearOption}
             fieldDefault={fieldDefault}

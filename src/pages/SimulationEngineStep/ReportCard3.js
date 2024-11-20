@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setStep } from '../../redux/simulationStepSlice';
@@ -10,6 +12,7 @@ import SESmallAlertMessage from '../../components/SimulationEngine/SESmallAlertM
 import { SIMULATION_ENGINE_STEPS } from '../../utils/Constants';
 import { Loader2 } from "lucide-react";
 import _ from 'lodash';
+import SvgConstant from '../../utils/SvgConstant';
 
 const ReportCard3 = () => {
     const dispatch = useDispatch();
@@ -110,6 +113,7 @@ const ReportCard3 = () => {
     };
 
     const updateWendogouser = (simulationStep, reportCard3) => {
+        console.log('ReportCard3 updateWendogouser AAA ', reportCard3);
         dispatch(setStep(simulationStep));
         const updatedUser = {
             ...user,
@@ -124,12 +128,14 @@ const ReportCard3 = () => {
     };
 
     useEffect(() => {
-        if (continueButtonClicked || isReadModes.some(mode => !mode) || isCancelModes.some(mode => mode)) {
+        // console.log('ReportCard3 useEffect AAA ', subjectLists);
+        // console.log('ReportCard3 useEffect2 AAA ', continueButtonClicked, isReadModes , isCancelModes.some(mode => mode));
+        if (continueButtonClicked || isReadModes.some(mode => !mode) || isCancelModes.some(mode => mode) || subjectLists.length > 0 ) {
             updateWendogouser(SIMULATION_ENGINE_STEPS.REPORT_CARD3, subjectLists);
             setIsCancelModes(Array(periodNumber).fill(false));
             setShowError(false);
         }
-    }, [subjectLists, isReadModes]);
+    }, [subjectLists, isReadModes.some(mode => !mode), isCancelModes.some(mode => mode)]);
 
     if (isInitializing) {
         return (
@@ -144,6 +150,7 @@ const ReportCard3 = () => {
             isReadModes[index] && (
                 <SEReportCard
                     key={`report3${index}`}
+                    svgConstantName="YEAR_N"
                     period={3}
                     disPlayBacTitle={index === (subjectLists.length-1) && isBaccalaureatMarkMandatory}
                     header={index < (subjectLists.length-1) ?
@@ -201,6 +208,7 @@ const ReportCard3 = () => {
             !isReadModes[index] && (
                 <SEMarkInput
                     key={`SEMarkInput${index}`}
+                    svgConstantName="YEAR_N"
                     id={`SEMarkInput${index}`}
                     isBacReportCard={index === (subjectLists.length-1) && isBaccalaureatMarkMandatory}
                     title={`${titleMarkInput}pour ${
@@ -256,8 +264,8 @@ const ReportCard3 = () => {
                 <div className="FieldWrapper">
                     <div className="FieldView field-valid">
                         <div className="FieldView-flex-container">
-                            <label className="Label">
-                                {`Veuillez renseigner toutes les matières par ${user?.academicYearHeadDetails3.academicYearOrganization?.name?.toLowerCase()} pour l'année ${user?.selectedSchoolYear3.name}.`}
+                            <label className="Label">{SvgConstant.getSvg('YEAR_N')} 
+                                {` Veuillez renseigner toutes les matières par ${user?.academicYearHeadDetails3.academicYearOrganization?.name?.toLowerCase()} pour l'année ${user?.selectedSchoolYear3.name}.`}
                             </label>
                         </div>
                         <div className="Tip" style={{marginBottom:'-5px'}}>

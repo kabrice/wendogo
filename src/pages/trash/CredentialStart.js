@@ -1,14 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import  { useForm, Controller }  from  "react-hook-form"
-import { activateSpinner, deactivateSpinner } from '../redux/spinnerslice'
-import { useUpdateCredentialMutation } from '../store/apis/userApi';
+import { activateSpinner, deactivateSpinner } from '../../redux/spinnerslice'
+import { useUpdateCredentialMutation } from '../../store/apis/userApi';
 import { useRouter } from 'next/router'
-import helper from '../utils/Helper';
-import FooterSingleRow from '../components/FooterSingleRow';
+import helper from '../../utils/Helper';
+import FooterSingleRow from '../../components/FooterSingleRow';
 import { Loader2 } from "lucide-react";
-import { setUser } from '../../redux/userSlice';
-
 
 const CredentialStart = () => {
 

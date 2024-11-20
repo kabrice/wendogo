@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from "react"; 
 import SEDateInput from "../../components/SimulationEngine/SEDateInput";
 import {SIMULATION_ENGINE_STEPS} from '../../utils/Constants'

@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import SEYesNo from '../../components/SimulationEngine/SEYesNo';
 import QuestionMark from './../../assets/simulation_icons/question_mark.svg';

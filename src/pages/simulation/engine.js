@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect, useRef} from 'react';
 // import EdgarHead from '../assets/edgar_head.jpeg'
 //import ExpertMan} from '../assets/ExpertMan1.svg'
@@ -188,8 +190,7 @@ const SimulationEngine = ({ spokenLanguages, academicYearOrganizations, markSyst
     //dispatch(deactivateSpinner());
     if (!user) {
         return null;
-    }
-
+    } 
     const STEPS = {
         VISA_TYPE: SIMULATION_ENGINE_STEPS.VISA_TYPE,
         SCHOOL_LEVEL: SIMULATION_ENGINE_STEPS.SCHOOL_LEVEL,
@@ -332,17 +333,31 @@ const SimulationEngine = ({ spokenLanguages, academicYearOrganizations, markSyst
     //     };
         
     // }, [browserWidth, isModalOpened]);
+    
 
-    const handleProgressBarStep = (stepId) => { 
+    const handleProgressBarStep = (step) => { 
+        const stepId = step.id;
         const updatedUser = {
             ...user,
             progressBarStep: stepId,
             date: new Date().toISOString(),
         };
         dispatch(setUser(updatedUser));
+        console.log('stepId mmm ', updatedUser)
         helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
         dispatch(setProgress(stepId)) 
         setIsModalOpened(false)
+
+        // Update hash without full page reload
+        if (typeof window !== 'undefined') {
+            window.location.hash = "";
+            window.location.hash = "form/"+step.reference 
+            // Scroll to the element if it exists
+            const element = document.getElementById(`form/${step.reference}`);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
     }
     const getCurrentProgressBarStepTitle = () => {
         let currentStep = progressBarSteps.find(step => step.id === currentProgressBarStep)
@@ -605,6 +620,7 @@ const SimulationEngine = ({ spokenLanguages, academicYearOrganizations, markSyst
                                                         {/* <h3>{'KK '+!user?.isResult3Available+ ' '+ isInUniversityGlobal+' '+currentSimulationStep+' '+STEPS.PROGRAM_DOMAIN_BAC_N_1}</h3> */}
                                                         {!user?.isResult3Available && 
                                                             <>
+                                                            {/* <h3>{'KK '+isInUniversityGlobal+ ' '+ isInUniversityGlobal+' '+currentSimulationStep+' '+STEPS.PROGRAM_DOMAIN_BAC_N_1}</h3> */}
                                                                 {(isInUniversityGlobal && currentSimulationStep >= STEPS.PROGRAM_DOMAIN_BAC_N_1) && <ProgramDomain/>}
                                                                 {currentSimulationStep >= STEPS.MAIN_SUBJECTS_BAC_N_1 && <MainSubjects/>}
                                                             </>}
@@ -690,7 +706,7 @@ const SimulationEngine = ({ spokenLanguages, academicYearOrganizations, markSyst
                                                                             return <div key={index} className={`Stack-child ${(currentProgressBarStep !== step.id && currentSimulationStep < step.completedStep) ? 'not-clickable' : ''}`} style={{ paddingTop: 20 }}>
                                                                                 {/* {'step.id '+step.id+' currentProgressBarStep== '+currentProgressBarStep+' currentSimulationStep== '+currentSimulationStep+' step.completedStep== '+step.completedStep} */}
                                                                                 <Link className={`${(currentProgressBarStep !== step.id && currentSimulationStep < step.completedStep) ? 'not-clickable' : ''}`} 
-                                                                                    href={`/simulation/engine?country=FR#form/${step.reference}`} onClick={(e) => {e.preventDefault();handleProgressBarStep(step.id)}}>
+                                                                                    href={`/simulation/engine?country=FR#form/${step.reference}`} onClick={(e) => {e.preventDefault();handleProgressBarStep(step)}}>
                                                                                     <div className="Stack  stackRow " style={{ flexDirection: "row", padding: 0, alignItems: "center" }}>
                                                                                     <div className="Stack-child  " style={{ paddingLeft: 10 }}>
                                                                                         <div className={`CheckProgressBar ${currentProgressBarStep === step.id ? 'BackgroundCircle' : ''}`}>
@@ -727,7 +743,7 @@ const SimulationEngine = ({ spokenLanguages, academicYearOrganizations, markSyst
                                                                     {progressBarSteps.map((step, index) => {
                                                                         return <div key={index} className={`Stack-child ${(currentProgressBarStep !== step.id && currentSimulationStep < step.completedStep) ? 'not-clickable' : ''}`} style={{ paddingTop: 20 }}>
                                                                             <Link className={`${(currentProgressBarStep !== step.id && currentSimulationStep < step.completedStep) ? 'not-clickable' : ''}`}
-                                                                                href={`/simulation/engine?country=FR#form/${step.reference}`} onClick={(e) => {e.preventDefault();handleProgressBarStep(step.id)}}>
+                                                                                href={`/simulation/engine?country=FR#form/${step.reference}`} onClick={(e) => {e.preventDefault();handleProgressBarStep(step)}}>
                                                                                 <div className="Stack  stackRow " style={{ flexDirection: "row", padding: 0, alignItems: "center" }}>
                                                                                 <div className="Stack-child  " style={{ paddingLeft: 10 }}>
                                                                                     <div className={`CheckProgressBar ${currentProgressBarStep === step.id ? 'BackgroundCircle' : ''}`}>

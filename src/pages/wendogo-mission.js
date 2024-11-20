@@ -1,18 +1,22 @@
+'use client';
+
 import { useState} from 'react';
-import EdgarHead from '../../assets/edgar_head.jpeg'
-import QuestionsOnTopic from '../../components/QuestionsOnTopic';
+import EdgarHead from '../assets/edgar_head.jpeg'
+import QuestionsOnTopic from '../components/QuestionsOnTopic';
 
 import Link from 'next/link';
 
-import Footer from '../../components/Footer';
-import HeaderMenuBar from '../../components/HeaderMenuBar';
-import MoneyGirl from '../../assets/capa.svg'
-import HappyWomanMoney from '../../assets/HappyWomanMoney.png'
-import DataPrivacy from '../../assets/dataprivacy.png'
-import SocialMediaLogo from '../../assets/wendogo_jeu_concours.png'
+import Footer from '../components/Footer';
+import HeaderMenuBar from '../components/HeaderMenuBar';
+import HappyGirl from '../assets/happyGirl.png'
+import Mentorship from '../assets/mentorship.png'
+import OurPromise from '../assets/OurPromise.png'
+import { useRouter } from 'next/router';
+import SocialMediaLogo from '../assets/wendogo_jeu_concours.png'
 import Head from 'next/head';
+import Image from 'next/image';
 
-function WendogoCost(){
+function WendogoMission(){
     const whatsapp =  <svg className="ButtonLinkstyles__Picto-sc-1s2ygn0-1 hkJOZg" width="24px" height="24.6350302px" viewBox="0 0 24 24.6350302" version="1.1" xmlns="http://www.w3.org/2000/svg">
                         <title>whatsapp</title>
                         <g id="Page-1" stroke="none" strokeWidth={1} fill="none" fillRule="evenodd">
@@ -44,17 +48,18 @@ function WendogoCost(){
         console.log('error copyTextToClipboard', error)
       }
     }  
+
     
     return <div >
             <Head>
-              <meta property="og:url"           content="https://wendogo.com/wendogo-cost" />
+              <meta property="og:url"           content="https://wendogo.com/wendogo-mission" />
               <meta property="og:type"          content="article" />
-              <meta property="og:title"         content="Combien coûte Pretto ? - Wendogo" />
-              <meta property="og:description"   content="Chez Wendogo, notre prix est fixe et  nous encaissons le paiement qu'au succès. En cas d'échec vous êtes totalement remboursé. Et avant cela, tout Wendogo est gratuit !" />
+              <meta property="og:title"         content="Notre mission - Vous accompagner de A(chat) à Z(en) - Wendogo" />
+              <meta property="og:description"   content="Démarches administratives, rendez-vous à l'ambassade et chances de voyager forment un parcours du combattant. Wendogo vous accompagne jusqu’à l’aboutissement de votre projet." />
               <meta property="og:image"         content={'https://wendogo.com'+SocialMediaLogo} /> 
-              <title>Combien coûte Pretto ? - Wendogo</title>
-              <meta name="description"          content="Chez Wendogo, notre prix est fixe et  nous encaissons le paiement qu'au succès. En cas d'échec vous êtes totalement remboursé. Et avant cela, tout Wendogo est gratuit !"/>
-            </Head>         
+              <title>Notre mission - Vous accompagner de A(chat) à Z(en) - Wendogo</title>
+              <meta name="description"          content="Démarches administratives, rendez-vous à l'ambassade et chances de voyager forment un parcours du combattant. Wendogo vous accompagne jusqu’à l’aboutissement de votre projet."/>
+            </Head>        
             <HeaderMenuBar/>
             <main className="styles__Main-sc-kz84w6-0 gEFmYD " style={{paddingTop: 80}}>
                 <div className="Blocsstyles__Page-sc-1q5awhx-1 dVmdSL">
@@ -62,10 +67,10 @@ function WendogoCost(){
                     <div className="styles__Container-sc-b6pzbt-0 gnYFPc">
 
                         <ul className="styles__List-sc-b6pzbt-1 Nbkao">
-                        <li className="styles__BaseTypo-sc-198xhmk-0 dCHWzO styles__ListItem-sc-b6pzbt-2 bQzhkc">
+                        <li className="styles__BaseTypo-sc-198xhmk-0 dCHWzO styles__ListItem-sc-b6pzbt-2 fdQKqN">
                             <a aria-current="page" className="styles__ListItemLink-sc-b6pzbt-8 jmsNjc" href="/wendogo-mission"> Mission </a>
                         </li>
-                        <li className="styles__BaseTypo-sc-198xhmk-0 dCHWzO styles__ListItem-sc-b6pzbt-2 fdQKqN">
+                        <li className="styles__BaseTypo-sc-198xhmk-0 dCHWzO styles__ListItem-sc-b6pzbt-2 bQzhkc">
                             <a className="styles__ListItemLink-sc-b6pzbt-8 jmsNjc" href="/wendogo-cost"> Combien coûte Wendogo </a>
                         </li>
                         <li className="styles__BaseTypo-sc-198xhmk-0 dCHWzO styles__ListItem-sc-b6pzbt-2 bQzhkc">
@@ -87,10 +92,10 @@ function WendogoCost(){
                     <div className="styles__Container-sc-1wzyvpr-1 bQAQqz Row-sc-13qiped-0 eUxnX">
                     <div className="styles__Grid-sc-10gqksz-1 iuHviD styles__Grid-sc-1wzyvpr-3 kLhHpn">
                         <div className="styles__Main-sc-1wzyvpr-6 bgJTPL">
-                        <h1 className="styles__BaseTypo-sc-198xhmk-0 dEWLNu styles__Title-sc-1wzyvpr-10 fGJAqT"> Outils et conseils gratuits, nous n'encaissons qu’au succès. </h1>
+                        <h1 className="styles__BaseTypo-sc-198xhmk-0 dEWLNu styles__Title-sc-1wzyvpr-10 fGJAqT"> Vos démarches visa en toute confiance. </h1>
                         <div className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__Content-sc-1qjc0o4-1 cLBZMY styles__Description-sc-1wzyvpr-2 kkxsWA">
-                            <p className="styles__Block-sc-1qjc0o4-0 styles__Paragraph-sc-1qjc0o4-2 ktDrhZ bbNzRf"> Simplifier votre demande de visa, cela passe aussi par apporter plus de transparence. 
-                            Chez Wendogo, notre prix est fixe et  nous encaissons le paiement qu'au succès. En cas d'échec vous êtes totalement remboursé. Et avant cela, tout Wendogo est gratuit !</p>
+                            <p className="styles__Block-sc-1qjc0o4-0 styles__Paragraph-sc-1qjc0o4-2 ktDrhZ bbNzRf"> Transparence, expertise et implication: Wendogo, c’est l'agence de visa en ligne qui vous accompagne 
+                            de A à Z pour une préparation optimale de votre demande de visa.</p>
                         </div>
                         <a href="/simulation/home" className="styles__BaseTypo-sc-198xhmk-0 aPHVI styles__Button-sc-wveu9u-1 iRJUAN styles__Button-sc-1wzyvpr-0 ctdOjM">
                             <span className="styles__Label-sc-wveu9u-2 hhrLkB"> Je simule mon visa </span>
@@ -101,7 +106,7 @@ function WendogoCost(){
                         </div>
                         <div className="styles__ImageContainer-sc-1wzyvpr-5 fWJBuN">
                         <picture>
-                            <img alt={MoneyGirl}  className="styles__Image-sc-1wzyvpr-4 dJhJuV" loading="lazy" src={MoneyGirl} style={{width : 400, height : 'auto'}} />
+                            <Image alt={HappyGirl}  className="styles__Image-sc-1wzyvpr-4 dJhJuV" loading="lazy" src={HappyGirl} style={{width : 400, height : 'auto'}} />
                         </picture>
                         </div>
                         <div className="styles__Container-sc-1fi1lc5-0 hJzdEq styles__ReasonToBelieve-sc-1wzyvpr-9 flTAYH">
@@ -109,48 +114,126 @@ function WendogoCost(){
                             <svg height={24} viewBox="0 0 24 24" width={24} xmlns="http://www.w3.org/2000/svg" className="styles__Picto-sc-1fi1lc5-2 ePzDkp">
                             <use href="#p_14TK4O" />
                             </svg>
-                            <div className="styles__BaseTypo-sc-198xhmk-0 jyPDDf styles__Title-sc-1fi1lc5-4 fPSpNh"> SANS ENGAGEMENT </div>
-                            <p className="styles__BaseTypo-sc-198xhmk-0 beQjJB styles__Description-sc-1fi1lc5-3 kgMJSQ"> Profitez des conseils et outils Wendogo gratuitement. </p>
+                            <div className="styles__BaseTypo-sc-198xhmk-0 jyPDDf styles__Title-sc-1fi1lc5-4 fPSpNh"> Transparence </div>
+                            <p className="styles__BaseTypo-sc-198xhmk-0 beQjJB styles__Description-sc-1fi1lc5-3 kgMJSQ"> Nos conseillers vous disent tout et défendent vos intérêts. </p>
                         </div>
                         <div className="styles__CurrentPromise-sc-1fi1lc5-1 cNjmnK">
                             <svg height={24} viewBox="0 0 24 24" width={24} xmlns="http://www.w3.org/2000/svg" className="styles__Picto-sc-1fi1lc5-2 ePzDkp">
                             <use href="#p_14TK4O" />
                             </svg>
-                            <div className="styles__BaseTypo-sc-198xhmk-0 jyPDDf styles__Title-sc-1fi1lc5-4 fPSpNh"> AU SUCCÈS UNIQUEMENT </div>
-                            <p className="styles__BaseTypo-sc-198xhmk-0 beQjJB styles__Description-sc-1fi1lc5-3 kgMJSQ"> Satisfait ou remboursé. Wendogo encaisse que si vous avez votre visa sinon on vous rembourse</p>
+                            <div className="styles__BaseTypo-sc-198xhmk-0 jyPDDf styles__Title-sc-1fi1lc5-4 fPSpNh"> Expertise </div>
+                            <p className="styles__BaseTypo-sc-198xhmk-0 beQjJB styles__Description-sc-1fi1lc5-3 kgMJSQ"> Nous traitons tous les types de visa (Immigration, visiteur, famille, étudiant, bourse, affaire...). </p>
                         </div>
                         <div className="styles__CurrentPromise-sc-1fi1lc5-1 cNjmnK">
                             <svg height={24} viewBox="0 0 24 24" width={24} xmlns="http://www.w3.org/2000/svg" className="styles__Picto-sc-1fi1lc5-2 ePzDkp">
                             <use href="#p_14TK4O" />
                             </svg>
-                            <div className="styles__BaseTypo-sc-198xhmk-0 jyPDDf styles__Title-sc-1fi1lc5-4 fPSpNh"> TRANSPARENT </div>
-                            <p className="styles__BaseTypo-sc-198xhmk-0 beQjJB styles__Description-sc-1fi1lc5-3 kgMJSQ"> Notre tarif est fixe et annoncé dès le départ. </p>
+                            <div className="styles__BaseTypo-sc-198xhmk-0 jyPDDf styles__Title-sc-1fi1lc5-4 fPSpNh"> Implication </div>
+                            <p className="styles__BaseTypo-sc-198xhmk-0 beQjJB styles__Description-sc-1fi1lc5-3 kgMJSQ"> Restez en contact avec votre expert (visio, sms, téléphone) </p>
                         </div>
                         </div>
                     </div>
                     </div>
                     <div className="styles__Grid-sc-1x6pdn2-2 fiFvNc Row-sc-13qiped-0 eUxnX">
-                      <div className="styles__ContentWrapper-sc-1x6pdn2-1 UkXxP">
-                        <div className="styles__BaseTypo-sc-198xhmk-0 jyPDDf styles__Suptitle-sc-1x6pdn2-9 hHIXCf"> Tarif simple et transparent </div>
-                        <h2 className="styles__BaseTypo-sc-198xhmk-0 czksA-D styles__Title-sc-1x6pdn2-10 bSmDAY"> Vous avez obtenu votre visa ? </h2>
-                        <div className="styles__Highlight-sc-1x6pdn2-3 jKXpMK">
-                          <div className="styles__BaseTypo-sc-198xhmk-0 dOwuxo styles__HighlightNumber-sc-1x6pdn2-4 fMhQkx"> 10% </div>
-                          <div className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__Content-sc-1qjc0o4-1 cLBZMY">
-                            <p className="styles__Block-sc-1qjc0o4-0 styles__Paragraph-sc-1qjc0o4-2 ktDrhZ bbNzRf"> du projet global. C’est le <strong className="styles__Strong-sc-1qjc0o4-5 flAqX"> taux fixe </strong> 
-                            appliqué dans <strong className="styles__Strong-sc-1qjc0o4-5 flAqX"> la grande majorité </strong> des cas. Et c’est en moyenne <strong className="styles__Strong-sc-1qjc0o4-5 flAqX"> 
-                            moins cher </strong>{" "} qu’une agence traditionnel. </p>
-                          </div>
-                        </div>
+                    <div className="styles__ContentWrapper-sc-1x6pdn2-1 UkXxP">
+                        <div className="RowCarouselstyles__Title-sc-sn9bq-3 dMQEOm"> Demandez votre visa bien accompagné </div>
                         <div className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__Content-sc-1qjc0o4-1 cLBZMY">
-                          <p className="styles__Block-sc-1qjc0o4-0 styles__Paragraph-sc-1qjc0o4-2 ktDrhZ bbNzRf"> Les frais Wendogo ne sont appliqués que si le dévis proposé par votre expert vous convient et que vous acceptez l’offre. </p>
-                          <p className="styles__Block-sc-1qjc0o4-0 styles__Paragraph-sc-1qjc0o4-2 ktDrhZ bbNzRf"> Selon la nature de votre projet, votre expert vous soumet un devis détaillant le coût total associé. L'acceptation du devis nécessite le versement d'un acompte équivalent à <strong>30%</strong> du montant estimé.
-                           En cas de réussite de votre projet, le paiement du solde est requis avant la délivrance de votre visa. En cas de refus, les fonds vous sont intégralement remboursé.</p>
+                        <p className="styles__Block-sc-1qjc0o4-0 styles__Paragraph-sc-1qjc0o4-2 ktDrhZ bbNzRf"> Face au stress des démarches visa, on a créé un service 100% en ligne qui associe 
+                        la puissance des meilleurs outils sur le marché à l'accompagnement engagé de nos experts en immigration. Avec Wendogo,
+                        <strong className="styles__Strong-sc-1qjc0o4-5 flAqX"> demandez votre visa sans vous arracher les cheveux </strong> . </p>
                         </div>
-                      </div>
-                      <div className="styles__ImageWrapper-sc-1x6pdn2-6 cdwedw">
-                        <img src={HappyWomanMoney} width={320}  alt={HappyWomanMoney} className="styles__Image-sc-1x6pdn2-5 hjnNVa" style={{height: 'auto'}} loading="lazy" />
-                      </div>
+                        <a className="styles__BaseTypo-sc-198xhmk-0 aPHVI styles__Button-sc-wveu9u-1 iRJUAN styles__Button-sc-1x6pdn2-0 eaWMjN" href="/simulation/home">
+                        <span className="styles__Label-sc-wveu9u-2 hhrLkB"> Simulez votre demande </span>
+                        <svg height={16} viewBox="0 0 16 16" width={16} xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="styles__Arrow-sc-wveu9u-0 jXLObB">
+                            <path d="M6.3,2.5,5,3.8,9.28,8,5,12.2l1.3,1.3L11.88,8Z" />
+                        </svg>
+                        </a>
                     </div>
+                    <div className="styles__ImageWrapper-sc-1x6pdn2-6 cdwedw">
+                        <Image src={Mentorship} alt={Mentorship} className="styles__Image-sc-1x6pdn2-5 hjnNVa" loading="lazy" style={{width : 400, height : 'auto'}} />
+                    </div>
+                    </div>
+                    <div className="NewBlocRow__Row-sc-57bush-0 iGkPwh RowCarouselstyles__NewBlocRow-sc-sn9bq-0 fwAKDL">
+                    <div className="RowCarouselstyles__ContentWrapper-sc-sn9bq-1 cLSjNN">
+                        <div className="RowCarouselstyles__Title-sc-sn9bq-3 dMQEOm"> Ce que l'on vous promet </div>
+                        <div className="BlockquoteItem__BlockquoteItemContainer-sc-1vut18p-0 fOqLqQ RowCarouselstyles__BlockquoteItem-sc-sn9bq-4 hFyJGz">
+                        <div className="BlockquoteItem__EntryPicto-sc-1vut18p-1 fXwFFQ">
+                            <svg height={24} viewBox="0 0 24 24" width={24} xmlns="http://www.w3.org/2000/svg" className="BlockquoteItem__Picto-sc-1vut18p-2 driHUc">
+                            <use href="#p_4HgaE" />
+                            </svg>
+                        </div>
+                        <div>
+                            <div className="BlockquoteItem__EntryTitle-sc-1vut18p-3 dtrzsL"> Un accompagnement tout au long de votre projet{" "} </div>
+                            <div className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__Content-sc-1qjc0o4-1 cLBZMY BlockquoteItem__EntryText-sc-1vut18p-4 gtHqOe">
+                            <p className="styles__Block-sc-1qjc0o4-0 styles__Paragraph-sc-1qjc0o4-2 ktDrhZ bbNzRf"> Votre expert immigration attitré vous accompagne à distance, avec pédagogie, 
+                            de la naissance de votre projet jusqu’à l'obtention de votre visa. </p>
+                            </div>
+                        </div>
+                        </div>
+                        <div className="BlockquoteItem__BlockquoteItemContainer-sc-1vut18p-0 fOqLqQ RowCarouselstyles__BlockquoteItem-sc-sn9bq-4 hFyJGz">
+                        <div className="BlockquoteItem__EntryPicto-sc-1vut18p-1 fXwFFQ">
+                            <svg height={24} viewBox="0 0 24 24" width={24} xmlns="http://www.w3.org/2000/svg" className="BlockquoteItem__Picto-sc-1vut18p-2 driHUc">
+                            <use href="#p_1W7mmN" />
+                            </svg>
+                        </div>
+                        <div>
+                            <div className="BlockquoteItem__EntryTitle-sc-1vut18p-3 dtrzsL"> Evaluation de vos chances d'obtenir un visa</div>
+                            <div className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__Content-sc-1qjc0o4-1 cLBZMY BlockquoteItem__EntryText-sc-1vut18p-4 gtHqOe">
+                            <p className="styles__Block-sc-1qjc0o4-0 styles__Paragraph-sc-1qjc0o4-2 ktDrhZ bbNzRf"> Notre simulateur doté d’algorithmes puissants compare en profondeur 
+                            les critères pour chaque visa et vous dit si vous êtes aptes à obtenir un visa. </p>
+                            </div>
+                        </div>
+                        </div>
+                        <div className="BlockquoteItem__BlockquoteItemContainer-sc-1vut18p-0 fOqLqQ RowCarouselstyles__BlockquoteItem-sc-sn9bq-4 hFyJGz">
+                        <div className="BlockquoteItem__EntryPicto-sc-1vut18p-1 fXwFFQ">
+                            <svg height={24} viewBox="0 0 24 24" width={24} xmlns="http://www.w3.org/2000/svg" className="BlockquoteItem__Picto-sc-1vut18p-2 driHUc">
+                            <use href="#p_boiV" />
+                            </svg>
+                        </div>
+                        <div>
+                            <div className="BlockquoteItem__EntryTitle-sc-1vut18p-3 dtrzsL"> Frais fixes </div>
+                            <div className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__Content-sc-1qjc0o4-1 cLBZMY BlockquoteItem__EntryText-sc-1vut18p-4 gtHqOe">
+                            <p className="styles__Block-sc-1qjc0o4-0 styles__Paragraph-sc-1qjc0o4-2 ktDrhZ bbNzRf"> Nos prix sont fixes, connus à l’avance et les mêmes pour tous. </p>
+                            </div>
+                        </div>
+                        </div>
+                        <div className="BlockquoteItem__BlockquoteItemContainer-sc-1vut18p-0 fOqLqQ RowCarouselstyles__BlockquoteItem-sc-sn9bq-4 hFyJGz">
+                        <div className="BlockquoteItem__EntryPicto-sc-1vut18p-1 fXwFFQ">
+                            <svg height={24} viewBox="0 0 24 24" width={24} xmlns="http://www.w3.org/2000/svg" className="BlockquoteItem__Picto-sc-1vut18p-2 driHUc">
+                            <use href="#p_51CrD" />
+                            </svg>
+                        </div>
+                        <div>
+                            <div className="BlockquoteItem__EntryTitle-sc-1vut18p-3 dtrzsL"> Vos démarches sans bouger de chez vous </div>
+                            <div className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__Content-sc-1qjc0o4-1 cLBZMY BlockquoteItem__EntryText-sc-1vut18p-4 gtHqOe">
+                            <p className="styles__Block-sc-1qjc0o4-0 styles__Paragraph-sc-1qjc0o4-2 ktDrhZ bbNzRf"> Avec notre plateforme gratuite, accédez à votre dossier et à toutes les informations dont vous avez besoin 24h/24. </p>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    <div className="RowCarouselstyles__ImageWrapper-sc-sn9bq-5 kMxKRQ">
+                        <Image src={OurPromise} alt={OurPromise} className="RowCarouselstyles__Image-sc-sn9bq-6 iipLPw" loading="lazy"/>
+                    </div>
+                    </div>
+                    {/* <div className="styles__Grid-sc-10gqksz-1 iuHviD Row-sc-13qiped-0 eUxnX">
+                    <div className="styles__Container-sc-ygsoy6-1 lmSxnT styles__Info-sc-vtkvbx-0 eozRrI">
+                        <div>
+                        <div className="styles__BaseTypo-sc-198xhmk-0 jyPDDf styles__Title-sc-ygsoy6-3 cZnCJN"> Wendogo est un courtier agréé par l’ORIAS </div>
+                        <div>
+                            <div className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__Content-sc-1qjc0o4-1 cLBZMY">
+                            <p className="styles__Block-sc-1qjc0o4-0 styles__Paragraph-sc-1qjc0o4-2 ktDrhZ bbNzRf"> Comme tout courtier, nous sommes homologués par l' <strong className="styles__Strong-sc-1qjc0o4-5 flAqX"> ORIAS </strong>{" "} pour avoir le droit d'exercer notre activité d'intermédiaire en finance. Chacun de nos experts crédit est formé et est habilité{" "} <strong className="styles__Strong-sc-1qjc0o4-5 flAqX"> IOBSP </strong>{" "} (Intermédiaire en Opérations de Banque et en Services de Paiement) pour avoir le droit de conseiller et accompagner les clients Wendogo dans leur projet immobilier. </p>
+                            </div>
+                        </div>
+                        <a className="styles__BaseTypo-sc-198xhmk-0 aPHVI styles__Button-sc-wveu9u-1 iRJUAN styles__Button-sc-ygsoy6-0 kjbVnZ" href="/courtier-credit/meilleur-courtier/courtier-agree-orias/">
+                            <span className="styles__Label-sc-wveu9u-2 hhrLkB"> En savoir plus </span>
+                            <svg height={16} viewBox="0 0 16 16" width={16} xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="styles__Arrow-sc-wveu9u-0 jXLObB">
+                            <path d="M6.3,2.5,5,3.8,9.28,8,5,12.2l1.3,1.3L11.88,8Z" />
+                            </svg>
+                        </a>
+                        </div>
+                        <Image alt="v1629988872/bricks/static-assets/illustrations/Satisfied_transparent.svg" className="styles__Image-sc-ygsoy6-2 ldUSCf" height={168} loading="lazy" src="https://res.cloudinary.com/pretto-fr/image/upload/q_auto,h_168,w_168/v1629988872/bricks/static-assets/illustrations/Satisfied_transparent.svg" width={168} />
+                    </div>
+                    </div> */}
                     <div className="styles__Grid-sc-10gqksz-1 iuHviD">
                     <div className="Blocsstyles__Content-sc-1q5awhx-0 kQmFpu">
                         <div id="main">
@@ -166,7 +249,7 @@ function WendogoCost(){
                                     <div className="AuthorInfosstyles__AuthorInfos-sc-1v2nwgf-0 kVLKSc">
                                       <div className="Avatarstyles__AvatarContainer-sc-168giry-2 glDTmS">
                                         <div className="Avatarstyles__Avatar-sc-168giry-0 eYtuGP AuthorInfosstyles__Avatar-sc-1v2nwgf-1 etCUXw">
-                                          <picture> <img alt="avatar" height={46} loading="lazy" src={EdgarHead} width={46} className="Avatarstyles__Image-sc-168giry-1 gNAMaq" />
+                                          <picture> <Image alt="avatar" height={46} loading="lazy" src={EdgarHead} width={46} className="Avatarstyles__Image-sc-168giry-1 gNAMaq" />
                                           </picture>
                                         </div>
                                       </div>
@@ -268,4 +351,4 @@ function WendogoCost(){
 
 }
 
-export default WendogoCost
+export default WendogoMission

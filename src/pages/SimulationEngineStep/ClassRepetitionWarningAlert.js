@@ -1,10 +1,14 @@
+'use client';
+
 import React, { useState, useEffect } from "react";
 import SEAlertMessage from "../../components/SimulationEngine/SEAlertMessage";
 import SadEmoticonSvg from './../../assets/simulation_icons/sad_emoticon.svg';
 import helper from '../../utils/Helper';
+import { useDispatch, useSelector } from 'react-redux';
 import { Loader2 } from "lucide-react";
 
 const ClassRepetitionWarningAlert = () => {
+  const user = useSelector((state) => state.user);
   const [isLoading, setIsLoading] = useState(true);
   const [classRepetitionNumber, setClassRepetitionNumber] = useState(null);
 

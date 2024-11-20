@@ -1,18 +1,21 @@
+'use client';
+
 import { useState} from 'react';
-import EdgarHead from '../../assets/edgar_head.jpeg'
-import QuestionsOnTopic from '../../components/QuestionsOnTopic';
-//import ExpertMan} from '../../assets/ExpertMan1.svg'
-import OptimizedImage from '../../components/OptimizedImage';
+import EdgarHead from '../assets/edgar_head.jpeg'
+import QuestionsOnTopic from '../components/QuestionsOnTopic';
+//import ExpertMan} from '../assets/ExpertMan1.svg'
+import OptimizedImage from '../components/OptimizedImage';
 
 import Link from 'next/link';
 
-import Footer from '../../components/Footer';
-import HeaderMenuBar from '../../components/HeaderMenuBar';
-import ExpertMan from '../../assets/superhero.png'
-//import WendogoTeam from '../../assets/wendogo_team-removebg.png'
-import WendogoTeam from '../../assets/wendogo_team.jpeg'
-import SocialMediaLogo from '../../assets/wendogo_jeu_concours.png'
+import Footer from '../components/Footer';
+import HeaderMenuBar from '../components/HeaderMenuBar';
+import ExpertMan from '../assets/superhero.png'
+//import WendogoTeam from '../assets/wendogo_team-removebg.png'
+import WendogoTeam from '../assets/wendogo_team.jpeg'
+import SocialMediaLogo from '../assets/wendogo_jeu_concours.png'
 import Head from 'next/head';
+import Image from 'next/image';
 
 function AboutUs(){
     const whatsapp =  <svg className="ButtonLinkstyles__Picto-sc-1s2ygn0-1 hkJOZg" width="24px" height="24.6350302px" viewBox="0 0 24 24.6350302" version="1.1" xmlns="http://www.w3.org/2000/svg">
@@ -60,27 +63,7 @@ function AboutUs(){
             </Head>         
             <HeaderMenuBar/>
             <main className="styles__Main-sc-kz84w6-0 gEFmYD " style={{paddingTop: 80}}>
-                <div className="Blocsstyles__Page-sc-1q5awhx-1 dVmdSL">
-                    {/* <nav className="styles__Grid-sc-10gqksz-1 iuHviD styles__Nav-sc-b6pzbt-9 cUAJrh">
-                    <div className="styles__Container-sc-b6pzbt-0 gnYFPc">
-
-                        <ul className="styles__List-sc-b6pzbt-1 Nbkao">
-                          <li className="styles__BaseTypo-sc-198xhmk-0 dCHWzO styles__ListItem-sc-b6pzbt-2 fdQKqN">
-                              <a aria-current="page" className="styles__ListItemLink-sc-b6pzbt-8 jmsNjc" href="/wendogo-mission"> Qui sont nos experts ? </a>
-                          </li>
-                        </ul>
-                        <button disabled="" className="styles__ListItemButton-sc-b6pzbt-3 styles__ListItemButtonRight-sc-b6pzbt-6 bnJCXg cqfNya">
-                        <span className="styles__ListItemButtonMask-sc-b6pzbt-4 hatcES">
-                            <svg height={16} viewBox="0 0 16 16" width={16} xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="styles__ListItemButtonChevron-sc-b6pzbt-7 zUUMP">
-                            <path d="M6.3,2.5,5,3.8,9.28,8,5,12.2l1.3,1.3L11.88,8Z" />
-                            </svg>
-                            <svg height={16} viewBox="0 0 16 16" width={16} xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="styles__ListItemButtonChevron-sc-b6pzbt-7 zUUMP">
-                            <path d="M6.3,2.5,5,3.8,9.28,8,5,12.2l1.3,1.3L11.88,8Z" />
-                            </svg>
-                        </span>
-                        </button>
-                    </div>
-                    </nav> */}
+                <div className="Blocsstyles__Page-sc-1q5awhx-1 dVmdSL"> 
                     <div className="styles__Container-sc-1wzyvpr-1 bQAQqz Row-sc-13qiped-0 eUxnX"  style={{paddingBottom : 0}}>
                     <div className="styles__Grid-sc-10gqksz-1 iuHviD styles__Grid-sc-1wzyvpr-3 kLhHpn">
                         <div className="styles__Main-sc-1wzyvpr-6 bgJTPL">
@@ -88,18 +71,12 @@ function AboutUs(){
                         <div className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__Content-sc-1qjc0o4-1 cLBZMY styles__Description-sc-1wzyvpr-2 kkxsWA">
                             <p className="styles__Block-sc-1qjc0o4-0 styles__Paragraph-sc-1qjc0o4-2 ktDrhZ bbNzRf"> 
                       Les conseillers Wendogo, tout aussi passionnés que compétents, vous guident de manière optimale à chaque étape de votre demande de visa avec implication et détermination.</p>
-                        </div>
-                        {/* <a href="https://app.pretto.fr/" className="styles__BaseTypo-sc-198xhmk-0 aPHVI styles__Button-sc-wveu9u-1 iRJUAN styles__Button-sc-1wzyvpr-0 ctdOjM">
-                            <span className="styles__Label-sc-wveu9u-2 hhrLkB"> Je simule mon visa </span>
-                            <svg height={16} viewBox="0 0 16 16" width={16} xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="styles__Arrow-sc-wveu9u-0 jXLObB">
-                            <path d="M6.3,2.5,5,3.8,9.28,8,5,12.2l1.3,1.3L11.88,8Z" />
-                            </svg>
-                        </a> */}
+                        </div> 
                         </div>
                         <div className="styles__ImageContainer-sc-1wzyvpr-5 fWJBuN">
                         <picture>
-                            <OptimizedImage alt={ExpertMan}  loading="lazy" src={ExpertMan} className="styles__Image-sc-1wzyvpr-4 dJhJuV" style={{width : 260, height : 'auto'}} />
-                            {/* <img alt={ExpertMan}  className="styles__Image-sc-1wzyvpr-4 dJhJuV" loading="lazy" src={ExpertMan} style={{width : 260, height : 'auto'}} /> */}
+                            <Image alt={ExpertMan}  loading="lazy" src={ExpertMan} className="styles__Image-sc-1wzyvpr-4 dJhJuV" style={{width : 260, height : 'auto'}} />
+                            {/* <Image alt={ExpertMan}  className="styles__Image-sc-1wzyvpr-4 dJhJuV" loading="lazy" src={ExpertMan} style={{width : 260, height : 'auto'}} /> */}
                         </picture>
                         </div>
                         <div className="styles__Container-sc-1fi1lc5-0 hJzdEq styles__ReasonToBelieve-sc-1wzyvpr-9 flTAYH">
@@ -136,8 +113,8 @@ function AboutUs(){
                                 <div className="RowCarouselstyles__Title-sc-sn9bq-3 dMQEOm"> Vos conseillers Wendogo seront vos meilleurs alliés </div>
                               </div>
                               <picture>
-                                <OptimizedImage alt="Programme de bourses d'étude : comment déterminer votre projet ?" loading="lazy" src={WendogoTeam} className="styles__Image-sc-s3dlnp-1 oBito" />
-                                {/* <img alt="Programme de bourses d'étude : comment déterminer votre projet ?" loading="lazy" src={WendogoTeam} className="styles__Image-sc-s3dlnp-1 oBito" /> */}
+                                <Image alt="Programme de bourses d'étude : comment déterminer votre projet ?" loading="lazy" src={WendogoTeam} className="styles__Image-sc-s3dlnp-1 oBito" />
+                                {/* <Image alt="Programme de bourses d'étude : comment déterminer votre projet ?" loading="lazy" src={WendogoTeam} className="styles__Image-sc-s3dlnp-1 oBito" /> */}
                               </picture>
                             </div>
                           </div>
@@ -202,8 +179,8 @@ function AboutUs(){
                                       <div className="Avatarstyles__AvatarContainer-sc-168giry-2 glDTmS">
                                         <div className="Avatarstyles__Avatar-sc-168giry-0 eYtuGP AuthorInfosstyles__Avatar-sc-1v2nwgf-1 etCUXw">
                                           <picture>
-                                            <OptimizedImage alt="avatar" height={46} loading="lazy" src={EdgarHead} width={46} className="Avatarstyles__Image-sc-168giry-1 gNAMaq" />
-                                             {/* <img alt="avatar" height={46} loading="lazy" src={EdgarHead} width={46} className="Avatarstyles__Image-sc-168giry-1 gNAMaq" /> */}
+                                            <Image alt="avatar" height={46} loading="lazy" src={EdgarHead} width={46} className="Avatarstyles__Image-sc-168giry-1 gNAMaq" />
+                                             {/* <Image alt="avatar" height={46} loading="lazy" src={EdgarHead} width={46} className="Avatarstyles__Image-sc-168giry-1 gNAMaq" /> */}
                                           </picture>
                                         </div>
                                       </div>

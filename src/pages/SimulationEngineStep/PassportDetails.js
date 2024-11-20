@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import SE2DateInput from '../../components/SimulationEngine/SE2DateInput';
 import { useDispatch, useSelector } from 'react-redux';

@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import SEDropDownList from '../../components/SimulationEngine/SEDropDownList';
 import { useDispatch, useSelector } from 'react-redux';

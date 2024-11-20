@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect, useRef } from 'react';
 import { useUserQuery } from '../store/apis/userApi';
 import { useSelector, useDispatch } from 'react-redux'

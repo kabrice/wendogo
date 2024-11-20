@@ -1,8 +1,11 @@
+'use client';
+
 import ButtonLarge from "../ButtonLarge";
 import React from "react";
+import SvgConstant from "../../utils/SvgConstant";
 
 function SEDropDownList(props) {
-    const { title, newRef, collapseOption, fieldDefault, items, itemSelected, toggleDropdown, updateSelected, handleContinue, showContinueBtn, tip, showTip, isPartOfInputGroup, inputGroupBlockTitle } = props;
+    const { title, newRef, collapseOption, fieldDefault, items, itemSelected, toggleDropdown, updateSelected, handleContinue, showContinueBtn, tip, showTip, isPartOfInputGroup, inputGroupBlockTitle, svgConstantName } = props;
     
     return (
         <div className="FieldWrapper SelectField VEH_USA_KILOM field-default">
@@ -11,7 +14,7 @@ function SEDropDownList(props) {
                 
                 && <>
                     <div className="FieldView-flex-container">
-                        <label className="Label">{title}</label>
+                        <label className="Label">{svgConstantName && SvgConstant.getSvg(svgConstantName)} {title}</label>
                     </div>
                     <div className="Tip">
                         {showTip && <div>{tip}</div>}

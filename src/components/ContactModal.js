@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import SETextArea from './SimulationEngine/SETextArea';
 import helper from '../utils/Helper';
@@ -269,10 +271,13 @@ const ContactModal = ({
                                         title={`Un dernier message ? ${displayEmailOption && 'WhatsApp et/ou e-mail, à vous de choisir !'}`} 
                                         id="PR" 
                                         showTip={displayEmailOption} 
-                                        tip=" WhatsApp pour un échange rapide, l'e-mail pour plus de détails (Vous pouvez utiliser les deux options)" placeholderText="• L'objectif précis de votre projet
-• Les étapes déjà réalisées
-• Vos interrogations sur la procédure visa
-• Les informations complémentaires utile" value={message} valid={valid} rows={displayEmailOption ? 7 : 10} setValid={setValid} errorMessage={errorMessage} onClickOutside={()=> validateMessage(message)} handleChange={handleChange}/> 
+                                        tip=" WhatsApp pour un échange rapide, l'e-mail pour plus de détails (Vous pouvez utiliser les deux options)"
+                                        placeholderText={[
+                                            "• L'objectif précis de votre projet",
+                                            "• Les étapes déjà réalisées",
+                                            "• Vos interrogations sur la procédure visa",
+                                            "• Les informations complémentaires utiles"
+                                          ].join("\n")}  value={message} valid={valid} rows={displayEmailOption ? 7 : 10} setValid={setValid} errorMessage={errorMessage} onClickOutside={()=> validateMessage(message)} handleChange={handleChange}/> 
         </div>
                     </div>
                     <div className="flex gap-4" style={{marginTop: '-50px', padding: 24}}>
@@ -338,7 +343,7 @@ const ContactModal = ({
                                         <p className="Paragraph  " style={{  fontSize: "1.275rem", margin: "8px 0px 0px", color: 'rgb(42, 55, 117)', textAlign:'center', padding: 0, fontWeight: 400, lineHeight: "initial" }}> Nos équipes s'occupent de vous. </p>
                                     </div>
                                     <div style={{  padding: " 10px",  marginLeft: "auto", marginRight: "auto", borderWidth: "initial", borderStyle: "none", borderColor: "initial"  }}>
-                                    <span>En attendant, un like et un abonnement à nos réseaux sociaux nous feraient grand plaisir 
+                                    <span style={{fontFamily: 'PayPalOpen-Bold'}}>En attendant, un like et un abonnement à nos réseaux sociaux nous feraient grand plaisir 
                                         <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="28px"viewBox="0 0 84 84" version="1.1" style={{marginLeft: 5}}>
                                             <title>noun-pleading-face-6024878</title>
                                             <g id="Page-1" stroke="none" strokeWidth={1} fill="none" fillRule="evenodd">

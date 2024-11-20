@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect } from "react";
 import SEYesNo from "../../components/SimulationEngine/SEYesNo";
 import { useDispatch, useSelector } from 'react-redux';

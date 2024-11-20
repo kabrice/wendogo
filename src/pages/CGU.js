@@ -1,8 +1,11 @@
+'use client';
+
 
 import SocialMediaLogo from '../assets/social_media_logo.png'
 import Footer from '../components/Footer';
 import HeaderMenuBar from '../components/HeaderMenuBar';
 import Head from 'next/head';
+import Image from 'next/image';
 
 function CGU(){
     

@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useRef, useEffect} from "react";
 import SEAcademicYearHeadDetails from "../../components/SimulationEngine/SEAcademicYearHeadDetails";
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,7 +16,8 @@ const AcademicYearHeadDetails1 = ({spokenLanguages, academicYearOrganizations, m
     const user = useSelector((state) => state.user);
     const dispatch = useDispatch();
     const simulationStepGlobal = useSelector((state) => state.simulationStep);
-
+    const [loading, setLoading] = useState(true); 
+    
     // Loading and data states
     const [isLoading, setIsLoading] = useState(true);
     //const user = useSelector((state) => state.user);
@@ -218,6 +221,7 @@ const AcademicYearHeadDetails1 = ({spokenLanguages, academicYearOrganizations, m
     return (
         <SEAcademicYearHeadDetails 
             title={`Informations au début de l'année académique ${user?.selectedSchoolYear1.name || 'N/A'} `}
+            svgConstantName="YEAR_N_2"
             tip={`Veuillez renseigner les détails de votre année académique ${user?.selectedSchoolYear1.name-1}/${user?.selectedSchoolYear1.name || 'N/A'}.`}
             showWarning={showWarning}
             selectedYear={user?.selectedSchoolYear1.name}

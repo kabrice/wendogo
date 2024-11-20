@@ -1,3 +1,5 @@
+'use client';
+
 
 import WendogoLogoIcon from '../assets/wendogo_logo_paperplane_blue.svg'
 import  DropDownIcon from '../assets/dropdown_icon.svg'
@@ -80,7 +82,7 @@ function HeaderMenuBar(){
                       <li aria-expanded="false" role="menuitem" tabIndex={0} className="Navbarstyles__MenuItem Navbarstyles__MenuItem-common">
                         <span className="Navbarstyles__MenuItemLabel" onClick={() => toggleNavSubMenu1()}>
                           <span>Simuler mon visa</span>
-                          <DropDownIcon style={{transform : (displaySubMenu1 ? "rotate(180deg)" : '')}}/>
+                          <DropDownIcon style={displaySubMenu1 ? {transform : "rotate(180deg)"} : {}}/>
                         </span>
                         <ul className={"Navbarstyles__SubMenu "+(displaySubMenu1 ? 'lowcCT subMenu1' : '')} style={{backgroundColor : 'white'}}>
                           <li className="Navbarstyles__SubMenuFirstItem">
@@ -98,7 +100,7 @@ function HeaderMenuBar(){
                       <li aria-expanded="false" aria-controls="7d517232" role="menuitem" tabIndex={0} className="Navbarstyles__MenuItem Navbarstyles__MenuItem-common">
                         <span className="Navbarstyles__MenuItemLabel" onClick={() => toggleNavSubMenu2()}>
                           <span>Ressources</span>
-                          <DropDownIcon style={{transform : (displaySubMenu2 ? "rotate(180deg)" : '')}}/>
+                          <DropDownIcon style={displaySubMenu2 ? {transform : "rotate(180deg)"} : {}}/>
                         </span>
                         <ul id="7d517232" className={"Navbarstyles__SubMenu "+(displaySubMenu2 ? 'lowcCT subMenu2' : '')} style={{backgroundColor : 'white'}}>
                           <li className="Navbarstyles__SubMenuFirstItem">
@@ -126,7 +128,7 @@ function HeaderMenuBar(){
                       <li aria-expanded="false" aria-controls="e75b56b9" role="menuitem" tabIndex={0} className="Navbarstyles__MenuItem Navbarstyles__MenuItem-common">
                           <span className="Navbarstyles__MenuItemLabel" onClick={() => toggleNavSubMenu3()}>
                             <span>À propos</span>
-                            <DropDownIcon style={{transform : (displaySubMenu3 ? "rotate(180deg)" : '')}}/>
+                            <DropDownIcon style={displaySubMenu3 ? {transform : "rotate(180deg)"} : {}}/>
                           </span>
                           <ul id="e75b56b9" className={"Navbarstyles__SubMenu "+(displaySubMenu3 ? 'lowcCT subMenu3' : '')} style={{backgroundColor : 'white'}}>
                           <li>

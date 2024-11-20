@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import { isValidNumber, parsePhoneNumberWithError, formatPhoneNumber } from 'libphonenumber-js';
 import SETextInputPhone from "../../components/SimulationEngine/SETextInputPhone";
@@ -71,17 +73,27 @@ const PhoneNumber = () => {
         if (phoneNumber.trim() === '') {
             return false;
         }
-
+    
         try {
-            const phoneNumberObj = parsePhoneNumberWithError(phoneNumber.toString(), user?.country);
+            // Attempt to parse the phone number with the selected country
+            const phoneNumberObj = parsePhoneNumberWithError(phoneNumber, countryIso2 || user?.country || 'US');
+            
+            // Return the formatted phone number and its validity
             const formatted = { name: phoneNumberObj.number, validated: phoneNumberObj.isValid() };
             setPhoneNumberFormatted(formatted);
             return phoneNumberObj.isValid();
         } catch (error) {
-            console.error('Error validating phone number:', error);
+            // Gracefully handle TOO_SHORT error or other parsing errors
+            if (error.message === 'TOO_SHORT') {
+                console.warn('Phone number is too short:', phoneNumber);
+            } else {
+                console.error('Error validating phone number:', error);
+            }
+            setPhoneNumberFormatted({ name: phoneNumber, validated: false });
             return false;
         }
     };
+    
 
     const handleChange = (e) => {
         const phoneNumber = e.target.value;

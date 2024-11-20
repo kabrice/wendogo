@@ -1,3 +1,5 @@
+'use client';
+
 import Calendar from "../components/Calendar";
 import Footer from "../components/Footer";
 import HeaderMenuLoginBar from '../components/HeaderMenuLoginBar';

@@ -1,22 +1,22 @@
-// SELevelRail.js
+'use client';
 import React from 'react';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 import ButtonLarge from "../ButtonLarge";
 import SvgConstant from '../../utils/SvgConstant';
 
-const SELevelRail = React.memo(({
-    title,
-    arialLabel,
-    value,
-    step,
-    marks,
-    valuetext,
-    valueLabelFormat,
-    handleContinue,
-    showContinueBtn,
-    handleChange,
-    svgConstantName,
+const SELevelRail = React.memo(({ 
+    title, 
+    arialLabel, 
+    defaultValue, 
+    step, 
+    marks, 
+    valuetext, 
+    valueLabelFormat, 
+    handleContinue, 
+    showContinueBtn, 
+    handleChange, 
+    svgConstantName, 
     id
 }) => {
     const CustomSliderStyles = {
@@ -50,13 +50,14 @@ const SELevelRail = React.memo(({
                                 <Slider
                                     sx={CustomSliderStyles}
                                     aria-label={arialLabel}
-                                    valueLabelFormat={valueLabelFormat}
-                                    value={value}
+                                    valueLabelFormat={valueLabelFormat} // Use for label formatting only
+                                    defaultValue={defaultValue}
                                     getAriaValueText={valuetext}
                                     step={step}
                                     valueLabelDisplay="auto"
                                     marks={marks}
-                                    onChange={handleChange}
+                                    onChange={handleChange} // Update state here instead
+                                    key={`slider-${defaultValue}`} 
                                     id={`${id}3`}
                                 />
                             </Box>

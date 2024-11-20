@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import SEYesNo from "../../components/SimulationEngine/SEYesNo";
 import { useDispatch, useSelector } from 'react-redux';
@@ -120,6 +122,7 @@ const IsResult2Available = () => {
     return (
         <SEYesNo 
             title={`Vos relevés académiques ${helper.updateBAC(isInUniversityGlobal, user, 1)} sont-ils disponibles ?`}
+            svgConstantName="YEAR_N_1"
             tip="Considérer uniquement les bulletins des années validées."
             yes={isResult2Available}
             handleYes={handleIsResult2Available}

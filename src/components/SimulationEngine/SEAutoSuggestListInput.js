@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useRef, useEffect } from 'react';
 import helper from '../../utils/Helper';
 import ButtonLarge from "../ButtonLarge";
@@ -82,8 +84,9 @@ const SEAutoSuggestListInput = (props) => {
     // e.stopPropagation();
     // e.nativeEvent.stopImmediatePropagation();
     //bindInput.onChange({ target: { value: suggestions[index].name } })
-    console.log('index', index, currentPriorityInput, mainValues)
+    
     let subject = {id: suggestions[index].id, name: suggestions[index].name, priority: (deletedPriority || mainValues.length+1)}
+    console.log('index', index, currentPriorityInput, mainValues, subject)
     if (!mainValues.some(subject => subject.id === suggestions[index].id)) {
       let newMainValues = [...mainValues, subject].sort((a, b) => a.priority - b.priority)
       console.log('handleOnClickOption newMainValues', newMainValues)

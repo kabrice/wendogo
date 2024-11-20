@@ -1,13 +1,20 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   transpilePackages: ['flag-icons'],
-  images: {
-    remotePatterns: ['wendogo-f972c21756e5.herokuapp.com'],
+  images: { 
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [
       {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '3000',
+        pathname: '/school_logos/**',
+      },
+      // Add your production domain pattern if needed
+      {
         protocol: 'https',
-        hostname: 'wendogo-f972c21756e5.herokuapp.com',
+        hostname: 'wendogo.com',
+        pathname: '/school_logos/**',
       },
     ],
   },

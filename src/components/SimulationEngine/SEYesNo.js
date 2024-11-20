@@ -1,3 +1,5 @@
+'use client';
+
 import ButtonLarge from "../ButtonLarge";
 import {React, useState, useCallback} from "react";
 import Modal from "../Modal";
@@ -29,8 +31,8 @@ const SEYesNo = (props) => {
         opacity: 1,
     }}>
                 <div className="FieldView DaisyFieldView undefined field-valid RadioField PRI_DON_AUTRE_VEH ">
-                <div className="FieldView-flex-container">
-                    <label className="Label ">{svgConstantName && SvgConstant.getSvg(svgConstantName)} {title}</label>
+                <div className="FieldView-flex-container fade-in">
+                    <label className="Label fade-in">{svgConstantName && SvgConstant.getSvg(svgConstantName)} {title}</label>
                     {displayQuestionTooltip && 
                                     <div  className="PopinTooltip">
                                         <button type="button" className="PopinTooltip-button-open" onClick={() => hideShowModal(true)}>
@@ -46,6 +48,7 @@ const SEYesNo = (props) => {
                 <div className="DrawerAnimation" style={{ height: 0 }}>
                     <div />
                 </div>
+                {/* {'YES '+yes} */}
                 <div className="app-row app-field">
                     <div className="app-col-xs-12 app-col-sm-12 app-col-md-12 Field">
                         <div className="ButtonField ">

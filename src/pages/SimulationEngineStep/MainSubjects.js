@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useGetLevelValuesQuery } from '../../store/apis/levelValueApi';
 import { activateSpinner, deactivateSpinner } from '../../redux/spinnerslice';
@@ -52,14 +54,14 @@ const MainSubjects = () => {
     );
 
     // Handle API loading state
-    useEffect(() => {
-        if (isApiLoading) {
-            dispatch(activateSpinner());
-        }
-        if (data || error) {
-            dispatch(deactivateSpinner());
-        }
-    }, [data, error, isApiLoading, dispatch]);
+    // useEffect(() => {
+    //     if (isApiLoading) {
+    //         dispatch(activateSpinner());
+    //     }
+    //     if (data || error) {
+    //         dispatch(deactivateSpinner());
+    //     }
+    // }, [data, error, isApiLoading, dispatch]);
 
     // Memoized values
     const titleWhenNoMatch = useMemo(() => 
@@ -101,22 +103,50 @@ const MainSubjects = () => {
         dispatch(setUser(updatedUser));
     }, [dispatch, user]);
 
-    const handleChange = useCallback((newMainSubjects) => {
+    // const handleChange = useCallback((newMainSubjects) => {
+    //     setMainSubjects(newMainSubjects);
+
+    //     const currentStep = !user?.isResult3Available ? {
+    //         step: SIMULATION_ENGINE_STEPS.MAIN_SUBJECTS_BAC_N_1,
+    //         progressBarStep: PROGRESS_BAR_STEPS.BULLETIN_N_1
+    //     } : !user?.isResult2Available ? {
+    //         step: SIMULATION_ENGINE_STEPS.MAIN_SUBJECTS_BAC_N_2,
+    //         progressBarStep: PROGRESS_BAR_STEPS.BULLETIN_N_2
+    //     } : {
+    //         step: SIMULATION_ENGINE_STEPS.MAIN_SUBJECTS,
+    //         progressBarStep: PROGRESS_BAR_STEPS.BULLETIN_LE_PLUS_RECENT
+    //     };
+
+    //     updateWendogouser(currentStep.step, newMainSubjects, currentStep.progressBarStep);
+    // }, [user, updateWendogouser]);
+
+    const handleChange = useCallback((newMainSubjects) =>  {
+
+        console.log('newMainSubjects', newMainSubjects)
         setMainSubjects(newMainSubjects);
-
-        const currentStep = !user?.isResult3Available ? {
-            step: SIMULATION_ENGINE_STEPS.MAIN_SUBJECTS_BAC_N_1,
-            progressBarStep: PROGRESS_BAR_STEPS.BULLETIN_N_1
-        } : !user?.isResult2Available ? {
-            step: SIMULATION_ENGINE_STEPS.MAIN_SUBJECTS_BAC_N_2,
-            progressBarStep: PROGRESS_BAR_STEPS.BULLETIN_N_2
-        } : {
-            step: SIMULATION_ENGINE_STEPS.MAIN_SUBJECTS,
-            progressBarStep: PROGRESS_BAR_STEPS.BULLETIN_LE_PLUS_RECENT
+        console.log('simulationStepGlobal $$$ ', simulationStepGlobal )
+        const determineCurrentStep = () => {
+            if (!user?.isResult2Available && !user?.isResult3Available) {
+                return {
+                    step: SIMULATION_ENGINE_STEPS.MAIN_SUBJECTS_BAC_N_2,
+                    progressBarStep: PROGRESS_BAR_STEPS.BULLETIN_N_2
+                };
+            }
+            if (!user?.isResult3Available) { 
+                return {
+                    step: SIMULATION_ENGINE_STEPS.MAIN_SUBJECTS_BAC_N_1,
+                    progressBarStep: PROGRESS_BAR_STEPS.BULLETIN_N_1
+                }
+            }
+            return {
+                step: SIMULATION_ENGINE_STEPS.MAIN_SUBJECTS,
+                progressBarStep: PROGRESS_BAR_STEPS.BULLETIN_LE_PLUS_RECENT
+            };
         };
-
-        updateWendogouser(currentStep.step, newMainSubjects, currentStep.progressBarStep);
-    }, [user, updateWendogouser]);
+        const { step, progressBarStep } = determineCurrentStep();   
+        //console.log('determineCurrentStep $$$ ', determineCurrentStep() )
+        updateWendogouser(step, newMainSubjects, progressBarStep)
+    }, [user, updateWendogouser]);  
 
     const handleContinue = useCallback(() => {
         if (typeof window === 'undefined' || !user) return;

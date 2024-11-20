@@ -1,3 +1,5 @@
+'use client';
+
 import SEAlertMessage from "../../components/SimulationEngine/SEAlertMessage";
 import FrenchTestSvg from './../../assets/simulation_icons/french_test.svg'
 

@@ -1,3 +1,5 @@
+'use client';
+
 import Footer from '../../components/Footer';
 import HeaderMenuLoginBar from '../../components/HeaderMenuLoginBar';
 import {useLeadstatusQuery} from '../../store/apis/leadstatusApi';

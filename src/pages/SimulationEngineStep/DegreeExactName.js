@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import SETextInput from "../../components/SimulationEngine/SETextInput";
 import { useDispatch, useSelector } from 'react-redux';

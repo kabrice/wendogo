@@ -1,4 +1,4 @@
-const REST_API_PARAMS = {baseUrl: 'https://wendogo-f972c21756e5.herokuapp.com', prepareHeaders: (headers, { getState }) => {
+const REST_API_PARAMS = {baseUrl: 'https://wendogo.online', prepareHeaders: (headers, { getState }) => {
     headers.set('Content-Type', 'application/json')
     headers.set('Access-Control-Allow-Origin', '*')
     headers.set('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization')

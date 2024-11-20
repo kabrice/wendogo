@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import SETextInput from "../../components/SimulationEngine/SETextInput";
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,39 +9,45 @@ import { SIMULATION_ENGINE_STEPS } from '../../utils/Constants';
 import { Loader2 } from "lucide-react";
 import { setUser } from '../../redux/userSlice';
 
-const Email = () => {
-    const [isLoading, setIsLoading] = useState(true);
+const Email = () => { 
     const user = useSelector((state) => state.user);
-    const dispatch = useDispatch();
+    const dispatch = useDispatch(); 
+    const [email, setEmail] = useState(user?.email || '');
     const simulationStepGlobal = useSelector((state) => state.simulationStep);
-    
-    // Local state
-    const [email, setEmail] = useState('');
-    const [valid, setValid] = useState(true); // Initially true for empty state
 
-    // Load user data on component mount
-    useEffect(() => {
-        const loadUserData = () => {
-            
-            if (user) {
-                
-                const initialEmail = user?.email || '';
-                setEmail(initialEmail);
-                setValid(doesValid(initialEmail));
-            }
-            setIsLoading(false);
-        };
-
-        loadUserData();
-    }, []);
-
-    const doesValid = (emailValue) => {
-        if (!emailValue || emailValue.trim() === '') {
+    // Improved email validation function
+    const doesValid = (email) => {
+        console.log('email', email);
+        if (!email || (email?.trim() === '')) {
+            // Set valid to true if the email is empty
             return true;
         }
+        // Regex for email validation
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(emailValue.trim());
+        return emailRegex.test(email?.trim());
     };
+
+    const [valid, setValid] = useState(doesValid());
+
+    // Update validity when email changes
+    // useEffect(() => {
+    //     setValid(doesValid());
+    // }, [email]);
+
+    const handleChange = (e) => {
+        const email = e.target.value;
+        setValid(doesValid());
+        setEmail(email);
+        if (doesValid()) {
+            updateWendogouser(SIMULATION_ENGINE_STEPS.EMAIL, email);
+        }
+    };
+
+    const handleContinue = () => {
+        if (doesValid()) {
+            updateWendogouser(SIMULATION_ENGINE_STEPS.WHATSAPP_NUMBER, email);
+        }
+    }; 
 
     const updateWendogouser = (simulationStep, emailValue) => {
         if (!user) return;
@@ -55,28 +63,6 @@ const Email = () => {
         dispatch(setUser(updatedUser));
     };
 
-    const handleChange = (e) => {
-        const newEmail = e.target.value;
-        setEmail(newEmail);
-        const isValid = doesValid(newEmail);
-        setValid(isValid);
-        
-        if (isValid) {
-            updateWendogouser(SIMULATION_ENGINE_STEPS.EMAIL, newEmail);
-        }
-    };
-
-    const handleContinue = () => {
-        if (doesValid(email)) {
-            updateWendogouser(SIMULATION_ENGINE_STEPS.WHATSAPP_NUMBER, email);
-        }
-    };
-
-    if (isLoading) {
-        return <div className="flex items-center justify-center min-h-[200px]">
-                      <Loader2 className="w-8 h-8 animate-spin" />
-                </div>; 
-    }
 
     if (!user) {
         return <div className="flex items-center justify-center min-h-[200px]">
@@ -96,7 +82,7 @@ const Email = () => {
             valid={valid}
             autoComplete="off"
             setValid={setValid}
-            onClickOutside={() => setValid(doesValid(email))}
+            onClickOutside={doesValid}
             handleContinue={handleContinue}
             showContinueBtn={simulationStepGlobal === SIMULATION_ENGINE_STEPS.EMAIL}
         />

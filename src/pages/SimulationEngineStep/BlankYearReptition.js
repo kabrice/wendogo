@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect } from "react";
 import NumberSelection from "../../components/SimulationEngine/SENumberSelection";
 import { useDispatch, useSelector } from 'react-redux';

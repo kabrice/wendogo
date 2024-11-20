@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { activateUniversity, deactivateUniversity } from '../../redux/universitySlice';
@@ -47,6 +49,7 @@ function SchoolLevel() {
     };
 
     const handleContinue = () => {
+        dispatch(schoolLevelSelected === 'Supérieur' ? activateUniversity() : deactivateUniversity());
         updateWendogouser(SIMULATION_ENGINE_STEPS.RECENT_CLASS_LEVEL, schoolLevelSelected);
     };
 
@@ -58,10 +61,11 @@ function SchoolLevel() {
             date: new Date().toISOString()
         };
         
-        helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
+        console.log('updatedUser:', updatedUser);
         dispatch(setUser(updatedUser));
         setShowContinueBtn(false);
         dispatch(setStep(simulationStep));
+        helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
     };
 
     // SVG icons

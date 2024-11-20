@@ -1,10 +1,8 @@
+'use client';
+
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useCountriesQuery } from '../../store/apis/userApi';
-import { useGetSpokenLanguagesQuery } from '../../store/apis/spokenLanguageApi';
-import { useGetAcademicYearOrganizationsQuery } from '../../store/apis/academicYearOrganizationApi';
-import { useGetMarkSystemsQuery } from '../../store/apis/markSystemApi';
-import { useGetSubjectWeightSystemsQuery } from '../../store/apis/subjectWeightSystemApi';
+import { useCountriesQuery } from '../../store/apis/userApi'; 
 import { activateSpinner, deactivateSpinner } from '../../redux/spinnerslice';
 import { activateErrorPage, deactivateErrorPage } from '../../redux/errorPageSlice';
 import helper from '../../utils/Helper';
@@ -15,6 +13,8 @@ import SENumberSelection from './SENumberSelection';
 import ButtonLarge from '../ButtonLarge';
 import { isError, update } from 'lodash';
 import SESmallAlertMessage from './SESmallAlertMessage';
+import { Loader2 } from "lucide-react"; 
+
 //import { isCustomErrorPage } from 'next/dist/build/utils';
 
 const SEAcademicYearHeadDetails = (props) => {
@@ -33,7 +33,7 @@ const SEAcademicYearHeadDetails = (props) => {
             collapseSubjectWeightSystemOption, setCollapseSubjectWeightSystemOption,
             updateSelectedCountry, updateSelectedCity, updateSelectedSpokenLanguage, updateSelectedAcademicYearOrganization, updateSelectedMarkSystem, updateSelectedSubjectWeightSystem,
             schoolName, handleChangeSchoolName, handleContinue, showContinueBtn,
-            spokenLanguages, academicYearOrganizations, markSystems, subjectWeightSystems,isErrorPage
+            spokenLanguages, academicYearOrganizations, markSystems, subjectWeightSystems,isErrorPage, svgConstantName
             } = props;
 
     const dispatch = useDispatch();
@@ -41,6 +41,7 @@ const SEAcademicYearHeadDetails = (props) => {
     // State variables
     const [countries, setCountries] = useState(null);
     const [cities, setCities] = useState(null);
+    const [loading, setLoading] = useState(true); 
 
     const newRefCountry = useRef(null);
     const newRefCity = useRef(null);
@@ -48,17 +49,12 @@ const SEAcademicYearHeadDetails = (props) => {
     const newRefAcademicYearOrganization = useRef(null);
     const newRefMarkSystem = useRef(null);
     const newRefSubjectWeightSystem = useRef(null);
- 
+    
     // Queries 
-    const { data, error, isLoading } = useCountriesQuery(selectedCountry.iso2);
-    // const { data: spokenLanguages, error: spokenLanguagesError, isLoading: spokenLanguagesIsLoading } = useGetSpokenLanguagesQuery();
-    // const { data: academicYearOrganizations, error: academicYearOrganizationsError, isLoading: academicYearOrganizationsIsLoading } = useGetAcademicYearOrganizationsQuery();
-    // const { data: markSystems, error: markSystemsError, isLoading: markSystemsIsLoading } = useGetMarkSystemsQuery();
-    // const { data: subjectWeightSystems, error: subjectWeightSystemsError, isLoading: subjectWeightSystemsIsLoading } = useGetSubjectWeightSystemsQuery();
-
+    const { data, error, isLoading } = useCountriesQuery(selectedCountry.iso2) 
     const doesValueValid = (schoolName) => {
-        console.log('schoolName', schoolName,  schoolName !== undefined, schoolName.trim().length >= 10, /[a-zA-Z].*[a-zA-Z]/.test(schoolName));
-        console.log('schoolNamexxx', schoolName !== undefined && schoolName && schoolName.trim().length >= 10 && /[a-zA-Z].*[a-zA-Z]/.test(schoolName));
+        //console.log('schoolName', schoolName,  schoolName !== undefined, schoolName.trim().length >= 10, /[a-zA-Z].*[a-zA-Z]/.test(schoolName));
+        //console.log('schoolNamexxx', schoolName !== undefined && schoolName && schoolName.trim().length >= 10 && /[a-zA-Z].*[a-zA-Z]/.test(schoolName));
         return schoolName !== undefined && schoolName && schoolName.trim().length >= 10 && /[a-zA-Z].*[a-zA-Z]/.test(schoolName);
     }
       
@@ -67,16 +63,19 @@ const SEAcademicYearHeadDetails = (props) => {
     useEffect(() => {
         console.log('IN SEAcademicYearHeadDetails useEffect');
         if (isLoading ) {
+            setLoading(true);
             dispatch(activateSpinner());
         }
 
         if (error  || isErrorPage) {
+            setLoading(false);
             //console.error('Error:', error || spokenLanguagesError || academicYearOrganizationsError || markSystemsError || subjectWeightSystemsError);
             dispatch(deactivateSpinner()) 
             dispatch(activateErrorPage())
         }
         //console.log('IN SEAcademicYearHeadDetails useEffect');
         if (data) {
+            setLoading(false);
             dispatch(deactivateSpinner()) 
             dispatch(deactivateErrorPage())
             const sortedCountries = data.countries.map((item) => ({ ...item })).sort((a, b) => a.name.localeCompare(b.name));
@@ -176,7 +175,18 @@ const SEAcademicYearHeadDetails = (props) => {
         }
 
     };
+    if (loading) {
+        // Display loader while data is being fetched
+        return  <div className="flex items-center justify-center min-h-[200px]">
+        <Loader2 className="w-8 h-8 animate-spin" />
+    </div>
+    }
 
+    if (error) {
+        dispatch(deactivateSpinner());
+        dispatch(activateErrorPage());
+        return null; // or your error component
+    }
     // Toggle functions for dropdowns
     const toggleMarkSystemDropdown = () => setCollapseMarkSystemOption(!collapseMarkSystemOption);
     const toggleSubjectWeightSystemDropdown = () => setCollapseSubjectWeightSystemOption(!collapseSubjectWeightSystemOption);
@@ -189,7 +199,7 @@ const SEAcademicYearHeadDetails = (props) => {
 
     return (
         <div style={{margin: '0 0 35px'}}>
-            <SELabel title={title} tip={tip}/>
+            <SELabel title={title} tip={tip} svgConstantName={svgConstantName}/>
 
             {countries && (
                 <SEDropDownList

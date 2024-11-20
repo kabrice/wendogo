@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, CSSProperties, useEffect } from "react";
 import ClipLoader from "react-spinners/ClipLoader";
 import { useSelector } from 'react-redux'

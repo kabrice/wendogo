@@ -1,3 +1,5 @@
+'use client';
+
 import ButtonLarge from "../ButtonLarge";
 import {React, useState} from "react";
 import Modal from "../Modal";

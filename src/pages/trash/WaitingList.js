@@ -1,3 +1,5 @@
+'use client';
+
 import { React, useEffect, useState, useRef } from 'react';
 import WendogoLogoIcon from '../assets/wendogo_logo_paperplane.svg'
 import Birthday from '../components/Birthday'

@@ -1,3 +1,5 @@
+'use client';
+
 import SEAlertMessage from "../../components/SimulationEngine/SEAlertMessage";
 import SadEmoticonSvg from './../../assets/simulation_icons/sad_emoticon.svg';
 import { useSelector } from 'react-redux';

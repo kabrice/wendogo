@@ -1,24 +1,28 @@
+'use client';
+
 import React from 'react'; 
-import Footer from '../../../components/Footer';
-import HeaderMenuBarOnlyWithLogo from '../../../components/HeaderMenuBarOnlyWithLogo';
+import Footer from '../../components/Footer';
+import HeaderMenuBarOnlyWithLogo from '../../components/HeaderMenuBarOnlyWithLogo';
 import FormGroup from '@mui/material/FormGroup';
-import LocationIcon from '../assets/location-353.svg';
+import LocationIcon from '../../assets/location-353.svg';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox'; 
-import helper from '../../../utils/Helper';
+import helper from '../../utils/Helper';
 import { useEffect, useState, useCallback, useMemo, useRef} from 'react'; 
 import _, { set } from 'lodash'
-import { useGetSchoolDetailsFromSchoolIdsMutation } from '../../../store/apis/schoolApi';
-import { useGetMajorDetailsFromMajorIdsMutation } from '../../../store/apis/majorApi';
-import {useUpdateAndGetStudentSimulationResultMutation} from '../../../store/apis/userApi';
-import { activateSpinner, deactivateSpinner } from '../../../redux/spinnerslice';
+import { useGetSchoolDetailsFromSchoolIdsMutation } from '../../store/apis/schoolApi';
+import { useGetMajorDetailsFromMajorIdsMutation } from '../../store/apis/majorApi';
+import {useUpdateAndGetStudentSimulationResultMutation} from '../../store/apis/userApi';
+import { activateSpinner, deactivateSpinner } from '../../redux/spinnerslice';
+import { setUser } from '../../redux/userSlice';
 import { useDispatch, useSelector } from 'react-redux'
-import OptimizedImage from '../../../components/OptimizedImage'; 
-import SimulationResultWaiting from '../../../components/SimulationResultWaiting'; 
-import ServicePricingCard from '../../../components/ServicePricingCard';
-import ContactModal from '../../../components/ContactModal'; 
+import OptimizedImage from '../../components/OptimizedImage'; 
+import SimulationResultWaiting from '../../components/SimulationResultWaiting'; 
+import ServicePricingCard from '../../components/ServicePricingCard';
+import ContactModal from '../../components/ContactModal'; 
 import Link from 'next/link';
 import { Loader2 } from "lucide-react";
+import Image from 'next/image';
 
 const SessionExpiredAlert = () => {
 
@@ -45,7 +49,8 @@ const SessionExpiredAlert = () => {
   };
 
   const useInitialDataLoad = () => {
-    const [user, setUser] = useState(null);
+    const user = useSelector((state) => state.user);
+    const dispatch = useDispatch();
     const [evaluationResults, setEvaluationResults] = useState(null);
     const [displayValidCourses, setDisplayValidCourses] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
@@ -60,38 +65,41 @@ const SessionExpiredAlert = () => {
       const initializeData = async () => {
         try {
           // Get localStorage data first
-          const userData = helper.getLocalStorageWithExpiration('wendogouser');
+          
           
           // Only proceed if component is still mounted
           if (!mounted) return;
 
-          if (!userData) {
+          if (!user) {
             setIsSessionExpired(true);
             setIsLoading(false);
             return;
           }
 
           // Set user data
-          setUser(userData);
+          
 
           let simulationResults;
           
           // Check for existing simulation results
-          if (userData?.simulationResults) {
-            simulationResults = userData.simulationResults;
+          if (user?.simulationResults) {
+            simulationResults = user.simulationResults;
           } else {
             // Fetch new simulation results if none exist
-            simulationResults = await getStudentSimulationResult(userData).unwrap();
-            
+            console.log('userxx NN', user)
+            simulationResults = await getStudentSimulationResult(user).unwrap();
+            console.log('userxx NNN', user)
             // Save results to localStorage
-            if (mounted) {
-              helper.setLocalStorageWithExpiration('wendogouser', {
-                ...userData, 
-                'userId': simulationResults?.user_id,
-                'simulationResults': simulationResults, 
-                date: new Date().toISOString()
-              });
-            }
+           // if (simulationResults) {
+            const newUser = {
+                                ...user, 
+                                'userId': simulationResults?.user_id,
+                                'simulationResults': simulationResults, 
+                                date: new Date().toISOString()
+                            };
+            dispatch(setUser(newUser));
+            helper.setLocalStorageWithExpiration('wendogouser', newUser)  
+            //}
           }
 
           // Only update state if component is still mounted
@@ -163,7 +171,7 @@ const SimulationResult = () => {
     const [revealChildren, setRevealChildren] = useState(false);
 
     // Function to render valid or invalid courses
-    console.log('evaluationResults length', evaluationResults?.valid_courses?.length )
+    //console.log('evaluationResults length', evaluationResults?.valid_courses?.length )
     const [coursesToDisplay, setCoursesToDisplay] = useState(displayValidCourses ? evaluationResults?.valid_courses : evaluationResults?.invalid_courses?.flatMap(item => item.courses || []));
     const [finalCoursesToDisplay, setFinalCoursesToDisplay] = useState(coursesToDisplay);
     const [checkSubdomain, setCheckSubdomain] = useState(false);
@@ -291,8 +299,10 @@ const SimulationResult = () => {
                 fetchedSchoolDetails = await getSchoolDetailsFromSchoolIds({ "school_ids": Array.from(globalSchoolIds) }).unwrap();
             }
             if (transformedMajorDetails?.length>0 && fetchedSchoolDetails.length>0) {
-                const userData = helper.getLocalStorageWithExpiration('wendogouser')
-                helper.setLocalStorageWithExpiration('wendogouser', {...userData, 'schoolDetails': fetchedSchoolDetails, 'majorDetails': transformedMajorDetails, date: new Date().toISOString() });
+                const user = helper.getLocalStorageWithExpiration('wendogouser')
+                const newUser = {...user, 'schoolDetails': fetchedSchoolDetails, 'majorDetails': transformedMajorDetails, date: new Date().toISOString() }
+                dispatch(setUser(newUser));
+                helper.setLocalStorageWithExpiration('wendogouser', newUser);      
                 setSchoolDetails(fetchedSchoolDetails);
                 setMajorDetails(transformedMajorDetails);              
             }
@@ -430,7 +440,7 @@ const SimulationResult = () => {
             (user?.isFrancophoneCountry && !user?.isFrancophone) ||
             (user?.isFrancophone && !user?.isFrancophoneCountry)
         );
-        console.log('needsTestBasedOnOrigin xxxx ', needsTestBasedOnOrigin, user, user?.isFrancophoneCountry, user?.isFrancophone, user?.selectedFrenchLevel)
+       // console.log('needsTestBasedOnOrigin xxxx ', needsTestBasedOnOrigin, user, user?.isFrancophoneCountry, user?.isFrancophone, user?.selectedFrenchLevel)
         return needsTestBasedOnOrigin || !hasSufficientFrenchLevel;
      }; 
 
@@ -610,8 +620,14 @@ const SimulationResult = () => {
                         <div className="Stack stackColumn" style={{ flexDirection: "column", padding: 0, alignItems: "stretch" }}>
                             <div className="Stack-child" style={{ paddingTop: 30 }}>
                             <div className="Logo border small" style={{ width: 150, height: 150, padding:  7 }}>
-                                <OptimizedImage style={{ width: '100%', height: '100%', objectFit: 'contain' }} src={`${process.env.PUBLIC_URL}/school_logos/${school?.logo_path || school?.university?.logo_path || 'default-logo.jpeg'}`} alt={schoolName} />
-                            </div> 
+                            <div style={{ position: 'relative', width: '100%', height: '300px' }}>
+  <Image 
+    fill
+    style={{ objectFit: 'contain' }}
+    src={`${process.env.NEXT_PUBLIC_PUBLIC_URL || ''}/school_logos/${school?.logo_path || school?.university?.logo_path || 'default-logo.jpeg'}`}
+    alt={schoolName}
+  />
+</div>                            </div> 
                             </div>
                         </div>
                         </div>

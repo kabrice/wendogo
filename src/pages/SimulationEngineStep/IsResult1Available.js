@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import SEYesNo from "../../components/SimulationEngine/SEYesNo";
 import SESmallAlertMessage from "../../components/SimulationEngine/SESmallAlertMessage";
@@ -88,18 +90,19 @@ const IsResult1Available = () => {
         helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
         dispatch(setUser(updatedUser));
     }, [dispatch, user]);
+ 
 
     const handleIsResult1Available = useCallback((val) => {
+        console.log('handleIsResult1Available', val);
         setIsResult1Available(val);
-        if (!user) return;
-        
         dispatch(setStep(SIMULATION_ENGINE_STEPS.IS_YEAR_1_RESULTS_AVAILABLE));
         const updatedUser = {
             ...user,
-            simulationStep: SIMULATION_ENGINE_STEPS.IS_YEAR_1_RESULTS_AVAILABLE
+            simulationStep: SIMULATION_ENGINE_STEPS.IS_YEAR_1_RESULTS_AVAILABLE,
+            isResult1Available: val,
         };
-        helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
         dispatch(setUser(updatedUser));
+        helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
     }, [dispatch, user]);
 
     const handleContinue = useCallback(() => {
@@ -138,6 +141,7 @@ const IsResult1Available = () => {
         <>
             <SEYesNo 
                 title={`Vos relevés académiques ${helper.updateBAC(isInUniversityGlobal, user, 2)} ${additionalText} sont-ils disponibles ?`}
+                svgConstantName="YEAR_N_2"
                 tip="Considérer uniquement les bulletins des années validées."
                 yes={isResult1Available}
                 handleYes={handleIsResult1Available}

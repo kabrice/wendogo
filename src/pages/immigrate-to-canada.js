@@ -1,16 +1,19 @@
+'use client';
+
 import { useState, useEffect} from 'react';
-import ImmigrateToCanadaImg from '../../assets/immigrate_to_canada.jpeg'
-import BorisHead from '../../assets/Boris_head.jpeg'
-import QuestionsOnTopic from '../../components/QuestionsOnTopic';
+import ImmigrateToCanadaImg from '../assets/immigrate_to_canada.jpeg'
+import BorisHead from '../assets/Boris_head.jpeg'
+import QuestionsOnTopic from '../components/QuestionsOnTopic';
 
 import Link from 'next/link';
 
-import Footer from '../../components/Footer';
-import HeaderMenuBar from '../../components/HeaderMenuBar';
+import Footer from '../components/Footer';
+import HeaderMenuBar from '../components/HeaderMenuBar';
 import Head from 'next/head';
 // import Link from 'next/link';
 // import Nav from "./Nav";
-import helper from '../../utils/Helper';
+import helper from '../utils/Helper';
+import Image from 'next/image';
 
 function ImmigrateToCanada(){
     const whatsapp =  <svg className="ButtonLinkstyles__Picto-sc-1s2ygn0-1 hkJOZg" width="24px" height="24.6350302px" viewBox="0 0 24 24.6350302" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
@@ -113,7 +116,7 @@ function ImmigrateToCanada(){
                                 <div className="AuthorInfosstyles__AuthorInfos-sc-1v2nwgf-0 kVLKSc">
                                   <div className="Avatarstyles__AvatarContainer-sc-168giry-2 glDTmS">
                                     <div className="Avatarstyles__Avatar-sc-168giry-0 eYtuGP AuthorInfosstyles__Avatar-sc-1v2nwgf-1 etCUXw">
-                                      <picture><img alt="avatar" height={46} loading="lazy" src={BorisHead} width={46} className="Avatarstyles__Image-sc-168giry-1 gNAMaq" />
+                                      <picture><Image alt="avatar" height={46} loading="lazy" src={BorisHead} width={46} className="Avatarstyles__Image-sc-168giry-1 gNAMaq" />
                                       </picture>
                                     </div>
                                   </div>
@@ -163,7 +166,7 @@ function ImmigrateToCanada(){
                               </div>
                             </div>
                             <picture>
-                              <img alt="Programme de bourses d'étude : comment déterminer votre projet ?" loading="lazy" src={ImmigrateToCanadaImg} className="styles__Image-sc-s3dlnp-1 oBito" />
+                              <Image alt="Programme de bourses d'étude : comment déterminer votre projet ?" loading="lazy" src={ImmigrateToCanadaImg} className="styles__Image-sc-s3dlnp-1 oBito" />
                             </picture>
                           </div>
                         </div>
@@ -404,7 +407,7 @@ function ImmigrateToCanada(){
                                     <div className="AuthorInfosstyles__AuthorInfos-sc-1v2nwgf-0 kVLKSc">
                                       <div className="Avatarstyles__AvatarContainer-sc-168giry-2 glDTmS">
                                         <div className="Avatarstyles__Avatar-sc-168giry-0 eYtuGP AuthorInfosstyles__Avatar-sc-1v2nwgf-1 etCUXw">
-                                          <picture> <img alt="avatar" height={46} loading="lazy" src={BorisHead} width={46} className="Avatarstyles__Image-sc-168giry-1 gNAMaq" />
+                                          <picture> <Image alt="avatar" height={46} loading="lazy" src={BorisHead} width={46} className="Avatarstyles__Image-sc-168giry-1 gNAMaq" />
                                           </picture>
                                         </div>
                                       </div>

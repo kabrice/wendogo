@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { activateSpinner, deactivateSpinner } from '../../redux/spinnerslice';
@@ -141,6 +143,7 @@ const SchoolYear1 = ({ schoolYears, isErrorPage }) => {
     return (
         <SEDropDownList 
             title={`Votre ${helper.updateBAC(isInUniversityGlobal, user, 2)} correspond à quelle année scolaire ?`}
+            svgConstantName="YEAR_N_2"
             newRef={newRef}
             collapseOption={collapseYearOption}
             fieldDefault={fieldDefault}

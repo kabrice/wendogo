@@ -2,10 +2,11 @@ import { useState, useEffect } from 'react';
 import helper from '../../utils/Helper'; 
 import Hostess  from '../../assets/simulation_icons/hostess.svg'; 
 import { Loader2 } from "lucide-react";
+import { useDispatch, useSelector } from 'react-redux';
 
 const FormSuccess = (props) => {
 
-    const [user, setUserData] = useState(null);
+    const user = useSelector((state) => state.user);
     const [deviceType, setDeviceType] = useState('lg');
     const [isLoading, setIsLoading] = useState(true);
     const [browserWidth, setBrowserWidth] = useState(window.innerWidth);
@@ -16,10 +17,8 @@ const FormSuccess = (props) => {
         let mounted = true;
 
         const initializeUserData = () => {
-            try {
-                const user = helper.getLocalStorageWithExpiration('wendogouser');
-                if (mounted) {
-                    setUserData(user);
+            try { 
+                if (mounted) { 
                     setIsLoading(false);
                 }
             } catch (error) {
@@ -127,7 +126,7 @@ const FormSuccess = (props) => {
                                     </div>
 
                                 <div style={{  padding: " 10px",  marginLeft: "auto", marginRight: "auto", borderWidth: "initial", borderStyle: "none", borderColor: "initial"  }}>
-                                    <span>En attendant, un like et un abonnement à nos réseaux sociaux nous feraient grand plaisir 
+                                    <span style={{fontFamily: 'PayPalOpen-Bold'}}>En attendant, un like et un abonnement à nos réseaux sociaux nous feraient grand plaisir 
                                         <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="24px"viewBox="0 0 84 84" version="1.1" style={{marginLeft: 5}}>
                                             <title>noun-pleading-face-6024878</title>
                                             <g id="Page-1" stroke="none" strokeWidth={1} fill="none" fillRule="evenodd">

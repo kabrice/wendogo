@@ -1,3 +1,5 @@
+'use client';
+
 
 // Import img
 import backgroundImg3 from '../assets/générique-chateau.jpg';
@@ -437,13 +439,13 @@ function HomePage(){
                         <div className="Laptop__Container-sc-1henh52-0 ebnCSa ">
                           <div className="Sliderstyles__ImageContainer-sc-jd0rgd-6 isxeYt">
                             <picture>
-                              <source type="image/webp" srcSet={SliderstylesImage1} />
-                              <source srcSet={SliderstylesImage1} />
+                              {/* <source type="image/webp" srcSet={SliderstylesImage1} />
+                              <source srcSet={SliderstylesImage1} /> */}
                               <Image className={"Sliderstyles__Image-sc-jd0rgd-7 "+ (isLeftArrow ? "kCpYFv" : "CtOpC") } src={SliderstylesImage1} alt="" />
                             </picture>
                             <picture>
-                              <source type="image/webp" srcSet={SliderstylesImage2} />
-                              <source srcSet={SliderstylesImage2} />
+                              {/* <source type="image/webp" srcSet={SliderstylesImage2} />
+                              <source srcSet={SliderstylesImage2} /> */}
                               <Image className={"Sliderstyles__Image-sc-jd0rgd-7 "+ (!isLeftArrow ? "kCpYFv" : "CtOpC") } src={SliderstylesImage2} alt="" />
                             </picture>
                           </div>
@@ -500,13 +502,13 @@ function HomePage(){
                             </button>
                             <div className="Sliderstyles__ImageContainer-sc-jd0rgd-6 isxeYt">
                             <picture>
-                              <source type="image/webp" srcSet={SliderstylesImage1} />
-                              <source srcSet={SliderstylesImage1} />
+                              {/* <source type="image/webp" srcSet={SliderstylesImage1} />
+                              <source srcSet={SliderstylesImage1} /> */}
                               <Image className={"Sliderstyles__Image-sc-jd0rgd-7 "+ (isLeftArrow ? "kCpYFv" : "CtOpC") } src={SliderstylesImage1} alt="" />
                             </picture>
                             <picture>
-                              <source type="image/webp" srcSet={SliderstylesImage2} />
-                              <source srcSet={SliderstylesImage2} />
+                              {/* <source type="image/webp" srcSet={SliderstylesImage2} />
+                              <source srcSet={SliderstylesImage2} /> */}
                               <Image className={"Sliderstyles__Image-sc-jd0rgd-7 "+ (!isLeftArrow ? "kCpYFv" : "CtOpC") } src={SliderstylesImage2} alt="" />
                             </picture>
                           </div>
@@ -549,13 +551,13 @@ function HomePage(){
                                   </div>
                                   <div className="Sliderstyles__ImageContainer-sc-jd0rgd-6 isxeYt">
                                     <picture>
-                                      <source type="image/webp" srcSet={SliderstylesImage1} />
-                                      <source srcSet={SliderstylesImage1} />
+                                      {/* <source type="image/webp" srcSet={SliderstylesImage1} />
+                                      <source srcSet={SliderstylesImage1} /> */}
                                       <Image className={"Sliderstyles__Image-sc-jd0rgd-7 "+ (isLeftArrow ? "kCpYFv" : "CtOpC") } src={SliderstylesImage1} alt="" />
                                     </picture>
                                     <picture>
-                                      <source type="image/webp" srcSet={SliderstylesImage2} />
-                                      <source srcSet={SliderstylesImage2} />
+                                      {/* <source type="image/webp" srcSet={SliderstylesImage2} />
+                                      <source srcSet={SliderstylesImage2} /> */}
                                       <Image className={"Sliderstyles__Image-sc-jd0rgd-7 "+ (!isLeftArrow ? "kCpYFv" : "CtOpC") } src={SliderstylesImage2} alt="" />
                                     </picture>
                                   </div>
@@ -688,16 +690,16 @@ function HomePage(){
                             <Image alt="" size="(min-width: 1024px) 50vw, 100vw" loading="lazy" src="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto/v1677667256/website/page/home/BlocCourtier-1.jpg" className={"Images__Image-sc-2gr022-1 "+((countdown<5 || countdown===15) ? bannerAnimationClassList[1] : "eXDVgd")} />
                           </picture> */}
                           <picture>
-                            <source type="image/webp" srcSet={BlockCourtier1} />
-                            <source srcSet={BlockCourtier1} />
+                            {/* <source type="image/webp" srcSet={BlockCourtier1} />
+                            <source srcSet={BlockCourtier1} /> */}
                             <Image className={"Images__Image-sc-2gr022-1 "+((countdown<5 || countdown===15) ? bannerAnimationClassList[1] : "eXDVgd")} src={BlockCourtier1} alt="" size="(min-width: 1024px) 50vw, 100vw" loading="lazy"  />
                             {/* <Image alt="v1677658638/website/page/home/Re%CC%81sultat.png" className="Sliderstyles__Image-sc-jd0rgd-7 kCpYFv" loading="lazy" src="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto/v1677658638/website/page/home/Re%CC%81sultat.png" /> */}
                           </picture>
                         </div>
                         <div className="Images__BaseImage-sc-2gr022-2 Images__Image2-sc-2gr022-4 ioovUp kUUMLx">
                           <picture>
-                            <source type="image/webp" srcSet={BlockCourtier2} />
-                            <source srcSet={BlockCourtier2} />
+                            {/* <source type="image/webp" srcSet={BlockCourtier2} />
+                            <source srcSet={BlockCourtier2} /> */}
                             <Image  className={"Images__Image-sc-2gr022-1 "+((countdown >= 5 && countdown<10) ? bannerAnimationClassList[1] : "eXDVgd")} src={BlockCourtier2} alt="" size="(min-width: 1024px) 50vw, 100vw" loading="lazy"  />
                             {/* <Image alt="v1677658638/website/page/home/Re%CC%81sultat.png" className="Sliderstyles__Image-sc-jd0rgd-7 kCpYFv" loading="lazy" src="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto/v1677658638/website/page/home/Re%CC%81sultat.png" /> */}
                           </picture>
@@ -709,8 +711,8 @@ function HomePage(){
                         </div>
                         <div className="Images__BaseImage-sc-2gr022-2 Images__Image3-sc-2gr022-5 ioovUp gaxwmL">
                           <picture>
-                            <source type="image/webp" srcSet={BlockCourtier3} />
-                            <source srcSet={BlockCourtier3} />
+                            {/* <source type="image/webp" srcSet={BlockCourtier3} />
+                            <source srcSet={BlockCourtier3} /> */}
                             <Image className={"Images__Image-sc-2gr022-1 "+((countdown >= 10 && countdown<15) ? bannerAnimationClassList[1] : "eXDVgd")} src={BlockCourtier3} alt="" size="(min-width: 1024px) 50vw, 100vw" loading="lazy"  />
                             {/* <Image alt="v1677658638/website/page/home/Re%CC%81sultat.png" className="Sliderstyles__Image-sc-jd0rgd-7 kCpYFv" loading="lazy" src="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto/v1677658638/website/page/home/Re%CC%81sultat.png" /> */}
                           </picture>
@@ -768,8 +770,8 @@ function HomePage(){
                         <div className="Banner__Container-sc-yqcec5-0 TiNYc Footer__Header-sc-1adny8q-1 BGhzp">
                           <div className="Banner__ImageContainer-sc-yqcec5-1 dwrjaK">
                           <picture>
-                            <source type="image/webp" sizes="(min-width: 1240px) 288px, (min-width: 1024px) 25vw, (min-width: 768px) 37.5vw, 100vw" srcSet={WorldNoBorders} />
-                            <source sizes="(min-width: 1240px) 288px, (min-width: 1024px) 25vw, (min-width: 768px) 37.5vw, 100vw"  srcSet={WorldNoBorders} />
+                            {/* <source type="image/webp" sizes="(min-width: 1240px) 288px, (min-width: 1024px) 25vw, (min-width: 768px) 37.5vw, 100vw" srcSet={WorldNoBorders} />
+                            <source sizes="(min-width: 1240px) 288px, (min-width: 1024px) 25vw, (min-width: 768px) 37.5vw, 100vw"  srcSet={WorldNoBorders} /> */}
                             <Image className="Banner__Image-sc-yqcec5-2 kHAXoZ" alt="v1677669144/website/page/home/BlocFooter.jpg" loading="lazy" src={WorldNoBorders}/>
                           </picture>
                         </div>

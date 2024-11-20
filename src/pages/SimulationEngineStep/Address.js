@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import SETextArea from "../../components/SimulationEngine/SETextArea";
 import { useDispatch, useSelector } from 'react-redux';

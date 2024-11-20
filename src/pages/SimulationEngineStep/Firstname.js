@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+'use client';
+
+import React, { useState, useEffect , useCallback} from 'react';
 import SETextInput from "../../components/SimulationEngine/SETextInput";
 import { useDispatch, useSelector } from 'react-redux';
 import { setStep } from '../../redux/simulationStepSlice';
@@ -8,37 +10,26 @@ import { Loader2 } from "lucide-react"; // Using lucide-react for loading spinne
 import { setUser } from '../../redux/userSlice';
 
 const Firstname = () => {
-    const [isLoading, setIsLoading] = useState(true);
     const user = useSelector((state) => state.user);
     const dispatch = useDispatch();
+    const [firstname, setFirstname] = useState(user?.firstname || '');
     const simulationStepGlobal = useSelector((state) => state.simulationStep);
-    const [firstname, setFirstname] = useState('');
-    const [valid, setValid] = useState(false);
 
-    useEffect(() => {
-        const loadUserData = () => {
-            
-            if (user) {
-                
-                const initialFirstname = user?.firstname || '';
-                setFirstname(initialFirstname);
-                setValid(doesValid(initialFirstname));
-            }
-            setIsLoading(false);
-        };
+    const doesValid = (firstname) => {
+        return firstname !== undefined && firstname.trim().length >= 3 && /[a-zA-Z].*[a-zA-Z]/.test(firstname);
+      }
+      
+    const [valid, setValid] = useState(doesValid());
 
-        loadUserData();
-    }, []);
+    const handleChange = (e) => {
+        const firstname = e.target.value;
+        setFirstname(firstname);
+        updateWendogouser(SIMULATION_ENGINE_STEPS.FIRSTNAME, firstname)
+    };   
 
-    const doesValid = (value) => {
-        return value !== undefined && 
-               value.trim().length >= 3 && 
-               /[a-zA-Z].*[a-zA-Z]/.test(value);
-    };
 
-    const updateWendogouser = (simulationStep, firstname) => {
-        if (!user) return;
-
+    const updateWendogouser = useCallback((simulationStep, firstname) => {
+        
         dispatch(setStep(simulationStep));
         const updatedUser = {
             ...user,
@@ -48,19 +39,14 @@ const Firstname = () => {
         };
         helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
         dispatch(setUser(updatedUser));
-    };
+    }, [dispatch, user]);
+ 
 
-    const handleChange = (e) => {
-        const newFirstname = e.target.value;
-        setFirstname(newFirstname);
-        updateWendogouser(SIMULATION_ENGINE_STEPS.FIRSTNAME, newFirstname);
-    };
-
-    const handleContinue = () => {
+    const handleContinue = useCallback(() => { 
         updateWendogouser(SIMULATION_ENGINE_STEPS.LASTNAME, firstname);
-    };
+    }, [firstname, updateWendogouser]);
 
-    if (isLoading) {
+    if (!user) {
         return (
             <div className="flex items-center justify-center min-h-[100px]">
                 <Loader2 className="h-8 w-8 animate-spin text-primary" />
@@ -68,15 +54,7 @@ const Firstname = () => {
         );
     }
 
-    if (!user) {
-        return (
-            <div className="flex items-center justify-center min-h-[100px] text-red-500">
-                Error loading user data
-            </div>
-        );
-    }
-
-    return (
+    return (<>{'xx '+valid}
         <SETextInput 
             title="Quel est votre prénom ?"
             id="FIRSTNAME"
@@ -86,10 +64,10 @@ const Firstname = () => {
             inputLength={64}
             valid={valid}
             setValid={setValid}
-            onClickOutside={() => setValid(doesValid(firstname))}
+            onClickOutside={doesValid}
             handleContinue={handleContinue}
             showContinueBtn={simulationStepGlobal === SIMULATION_ENGINE_STEPS.FIRSTNAME}
-        />
+        /></>
     );
 };
 

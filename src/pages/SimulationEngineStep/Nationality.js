@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useGetNationalitiesQuery } from '../../store/apis/nationalityApi';
 import { activateSpinner, deactivateSpinner } from '../../redux/spinnerslice';
@@ -57,19 +59,19 @@ const Nationality = () => {
 
     // Handle API states
     useEffect(() => {
-        if (isApiLoading) {
-            dispatch(activateSpinner());
-        }
+        // if (isApiLoading) {
+        //     dispatch(activateSpinner());
+        // }
 
         if (error) {
             console.error('API Error:', error);
-            dispatch(deactivateSpinner());
+            //dispatch(deactivateSpinner());
             dispatch(activateErrorPage());
             return;
         }
 
         if (data) {
-            dispatch(deactivateSpinner());
+            //dispatch(deactivateSpinner());
             dispatch(deactivateErrorPage());
 
             const sortedNationalities = [...data].sort((a, b) => 

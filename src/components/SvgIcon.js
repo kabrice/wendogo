@@ -1,3 +1,5 @@
+'use client';
+
 // components/SvgIcon.js
 const SvgIcon = ({ sprite, className }) => (
     <svg className={`SvgIcon ${className || ''}`}>

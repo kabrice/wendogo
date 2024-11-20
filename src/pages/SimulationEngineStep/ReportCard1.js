@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setStep } from '../../redux/simulationStepSlice';
@@ -11,6 +13,7 @@ import SESmallAlertMessage from '../../components/SimulationEngine/SESmallAlertM
 import { SIMULATION_ENGINE_STEPS, PROGRESS_BAR_STEPS } from '../../utils/Constants';
 import { Loader2 } from "lucide-react";
 import _ from 'lodash';
+import SvgConstant from '../../utils/SvgConstant';
 
 const ReportCard1 = () => {
     const dispatch = useDispatch();
@@ -87,7 +90,13 @@ const ReportCard1 = () => {
         ((!user.isResult3Available && !user.isResult2Available && !user.mainSubjects) || 
         (user.isResult3Available || user.isResult2Available)) && 
         ((simulationStepGlobal === SIMULATION_ENGINE_STEPS.REPORT_CARD1) || 
-        (progressBarStep === PROGRESS_BAR_STEPS.BULLETIN_N_2))
+        (progressBarStep === PROGRESS_BAR_STEPS.BULLETIN_N_2)) &&
+        ![SIMULATION_ENGINE_STEPS.PROGRAM_DOMAIN, 
+          SIMULATION_ENGINE_STEPS.PROGRAM_DOMAIN_BAC_N_1, 
+          SIMULATION_ENGINE_STEPS.PROGRAM_DOMAIN_BAC_N_2,
+          SIMULATION_ENGINE_STEPS.MAIN_SUBJECTS_BAC_N_1,
+          SIMULATION_ENGINE_STEPS.MAIN_SUBJECTS_BAC_N_2,
+          SIMULATION_ENGINE_STEPS.MAIN_SUBJECTS].includes(simulationStepGlobal)
     );
 
     const handleContinue = () => {
@@ -103,7 +112,7 @@ const ReportCard1 = () => {
             let nextStep = SIMULATION_ENGINE_STEPS.HAS_WON_AWARD;
             let nextProgressBarStep = PROGRESS_BAR_STEPS.PARCOURS_ACADEMIQUE_ET_PROFESSIONNEL;
 
-            if (!user?.isResult2Available && !user?.isResult1Available) {
+            if (!user?.isResult3Available && !user?.isResult2Available) {
                 setMainSubjects(null);
                 const isApplyingForMaster = helper.isApplyingForMaster(user, subjectLists, 2);
                 setApplyingForMaster(isApplyingForMaster);
@@ -115,6 +124,7 @@ const ReportCard1 = () => {
                 window.location.hash = "";
                 window.location.hash = "form/PARCOURS_ACADEMIQUE_ET_PROFESSIONNEL";
             }
+            //console.log('NNNNN ', !user?.isResult2Available, !user?.isResult3Available, nextStep, nextProgressBarStep)
             updateWendogouser(nextStep, subjectLists, nextProgressBarStep);
         } else {
             setShowError(true);
@@ -138,12 +148,12 @@ const ReportCard1 = () => {
     };
 
     useEffect(() => {
-        if (continueButtonClicked || isReadModes.some(mode => !mode) || isCancelModes.some(mode => mode)) {
+        if (continueButtonClicked || isReadModes.some(mode => !mode) || isCancelModes.some(mode => mode) || subjectLists.length > 0 ) {
             updateWendogouser(SIMULATION_ENGINE_STEPS.REPORT_CARD1, subjectLists);
             setIsCancelModes(Array(periodNumber).fill(false));
             setShowError(false);
         }
-    }, [subjectLists, isReadModes]);
+    }, [subjectLists, isReadModes.some(mode => !mode), isCancelModes.some(mode => mode)]);
 
     if (isInitializing) {
         return (
@@ -157,7 +167,7 @@ const ReportCard1 = () => {
         subjectLists.map((list, index) => (
             isReadModes[index] && (
                 <SEReportCard
-                    key={'report1'+index}
+                    key={'report1'+index} 
                     period={1}
                     disPlayBacTitle={index === (subjectLists.length-1) && isBaccalaureatMarkMandatory}
                     header={index < (subjectLists.length-1) ?
@@ -211,7 +221,8 @@ const ReportCard1 = () => {
         subjectLists.map((_, index) => (
             !isReadModes[index] && (
                 <SEMarkInput
-                    key={`SEMarkInput${index}`}
+                    key={`SEMarkInput${index}`} 
+                    svgConstantName="YEAR_N_2"
                     id={`SEMarkInput${index}`}
                     isBacReportCard={index === (subjectLists.length-1) && isBaccalaureatMarkMandatory}
                     title={`${titleMarkInput}pour ${
@@ -267,7 +278,7 @@ const ReportCard1 = () => {
                 <div className="FieldWrapper">
                     <div className="FieldView field-valid">
                         <div className="FieldView-flex-container">
-                            <label className="Label">{`Veuillez renseigner toutes les matières par ${user?.academicYearHeadDetails1.academicYearOrganization?.name?.toLowerCase()} pour l'année ${user?.selectedSchoolYear1.name}.`}</label>
+                            <label className="Label">{SvgConstant.getSvg('YEAR_N_2')} {` Veuillez renseigner toutes les matières par ${user?.academicYearHeadDetails1.academicYearOrganization?.name?.toLowerCase()} pour l'année ${user?.selectedSchoolYear1.name}.`}</label>
                         </div>
                         <div className="Tip" style={{marginBottom:'-5px'}}>
                             <span>Gagnez du temps : dupliquez                                 <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink"  viewBox="0 0 90.7659 97.9493" version="1.1" className='Navbarstyles__MenuItemArrow'>

@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useRef, useEffect } from 'react';
 import helper from '../../utils/Helper';
 import ButtonLarge from "../ButtonLarge";
@@ -10,6 +12,8 @@ import { createTheme, ThemeProvider, useTheme } from '@mui/material/styles';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import _ from 'lodash';
+import SvgConstant from "../../utils/SvgConstant";
+
 
 const MARK_SYSTEM = {
   SUR_6: 'Sur 6',
@@ -151,7 +155,7 @@ const customTheme = (outerTheme) =>
 const SEMarkInput = (props) => {
 
   const { title, urlFragment, tip, subject, setSubject, setIsReadMode, setReferenceInc, referenceInc, setSubjectList, 
-          subjectList, subjectWeightSystem, markSystem, id, isBacReportCard} = props;
+          subjectList, subjectWeightSystem, markSystem, id, isBacReportCard, svgConstantName} = props;
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
   const [stopSearch, setStopSearch] = useState(true)
@@ -188,42 +192,63 @@ const SEMarkInput = (props) => {
   }
   const markSystemIsNumeric = effectiveMarkSystem !== MARK_SYSTEM.LETTRE;
   
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      console.log('newRef.current:', newRef.current, 'event.target:', event.target);
+
+      if (
+        newRef.current &&
+        !newRef.current.contains(event.target) && // Check if the click is outside `newRef`
+        !event.target.closest('.AutoSuggest-inputWrapper') // Check if the click is outside the input wrapper
+      ) {
+        console.log('Outside click detected');
+        setBusy(false);
+        reinitializeInput(false);
+        setFocused(false);
+        setSuggestions([]); // Clear suggestions
+      }
+    };
+  
+    // Attach the event listener
+    document.addEventListener('mousedown', handleClickOutside);
+  
+    // Cleanup the event listener
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [suggestions, setBusy, setFocused]);
   
 
-  const handleOutsideClick = (e) => { 
-    if (newRef.current && !newRef.current.contains(e.target) && suggestions?.length > 0 && !helper.isTargetContainsIgnoreClass(e.target)) {
-        //console.log('Outside click SEMarkInput')
-        setBusy(false);
-        reinitializeInput(false)
-        setFocused(false); 
-    }
-  };
-
-  const { bindInput, bindOptions, bindOption, isBusy, suggestions, setSuggestions, setBusy, setTextValue } = useAutoComplete({ 
+  // const handleOutsideClick = (e) => { 
+  //   console.log('Outside click SEMarkInput' , newRef)
+  //   if (newRef.current && !newRef.current.contains(e.target) && suggestions?.length > 0 && !helper.isTargetContainsIgnoreClass(e.target)) {
+  //       console.log('Outside click SEMarkInput OOO' )
+  //       setBusy(false);
+  //       reinitializeInput(false)
+  //       setFocused(false); 
+  //   }
+  // }; 
+  
+  const { bindInput, bindOptions, bindOption, isBusy, suggestions, setSuggestions, setBusy, setTextValue} = useAutoComplete({
     source: async (search) => {
         try {
-            setFocused(true);
             const res = await fetch(`${REST_API_PARAMS.baseUrl}${urlFragment}${search}`, {
-                mode: 'cors', // or 'no-cors' if the server doesn't support CORS and you need a workaround
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                mode: 'cors',
+                headers: { 'Content-Type': 'application/json' },
             });
-
-            if (!res.ok) {
-                console.error('Error:', res.statusText);
-                return [];
-            }
-
-            const data = await res.json(); 
-            setSubject({ ...subject, label: { ...subject.label, validated: true, value:  _.capitalize(search) }});
+            if (!res.ok) throw new Error(res.statusText);
+            const data = await res.json();
             return data.map(d => ({ id: d.id, name: d.name }));
-        } catch (e) {
-            console.error('Fetch error:', e);
+        } catch (error) {
+            console.error('Autocomplete error:', error);
             return [];
         }
-    }
-  });
+    },
+    initialValue: subject.label.value, // Initialize with subject.label.value
+    onChange: (selectedOption) => {
+        setSubject({ ...subject, label: { value: selectedOption.label, validated: true } });
+    },
+});
 
   const [isFirstRender, setIsFirstRender] = useState(true);
   const [isInitialized, setIsInitialized] = useState(false);
@@ -268,7 +293,8 @@ const SEMarkInput = (props) => {
       setTextValue(subject.label.value);
       setIsFirstRender(false);
     }
-    helper.addOutsideClick(handleOutsideClick)
+    console.log('🦉', isFirstRender, subject?.label?.value)
+    //helper.addOutsideClick(handleOutsideClick)
 
     const handleResize = () => setWindowWidth(window.innerWidth);
     window.addEventListener('resize', handleResize);
@@ -298,8 +324,13 @@ const SEMarkInput = (props) => {
   
   const putStringTagOnOptionFromSearchInput = (index, searchInput) => {
     // Convert option to Sentence Case
-    const sentenceCaseOption = toSentenceCase(suggestions[index].name);
-  
+    console.log('IIII searchInput',searchInput, index, suggestions)
+    if (!suggestions[index]?.name || !searchInput?.value) {
+        return <span>{suggestions[index]?.name || ''}</span>;
+    }
+
+    const sentenceCaseOption = suggestions[index].name.charAt(0).toUpperCase() + suggestions[index].name.slice(1).toLowerCase();
+    console.log('IIII sentenceCaseOption',searchInput, index, sentenceCaseOption)
     // Highlight the search input
     const regex = new RegExp(searchInput.value, 'gi');
     const highlightedOption = sentenceCaseOption.replace(regex, (match) => `<strong>${match}</strong>`);
@@ -355,116 +386,140 @@ const SEMarkInput = (props) => {
   };
 
   const validateInput = () => {
-    if(subject.label.value === ''){
-      console.log('aaa hola' )
-      //setSubject({...subject, label: {validated : true, value: bindInput.value}})   
-      setSubject({
-        ...subject, 
-        label: {
-          ...subject.label, 
-          validated: true, 
-          value: bindInput.value
-        }
-      });
-      
+    if(subject.label.value === '') {
+        setSubject({
+            ...subject,
+            label: {
+                ...subject.label,
+                validated: true,
+                value: bindInput.value
+            }
+        });
     }
-    console.log('aaa subject', subject)
-    const updatedSubject = { ...subject };
-    console.log('aaa updatedSubject', updatedSubject.label.value, ' ooo ', bindInput.value)
-    if (!updatedSubject.label.value && bindInput.value) {
-      updatedSubject.label.value = bindInput.value;
-    }
-    // Validate label (no weird characters, length > 3 and length < 1024)
-    const labelIsValid =  /^[a-zA-ZÀ-ÿ0-9\s',;’'‛:-]+$/.test(updatedSubject.label.value) && updatedSubject.label?.value?.length > 3 && updatedSubject.label.value.length < 1024;
-    console.log('aaa labelIsValid', labelIsValid)
-    updatedSubject.label.validated = labelIsValid;
 
-    // Convert mark to decimal and validate (mark <= 20 and mark > 0)
-    //console.log('updatedSubject.mark.value', updatedSubject  )
-    updatedSubject.mark.value = markSystemIsNumeric ? 
-        localMark.replace(',', '.').replace(/^0+/, '') : 
-        localMark.trim().toUpperCase();
-    
+    // Create a new object instead of modifying the existing one
+    const updatedSubject = {
+        ...subject,
+        label: { ...subject.label },
+        mark: { ...subject.mark },
+        rank: { ...subject.rank },
+        weight: { ...subject.weight }
+    };
+
+    if (!updatedSubject.label.value && bindInput.value) {
+        updatedSubject.label = {
+            ...updatedSubject.label,
+            value: bindInput.value
+        };
+    }
+
+    // Validate label
+    const labelIsValid = /^[a-zA-ZÀ-ÿ0-9\s',;''‛:-]+$/.test(updatedSubject.label.value) 
+        && updatedSubject.label?.value?.length > 3 
+        && updatedSubject.label.value.length < 1024;
+
+    updatedSubject.label = {
+        ...updatedSubject.label,
+        validated: labelIsValid
+    };
+
+    // Handle mark validation
+    updatedSubject.mark = {
+        ...updatedSubject.mark,
+        value: markSystemIsNumeric ? 
+            localMark.replace(',', '.').replace(/^0+/, '') : 
+            localMark.trim().toUpperCase()
+    };
+
     let mark = updatedSubject.mark.value;
     let isValidMark = false;
-    //const gradingSystem = '20'
 
     // Validation logic based on grading system
     switch(effectiveMarkSystem) {
-      case MARK_SYSTEM.SUR_6:
-          isValidMark = validateNumericGrade(mark, 6);
-          break;
-      case MARK_SYSTEM.SUR_10:
-          isValidMark = validateNumericGrade(mark, 10);
-          break;
-      case MARK_SYSTEM.SUR_20:
-          isValidMark = validateNumericGrade(mark, 20);
-          break;
-      case MARK_SYSTEM.SUR_100:
-          isValidMark = validateNumericGrade(mark, 100);
-          break;
-      case MARK_SYSTEM.LETTRE:
-          isValidMark = validateLetterGrade(mark);
-          break;
-      default:
-          console.error('Unsupported grading system');
-          break;
+        case MARK_SYSTEM.SUR_6:
+            isValidMark = validateNumericGrade(mark, 6);
+            break;
+        case MARK_SYSTEM.SUR_10:
+            isValidMark = validateNumericGrade(mark, 10);
+            break;
+        case MARK_SYSTEM.SUR_20:
+            isValidMark = validateNumericGrade(mark, 20);
+            break;
+        case MARK_SYSTEM.SUR_100:
+            isValidMark = validateNumericGrade(mark, 100);
+            break;
+        case MARK_SYSTEM.LETTRE:
+            isValidMark = validateLetterGrade(mark);
+            break;
+        default:
+            console.error('Unsupported grading system');
+            break;
     }
-    console.log('isValidMark', isValidMark)
-    updatedSubject.mark.validated = isValidMark;
 
-    // If validated, update the value (only for numeric systems)
-    if (updatedSubject.mark.validated && markSystemIsNumeric) {
-      updatedSubject.mark.value = parseFloat(mark).toString();
-    }
-    // Convert rank to number and validate (rank <= 1000 and rank >= 0, must be an integer), or allow empty rank
-    if (!updatedSubject.rank.value || updatedSubject.rank.value.trim() === '') {
-        updatedSubject.rank.validated = true;
+    updatedSubject.mark = {
+        ...updatedSubject.mark,
+        validated: isValidMark
+    };
+
+    // Handle rank validation
+    if (!localRank || localRank.trim() === '') {
+        updatedSubject.rank = {
+            ...updatedSubject.rank,
+            validated: true,
+            value: ''
+        };
     } else {
-        const rank = parseInt(updatedSubject.rank.value, 10);
-        updatedSubject.rank.validated = Number.isInteger(rank) && rank <= 1000 && rank >= 0;
-        if(updatedSubject.rank.validated){
-            updatedSubject.rank.value = rank.toString()
-        }
+        const rank = parseInt(localRank, 10);
+        updatedSubject.rank = {
+            ...updatedSubject.rank,
+            validated: Number.isInteger(rank) && rank <= 1000 && rank >= 0,
+            value: Number.isInteger(rank) ? rank.toString() : localRank
+        };
     }
 
-    // Convert weight to number and validate (weight <= 1000 and weight >= 0, must be an integer)
-    //console.log('weight before', updatedSubject , updatedSubject.mark.value)
-    const weight = parseInt(updatedSubject.weight.value, 10);
-    //console.log('weight', weight)
-    updatedSubject.weight.validated = Number.isInteger(weight) && weight <= 1000 && weight > 0;
-    if(updatedSubject.weight.validated){
-        updatedSubject.weight.value = weight.toString()
-    }
+    // Handle weight validation
+    const weight = parseInt(localWeight, 10);
+    updatedSubject.weight = {
+        ...updatedSubject.weight,
+        validated: Number.isInteger(weight) && weight <= 1000 && weight > 0,
+        value: Number.isInteger(weight) ? weight.toString() : localWeight
+    };
+
     updatedSubject.isBaccalaureat = isBacReportCard;
     updatedSubject.isPracticalWork = showTPCheckBox;
+
     // Set the validated subject state
-    console.log('$$$ updatedSubject', updatedSubject)
     setSubject(updatedSubject);
 
     // Check if all validations passed
-    const allValid = updatedSubject.label.validated && updatedSubject.mark.validated && updatedSubject.rank.validated && updatedSubject.weight.validated;
+    const allValid = updatedSubject.label.validated && 
+                    updatedSubject.mark.validated && 
+                    updatedSubject.rank.validated && 
+                    updatedSubject.weight.validated;
 
     if (allValid) {
-        if(updatedSubject.reference === 0){ // New subject
-          setReferenceInc(prevInc => prevInc + 1);
-
-          if (subjectList.length > 0) {
-            const lastSubject = subjectList[subjectList.length - 1];
-            updatedSubject.reference = lastSubject.reference + 1;
-          } else {
-            updatedSubject.reference = referenceInc + 1;
-          }  
-          setSubjectList(prevList => [...prevList, updatedSubject]);
-        }else{ // Edit subject 
-            setSubjectList(prevList => prevList.map(subject => subject.reference === updatedSubject.reference ? updatedSubject : subject));
+        if(updatedSubject.reference === 0) {
+            setReferenceInc(prevInc => prevInc + 1);
+            const newReference = subjectList.length > 0 
+                ? subjectList[subjectList.length - 1].reference + 1 
+                : referenceInc + 1;
+            
+            const finalSubject = {
+                ...updatedSubject,
+                reference: newReference
+            };
+            
+            setSubjectList(prevList => [...prevList, finalSubject]);
+        } else {
+            setSubjectList(prevList => 
+                prevList.map(subject => 
+                    subject.reference === updatedSubject.reference ? updatedSubject : subject
+                )
+            );
         }
         setIsReadMode(true);
-    } else {
-        console.log('Validation failed', updatedSubject);
-    } 
-}
-
+    }
+};
   return (
     <div className={`FieldWrapper TextField ${focused ? 'focused' : ''} fade-animation fade-slow-enter-done`} id="open-mark-input">
       <div className={`FieldView DaisyFieldView TextField COORD_PRE ${focused ? 'focused' : ''}`}>
@@ -479,7 +534,7 @@ const SEMarkInput = (props) => {
             </div>
         </div>
         <div className="FieldView-flex-container">
-          <label className="Label">{title}</label>
+          <label className="Label">{svgConstantName && SvgConstant.getSvg(svgConstantName)} {title}</label>
         </div>
         {!isBacReportCard && <div className="Tip">
           <div>{tip} </div>
@@ -497,6 +552,21 @@ const SEMarkInput = (props) => {
               {<div className='Input ' style={{height: 80, border: 'none', borderEndEndRadius : (suggestions?.length>0 || isBusy) ? 0 : 16, borderEndStartRadius: (suggestions?.length>0 || isBusy) ? 0 : 16 }}>
                   {/* {'$$  '+bindInput?.value} */}
                   <input  type="text" {...bindInput}   id={`${id}`} name="9026b80" value={bindInput.value /*|| subject.label.value*/} 
+                      onChange={(e) => {
+                        bindInput.onChange(e); // Update textValue in useAutoComplete
+                        setSubject({
+                            ...subject,
+                            label: {
+                                value: e.target.value,
+                                validated: /^[a-zA-ZÀ-ÿ0-9\s',;''‛:-]+$/.test(e.target.value),
+                            },
+                        });
+                    }}
+                    onFocus={() => {
+                        if (!bindInput.value && subject.label.value) {
+                            setTextValue(subject.label.value); // Sync autocomplete state
+                        }
+                    }}
                           tabIndex={6} maxLength={1000} autoComplete="off" 
                           style={{zIndex: 10, padding: '15px 30px'  }} 
                           onMouseDown={() => {console.log('$$$ onMouseDown',subject.label.value); setSubject({...subject, label: {validated : true, value: subject.label.value}}); setStopSearch(false); setFocused(true);}}
@@ -534,8 +604,8 @@ const SEMarkInput = (props) => {
                   <div className="ListSuggestion">
                     <div className={`AutoSuggest-element List-element icon-lesfurets icon-arrow-right after`}><i>un instant svp...</i></div></div></div></div>}
               {!stopSearch && suggestions?.length>0 && <div {...bindOptions} className="slide-animation slide-fast-enter-done">
-                <div className={`AutoSuggest-elements List-elements not-empty`}>
-                  <div className="ListSuggestion"  ref={newRef} >
+                <div className={`AutoSuggest-elements List-elements not-empty`} ref={newRef}>
+                  <div className="ListSuggestion"    >
                       {
                           suggestions.map((_, index) => (                             
                               <div className={`AutoSuggest-element List-element icon-lesfurets icon-arrow-right after ${hoveredIndex === index ? 'active ' : ''}`}
@@ -682,6 +752,11 @@ const SEMarkInput = (props) => {
                         className={windowWidth <= 764 ? 'app-col-xs-12' : ''}
                     />
                 )}
+              <FormControlLabel
+                      sx={{ margin: '0 0 10px -7px', width: '100%' }}
+                      control={<Checkbox checked={showTPCheckBox} onChange={handleChangeTPCheckbox} sx={{ color: '#acbac8', borderWidth: '1px' }} />}
+                      label="Travaux Pratiques (TP) ?"
+                  />
             </ThemeProvider>
         </Box>
         <ButtonLarge notStandard={windowWidth > 764}  name="Enregistrer les modifications" handleContinue={  validateInput } />

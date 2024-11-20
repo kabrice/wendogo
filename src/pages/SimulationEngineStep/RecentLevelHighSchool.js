@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect } from 'react';
 import { useGetDegreesQuery } from '../../store/apis/degreeApi';
 import { activateSpinner, deactivateSpinner } from '../../redux/spinnerslice'

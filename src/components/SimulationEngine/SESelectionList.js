@@ -1,3 +1,5 @@
+'use client';
+
 import ButtonLarge from "../ButtonLarge";
 
 function SESelectionList(props){

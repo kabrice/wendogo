@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect } from "react";
 import SEYesNo from "../../components/SimulationEngine/SEYesNo";
 import { useDispatch, useSelector } from 'react-redux';
@@ -65,6 +67,7 @@ const IsResult3Available = () => {
         const updatedUser = {
             ...user,
             simulationStep,
+            mainSubjects: null,
             isResult3Available,
             ...(isResult3Available 
                 ? { selectedSchoolYear2: null }
@@ -96,6 +99,7 @@ const IsResult3Available = () => {
     return (
         <SEYesNo 
             title={`Vos relevés académiques ${user.selectedSchoolYear3.name} sont-ils disponibles ?`}
+            svgConstantName="YEAR_N"
             yes={isResult3Available}
             handleYes={handleIsResult3Available}
             handleContinue={handleContinue}

@@ -1,16 +1,19 @@
-import { useState, useEffect} from 'react';
-import ScholarshipProgramFRImg from '../../assets/scholarship_program_for_france.jpeg'
-import BorisHead from '../../assets/Boris_head.jpeg'
-import QuestionsOnTopic from '../../components/QuestionsOnTopic';
+'use client';
+
+import {useState,useEffect} from 'react';
+import StudyInFranceImg from '../assets/study_in_France.jpeg'
+import EdgarHead from '../assets/edgar_head.jpeg'
+import QuestionsOnTopic from '../components/QuestionsOnTopic';
 
 import Link from 'next/link';
 
-import Footer from '../../components/Footer';
-import HeaderMenuBar from '../../components/HeaderMenuBar';
+import Footer from '../components/Footer';
+import HeaderMenuBar from '../components/HeaderMenuBar';
 import Head from 'next/head';
-import helper from '../../utils/Helper';
+import helper from '../utils/Helper';
+import Image from 'next/image';
 
-function ScholarshipProgramFR(){
+function StudyInFrance(){
     const whatsapp =  <svg className="ButtonLinkstyles__Picto-sc-1s2ygn0-1 hkJOZg" width="24px" height="24.6350302px" viewBox="0 0 24 24.6350302" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
                         <title>whatsapp</title>
                         <g id="Page-1" stroke="none" strokeWidth={1} fill="none" fillRule="evenodd">
@@ -35,7 +38,7 @@ function ScholarshipProgramFR(){
 
     async function copyTextToClipboard(linkNum) {
       try {
-        await navigator.clipboard.writeText("https://wendogo.com/scholarship-program-france")
+        await navigator.clipboard.writeText("https://wendogo.com/study-in-france")
         setIsCopied1(linkNum === 1)
         setIsCopied2(linkNum === 2)
       } catch (error) {
@@ -44,18 +47,17 @@ function ScholarshipProgramFR(){
     }  
     useEffect(() => {
       helper.loadFacebookSDK() }, [])
-    return <div  className="klmqdo">
+    return <div className="klmqdo">
             <Head>
-              <meta property="og:url"           content="https://wendogo.com/scholarship-program-france" />
+              <meta property="og:url"           content="https://wendogo.com/study-in-france" />
               <meta property="og:type"          content="article" />
-              <meta property="og:title"         content="Programmes de Bourses d'Études en France pour les Étudiants Étrangers" />
-              <meta property="og:description"   content="Comment financer ses études en France lorsqu’on envisage de suivre des cours dans une université à Paris ou Montpellier ? Découvrez les possibilités et les conditions pour décrocher une bourse, une aide financière et les bons plans quand on part étudier en France." />
-              <meta property="og:image"         content={'https://wendogo.com'+ScholarshipProgramFRImg} /> 
-              <title>Programmes de Bourses d'Études en France pour les Étudiants Étrangers</title>
-              <meta name="description"          content="Comment financer ses études en France lorsqu’on envisage de suivre des cours dans une université à Paris ou Montpellier ? Découvrez les possibilités et les conditions pour décrocher une bourse, une aide financière et les bons plans quand on part étudier en France."/>
-            </Head>          
-            <HeaderMenuBar/>
-    
+              <meta property="og:title"         content="Comment postuler pour étudier dans une université en France" />
+              <meta property="og:description"   content="Pour être admis dans une université en France, vous devez remplir plusieurs conditions. Dans cet article, nous allons voir les étapes à franchir pour être admis dans une université publique ou privée en France en tant qu’étranger en 2024." />
+              <meta property="og:image"         content={'https://wendogo.com'+StudyInFranceImg} /> 
+              <title>Comment postuler pour étudier dans une université en France</title>
+              <meta name="description"          content="Pour être admis dans une université en France, vous devez remplir plusieurs conditions. Dans cet article, nous allons voir les étapes à franchir pour être admis dans une université publique ou privée en France en tant qu’étranger en 2024."/>
+            </Head>        
+            <HeaderMenuBar/>   
             <div className='container-24' style={{maxWidth: 'inherit'}}>
               <div style={{ outline: "none" }} tabIndex={-1} id="gatsby-focus-wrapper">
                 <div>
@@ -74,7 +76,7 @@ function ScholarshipProgramFR(){
                               </svg>
                             </li>
                             <li className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__Item-sc-k0ssrw-2 iNCHhD">
-                              <div aria-current="Programme de bourses d'étude" className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__Title-sc-k0ssrw-4 gwJOSc">Programme de bourses d'étude <span>🇫🇷</span></div>
+                              <div aria-current="Programme de bourses d'étude" className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__Title-sc-k0ssrw-4 gwJOSc">Comment postuler pour étudier dans une université en France</div>
                             </li>
                           </ol>
                           <ol aria-label="none" className="styles__Breadcrumb-sc-k0ssrw-0 styles__HiddenBreadcrumb-sc-k0ssrw-1 hoUFOh jKdNmR">
@@ -87,7 +89,7 @@ function ScholarshipProgramFR(){
                               </svg>
                             </li>
                             <li className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__Item-sc-k0ssrw-2 iNCHhD">
-                              <div className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__Title-sc-k0ssrw-4 gwJOSc">Programme de bourses d'étude <span>🇫🇷</span></div>
+                              <div className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__Title-sc-k0ssrw-4 gwJOSc">Comment postuler pour étudier dans une université en France</div>
                             </li>
                           </ol>
                         </div>
@@ -100,23 +102,23 @@ function ScholarshipProgramFR(){
                         <div className="Defautstyles__Header-sc-1tnudyr-0 hAkdZW">
                           <div className="styles__Hero-sc-s3dlnp-0 gMynSv">
                             <div className="styles__Title-sc-s3dlnp-2 iUyMl">
-                              <h1 size="large" className="styles__HeadingBridge-sc-6txi54-0 hzNvHf">La France ouvre ses Portes : Les Programmes de Bourses d'Études pour les Étudiants Étrangers</h1>
+                              <h1 size="large" className="styles__HeadingBridge-sc-6txi54-0 hzNvHf"> Comment postuler pour étudier dans une université en France</h1>
                             </div>
-                            <div style={{float : 'right'}} className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh">
-                             <Link  href="/scholarship-program-canada">Cliquer ici pour la version 🇨🇦</Link>
+                            {/* <div style={{float : 'right'}} className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh kmzeo">
+                             <Link>Cliquer ici pour la version 🇫🇷</Link>
                             </div>
-                            <div style={{clear : 'both'}}></div>
+                            <div style={{clear : 'both'}}></div> */}
                             <div className="styles__Wrapper-sc-s3dlnp-3 KKpTb">
                               <div className="BlocAuthorStartstyles__BlocAuthorStart-sc-176st2l-0 oTIGB">
                                 <div className="AuthorInfosstyles__AuthorInfos-sc-1v2nwgf-0 kVLKSc">
                                   <div className="Avatarstyles__AvatarContainer-sc-168giry-2 glDTmS">
                                     <div className="Avatarstyles__Avatar-sc-168giry-0 eYtuGP AuthorInfosstyles__Avatar-sc-1v2nwgf-1 etCUXw">
-                                      <picture><img alt="avatar" height={46} loading="lazy" src={BorisHead} width={46} className="Avatarstyles__Image-sc-168giry-1 gNAMaq" />
+                                      <picture><Image alt="avatar" height={46} loading="lazy" src={EdgarHead} width={46} className="Avatarstyles__Image-sc-168giry-1 gNAMaq" />
                                       </picture>
                                     </div>
                                   </div>
                                   <div className="AuthorInfosstyles__AuthorInformation-sc-1v2nwgf-2 gPPLmh">
-                                    <div className="AuthorInfosstyles__Title-sc-1v2nwgf-3 hpWifG"> Boris Guiffot </div>
+                                    <div className="AuthorInfosstyles__Title-sc-1v2nwgf-3 hpWifG"> Edgar Kamdem </div>
                                     <div className="AuthorInfosstyles__SubTitle-sc-1v2nwgf-4 KkeWN"> Mis à jour le 15 jan. 2024 </div>
                                   </div>
                                 </div>
@@ -124,7 +126,7 @@ function ScholarshipProgramFR(){
                                   <div className="SharingLinksstyles__SharingLinksDesktop-sc-13jf7g7-2 dAIRMX">
                                     <div className="SharingLinksstyles__Title-sc-13jf7g7-3 eZpqGZ"> Partager : </div>
                                     <div className="Tooltipstyles__TooltipContainer-sc-ynyslw-0 iMhBNO SharingLinksstyles__Tooltip-sc-13jf7g7-4 eUmNLd">
-                                    <Link target="_blank" href="https://api.whatsapp.com/send/?text=https://wendogo.com/scholarship-program-france" >
+                                    <Link target="_blank" href="https://api.whatsapp.com/send/?text=https://wendogo.com/study-in-france" >
                                       <button className="ButtonLinkstyles__ButtonLink-sc-1s2ygn0-0 iPwlpd">
                                         {whatsapp}
                                         <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh kmzeo"> 
@@ -135,7 +137,7 @@ function ScholarshipProgramFR(){
                                       <div role="tooltip" className="Tooltipstyles__Tooltip-sc-ynyslw-1 hrixxN"> Partager sur WhatsApp </div>
                                     </div>
                                     <div className="Tooltipstyles__TooltipContainer-sc-ynyslw-0 iMhBNO SharingLinksstyles__Tooltip-sc-13jf7g7-4 eUmNLd">
-                                    <div onClick={() => helper.openFacebookOnPopup('scholarship-program-france')}  className="fb-xfbml-parse-ignore" rel="noreferrer">
+                                    <div onClick={() => helper.openFacebookOnPopup('study-in-france')} className="fb-xfbml-parse-ignore" rel="noreferrer">
                                       <button className="ButtonLinkstyles__ButtonLink-sc-1s2ygn0-0 iPwlpd">
                                         {facebook}
                                         <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh kmzeo"> 
@@ -161,7 +163,7 @@ function ScholarshipProgramFR(){
                               </div>
                             </div>
                             <picture>
-                              <img alt="Programme de bourses d'étude : comment déterminer votre projet ?" loading="lazy" src={ScholarshipProgramFRImg} className="styles__Image-sc-s3dlnp-1 oBito" />
+                              <Image alt="Programme de bourses d'étude : comment déterminer votre projet ?" loading="lazy" src={StudyInFranceImg} className="styles__Image-sc-s3dlnp-1 oBito" />
                             </picture>
                           </div>
                         </div>
@@ -169,138 +171,88 @@ function ScholarshipProgramFR(){
                           <div className="styles__Content-sc-1b5sr4l-4 euNroP">
                             <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
                               <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> 
-                              La France, réputée pour son patrimoine culturel, son enseignement supérieur de qualité, et ses institutions académiques renommées, accueille chaque année des milliers d'étudiants étrangers. Pour faciliter l'accès à cette expérience éducative riche, la France propose divers programmes de bourses d'études destinés spécifiquement aux étudiants internationaux. Voici un aperçu de quelques-uns de ces programmes offrant des opportunités exceptionnelles aux étudiants venant du monde entier.
+                              Êtes-vous enthousiaste et prêt à postuler pour votre nouveau parcours académique en France ? Nous espérons que vous l’êtes ! Le processus de candidature aux universités françaises 
+                              n’est pas exigeant du tout puisque nous avons rassemblé toutes les étapes importantes à suivre pour être admis dans l’université française de votre choix.
                               </p>
                             </div>
                             <div className="styles__Block-sc-1b5sr4l-5 styles__BlockHeading-sc-1b5sr4l-8 lhYawK lngqIb">
-                              <h2 id="quel-type-de-logement-acheter-maison-ou-appartementnbsp" size="large" format="default" className="styles__SubHeading-sc-xwwv8k-0 PVMuW">Programme Eiffel</h2>
+                              <h2 id="quel-type-de-logement-acheter-maison-ou-appartementnbsp" size="large" format="default" className="styles__SubHeading-sc-xwwv8k-0 PVMuW">1 - Choisissez votre spécialisation</h2>
                             </div>
                             <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
-                              <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv">
-                              Le Programme Eiffel, financé par le ministère des Affaires étrangères français, offre des bourses d'études aux étudiants internationaux de haut niveau qui souhaitent poursuivre des études de master ou de doctorat en France.
-                               Ce programme prend en charge les frais de scolarité, les billets d'avion, et fournit une allocation mensuelle.</p>
-                            </div>                       
-                            <div className="styles__Block-sc-1b5sr4l-5 styles__BlockHeading-sc-1b5sr4l-8 lhYawK lngqIb">
-                              <h2 id="quel-type-de-logement-acheter-maison-ou-appartementnbsp" size="large" format="default" className="styles__SubHeading-sc-xwwv8k-0 PVMuW"> 
-                              Bourses du Gouvernement Français (EGIDE)</h2>
-                            </div>
-                            <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
-                              <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> 
-                              L'Agence EGIDE propose plusieurs programmes de bourses pour les étudiants étrangers. Ces bourses couvrent différents niveaux d'études, 
-                              des cours de français aux études doctorales, dans divers domaines académiques.                          
-                                                           </p>
-                            </div>
-                            <div className="styles__Block-sc-1b5sr4l-5 styles__BlockHeading-sc-1b5sr4l-8 lhYawK lngqIb">
-                              <h2 id="quel-type-de-logement-acheter-maison-ou-appartementnbsp" size="large" format="default" className="styles__SubHeading-sc-xwwv8k-0 PVMuW"> 
-                              Bourses des Universités Françaises</h2>
-                            </div>
-                            <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
-                              <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> 
-                              De nombreuses universités françaises offrent des bourses spécifiques aux étudiants étrangers. Ces bourses peuvent être basées sur le mérite académique, 
-                              les compétences linguistiques, ou d'autres critères définis par chaque institution.                             
+                              <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv">  
+                              C’est probablement l’étape la plus importante et peut-être la plus difficile. Le choix de votre spécialisation définira votre vie et votre carrière. 
+                              Imaginez-vous dans le futur et prenez en considération les nombreux diplômes que la France a à vous proposer dans des disciplines variées. 
+                              Vous souhaitez étudier l'informatique dans l'un des pays les plus dynamiques dans le domaine ou obtenir un diplôme de commerce d'une Grande école ? Le choix vous appartient!
                               </p>
-                            </div>
-                    
+                            </div> 
                             <div className="styles__Block-sc-1b5sr4l-5 styles__BlockHeading-sc-1b5sr4l-8 lhYawK lngqIb">
-                              <h2 id="quel-type-de-logement-acheter-maison-ou-appartementnbsp" size="large" format="default" className="styles__SubHeading-sc-xwwv8k-0 PVMuW"> 
-                              Bourses du Programme Hubert Curien (PHC)
-                                </h2>
+                              <h2 id="quel-type-de-logement-acheter-maison-ou-appartementnbsp" size="large" format="default" className="styles__SubHeading-sc-xwwv8k-0 PVMuW">2 - Vérifiez les conditions d'admission </h2>
                             </div>
                             <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
-                              <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> 
-                              Le Programme Hubert Curien, également connu sous le nom de Programme Tournesol, encourage la collaboration scientifique entre la France et d'autres pays. Il propose des bourses de recherche pour les étudiants internationaux.</p>
-                            </div>
+                              <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv">  
+                              Selon votre objectif, votre nationalité et le niveau académique de vos études, il existe des conditions d'admission particulières auxquelles vous devez prêter une attention particulière lors 
+                              de la préparation de votre candidature dans les universités françaises. Faites un plan, sélectionnez les universités et les spécialisations de votre choix. Contactez l'ambassade de France de votre 
+                              pays d'origine ou contactez les universités auxquelles vous souhaitez postuler ainsi que les services d'accompagnement existants comme Campus France afin de trouver les réponses à vos éventuelles questions.                                    
+                              </p>
+                            </div> 
                             <div className="styles__Block-sc-1b5sr4l-5 styles__BlockHeading-sc-1b5sr4l-8 lhYawK lngqIb">
-                              <h2 id="quel-type-de-logement-acheter-maison-ou-appartementnbsp" size="large" format="default" className="styles__SubHeading-sc-xwwv8k-0 PVMuW"> 
-                              Bourses d'Excellence Major  
-                                </h2>
+                              <h2 id="quel-type-de-logement-acheter-maison-ou-appartementnbsp" size="large" format="default" className="styles__SubHeading-sc-xwwv8k-0 PVMuW">3 - Préparez les documents nécessaires</h2>
                             </div>
                             <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
-                              <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> 
-                              Le programme d'Excellence Major vise à attirer les étudiants étrangers talentueux en master et en doctorat. Ces bourses couvrent les frais de scolarité et offrent un soutien financier mensuel.
-                                                </p>
-                            </div>
-                            <div className="styles__Block-sc-1b5sr4l-5 styles__BlockHeading-sc-1b5sr4l-8 lhYawK lngqIb">
-                              <h2 id="quel-type-de-logement-acheter-maison-ou-appartementnbsp" size="large" format="default" className="styles__SubHeading-sc-xwwv8k-0 PVMuW"> 
-                              Bourses Erasmus+
-                                </h2>
-                            </div>
-                            <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
-                              <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> 
-                              Le programme Erasmus+ offre des opportunités de mobilité internationale, permettant aux étudiants étrangers de participer à des échanges académiques 
-                              et de bénéficier de bourses pour couvrir une partie de leurs frais.
+                              <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv">  
+                              Commencez à rassembler les documents nécessaires dès que possible. C'est une étape qui prend du temps. Tenez compte des exigences particulières en matière de documentation concernant 
+                              votre nationalité, votre niveau d'études et l'université de votre choix. N'oubliez pas que vous pourriez avoir besoin de traductions en français de vos documents originaux. L'ambassade
+                               de France de votre pays d'origine peut fournir ces services. La plupart des candidatures aux universités françaises comprennent : 
                                                                   </p>
-                            </div>
-                            <div className="styles__Block-sc-1b5sr4l-5 styles__BlockHeading-sc-1b5sr4l-8 lhYawK lngqIb">
-                              <h2 id="quel-type-de-logement-acheter-maison-ou-appartementnbsp" size="large" format="default" className="styles__SubHeading-sc-xwwv8k-0 PVMuW"> 
-                              Bourses du CROUS
-                                </h2>
+                            </div> 
+                            <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
+                              <ul className="TextList-sc-100qkuv-0 enKgYQ">
+                                <li>Un formulaire de candidature complété et signé par les autorités officielles</li>
+                                <li>Autorisation Campus France</li>
+                                <li>Une attestation de responsabilité civile</li>
+                                <li>Photos d'identité</li>
+                                <li>Passeport</li>
+                                <li>Relevés de notes du secondaire</li>
+                                <li>Un CV (si demandé par l'université)</li>
+                                <li>Preuve de compétence linguistique en anglais ou en français selon le programme</li>
+                                <li>Preuve de paiement des frais de dossier (AVI)</li>
+                              </ul>
                             </div>
                             <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
-                              <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> 
-                              Les Centres Régionaux des Œuvres Universitaires et Scolaires (CROUS) proposent des bourses sur critères sociaux aux étudiants étrangers en fonction de leur situation financière.                                                                                   
-                               </p>
+                            <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> 
+                            il pourra aussi vous être demandé de fournir des documents supplémentaires tels que votre acte de naissance, un justificatif de soutien financier pour vos études et,
+                             après admission, votre visa étudiant français. Veuillez noter que chaque programme peut demander des documents supplémentaires, alors assurez-vous d'avoir le temps 
+                             d'évaluer ce qui est nécessaire de votre côté.                                       </p>
                             </div>
                             <div className="styles__Block-sc-1b5sr4l-5 styles__BlockHeading-sc-1b5sr4l-8 lhYawK lngqIb">
-                              <h2 id="quel-type-de-logement-acheter-maison-ou-appartementnbsp" size="large" format="default" className="styles__SubHeading-sc-xwwv8k-0 PVMuW"> 
-                              Bourses de Fondations et d'Organisations Privées 
-                                </h2>
+                              <h2 id="quel-type-de-logement-acheter-maison-ou-appartementnbsp" size="large" format="default" className="styles__SubHeading-sc-xwwv8k-0 PVMuW">4 - Soumettez votre candidature </h2>
                             </div>
                             <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
-                              <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> 
-                              Certaines fondations et organisations privées en France offrent des bourses d'études pour soutenir financièrement les étudiants étrangers dans la poursuite de leurs études.                                                                                  
-                               </p>
-                            </div>
+                              <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv">  
+                               Vous devez ici réussir l'admission préliminaire ou "Demande d'Admission Préalable - DAP" pour postuler dans les établissements français et
+                               par la suite postuler en ligne via Campus France .
+                                                                                                </p>
+                            </div> 
                             <div className="styles__Block-sc-1b5sr4l-5 styles__BlockHeading-sc-1b5sr4l-8 lhYawK lngqIb">
-                              <h2 id="quel-type-de-logement-acheter-maison-ou-appartementnbsp" size="large" format="default" className="styles__SubHeading-sc-xwwv8k-0 PVMuW"> 
-                              Bourses du Gouvernement Régional
-                                </h2>
+                              <h2 id="quel-type-de-logement-acheter-maison-ou-appartementnbsp" size="large" format="default" className="styles__SubHeading-sc-xwwv8k-0 PVMuW">5 - Demander un visa étudiant français</h2>
                             </div>
                             <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
-                              <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> 
-                              Certaines régions françaises proposent des programmes de bourses destinés à attirer des étudiants étrangers dans leurs universités.
-                               Ces bourses peuvent couvrir les frais de scolarité ou offrir un soutien financier.                                                                                   
-                               </p>
-                            </div>
+                              <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv">  
+                              Félicitations ! Vous êtes officiellement étudiant en France ! Lorsque vous recevez votre lettre d'acceptation, contactez votre université afin de payer le premier versement 
+                              de vos frais de scolarité le cas échéant. Ensuite, vous devez demander un visa étudiant français dès que possible. Décidez du type de visa dont vous avez besoin, de courte ou 
+                              de longue durée, et lisez attentivement les règles qui s'appliquent à votre situation. Contactez l'ambassade de France de votre pays d'origine si vous avez besoin d'aide pour la procédure de visa.                              
+                              </p>
+                            </div> 
                             <div className="styles__Block-sc-1b5sr4l-5 styles__BlockHeading-sc-1b5sr4l-8 lhYawK lngqIb">
-                              <h2 id="quel-type-de-logement-acheter-maison-ou-appartementnbsp" size="large" format="default" className="styles__SubHeading-sc-xwwv8k-0 PVMuW"> 
-                              Bourses de Recherche 
-                                </h2>
+                              <h2 id="quel-type-de-logement-acheter-maison-ou-appartementnbsp" size="large" format="default" className="styles__SubHeading-sc-xwwv8k-0 PVMuW">6 - Arriver en France </h2>
                             </div>
                             <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
-                              <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> 
-                              Pour les étudiants en recherche, divers organismes de recherche en France proposent des bourses pour encourager l'excellence dans la recherche scientifique.                                                                                   
-                               </p>
-                            </div>
-                            <div className="styles__Block-sc-1b5sr4l-5 styles__BlockHeading-sc-1b5sr4l-8 lhYawK lngqIb">
-                              <h2 id="quel-type-de-logement-acheter-maison-ou-appartementnbsp" size="large" format="default" className="styles__SubHeading-sc-xwwv8k-0 PVMuW"> 
-                              Comment trouver des bourses 
-                                </h2>
-                            </div>
-                            <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
-                              <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> 
-                              Il existe de nombreuses ressources disponibles pour aider les étudiants étrangers à trouver des bourses au Canada. Les étudiants peuvent commencer par visiter les sites Web des établissements d'enseignement, des organismes gouvernementaux et des organismes privés. Ils peuvent également consulter les bases de données de bourses en ligne.
-                                                </p>
-                            </div>
-                            <div className="styles__Block-sc-1b5sr4l-5 styles__BlockHeading-sc-1b5sr4l-8 lhYawK lngqIb">
-                              <h2 id="quel-type-de-logement-acheter-maison-ou-appartementnbsp" size="large" format="default" className="styles__SubHeading-sc-xwwv8k-0 PVMuW"> 
-                              Conseils pour postuler à des bourses
-                                </h2>
-                            </div>
-                            <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
-                              <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> 
-                              Lorsque vous postulez à une bourse, il est important de bien préparer votre dossier. Cela inclut de fournir des documents d'appui pertinents, tels que des relevés de notes, des lettres de recommandation et un curriculum vitae. Il est également important de rédiger une lettre de motivation convaincante qui explique pourquoi vous êtes admissible à la bourse et pourquoi vous êtes intéressé par les études au Canada.
-                                                                  </p>
-                            </div>
-                            <div className="styles__Block-sc-1b5sr4l-5 styles__BlockHeading-sc-1b5sr4l-8 lhYawK lngqIb">
-                              <h2 id="quel-type-de-logement-acheter-maison-ou-appartementnbsp" size="large" format="default" className="styles__SubHeading-sc-xwwv8k-0 PVMuW"> 
-                              Les avantages des bourses
-                                </h2>
-                            </div>
-                            <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
-                              <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> 
-                              Les bourses peuvent offrir de nombreux avantages aux étudiants étrangers. Elles peuvent aider à couvrir les frais de scolarité, les frais de subsistance et les autres frais liés aux études. Les bourses peuvent également contribuer à améliorer le CV des étudiants et à augmenter leurs chances d'obtenir un emploi après l'obtention de leur diplôme.                                                                                    </p>
-                            </div>
+                              <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv">  
+                              Après avoir obtenu votre visa étudiant français et préparé tous les documents nécessaires, préparez vos bagages et montez dans l'avion pour la France. Ce n'est que le début.
+                               Vous êtes sur le point de vivre et d’étudier dans les pays les plus sophistiqués, modernes et romantiques du monde !                             
+                              </p>
+                            </div> 
+                            
                           </div>
                           <div className="styles__Footer-sc-ifmuzk-5 bBEUGj">
                             <div className="styles__FooterComponent-sc-ifmuzk-6 cbSMYG">
@@ -314,20 +266,20 @@ function ScholarshipProgramFR(){
                                     <div className="AuthorInfosstyles__AuthorInfos-sc-1v2nwgf-0 kVLKSc">
                                       <div className="Avatarstyles__AvatarContainer-sc-168giry-2 glDTmS">
                                         <div className="Avatarstyles__Avatar-sc-168giry-0 eYtuGP AuthorInfosstyles__Avatar-sc-1v2nwgf-1 etCUXw">
-                                          <picture> <img alt="avatar" height={46} loading="lazy" src={BorisHead} width={46} className="Avatarstyles__Image-sc-168giry-1 gNAMaq" />
+                                          <picture> <Image alt="avatar" height={46} loading="lazy" src={EdgarHead} width={46} className="Avatarstyles__Image-sc-168giry-1 gNAMaq" />
                                           </picture>
                                         </div>
                                       </div>
                                       <div className="AuthorInfosstyles__AuthorInformation-sc-1v2nwgf-2 gPPLmh">
-                                        <div className="AuthorInfosstyles__Title-sc-1v2nwgf-3 hpWifG"> Boris Guiffot </div>
-                                        <div className="AuthorInfosstyles__SubTitle-sc-1v2nwgf-4 gdZZXb"> Expert en immigration </div>
+                                        <div className="AuthorInfosstyles__Title-sc-1v2nwgf-3 hpWifG"> Edgar Kamdem </div>
+                                        <div className="AuthorInfosstyles__SubTitle-sc-1v2nwgf-4 gdZZXb"> Co-fondateur & CEO </div>
                                       </div>
                                     </div>
                                     <div className="SharingLinksstyles__SharingLinks-sc-13jf7g7-0 cuaEfY">
                                       <div className="SharingLinksstyles__SharingLinksDesktop-sc-13jf7g7-2 dAIRMX">
                                         <div className="SharingLinksstyles__Title-sc-13jf7g7-3 eZpqGZ"> Partager : </div>
                                         <div className="Tooltipstyles__TooltipContainer-sc-ynyslw-0 iMhBNO SharingLinksstyles__Tooltip-sc-13jf7g7-4 eUmNLd">
-                                        <Link target="_blank" href="https://api.whatsapp.com/send/?text=https://wendogo.com/scholarship-program-france" >
+                                        <Link target="_blank" href="https://api.whatsapp.com/send/?text=https://wendogo.com/study-in-france" >
                                           <button className="ButtonLinkstyles__ButtonLink-sc-1s2ygn0-0 iPwlpd">
                                           {whatsapp}
                                           <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh kmzeo"> 
@@ -338,7 +290,7 @@ function ScholarshipProgramFR(){
                                           <div role="tooltip" className="Tooltipstyles__Tooltip-sc-ynyslw-1 hrixxN"> Partager par WhatsApp </div>
                                         </div>
                                         <div className="Tooltipstyles__TooltipContainer-sc-ynyslw-0 iMhBNO SharingLinksstyles__Tooltip-sc-13jf7g7-4 eUmNLd">
-                                        <div onClick={() => helper.openFacebookOnPopup('scholarship-program-france')} className="fb-xfbml-parse-ignore" rel="noreferrer">
+                                        <div onClick={() => helper.openFacebookOnPopup('study-in-france')} className="fb-xfbml-parse-ignore" rel="noreferrer">
                                           <button className="ButtonLinkstyles__ButtonLink-sc-1s2ygn0-0 iPwlpd">
                                             {facebook}
                                             <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh kmzeo"> 
@@ -362,7 +314,8 @@ function ScholarshipProgramFR(){
                                       </div>
                                     </div>
                                   </div>
-                                  <div className="BlocAuthorEndstyles__Text-sc-1vpghvk-3 dxlmwf"> Spécialisé dans les demandes de visa depuis quelques années, Boris Guiffot est aujourd'hui en charge d'une équipe d'experts en immigration. Il accompagne notamment les camerounais dans leur demande visa pour la France et le France. </div>
+                                  <div className="BlocAuthorEndstyles__Text-sc-1vpghvk-3 dxlmwf"> Edgar est le co-fondateur de Wendogo. Ingénieur de formation il possède une vaste expérience dans les processus applicatifs liés au web, 
+                                  il a créé Wendogo après avoir eu lui-même beaucoup de mal à faire voyager ses proches au travers de certains organismes en place. </div>
                                 </div>
                               </div>
                             </div>
@@ -381,4 +334,4 @@ function ScholarshipProgramFR(){
 
 }
 
-export default ScholarshipProgramFR
+export default StudyInFrance

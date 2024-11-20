@@ -1,9 +1,13 @@
+'use client';
+
 import React, { useState } from 'react';
 import ButtonLarge from "../ButtonLarge";
 import SESmallAlertMessage from './SESmallAlertMessage';
 import  DropDownIcon from '../../assets/dropdown_icon.svg'
 import { get, set } from 'lodash';
 import helper from '../../utils/Helper';
+import SvgConstant from "../../utils/SvgConstant";
+
 
 const SEReportCard = (props) => {
 

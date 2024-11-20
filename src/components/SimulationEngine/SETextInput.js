@@ -120,7 +120,7 @@ const SETextInput = (props) => {
             <span className="Icon error-icon icon-lesfurets icon-system-alert" /> Veuillez entrer un texte valide
           </div>
         )}
-        {showContinueBtn && <ButtonLarge name="Continuer" handleContinue={valid ? handleContinue : voidFunction} uniqueId={`${id}-continue-btn`}/>}
+        {showContinueBtn && <ButtonLarge name="Continuer" handleContinue={valid ? handleContinue : voidFunction} uniqueId={`${title}-continue-btn`}/>}
       </div>
     </div>
   );

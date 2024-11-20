@@ -1,5 +1,7 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import ButtonLarge from '../../components/ButtonLarge';
 import SESmallAlertMessage from '../../components/SimulationEngine/SESmallAlertMessage';
 import helper from '../../utils/Helper';
@@ -44,10 +46,10 @@ const Validation = () => {
                 majorDetails: null,
                 date: new Date().toISOString()
             };
-            
-            helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
+            console.log('updatedUser VVVV', updatedUser);
             dispatch(setUser(updatedUser));
-            router.push('/simulation/result#view/SCORE_DETAILLE', { replace: true });
+            helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
+            window.location.href = '/simulation/result#view/SCORE_DETAILLE';
         } else {
             setIsAlert(true);
         }
@@ -114,11 +116,11 @@ const Validation = () => {
                                                                 <div>
                                                                     <div id="cgu" className="Text">
                                                                         <div>
-                                                                            J'accepte les&nbsp;
+                                                                        En cochant cette case, j'accepte les&nbsp;
                                                                             <span className="toggle-modal" onClick={goToCGU}>
                                                                                 Conditions Générales d'Utilisation
                                                                             </span>
-                                                                            &nbsp;et d'être contacté par nos conseillers en demande de visa.
+                                                                            &nbsp;de Wendogo et je consens à être contacté(e) par les conseillers concernant mon projet d'étude en France.
                                                                         </div>
                                                                     </div>
                                                                     <div style={{ marginTop: 10 }}>
