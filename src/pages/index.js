@@ -2,7 +2,7 @@
 
 
 // Import img
-import backgroundImg3 from '../assets/optimized/générique-chateau.webp';
+import backgroundImg3 from '../assets/optimized/generique-chateau.webp';
 import backgroundImg2 from '../assets/optimized/1000_F_534931774_iiLVveToIVDuO89bZdeLs770iR7Lnm2a.webp';
 import backgroundImg1 from '../assets/flightwallpaper.webp';
 import SliderstylesImage1 from '../assets/optimized/Sliderstyles__Image1.webp'
