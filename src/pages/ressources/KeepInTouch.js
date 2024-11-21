@@ -221,26 +221,21 @@ const KeepInTouch = (props) => {
         setValidSituationDescription(validateSituationDescription());
         //console.log('useEffect KeepInTouch', situationDescription, '-', validSituationDescription);
         const handleResize = () => {
+        if (typeof window !== 'undefined') {
             const browserWidth = window.innerWidth;
-            //console.log('browserWidth', browserWidth)
-            if (browserWidth>1200) {
-                setDeviceType('lg'); 
-            }
-            if (browserWidth>991 && browserWidth <= 1200) {
-                setDeviceType('md'); 
-            } 
-            if (browserWidth>765 && browserWidth <= 990) {
-                setDeviceType('sm');
-            }  
-            if (browserWidth <= 764) {
-                setDeviceType('xs');
-            } 
+
+            if (browserWidth > 1200) setDeviceType('lg');
+            else if (browserWidth > 991) setDeviceType('md');
+            else if (browserWidth > 765) setDeviceType('sm');
+            else setDeviceType('xs');
+        }
         };
         
-        handleResize();
+        handleResize(); // Set initial device type
         window.addEventListener('resize', handleResize);
+    
         return () => {
-            window.removeEventListener('resize', handleResize);
+          window.removeEventListener('resize', handleResize);
         };
 
 
