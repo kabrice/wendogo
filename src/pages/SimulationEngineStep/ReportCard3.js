@@ -175,7 +175,8 @@ const ReportCard3 = () => {
     useEffect(() => {
         // console.log('ReportCard3 useEffect AAA ', subjectLists);
         // console.log('ReportCard3 useEffect2 AAA ', continueButtonClicked, isReadModes , isCancelModes.some(mode => mode));
-        if (continueButtonClicked || isReadModes.some(mode => !mode) || isCancelModes.some(mode => mode) || subjectLists.length > 0 ) {
+        if ((continueButtonClicked || isReadModes.some(mode => !mode) || isCancelModes.some(mode => mode) || subjectLists.length > 0)
+            && (simulationStepGlobal  <= SIMULATION_ENGINE_STEPS.REPORT_CARD3)) {
             updateWendogouser(SIMULATION_ENGINE_STEPS.REPORT_CARD3, subjectLists);
             setIsCancelModes(Array(periodNumber).fill(false));
             setShowError(false);

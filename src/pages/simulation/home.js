@@ -43,6 +43,7 @@ export async function getServerSideProps() {
 }
 
 const SimulationHome = ({ leadStatus=[], isErrorHomePage=false }) => {
+    //console.log('leadStatus:', leadStatus);
     const [isErrorPage, setIsErrorPage] = useState(isErrorHomePage);
     const [isReady, setIsReady] = useState(false);
     //et user = helper.getLocalStorageWithExpiration('wendogouser')
@@ -109,17 +110,12 @@ const SimulationHome = ({ leadStatus=[], isErrorHomePage=false }) => {
         setIsKeepInTouch(true)
         return;
       }
-
+      
       try {
         dispatch(activateSpinner())
         
-        const updatedUser = user ? {
-          ...user,
-          lead_status_id: leadstatusId,
-          subscription_step: '/simulation/country/selection',
-          simulationStep: user?.simulationStep ? user?.simulationStep : 1,
-          date: new Date().toISOString(),
-        } : {
+        const userToProcess = {
+          userId: user?.userId ? user?.userId : null,
           lastname: user?.lastname ? user?.lastname :'guest',
           phone: user?.phone ? user?.phone : generateRandomString(),
           country: user?.country ? user?.country : userCountry,
@@ -127,16 +123,22 @@ const SimulationHome = ({ leadStatus=[], isErrorHomePage=false }) => {
           subscription_step: '/simulation/country/selection',
           simulationStep: user?.simulationStep ? user?.simulationStep : 1,
           date: new Date().toISOString(),
-        };
-
-        const response = await (user ? updateUser(updatedUser) : addUser(updatedUser));
-        
+        }
+        console.log('XXXupdatedUser userToProcess userToProcess', userToProcess, user?.userId );
+        const response = await (user?.userId ? updateUser(userToProcess) : addUser(userToProcess));
+        console.log('XXXupdatedUser response 11', response);
         if(response.data.status){  
+          const updatedUser = {
+            ...userToProcess,
+            userId: response.data.user_id,
+          }
+          console.log('XXXupdatedUser:', updatedUser);
           dispatch(setUser(updatedUser));
           helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
-          router.push('/simulation/country/selection');
+          //router.push('/simulation/country/selection');
           return true;
         }
+        console.log('XXXupdatedUser response 22', response);
         return false;
       } catch (error) {
         helper.triggerToastError(error);
@@ -167,30 +169,23 @@ const SimulationHome = ({ leadStatus=[], isErrorHomePage=false }) => {
     return (
       <div>     
         <HeaderMenuLoginBar/>
+        {/* {'eee '+isErrorPage+ ' '+leadStatus.length} */}
         {(isErrorPage || leadStatus.length<1) ? (
           <main className="styles__Main-sc-kz84w6-0 gEFmYD" style={{ paddingTop: 280 }}>
             <div className="styles__Wrapper-sc-gk465i-0 fiWVzr">
               <div className="styles__Hero-sc-s3dlnp-0 gMynSv">
                 <div className="styles__Title-sc-s3dlnp-2 eWHDTF">
                   <h1 size="large" className="styles__HeadingBridge-sc-6txi54-0 hzNvHf">
-                    Désolé, une erreur s'est produite. Veuillez réessayer plus tard ou nous contacter.
-                  </h1>
+                              Désolé, une erreur s'est produite. Veuillez réessayer plus tard ou nous contacter.
+                            </h1>
                   <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '10px' }}>
-                    <button
-                      onClick={() => router.refresh()} 
-                      className="CTA button primary xlarge userValidation"
-                      style={{ width: '15.3%', height: 20, margin: '10px' }}
-                    >
-                      Recharger
-                    </button>
-                    <a
-                      href="mailto:hello@wendogo.com"
-                      className="CTA button primary xlarge userValidation"
-                      style={{ width: '21.7%', height: 20, margin: '10px' }}
-                    >
-                      Nous contacter
-                    </a>
-                  </div>
+                      <button onClick={()=> router.reload()} className="CTA button primary xlarge userValidation" style={{ width: '15.3%', height: 20, margin: '10px' }} > 
+                        Recharger 
+                      </button> 
+                      <a href="mailto:hello@wendogo.com" className="CTA button primary xlarge userValidation" style={{ width: '21.7%', height: 20, margin: '10px' }}>
+                        Nous contacter
+                      </a> 
+                   </div>
                 </div>
               </div>
             </div>
@@ -217,9 +212,13 @@ const SimulationHome = ({ leadStatus=[], isErrorHomePage=false }) => {
                       href="/simulation/country/selection"
                       onClick={async (e) => {
                         e.preventDefault();
-                        const success = await handleUserUpdate(item.id);
-                        if (success) {
-                          router.push('/simulation/country/selection');
+                        try {
+                          const success = await handleUserUpdate(item.id);
+                          if (success) {
+                            router.push('/simulation/country/selection');
+                          }
+                        } catch (error) {
+                          console.error('Error in navigation:', error);
                         }
                       }}
                       className="Choice-sc-14ytia7-1 OvYpW"

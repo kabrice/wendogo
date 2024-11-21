@@ -190,8 +190,9 @@ const ReportCard1 = () => {
         dispatch(setUser(updatedUser));
     };
 
-    useEffect(() => {
-        if (continueButtonClicked || isReadModes.some(mode => !mode) || isCancelModes.some(mode => mode) || subjectLists.length > 0 ) {
+    useEffect(() => { 
+        if ((continueButtonClicked || isReadModes.some(mode => !mode) || isCancelModes.some(mode => mode) || subjectLists.length > 0 ) 
+            && (simulationStepGlobal  <= SIMULATION_ENGINE_STEPS.REPORT_CARD1)){
             updateWendogouser(SIMULATION_ENGINE_STEPS.REPORT_CARD1, subjectLists);
             setIsCancelModes(Array(periodNumber).fill(false));
             setShowError(false);

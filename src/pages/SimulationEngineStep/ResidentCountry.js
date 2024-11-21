@@ -119,11 +119,11 @@ const ResidentCountry = () => {
             if (!user?.selectedCountry) {
                 const defaultCountry = data.find(item => item.default === true);
                 if (defaultCountry) {
-                    const isFrancophone = FRANCOPHONE_COUNTRIES.some(
+                    const isFrancophoneCountryTemp = FRANCOPHONE_COUNTRIES.some(
                         country => country.code_iso2 === defaultCountry.iso2
                     );
                     setSelectedCountry({ ...defaultCountry });
-                    setIsFrancophoneCountry(isFrancophone);
+                    setIsFrancophoneCountry(isFrancophoneCountryTemp);
                 }
             }
         }
@@ -143,19 +143,20 @@ const ResidentCountry = () => {
     };
 
     const updateSelectedCountry = (item) => {
-        const isFrancophone = FRANCOPHONE_COUNTRIES.some(
+        const isFrancophoneCountryTemp = FRANCOPHONE_COUNTRIES.some(
             country => country.code_iso2 === item.iso2
         );
         
         setSelectedCountry({ ...item, validated: true });
         setCollapseCountryOption(true);
         setFieldDefault(false);
-        setIsFrancophoneCountry(isFrancophone);
+        setIsFrancophoneCountry(isFrancophoneCountryTemp);
         
         updateWendogouser(
             SIMULATION_ENGINE_STEPS.RESIDENT_COUNTRY,
             { ...item, validated: true },
-            isFrancophone
+            false,
+            isFrancophoneCountryTemp
         );
     };
 
@@ -189,6 +190,7 @@ const ResidentCountry = () => {
             ...user,
             simulationStep,
             selectedCountry,
+            country : selectedCountry.iso2,
             isFrancophone,
             isIneligibleForCampusFrance,
             isFrancophoneCountry: isFrancophone,
