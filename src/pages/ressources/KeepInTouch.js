@@ -212,13 +212,12 @@ const KeepInTouch = (props) => {
     };
  
     const [deviceType, setDeviceType] = useState('lg');
-    const [browserWidth, setBrowserWidth] = useState(window.innerWidth); 
+    //const [browserWidth, setBrowserWidth] = useState(window.innerWidth); 
 
     //console.log('currentSimulationStep 🥳', currentSimulationStep)
     useEffect(() => {
         //helper.addOutsideClick(handleOutsideClick)
-        
-        setValidSituationDescription(validateSituationDescription());
+         
         //console.log('useEffect KeepInTouch', situationDescription, '-', validSituationDescription);
         const handleResize = () => {
         if (typeof window !== 'undefined') {
@@ -239,8 +238,11 @@ const KeepInTouch = (props) => {
         };
 
 
-    }, [browserWidth, situationDescription]);
+    }, [ ]);
 
+    useEffect(() => {
+        setValidSituationDescription(validateSituationDescription());
+    }, [situationDescription]);
   
     const handleContinue = async () => {
 
