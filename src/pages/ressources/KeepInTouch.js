@@ -57,7 +57,7 @@ const KeepInTouch = (props) => {
                             const response = await fetch(IPINFO_URL);
                             const data = await response.json();
  
-                           
+                            console.log('KeepInTouch data country', data);
                             if (data.country) {
                                 setCountryIso2(data.country);
                             }
