@@ -398,7 +398,7 @@ const SEMarkInput = (props) => {
     }
 
     // Validate label
-    const labelIsValid = /^[a-zA-ZÀ-ÿ0-9\s',;''‛:-]+$/.test(updatedSubject.label.value) 
+    const labelIsValid = /^[a-zA-ZÀ-ÿ0-9\s',;’''‛:-]+$/.test(updatedSubject.label.value) 
         && updatedSubject.label?.value?.length > 3 
         && updatedSubject.label.value.length < 1024;
 
