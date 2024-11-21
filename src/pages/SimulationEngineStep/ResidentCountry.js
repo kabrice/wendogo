@@ -8,13 +8,12 @@ import { useGetCountriesQuery } from '../../store/apis/countryApi';
 import helper from '../../utils/Helper';
 import { setUser } from '../../redux/userSlice'; 
 import SEDropDownList from '../../components/SimulationEngine/SEDropDownList';
-import dynamic from 'next/dynamic';
 import { FRANCOPHONE_COUNTRIES } from '../../utils/Constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { setStep } from '../../redux/simulationStepSlice';
 import { SIMULATION_ENGINE_STEPS } from '../../utils/Constants';
 import { Loader2 } from "lucide-react";
-const useGeoLocation = dynamic(() => import('react-ipgeolocation'), { ssr: false });
+import { IPINFO_URL } from '../../utils/Constants';
 
 const ResidentCountry = () => {
     const router = useRouter();
@@ -28,19 +27,38 @@ const ResidentCountry = () => {
     const [collapseCountryOption, setCollapseCountryOption] = useState(true);
     const [fieldDefault, setFieldDefault] = useState(true);
     const [isFrancophoneCountry, setIsFrancophoneCountry] = useState(false);
+    const [userCountry, setUserCountry] = useState(null);
 
     // Refs
     const newRef = useRef(null);
 
     // Selectors and Queries
     const simulationStepGlobal = useSelector((state) => state.simulationStep);
-    const location = useGeoLocation();
-    const { data, error, isLoading } = useGetCountriesQuery(location.country);
+    const { data, error, isLoading } = useGetCountriesQuery(userCountry);
+
+    // Detect user's country
+    useEffect(() => {
+        const getCountry = async () => {
+            try {
+                const response = await fetch(IPINFO_URL);
+                const data = await response.json();
+                setUserCountry(data.country || 'FR'); // Default to FR if detection fails
+            } catch (error) {
+                console.warn('Failed to get country:', error);
+                setUserCountry('FR'); // Default to FR on error
+            }
+        };
+
+        if (!user?.country) {
+            getCountry();
+        } else {
+            setUserCountry(user.country);
+        }
+    }, [user?.country]);
 
     // Load user data on client side
     useEffect(() => {
         const loadUserData = () => {
-            
             if (!user) {
                 router.push('/simulation/home');
                 return;
@@ -52,7 +70,7 @@ const ResidentCountry = () => {
         };
 
         loadUserData();
-    }, [router]);
+    }, [router, user]);
 
     // Handle outside clicks
     useEffect(() => {
@@ -77,11 +95,10 @@ const ResidentCountry = () => {
     useEffect(() => {
         if (isLoading) {
             dispatch(activateSpinner());
-            return
+            return;
         }  
 
         dispatch(deactivateSpinner());
-
         
         if (error) {
             console.error('🛑 error ResidentCountry', error);

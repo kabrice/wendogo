@@ -1,3 +1,5 @@
+const IPINFO_URL = 'https://ipinfo.io/json?token=3089ed2a513bd9';
+
 const REST_API_PARAMS = {baseUrl: 'https://wendogo.online', prepareHeaders: (headers, { getState }) => {
     headers.set('Content-Type', 'application/json')
     headers.set('Access-Control-Allow-Origin', '*')
@@ -126,5 +128,5 @@ const PROGRESS_BAR_STEPS = {
 }
  
 
-export{REST_API_PARAMS, ERROR_TEXT, FRANCOPHONE_COUNTRIES, CAMPUS_FRANCE_CRITERIA, SIMULATION_ENGINE_STEPS, PROGRESS_BAR_STEPS}
+export{REST_API_PARAMS, ERROR_TEXT, FRANCOPHONE_COUNTRIES, CAMPUS_FRANCE_CRITERIA, SIMULATION_ENGINE_STEPS, PROGRESS_BAR_STEPS, IPINFO_URL}
 

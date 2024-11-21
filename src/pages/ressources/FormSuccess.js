@@ -1,84 +1,48 @@
-import { useState, useEffect } from 'react';  
-import Hostess  from '../../assets/simulation_icons/hostess.svg'; 
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import Hostess from "../../assets/simulation_icons/hostess.svg";
 import { Loader2 } from "lucide-react";
-import {  useSelector } from 'react-redux';
 
-const FormSuccess = (props) => {
+const FormSuccess = () => {
+  const user = useSelector((state) => state.user);
+  const [deviceType, setDeviceType] = useState("lg");
+  const [isLoading, setIsLoading] = useState(true);
 
-    const user = useSelector((state) => state.user);
-    const [deviceType, setDeviceType] = useState('lg');
-    const [isLoading, setIsLoading] = useState(true);
-    const [browserWidth, setBrowserWidth] = useState(window.innerWidth);
+  // Handle user data loading
+  useEffect(() => {
+    setIsLoading(false); // Assuming user data is already available from Redux
+  }, []);
 
+  // Handle responsive layout
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      if (width > 1200) setDeviceType("lg");
+      else if (width > 991) setDeviceType("md");
+      else if (width > 765) setDeviceType("sm");
+      else setDeviceType("xs");
+    };
 
-    // Handle user data loading
-    useEffect(() => {
-        let mounted = true;
+    handleResize(); // Set initial state
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
-        const initializeUserData = () => {
-            try { 
-                if (mounted) { 
-                    setIsLoading(false);
-                }
-            } catch (error) {
-                console.error('Error loading user data:', error);
-                if (mounted) {
-                    setIsLoading(false);
-                }
-            }
-        };
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-[200px]">
+        <Loader2 className="w-8 h-8 animate-spin" />
+      </div>
+    );
+  }
 
-        initializeUserData();
-
-        return () => {
-            mounted = false;
-        };
-    }, []);
-
-    // Handle responsive layout
-    useEffect(() => {
-        const handleResize = () => {
-            const width = window.innerWidth;
-            if (width > 1200) {
-                setDeviceType('lg');
-            } else if (width > 991 && width <= 1200) {
-                setDeviceType('md');
-            } else if (width > 765 && width <= 990) {
-                setDeviceType('sm');
-            } else {
-                setDeviceType('xs');
-            }
-            setBrowserWidth(width);
-        };
-
-        window.addEventListener('resize', handleResize);
-        handleResize(); // Initial call
-
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-    }, []);
-
-    if (isLoading) {
-        return (
-            <div className="flex items-center justify-center min-h-[200px]">
-                <Loader2 className="w-8 h-8 animate-spin" />
-            </div>
-        );
-    }
-
-    if (!user) {
-        return (
-            <div className="flex items-center justify-center min-h-screen">
-                <div className="text-center p-4">
-                    <p>Erreur de chargement des données. Veuillez réessayer.</p>
-                </div>
-            </div>
-        );
-    }
-
-
-   
+  if (!user) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <p className="text-center p-4">Erreur de chargement des données. Veuillez réessayer.</p>
+      </div>
+    );
+  }
 
     return ( 
 

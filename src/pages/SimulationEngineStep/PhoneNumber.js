@@ -10,12 +10,11 @@ import { SIMULATION_ENGINE_STEPS } from '../../utils/Constants';
 import { useRef } from 'react'; 
 import { Loader2 } from "lucide-react";
 import { setUser } from '../../redux/userSlice';
-import dynamic from 'next/dynamic';
-const useGeoLocation = dynamic(() => import('react-ipgeolocation'), { ssr: false });
+import { IPINFO_URL } from '../../utils/Constants';
+import { set } from 'lodash';
 
 const PhoneNumber = () => {
-    const dispatch = useDispatch();
-    const location = useGeoLocation(); 
+    const dispatch = useDispatch(); 
     const simulationStepGlobal = useSelector((state) => state.simulationStep);
 
     // Local state
@@ -44,17 +43,16 @@ const PhoneNumber = () => {
                     setIsLoadingCountry(true);
                     if (user?.country) {
                         setCountryIso2(user.country);
-                    } else if (!location.isLoading && location.country) {
-                        setCountryIso2(location.country);
                     } else {
                         try {
-                            const response = await fetch('https://ipinfo.io/json?token=3089ed2a513bd9');
+                            const response = await fetch(IPINFO_URL);
                             const data = await response.json();
                             if (data.country) {
                                 setCountryIso2(data.country);
                             }
                         } catch (error) {
                             console.warn('Failed to get country from IP:', error);
+                            setCountryIso2('FR');
                         }
                     }
                 } catch (error) {
@@ -67,7 +65,7 @@ const PhoneNumber = () => {
 
             getCountry();
         }
-    }, [location.isLoading, location.country, user]);
+    }, [user]);
 
     const doesValid = (phoneNumber) => {
         if (phoneNumber.trim() === '') {

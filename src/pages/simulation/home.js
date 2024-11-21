@@ -20,9 +20,8 @@ import { REST_API_PARAMS } from '../../utils/Constants';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import { Loader2 } from "lucide-react";
-import { setUser } from '../../redux/userSlice';
- 
-const useGeoLocation = dynamic(() => import('react-ipgeolocation'), { ssr: false });
+import { setUser } from '../../redux/userSlice'; 
+import { IPINFO_URL } from '../../utils/Constants';
 
 const KeepInTouch = dynamic(() => import('../ressources/KeepInTouch'), {
   loading: () => <div className="flex items-center justify-center min-h-[200px]">
@@ -56,8 +55,26 @@ const SimulationHome = ({ leadStatus=[], isErrorHomePage=false }) => {
     const [isKeepInTouch, setIsKeepInTouch] = useState(false);
     const user = useSelector((state) => state.user);
     const [addUser] = useAddUserMutation();
-    const [updateUser] = useUpdateUserMutation();
-    const location = useGeoLocation();
+    const [updateUser] = useUpdateUserMutation(); 
+    const [userCountry, setUserCountry] = useState(null);
+
+
+    useEffect(() => {
+      const getCountry = async () => {
+        try {
+          const response = await fetch(IPINFO_URL);
+          const data = await response.json();
+          setUserCountry(data.country || 'FR');
+        } catch (error) {
+          console.warn('Failed to get country:', error);
+          setUserCountry('FR');
+        }
+      };
+
+      if (!user?.country) {
+        getCountry();
+      }
+    }, [user?.country]);
 
     useEffect(() => {
       dispatch(deactivateSpinner());
@@ -105,7 +122,7 @@ const SimulationHome = ({ leadStatus=[], isErrorHomePage=false }) => {
         } : {
           lastname: user?.lastname ? user?.lastname :'guest',
           phone: user?.phone ? user?.phone : generateRandomString(),
-          country: user?.country ? user?.country : location.country,
+          country: user?.country ? user?.country : userCountry,
           lead_status_id: leadstatusId,
           subscription_step: '/simulation/country/selection',
           simulationStep: user?.simulationStep ? user?.simulationStep : 1,

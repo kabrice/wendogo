@@ -14,16 +14,14 @@ import { useRef } from 'react';
 import { activateSpinner, deactivateSpinner } from '../../redux/spinnerslice';
 import { setUser } from '../../redux/userSlice';
 import { useDispatch, useSelector } from 'react-redux' 
-
-import dynamic from 'next/dynamic';
-const useGeoLocation = dynamic(() => import('react-ipgeolocation'), { ssr: false });
-
+import { Loader2 } from 'lucide-react';
+import { IPINFO_URL } from '../../utils/Constants';
+ 
 const KeepInTouch = (props) => {
 
     const { title, tip, setIsError, setIsKeepInTouch, typeRequest} = props;
     const user = useSelector((state) => state.user);
-
-    const location = useGeoLocation(); 
+ 
     const dispatch = useDispatch()
     const [countryIso2, setCountryIso2] = useState(user?.country || null);
     let description
@@ -54,17 +52,18 @@ const KeepInTouch = (props) => {
                     // Priority chain for country detection
                     if (user?.country) {
                         setCountryIso2(user.country);
-                    } else if (!location.isLoading && location.country) {
-                        setCountryIso2(location.country);
                     } else {
-                        try {
-                            const response = await fetch('https://ipinfo.io/json?token=3089ed2a513bd9');
+                        try {  
+                            const response = await fetch(IPINFO_URL);
                             const data = await response.json();
+ 
+                           
                             if (data.country) {
                                 setCountryIso2(data.country);
                             }
                         } catch (error) {
                             console.warn('Failed to get country from IP:', error);
+                            setCountryIso2('FR'); // Fallback to CM is already handled by initial state
                             // Fallback to CM is already handled by initial state
                         }
                     }
@@ -79,7 +78,7 @@ const KeepInTouch = (props) => {
 
             getCountry();
         }
-    }, [location.isLoading, location.country, user?.country]);
+    }, [ user?.country]);
 
     const handleChangeSituationDescription = (e) => {
         setSituationDescription(e.target.value);
@@ -322,7 +321,11 @@ const KeepInTouch = (props) => {
         }
     };
  
-
+    if(isLoadingCountry) {
+      return    <div className="flex items-center justify-center min-h-[200px]">
+                 <Loader2 className="w-8 h-8 animate-spin" />
+               </div>
+    }
     return ( <>
 {/* <FormSuccess/> */}
 <div className="theme-wrapper theme-daisy">
