@@ -178,15 +178,15 @@ function HomePage(){
     return (
       <>
       <Head>
-        <title>Wendogo - Expert en ligne pour vos demandes de visa</title>
+        <title>Wendogo - Expert en ligne pour organiser vos voyages à l'étranger</title>
         <meta
           name="description"
-          content="Wendogo is your trusted online expert for visa applications."
+          content="Wendogo est votre expert en ligne pour vos démarches de voyage à l'international"
         />
-        <meta property="og:title" content="Wendogo - Your Visa Expert" />
+        <meta property="og:title" content="Wendogo - Spécialiste en Mobilité Internationale" />
         <meta
           property="og:description"
-          content="Expert en ligne pour vos demandes de visa."
+          content="Expert pour organiser vos voyages à l'étranger."
         />
         <meta
           property="og:image"
