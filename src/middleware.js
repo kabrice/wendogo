@@ -10,8 +10,10 @@ export function middleware(request) {
     pathname.startsWith('/api') ||
     pathname.startsWith('/static') ||
     pathname.startsWith('/public') ||
+    pathname.startsWith('/school_logos') || 
     pathname === '/favicon.ico' ||
-    pathname.startsWith('/src/assets') // Add this if you serve assets directly
+    pathname.startsWith('/src/assets') || // Add this if you serve assets directly
+    pathname.match(/\.(png|jpg|jpeg|svg|gif|ico|webp|bmp|tiff|svg)$/i) // Skip image files
   ) {
     return NextResponse.next();
   }
