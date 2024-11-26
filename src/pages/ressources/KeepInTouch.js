@@ -63,7 +63,7 @@ const KeepInTouch = (props) => {
                             }
                         } catch (error) {
                             console.warn('Failed to get country from IP:', error);
-                            setCountryIso2('FR'); // Fallback to CM is already handled by initial state
+                            setCountryIso2('CM'); // Fallback to CM is already handled by initial state
                             // Fallback to CM is already handled by initial state
                         }
                     }

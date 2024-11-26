@@ -23099,3 +23099,11 @@ border-color: initial;
 	stroke-linejoin: round;
 	fill: none;
   }
+
+  .menu-arrow {
+	transition: transform 0.2s ease;
+  }
+  
+  .menu-arrow-rotated {
+	transform: rotate(180deg);
+  }

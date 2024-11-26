@@ -19,6 +19,8 @@ const Validation = () => {
     const user = useSelector((state) => state.user);
     const [isCheck, setIsCheck] = useState(false);
     const [isAlert, setIsAlert] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
 
     // Initialize user data
     useEffect(() => {
@@ -39,8 +41,17 @@ const Validation = () => {
     const handleCheck = () => setIsCheck(prev => !prev);
 
     const handleContinue = () => {
-        dispatch(activateSpinner())
-        if (isCheck) {
+        if (isSubmitting) return; // Prevent multiple submissions
+        console.log('handleContinue VVVV', user); 
+
+        if (!isCheck) {
+            setIsAlert(true);
+            return;
+        }
+        try {
+            setIsSubmitting(true);
+            dispatch(activateSpinner());
+            
             const updatedUser = {
                 ...user,
                 simulationResults: null,
@@ -48,14 +59,16 @@ const Validation = () => {
                 majorDetails: null,
                 date: new Date().toISOString()
             };
-            console.log('updatedUser VVVV', updatedUser);
+            
             dispatch(setUser(updatedUser));
             helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
             router.push('/simulation/result#view/SCORE_DETAILLE');
-            dispatch(deactivateSpinner())
-        } else {
-            setIsAlert(true);
-            dispatch(deactivateSpinner())
+            
+        } catch (error) {
+            console.error('Navigation error:', error);
+        } finally {
+            dispatch(deactivateSpinner());
+            // Note: We don't reset isSubmitting since we want the button to stay disabled
         }
     };
 
@@ -160,7 +173,7 @@ const Validation = () => {
                     </div>
                 </div>
                 <div className="FieldView DaisyFieldView field-default SelectField VEH_USA_KILOM">
-                    <ButtonLarge name="Evaluer mes chances" handleContinue={handleContinue} />
+                    <ButtonLarge name="Evaluer mes chances" handleContinue={handleContinue} isSubmitting={isSubmitting} />
                 </div>
             </div>
         </div>

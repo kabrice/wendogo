@@ -64,7 +64,7 @@ const MainSubjects = () => {
 
     // Memoized values
     const titleWhenNoMatch = useMemo(() => 
-        `Veuillez renseigner les équivalents français correspondant au mieux à vos trois principales unités d'enseignement pour l'année scolaire ${user?.selectedSchoolYear3?.name}.`,
+        `Veuillez rechercher les équivalents français correspondant au mieux à vos trois principales unités d'enseignement pour l'année scolaire ${user?.selectedSchoolYear3?.name}.`,
     [user?.selectedSchoolYear3?.name]);
 
     const showContinueBtn = useMemo(() => {

@@ -11,7 +11,7 @@ export const majorApi = createApi({
         method: 'POST',
         body
       }),
-      invalidatesTags: ['major']
+      invalidatesTags: ['Major']
     })
   })
 }) 

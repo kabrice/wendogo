@@ -219,7 +219,7 @@ function HomePage(){
                       <li aria-expanded="false" role="menuitem" tabIndex={0} className="Navbarstyles__MenuItem Navbarstyles__MenuItem-common">
                         <span className="Navbarstyles__MenuItemLabel" onClick={() => toggleNavSubMenu1()}>
                           <span>Evaluer mes chances</span> 
-                          <DropDownIcon className="Navbarstyles__MenuItemArrow" style={{transform : (displaySubMenu1 ? "rotate(180deg)" : '')}}/>
+                          <DropDownIcon className={`Navbarstyles__MenuItemArrow menu-arrow ${displaySubMenu1 ? 'menu-arrow-rotated' : ''}`} />
                         </span>
                         <ul className={"Navbarstyles__SubMenu "+(displaySubMenu1 ? 'lowcCT subMenu1' : '')} >
                           <li className="Navbarstyles__SubMenuFirstItem">
@@ -238,7 +238,7 @@ function HomePage(){
                         <span className="Navbarstyles__MenuItemLabel" onClick={() => toggleNavSubMenu2()}>
                           <span>Ressources</span>
                           {/* <Image src={DropDownIcon} style={{transform : (displaySubMenu2 ? "rotate(180deg)" : '')}} alt='DropDownIcon'/> */}
-                          <DropDownIcon  className="Navbarstyles__MenuItemArrow"  style={{transform : (displaySubMenu2 ? "rotate(180deg)" : '')}}/>
+                          <DropDownIcon className={`Navbarstyles__MenuItemArrow menu-arrow ${displaySubMenu2 ? 'menu-arrow-rotated' : ''}`} />
                         </span>
                         <ul id="7d517232" className={"Navbarstyles__SubMenu "+(displaySubMenu2 ? 'lowcCT subMenu2' : '')}>
                           <li className="Navbarstyles__SubMenuFirstItem">
@@ -267,7 +267,7 @@ function HomePage(){
                           <span className="Navbarstyles__MenuItemLabel" onClick={() => toggleNavSubMenu3()}>
                             <span>À propos</span>
                             {/* <Image src={DropDownIcon} style={{transform : (displaySubMenu3 ? "rotate(180deg)" : '')}}  alt='DropDownIcon'/> */}
-                            <DropDownIcon  className="Navbarstyles__MenuItemArrow"  style={{transform : (displaySubMenu3 ? "rotate(180deg)" : '')}}/>
+                            <DropDownIcon className={`Navbarstyles__MenuItemArrow menu-arrow ${displaySubMenu3 ? 'menu-arrow-rotated' : ''}`} />
                             {/* <DropDownIcon /> */}
                           </span>
                           <ul id="e75b56b9" className={"Navbarstyles__SubMenu "+(displaySubMenu3 ? 'lowcCT subMenu3' : '')}>

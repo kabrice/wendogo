@@ -341,15 +341,17 @@ const SimulationEngine = ({ spokenLanguages, academicYearOrganizations, markSyst
                                                 <div className="Stack-child  " style={{ paddingTop: 8 }}>
                                                     <div className="Heading s isWeak  MegaTip-title">
                                                     <div className="Stack  stackColumn " style={{ flexDirection: "column", padding: 0, alignItems: "stretch" }}>
-                                                        <div className="Stack-child  " style={{ paddingTop: 8 }}> Conseil de Wendogo :  Pour une simulation optimale, pensez à vous munir des éléments suivants : </div>
+                                                        <div className="Stack-child  " style={{ paddingTop: 8 }}> Avant de commencer, nous vous recommandons fortement ceci : </div>
                                                     </div>
                                                     </div>
                                                 </div>
                                                 <div className="Stack-child  " style={{ paddingTop: 8 }}>
                                                     <div className="MegaTip-text">
                                                     <ul style={{ margin: 0, paddingLeft: 25, color: "rgb(127, 148, 169)" }}>
-                                                        <li>Passeport (si disponible) </li>
-                                                        <li>Relevés de notes de vos 3 dernières années d'études</li>
+                                                        <li>✓ Votre passeport à portée de main (si vous en avez un)</li>
+                                                        <li>✓ Vos relevés de notes des 3 dernières années, baccalauréat inclus</li>
+                                                        <li>✓ Un ordinateur pour une meilleure navigation</li>
+                                                        <li>✓ 30min de disponibilité pour une saisie calme et posée </li>
                                                     </ul>
                                                     {/* <p>Les dates de candidatures 2024 pour Campus France debutent en Novembre...</p> */}
                                                     </div>

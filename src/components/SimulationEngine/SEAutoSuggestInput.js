@@ -99,7 +99,7 @@ const SEAutoSuggestInput = (props) => {
             <div className="AutoSuggest TextFieldContainer isBordered">
               <div className={`AutoSuggest-inputWrapper field-error ${(suggestions?.length>0 || isBusy)  ? 'not-empty ' : ''}`}>
               {!stopSearch && <div className={`Input ${(focused || isBusy) ? 'focused' : 'field-error'}`}>
-                  <input  type="text" {...bindInput} placeholder="Domaine d'études" id={id} name={id} value={bindInput.value} 
+                  <input  type="text" {...bindInput} placeholder="Rechercher votre domaine d'études" id={id} name={id} value={bindInput.value} 
                           tabIndex={6} maxLength={1000} autoComplete="off"/>
                   {bindInput?.value?.length>0 && 
                       <span className="Input-symbol" onClick={reinitializeInput}>
@@ -178,7 +178,7 @@ const SEAutoSuggestInput = (props) => {
                 </div>
               </div>
               <div className="Stack-child  " style={{ paddingLeft: 0 }}>
-                <p style={{ color: "rgb(127, 148, 169)", fontSize: "1rem", margin: "0px 15px", padding: 0, textAlign: "left", fontWeight: 400, lineHeight: "inherit" }}> Cliquez sur la croix pour fermer et resaisir si ça ne convient pas. </p>
+                <p style={{ color: "rgb(127, 148, 169)", fontSize: "1rem", margin: "0px 15px", padding: 0, textAlign: "left", fontWeight: 400, lineHeight: "inherit" }}> Cliquez sur la croix pour supprimer et rechercher à nouveau si ça ne convient pas. </p>
               </div>
             </div>
           </div>

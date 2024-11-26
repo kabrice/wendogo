@@ -124,7 +124,7 @@ const SEAutoSuggestListInput = (props) => {
             <div className="AutoSuggest TextFieldContainer isBordered">
               <div className={`AutoSuggest-inputWrapper field-error ${(suggestions?.length>0 || isBusy)  ? 'not-empty ' : ''}`}>
               {!stopSearch && <div className={`Input ${(focused || isBusy) ? 'focused' : 'field-error'}`}>
-                  <input  type="text" {...bindInput} placeholder={`Entrez votre${currentPriorityInput>0 ? (currentPriorityInput===1 ? ' 2ème' : ' 3ème') : ''} matière la plus significative`} 
+                  <input  type="text" {...bindInput} placeholder={`Rechercher votre${currentPriorityInput>0 ? (currentPriorityInput===1 ? ' 2ème' : ' 3ème') : ''} matière la plus significative`} 
                           id={id} name={id} value={bindInput.value} 
                           tabIndex={6} maxLength={1000} autoComplete="off"/>
                           {bindInput?.value?.length>0 && 
@@ -210,7 +210,7 @@ const SEAutoSuggestListInput = (props) => {
                 </div>
               </div>
               <div className="Stack-child  " style={{ paddingLeft: 0 }}>
-                <p style={{ color: "rgb(127, 148, 169)", fontSize: "1rem", margin: "0px 15px", padding: 0, textAlign: "left", fontWeight: 400, lineHeight: "inherit" }}> Cliquez sur la croix pour fermer et resaisir si ça ne convient pas. </p>
+                <p style={{ color: "rgb(127, 148, 169)", fontSize: "1rem", margin: "0px 15px", padding: 0, textAlign: "left", fontWeight: 400, lineHeight: "inherit" }}> Cliquez sur la croix pour supprimer et rechercher à nouveau si ça ne convient pas. </p>
               </div>
             </div>
           </div>

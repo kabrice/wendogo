@@ -42,10 +42,10 @@ const ResidentCountry = () => {
             try {
                 const response = await fetch(IPINFO_URL);
                 const data = await response.json();
-                setUserCountry(data.country || 'FR'); // Default to FR if detection fails
+                setUserCountry(data.country || 'CM'); // Default to FR if detection fails
             } catch (error) {
                 console.warn('Failed to get country:', error);
-                setUserCountry('FR'); // Default to FR on error
+                setUserCountry('CM'); // Default to FR on error
             }
         };
 

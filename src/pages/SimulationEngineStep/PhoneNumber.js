@@ -52,7 +52,7 @@ const PhoneNumber = () => {
                             }
                         } catch (error) {
                             console.warn('Failed to get country from IP:', error);
-                            setCountryIso2('FR');
+                            setCountryIso2('CM');
                         }
                     }
                 } catch (error) {

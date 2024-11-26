@@ -58,7 +58,7 @@ function SimulationCountrySelection(){
     }
 
     async function handleCountrySelection(event, countryIso2) {
-      event.preventDefault();
+      //event.preventDefault();
       
       if (countryIso2 === 'CA') {
         setIsKeepInTouch(true);

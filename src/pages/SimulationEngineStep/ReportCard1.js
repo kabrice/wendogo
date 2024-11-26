@@ -294,7 +294,7 @@ const ReportCard1 = () => {
                         });
                     }}
                     onSubjectUpdate={(updatedSubject) => {
-                        updateWendogouser(SIMULATION_ENGINE_STEPS.REPORT_CARD3, subjectLists);
+                        updateWendogouser(SIMULATION_ENGINE_STEPS.REPORT_CARD1, subjectLists);
                     }}
                     showContinueBtn={1}
                     setReferenceInc={newInc => {

@@ -1,5 +1,6 @@
 const IPINFO_URL = 'https://ipinfo.io/json?token=3089ed2a513bd9';
-
+//http://127.0.0.1:5000
+//https://wendogo.online
 const REST_API_PARAMS = {baseUrl: 'https://wendogo.online', prepareHeaders: (headers, { getState }) => {
     headers.set('Content-Type', 'application/json')
     headers.set('Access-Control-Allow-Origin', '*')

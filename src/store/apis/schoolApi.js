@@ -11,7 +11,7 @@ export const schoolApi = createApi({
         method: 'POST',
         body
       }),
-      invalidatesTags: ['school']
+      invalidatesTags: ['School']
     })
   })
 }) 

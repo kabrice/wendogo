@@ -65,10 +65,10 @@ const SimulationHome = ({ leadStatus=[], isErrorHomePage=false }) => {
         try {
           const response = await fetch(IPINFO_URL);
           const data = await response.json();
-          setUserCountry(data.country || 'FR');
+          setUserCountry(data.country || 'CM');
         } catch (error) {
           console.warn('Failed to get country:', error);
-          setUserCountry('FR');
+          setUserCountry('CM');
         }
       };
 
@@ -129,6 +129,7 @@ const SimulationHome = ({ leadStatus=[], isErrorHomePage=false }) => {
         console.log('XXXupdatedUser response 11', response);
         if(response.data.status){  
           const updatedUser = {
+            ...user,
             ...userToProcess,
             userId: response.data.user_id,
           }
