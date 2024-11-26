@@ -314,7 +314,7 @@ function HomePage(){
                 <SwiperSlide><Image src={backgroundImg3} alt="homepageImage3" /></SwiperSlide>
                 <div className="main-screen__row">
                    <div className="main-screen__content">
-                    <h1 className="HeroLeft__Title-sc-1axg5uv-3 jDYqud">Demandez un visa pour la France ou le Canada plus simplement.</h1>
+                    <h1 className="HeroLeft__Title-sc-1axg5uv-3 jDYqud">Préparez votre projet de voyage pour la France ou le Canada simplement</h1>
                     <div className="main-screen__content-subscribe"> C’est trop beau parce que c’est vrai&nbsp;: transparence, expertise et implication.  Wendogo, c’est l'agence de visa en ligne qui vous accompagne de A à Z pour préparer au mieux votre demande de visa </div>
                     <button className="PrimaryButton__Container-sc-1vkvp7q-0 iroZSn HeroLeft__PrimaryButton-sc-1axg5uv-6 jJuKZd">
                       <span className="PrimaryButton__Overlay-sc-1vkvp7q-3 sSEIO">
