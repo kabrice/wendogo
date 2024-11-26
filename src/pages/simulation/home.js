@@ -207,7 +207,7 @@ const SimulationHome = ({ leadStatus=[], isErrorHomePage=false }) => {
                 </header>
                 <ul className="Component-sc-14ytia7-5 iSJdAc Choices-sc-hqj7z4-0 cezjjJ">
                   {sortedArray.length > 1 && sortedArray.map((item, id) => (
-                    <Link 
+                    <a 
                       key={item.id}
                       href="/simulation/country/selection"
                       onClick={async (e) => {
@@ -252,7 +252,7 @@ const SimulationHome = ({ leadStatus=[], isErrorHomePage=false }) => {
                           <use xlinkHref="#260b3914" x={0} y={0} className="ArrowInstance-sc-9kce0i-2 ArrowInstance2-sc-9kce0i-4 RwYBr bGftjK" />
                         </svg>
                       </button>
-                    </Link>
+                    </a>
                   ))}
                 </ul>
               </main>

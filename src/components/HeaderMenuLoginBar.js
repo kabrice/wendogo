@@ -13,9 +13,9 @@ function HeaderMenuLoginBar(){
     return (
           <div className="NavBar-sc-10rxn4k-0 gHRjdu">
             <div className="LogosContainer-sc-10rxn4k-1 iBooYb">
-            <Link href="/" className="Logostyles__LogoLink-sc-10zpnfr-0 jJHAoQ">
+            <a href="/" className="Logostyles__LogoLink-sc-10zpnfr-0 jJHAoQ" alt="Back to Home Page">
                       <WendogoLogoIcon/>
-                  </Link>
+                  </a>
             </div>
             {/* <div className="Navigation-sc-10rxn4k-8 cWgqeC">
               <a className="NavItem-sc-cubywz-2 bFnYhT" href="https://faq.pretto.fr/" rel="noreferrer noopener" target="_blank">

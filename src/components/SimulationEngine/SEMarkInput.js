@@ -474,7 +474,7 @@ const SEMarkInput = (props) => {
 
     // Set the validated subject state
     setSubject(updatedSubject);
-
+    console.log('cccc updatedSubject', updatedSubject)
     // Check if all validations passed
     const allValid = updatedSubject.label.validated && 
                     updatedSubject.mark.validated && 
@@ -502,6 +502,11 @@ const SEMarkInput = (props) => {
             );
         }
         setIsReadMode(true);
+
+               // Force update of local storage after edit
+        if (typeof props.onSubjectUpdate === 'function') {
+            props.onSubjectUpdate(updatedSubject);
+        }
     }
 };
   return (

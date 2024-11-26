@@ -81,7 +81,7 @@ function HeaderMenuBar(){
                       </li>
                       <li aria-expanded="false" role="menuitem" tabIndex={0} className="Navbarstyles__MenuItem Navbarstyles__MenuItem-common">
                         <span className="Navbarstyles__MenuItemLabel" onClick={() => toggleNavSubMenu1()}>
-                          <span>Simuler mon visa</span>
+                          <span>Evaluer mes chances</span>
                           <DropDownIcon style={displaySubMenu1 ? {transform : "rotate(180deg)"} : {}}/>
                         </span>
                         <ul className={"Navbarstyles__SubMenu "+(displaySubMenu1 ? 'lowcCT subMenu1' : '')} style={{backgroundColor : 'white'}}>
@@ -146,7 +146,7 @@ function HeaderMenuBar(){
                       <li className="Navbarstyles__MenuButtonItems-sc-mi7mu3-6 eonXWL">
                         {/* <Link href='/waitinglist' className="ButtonLogin__Button"> Se connecter </Link> */}
                         <Link href='/simulation/home' className="ButtonNavbar__Button">
-                          <span className="ButtonNavbar__Label"> Simuler mon visa </span>
+                          <span className="ButtonNavbar__Label"> Evaluer mes chances </span>
                           <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className="ButtonNavbar__Arrow">
                             <path d="M15.3,11.17l-2.51-2.49,1.18-1.18,4.53,4.5-4.53,4.5-1.18-1.18,2.51-2.49H5.5v-1.66H15.3Z" />
                           </svg>

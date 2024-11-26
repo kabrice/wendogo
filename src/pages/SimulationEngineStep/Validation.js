@@ -9,6 +9,7 @@ import { setUser } from '../../redux/userSlice';
 import Link from 'next/link';
 import { Loader2 } from "lucide-react";
 import { useDispatch, useSelector } from 'react-redux';
+import { activateSpinner, deactivateSpinner } from '../../redux/spinnerslice';
 
 const Validation = () => {
     const router = useRouter();
@@ -38,6 +39,7 @@ const Validation = () => {
     const handleCheck = () => setIsCheck(prev => !prev);
 
     const handleContinue = () => {
+        dispatch(activateSpinner())
         if (isCheck) {
             const updatedUser = {
                 ...user,
@@ -50,8 +52,10 @@ const Validation = () => {
             dispatch(setUser(updatedUser));
             helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
             router.push('/simulation/result#view/SCORE_DETAILLE');
+            dispatch(deactivateSpinner())
         } else {
             setIsAlert(true);
+            dispatch(deactivateSpinner())
         }
     };
 

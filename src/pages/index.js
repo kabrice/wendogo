@@ -218,18 +218,18 @@ function HomePage(){
                       </li>
                       <li aria-expanded="false" role="menuitem" tabIndex={0} className="Navbarstyles__MenuItem Navbarstyles__MenuItem-common">
                         <span className="Navbarstyles__MenuItemLabel" onClick={() => toggleNavSubMenu1()}>
-                          <span>Simuler mon visa</span> 
+                          <span>Evaluer mes chances</span> 
                           <DropDownIcon className="Navbarstyles__MenuItemArrow" style={{transform : (displaySubMenu1 ? "rotate(180deg)" : '')}}/>
                         </span>
                         <ul className={"Navbarstyles__SubMenu "+(displaySubMenu1 ? 'lowcCT subMenu1' : '')} >
                           <li className="Navbarstyles__SubMenuFirstItem">
                             <a tabIndex={0} className="LinkLabel__Link" href="/simulation/home">
-                              <span href='/simulation/home' prefetch={true} className="LinkLabel__Label">Visa pour la France</span>
+                              <span href='/simulation/home' className="LinkLabel__Label">Visa pour la France</span>
                             </a>
                           </li>
                           <li>
                             <a tabIndex={0} className="LinkLabel__Link" href="/simulation/home">
-                            <span href='/simulation/home' prefetch={true} className="LinkLabel__Label">Visa pour le Canada </span>
+                            <span href='/simulation/home' className="LinkLabel__Label">Visa pour le Canada </span>
                             </a>
                           </li>
                         </ul>
@@ -285,12 +285,12 @@ function HomePage(){
                       </li>
                       <li className="Navbarstyles__MenuButtonItems-sc-mi7mu3-6 eonXWL">
                         {/* <Link href='/waitinglist' className="ButtonLogin__Button"> Se connecter </Link> */}
-                        <Link href='/simulation/home' prefetch={true} className="ButtonNavbar__Button">
-                          <span className="ButtonNavbar__Label"> Simuler mon visa </span>
+                        <a href='/simulation/home' className="ButtonNavbar__Button">
+                          <span className="ButtonNavbar__Label"> Evaluer mes chances </span>
                           <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className="ButtonNavbar__Arrow">
                             <path d="M15.3,11.17l-2.51-2.49,1.18-1.18,4.53,4.5-4.53,4.5-1.18-1.18,2.51-2.49H5.5v-1.66H15.3Z" />
                           </svg>
-                        </Link>
+                        </a>
                       </li>
                     </ul>
                   </div>
@@ -324,8 +324,8 @@ function HomePage(){
                           </svg>
                         </span>
                       </span>
-                      <Link href='/simulation/home' prefetch={true} >
-                        <span className="PrimaryButton__Label-sc-1vkvp7q-2 kVCvkJ"> Simuler mon visa </span>
+                      <Link href='/simulation/home' >
+                        <span className="PrimaryButton__Label-sc-1vkvp7q-2 kVCvkJ"> Evaluer mes chances </span>
                       </Link>
                     </button>
                   </div> 
@@ -428,9 +428,9 @@ function HomePage(){
                                 </svg>
                               </span>
                             </span>
-                            <Link href='/simulation/home' prefetch={true} >
-                              <span className="PrimaryButton__Label-sc-1vkvp7q-2 kVCvkJ"> Simuler mon visa </span>
-                            </Link>
+                            <a href='/simulation/home' >
+                              <span className="PrimaryButton__Label-sc-1vkvp7q-2 kVCvkJ"> Evaluer mes chances </span>
+                            </a>
                           </button>
                         </div>
                         {browserWidth>1024 ?
@@ -585,9 +585,9 @@ function HomePage(){
                                         </svg>
                                       </span>
                                     </span>
-                                    <Link href='/simulation/home' prefetch={true} >
-                                      <span className="PrimaryButton__Label-sc-1vkvp7q-2 kVCvkJ"> Simuler mon visa </span>
-                                    </Link>
+                                    <a href='/simulation/home' >
+                                      <span className="PrimaryButton__Label-sc-1vkvp7q-2 kVCvkJ"> Evaluer mes chances </span>
+                                    </a>
                                   </button>
                               </p>
                             </div>
@@ -638,7 +638,7 @@ function HomePage(){
                               </svg>
                             </span>
                           </span>
-                          <span className="PrimaryButton__Label-sc-1vkvp7q-2 kVCvkJ"> Simuler mon visa </span>
+                          <span className="PrimaryButton__Label-sc-1vkvp7q-2 kVCvkJ"> Evaluer mes chances </span>
                         </button>
                       </div> 
                     </div>
@@ -672,9 +672,9 @@ function HomePage(){
                               </svg>
                             </span>
                           </span>
-                          <Link href='/simulation/home' prefetch={true} >
-                            <span className="PrimaryButton__Label-sc-1vkvp7q-2 kVCvkJ"> Simuler mon visa </span>
-                          </Link>
+                          <a href='/simulation/home' >
+                            <span className="PrimaryButton__Label-sc-1vkvp7q-2 kVCvkJ"> Evaluer mes chances </span>
+                          </a>
                         </button>
                         {/* <h1>{countdown}</h1>
                         <h1>dd {positionLeft} - {browserWidth}</h1>
@@ -786,9 +786,9 @@ function HomePage(){
                                   </svg>
                                 </span>
                               </span>
-                              <Link href='/simulation/home' prefetch={true} >
-                                <span className="PrimaryButton__Label-sc-1vkvp7q-2 kVCvkJ"> Simuler mon visa </span>
-                              </Link>
+                              <a href='/simulation/home' >
+                                <span className="PrimaryButton__Label-sc-1vkvp7q-2 kVCvkJ"> Evaluer mes chances </span>
+                              </a>
                             </button>
                             <p className="Banner__Caption-sc-yqcec5-7 elCGHz"> En 3 minutes, sans inscription&nbsp;! </p>
                           </div>
