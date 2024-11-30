@@ -89,7 +89,7 @@ const OtherLanguageLevel = () => {
     // Memoized title
     const title = useMemo(() => 
         user?.selectedOtherSpokenLanguage?.name
-            ? `Comment évaluer votre niveau en ${user.selectedOtherSpokenLanguage.name} ?`
+            ? `Comment évaluez-vous votre niveau en ${user.selectedOtherSpokenLanguage.name} ?`
             : '',
     [user?.selectedOtherSpokenLanguage?.name]);
 

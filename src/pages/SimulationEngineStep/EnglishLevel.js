@@ -93,7 +93,7 @@ const EnglishLevel = () => {
     return (
         <SELevelRail 
             id="ENGLISH_LEVEL"
-            title="Comment évaluer votre niveau en anglais ?"
+            title="Comment évaluez-vous votre niveau en anglais ?"
             arialLabel="English Level"
             defaultValue={selectedEnglishLevel}
             svgConstantName="ENGLISH"

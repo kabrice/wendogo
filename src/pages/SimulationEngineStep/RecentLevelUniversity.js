@@ -61,10 +61,15 @@ const RecentLevelUniversity = ({ universityLevels, isErrorPage }) => {
     const reportCards = ['reportCard3', 'reportCard2', 'reportCard1'];
     for (const reportCard of reportCards) {
       if (user?.[reportCard]?.length > 0) {
-        user[reportCard][user[reportCard].length - 1] = [];
+        // user[reportCard][user[reportCard].length - 1] = [];
+        // Create a new array to avoid direct mutation
+        const updatedReportCard = [...user[reportCard]];
+        updatedReportCard[updatedReportCard.length - 1] = []; // Replace the last item
+
+        // Update the user object with the new array
         updatedUser = {
           ...updatedUser,
-          [reportCard]: user[reportCard]
+          [reportCard]: updatedReportCard,
         };
         break;
       }

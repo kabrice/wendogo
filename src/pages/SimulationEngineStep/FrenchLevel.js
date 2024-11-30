@@ -99,7 +99,7 @@ const FrenchLevel = () => {
     return (
         <SELevelRail
             id="FRENCH_LEVEL"
-            title="Comment évaluer votre niveau de langue française ?"
+            title="Comment évaluez-vous votre niveau de langue française ?"
             arialLabel="French Level"
             defaultValue={selectedFrenchLevel}
             handleChange={handleChange}
