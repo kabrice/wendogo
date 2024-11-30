@@ -90,7 +90,7 @@ const KeepInTouch = (props) => {
         const rules = [
             { 
                 // Updated regex with proper escaping and all French characters
-                regex: /^[a-zA-ZÀ-ÿœŒàáâãäåçèéêëìíîïðòóôõöùúûüýÿ0-9\s,'.;'''’\-«»""„‹›]+$/,
+                regex: /^[a-zA-Z0-9\u00C0-\u017F\u0152\u0153\s,.;()'"'''‛«»„!?’-]+$/gm,
                 error: "Seules les lettres, les chiffres et les espaces sont autorisés." 
             },
             { 

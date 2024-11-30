@@ -115,7 +115,7 @@ const ContactModal = ({
   const validateMessage = (message) => {
     console.log('messagexx' , message);
     const rules = [
-        { regex: /^[a-zA-ZÀ-ÿœŒàáâãäåçèéêëìíîïðòóôõöùúûüýÿ0-9\s,'.;'''‛«»„"""-]+$/gm, error: "Seules les lettres, les chiffres et les espaces sont autorisés." },
+        { regex: /^[a-zA-Z0-9\u00C0-\u017F\u0152\u0153\s,.;()'"'''‛«»„!?’-]+$/gm, error: "Seules les lettres, les chiffres et les espaces sont autorisés." },
         { regex: /^[\s\S]{10,36000}$/, error: "Le contenu doit être compris entre 10 et 36000 caractères." },
         { regex: /^(?!.*[^\S\n]{2,})[\s\S]*$/, error: "Aucun espace consécutif n'est autorisé." },
         // Add more rules as needed
