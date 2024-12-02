@@ -1,6 +1,6 @@
 'use client';
 
-import { useState} from 'react';
+import {useEffect, useState} from 'react';
 import EdgarHead from '../assets/optimized/edgar_head.webp'
 
 import QuestionsOnTopic from '../components/QuestionsOnTopic';
@@ -13,8 +13,54 @@ import DataPrivacy from '../assets/optimized/dataprivacyd.webp'
 import SocialMediaLogo from '../assets/optimized/wendogo_jeu_concours.webp'
 import Head from 'next/head';
 import Image from 'next/image';
+import ServicePricingCard from '../components/ServicePricingCard';
 
 function WendogoPrivacy(){
+
+
+  const [deviceType, setDeviceType] = useState('lg')
+  const [browserWidth, setBrowserWidth] = useState(0)
+  const [openContactModal, setOpenContactModal] = useState(false) 
+  const [isSpecialDeviceType, setIsSpecialDeviceType] = useState(false)
+
+  useEffect(() => {
+
+      const handleResize = () => {
+          const browserWidth = document.documentElement.clientWidth;
+          //console.log('browserWidth', browserWidth)
+          if(browserWidth>=1300) {
+              setDeviceType('lg+'); 
+          }
+          if (browserWidth>1100 && browserWidth <= 1300) {
+              setDeviceType('lg'); 
+          }
+          if (browserWidth>991 && browserWidth <= 1100) {
+              setDeviceType('md');
+          } 
+          if (browserWidth>764 && browserWidth <= 991) {
+              setDeviceType('sm');
+          } 
+          if (browserWidth>480 && browserWidth <= 764) {
+              setDeviceType('xs');
+          } 
+          if(browserWidth <= 670) {
+              setIsSpecialDeviceType(true)
+          }
+          if (browserWidth <= 480) {
+              setDeviceType('xss');
+          } 
+      };
+
+      // Call handleResize immediately to set initial device type
+      handleResize();
+      
+      // Then add the event listener for subsequent resizes
+      window.addEventListener('resize', handleResize);
+      return () => {
+          window.removeEventListener('resize', handleResize);
+      };
+      
+    }, [browserWidth]);  
     const whatsapp =  <svg className="ButtonLinkstyles__Picto-sc-1s2ygn0-1 hkJOZg" width="24px" height="24.6350302px" viewBox="0 0 24 24.6350302" version="1.1" xmlns="http://www.w3.org/2000/svg">
                         <title>whatsapp</title>
                         <g id="Page-1" stroke="none" strokeWidth={1} fill="none" fillRule="evenodd">
@@ -133,7 +179,7 @@ function WendogoPrivacy(){
                       <div className="styles__ContentWrapper-sc-1x6pdn2-1 UkXxP">
                         <h2 className="styles__BaseTypo-sc-198xhmk-0 czksA-D styles__Title-sc-1x6pdn2-10 bSmDAY"> Vous pouvez utiliser Wendogo sereinement</h2>
                         <div className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__Content-sc-1qjc0o4-1 cLBZMY">
-                          <p className="styles__Block-sc-1qjc0o4-0 styles__Paragraph-sc-1qjc0o4-2 ktDrhZ bbNzRf"> Une demande de visa implique un grand nombre d'informations personnelles : identité, situation sociale...
+                          <p className="styles__Block-sc-1qjc0o4-0 styles__Paragraph-sc-1qjc0o4-2 ktDrhZ bbNzRf"> Prépaer son voyage à l'étranger implique un grand nombre d'informations personnelles : identité, situation sociale...
                            Celles-ci sont indispensables pour que nos équipes et nos algorithmes puissent évaluer la viabilité de votre projet et vous accompagner dans les meilleures conditions. </p>
                           <p className="styles__Block-sc-1qjc0o4-0 styles__Paragraph-sc-1qjc0o4-2 ktDrhZ bbNzRf"> Vous nous faites confiance pour vous accompagner, à 
                           nous de <u> faire le maximum pour sécuriser vos données.</u> Et nous nous engageons évidemment à ne les utiliser que pour le bien de votre projet.</p>
@@ -258,6 +304,9 @@ function WendogoPrivacy(){
                     <path d="M31.63,18.88A2.19,2.19,0,0,0,30,17.37,54.83,54.83,0,0,0,23,17a57.93,57.93,0,0,0-7,.35,2.25,2.25,0,0,0-1.59,1.53A21.58,21.58,0,0,0,14,23a21.47,21.47,0,0,0,.37,4.12A2.19,2.19,0,0,0,16,28.63,54.91,54.91,0,0,0,23,29a57.93,57.93,0,0,0,7-.35,2.23,2.23,0,0,0,1.59-1.51A21.67,21.67,0,0,0,32,23,20.83,20.83,0,0,0,31.63,18.88ZM21.21,25.57V20.43L25.89,23Z" />
                 </symbol>
             </svg>
+            <div className="app-lg">
+              <ServicePricingCard deviceType={deviceType} setOpenContactModal={setOpenContactModal} openContactModal={openContactModal} isSpecialDeviceType={isSpecialDeviceType}/> 
+            </div>
             <Footer/>                    
           </div>
 

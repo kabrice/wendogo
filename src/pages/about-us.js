@@ -68,7 +68,7 @@ function AboutUs(){
                         <h1 className="styles__BaseTypo-sc-198xhmk-0 dEWLNu styles__Title-sc-1wzyvpr-10 fGJAqT"> Qui sont vos conseillers ?</h1>
                         <div className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__Content-sc-1qjc0o4-1 cLBZMY styles__Description-sc-1wzyvpr-2 kkxsWA">
                             <p className="styles__Block-sc-1qjc0o4-0 styles__Paragraph-sc-1qjc0o4-2 ktDrhZ bbNzRf"> 
-                      Les conseillers Wendogo, tout aussi passionnés que compétents, vous guident de manière optimale à chaque étape de votre demande de visa avec implication et détermination.</p>
+                      Les conseillers Wendogo, tout aussi passionnés que compétents, vous guident de manière optimale à chaque étape de votre projet de voyage avec implication et détermination.</p>
                         </div> 
                         </div>
                         <div className="styles__ImageContainer-sc-1wzyvpr-5 fWJBuN">
@@ -153,7 +153,7 @@ function AboutUs(){
                               <div>
                                 <div className="BlockquoteItem__EntryTitle-sc-1vut18p-3 dtrzsL"> Nos conseillers sont vos copilotes. </div>
                                 <div className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__Content-sc-1qjc0o4-1 cLBZMY BlockquoteItem__EntryText-sc-1vut18p-4 gtHqOe">
-                                  <p className="styles__Block-sc-1qjc0o4-0 styles__Paragraph-sc-1qjc0o4-2 ktDrhZ bbNzRf"> Un projet de demande de visa étant aussi excitant que stressant, nous mettons un point d’honneur à l’accompagnement.  Transparent et à l’écoute, votre Expert immigration veille à vous impliquer dans chacune des étapes du dossier. Il vous épaule tel un copilote, dans votre prise de décision.</p>
+                                  <p className="styles__Block-sc-1qjc0o4-0 styles__Paragraph-sc-1qjc0o4-2 ktDrhZ bbNzRf"> Un projet de voyage étant aussi excitant que stressant, nous mettons un point d’honneur à l’accompagnement.  Transparent et à l’écoute, votre Expert immigration veille à vous impliquer dans chacune des étapes du dossier. Il vous épaule tel un copilote, dans votre prise de décision.</p>
                                 </div>
                               </div>
                             </div>

@@ -227,7 +227,7 @@ const helper = {
         });
         return isIgnored;
       },
-      updateBAC : function(isInUniversityGlobal, user, downgradedYear) {
+      updateBAC : function(isInUniversityGlobal, user, downgradedYear, isSchoolYear = false) {
         // Un peu contradictoire avec ce qui est dit dans la base de données, mais ici c'est juste pour le design 
         let educationLevel
         if(isInUniversityGlobal){
@@ -245,7 +245,7 @@ const helper = {
         console.log('updatedNumberlastCharacter', {educationLevel, lastTwoCharacters, updatedNumber})
         // Handle different cases based on the value of updatedNumber
         if(updatedNumber === 1){
-          return 'du diplôme du Baccalauréat et BAC+1';
+          return isSchoolYear ?  'BAC+1' : 'du Baccalauréat et BAC+1';
         }else if (updatedNumber === 0) {
           return 'de Terminale';
         } else if (updatedNumber === -1) {

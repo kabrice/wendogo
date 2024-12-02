@@ -6,9 +6,10 @@ import { activateUniversity, deactivateUniversity } from '../../redux/university
 import { setStep } from '../../redux/simulationStepSlice';
 import { SIMULATION_ENGINE_STEPS } from '../../utils/Constants';
 import SEDualSelection from "../../components/SimulationEngine/SEDualSelection";
+import TutorialModal from "../ressources/TutorialModal";
 import helper from '../../utils/Helper';
 import { setUser } from '../../redux/userSlice';
-import { Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react"; 
 
 function SchoolLevel() {
     const dispatch = useDispatch();
@@ -18,17 +19,24 @@ function SchoolLevel() {
     const user = useSelector((state) => state.user);
     const [schoolLevelSelected, setSchoolLevelSelected] = useState('Supérieur');
     const [showContinueBtn, setShowContinueBtn] = useState(false);
+    const [openTutorial, setOpenTutorial] = useState(true);
+
+
 
     // Initialize user data
     useEffect(() => {
         const initializeData = () => {
             
             if (!user) return;
-
-            
+           
             setSchoolLevelSelected(user?.schoolLevelSelected || 'Supérieur');
             setShowContinueBtn(user?.simulationStep === SIMULATION_ENGINE_STEPS.SCHOOL_LEVEL);
-            
+
+            // Only set openTutorial to false if it's explicitly set to false in user data
+            // This ensures the modal opens on first load and subsequent loads if not explicitly closed
+            if (user.openTutorial === false) {
+                setOpenTutorial(false);
+            }
             // Set initial university state
             if (user?.schoolLevelSelected === 'Supérieur') {
                 dispatch(activateUniversity());
@@ -41,6 +49,8 @@ function SchoolLevel() {
 
         initializeData();
     }, [dispatch]);
+
+
 
     const handleSchoolLevelSelection = (item) => {
         setSchoolLevelSelected(item);
@@ -104,15 +114,33 @@ function SchoolLevel() {
         );
     }
 
+    const closeTutorial = () => {
+        setOpenTutorial(false);
+        const updatedUser = {
+            ...user,
+            openTutorial : false,
+            date: new Date().toISOString()
+        };
+        
+        console.log('updatedUser:', updatedUser);
+        dispatch(setUser(updatedUser)); 
+        helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
+    };
+
     return (
-        <SEDualSelection 
-            title="Quel est votre degré d'enseignement le plus récent ?"
-            valueSelected={schoolLevelSelected}
-            handleValueSelected={handleSchoolLevelSelection}
-            handleContinue={handleContinue}
-            icons={icons}
-            showContinueBtn={showContinueBtn}
-        />
+        <>
+            <TutorialModal 
+                isOpen={openTutorial} 
+                onClose={() => closeTutorial()}/>
+            <SEDualSelection 
+                title="Quel est votre degré d'enseignement le plus récent ?"
+                valueSelected={schoolLevelSelected}
+                handleValueSelected={handleSchoolLevelSelection}
+                handleContinue={handleContinue}
+                icons={icons}
+                showContinueBtn={showContinueBtn}
+            />
+        </>
     );
 }
 

@@ -130,7 +130,7 @@ const SchoolYear2 = ({ schoolYears, isErrorPage }) => {
 
     return (
         <SEDropDownList 
-            title={`Votre ${helper.updateBAC(isInUniversityGlobal, user, 1)} correspond à quelle année scolaire ?`}
+            title={`Votre ${helper.updateBAC(isInUniversityGlobal, user, 1, true)} correspond à quelle année scolaire ?`}
             svgConstantName="YEAR_N_1"
             newRef={newRef}
             collapseOption={collapseYearOption}

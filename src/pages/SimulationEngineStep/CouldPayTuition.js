@@ -10,7 +10,7 @@ import { SIMULATION_ENGINE_STEPS } from '../../utils/Constants';
 import { Loader2 } from "lucide-react";
 import { setUser } from '../../redux/userSlice';
 
-const FIRST_PARAGRAPHS = [`Êtes-vous en train de préparer votre demande de visa et souhaitez-vous plus d'informations sur la partie relative au garant financier ? 
+const FIRST_PARAGRAPHS = [`Êtes-vous en train de préparer votre voyage à l'étranger et souhaitez-vous plus d'informations sur la partie relative au garant financier ? 
     <p>Tout d'abord, vous devez savoir que la raison la plus courante de refus de visa est la motif n°2 :</p>
     <p><strong>Vous n'avez pas fourni de preuve démontrant que vous disposez de ressources suffisantes pour couvrir les dépenses de toute nature durant votre séjour en France, ou que vous n'êtes pas en mesure d'acquérir légalement ces moyens.</strong></p>
     <p>Cette raison est utilisée lorsque l'étudiant ne présente pas suffisamment d'éléments prouvant de manière incontestable qu'il/elle disposera des ressources nécessaires (supérieures ou égales à 615 €/mois) pour au moins un an.</p>

@@ -65,7 +65,7 @@ function CGU(){
                         <h2 id="2-objet" size="large" className="styles__SubHeading-sc-xwwv8k-0 PVMuW" format="default"> 2. Objet </h2>
                       </div>
                       <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
-                        <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> La PLATEFORME WENDOGO a pour objet et pour finalités de proposer des services d'accompagnement en demande de visa. Les UTILISATEURS bénéficient des services proposés par l’OPÉRATEUR, décrits par les présentes. Les présentes CONDITIONS GÉNÉRALES de VENTE et d’UTILISATION (ou CGV-CGU) ont pour objet de régir l’utilisation de la PLATEFORME par l’UTILISATEUR auquel l’OPÉRATEUR a librement confié des identifiants de connexion. L’OPÉRATEUR se réserve la possibilité de modifier à tout moment les présentes CGU. Les nouvelles dispositions seront portées à la connaissance des UTILISATEURS au moins quinze (15) jours avant leur date d’entrée en vigueur et en application. </p>
+                        <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> La PLATEFORME WENDOGO a pour objet et pour finalités de proposer des services pour vous accompagner dans votre projet de voyage. Les UTILISATEURS bénéficient des services proposés par l’OPÉRATEUR, décrits par les présentes. Les présentes CONDITIONS GÉNÉRALES de VENTE et d’UTILISATION (ou CGV-CGU) ont pour objet de régir l’utilisation de la PLATEFORME par l’UTILISATEUR auquel l’OPÉRATEUR a librement confié des identifiants de connexion. L’OPÉRATEUR se réserve la possibilité de modifier à tout moment les présentes CGU. Les nouvelles dispositions seront portées à la connaissance des UTILISATEURS au moins quinze (15) jours avant leur date d’entrée en vigueur et en application. </p>
                       </div>
                       <div className="styles__Block-sc-1b5sr4l-5 styles__BlockHeading-sc-1b5sr4l-8 lhYawK lngqIb">
                         <h2 id="3-acces-et-utilisation-de-la-plateforme-pretto" size="large" className="styles__SubHeading-sc-xwwv8k-0 PVMuW" format="default"> 3. Accès et utilisation de la PLATEFORME WENDOGO </h2>
@@ -89,7 +89,7 @@ function CGU(){
                         <h2 id="4-services-de-la-plateforme-pretto" size="large" className="styles__SubHeading-sc-xwwv8k-0 PVMuW" format="default"> 4. Services de la PLATEFORME WENDOGO </h2>
                       </div>
                       <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
-                        <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> Les principaux services proposés aux UTILISATEURS sont&nbsp;: - Des informations relatives aux demandes de visa, - La collecte des données nécessaires à l’analyse pour l'obtention de visa, - L’analyse de demandes de visa, - Des simulateurs de demande de visa, comportant des Taux d'acception Effectifs Globaux (TAEG). </p>
+                        <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> Les principaux services proposés aux UTILISATEURS sont&nbsp;: - Des informations relatives aux demandes de visa, - La collecte des données nécessaires à l’analyse pour l'obtention de visa, - L’analyse de projet de voyage, - Des simulateurs de demande de visa, comportant des Taux d'acception Effectifs Globaux (TAEG). </p>
                       </div>
                       <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
                         <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> Le logiciel de simulation de visa permettent </p>
@@ -121,7 +121,7 @@ function CGU(){
                         </ul>
                       </div>
                       <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
-                        <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> L’OPÉRATEUR attire l’attention de l’UTILISATEUR sur le fait que la demande de visa pour le compte d’un couple ou tiers peut s’effectuer à la demande d’un seul UTILISATEUR. 
+                        <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> L’OPÉRATEUR attire l’attention de l’UTILISATEUR sur le fait que le projet de voyage pour le compte d’un couple ou tiers peut s’effectuer à la demande d’un seul UTILISATEUR. 
                         En revanche, la souscription d’un contrat nécessite les consentements individuels de chaque emprunteur et de chaque souscripteur majeur. </p>
                       </div>
                       <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
@@ -134,7 +134,7 @@ function CGU(){
                         <h2 id="6-les-obligations-de-loperateur" size="large" className="styles__SubHeading-sc-xwwv8k-0 PVMuW" format="default"> 6. Les obligations de l’OPÉRATEUR </h2>
                       </div>
                       <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
-                        <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> L’OPÉRATEUR propose aux UTILISATEURS un contenu informatif sous différentes formes&nbsp;: notamment des articles, des infographies, des simulations financières, ou des comparaisons d’offres de crédit. Ces contenus visent à fournir aux UTILISATEURS des informations pratiques, à améliorer leurs connaissances générales des démarches visa et à les aider à préparer, à élaborer et à conduire leurs projets de demande de visa. </p>
+                        <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> L’OPÉRATEUR propose aux UTILISATEURS un contenu informatif sous différentes formes&nbsp;: notamment des articles, des infographies, des simulations financières, ou des comparaisons d’offres de crédit. Ces contenus visent à fournir aux UTILISATEURS des informations pratiques, à améliorer leurs connaissances générales des démarches visa et à les aider à préparer, à élaborer et à conduire leurs projets de voyage. </p>
                       </div>
                       <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
                         <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> L’OPÉRATEUR sélectionne puis délivre ces informations à titre purement indicatif ; en aucun cas le contenu présenté n’a vocation à être exhaustif. 
@@ -145,7 +145,7 @@ function CGU(){
                         <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> L’OPÉRATEUR met donc en garde chaque UTILISATEUR contre l’usage inadéquat qui pourrait être fait des informations générales et non individualisées diffusées par la PLATEFORME. </p>
                       </div>
                       <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
-                        <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> Agissant en tant qu’Intermédiaire en demande de visa, 
+                        <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> Agissant en tant qu’Intermédiaire en projet de voyage, 
                         l’OPÉRATEUR est soumis à une obligation générale de moyens et n’est tenu d’aucune obligation de résultat. Il délivre les obligations prévues par la Loi spécifiquement à ses activités. Aucun UTILISATEUR, en aucun cas, ne pourra rechercher la responsabilité de l’OPÉRATEUR, ni de ses partenaires ni de ses préposés, au titre d’informations indicatives proposées par le site Wendogo.com. </p>
                       </div>
                       <div className="styles__Block-sc-1b5sr4l-5 lhYawK">

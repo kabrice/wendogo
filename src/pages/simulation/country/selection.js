@@ -154,7 +154,7 @@ function SimulationCountrySelection(){
                             <div className="MuiStack-root css-j7qwjs">
                               <div className="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-sljwc1">
                                 <div className="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-1 css-1vad3iu" >
-                                  <div className="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineNone ButtonProduct css-1av9as7" style={{textDecoration:'none'}} title="Simulez une demande de visa pour la France" data-testid="hpTopLayerButtonProduct-emprunteur"   onClick={(e) => {
+                                  <div className="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineNone ButtonProduct css-1av9as7" style={{textDecoration:'none'}} title="Simulez votre projet de voyage pour la France" data-testid="hpTopLayerButtonProduct-emprunteur"   onClick={(e) => {
                                           e.preventDefault(); // Prevent immediate navigation
                                           handleCountrySelection(e, 'FR');
                                         }}>
@@ -177,7 +177,7 @@ function SimulationCountrySelection(){
                                   </div>
                                 </div>
                                 <div className="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-1 css-1vad3iu">
-                                  <span className="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineNone ButtonProduct css-1av9as7" title="Simulez une demande de visa pour le Canada" style={{textDecoration:'none'}} data-testid="hpTopLayerButtonProduct-energie" onClick={(e)=>handleCountrySelection(e, 'CA')}>
+                                  <span className="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineNone ButtonProduct css-1av9as7" title="Simulez votre projet de voyage pour le Canada" style={{textDecoration:'none'}} data-testid="hpTopLayerButtonProduct-energie" onClick={(e)=>handleCountrySelection(e, 'CA')}>
                                     <div className="MuiStack-root css-2gjs0d">
                                       <div className="MuiStack-root css-w1kzse">
                                         <div className="MuiBox-root css-68zbsl">

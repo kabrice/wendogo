@@ -315,7 +315,7 @@ function HomePage(){
                 <div className="main-screen__row">
                    <div className="main-screen__content">
                     <h1 className="HeroLeft__Title-sc-1axg5uv-3 jDYqud">Préparez votre projet de voyage pour la France ou le Canada simplement</h1>
-                    <div className="main-screen__content-subscribe"> C’est trop beau parce que c’est vrai&nbsp;: transparence, expertise et implication.  Wendogo, c’est l'agence de visa en ligne qui vous accompagne de A à Z pour préparer au mieux votre demande de visa </div>
+                    <div className="main-screen__content-subscribe"> C’est trop beau parce que c’est vrai&nbsp;: transparence, expertise et implication. Wendogo, votre partenaire en ligne pour un accompagnement complet dans la préparation de votre voyage à l'étranger.</div>
                     <button className="PrimaryButton__Container-sc-1vkvp7q-0 iroZSn HeroLeft__PrimaryButton-sc-1axg5uv-6 jJuKZd">
                       <span className="PrimaryButton__Overlay-sc-1vkvp7q-3 sSEIO">
                         <span className="PrimaryButton__OverlayBackground-sc-1vkvp7q-4 kxNCsz">
@@ -613,8 +613,7 @@ function HomePage(){
                             <div className="div-block-7">
                               <div className="work__item-num">5</div>
                               <h2 className="steps">Suivi des démarches</h2>
-                              <p className="paragraph-2"> 
-                                Nous vous accompagnons à chaque étape de votre demande de visa, offrant une assistance complète pour l'obtention des documents gouvernementaux nécessaires. </p>
+                              <p className="paragraph-2">Nous vous accompagnons à chaque étape de votre projet de voyage, en vous offrant un soutien complet pour obtenir les documents officiels requis. </p>
                             </div>
                             <div className="div-block-7">
                               <div className="work__item-num">6</div>
@@ -663,7 +662,7 @@ function HomePage(){
                         <p className="Content__Catchphrase-sc-hd6o8b-0 fCnjcm"> Des conseillers pas comme les autres&nbsp;: </p>
                         <h2 className="Content__Title-sc-hd6o8b-1 erjsGF"> Leur priorité c’est vous&nbsp;! </h2>
                         <p className="Content__Description-sc-hd6o8b-2 hhQjSJ"> Un conseiller, c’est bien. Un conseiller expert et pédagogue qui vous comprend, c’est mieux. 
-                                                                                Les conseillers Wendogo vous accompagnent dans votre projet de demande de visa avec implication et réactivité. </p>
+                                                                                Les conseillers Wendogo vous accompagnent dans votre projet de voyage avec implication et réactivité. </p>
                         <button className="PrimaryButton__Container-sc-1vkvp7q-0 iroZSn">
                           <span className="PrimaryButton__Overlay-sc-1vkvp7q-3 sSEIO">
                             <span className="PrimaryButton__OverlayBackground-sc-1vkvp7q-4 kxNCsz">

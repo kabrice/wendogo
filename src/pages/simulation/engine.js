@@ -352,6 +352,14 @@ const SimulationEngine = ({ spokenLanguages, academicYearOrganizations, markSyst
                                                         <li>✓ Vos relevés de notes des 3 dernières années, baccalauréat inclus</li>
                                                         <li>✓ Un ordinateur pour une meilleure navigation</li>
                                                         <li>✓ 30min de disponibilité pour une saisie calme et posée </li>
+                                                        <li>✓ Notre tutoriel sur YouTube, accessible en 
+                                                        <a href="https://www.youtube.com/watch?v=wUrgx3WLURI" 
+                                                                target="_blank" 
+                                                                rel="noopener noreferrer" 
+                                                                style={{ color: "rgb(33, 150, 243)", textDecoration: "none", marginLeft: "5px" }}>
+                                                                cliquant ici
+                                                            </a>.
+                                                        </li>
                                                     </ul>
                                                     {/* <p>Les dates de candidatures 2024 pour Campus France debutent en Novembre...</p> */}
                                                     </div>
