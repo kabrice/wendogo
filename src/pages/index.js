@@ -181,7 +181,7 @@ function HomePage(){
         <title>Wendogo - Expert en ligne pour organiser vos voyages à l'étranger</title>
         <meta
           name="description"
-          content="Wendogo est votre expert en ligne pour vos démarches de voyage à l'international"
+          content="Wendogo, votre expert en ligne pour simplifier vos démarches de mobilité internationale."
         />
         <meta property="og:title" content="Wendogo - Spécialiste en Mobilité Internationale" />
         <meta

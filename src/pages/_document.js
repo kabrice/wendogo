@@ -17,7 +17,7 @@ export default function Document() {
         <meta property="og:url" content="https://wendogo.com/" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Wendogo" />
-        <meta property="og:description" content="Expert en ligne pour vos projets d'émmigration" />
+        <meta property="og:description" content="Spécialiste en ligne pour vos projets d'études et de mobilité internationale." />
         <meta property="og:image" content="/social_media_logo.png" />
 
         {/* Apple Touch Icon */}
