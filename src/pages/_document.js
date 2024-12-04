@@ -1,4 +1,4 @@
-import { Html, Head, Main, NextScript } from 'next/document';
+import { Html, Head, Main, NextScript } from 'next/document'; 
 
 export default function Document() {
   return (
@@ -18,10 +18,10 @@ export default function Document() {
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Wendogo" />
         <meta property="og:description" content="Spécialiste en ligne pour vos projets d'études et de mobilité internationale." />
-        <meta property="og:image" content="/social_media_logo.png" />
+        <meta property="og:image" content="/social_media_logo.webp"/>
 
         {/* Apple Touch Icon */}
-        <link rel="apple-touch-icon" href="/social_media_logo.png" />
+        <link rel="apple-touch-icon" href="/social_media_logo.webp" />
 
         {/* CSS for Flag Icons */}
         <link

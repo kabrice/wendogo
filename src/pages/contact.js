@@ -1,10 +1,10 @@
 'use client';
 
 import Head from 'next/head'; 
-import SocialMediaLogo from '../assets/optimized/social_media_logo.webp'
 import Footer from '../components/Footer';
 import HeaderMenuBar from '../components/HeaderMenuBar';
 import CoffeeCup from '../assets/optimized/coffeecup.webp'
+import SocialMediaLogo from '../assets/optimized/social_media_logo.webp'
 import { FloatingWhatsApp } from 'react-floating-whatsapp';
 import Image from 'next/image';
 
@@ -60,8 +60,8 @@ function Contact(){
                           </div>
                         </div>
                       </div>
-                      <FloatingWhatsApp phoneNumber="330745493086" accountName="Wendogo" avatar={SocialMediaLogo} statusMessage="Répond en général dans l'heure" 
-                        chatMessage={'Salut toi 🤝 \nSi tu as une question, suis ces étapes pour obtenir une assistance rapide :\n1. Présente toi\n2. Indique l\'objet de ton message \n3. Décris clairement ton problème 😉'}
+                      <FloatingWhatsApp phoneNumber="330668156073" accountName="Wendogo" avatar="/social_media_logo.webp" statusMessage="Répond en général dans l'heure" 
+                        chatMessage={'Salut toi 🤝 \nPour une assistance rapide, suis ces étapes simples :\n1. Présente-toi brièvement.\n2. Indique l\'objet de ton message \n3. Décris ton problème de manière claire et détaillée 😉.'}
                         placeholder={"Racontes nous ce qui te préoccupe"} chatboxHeight={500} CSSProperties={{color:'#001435'}}/>
                     </main> 
 

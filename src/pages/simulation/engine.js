@@ -341,7 +341,7 @@ const SimulationEngine = ({ spokenLanguages, academicYearOrganizations, markSyst
                                                 <div className="Stack-child  " style={{ paddingTop: 8 }}>
                                                     <div className="Heading s isWeak  MegaTip-title">
                                                     <div className="Stack  stackColumn " style={{ flexDirection: "column", padding: 0, alignItems: "stretch" }}>
-                                                        <div className="Stack-child  " style={{ paddingTop: 8 }}> Avant de commencer, nous vous recommandons fortement ceci : </div>
+                                                        <div className="Stack-child  " style={{ paddingTop: 8 }}>Avant de commencer, nous vous conseillons vivement de préparer : </div>
                                                     </div>
                                                     </div>
                                                 </div>

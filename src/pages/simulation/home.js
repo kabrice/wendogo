@@ -21,7 +21,8 @@ import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import { Loader2 } from "lucide-react";
 import { setUser } from '../../redux/userSlice'; 
-import { IPINFO_URL } from '../../utils/Constants';
+import { IPINFO_URL } from '../../utils/Constants'; 
+import { FloatingWhatsApp } from 'react-floating-whatsapp';
 
 const KeepInTouch = dynamic(() => import('../ressources/KeepInTouch'), {
   loading: () => <div className="flex items-center justify-center min-h-[200px]">
@@ -260,6 +261,9 @@ const SimulationHome = ({ leadStatus=[], isErrorHomePage=false }) => {
             </div>
           )
         )}
+        <FloatingWhatsApp phoneNumber="330668156073" accountName="Wendogo" avatar="/social_media_logo.webp" statusMessage="Répond en général dans l'heure" 
+                        chatMessage={'Salut toi 🤝 \nPour une assistance rapide, suis ces étapes simples :\n1. Présente-toi brièvement.\n2. Indique l\'objet de ton message \n3. Décris ton problème de manière claire et détaillée 😉.'}
+                        placeholder={"Racontes nous ce qui te préoccupe"} chatboxHeight={500} CSSProperties={{color:'#001435'}}/>
         <Footer/>                    
       </div>
     );

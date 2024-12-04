@@ -36,7 +36,8 @@ import { Pagination, Autoplay } from "swiper";
 import { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 // import Head from 'next/head'
-
+ 
+import { FloatingWhatsApp } from 'react-floating-whatsapp';
 import Footer from '../components/Footer'; 
 
 function HomePage(){
@@ -302,7 +303,7 @@ function HomePage(){
               <meta property="og:type"          content="website" />
               <meta property="og:title"         content="Wendogo" />
               <meta property="og:description"   content="Expert en ligne pour vos demandes de visa" />
-              <meta property="og:image"         content={'https://wendogo.com/'+SocialMediaLogo} /> 
+              <meta property="og:image"         content={SocialMediaLogo} /> 
               <title>Wendogo</title>
               <meta name="description"          content="Expert en ligne pour vos demandes de visa"/>
             </Head>
@@ -795,6 +796,9 @@ function HomePage(){
                       </div>
                     </div>
                   </main>
+                  <FloatingWhatsApp phoneNumber="330668156073" accountName="Wendogo" avatar="/social_media_logo.webp" statusMessage="Répond en général dans l'heure" 
+                        chatMessage={'Salut toi 🤝 \nPour une assistance rapide, suis ces étapes simples :\n1. Présente-toi brièvement.\n2. Indique l\'objet de ton message \n3. Décris ton problème de manière claire et détaillée 😉.'}
+                        placeholder={"Racontes nous ce qui te préoccupe"} chatboxHeight={500} CSSProperties={{color:'#001435'}}/>
                   <Footer/>
                 </section>
             </div>           
