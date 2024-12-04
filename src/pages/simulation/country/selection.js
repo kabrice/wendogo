@@ -45,7 +45,38 @@ function SimulationCountrySelection(){
     const dispatch = useDispatch();
     const [updateUser] = useUpdateUserMutation();
     const [showMessage, setShowMessage] = useState(false);
+    const spinnerActive = useSelector((state) => state.spinner.active);
+    const [isFranceLoading, setIsFranceLoading] = useState(false);
+    const [isNavigating, setIsNavigating] = useState(false);
 
+    useEffect(() => {
+      const handleStart = () => {
+        setIsNavigating(true);
+        dispatch(activateSpinner());
+      };
+    
+      const handleComplete = () => {
+        setIsNavigating(false);
+        setIsFranceLoading(false);
+        dispatch(deactivateSpinner());
+      };
+    
+      const handleError = () => {
+        setIsNavigating(false);
+        setIsFranceLoading(false);
+        dispatch(deactivateSpinner());
+      };
+    
+      router.events.on('routeChangeStart', handleStart);
+      router.events.on('routeChangeComplete', handleComplete);
+      router.events.on('routeChangeError', handleError);
+    
+      return () => {
+        router.events.off('routeChangeStart', handleStart);
+        router.events.off('routeChangeComplete', handleComplete);
+        router.events.off('routeChangeError', handleError);
+      };
+    }, [router, dispatch]);
 
     useEffect(() => {
       console.log('Current user state:', user);
@@ -61,38 +92,45 @@ function SimulationCountrySelection(){
     }
 
     async function handleCountrySelection(event, countryIso2) {
-      //quel pays résidez-vousevent.preventDefault();
-      
+      event.preventDefault();
+          
       if (countryIso2 === 'CA') {
         setIsKeepInTouch(true);
         return;
       }
     
       try {
+        setIsFranceLoading(true);
+        setIsNavigating(true);
         dispatch(activateSpinner());
         
-        // First update the user data
         const updatedUser = {
           ...user,
           subscription_step: '/simulation/engine?country=' + countryIso2
         };
     
-        // Update Redux and localStorage before making the API call
         dispatch(setUser(updatedUser));
         helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
     
-        // Make the API call
         await updateUser(updatedUser);
         
-        // Only redirect after everything is successful
-        dispatch(deactivateSpinner());
-        router.push('/simulation/engine?country=' + countryIso2);
+        // Push to the new route and wait for it to complete
+        try {
+          await router.push('/simulation/engine?country=' + countryIso2);
+        } catch (error) {
+          // If navigation fails, make sure to clean up
+          setIsFranceLoading(false);
+          setIsNavigating(false);
+          dispatch(deactivateSpinner());
+          throw error; // Re-throw to be caught by outer catch block
+        }
         
       } catch (error) {
+        setIsFranceLoading(false);
+        setIsNavigating(false);
         dispatch(deactivateSpinner());
         helper.triggerToastError(error);
         
-        // Optionally reset the user state if the API call fails
         const originalUser = { ...user };
         dispatch(setUser(originalUser));
         helper.setLocalStorageWithExpiration('wendogouser', originalUser);
@@ -157,13 +195,24 @@ function SimulationCountrySelection(){
                             <div className="MuiStack-root css-j7qwjs">
                               <div className="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-sljwc1">
                                 <div className="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-1 css-1vad3iu" >
-                                  <div className="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineNone ButtonProduct css-1av9as7" style={{textDecoration:'none'}} title="Simulez votre projet de voyage pour la France" data-testid="hpTopLayerButtonProduct-emprunteur"   onClick={(e) => {
+                                  <div className="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineNone ButtonProduct css-1av9as7" 
+                                  style={{textDecoration:'none', position: 'relative'}} 
+                                  title="Simulez votre projet de voyage pour la France" 
+                                  data-testid="hpTopLayerButtonProduct-emprunteur"   onClick={(e) => {
                                           e.preventDefault(); // Prevent immediate navigation
                                           handleCountrySelection(e, 'FR');
                                         }}>
                                     <div className="MuiStack-root css-2gjs0d">
                                       <div className="MuiStack-root css-w1kzse">
                                         <div className="MuiBox-root css-68zbsl">
+                                        {isFranceLoading ? (
+                                            <div className="flex items-center justify-center h-full">
+                                              <div className="flex flex-col items-center gap-2">
+                                                <Loader2 className="w-6 h-6 animate-spin text-white" />
+                                                <span className="text-white text-sm">Chargement en cours...</span>
+                                              </div>
+                                            </div>
+                                          ) : (       
                                         <svg width="170px" height="122.777778px" viewBox="0 0 170 122.777778" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
                                           <title>flag-for-flag-france-svgrepo-com</title>
                                           <g id="Page-1" stroke="none" strokeWidth={1} fill="none" fillRule="evenodd">
@@ -174,6 +223,7 @@ function SimulationCountrySelection(){
                                             </g>
                                           </g>
                                         </svg>
+                                         )}
                                         </div>
                                       </div>
                                     </div>
@@ -345,7 +395,15 @@ function SimulationCountrySelection(){
               <FloatingWhatsApp phoneNumber="330668156073" accountName="Wendogo" avatar="/social_media_logo.webp" statusMessage="Répond en général dans l'heure" 
                         chatMessage={'Salut toi 🤝 \nPour une assistance rapide, suis ces étapes simples :\n1. Présente-toi brièvement.\n2. Indique l\'objet de ton message \n3. Décris ton problème de manière claire et détaillée 😉.'}
                         placeholder={"Racontes nous ce qui te préoccupe"} chatboxHeight={500} CSSProperties={{color:'#001435'}}/>
-              <Footer/>                    
+              <Footer/> 
+              {spinnerActive && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-white p-4 rounded-lg flex items-center gap-3">
+              <Loader2 className="w-6 h-6 animate-spin text-blue-600" />
+              <span>Chargement en cours...</span>
+            </div>
+          </div>
+        )}                   
           </div>}</>
 
 }
