@@ -566,7 +566,7 @@ button {
 	font-family: Roboto;
 	font-style: normal;
 	font-weight: 400;
-	src: local("Roboto-Regular"), url(/fonts/Roboto-Regular.latin-cfba0239aa54fa9645fe4204ba703146.woff2) format("woff2");
+	src: local("Roboto-Regular"), url(./fonts/Roboto-Regular.latin-cfba0239aa54fa9645fe4204ba703146.woff2) format("woff2");
 	unicode-range: U+00??, U+0131, U+0152-0153, U+02bb-02bc, U+02c6, U+02da, U+02dc, U+0304, U+0308, U+0329, U+2000-206f, U+2074, U+20ac, U+2122, U+2191, U+2193, U+2212, U+2215, U+feff, U+fffd;
 }
 
@@ -576,7 +576,7 @@ button {
 	font-stretch: 100%;
 	font-style: normal;
 	font-weight: 600;
-	src: url(/fonts/Roboto-SemiBold.latin-5c5742e4dd862ff9c8432afa714e85ea.woff2) format("woff2");
+	src: url(./fonts/Roboto-SemiBold.latin-5c5742e4dd862ff9c8432afa714e85ea.woff2) format("woff2");
 	unicode-range: U+0100-02af, U+0304, U+0308, U+0329, U+1e00-1e9f, U+1ef2-1eff, U+2020, U+20a0-20ab, U+20ad-20cf, U+2113, U+2c60-2c7f, U+a720-a7ff;
 }
 
@@ -586,7 +586,7 @@ button {
 	font-stretch: 100%;
 	font-style: normal;
 	font-weight: 600;
-	src: url(/fonts/Roboto-SemiBold.latin-5c5742e4dd862ff9c8432afa714e85ea.woff2) format("woff2");
+	src: url(./fonts/Roboto-SemiBold.latin-5c5742e4dd862ff9c8432afa714e85ea.woff2) format("woff2");
 	unicode-range: U+00??, U+0131, U+0152-0153, U+02bb-02bc, U+02c6, U+02da, U+02dc, U+0304, U+0308, U+0329, U+2000-206f, U+2074, U+20ac, U+2122, U+2191, U+2193, U+2212, U+2215, U+feff, U+fffd;
 }
 
@@ -2276,7 +2276,7 @@ button {
 	font-family: Roboto;
 	font-style: normal;
 	font-weight: 400;
-	src: local("Roboto-Regular"), url(/fonts/Roboto-Regular.latin-cfba0239aa54fa9645fe4204ba703146.woff2) format("woff2");
+	src: local("Roboto-Regular"), url(./fonts/Roboto-Regular.latin-cfba0239aa54fa9645fe4204ba703146.woff2) format("woff2");
 	unicode-range: U+00??, U+0131, U+0152-0153, U+02bb-02bc, U+02c6, U+02da, U+02dc, U+0304, U+0308, U+0329, U+2000-206f, U+2074, U+20ac, U+2122, U+2191, U+2193, U+2212, U+2215, U+feff, U+fffd;
 }
 
@@ -2286,7 +2286,7 @@ button {
 	font-stretch: 100%;
 	font-style: normal;
 	font-weight: 600;
-	src: url(/fonts/Roboto-SemiBold.latin-5c5742e4dd862ff9c8432afa714e85ea.woff2) format("woff2");
+	src: url(./fonts/Roboto-SemiBold.latin-5c5742e4dd862ff9c8432afa714e85ea.woff2) format("woff2");
 	unicode-range: U+0100-02af, U+0304, U+0308, U+0329, U+1e00-1e9f, U+1ef2-1eff, U+2020, U+20a0-20ab, U+20ad-20cf, U+2113, U+2c60-2c7f, U+a720-a7ff;
 }
 
@@ -2296,7 +2296,7 @@ button {
 	font-stretch: 100%;
 	font-style: normal;
 	font-weight: 600;
-	src: url(/fonts/Roboto-SemiBold.latin-5c5742e4dd862ff9c8432afa714e85ea.woff2) format("woff2");
+	src: url(./fonts/Roboto-SemiBold.latin-5c5742e4dd862ff9c8432afa714e85ea.woff2) format("woff2");
 	unicode-range: U+00??, U+0131, U+0152-0153, U+02bb-02bc, U+02c6, U+02da, U+02dc, U+0304, U+0308, U+0329, U+2000-206f, U+2074, U+20ac, U+2122, U+2191, U+2193, U+2212, U+2215, U+feff, U+fffd;
 }
 
@@ -2719,7 +2719,7 @@ h1 {
 	font-family: Pensum Pro;
 	font-style: normal;
 	font-weight: 900;
-	src: local("PensumPro-Black"), url(/fonts/Pensum-Pro-Black-56e4e329e19a5efb4b82679d5e4c0efc.woff2) format("woff2"), url(https://www.pretto.fr/static/Pensum-Pro-Black-18e6b7d96872bf4c70b228cde3045adb.woff) format("woff");
+	src: local("PensumPro-Black"), url(./fonts/Pensum-Pro-Black-56e4e329e19a5efb4b82679d5e4c0efc.woff2) format("woff2"), url(https://www.pretto.fr/static/Pensum-Pro-Black-18e6b7d96872bf4c70b228cde3045adb.woff) format("woff");
 }
 
 @font-face {
@@ -2733,9 +2733,9 @@ h1 {
 @font-face {
     font-family: 'Avenir Next';
     src: local('Avenir Next Heavy'), local('Avenir-Next-Heavy'),
-        url('/fonts/AvenirNextCyr-Heavy.woff2') format('woff2'),
-        url('/fonts/AvenirNextCyr-Heavy.woff') format('woff'),
-        url('/fonts/AvenirNextCyr-Heavy.ttf') format('truetype');
+        url('./fonts/AvenirNextCyr-Heavy.woff2') format('woff2'),
+        url('./fonts/AvenirNextCyr-Heavy.woff') format('woff'),
+        url('./fonts/AvenirNextCyr-Heavy.ttf') format('truetype');
     font-weight: 900;
     font-style: normal;
   }
@@ -4754,7 +4754,7 @@ h3 {
 	font-family: Maison Neue;
 	font-style: normal;
 	font-weight: 500;
-	src: local("Maison Neue Medium"), local("MaisonNeue-Medium"), url(/fonts/MaisonNeue-Black.latin-78f5e547502ef68472ec6a8dbc5a9fe7.woff2) format("woff2"), url(https://www.pretto.fr/static/MaisonNeue-Medium.latin-ext-f9fdb9c21633cf8089ec452e499802c9.woff) format("woff");
+	src: local("Maison Neue Medium"), local("MaisonNeue-Medium"), url(./fonts/MaisonNeue-Black.latin-78f5e547502ef68472ec6a8dbc5a9fe7.woff2) format("woff2"), url(https://www.pretto.fr/static/MaisonNeue-Medium.latin-ext-f9fdb9c21633cf8089ec452e499802c9.woff) format("woff");
 	unicode-range: U+0100-024f, U+0259, U+1e??, U+2020, U+20a0-20ab, U+20ad-20cf, U+2113, U+2c60-2c7f, U+a720-a7ff;
 }
 
@@ -4772,7 +4772,7 @@ h3 {
 	font-family: Roboto;
 	font-style: normal;
 	font-weight: 400;
-	src: local("Roboto-Regular"), url(/fonts/Roboto-Regular.latin-cfba0239aa54fa9645fe4204ba703146.woff2) format("woff2");
+	src: local("Roboto-Regular"), url(./fonts/Roboto-Regular.latin-cfba0239aa54fa9645fe4204ba703146.woff2) format("woff2");
 	unicode-range: U+00??, U+0131, U+0152-0153, U+02bb-02bc, U+02c6, U+02da, U+02dc, U+0304, U+0308, U+0329, U+2000-206f, U+2074, U+20ac, U+2122, U+2191, U+2193, U+2212, U+2215, U+feff, U+fffd;
 }
 
@@ -4782,7 +4782,7 @@ h3 {
 	font-stretch: 100%;
 	font-style: normal;
 	font-weight: 600;
-	src: url(/fonts/Roboto-SemiBold.latin-5c5742e4dd862ff9c8432afa714e85ea.woff2) format("woff2");
+	src: url(./fonts/Roboto-SemiBold.latin-5c5742e4dd862ff9c8432afa714e85ea.woff2) format("woff2");
 	unicode-range: U+0100-02af, U+0304, U+0308, U+0329, U+1e00-1e9f, U+1ef2-1eff, U+2020, U+20a0-20ab, U+20ad-20cf, U+2113, U+2c60-2c7f, U+a720-a7ff;
 }
 
@@ -4792,7 +4792,7 @@ h3 {
 	font-stretch: 100%;
 	font-style: normal;
 	font-weight: 600;
-	src: url(/fonts/Roboto-SemiBold.latin-5c5742e4dd862ff9c8432afa714e85ea.woff2) format("woff2");
+	src: url(./fonts/Roboto-SemiBold.latin-5c5742e4dd862ff9c8432afa714e85ea.woff2) format("woff2");
 	unicode-range: U+00??, U+0131, U+0152-0153, U+02bb-02bc, U+02c6, U+02da, U+02dc, U+0304, U+0308, U+0329, U+2000-206f, U+2074, U+20ac, U+2122, U+2191, U+2193, U+2212, U+2215, U+feff, U+fffd;
 }
 
@@ -4810,7 +4810,7 @@ h3 {
 	font-family: Roboto;
 	font-style: normal;
 	font-weight: 900;
-	src: local("Roboto-Black"), url(/fonts/Roboto-SemiBold.latin-5c5742e4dd862ff9c8432afa714e85ea.woff2) format("woff2");
+	src: local("Roboto-Black"), url(./fonts/Roboto-SemiBold.latin-5c5742e4dd862ff9c8432afa714e85ea.woff2) format("woff2");
 	unicode-range: U+00??, U+0131, U+0152-0153, U+02bb-02bc, U+02c6, U+02da, U+02dc, U+0304, U+0308, U+0329, U+2000-206f, U+2074, U+20ac, U+2122, U+2191, U+2193, U+2212, U+2215, U+feff, U+fffd;
 }
 
@@ -5071,7 +5071,7 @@ h3 {
 	font-family: Pensum Pro;
 	font-style: normal;
 	font-weight: 900;
-	src: local("PensumPro-Black"), url(/fonts/Pensum-Pro-Black-18e6b7d96872bf4c70b228cde3045adb.woff) format("woff2"), url(/fonts/Pensum-Pro-Black-18e6b7d96872bf4c70b228cde3045adb.woff) format("woff");
+	src: local("PensumPro-Black"), url(./fonts/Pensum-Pro-Black-18e6b7d96872bf4c70b228cde3045adb.woff) format("woff2"), url(./fonts/Pensum-Pro-Black-18e6b7d96872bf4c70b228cde3045adb.woff) format("woff");
 }
 
 @font-face {
@@ -5079,7 +5079,7 @@ h3 {
 	font-family: Pensum Pro;
 	font-style: italic;
 	font-weight: 450;
-	src: local("PensumPro-BookItalic"), url(/fonts/Pensum-Pro-Book-Italic-64fd6a5d73523b80afc14814313e575f.woff2) format("woff2"), url(/fonts/Pensum-Pro-Book-Italic-64fd6a5d73523b80afc14814313e575f.woff2) format("woff");
+	src: local("PensumPro-BookItalic"), url(./fonts/Pensum-Pro-Book-Italic-64fd6a5d73523b80afc14814313e575f.woff2) format("woff2"), url(./fonts/Pensum-Pro-Book-Italic-64fd6a5d73523b80afc14814313e575f.woff2) format("woff");
 }
 
 /* How it works section */
