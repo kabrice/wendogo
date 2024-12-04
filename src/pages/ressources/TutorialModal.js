@@ -20,7 +20,7 @@ const TutorialModal = ({ isOpen, onClose }) => {
                 </button>
                 <div className="text-center">
                     <h3 className="text-xl font-semibold mb-4">Bienvenue sur Wendogo!</h3>
-                    <p className="mb-6"> Pour mieux comprendre comment utiliser notre plateforme, vous pouvez visionner notre tutoriel vidéo. </p> {/* Thumbnail Container */}
+                    <p className="mb-6"> Besoin d'aide ? Notre tutoriel vidéo vous guide pas à pas 👋" </p> {/* Thumbnail Container */}
                     <div className="relative mb-6 group cursor-pointer"> <a href="https://www.youtube.com/watch?v=wUrgx3WLURI" target="_blank" rel="noopener noreferrer">
                                     {/* Video Thumbnail */}
                                     <img 
