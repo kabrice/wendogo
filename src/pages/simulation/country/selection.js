@@ -44,6 +44,8 @@ function SimulationCountrySelection(){
     const router = useRouter();
     const dispatch = useDispatch();
     const [updateUser] = useUpdateUserMutation();
+    const [showMessage, setShowMessage] = useState(false);
+
 
     useEffect(() => {
       console.log('Current user state:', user);
@@ -178,7 +180,10 @@ function SimulationCountrySelection(){
                                   </div>
                                 </div>
                                 <div className="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-1 css-1vad3iu">
-                                  <span className="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineNone ButtonProduct css-1av9as7" title="Simulez votre projet de voyage pour le Canada" style={{textDecoration:'none'}} data-testid="hpTopLayerButtonProduct-energie" onClick={(e)=>handleCountrySelection(e, 'CA')}>
+                                  <span className="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineNone ButtonProduct css-1av9as7" 
+                                  title="Simulez votre projet de voyage pour le Canada"
+                                   style={{textDecoration:'none', position: 'relative'}} data-testid="hpTopLayerButtonProduct-energie" 
+                                   onClick={() => setShowMessage(true)}>
                                     <div className="MuiStack-root css-2gjs0d">
                                       <div className="MuiStack-root css-w1kzse">
                                         <div className="MuiBox-root css-68zbsl">
@@ -195,6 +200,25 @@ function SimulationCountrySelection(){
                                         </div>
                                       </div>
                                     </div>
+                                    {showMessage && (
+                                        <div 
+                                          style={{
+                                            position: 'absolute',
+                                            top: '50%',
+                                            left: '50%',
+                                            transform: 'translate(-50%, -50%)',
+                                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                                            color: 'white',
+                                            padding: '10px',
+                                            borderRadius: '5px',
+                                            zIndex: 1000,
+                                            width: '150px',
+                                            textAlign: 'center'
+                                          }}
+                                        >
+                                          Pas encore disponible
+                                        </div>
+                                      )}
                                   </span>
                                 </div>
                               </div>

@@ -299,6 +299,44 @@ function HomePage(){
               </div>
             </nav>
             <Head>
+                {/* Essential Meta Tags */}
+                <title>Wendogo - Expert en orientation pour études en France</title>
+                <meta name="description" content="Évaluez vos chances d'admission et simplifiez vos démarches d'études en France avec Wendogo, votre plateforme d'orientation intelligente." />
+                <meta name="keywords" content="études France, orientation études, visa étudiant, admission université France, études supérieures France, Campus France" />
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                
+                {/* Open Graph / Facebook */}
+                <meta property="og:type" content="website" />
+                <meta property="og:url" content="https://wendogo.com/" />
+                <meta property="og:title" content="Wendogo - Votre avenir étudiant en France commence ici" />
+                <meta property="og:description" content="Évaluez vos chances d'admission et simplifiez vos démarches d'études en France avec Wendogo, votre plateforme d'orientation intelligente." />
+                <meta property="og:image" content={backgroundImg2} />
+                <meta property="og:image:width" content="1200" />
+                <meta property="og:image:height" content="630" />
+                <meta property="og:locale" content="fr_FR" />
+                <meta property="og:site_name" content="Wendogo" />
+
+                {/* Twitter */}
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:url" content="https://wendogo.com/" />
+                <meta name="twitter:title" content="Wendogo - Votre avenir étudiant en France commence ici" />
+                <meta name="twitter:description" content="Évaluez vos chances d'admission et simplifiez vos démarches d'études en France avec Wendogo." />
+                <meta name="twitter:image" content="https://wendogo.com/twitter-image.jpg" />
+
+                {/* Other Important Meta Tags */}
+                <meta name="robots" content="index, follow" />
+                <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+                <meta name="language" content="French" />
+                <meta name="author" content="Wendogo" />
+
+                {/* Favicon */}
+                <link rel="icon" href="/favicon.ico" />
+                <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+                {/* Canonical URL */}
+                <link rel="canonical" href="https://wendogo.com/" />
+            </Head>
+            {/* <Head>
               <meta property="og:url"           content="https://wendogo.com/" />
               <meta property="og:type"          content="website" />
               <meta property="og:title"         content="Wendogo" />
@@ -306,7 +344,7 @@ function HomePage(){
               <meta property="og:image"         content={SocialMediaLogo} /> 
               <title>Wendogo</title>
               <meta name="description"          content="Expert en ligne pour vos demandes de visa"/>
-            </Head>
+            </Head> */}
             <div className="main" style={{background: 'black'}}> 
               <Swiper className="mySwiper swiper-h" spaceBetween={50} pagination={{ clickable: true, }} modules={[Pagination, Autoplay]} speed={1000}
                     loop={true} autoplay={{delay: 2000,  disableOnInteraction: false, pauseOnMouseEnter: true}}>   
