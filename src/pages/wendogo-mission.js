@@ -100,10 +100,10 @@ function WendogoMission(){
               <meta property="og:url"           content="https://wendogo.com/wendogo-mission" />
               <meta property="og:type"          content="article" />
               <meta property="og:title"         content="Notre mission - Vous accompagner de A(chat) à Z(en) - Wendogo" />
-              <meta property="og:description"   content="Démarches administratives, rendez-vous à l'ambassade et chances de voyager forment un parcours du combattant. Wendogo vous accompagne jusqu’à l’aboutissement de votre projet." />
+              <meta property="og:description"   content="Les démarches administratives,l'évaluation de vos chances de succès peuvent sembler un véritable défi. Avec Wendogo, bénéficiez d’un accompagnement complet jusqu’à la réalisation de votre projet d’étude en France." />
               <meta property="og:image"         content={'https://wendogo.com'+SocialMediaLogo} /> 
               <title>Notre mission - Vous accompagner de A(chat) à Z(en) - Wendogo</title>
-              <meta name="description"          content="Démarches administratives, rendez-vous à l'ambassade et chances de voyager forment un parcours du combattant. Wendogo vous accompagne jusqu’à l’aboutissement de votre projet."/>
+              <meta name="description"          content="Les démarches administratives,l'évaluation de vos chances de succès peuvent sembler un véritable défi. Avec Wendogo, bénéficiez d’un accompagnement complet jusqu’à la réalisation de votre projet d’étude en France."/>
             </Head>        
             <HeaderMenuBar/>
             <main className="styles__Main-sc-kz84w6-0 gEFmYD " style={{paddingTop: 80}}>
