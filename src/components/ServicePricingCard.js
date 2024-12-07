@@ -29,10 +29,22 @@ const ServiceSection = ({ title, svg, items }) => {
   );
 };
 
-const ServicePricingCard = ({deviceType, setOpenContactModal, openContactModal, isSpecialDeviceType}) => {
+const ServicePricingCard = ({deviceType, setOpenContactModal, openContactModal, isSpecialDeviceType, outSideOfResult=false }) => {
   
   
     const [isExpanded, setIsExpanded] = useState(false);
+
+    const handleContactClick = () => {
+      if (outSideOfResult) {
+        // Pre-built message for WhatsApp
+        const message = encodeURIComponent("Bonjour, je souhaite avoir plus d'informations sur vos services d'accompagnement pour étudier en France.");
+        // WhatsApp URL with French phone number format and message
+        window.open(`https://wa.me/33668156073?text=${message}`, '_blank');
+      } else {
+        // Toggle the contact modal when outSideOfResult is false
+        setOpenContactModal(prev => !prev);
+      }
+    };
   
     // Define servicesData
     const servicesData = [
@@ -353,7 +365,7 @@ const ServicePricingCard = ({deviceType, setOpenContactModal, openContactModal, 
                                   <div className="stack-item" style={{ paddingTop: 0, marginLeft: 25 }}>
                                     <div className="Box   " style={{ padding: 0, width: 190, borderWidth: "initial", borderStyle: "none", borderColor: "initial",   marginLeft: [ 'lg+'].includes(deviceType) ? 15: ([ 'sm'].includes(deviceType) ? -57 :([ 'lg'].includes(deviceType) ? -15 : -30))  }}>
                                         <div className="MerButton" style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', width: '150px' }}>
-                                            <button type="button" className="CTA button primary xlarge" data-testid="mer-button-affiliation_sg1" onClick={()=> {setOpenContactModal(prev=>!prev)}}
+                                            <button type="button" className="CTA button primary xlarge" data-testid="mer-button-affiliation_sg1" onClick={handleContactClick}
                                             style={{padding: [ 'lg'].includes(deviceType) ? 3 : 5, margin: 'auto', height:'auto', ...(openContactModal ? {} : { background: 'none' } ),  ...(openContactModal ? {}: {border:'2px solid #0154c0'}), color: openContactModal ? '#fff':'#0154c0', minWidth: 'fit-content',}}>
                                                 <svg id="icon-system-phone" viewBox="0 0 40 40"  height={[ 'lg+'].includes(deviceType) ? 64 : ([ 'sm'].includes(deviceType) ? 40 :([ 'lg'].includes(deviceType) ? 54 :52))} >
                                                   <g id="icon/medium-40px/field/phone" stroke="none" strokeWidth={1} fillRule="evenodd">
@@ -371,7 +383,7 @@ const ServicePricingCard = ({deviceType, setOpenContactModal, openContactModal, 
                   {!isExpanded &&
                   <div className="Box   " style={{ padding: 0, width: 190, borderWidth: "initial", borderStyle: "none", borderColor: "initial" }}>
                       <div className="MerButton" style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', width: '150px' }}>
-                          <button type="button" className="CTA button primary xlarge" data-testid="mer-button-affiliation_sg1" onClick={()=> setOpenContactModal(prev => !prev)}
+                          <button type="button" className="CTA button primary xlarge" data-testid="mer-button-affiliation_sg1" onClick={handleContactClick}
                           style={ {padding: 0, margin: 'auto', width: [ 'sm'].includes(deviceType) ? 120 : 'inherit', fontSize: [ 'sm'].includes(deviceType) ? '0.83rem' : 'inherit', height: 'auto'}}>        
                               <div className="PpsButton-children " > Être contacté </div>
                           </button>
@@ -519,7 +531,7 @@ const ServicePricingCard = ({deviceType, setOpenContactModal, openContactModal, 
   const renderSmallCall = () => {
     return (
       <div style={styles.gridItem}>
-        <button style={styles.button(openContactModal)} onClick={()=> setOpenContactModal(prev => !prev)} >
+        <button style={styles.button(openContactModal)} onClick={handleContactClick} >
           <svg id="icon-system-phone" viewBox="0 0 40 40" height={sizing.button.iconSize}>
             <g id="icon/medium-40px/field/phone" stroke="none" strokeWidth={1} fillRule="evenodd">
               <path d="M24.025 25.616l1.996-1.99c.28-.277.577-.425.86-.425.375 0 .677.264.827.426l3.22 3.203c.573.57.566 1.167-.021 1.776-.23.246-.474.482-.705.7l-.065.065c-.356.345-.725.7-1.055 1.096-.583.625-1.271.916-2.17.916-.074 0-.153-.005-.267-.01-1.724-.11-3.332-.783-4.54-1.357-3.307-1.595-6.2-3.854-8.597-6.712-1.98-2.375-3.31-4.583-4.189-6.948-.536-1.426-.748-2.581-.662-3.635a2.65 2.65 0 01.8-1.706L11.44 9.04c.543-.525 1.164-.546 1.716.01.312.289.609.59.921.908l2.277 2.282c.301.298.454.593.454.877 0 .285-.153.579-.455.877l-.612.62c-.454.457-.88.887-1.349 1.3l-.035.033c-.508.508-.418 1.014-.308 1.343.005.016.01.03.023.062.425 1.016 1.01 1.963 1.896 3.076 1.608 1.977 3.304 3.516 5.185 4.705.201.13.408.234.607.335l.114.058c.195.097.4.2.572.31l.072.04c.524.27 1.068.18 1.507-.26zm8.06.043l-3.206-3.195c-.576-.595-1.266-.91-1.998-.91-.725 0-1.424.312-2.018.903l-1.822 1.817a13.687 13.687 0 00-.426-.22 6.509 6.509 0 01-.573-.31c-1.72-1.09-3.288-2.51-4.79-4.346-.732-.923-1.218-1.686-1.564-2.453.48-.437.927-.888 1.344-1.316.13-.131.26-.261.39-.394l.1-.098c.611-.609.934-1.31.934-2.03 0-.726-.323-1.43-.934-2.033l-1.59-1.586c-.187-.185-.361-.365-.543-.55a28.589 28.589 0 00-1.085-1.073C13.723 7.299 13.034 7 12.309 7c-.72 0-1.416.3-2.02.872L8.295 9.86a4.265 4.265 0 00-1.27 2.721c-.104 1.298.136 2.672.752 4.325.941 2.549 2.36 4.91 4.463 7.427h.001c2.551 3.038 5.627 5.439 9.147 7.139 1.35.638 3.158 1.388 5.151 1.517l.067.002c.101.005.2.008.302.008 1.377 0 2.486-.474 3.393-1.457l.038-.044v-.004c.275-.326.584-.626.91-.942l.092-.088c.253-.242.51-.493.758-.75 1.207-1.253 1.203-2.846-.013-4.056z" id="phone" fill={openContactModal? "#fff" : "#627A93"} /> </g>

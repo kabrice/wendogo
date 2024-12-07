@@ -313,7 +313,7 @@ function WendogoCost(){
                 </symbol>
             </svg>
             <div className="app-lg" style={{fontFamily: 'Roboto, sans-serif'}}>
-              <ServicePricingCard deviceType={deviceType} setOpenContactModal={setOpenContactModal} openContactModal={openContactModal} isSpecialDeviceType={isSpecialDeviceType}/> 
+              <ServicePricingCard deviceType={deviceType} outSideOfResult={true} setOpenContactModal={setOpenContactModal} openContactModal={openContactModal} isSpecialDeviceType={isSpecialDeviceType}/> 
             </div>
             <Footer/>                    
           </div>
