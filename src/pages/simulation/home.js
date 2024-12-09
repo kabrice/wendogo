@@ -23,6 +23,7 @@ import { Loader2 } from "lucide-react";
 import { setUser } from '../../redux/userSlice'; 
 import { IPINFO_URL } from '../../utils/Constants'; 
 import { FloatingWhatsApp } from 'react-floating-whatsapp';
+import Head from 'next/head';
 
 const KeepInTouch = dynamic(() => import('../ressources/KeepInTouch'), {
   loading: () => <div className="flex items-center justify-center min-h-[200px]">
@@ -171,6 +172,44 @@ const SimulationHome = ({ leadStatus=[], isErrorHomePage=false }) => {
     return (
       <div>     
         <HeaderMenuLoginBar/>
+        <Head>
+                {/* Essential Meta Tags */}
+                <title>Wendogo - Expert en orientation pour études en France</title>
+                <meta name="description" content="Où en êtes-vous dans votre projet d’études en France ? Wendogo vous accompagne à chaque étape, de la réflexion à l’obtention de votre visa. Découvrez nos solutions adaptées à votre situation." />
+                <meta name="keywords" content="étudier en france, visa étudiant france, démarches visa étudiant, admission université france, études supérieures france, aide étudiants étrangers, universités françaises, simulateur visa étudiant, logement étudiant france, préparer dossier campus france" />
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                
+                {/* Open Graph / Facebook */}
+                <meta property="og:type" content="website" />
+                <meta property="og:url" content="https://wendogo.com/simulation/home" />
+                <meta property="og:title" content="Simulation d’Étude en France - Wendogo" />
+                <meta property="og:description" content="Où en êtes-vous dans votre projet d’études en France ? Wendogo vous accompagne à chaque étape, de la réflexion à l’obtention de votre visa. Découvrez nos solutions adaptées à votre situation." />
+                <meta property="og:image" content="/social_media_logo.webp"/>
+                <meta property="og:image:width" content="1200" />
+                <meta property="og:image:height" content="630" />
+                <meta property="og:locale" content="fr_FR" />
+                <meta property="og:site_name" content="Wendogo" />
+
+                {/* Twitter */}
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:url" content="https://wendogo.com/simulation/home" />
+                <meta name="twitter:title" content="Simulation d’Étude en France - Wendogo" />
+                <meta name="twitter:description" content="Évaluez vos chances d'admission et simplifiez vos démarches d'études en France avec Wendogo." />
+                <meta name="twitter:image" content="/social_media_logo.webp" />
+
+                {/* Other Important Meta Tags */}
+                <meta name="robots" content="index, follow" />
+                <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+                <meta name="language" content="French" />
+                <meta name="author" content="Wendogo" />
+
+                {/* Favicon */}
+                <link rel="icon" href="/favicon.ico" />
+                <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+                {/* Canonical URL */}
+                <link rel="canonical" href="https://wendogo.com/simulation/home" />
+            </Head>
         {/* {'eee '+isErrorPage+ ' '+leadStatus.length} */}
         {(isErrorPage || leadStatus.length<1) ? (
           <main className="styles__Main-sc-kz84w6-0 gEFmYD" style={{ paddingTop: 280 }}>
