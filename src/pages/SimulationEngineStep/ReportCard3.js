@@ -99,7 +99,7 @@ const ReportCard3 = () => {
         setContinueButtonClicked(true);
 
 
-        if (isReportCardsValid && hasBaccalaureatMarks) {
+        if ((isReportCardsValid || user.universityLevelSelected?.id === 'bac00004')  && hasBaccalaureatMarks) {
             setShowError(false);
             setMainSubjects(null);
 
