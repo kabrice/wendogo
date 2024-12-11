@@ -289,11 +289,11 @@ const ServicePricingCard = ({deviceType, setOpenContactModal, openContactModal, 
                                           <div className=" large  " style={{ padding: 20, color: '#2a3775' }}>
                                               <div style={[ 'sm'].includes(deviceType) ? { fontSize:12} : {}}>Accompagnement dès</div>
                                               <div className="o-card__footer o-vflow--xs">
-                                                  <div className="c-price--mention"> <s>399,00€</s> <span className="c-chip c-chip--rounded c-chip--ventePrive" style={{ background: "#ff1e3c", borderRadius: 50, fontFamily: '"Hind Madurai"', fontSize: [ 'sm'].includes(deviceType) ? 12 : 16}}>
-                                                                      <em className="c-chip__label">-40%</em>
+                                                  <div className="c-price--mention"> <s>250,00€</s> <span className="c-chip c-chip--rounded c-chip--ventePrive" style={{ background: "#ff1e3c", borderRadius: 50, fontFamily: '"Hind Madurai"', fontSize: [ 'sm'].includes(deviceType) ? 12 : 16}}>
+                                                                      <em className="c-chip__label">-52%</em>
                                                                   </span> </div>
                                                   <div className="o-card__priceWrapper">
-                                                      <div className="o-card__price o-card__price--inline"> <span className="c-price c-price--promo c-price--l" style={{ fontSize: [ 'sm'].includes(deviceType) ? 32 : 48 }}> 159 
+                                                      <div className="o-card__price o-card__price--inline"> <span className="c-price c-price--promo c-price--l" style={{ fontSize: [ 'sm'].includes(deviceType) ? 32 : 48 }}> 119 
                                                                           <sup>
                                                                               <span itemProp="priceCurrency">€00</span> </sup>
                                                           </span>
@@ -553,8 +553,8 @@ const ServicePricingCard = ({deviceType, setOpenContactModal, openContactModal, 
                                   <div style={styles.gridContainer}>
                                     <div style={styles.priceSection}>
                                       <div style={{ fontSize: sizing.price.titleSize }}>Accompagnement dès</div>
-                                      <div> <s>399,00€</s> <span style={{ background: "#ff1e3c", borderRadius: '50px', fontFamily: '"Hind Madurai"', fontSize: sizing.price.discountSize, padding: '2px 8px', color: 'white', marginLeft: '8px', display: 'inline-block' }}>-40%</span> </div>
-                                      <div style={{ fontSize: sizing.price.mainPrice, fontWeight: 'bold', margin: `${sizing.spacing.margin} 0` }}> 159<sup style={{ fontSize: '50%' }}>€00</sup> </div>
+                                      <div> <s>250,00€</s> <span style={{ background: "#ff1e3c", borderRadius: '50px', fontFamily: '"Hind Madurai"', fontSize: sizing.price.discountSize, padding: '2px 8px', color: 'white', marginLeft: '8px', display: 'inline-block' }}>-40%</span> </div>
+                                      <div style={{ fontSize: sizing.price.mainPrice, fontWeight: 'bold', margin: `${sizing.spacing.margin} 0` }}> 119<sup style={{ fontSize: '50%' }}>€00</sup> </div>
                                       <div style={{ fontSize: sizing.price.footerSize }}> Frais de dossier inclus </div>
                                     </div> {!isExpanded &&
                                     <div style={{display: 'flex', justifyContent: 'space-evenly',alignItems: (isSpecialDeviceType ? 'flex-start' : 'center'), margin: 'auto', flexDirection : isSpecialDeviceType ? 'column' : 'inherit'}}>
