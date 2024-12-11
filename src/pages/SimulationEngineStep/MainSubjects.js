@@ -10,6 +10,7 @@ import { Loader2 } from "lucide-react";
 import helper from '../../utils/Helper';
 import { SIMULATION_ENGINE_STEPS, PROGRESS_BAR_STEPS } from '../../utils/Constants';
 import { setUser } from '../../redux/userSlice';
+import SESmallAlertMessage from '../../components/SimulationEngine/SESmallAlertMessage';
 
 const MainSubjects = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -19,6 +20,7 @@ const MainSubjects = () => {
     // Redux selectors
     const simulationStepGlobal = useSelector((state) => state.simulationStep);
     const progressBarStep = useSelector((state) => state.progressBarStep);
+    const [msgErrorProgramDomain, setMsgErrorProgramDomain] = useState(null);
 
     // Local state
     const [mainSubjects, setMainSubjects] = useState([]);
@@ -94,6 +96,7 @@ const MainSubjects = () => {
             ...user,
             simulationStep,
             mainSubjects: subjects,
+            mainSubjectStep: simulationStep,
             progressBarStep,
             date: new Date().toISOString()
         };
@@ -177,6 +180,13 @@ const MainSubjects = () => {
                 };
             }
         })();
+        //alert('programDomainObj', user?.programDomainObj)
+        if(!user?.programDomainObj && user?.schoolLevelSelected == "Supérieur"){ 
+            setMsgErrorProgramDomain("Veuillez sélectionner un domaine d'études.");
+            return;
+        }else{
+            setMsgErrorProgramDomain(null);
+        }
 
         if (nextStep) {
             updateWendogouser(nextStep.step, mainSubjects, nextStep.myProgressBarStep);
@@ -195,19 +205,22 @@ const MainSubjects = () => {
         return null;
     }
 
-    return (
+    return (<>
+    {msgErrorProgramDomain && <SESmallAlertMessage 
+                                type="error" 
+                                content={msgErrorProgramDomain}/>}
         <SEAutoSuggestListInput 
             title={titleWhenNoMatch}
             id={`MAIN_SUBJECTS${simulationStepGlobal}`}
             tip="Pour une meilleure suggestion de l'algorithme, soyez le plus précis possible. En cas de priorités égales, classez à votre convenance."
-            messageError="Vous devez obligatoirement saisir 3 unités d'enseignement."
+            messageError={ "Vous devez obligatoirement saisir 3 unités d'enseignement."}
             mainValues={mainSubjects}
             setMainValues={setMainSubjects}
             urlFragment={urlFragment}
             showContinueBtn={showContinueBtn}
             handleChange={handleChange}
             handleContinue={handleContinue}
-        />
+        /></>
     );
 };
 

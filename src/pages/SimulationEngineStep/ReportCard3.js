@@ -58,7 +58,7 @@ const ReportCard3 = () => {
             };
 
             setSubjectStates(Array(periods).fill(initialSubjectState));
-            setSubjectLists(user?.reportCard3 || Array(periods).fill([]));
+            setSubjectLists((user?.reportCard3?.length === periods ? user?.reportCard3 : Array(periods).fill([])) || Array(periods).fill([]));
             setReferenceIncs(Array(periods).fill(0));
             setIsReadModes(Array(periods).fill(true));
             setIsCancelModes(Array(periods).fill(false));
@@ -66,7 +66,8 @@ const ReportCard3 = () => {
 
             // Calculate bac-related values
             const mostRecentBacId = helper.getMostRecentBacId(user);
-            const isBacMandatory = mostRecentBacId === 'bac00004';
+            // const isBacMandatory = mostRecentBacId === 'bac00004';
+            const isBacMandatory = false
             setIsBaccalaureatMarkMandatory(isBacMandatory);
 
             // Set other state values
@@ -99,7 +100,7 @@ const ReportCard3 = () => {
         setContinueButtonClicked(true);
 
 
-        if ((isReportCardsValid || user.universityLevelSelected?.id === 'bac00004')  && hasBaccalaureatMarks) {
+        if (isReportCardsValid && hasBaccalaureatMarks) {
             setShowError(false);
             setMainSubjects(null);
 

@@ -61,7 +61,8 @@ const ReportCard1 = () => {
             };
 
             setSubjectStates(Array(periods).fill(initialSubjectState));
-            setSubjectLists(user?.reportCard1 || Array(periods).fill([]));
+            //setSubjectLists(user?.reportCard1 || Array(periods).fill([]));
+            setSubjectLists((user?.reportCard1?.length === periods ? user?.reportCard1 : Array(periods).fill([])) || Array(periods).fill([]));
             setReferenceIncs(Array(periods).fill(0));
             setIsReadModes(Array(periods).fill(true));
             setIsCancelModes(Array(periods).fill(false));
@@ -186,6 +187,10 @@ const ReportCard1 = () => {
             applyingForMaster,
             date: new Date().toISOString()
         };
+        
+        if(user?.mainSubjectStep === (SIMULATION_ENGINE_STEPS.MAIN_SUBJECTS_BAC_N_2+1)){
+            updatedUser.mainSubjects = null;
+        }
         helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
         dispatch(setUser(updatedUser));
     };

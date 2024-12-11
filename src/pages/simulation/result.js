@@ -606,7 +606,7 @@ const SimulationResult = () => {
                         <div className="Stack stackColumn" style={{ flexDirection: "column", padding: 0, alignItems: "stretch" }}>
                             <div className="Stack-child" style={{ paddingTop: 30 }}>
                             <div className="Logo border small" style={{ width: 150, height: 150, padding:  7 }}>
-                            <div style={{ position: 'relative', width: '100%', height: '300px' }}>
+                            <div style={{ position: 'relative', width: '100%', height: 'inherit' }}>
   <Image 
     fill
     style={{ objectFit: 'contain' }}
@@ -1201,11 +1201,11 @@ const SimulationResult = () => {
                                                                 </div>
                                                             </div>
                                                         </div>
-                                        <div className="Stack-child  " style={{ paddingTop: 0 }}>
-                                            <div className="FadeInOrderedAnimation" data-testid="AutoOffersList"> 
-                                            {renderCourses}
+                                            <div className="Stack-child  " style={{ paddingTop: 0 }}>
+                                                <div className="FadeInOrderedAnimation" data-testid="AutoOffersList"> 
+                                                {renderCourses}
+                                                </div>
                                             </div>
-                                        </div>
                                                     </div>
                                                     <div className="Stack-child courses" style={{ paddingTop: 0 }}>
                                                         <div className="Box   " style={{ padding: "10px 0px 0px", borderWidth: "initial", borderStyle: "none", borderColor: "initial" }}>
@@ -1233,7 +1233,7 @@ const SimulationResult = () => {
                                                 </div>
                                             </div> :renderScroredetails()} 
                                             <ServicePricingCard deviceType={deviceType} setOpenContactModal={setOpenContactModal} openContactModal={openContactModal} isSpecialDeviceType={isSpecialDeviceType}/> 
-                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

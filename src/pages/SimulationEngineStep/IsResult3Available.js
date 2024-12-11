@@ -98,8 +98,7 @@ const IsResult3Available = () => {
 
     return (
         <SEYesNo 
-            title={`Vos relevés académiques ${user.selectedSchoolYear3.name} ${user.universityLevelSelected?.id === 'bac00004' ? 'ou du Baccalauréat' : ''} sont-ils disponibles ?`}
-            tip ={user.universityLevelSelected?.id === 'bac00004' ? 'Les notes du Baccalauréat sont indispensables pour bien poursuivre la simulation.' : ''}
+            title={`Vos relevés académiques ${user.selectedSchoolYear3.name} sont-ils disponibles ?`}
             svgConstantName="YEAR_N"
             yes={isResult3Available}
             handleYes={handleIsResult3Available}

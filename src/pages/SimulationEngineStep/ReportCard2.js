@@ -59,7 +59,8 @@ const ReportCard2 = () => {
             };
 
             setSubjectStates(Array(periods).fill(initialSubjectState));
-            setSubjectLists(user.reportCard2 || Array(periods).fill([]));
+            setSubjectLists((user?.reportCard2?.length === periods ? user?.reportCard2 : Array(periods).fill([])) || Array(periods).fill([]));
+            //setSubjectLists(user.reportCard2 || Array(periods).fill([]));
             setReferenceIncs(Array(periods).fill(0));
             setIsReadModes(Array(periods).fill(true));
             setIsCancelModes(Array(periods).fill(false));
@@ -68,7 +69,7 @@ const ReportCard2 = () => {
             // Calculate bac-related values
             const mostRecentBacId = helper.getMostRecentBacId(user);
             const bacId = `bac0000${parseInt(mostRecentBacId.slice(-1)) - 1}`;
-            const isBacMandatory = bacId === 'bac00004';
+            const isBacMandatory = (bacId === 'bac00004') || (mostRecentBacId === 'bac00004');
             setIsBaccalaureatMarkMandatory(isBacMandatory);
 
             // Set other state values
@@ -192,7 +193,11 @@ const ReportCard2 = () => {
             applyingForMaster,
             date: new Date().toISOString()
         };
-        console.log('KKK ReportCard2', user)
+        //alert('mainSubjects '+user?.mainSubjectStep + ' '+(SIMULATION_ENGINE_STEPS.MAIN_SUBJECTS_BAC_N_1+1))
+        if(user?.mainSubjectStep === (SIMULATION_ENGINE_STEPS.MAIN_SUBJECTS_BAC_N_1+1)){
+            updatedUser.mainSubjects = null;
+        }
+        // console.log('KKK ReportCard2', user)
         helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
         dispatch(setUser(updatedUser));
     };

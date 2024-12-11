@@ -247,7 +247,8 @@ const helper = {
         if(updatedNumber === 1){
           return isSchoolYear ?  'BAC+1' : 'du Baccalauréat et BAC+1';
         }else if (updatedNumber === 0) {
-          return 'de Terminale';
+          return ((user?.universityLevelSelected?.id === 'bac00004') && !isSchoolYear) ?  'de Terminale et du Baccalauréat' : `${isSchoolYear ? 'classe' : ''}  de Terminale`;
+          //return 'de Terminale';
         } else if (updatedNumber === -1) {
           return 'de la classe de Première (ou équivalent)';
         } else if (updatedNumber <= -2) {
