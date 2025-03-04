@@ -1,19 +1,12 @@
 'use client';
 
 
-// Import img
-import backgroundImg3 from '../assets/optimized/generique-chateau.webp';
-import backgroundImg2 from '../assets/optimized/1000_F_534931774_iiLVveToIVDuO89bZdeLs770iR7Lnm2a.webp';
-import backgroundImg1 from '../assets/flightwallpaper.webp';
-import SliderstylesImage1 from '../assets/optimized/Sliderstyles__Image1.webp'
-import SliderstylesImage2 from '../assets/optimized/Sliderstyles__Image2.webp'
-import PasseportVisa from '../assets/optimized/1000_F_154951378_oyz1BvKKnOVw92VJ05vNIk4l72WxkZaP.webp'
+// Import img 
+import backgroundImg2 from '../assets/optimized/1000_F_534931774_iiLVveToIVDuO89bZdeLs770iR7Lnm2a.webp'; 
 import WorldNoBorders from '../assets/optimized/AdobeStock_559662042_Preview.webp'
 import BlockCourtier1 from '../assets/group-portrait-five-african-business-colleagues-standing-row-office_484651-18709.avif'
 import BlockCourtier2 from '../assets/optimized/240_F_271683964_RV5TD7e4GN67UBFhvBvtltNO4hJ5aTQs.webp'
 import BlockCourtier3 from '../assets/beautiful-woman-standing-front-colleagues-group-african-american-business-people-working-office-together_146671-45002.avif'
-import SocialMediaLogo from '../assets/optimized/social_media_logo.webp'
-import WendogoHomeVideo from '../assets/wendogo_homepage.mp4'
 import FighterProgramLogo from '../assets/companies_that_trust_us/fighters_program_logo.png'
 import GlobalVisaFlair from '../assets/companies_that_trust_us/global_visa_flair.jpeg'
 import StationF from '../assets/companies_that_trust_us/station_F_Logo.png'
@@ -29,26 +22,12 @@ import ConferenceCall from '../assets/Homepage_pics/conference call.jpg'
 
 // Import svg
 import WendogoLogo from '../assets/wendogo_logo.svg'
-import  DropDownIcon from '../assets/dropdown_icon.svg'
-import FeatureDistance from '../assets/features-distance-1.svg'
-import FeatureImplication from '../assets/features-implication-4.svg'
-import FeatureNoStress from '../assets/features-no-stress-4.svg'
-import FeaturePrice from '../assets/features-price-2.svg'
-import FeatureProfessional from '../assets/features-professional-4.svg'
-import FeatureTransparence from '../assets/features-transparence-4.svg'
+import  DropDownIcon from '../assets/dropdown_icon.svg' 
 
 
 import Image from 'next/image';
-import Head from 'next/head';
-// Import Swiper React components
-import { Swiper, SwiperSlide } from "swiper/react";
-// Import Swiper styles
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/effect-fade";
+import Head from 'next/head';  
 
-// import required modules
-import { Pagination, Autoplay } from "swiper";
 import { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 // import Head from 'next/head'
