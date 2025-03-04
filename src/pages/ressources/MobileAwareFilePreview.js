@@ -10,7 +10,7 @@ const MobileAwareFilePreview = ({ isVisible, onClose, file }) => {
   const [cachedUrl, setCachedUrl] = useState(null);
   
   // Determine file type from name
-  const fileExtension = file.name.split('.').pop().toLowerCase();
+  const fileExtension = file?.name?.split('.').pop().toLowerCase();
   const isImage = ['jpg', 'jpeg', 'png', 'gif'].includes(fileExtension);
   const isPdf = fileExtension === 'pdf';
   // Detect if device is mobile
@@ -24,12 +24,12 @@ const MobileAwareFilePreview = ({ isVisible, onClose, file }) => {
       const cacheFile = async () => {
         try {
           // Only try to cache images (PDFs could be too large)
-          const fileExtension = file.name.split('.').pop().toLowerCase();
+          const fileExtension = file?.name.split('.').pop().toLowerCase();
           const isImage = ['jpg', 'jpeg', 'png', 'gif'].includes(fileExtension);
           
           if (isImage) {
             setIsDownloading(true);
-            const response = await fetch(file.url);
+            const response = await fetch(file?.url);
             const blob = await response.blob();
             const objectUrl = URL.createObjectURL(blob);
             setCachedUrl(objectUrl);
@@ -82,7 +82,7 @@ const MobileAwareFilePreview = ({ isVisible, onClose, file }) => {
   if (!isVisible || !file) return null;
   
   // Get the effective URL (cached or original)
-  const effectiveUrl = cachedUrl || file.url;
+  const effectiveUrl = cachedUrl || file?.url;
   
 
   
@@ -102,7 +102,7 @@ const MobileAwareFilePreview = ({ isVisible, onClose, file }) => {
       
       if (isMobile) {
         // For mobile, we need to fetch and create a download link
-        const response = await fetch(file.url);
+        const response = await fetch(file?.url);
         const blob = await response.blob();
         const url = window.URL.createObjectURL(blob);
         
@@ -110,7 +110,7 @@ const MobileAwareFilePreview = ({ isVisible, onClose, file }) => {
         const a = document.createElement('a');
         a.style.display = 'none';
         a.href = url;
-        a.download = file.name;
+        a.download = file?.name;
         document.body.appendChild(a);
         a.click();
         
@@ -119,7 +119,7 @@ const MobileAwareFilePreview = ({ isVisible, onClose, file }) => {
         document.body.removeChild(a);
       } else {
         // For desktop, we can use a simple link
-        window.open(file.url, '_blank');
+        window.open(file?.url, '_blank');
       }
     } catch (error) {
       console.error('Download error:', error);
@@ -134,7 +134,7 @@ const MobileAwareFilePreview = ({ isVisible, onClose, file }) => {
       <div className="bg-white rounded-lg w-full max-w-lg sm:max-w-3xl max-h-[95vh] flex flex-col overflow-hidden">
         <div className="flex items-center justify-between p-3 sm:p-4 border-b">
           <h3 className="font-medium text-base sm:text-lg truncate max-w-[calc(100%-40px)]">
-            {file.name}
+            {file?.name}
           </h3>
           <button 
             onClick={onClose}
@@ -161,7 +161,7 @@ const MobileAwareFilePreview = ({ isVisible, onClose, file }) => {
             <div className="text-center p-4 sm:p-8 bg-red-50 text-red-600 rounded-lg">
               <p>{error}</p>
               <button 
-                onClick={() => window.open(file.url, '_blank')}
+                onClick={() => window.open(file?.url, '_blank')}
                 className="mt-4 inline-block px-4 py-2 bg-blue-600 text-white rounded-md"
               >
                 Essayer dans un nouvel onglet
@@ -171,7 +171,7 @@ const MobileAwareFilePreview = ({ isVisible, onClose, file }) => {
             <div className="flex items-center justify-center min-h-[50vh]">
               <img 
                 src={effectiveUrl} 
-                alt={file.name}
+                alt={file?.name}
                 onLoad={handleLoad}
                 onError={handleError}
                 className="max-w-full max-h-[70vh] mx-auto object-contain"
@@ -179,12 +179,12 @@ const MobileAwareFilePreview = ({ isVisible, onClose, file }) => {
             </div>
           ) : isPdf ? (
             <object
-            data={file.url}
+            data={file?.url}
             ref={pdfObjectRef}
             type="application/pdf"
             className="w-full h-[70vh] border-0"
           >
-            <p>Impossible de charger le PDF. <a href={file.url} className="text-blue-600 underline">Télécharger pour consulter</a></p>
+            <p>Impossible de charger le PDF. <a href={file?.url} className="text-blue-600 underline">Télécharger pour consulter</a></p>
           </object>
           ) : (
             <div className="text-center p-4 sm:p-8 bg-gray-50 rounded-lg">
