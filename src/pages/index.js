@@ -19,7 +19,7 @@ import ScanningDoc from '../assets/Homepage_pics/dcouments-ligne-scanning.jpg'
 import CVOptimization from '../assets/Homepage_pics/cv_lm_ai.jpg'
 import VisaOnHand from '../assets/Homepage_pics/visa_on_hand.webp'
 import ConferenceCall from '../assets/Homepage_pics/conference call.jpg'
-
+import WendogoMP4 from '../assets/wendogo_homepage_full.mp4'
 // Import svg
 import WendogoLogo from '../assets/wendogo_logo.svg'
 import  DropDownIcon from '../assets/dropdown_icon.svg' 
@@ -408,7 +408,7 @@ function HomePage(){
 		<div className="HeroPictureRatestyles__Wrapper-sc-s8xhxd-10 jUWPqd">
 			<div className="HeroPictureRatestyles__ImageWrapper-sc-s8xhxd-11 hqZtQD">
         <video autoPlay loop muted playsInline>
-          <source src={process.env.NEXT_PUBLIC_PUBLIC_URL+'/wendogo_homepage_full.mp4'} type="video/mp4"/>
+          <source src={WendogoMP4} type="video/mp4"/>
           Votre navigateur ne supporte pas la lecture des vidéos.
         </video>
 				</div>
