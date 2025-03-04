@@ -173,7 +173,7 @@ const Validation = () => {
                     </div>
                 </div>
                 <div className="FieldView DaisyFieldView field-default SelectField VEH_USA_KILOM">
-                    <ButtonLarge name="Evaluer mes chances" handleContinue={handleContinue} isSubmitting={isSubmitting} />
+                    <ButtonLarge name="Je me lance" handleContinue={handleContinue} isSubmitting={isSubmitting} />
                 </div>
             </div>
         </div>

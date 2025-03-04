@@ -13,6 +13,20 @@ import BlockCourtier1 from '../assets/group-portrait-five-african-business-colle
 import BlockCourtier2 from '../assets/optimized/240_F_271683964_RV5TD7e4GN67UBFhvBvtltNO4hJ5aTQs.webp'
 import BlockCourtier3 from '../assets/beautiful-woman-standing-front-colleagues-group-african-american-business-people-working-office-together_146671-45002.avif'
 import SocialMediaLogo from '../assets/optimized/social_media_logo.webp'
+import WendogoHomeVideo from '../assets/wendogo_homepage.mp4'
+import FighterProgramLogo from '../assets/companies_that_trust_us/fighters_program_logo.png'
+import GlobalVisaFlair from '../assets/companies_that_trust_us/global_visa_flair.jpeg'
+import StationF from '../assets/companies_that_trust_us/station_F_Logo.png'
+import RefusEcole0 from '../assets/refus/Refus_ecole.webp'
+import RefusEcole1 from '../assets/refus/Refus_ecole_1.webp'
+import RefusEcole2 from '../assets/refus/Refus_ecole_2.webp'
+import RefusEcole3 from '../assets/refus/Refus_ecole_3.webp'
+import RefusVisa from '../assets/refus/Refus_visa.webp'
+import ScanningDoc from '../assets/Homepage_pics/dcouments-ligne-scanning.jpg'
+import CVOptimization from '../assets/Homepage_pics/cv_lm_ai.jpg'
+import VisaOnHand from '../assets/Homepage_pics/visa_on_hand.webp'
+import ConferenceCall from '../assets/Homepage_pics/conference call.jpg'
+
 // Import svg
 import WendogoLogo from '../assets/wendogo_logo.svg'
 import  DropDownIcon from '../assets/dropdown_icon.svg'
@@ -22,6 +36,8 @@ import FeatureNoStress from '../assets/features-no-stress-4.svg'
 import FeaturePrice from '../assets/features-price-2.svg'
 import FeatureProfessional from '../assets/features-professional-4.svg'
 import FeatureTransparence from '../assets/features-transparence-4.svg'
+
+
 import Image from 'next/image';
 import Head from 'next/head';
 // Import Swiper React components
@@ -41,13 +57,48 @@ import { FloatingWhatsApp } from 'react-floating-whatsapp';
 import Footer from '../components/Footer'; 
 
 function HomePage(){
-
-    const [isLeftArrow, setIsLeftArrow] = useState(true)
-
-    const handleClickArrow = (isLeftArrow) => {
-      setIsLeftArrow(isLeftArrow)
-    }
-
+  const [currentIndex, setCurrentIndex] = useState(0);
+  
+  // Array of all image sources
+  const images = [RefusEcole0, RefusEcole1, RefusEcole2, RefusEcole3, RefusVisa];
+  
+  // Titles for each slide
+  const titles = [
+    "Niveau insuffisant pour la formation", 
+    "Niveau insuffisant au regard d'autres candidatures", 
+    "Compétences déjà acquises",
+    "Capacité d'accueil atteinte",
+    "Motif du refus de Visa"
+  ];
+  
+  // Descriptions for each slide
+  const descriptions = [
+    "Grâce à notre simulateur doté d’algorithmes puissants,  nous analysons tes bulletins via IA pour te recommander des formations les plus adaptées à ton profil académique évitant ainsi des choix inappropriés",
+    "Nous t'aidons à renforcer ton dossier (CV, lettres de motivation, certifications) pour te démarquer des autres candidats",
+    "L’IA de Wendogo t'oriente  vers des formations plus avancées ou complémentaires pour éviter ce motif de refus",
+    "Nous optimisons ta stratégie de candidature en ciblant des établissements avec une meilleure disponibilité et en diversifiant les options",
+    "Nous t'accompagnons pour un dossier solide et complet (justificatifs, preuve de ressources, lettre de motivation optimisée) afin d’éviter les incohérences et d’augmenter les chances d’acceptation"
+  ];
+  
+  // Handle navigation
+  const handlePrevious = () => {
+    setCurrentIndex((prevIndex) => (prevIndex === 0 ? images.length - 1 : prevIndex - 1));
+  };
+  
+  const handleNext = () => {
+    setCurrentIndex((prevIndex) => (prevIndex === images.length - 1 ? 0 : prevIndex + 1));
+  };
+   
+  
+  // Update browser width on resize
+  useEffect(() => {
+    const handleResize = () => {
+      setBrowserWidth(window.innerWidth);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
     const [countdown, setCountdown] = useState(0)
     const [bannerAnimationClassList, updateBannerAnimationClassList] = useState(["bEueds", "egKQIA"])
     //const [progressBarClass, setProgressBarClass] = useState('lahlbf')
@@ -130,8 +181,26 @@ function HomePage(){
     // useLayoutEffect(() => {
     //   setWidthBanner(myElementRef.current.offsetWidth)
     // }, [])
-
-
+    const logoContainerStyle = {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      flexWrap: 'wrap',
+      gap: '30px',
+      margin: '20px auto',
+      maxWidth: '1200px'
+    };
+    
+    const logoImageStyle = {
+      objectFit: 'contain',
+      maxHeight: '80px',
+      width: 'auto'
+    };
+    const logoImageStyle1 = {
+      objectFit: 'contain',
+      maxHeight: '180px',
+      width: 'auto'
+    };
     useEffect(() => {
       
       const handleScroll = () => {
@@ -219,7 +288,7 @@ function HomePage(){
                       </li>
                       <li aria-expanded="false" role="menuitem" tabIndex={0} className="Navbarstyles__MenuItem Navbarstyles__MenuItem-common">
                         <span className="Navbarstyles__MenuItemLabel" onClick={() => toggleNavSubMenu1()}>
-                          <span>Evaluer mes chances</span> 
+                          <span>Je me lance</span> 
                           <DropDownIcon className={`Navbarstyles__MenuItemArrow menu-arrow ${displaySubMenu1 ? 'menu-arrow-rotated' : ''}`} />
                         </span>
                         <ul className={"Navbarstyles__SubMenu "+(displaySubMenu1 ? 'lowcCT subMenu1' : '')} >
@@ -287,7 +356,7 @@ function HomePage(){
                       <li className="Navbarstyles__MenuButtonItems-sc-mi7mu3-6 eonXWL">
                         {/* <Link href='/waitinglist' className="ButtonLogin__Button"> Se connecter </Link> */}
                         <a href='/simulation/home' className="ButtonNavbar__Button">
-                          <span className="ButtonNavbar__Label"> Evaluer mes chances </span>
+                          <span className="ButtonNavbar__Label"> Je me lance </span>
                           <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className="ButtonNavbar__Arrow">
                             <path d="M15.3,11.17l-2.51-2.49,1.18-1.18,4.53,4.5-4.53,4.5-1.18-1.18,2.51-2.49H5.5v-1.66H15.3Z" />
                           </svg>
@@ -335,27 +404,14 @@ function HomePage(){
 
                 {/* Canonical URL */}
                 <link rel="canonical" href="https://wendogo.com/" />
-            </Head>
-            {/* <Head>
-              <meta property="og:url"           content="https://wendogo.com/" />
-              <meta property="og:type"          content="website" />
-              <meta property="og:title"         content="Wendogo" />
-              <meta property="og:description"   content="Expert en ligne pour vos demandes de visa" />
-              <meta property="og:image"         content={SocialMediaLogo} /> 
-              <title>Wendogo</title>
-              <meta name="description"          content="Expert en ligne pour vos demandes de visa"/>
-            </Head> */}
-            <div className="main" style={{background: 'black'}}> 
-              <Swiper className="mySwiper swiper-h" spaceBetween={50} pagination={{ clickable: true, }} modules={[Pagination, Autoplay]} speed={1000}
-                    loop={true} autoplay={{delay: 2000,  disableOnInteraction: false, pauseOnMouseEnter: true}}>   
-                <SwiperSlide><Image src={backgroundImg1} alt="homepageImage1"  /></SwiperSlide>
-                <SwiperSlide><Image src={backgroundImg2} alt="homepageImage2" /></SwiperSlide>
-                <SwiperSlide><Image src={backgroundImg3} alt="homepageImage3" /></SwiperSlide>
-                <div className="main-screen__row">
-                   <div className="main-screen__content">
-                    <h1 className="HeroLeft__Title-sc-1axg5uv-3 jDYqud">Préparez votre projet de voyage pour la France ou le Canada simplement</h1>
-                    <div className="main-screen__content-subscribe"> C’est trop beau parce que c’est vrai&nbsp;: transparence, expertise et implication. Wendogo, votre partenaire en ligne pour un accompagnement complet dans la préparation de votre voyage à l'étranger.</div>
-                    <button className="PrimaryButton__Container-sc-1vkvp7q-0 iroZSn HeroLeft__PrimaryButton-sc-1axg5uv-6 jJuKZd">
+            </Head> 
+            
+<div className="HeroPictureRatestyles__HeroPictureRateContainer-sc-s8xhxd-0 fCWUzd" style={{background: '#333'}}>
+	<div className="HeroPictureRatestyles__LeftSection-sc-s8xhxd-1 dGQEox" style={{marginTop: '100px'}}>
+		<h1 className="HeroLeft__Title-sc-1axg5uv-3 jDYqud" style={{color:'white'}}> Préparez ses études pour la France n'a jamais été aussi simple </h1>
+		<div className="main-screen__content-subscribe"  style={{color:'white'}}> Avec notre IA experte et plus de 50 000 formations recensées, prépare ton projet d'étude en France plus vite et plus efficacement. </div>
+		<div className="HeroPictureRatestyles__CTAContainer-sc-s8xhxd-4 geqbtd">
+    <button className="PrimaryButton__Container-sc-1vkvp7q-0 iroZSn HeroLeft__PrimaryButton-sc-1axg5uv-6 jJuKZd">
                       <span className="PrimaryButton__Overlay-sc-1vkvp7q-3 sSEIO">
                         <span className="PrimaryButton__OverlayBackground-sc-1vkvp7q-4 kxNCsz">
                           <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="PrimaryButton__Arrow-sc-1vkvp7q-1 crhpBB">
@@ -364,338 +420,463 @@ function HomePage(){
                         </span>
                       </span>
                       <Link href='/simulation/home' >
-                        <span className="PrimaryButton__Label-sc-1vkvp7q-2 kVCvkJ"> Evaluer mes chances </span>
+                        <span className="PrimaryButton__Label-sc-1vkvp7q-2 kVCvkJ"> Je me lance </span>
                       </Link>
                     </button>
-                  </div> 
-                </div>  
-              </Swiper>
-
-            </div>
-            <div className="content" id="content">
-              <section className="styles__Main-sc-kz84w6-0 ≈">
-                <main className="styles__Main-sc-kz84w6-0 gEFmYD">
-                  <section className="BlocRTB__Bloc-sc-15u9ccm-0 lgCmtM" style={{margin : 0}}>
-                    <div className="BlocRTB__Container-sc-15u9ccm-1 kSXqSI">
-                      <h2 className="h2"> Nous vous aidons au  <br />
-                        <span>maximum à obtenir votre visa</span>
-                      </h2>
-                    </div>
-                  </section>
-                </main>
-              </section>
+		</div>
+		<div className="HeroPictureRatestyles__Checks-sc-s8xhxd-8 kNXFIj" /> </div>
+	<div className="HeroPictureRatestyles__RightSection-sc-s8xhxd-9 jbJlkC" style={{marginTop: '100px'}}>
+		<div className="HeroPictureRatestyles__Wrapper-sc-s8xhxd-10 jUWPqd">
+			<div className="HeroPictureRatestyles__ImageWrapper-sc-s8xhxd-11 hqZtQD">
+        <video autoPlay loop muted playsInline>
+          <source src={process.env.NEXT_PUBLIC_PUBLIC_URL+'/wendogo_homepage_full.mp4'} type="video/mp4"/>
+          Votre navigateur ne supporte pas la lecture des vidéos.
+        </video>
+				</div>
+			 
+		</div>
+	</div>
+</div>
+            <div className="content" id="content" style={{paddingTop: '50px'}}>
+              <section className="styles__Main-sc-kz84w6-0">
+                <h2 className="h2" style={{ textAlign: 'center' }}>
+                  Ils nous font confiance <br />
+                </h2>
+                <div style={logoContainerStyle}>
+                  <Image src={StationF} alt="" style={logoImageStyle} />
+                  <Image src={FighterProgramLogo} alt="" style={logoImageStyle} />
+                  <Image src={GlobalVisaFlair} alt="" style={logoImageStyle1} />
+                </div>
+              </section>   
               <section>
-                  <main className="styles__Main-sc-kz84w6-0 gEFmYD">
-                    <section className="BlocRTB__Bloc-sc-15u9ccm-0 lgCmtM">
-                      <div className="BlocRTB__Container-sc-15u9ccm-1 kSXqSI">
-                        <div className="Card__Container-sc-1qqjegm-0 bSzjhs">
-                          <div className="Card__CheckContainer-sc-1qqjegm-1 ffwQEH">
-                            <FeatureDistance/>
-                            {/* <Image src={FeatureDistance} alt='FeatureDistance'/> */}
-                          </div>
-                          <div className="Card__TextContainer-sc-1qqjegm-3 ezVybs">
-                            <div className="Card__Title-sc-1qqjegm-4 bqicpW">Nous travaillons à distance</div>
-                            <p className="Card__Text-sc-1qqjegm-5 iOmyQf"> Profitez d'une assistance personnalisée depuis le confort de votre canapé. </p>
-                          </div>
-                        </div>
-                        <div className="Card__Container-sc-1qqjegm-0 bSzjhs">
-                          <div className="Card__CheckContainer-sc-1qqjegm-1 ffwQEH">
-                           <FeaturePrice/>
-                           {/* <Image src={FeaturePrice} alt='FeaturePrice'/> */}
-                          </div>
-                          <div className="Card__TextContainer-sc-1qqjegm-3 ezVybs">
-                            <div className="Card__Title-sc-1qqjegm-4 bqicpW">Tarifs</div>
-                            <p className="Card__Text-sc-1qqjegm-5 iOmyQf"> Outils et conseils gratuits. Nous n'encaissons véritablement le paiement qu’au succès. </p>
-                          </div>
-                        </div>
-                        <div className="Card__Container-sc-1qqjegm-0 bSzjhs">
-                          <div className="Card__CheckContainer-sc-1qqjegm-1 ffwQEH">
-                            <FeatureNoStress/>
-                            {/* <Image src={FeatureNoStress} alt='FeatureNoStress'/> */}
-                          </div>
-                          <div className="Card__TextContainer-sc-1qqjegm-3 ezVybs">
-                            <div className="Card__Title-sc-1qqjegm-4 bqicpW">No Stress</div>
-                            <p className="Card__Text-sc-1qqjegm-5 iOmyQf"> Évitez toute démarche fastidieuse, et tout risque d’erreur de procédure visa. </p>
-                          </div>
-                        </div>
-                      </div>
-                    </section>
-                    <section className="BlocRTB__Bloc-sc-15u9ccm-0 lgCmtM" style={{paddingBottom: 90}}>
-                      <div className="BlocRTB__Container-sc-15u9ccm-1 kSXqSI">
-                        <div className="Card__Container-sc-1qqjegm-0 bSzjhs mkxwco">
-                          <div className="Card__CheckContainer-sc-1qqjegm-1 ffwQEH">
-                            {/* <Image src={FeatureTransparence} alt='FeatureTransparence'/> */}
-                            <FeatureTransparence/>
-                          </div>
-                          <div className="Card__TextContainer-sc-1qqjegm-3 ezVybs">
-                            <div className="Card__Title-sc-1qqjegm-4 bqicpW">Transparence</div>
-                            <p className="Card__Text-sc-1qqjegm-5 iOmyQf"> Nos conseillers vous disent tout et défendent vos intérêts. </p>
-                          </div>
-                        </div>
-                        <div className="Card__Container-sc-1qqjegm-0 bSzjhs">
-                          <div className="Card__CheckContainer-sc-1qqjegm-1 ffwQEH">
-                            {/* <Image src={FeatureProfessional} alt='FeatureProfessional'/> */}
-                            <FeatureProfessional/>
-                          </div>
-                          <div className="Card__TextContainer-sc-1qqjegm-3 ezVybs">
-                            <div className="Card__Title-sc-1qqjegm-4 bqicpW">Expertise</div>
-                            <p className="Card__Text-sc-1qqjegm-5 iOmyQf">Nous traitons tous les types de visa (Immigration, visiteur, famille, étudiant, bourse, affaire...). </p>
-                          </div>
-                        </div>
-                        <div className="Card__Container-sc-1qqjegm-0 bSzjhs">
-                          <div className="Card__CheckContainer-sc-1qqjegm-1 ffwQEH">
-                            <FeatureImplication/>
-                            {/* <Image src={FeatureImplication} alt='FeatureImplication'/> */}
-                          </div>
-                          <div className="Card__TextContainer-sc-1qqjegm-3 ezVybs">
-                            <div className="Card__Title-sc-1qqjegm-4 bqicpW">Implication</div>
-                            <p className="Card__Text-sc-1qqjegm-5 iOmyQf">Restez en contact avec votre expert (visio, sms, téléphone). </p>
-                          </div>
-                        </div>
-                      </div>
-                    </section>
+                  <main className="styles__Main-sc-kz84w6-0 gEFmYD"> 
                       <div className="styles__Grid-sc-10gqksz-1 iuHviD BlocOutils__Container-sc-10c9hjh-0 fGvXyl">
-                        <div className="BlocOutils__Content-sc-10c9hjh-1 jQpxOw">
-                          <p className="BlocOutils__Transparency-sc-10c9hjh-2 jXRqut"> La transparence selon Wendogo </p>
-                          <h2 className="BlocOutils__Title-sc-10c9hjh-3 wniqW"> Tout ce qu’on sait, vous le savez. </h2>
-                          <p className="BlocOutils__Description-sc-10c9hjh-4 eQpKZn"> Nous partageons toutes les informations en notre possession afin de garantir une relation de confiance et des décisions éclairées. </p>
-                          <button className="PrimaryButton__Container-sc-1vkvp7q-0 iroZSn BlocOutils__Simulate-sc-10c9hjh-5 cWIQGA">
-                            <span className="PrimaryButton__Overlay-sc-1vkvp7q-3 sSEIO">
-                              <span className="PrimaryButton__OverlayBackground-sc-1vkvp7q-4 kxNCsz">
-                                <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="PrimaryButton__Arrow-sc-1vkvp7q-1 crhpBB">
-                                  <path d="M20.7454 14.8908L17.1664 11.3187L18.7381 9.75L25 16L18.7381 22.25L17.1664 20.6813L20.7454 17.1092H7V14.8908H20.7454Z" />
-                                </svg>
-                              </span>
-                            </span>
-                            <a href='/simulation/home' >
-                              <span className="PrimaryButton__Label-sc-1vkvp7q-2 kVCvkJ"> Evaluer mes chances </span>
-                            </a>
-                          </button>
+                        <div className="BlocOutils__Content-sc-10c9hjh-1 jQpxOw"> 
+                          <h2 className="BlocOutils__Title-sc-10c9hjh-3 wniqW"> Nous minimisons au maximum ces types de refus.</h2>
+                          <p className="BlocOutils__Description-sc-10c9hjh-4 eQpKZn">   </p>
+                          
                         </div>
-                        {browserWidth>1024 ?
-                        <div className="Laptop__Container-sc-1henh52-0 ebnCSa ">
-                          <div className="Sliderstyles__ImageContainer-sc-jd0rgd-6 isxeYt">
-                            <picture>
-                              {/* <source type="image/webp" srcSet={SliderstylesImage1} />
-                              <source srcSet={SliderstylesImage1} /> */}
-                              <Image className={"Sliderstyles__Image-sc-jd0rgd-7 "+ (isLeftArrow ? "kCpYFv" : "CtOpC") } src={SliderstylesImage1} alt="" />
-                            </picture>
-                            <picture>
-                              {/* <source type="image/webp" srcSet={SliderstylesImage2} />
-                              <source srcSet={SliderstylesImage2} /> */}
-                              <Image className={"Sliderstyles__Image-sc-jd0rgd-7 "+ (!isLeftArrow ? "kCpYFv" : "CtOpC") } src={SliderstylesImage2} alt="" />
-                            </picture>
-                          </div>
-                          <div className="Laptop__Content-sc-1henh52-2 bwEaWU">
-                            <h3 className="Sliderstyles__Title-sc-jd0rgd-0 kQjOWu">  {(isLeftArrow ? "Notre simulateur" : "Suivez votre dossier en temps réel")}</h3>
-                            <p className="Sliderstyles__Description-sc-jd0rgd-1 Laptop__Text-sc-1henh52-1 dzJZez hCTNwG"> 
-                                {(isLeftArrow ? "Soyez sûr avant de vous engager : notre simulateur doté d’algorithmes puissants vous donne gratuitement un indice de confiance sur vos chances d'obtenir votre visa." 
-                                              : "Vous nous confiez votre projet, vous devez savoir où il en est : RDV à l'ambassade, décision d'une école ... Bénéficiez d’un espace en ligne sécurisé pour suivre l’avancée de votre dossier en toute autonomie.") }
-                                
-                            </p>
-                            <div className="Sliderstyles__SlideContainer-sc-jd0rgd-4 exfKJT">
-                              <hr className={"Divider-sc-1qii385-0 Sliderstyles__Slide-sc-jd0rgd-5 iyJAir "+ (isLeftArrow ? "LACWn" : "jaXoBy") } />
-                              <hr className={"Divider-sc-1qii385-0 Sliderstyles__Slide-sc-jd0rgd-5 iyJAir "+ (!isLeftArrow ? "LACWn" : "jaXoBy")} />
-                            </div>
-                            <div className="Laptop__ArrowContainer-sc-1henh52-3 lgqkPS">
-                              <button aria-label="Précédent" type="button" onClick={() => handleClickArrow(true)} className="ArrowButton__Container-sc-11aiclo-3 hRnQwB Sliderstyles__Previous-sc-jd0rgd-2 ENyIs" disabled={isLeftArrow}>
-                                <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="ArrowButton__Arrow-sc-11aiclo-0 ArrowButton__Arrow1-sc-11aiclo-1 fhLDeK">
-                                  <path d="M20.7454 14.8908L17.1664 11.3187L18.7381 9.75L25 16L18.7381 22.25L17.1664 20.6813L20.7454 17.1092H7V14.8908H20.7454Z" />
-                                </svg>
-                                <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="ArrowButton__Arrow-sc-11aiclo-0 ArrowButton__Arrow2-sc-11aiclo-2 fhLDeK">
-                                  <path d="M20.7454 14.8908L17.1664 11.3187L18.7381 9.75L25 16L18.7381 22.25L17.1664 20.6813L20.7454 17.1092H7V14.8908H20.7454Z" />
-                                </svg>
-                              </button>
-                              <button aria-label="Suivant" type="button" onClick={() => handleClickArrow(false)} className="ArrowButton__Container-sc-11aiclo-3 doTHWK Sliderstyles__Next-sc-jd0rgd-3 jZecqw" disabled={!isLeftArrow}>
-                                <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="ArrowButton__Arrow-sc-11aiclo-0 ArrowButton__Arrow1-sc-11aiclo-1 bJwJPy">
-                                  <path d="M20.7454 14.8908L17.1664 11.3187L18.7381 9.75L25 16L18.7381 22.25L17.1664 20.6813L20.7454 17.1092H7V14.8908H20.7454Z" />
-                                </svg>
-                                <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="ArrowButton__Arrow-sc-11aiclo-0 ArrowButton__Arrow2-sc-11aiclo-2 bJwJPy">
-                                  <path d="M20.7454 14.8908L17.1664 11.3187L18.7381 9.75L25 16L18.7381 22.25L17.1664 20.6813L20.7454 17.1092H7V14.8908H20.7454Z" />
-                                </svg>
-                              </button>
-                            </div>
-                          </div>
-                        </div> : (  (browserWidth<1024 && browserWidth>768) ?                   
-                        <div className="Tablet__Container-sc-2ocpeo-0 UcQSe">
-                          <div className="Tablet__Content-sc-2ocpeo-1 eyLBfp">
-                          <h3 className="Sliderstyles__Title-sc-jd0rgd-0 kQjOWu">  {(isLeftArrow ? "Notre simulateur" : "Suivez votre dossier en temps réel")}</h3>
-                            <p className="Sliderstyles__Description-sc-jd0rgd-1 dzJZez"> 
-                                    {(isLeftArrow ? "Soyez sûr avant de vous engager : notre simulateur doté d’algorithmes puissants vous donne un indice de confiance sur vos chances d'obtenir votre visa." 
-                                              : "Vous nous confiez votre projet, vous devez savoir où il en est. RDV à l'ambassade, décision d'une école ... Bénéficiez d’un espace en ligne sécurisé pour suivre l’avancée de votre dossier en toute autonomie.") } </p>
-                            <div className="Sliderstyles__SlideContainer-sc-jd0rgd-4 exfKJT">
-                              <hr className={"Divider-sc-1qii385-0 Sliderstyles__Slide-sc-jd0rgd-5 iyJAir "+ (isLeftArrow ? "LACWn" : "jaXoBy") } />
-                              <hr className={"Divider-sc-1qii385-0 Sliderstyles__Slide-sc-jd0rgd-5 iyJAir "+ (!isLeftArrow ? "LACWn" : "jaXoBy")} />
-                            </div>
-                          </div>
-                          <div className="Tablet__ImageController-sc-2ocpeo-2 qqeks">
-                            <button aria-label="Précédent" type="button" onClick={() => handleClickArrow(true)} className="ArrowButton__Container-sc-11aiclo-3 hRnQwB Sliderstyles__Previous-sc-jd0rgd-2 ENyIs" disabled={isLeftArrow}>
-                              <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="ArrowButton__Arrow-sc-11aiclo-0 ArrowButton__Arrow1-sc-11aiclo-1 fhLDeK">
-                                <path d="M20.7454 14.8908L17.1664 11.3187L18.7381 9.75L25 16L18.7381 22.25L17.1664 20.6813L20.7454 17.1092H7V14.8908H20.7454Z" />
-                              </svg>
-                              <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="ArrowButton__Arrow-sc-11aiclo-0 ArrowButton__Arrow2-sc-11aiclo-2 fhLDeK">
-                                <path d="M20.7454 14.8908L17.1664 11.3187L18.7381 9.75L25 16L18.7381 22.25L17.1664 20.6813L20.7454 17.1092H7V14.8908H20.7454Z" />
-                              </svg>
-                            </button>
-                            <div className="Sliderstyles__ImageContainer-sc-jd0rgd-6 isxeYt">
-                            <picture>
-                              {/* <source type="image/webp" srcSet={SliderstylesImage1} />
-                              <source srcSet={SliderstylesImage1} /> */}
-                              <Image className={"Sliderstyles__Image-sc-jd0rgd-7 "+ (isLeftArrow ? "kCpYFv" : "CtOpC") } src={SliderstylesImage1} alt="" />
-                            </picture>
-                            <picture>
-                              {/* <source type="image/webp" srcSet={SliderstylesImage2} />
-                              <source srcSet={SliderstylesImage2} /> */}
-                              <Image className={"Sliderstyles__Image-sc-jd0rgd-7 "+ (!isLeftArrow ? "kCpYFv" : "CtOpC") } src={SliderstylesImage2} alt="" />
-                            </picture>
-                          </div>
-                            <button aria-label="Suivant" type="button" onClick={() => handleClickArrow(false)} className="ArrowButton__Container-sc-11aiclo-3 doTHWK Sliderstyles__Next-sc-jd0rgd-3 jZecqw" disabled={!isLeftArrow}>
-                              <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="ArrowButton__Arrow-sc-11aiclo-0 ArrowButton__Arrow1-sc-11aiclo-1 bJwJPy">
-                                <path d="M20.7454 14.8908L17.1664 11.3187L18.7381 9.75L25 16L18.7381 22.25L17.1664 20.6813L20.7454 17.1092H7V14.8908H20.7454Z" />
-                              </svg>
-                              <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="ArrowButton__Arrow-sc-11aiclo-0 ArrowButton__Arrow2-sc-11aiclo-2 bJwJPy">
-                                <path d="M20.7454 14.8908L17.1664 11.3187L18.7381 9.75L25 16L18.7381 22.25L17.1664 20.6813L20.7454 17.1092H7V14.8908H20.7454Z" />
-                              </svg>
-                            </button>
-                          </div>
-                        </div> : <div className="Mobile__Container-sc-fyrimv-0 jERalJ">
-                                  <h3 className="Sliderstyles__Title-sc-jd0rgd-0 kQjOWu">  {(isLeftArrow ? "Notre simulateur" : "Suivez votre dossier en temps réel")}</h3>
-                                  <p className="Sliderstyles__Description-sc-jd0rgd-1 dzJZez"> 
-                                        {(isLeftArrow ? "Soyez sûr avant de vous engager : notre simulateur doté d’algorithmes puissants vous donne un indice de confiance sur vos chances d'obtenir votre visa." 
-                                              : "Vous nous confiez votre projet, vous devez savoir où il en est. RDV à l'ambassade, décision d'une école ... Bénéficiez d’un espace en ligne sécurisé pour suivre l’avancée de votre dossier en toute autonomie.") }
-                                  </p>
-                                  <div className="Mobile__Navbar-sc-fyrimv-1 kHmjuy">
-                                    <button aria-label="Précédent" type="button" onClick={() => handleClickArrow(true)} className="ArrowButton__Container-sc-11aiclo-3 hRnQwB Sliderstyles__Previous-sc-jd0rgd-2 ENyIs" disabled={isLeftArrow}>
-                                      <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="ArrowButton__Arrow-sc-11aiclo-0 ArrowButton__Arrow1-sc-11aiclo-1 fhLDeK">
-                                        <path d="M20.7454 14.8908L17.1664 11.3187L18.7381 9.75L25 16L18.7381 22.25L17.1664 20.6813L20.7454 17.1092H7V14.8908H20.7454Z" />
-                                      </svg>
-                                      <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="ArrowButton__Arrow-sc-11aiclo-0 ArrowButton__Arrow2-sc-11aiclo-2 fhLDeK">
-                                        <path d="M20.7454 14.8908L17.1664 11.3187L18.7381 9.75L25 16L18.7381 22.25L17.1664 20.6813L20.7454 17.1092H7V14.8908H20.7454Z" />
-                                      </svg>
-                                    </button>
-                                    <div className="Sliderstyles__SlideContainer-sc-jd0rgd-4 exfKJT">
-                                      <hr className={"Divider-sc-1qii385-0 Sliderstyles__Slide-sc-jd0rgd-5 iyJAir "+ (isLeftArrow ? "LACWn" : "jaXoBy") } />
-                                      <hr className={"Divider-sc-1qii385-0 Sliderstyles__Slide-sc-jd0rgd-5 iyJAir "+ (!isLeftArrow ? "LACWn" : "jaXoBy")} />
-                                    </div>
-                                    <button aria-label="Suivant" type="button" onClick={() => handleClickArrow(false)} className="ArrowButton__Container-sc-11aiclo-3 doTHWK Sliderstyles__Next-sc-jd0rgd-3 jZecqw" disabled={!isLeftArrow}>
-                                      <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="ArrowButton__Arrow-sc-11aiclo-0 ArrowButton__Arrow1-sc-11aiclo-1 bJwJPy">
-                                        <path d="M20.7454 14.8908L17.1664 11.3187L18.7381 9.75L25 16L18.7381 22.25L17.1664 20.6813L20.7454 17.1092H7V14.8908H20.7454Z" />
-                                      </svg>
-                                      <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="ArrowButton__Arrow-sc-11aiclo-0 ArrowButton__Arrow2-sc-11aiclo-2 bJwJPy">
-                                        <path d="M20.7454 14.8908L17.1664 11.3187L18.7381 9.75L25 16L18.7381 22.25L17.1664 20.6813L20.7454 17.1092H7V14.8908H20.7454Z" />
-                                      </svg>
-                                    </button>
-                                  </div>
-                                  <div className="Sliderstyles__ImageContainer-sc-jd0rgd-6 isxeYt">
-                                    <picture>
-                                      {/* <source type="image/webp" srcSet={SliderstylesImage1} />
-                                      <source srcSet={SliderstylesImage1} /> */}
-                                      <Image className={"Sliderstyles__Image-sc-jd0rgd-7 "+ (isLeftArrow ? "kCpYFv" : "CtOpC") } src={SliderstylesImage1} alt="" />
-                                    </picture>
-                                    <picture>
-                                      {/* <source type="image/webp" srcSet={SliderstylesImage2} />
-                                      <source srcSet={SliderstylesImage2} /> */}
-                                      <Image className={"Sliderstyles__Image-sc-jd0rgd-7 "+ (!isLeftArrow ? "kCpYFv" : "CtOpC") } src={SliderstylesImage2} alt="" />
-                                    </picture>
-                                  </div>
-                                </div>)}
+                        {browserWidth > 1024 ? (
+        <div className="Laptop__Container-sc-1henh52-0 ebnCSa">
+          <div className="Sliderstyles__ImageContainer-sc-jd0rgd-6 isxeYt">
+            {images.map((img, index) => (
+              <picture key={index}>
+                <Image 
+                  className={`Sliderstyles__Image-sc-jd0rgd-7 ${index === currentIndex ? "kCpYFv" : "CtOpC"}`} 
+                  src={img} 
+                  alt="" 
+                />
+              </picture>
+            ))}
+          </div>
+          <div className="Laptop__Content-sc-1henh52-2 bwEaWU">
+            <h3 className="Sliderstyles__Title-sc-jd0rgd-0 kQjOWu">
+              {titles[currentIndex]}
+            </h3>
+            <p className="Sliderstyles__Description-sc-jd0rgd-1 Laptop__Text-sc-1henh52-1 dzJZez hCTNwG">
+              {descriptions[currentIndex]}
+            </p>
+            <div className="Sliderstyles__SlideContainer-sc-jd0rgd-4 exfKJT">
+              {images.map((_, index) => (
+                <hr 
+                  key={index}
+                  className={`Divider-sc-1qii385-0 Sliderstyles__Slide-sc-jd0rgd-5 iyJAir ${index === currentIndex ? "LACWn" : "jaXoBy"}`} 
+                />
+              ))}
+            </div>
+            <div className="Laptop__ArrowContainer-sc-1henh52-3 lgqkPS">
+              <button 
+                aria-label="Précédent" 
+                type="button" 
+                onClick={handlePrevious} 
+                className="ArrowButton__Container-sc-11aiclo-3 hRnQwB Sliderstyles__Previous-sc-jd0rgd-2 ENyIs"
+              >
+                <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="ArrowButton__Arrow-sc-11aiclo-0 ArrowButton__Arrow1-sc-11aiclo-1 fhLDeK">
+                  <path d="M20.7454 14.8908L17.1664 11.3187L18.7381 9.75L25 16L18.7381 22.25L17.1664 20.6813L20.7454 17.1092H7V14.8908H20.7454Z" />
+                </svg>
+                <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="ArrowButton__Arrow-sc-11aiclo-0 ArrowButton__Arrow2-sc-11aiclo-2 fhLDeK">
+                  <path d="M20.7454 14.8908L17.1664 11.3187L18.7381 9.75L25 16L18.7381 22.25L17.1664 20.6813L20.7454 17.1092H7V14.8908H20.7454Z" />
+                </svg>
+              </button>
+              <button 
+                aria-label="Suivant" 
+                type="button" 
+                onClick={handleNext}
+                className="ArrowButton__Container-sc-11aiclo-3 doTHWK Sliderstyles__Next-sc-jd0rgd-3 jZecqw"
+              >
+                <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="ArrowButton__Arrow-sc-11aiclo-0 ArrowButton__Arrow1-sc-11aiclo-1 bJwJPy">
+                  <path d="M20.7454 14.8908L17.1664 11.3187L18.7381 9.75L25 16L18.7381 22.25L17.1664 20.6813L20.7454 17.1092H7V14.8908H20.7454Z" />
+                </svg>
+                <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="ArrowButton__Arrow-sc-11aiclo-0 ArrowButton__Arrow2-sc-11aiclo-2 bJwJPy">
+                  <path d="M20.7454 14.8908L17.1664 11.3187L18.7381 9.75L25 16L18.7381 22.25L17.1664 20.6813L20.7454 17.1092H7V14.8908H20.7454Z" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : browserWidth < 1024 && browserWidth > 768 ? (
+        <div className="Tablet__Container-sc-2ocpeo-0 UcQSe">
+          <div className="Tablet__Content-sc-2ocpeo-1 eyLBfp">
+            <h3 className="Sliderstyles__Title-sc-jd0rgd-0 kQjOWu">
+              {titles[currentIndex]}
+            </h3>
+            <p className="Sliderstyles__Description-sc-jd0rgd-1 dzJZez">
+              {descriptions[currentIndex]}
+            </p>
+            <div className="Sliderstyles__SlideContainer-sc-jd0rgd-4 exfKJT">
+              {images.map((_, index) => (
+                <hr 
+                  key={index}
+                  className={`Divider-sc-1qii385-0 Sliderstyles__Slide-sc-jd0rgd-5 iyJAir ${index === currentIndex ? "LACWn" : "jaXoBy"}`} 
+                />
+              ))}
+            </div>
+          </div>
+          <div className="Tablet__ImageController-sc-2ocpeo-2 qqeks">
+            <button 
+              aria-label="Précédent" 
+              type="button" 
+              onClick={handlePrevious}
+              className="ArrowButton__Container-sc-11aiclo-3 hRnQwB Sliderstyles__Previous-sc-jd0rgd-2 ENyIs"
+            >
+              <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="ArrowButton__Arrow-sc-11aiclo-0 ArrowButton__Arrow1-sc-11aiclo-1 fhLDeK">
+                <path d="M20.7454 14.8908L17.1664 11.3187L18.7381 9.75L25 16L18.7381 22.25L17.1664 20.6813L20.7454 17.1092H7V14.8908H20.7454Z" />
+              </svg>
+              <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="ArrowButton__Arrow-sc-11aiclo-0 ArrowButton__Arrow2-sc-11aiclo-2 fhLDeK">
+                <path d="M20.7454 14.8908L17.1664 11.3187L18.7381 9.75L25 16L18.7381 22.25L17.1664 20.6813L20.7454 17.1092H7V14.8908H20.7454Z" />
+              </svg>
+            </button>
+            <div className="Sliderstyles__ImageContainer-sc-jd0rgd-6 isxeYt">
+              {images.map((img, index) => (
+                <picture key={index}>
+                  <Image 
+                    className={`Sliderstyles__Image-sc-jd0rgd-7 ${index === currentIndex ? "kCpYFv" : "CtOpC"}`} 
+                    src={img} 
+                    alt="" 
+                  />
+                </picture>
+              ))}
+            </div>
+            <button 
+              aria-label="Suivant" 
+              type="button" 
+              onClick={handleNext}
+              className="ArrowButton__Container-sc-11aiclo-3 doTHWK Sliderstyles__Next-sc-jd0rgd-3 jZecqw"
+            >
+              <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="ArrowButton__Arrow-sc-11aiclo-0 ArrowButton__Arrow1-sc-11aiclo-1 bJwJPy">
+                <path d="M20.7454 14.8908L17.1664 11.3187L18.7381 9.75L25 16L18.7381 22.25L17.1664 20.6813L20.7454 17.1092H7V14.8908H20.7454Z" />
+              </svg>
+              <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="ArrowButton__Arrow-sc-11aiclo-0 ArrowButton__Arrow2-sc-11aiclo-2 bJwJPy">
+                <path d="M20.7454 14.8908L17.1664 11.3187L18.7381 9.75L25 16L18.7381 22.25L17.1664 20.6813L20.7454 17.1092H7V14.8908H20.7454Z" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className="Mobile__Container-sc-fyrimv-0 jERalJ">
+          <h3 className="Sliderstyles__Title-sc-jd0rgd-0 kQjOWu">
+            {titles[currentIndex]}
+          </h3>
+          <p className="Sliderstyles__Description-sc-jd0rgd-1 dzJZez">
+            {descriptions[currentIndex]}
+          </p>
+          <div className="Mobile__Navbar-sc-fyrimv-1 kHmjuy">
+            <button 
+              aria-label="Précédent" 
+              type="button" 
+              onClick={handlePrevious}
+              className="ArrowButton__Container-sc-11aiclo-3 hRnQwB Sliderstyles__Previous-sc-jd0rgd-2 ENyIs"
+            >
+              <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="ArrowButton__Arrow-sc-11aiclo-0 ArrowButton__Arrow1-sc-11aiclo-1 fhLDeK">
+                <path d="M20.7454 14.8908L17.1664 11.3187L18.7381 9.75L25 16L18.7381 22.25L17.1664 20.6813L20.7454 17.1092H7V14.8908H20.7454Z" />
+              </svg>
+              <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="ArrowButton__Arrow-sc-11aiclo-0 ArrowButton__Arrow2-sc-11aiclo-2 fhLDeK">
+                <path d="M20.7454 14.8908L17.1664 11.3187L18.7381 9.75L25 16L18.7381 22.25L17.1664 20.6813L20.7454 17.1092H7V14.8908H20.7454Z" />
+              </svg>
+            </button>
+            <div className="Sliderstyles__SlideContainer-sc-jd0rgd-4 exfKJT">
+              {images.map((_, index) => (
+                <hr 
+                  key={index}
+                  className={`Divider-sc-1qii385-0 Sliderstyles__Slide-sc-jd0rgd-5 iyJAir ${index === currentIndex ? "LACWn" : "jaXoBy"}`} 
+                />
+              ))}
+            </div>
+            <button 
+              aria-label="Suivant" 
+              type="button" 
+              onClick={handleNext}
+              className="ArrowButton__Container-sc-11aiclo-3 doTHWK Sliderstyles__Next-sc-jd0rgd-3 jZecqw"
+            >
+              <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="ArrowButton__Arrow-sc-11aiclo-0 ArrowButton__Arrow1-sc-11aiclo-1 bJwJPy">
+                <path d="M20.7454 14.8908L17.1664 11.3187L18.7381 9.75L25 16L18.7381 22.25L17.1664 20.6813L20.7454 17.1092H7V14.8908H20.7454Z" />
+              </svg>
+              <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="ArrowButton__Arrow-sc-11aiclo-0 ArrowButton__Arrow2-sc-11aiclo-2 bJwJPy">
+                <path d="M20.7454 14.8908L17.1664 11.3187L18.7381 9.75L25 16L18.7381 22.25L17.1664 20.6813L20.7454 17.1092H7V14.8908H20.7454Z" />
+              </svg>
+            </button>
+          </div>
+          <div className="Sliderstyles__ImageContainer-sc-jd0rgd-6 isxeYt">
+            {images.map((img, index) => (
+              <picture key={index}>
+                <Image 
+                  className={`Sliderstyles__Image-sc-jd0rgd-7 ${index === currentIndex ? "kCpYFv" : "CtOpC"}`} 
+                  src={img} 
+                  alt="" 
+                />
+              </picture>
+            ))}
+          </div>
+        </div>
+      )}
 
 
                       </div>
-                      <div className="section-2 section-9 wf-section">
-                        <div className="pre-title">Comment ça marche</div>
-                        <h1 className="center-text center-text1">Votre visa en 6 étapes</h1>
-                        <div className="columns-6 w-row">
-                          <div className="w-col w-col-6 w-col-stack">
-                            {/* <Image src="https://uploads-ssl.webflow.com/61d984790bdf2970837c8d96/62bafa7838ff242093f9d9b5_iollo-kit%402x.webp" loading="lazy" width={750} sizes="(max-width: 991px) 100vw, (max-width: 1439px) 48vw, 621px" srcSet="https://uploads-ssl.webflow.com/61d984790bdf2970837c8d96/62bafa7838ff242093f9d9b5_iollo-kit%402x-p-500.webp  500w,https://uploads-ssl.webflow.com/61d984790bdf2970837c8d96/62bafa7838ff242093f9d9b5_iollo-kit%402x-p-800.webp  800w,https://uploads-ssl.webflow.com/61d984790bdf2970837c8d96/62bafa7838ff242093f9d9b5_iollo-kit%402x-p-1080.webp  1080w,https://uploads-ssl.webflow.com/61d984790bdf2970837c8d96/62bafa7838ff242093f9d9b5_iollo-kit%402x.webp  1500w" alt="" className="image-5" /> */}
-                            <Image src={PasseportVisa} loading="lazy" width={750} sizes="(max-width: 991px) 100vw, (max-width: 1439px) 48vw, 621px" alt="" className="image-5" />
-                          </div>
-                          <div className="column-19 w-col w-col-6 w-col-stack">
-                            <div className="div-block-2">
-                              <div className="work__item-num">1</div>
-                              <h2 className="steps">Test de chances de voyager</h2>
-                              <p className="paragraph-2"> Grâce à notre puissant simulateur, nous évaluons vos chances d'obtenir un visa. Nous déterminons ainsi si vous devriez déposer votre demande immédiatement ou suivre nos recommandations personnalisées afin d'optimiser vos chances et ainsi commencer vos démarches.
-                                  <br />
-                                  <button className="PrimaryButton__Container-sc-1vkvp7q-0 iroZSn">
-                                    <span className="PrimaryButton__Overlay-sc-1vkvp7q-3 sSEIO">
-                                      <span className="PrimaryButton__OverlayBackground-sc-1vkvp7q-4 kxNCsz">
-                                        <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="PrimaryButton__Arrow-sc-1vkvp7q-1 crhpBB">
-                                          <path d="M20.7454 14.8908L17.1664 11.3187L18.7381 9.75L25 16L18.7381 22.25L17.1664 20.6813L20.7454 17.1092H7V14.8908H20.7454Z" />
-                                        </svg>
-                                      </span>
-                                    </span>
-                                    <a href='/simulation/home' >
-                                      <span className="PrimaryButton__Label-sc-1vkvp7q-2 kVCvkJ"> Evaluer mes chances </span>
-                                    </a>
-                                  </button>
-                              </p>
-                            </div>
-                            <div className="div-block-3">
-                              <div className="work__item-num">2</div>
-                              <h2 className="steps">Contrat d'accompagnement</h2>
-                              <p className="paragraph-2"> En cas d'éligibilité, la souscription à nos services s'effectuer à distance par la signature d’un contrat. Vous profiterez ainsi d'un suivi personnalisé tout au long de votre projet, et au-delà. </p>
-                            </div>
-                            <div className="div-block-4">
-                              <div className="work__item-num">3</div>
-                              <h2 className="steps">Paiement</h2>
-                              <p className="paragraph-2"> 
-                                {/* Ensemble, nous établissons un devis prévisionnel, intégrant nos commissions à hauteur de 10%, exposant le coût global du projet. Après acceptation du devis, */}
-                                Après signature du contrat,            
-                              un acompte équivalent à 50% du montant estimé doit être versé, lequel sera consigné dans un compte bloqué. En cas de réussite, le règlement du solde est exigé avant la délivrance de votre visa.
-                              En cas de refus, le remboursement intégral des fonds est effectué ! </p>
-                            </div>
-                            <div className="div-block-7">
-                              <div className="work__item-num">4</div>
-                              <h2 className="steps">Dossier de candidature</h2>
-                              <p className="paragraph-2"> Nos experts ré-examinent avec vous vos documents et préparent votre dossier de candidature en vue d'une démarche efficace. </p>
-                            </div>
-                            <div className="div-block-7">
-                              <div className="work__item-num">5</div>
-                              <h2 className="steps">Suivi des démarches</h2>
-                              <p className="paragraph-2">Nous vous accompagnons à chaque étape de votre projet de voyage, en vous offrant un soutien complet pour obtenir les documents officiels requis. </p>
-                            </div>
-                            <div className="div-block-7">
-                              <div className="work__item-num">6</div>
-                              <h2 className="steps">Decision finale</h2>
-                              <p className="paragraph-2"> Après réception de la réponse de l'ambassade, nous effectuons une évaluation globale et vous prodiguons les derniers conseils pour la suite de la procédure.</p>
-                            </div>
-                            <Image src={PasseportVisa} loading="lazy" width={750} sizes="(max-width: 479px) 320px, (max-width: 991px) 96vw, 100vw" alt="" className="image-17" />
-                          </div>
-                        </div>
-                      </div>
-                    {/* <div className="styles__Grid-sc-10gqksz-1 iuHviD BlocOutils__Container-sc-10c9hjh-0 fGvXyl">
-                      <div className="BlocOutils__Content-sc-10c9hjh-1 jQpxOw">
-                        <p className="BlocOutils__Transparency-sc-10c9hjh-2 jXRqut"> Notre objectif </p>
-                        <h2 className="BlocOutils__Title-sc-10c9hjh-3 wniqW">  Notre objectif - Créer un monde sans frontières ! </h2>
-                        <p className="BlocOutils__Description-sc-10c9hjh-4 eQpKZn"> Chacun mérite de se sentir libre et de voyager où il veut ! </p>
-                        <button className="PrimaryButton__Container-sc-1vkvp7q-0 iroZSn BlocOutils__Simulate-sc-10c9hjh-5 cWIQGA">
-                          <span className="PrimaryButton__Overlay-sc-1vkvp7q-3 sSEIO">
-                            <span className="PrimaryButton__OverlayBackground-sc-1vkvp7q-4 kxNCsz">
-                              <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="PrimaryButton__Arrow-sc-1vkvp7q-1 crhpBB">
-                                <path d="M20.7454 14.8908L17.1664 11.3187L18.7381 9.75L25 16L18.7381 22.25L17.1664 20.6813L20.7454 17.1092H7V14.8908H20.7454Z" />
-                              </svg>
-                            </span>
-                          </span>
-                          <span className="PrimaryButton__Label-sc-1vkvp7q-2 kVCvkJ"> Evaluer mes chances </span>
-                        </button>
-                      </div> 
+                      <div className="ConnectSection-styles__ConnectSectionWrapper-sc-b6er0l-0 cEJUfy">
+	<section className="CommonComponents-styles__Section-sc-1bkhv27-4 kSYCBF">
+		<div style={{ maxWidth: 920, fontFamily: "Uivo, Helvetica, sans-serif" }} className="HomeTitle-styles__StyledTitle-sc-3v9hrw-0 FqeUK">
+			<h3 style={{ margin: 0, textAlign: "center", fontWeight: 600 }} className="BlocOutils__Title-sc-10c9hjh-3 wniqW">
+      Boostez vos chances d’admission avec notre IA et nos experts dédiés.
+      </h3> </div>
+	</section>
+	<div className="PageSection-styled__StyledPageSection-sc-bo1t4i-0 dbQXcz">
+		<div className="CommonComponents-styles__Container-sc-1bkhv27-1 ireHjh">
+			<section className="CommonComponents-styles__Section-sc-1bkhv27-4 TextWithImage-styles__TextWithImageContainer-sc-1h6e103-0 kSYCBF JEoJV">
+				<div className="TextWithImage-styles__TextWithImageColLeft-sc-1h6e103-1 hFREee">
+					<div className="TextWithImage-styles__TextWithImageText-sc-1h6e103-3 gUPPGB">
+						<div style={{ maxWidth: 800, fontFamily: "Uivo, Helvetica, sans-serif" }} className="HomeTitle-styles__StyledTitle-sc-3v9hrw-0 iIqquG">
+							<h3 style={{ margin: 0, textAlign: "left", fontWeight: 700 }} className="Card__Title-sc-1qqjegm-4 bqicpW">
+              Analyse automatique de tes relevés pour des recommandations précises
+
+              
+              </h3> </div> <span className="Card__Text-sc-1qqjegm-5 iOmyQf">
+              Prends en photo ton relevé de notes  et laisse notre IA analyser instantanément ton profil. Plus besoin de remplir manuellement des formulaires ! Nous trouvons les formations les plus adaptées en fonction de tes résultats et aspirations. </span>
+					</div>
+					<div className="TextWithImage-styles__TextWithImageLinkMobile-sc-1h6e103-8 TroxI">
+						<a color="#7E7C91" className="LinkWithArrow-styles__StyledLinkWithArrow-sc-gshyp2-0 iMAHuj" href="/product/interactive-guides"> <span>
+                <span
+                  style={{ fontWeight: 500 }}
+                  className="Text-styles__StyledText-sc-1lbfrxz-0 eIHzDT"
+                >
+                  En savoir plus sur guides{/* */}&nbsp;
+                  <span className="LinkWithArrow-styles__Arrow-sc-gshyp2-3 jyLUtt">
+                    <div
+                      color="#ED216F"
+                      className="AnimatedArrow-styles__StyledAnimatedArrow-sc-1k9se9d-0 biFsGA"
+                    >
+                      <svg
+                        width={18}
+                        height={12}
+                        viewBox="0 0 18 12"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M 0 7.1136 v -2.1136 H 9.7206 C 11.0995 4.9108 13.8946 5.282 15.5293 5.5132 C 14.4499 5.0264 12.8714 4.2292 12.0541 3.432 L 10.1948 1.6187 L 11.8544 0 L 18 6 L 11.8544 12 L 10.1948 10.3813 L 12.0541 8.5679 C 12.8901 7.7525 14.3688 6.9919 15.4295 6.5051 C 13.7698 6.7363 11.0745 7.1075 9.7206 7.1075 H 2.332 Z"
+                          fill="#ED216F"
+                        />
+                      </svg>
                     </div>
-                    <section className="BlocParole__Bloc-sc-43i1q4-0 iRbylv">
-                    <div className="BlocOutils__Content-sc-10c9hjh-1 jQpxOw">
-                        <p className="BlocOutils__Transparency-sc-10c9hjh-2 jXRqut"> Notre objectif </p>
-                        <h2 className="BlocOutils__Title-sc-10c9hjh-3 wniqW"> Notre objectif - Créer un monde sans frontières ! </h2>
-                      </div>
-                      <div className="BlocParole__List-sc-43i1q4-7 hGqDyH">
-                        <p className="BlocParole__ListItemTitleDescription-sc-43i1q4-11 gLpqe"> Chacun mérite de se sentir libre et de voyager où il veut !</p>
-                      </div>
-                      <div className="BlocParole__ImageContainer-sc-43i1q4-4 gzOqSu">
-                        <picture>
-                            <source type="image/webp" srcSet={WorldNoBorders} />
-                            <source srcSet={WorldNoBorders} />
-                            <Image className="BlocParole__Image-sc-43i1q4-5 gXGJBg" src={SliderstylesImage1} alt="" loading="lazy" size="(min-width: 1024px) 50vw, (min-width: 768px) 75vw, 100vw"/>
-                        </picture>
-                      </div>
-                    </section>*/}
+                  </span> </span>
+							</span>
+						</a>
+					</div>
+				</div>
+				<div className="TextWithImage-styles__TextWithImageColRight-sc-1h6e103-2 dKdAlx">
+					<div className="TextWithImage-styles__TextWithImageWrapper-sc-1h6e103-4 bITtIs">
+						<div>
+							<div className="TextWithImage-styles__TextWithImageImg-sc-1h6e103-6 ZtLxi">
+								<div className="LottieFile-styles__Canvas-sc-t4ls67-0 cOaUIN">
+									 <Image src={ScanningDoc} alt="ScanningDoc" />
+								</div>
+							</div>
+						</div>
+						<div>
+							<div className="TextWithImage-styles__TextWithImageImg-sc-1h6e103-6 kcKwQf"> <img src="https://cdn.stonly.com/website/6b52e978/images/platform-tours.png" alt="tours" /> </div>
+						</div>
+						<div>
+							<div className="TextWithImage-styles__TextWithImageImg-sc-1h6e103-6 kcKwQf"> <img src="https://cdn.stonly.com/website/6b52e978/images/platform-checklists.png" alt="checklist" /> </div>
+						</div>
+						<div>
+							<div className="TextWithImage-styles__TextWithImageImg-sc-1h6e103-6 kcKwQf">
+								<div className="LottieFile-styles__Canvas-sc-t4ls67-0 cOaUIN">
+									 <Image src={CVOptimization} alt="CVOptimization" />
+								</div>
+							</div>
+						</div> <img src="https://cdn.stonly.com/website/6b52e978/images/image-placeholder.png" alt="" className="TextWithImage-styles__TextWithImagePlaceholder-sc-1h6e103-5 HZYXD" /> </div>
+					<div className="TextWithImage-styles__TextWithImageLink-sc-1h6e103-7 gERARq">
+						<a color="#7E7C91" className="LinkWithArrow-styles__StyledLinkWithArrow-sc-gshyp2-0 iMAHuj" href="/product/interactive-guides"> <span>
+                <span
+                  style={{ fontWeight: 500 }}
+                  className="Text-styles__StyledText-sc-1lbfrxz-0 eIHzDT"
+                >
+                  En savoir plus sur l'analyse des relevés de notes{/* */}&nbsp;
+                  <span className="LinkWithArrow-styles__Arrow-sc-gshyp2-3 jyLUtt">
+                    <div
+                      color="#ED216F"
+                      className="AnimatedArrow-styles__StyledAnimatedArrow-sc-1k9se9d-0 biFsGA"
+                    >
+                      <svg
+                        width={18}
+                        height={12}
+                        viewBox="0 0 18 12"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M 0 7.1136 v -2.1136 H 9.7206 C 11.0995 4.9108 13.8946 5.282 15.5293 5.5132 C 14.4499 5.0264 12.8714 4.2292 12.0541 3.432 L 10.1948 1.6187 L 11.8544 0 L 18 6 L 11.8544 12 L 10.1948 10.3813 L 12.0541 8.5679 C 12.8901 7.7525 14.3688 6.9919 15.4295 6.5051 C 13.7698 6.7363 11.0745 7.1075 9.7206 7.1075 H 2.332 Z"
+                          fill="#ED216F"
+                        />
+                      </svg>
+                    </div>
+                  </span> </span>
+							</span>
+						</a>
+					</div>
+				</div>
+			</section>
+		</div>
+	</div>
+	<div className="PageSection-styled__StyledPageSection-sc-bo1t4i-0 bYoQmX">
+		<div className="CommonComponents-styles__Container-sc-1bkhv27-1 ireHjh">
+			<section reversed="" className="CommonComponents-styles__Section-sc-1bkhv27-4 TextWithImage-styles__TextWithImageContainer-sc-1h6e103-0 kSYCBF gLyNk">
+				<div className="TextWithImage-styles__TextWithImageColLeft-sc-1h6e103-1 hFREee">
+					<div className="TextWithImage-styles__TextWithImageText-sc-1h6e103-3 gUPPGB">
+						<div style={{ maxWidth: 800, fontFamily: "Uivo, Helvetica, sans-serif" }} className="HomeTitle-styles__StyledTitle-sc-3v9hrw-0 iIqquG">
+							<h4 style={{ margin: 0, textAlign: "left", fontWeight: 700 }} className="Card__Title-sc-1qqjegm-4 bqicpW">
+              Booste ton CV et tes lettres de motivation avec notre expertise
+              </h4> </div> <span className="Card__Text-sc-1qqjegm-5 iOmyQf">
+              Ton dossier est la clé pour convaincre les écoles ! Wendogo optimise ton CV et tes lettres de motivation pour les rendre plus percutants et adaptés aux attentes des recruteurs académiques. Notre IA analyse les meilleures pratiques et nos experts t’aident à valoriser ton parcours. </span>
+					</div>
+					<div className="TextWithImage-styles__TextWithImageLinkMobile-sc-1h6e103-8 TroxI">
+						<a color="#7E7C91" className="LinkWithArrow-styles__StyledLinkWithArrow-sc-gshyp2-0 iMAHuj" href="/solutions/contact-centers"> <span>
+                <span
+                  style={{ fontWeight: 500 }}
+                  className="Text-styles__StyledText-sc-1lbfrxz-0 eIHzDT"
+                >
+                  En savoir plus sur agents{/* */}&nbsp;
+                  <span className="LinkWithArrow-styles__Arrow-sc-gshyp2-3 jyLUtt">
+                    <div
+                      color="#ED216F"
+                      className="AnimatedArrow-styles__StyledAnimatedArrow-sc-1k9se9d-0 biFsGA"
+                    >
+                      <svg
+                        width={18}
+                        height={12}
+                        viewBox="0 0 18 12"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M 0 7.1136 v -2.1136 H 9.7206 C 11.0995 4.9108 13.8946 5.282 15.5293 5.5132 C 14.4499 5.0264 12.8714 4.2292 12.0541 3.432 L 10.1948 1.6187 L 11.8544 0 L 18 6 L 11.8544 12 L 10.1948 10.3813 L 12.0541 8.5679 C 12.8901 7.7525 14.3688 6.9919 15.4295 6.5051 C 13.7698 6.7363 11.0745 7.1075 9.7206 7.1075 H 2.332 Z"
+                          fill="#ED216F"
+                        />
+                      </svg>
+                    </div>
+                  </span> </span>
+							</span>
+						</a>
+					</div>
+				</div>
+				<div className="TextWithImage-styles__TextWithImageColRight-sc-1h6e103-2 dKdAlx">
+					<div className="TextWithImage-styles__TextWithImageWrapper-sc-1h6e103-4 bITtIs"> 
+						<div> 
+						</div> <Image src={CVOptimization} alt="CVOptimization" /> </div>
+					<div className="TextWithImage-styles__TextWithImageLink-sc-1h6e103-7 gERARq">
+						<a color="#7E7C91" className="LinkWithArrow-styles__StyledLinkWithArrow-sc-gshyp2-0 iMAHuj" href="/solutions/contact-centers"> <span>
+                <span
+                  style={{ fontWeight: 500 }}
+                  className="Text-styles__StyledText-sc-1lbfrxz-0 eIHzDT"
+                >
+                  En savoir plus sur accompagnement des agents{/* */}&nbsp;
+                  <span className="LinkWithArrow-styles__Arrow-sc-gshyp2-3 jyLUtt">
+                    <div
+                      color="#ED216F"
+                      className="AnimatedArrow-styles__StyledAnimatedArrow-sc-1k9se9d-0 biFsGA"
+                    >
+                      <svg
+                        width={18}
+                        height={12}
+                        viewBox="0 0 18 12"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M 0 7.1136 v -2.1136 H 9.7206 C 11.0995 4.9108 13.8946 5.282 15.5293 5.5132 C 14.4499 5.0264 12.8714 4.2292 12.0541 3.432 L 10.1948 1.6187 L 11.8544 0 L 18 6 L 11.8544 12 L 10.1948 10.3813 L 12.0541 8.5679 C 12.8901 7.7525 14.3688 6.9919 15.4295 6.5051 C 13.7698 6.7363 11.0745 7.1075 9.7206 7.1075 H 2.332 Z"
+                          fill="#ED216F"
+                        />
+                      </svg>
+                    </div>
+                  </span> </span>
+							</span>
+						</a>
+					</div>
+				</div>
+			</section>
+		</div>
+	</div>
+	<section className="CommonComponents-styles__Section-sc-1bkhv27-4 LeftRightBlock-styles__LRSection-sc-1y8s2op-0 kSYCBF fZoBWR">
+		<div className="CommonComponents-styles__Container-sc-1bkhv27-1 LeftRightBlock-styles__LRContainer-sc-1y8s2op-1 ireHjh cPfAmK">
+			<div className="LeftRightBlock-styles__LRTextCol-sc-1y8s2op-3 kFAOQK">
+				<div style={{ maxWidth: 800, fontFamily: "Uivo, Helvetica, sans-serif" }} className="HomeTitle-styles__StyledTitle-sc-3v9hrw-0 iIqquG">
+					<h3 style={{ margin: 0, textAlign: "left",   fontWeight: 700 }} className="Card__Title-sc-1qqjegm-4 bqicpW">
+          Prépare ton dossier visa en toute sérénité
+          </h3> </div> <span className="Card__Text-sc-1qqjegm-5 iOmyQf">
+          L’accompagnement Wendogo ne s’arrête pas aux admissions ! Nous t’aidons à monter un dossier visa solide : attestation d’hébergement, preuve de financement, lettres explicatives… Notre IA t’indique les pièces manquantes, et nos experts te conseillent pour maximiser tes chances d’approbation. </span></div>
+			<div className="LeftRightBlock-styles__LRImageCol-sc-1y8s2op-2 fmIcFR">
+				<div className="LottieFile-styles__Canvas-sc-t4ls67-0 cOaUIN LeftRightBlock-styles__StyledLottieFile-sc-1y8s2op-4 duaIKc">
+					 <Image src={VisaOnHand} alt="VisaOnHand" />
+				</div>
+			</div>
+		</div>
+	</section>
+	<section className="CommonComponents-styles__Section-sc-1bkhv27-4 LeftRightBlock-styles__LRSection-sc-1y8s2op-0 kSYCBF fZoBWR">
+		<div className="CommonComponents-styles__Container-sc-1bkhv27-1 LeftRightBlock-styles__LRContainer-sc-1y8s2op-1 ireHjh fMwJxX">
+			<div className="LeftRightBlock-styles__LRTextCol-sc-1y8s2op-3 gWrhJJ">
+				<div style={{ maxWidth: 800, fontFamily: "Uivo, Helvetica, sans-serif" }} className="HomeTitle-styles__StyledTitle-sc-3v9hrw-0 iIqquG">
+					<h3 style={{ margin: 0, textAlign: "left", fontWeight: 700 }} className="Card__Title-sc-1qqjegm-4 bqicpW">
+          Un coaching personnalisé pour tes entretiens
+          </h3> </div> <span className="Card__Text-sc-1qqjegm-5 iOmyQf">
+          Derrière Wendogo, il y a aussi des experts dédiés ! Nous te préparons aux entretiens Campus France, aux appels des écoles et aux démarches post-arrivée. Un accompagnement 360° pour réussir ton projet d’études. </span> </div>
+			<div className="LeftRightBlock-styles__LRImageCol-sc-1y8s2op-2 kpuSbv"> 
+        <Image src={ConferenceCall} alt="ConferenceCall" />
+         </div>
+		</div>
+	</section>
+	<section className="CommonComponents-styles__Section-sc-1bkhv27-4 ConnectSection-styles__BottomConnectSection-sc-b6er0l-6 kSYCBF cYJtCL">
+		<section className="CommonComponents-styles__Section-sc-1bkhv27-4 ConnectSection-styles__ConnectSectionTitle-sc-b6er0l-1 kSYCBF cTwPiO">
+			<div style={{ maxWidth: 800, fontFamily: "Uivo, Helvetica, sans-serif" }} className="HomeTitle-styles__StyledTitle-sc-3v9hrw-0 FqeUK">
+				<h3 style={{ margin: 0, textAlign: "center", fontWeight: 600 }} className="BlocOutils__Title-sc-10c9hjh-3 wniqW">
+          Une plateforme unique pour ton projet d'études en France
+        </h3> </div>
+		</section>
+		<div className="CommonComponents-styles__Container-sc-1bkhv27-1 ConnectSection-styles__ConnectSectionContainer-sc-b6er0l-2 ireHjh bTmQVT">
+			<div className="ConnectSection-styles__ConnectSectionCol-sc-b6er0l-3 bcqcVy">
+				<div className="ConnectSection-styles__ConnectSectionImg-sc-b6er0l-4 enPBZY"> <img src="https://cdn.stonly.com/website/6b52e978/images/connect-bottom-1.png" alt="Resolve customer questions instantly with AI-powered self-service" /> </div>
+				<div className="ConnectSection-styles__ConnectSectionText-sc-b6er0l-5 jqucOt">
+					<div style={{ maxWidth: 800, fontFamily: "Uivo, Helvetica, sans-serif" }} className="HomeTitle-styles__StyledTitle-sc-3v9hrw-0 iIqquG">
+						<h3 style={{ margin: 0, textAlign: "left", fontWeight: 700 }} className="h3">
+            Notre IA t’aide à remplir tes dossiers en un clic et optimise tes candidatures pour maximiser tes chances d’admission.
+            </h3> </div>
+					 
+				</div>
+			</div>
+			<div className="ConnectSection-styles__ConnectSectionCol-sc-b6er0l-3 cqqNLU">
+				<div className="ConnectSection-styles__ConnectSectionImg-sc-b6er0l-4 enPBZY"> 
+          
+          <img src="https://cdn.stonly.com/website/6b52e978/images/connect-bottom-2.png" alt="Améliorez le temps et la qualité de la prise en charge avec des arbres de décision pour vos agents." /> 
+          </div>
+				<div className="ConnectSection-styles__ConnectSectionText-sc-b6er0l-5 jqucOt">
+					<div style={{ maxWidth: 800, fontFamily: "Uivo, Helvetica, sans-serif" }} className="HomeTitle-styles__StyledTitle-sc-3v9hrw-0 iIqquG">
+						<h3 style={{ margin: 0, textAlign: "left", fontWeight: 700 }} className="h3">
+            Nos conseillers t'assistent sur tous les aspects de ton projet d'études en France : admissions, entretien, visa, logement, vie étudiante…
+            </h3> </div>
+					 
+				</div>
+			</div>
+		</div>
+	</section>
+</div>
                         <section className="Courtier__Bloc-sc-431mxx-0 lciTAJ">
                       <div className="Banner__Content-sc-krte25-0 kIwpz">
                         <p className="Content__Catchphrase-sc-hd6o8b-0 fCnjcm"> Des conseillers pas comme les autres&nbsp;: </p>
@@ -711,7 +892,7 @@ function HomePage(){
                             </span>
                           </span>
                           <a href='/simulation/home' >
-                            <span className="PrimaryButton__Label-sc-1vkvp7q-2 kVCvkJ"> Evaluer mes chances </span>
+                            <span className="PrimaryButton__Label-sc-1vkvp7q-2 kVCvkJ"> Je me lance </span>
                           </a>
                         </button>
                         {/* <h1>{countdown}</h1>
@@ -825,7 +1006,7 @@ function HomePage(){
                                 </span>
                               </span>
                               <a href='/simulation/home' >
-                                <span className="PrimaryButton__Label-sc-1vkvp7q-2 kVCvkJ"> Evaluer mes chances </span>
+                                <span className="PrimaryButton__Label-sc-1vkvp7q-2 kVCvkJ"> Je me lance </span>
                               </a>
                             </button>
                             <p className="Banner__Caption-sc-yqcec5-7 elCGHz"> En 3 minutes, sans inscription&nbsp;! </p>

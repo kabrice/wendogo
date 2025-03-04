@@ -24,6 +24,7 @@ import { subjectWeightSystemApi } from '../store/apis/subjectWeightSystemApi'
 import { nationalityApi } from '../store/apis/nationalityApi'
 import { schoolApi } from '../store/apis/schoolApi'
 import { majorApi } from '../store/apis/majorApi'  
+import { uploadToDriveApi } from '../store/apis/uploadToDriveApi'
 import helper from '../utils/Helper';
 
 let store;
@@ -56,7 +57,8 @@ export function initializeStore(preloadedState = undefined) {
       [subjectWeightSystemApi.reducerPath]: subjectWeightSystemApi.reducer,
       [nationalityApi.reducerPath]: nationalityApi.reducer,
       [schoolApi.reducerPath]: schoolApi.reducer,
-      [majorApi.reducerPath]: majorApi.reducer
+      [majorApi.reducerPath]: majorApi.reducer,
+      [uploadToDriveApi.reducerPath]: uploadToDriveApi.reducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(userApi.middleware)
                                             .concat(leadstatusApi.middleware)
@@ -75,6 +77,7 @@ export function initializeStore(preloadedState = undefined) {
                                             .concat(nationalityApi.middleware)
                                             .concat(schoolApi.middleware)
                                             .concat(majorApi.middleware)
+                                            .concat(uploadToDriveApi.middleware)
   })
 }
 

@@ -5,7 +5,7 @@ import React from "react";
 
 
 const SEDualSelection = (props) => {
-    const { title, valueSelected, tip, handleValueSelected, handleContinue, icons, showContinueBtn } = props;
+    const { title, valueSelected, tip, handleValueSelected, handleContinue, icons, showContinueBtn, displayIAAutoFill, openIAAutoFill } = props;
 
 
     return (
@@ -46,7 +46,11 @@ const SEDualSelection = (props) => {
                     </div>
                 </div>
                 </div>
-                {showContinueBtn && <ButtonLarge name="Continuer" handleContinue={handleContinue} uniqueId={`${title}-continue-btn`}/>}
+                {showContinueBtn && <ButtonLarge name="Continuer sans IA" handleContinue={handleContinue} uniqueId={`${title}-continue-btn`}/>}
+                {displayIAAutoFill &&  <button className="wendyIA-btn cnoACk styles__StyledButton-sc-reeitb-3 bVQYWs" 
+                                               style={{ height: "78px", borderRadius: "15px", marginLeft: "15px" }} onClick={openIAAutoFill}>
+                                        <span className="Buttonstyles__Label-sc-vsowxm-2 kGIufm"> Continuer avec WendyIA </span>
+                                  </button>}
                 </div>
             </div>
       );

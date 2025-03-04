@@ -10,6 +10,8 @@ import TutorialModal from "../ressources/TutorialModal";
 import helper from '../../utils/Helper';
 import { setUser } from '../../redux/userSlice';
 import { Loader2 } from "lucide-react"; 
+import SocialMediaModal from '../ressources/SocialMediaModal';
+import LoadFilesModal from "../ressources/LoadFilesModal";
 
 function SchoolLevel() {
     const dispatch = useDispatch();
@@ -20,7 +22,7 @@ function SchoolLevel() {
     const [schoolLevelSelected, setSchoolLevelSelected] = useState('Supérieur');
     const [showContinueBtn, setShowContinueBtn] = useState(false);
     const [openTutorial, setOpenTutorial] = useState(true);
-
+    const [openLoadFilesModal, setOpenLoadFilesModal] = useState(true);
 
 
     // Initialize user data
@@ -127,17 +129,29 @@ function SchoolLevel() {
         helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
     };
 
+    const closeLoadFilesModal = () => {
+        setOpenLoadFilesModal(false);
+    }
+
+    const handleIAAutoFill = () => {
+        setOpenLoadFilesModal(true);
+    }
+
     return (
         <>
-            <TutorialModal 
-                isOpen={openTutorial} 
-                onClose={() => closeTutorial()}/>
+            {/* <TutorialModal 
+                isOpen={true} 
+                onClose={() => closeTutorial()}/> */}
+                {/* <SocialMediaModal   isOpen={true} onClose={() => {}}  />  */}
+            {openLoadFilesModal && <LoadFilesModal type="bulletin" onClose={() => closeLoadFilesModal()}/>}
             <SEDualSelection 
                 title="Quel est votre degré d'enseignement le plus récent ?"
                 valueSelected={schoolLevelSelected}
                 handleValueSelected={handleSchoolLevelSelection}
                 handleContinue={handleContinue}
                 icons={icons}
+                displayIAAutoFill={true}
+                openIAAutoFill={handleIAAutoFill}
                 showContinueBtn={showContinueBtn}
             />
         </>

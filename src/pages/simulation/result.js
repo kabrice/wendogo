@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import SimulationResultWaiting from '../../components/SimulationResultWaiting'; 
 import ServicePricingCard from '../../components/ServicePricingCard';
 import ContactModal from '../../components/ContactModal'; 
+import SocialMediaModal from '../ressources/SocialMediaModal';
 import Link from 'next/link'; 
 import Image from 'next/image';
 
@@ -165,6 +166,10 @@ const SimulationResult = () => {
     const [warningMessage, setWarningMessage] = useState([]);
  
 
+    // At the top of SimulationResult component, add this state:
+    const [openSocialMediaModal, setOpenSocialMediaModal] = useState(false);
+    const [hasSeenSocialModal, setHasSeenSocialModal] = useState(false);
+    
     const isDataReady = user && evaluationResults;
 
 
@@ -303,15 +308,66 @@ const SimulationResult = () => {
             setIsErrorPage(true);
             }
       }
+      const handleScroll = useCallback(() => {
+        if (!hasSeenSocialModal && user) {
+            const scrollPosition = window.scrollY;
+            const windowHeight = window.innerHeight;
+            const documentHeight = document.documentElement.scrollHeight;
+            
+            // Show modal when user has scrolled 25% of the page
+            if (scrollPosition > windowHeight * 0.25) {
+                setOpenSocialMediaModal(true);
+                setHasSeenSocialModal(true);
+                
+                // Save to localStorage that user has seen the modal
+                const updatedUser = {
+                    ...user,
+                    hasSeenSocialModal: true,
+                    date: new Date().toISOString()
+                };
+                dispatch(setUser(updatedUser));
+                helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
+                
+                // Remove scroll listener
+                window.removeEventListener('scroll', handleScroll);
+            }
+        }
+    }, [hasSeenSocialModal, user]);
+    
+    // Add this effect to initialize scroll listener and check localStorage
+    useEffect(() => {
+        if (user && !user?.hasSeenSocialModal) {
+            window.addEventListener('scroll', handleScroll);
+            return () => window.removeEventListener('scroll', handleScroll);
+        } else {
+            setHasSeenSocialModal(true);
+        }
+    }, [handleScroll, user]);
 
     // Function to render Mon Orientation
     async function renderMonOrientation(isMonOrientation) {
         window.location.hash = isMonOrientation ? "view/MON_ORIENTATION_PERSONNALISEE" : "view/SCORE_DETAILLE"; 
         setDisplayMonOrientation(isMonOrientation);
+        
+        // Show social media modal if not seen before
+        if (isMonOrientation && !hasSeenSocialModal) {
+            setOpenSocialMediaModal(true);
+            setHasSeenSocialModal(true);
+            
+            // Save to localStorage
+            const updatedUser = {
+                ...user,
+                hasSeenSocialModal: true,
+                date: new Date().toISOString()
+            };
+            dispatch(setUser(updatedUser));
+            helper.setLocalStorageWithExpiration('wendogouser', updatedUser);
+        }
+        
         if (isMonOrientation && (!schoolDetails || !majorDetails)) { 
             await fetchSchoolAndMajorDetails();
         } 
-    } 
+    }
 
     useEffect(() => {
         if (!isDataReady) return;
@@ -1046,6 +1102,7 @@ const SimulationResult = () => {
                 <ContactModal  isOpen={openContactModal}  setDisplayEmailButton={setDisplayEmailButton} setDisplayWhatsappButton={setDisplayWhatsappButton} 
                                 displayEmailButton={displayEmailButton} displayWhatsappButton={displayWhatsappButton} setIsErrorPage={setIsErrorPage}
                                                     setOpenContactModal={setOpenContactModal} newRefContactModal={newRefContactModal}/>
+                <SocialMediaModal   isOpen={openSocialMediaModal} onClose={() => setOpenSocialMediaModal(false)}  /> 
                 <div className="styles__Main-sc-kz84w6-0 gEFmYD" style={{paddingTop: 80}}>
                     <div className="widget-container widget-funnel-auto">
                         <div className="theme-wrapper theme-daisy">
