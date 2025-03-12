@@ -387,7 +387,7 @@ function HomePage(){
             
 <div className="HeroPictureRatestyles__HeroPictureRateContainer-sc-s8xhxd-0 fCWUzd" style={{background: '#333'}}>
 	<div className="HeroPictureRatestyles__LeftSection-sc-s8xhxd-1 dGQEox" style={{marginTop: '100px'}}>
-		<h1 className="HeroLeft__Title-sc-1axg5uv-3 jDYqud" style={{color:'white'}}> Préparez ses études pour la France n'a jamais été aussi simple </h1>
+		<h1 className="HeroLeft__Title-sc-1axg5uv-3 jDYqud" style={{color:'white'}}> Préparer ses études pour la France n'a jamais été aussi simple </h1>
 		<div className="main-screen__content-subscribe"  style={{color:'white'}}> Avec notre IA experte et plus de 50 000 formations recensées, prépare ton projet d'étude en France plus vite et plus efficacement. </div>
 		<div className="HeroPictureRatestyles__CTAContainer-sc-s8xhxd-4 geqbtd">
     <button className="PrimaryButton__Container-sc-1vkvp7q-0 iroZSn HeroLeft__PrimaryButton-sc-1axg5uv-6 jJuKZd">
