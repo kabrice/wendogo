@@ -2,7 +2,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { trackPageView } from '../lib/gtag';
+import { trackPageView, event } from '../lib/gtag';
 import Head from 'next/head';
 import Footer from '../components/Footer';
 import NavBar from '../components/NavBar';
@@ -69,8 +69,8 @@ function Contact() {
         });
 
         // Track successful form submission
-        if (typeof gtag !== 'undefined') {
-          gtag('event', 'form_submit', {
+        if (typeof event !== 'undefined') {
+          event('event', 'form_submit', {
             event_category: 'engagement',
             event_label: 'contact_form_success',
             value: 1
