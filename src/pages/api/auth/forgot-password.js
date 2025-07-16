@@ -69,7 +69,7 @@ export default async function handler(req, res) {
     }
 
     // Construire l'URL de réinitialisation
-    const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
+    const baseUrl = process.env.NEXTAUTH_URL || 'https://www.wendogo.com';
     const resetUrl = `${baseUrl}/auth/reset-password?token=${resetToken}&email=${encodeURIComponent(email)}`;
 
     console.log('🔗 URL de reset généré:', resetUrl.substring(0, 50) + '...');

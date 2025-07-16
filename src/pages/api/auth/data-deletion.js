@@ -59,7 +59,7 @@ export default async function handler(req, res) {
       const confirmationCode = crypto.randomBytes(16).toString('hex');
       
       return res.status(200).json({
-        url: `http://localhost:3000/data-deletion-status?code=${confirmationCode}`,
+        url: `https://www.wendogo.com/data-deletion-status?code=${confirmationCode}`,
         confirmation_code: confirmationCode,
         message: "✅ Test successful - Data deletion simulated",
         user_id: user_id

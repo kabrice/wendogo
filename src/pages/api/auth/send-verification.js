@@ -43,7 +43,7 @@ export default async function handler(req, res) {
     console.log('✅ Token sauvegardé:', verificationToken.substring(0, 10) + '...');
 
     // Construire l'URL de vérification
-    const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
+    const baseUrl = process.env.NEXTAUTH_URL || 'https://www.wendogo.com';
     const verificationUrl = `${baseUrl}/auth/verify-email?token=${verificationToken}&email=${encodeURIComponent(email)}`;
 
     // Préparer l'email

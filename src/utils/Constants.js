@@ -6,7 +6,7 @@ const IPINFO_URL = 'https://ipinfo.io/json?token=3089ed2a513bd9';
 
 // CORRECTION: Simplifier la configuration des headers
 const REST_API_PARAMS = {
-    baseUrl: 'http://127.0.0.1:5000',
+    baseUrl: 'https://wendogo.online',
     // prepareHeaders: (headers, { getState }) => {
     //     // Pour Next.js, on retourne un objet simple avec les headers
     //     return {
