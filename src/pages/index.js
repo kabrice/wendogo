@@ -1642,71 +1642,51 @@ const HomePage = () => {
             <FadeTransition show={selectedDomain && !showResults}>
               <div className="mb-8" data-subdomain-selection>
                 <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6">
-<div className="mb-4 sm:mb-6">
-  {/* Mobile: Bouton retour + titre sur une ligne */}
-  <div className="flex items-center gap-2 mb-3 sm:mb-0">
-    <button
-      onClick={() => setSelectedDomain(null)}
-      className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors flex-shrink-0"
-      title="Retour"
-    >
-      <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-      </svg>
-    </button>
-    
-    <h2 className="text-sm sm:text-xl font-bold text-gray-900 truncate">
-      <span className="text-gray-500 text-xs sm:text-base font-normal">Spécialisations dans </span>
-      <br className="sm:hidden" />
-      <span className="text-blue-600">{getDomainNameSync(selectedDomain, domains)}</span>
-    </h2>
-  </div>
-  
-  {/* Bouton séparé sur mobile pour plus d'espace */}
-  <div className="sm:hidden">
-    <button
-      onClick={() => {
-        if (selectedSubdomains.length > 0) {
-          setShowResults(true);
-          setSelectedSubdomainFilters(new Set(selectedSubdomains));
-          // Scroll logic...
-          handleSearch();
-        }
-      }}
-      disabled={selectedSubdomains.length === 0}
-      className={`w-full py-3 rounded-lg font-semibold text-sm transition-colors ${
-        selectedSubdomains.length > 0
-          ? 'bg-blue-600 text-white hover:bg-blue-700'
-          : 'bg-gray-200 text-gray-400 cursor-not-allowed'
-      }`}
-    >
-      Voir les {programCountForSelected || 0} formation{(programCountForSelected || 0) > 1 ? 's' : ''}
-    </button>
-  </div>
-  
-  {/* Desktop: Layout horizontal classique */}
-  <div className="hidden sm:flex sm:items-center sm:justify-between">
-    <div></div> {/* Spacer pour le titre déjà affiché */}
-    <button
-      onClick={() => {
-        if (selectedSubdomains.length > 0) {
-          setShowResults(true);
-          setSelectedSubdomainFilters(new Set(selectedSubdomains));
-          handleSearch();
-        }
-      }}
-      disabled={selectedSubdomains.length === 0}
-      className={`px-6 py-2 rounded-lg font-semibold transition-colors ${
-        selectedSubdomains.length > 0
-          ? 'bg-blue-600 text-white hover:bg-blue-700'
-          : 'bg-gray-200 text-gray-400 cursor-not-allowed'
-      }`}
-    >
-      Voir les formations ({programCountForSelected || 0})
-    </button>
-  </div>
-</div>
+                    <div className="mb-4">
+                      {/* Barre en haut : retour + titre (à gauche) ET bouton (à droite) en desktop */}
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between sm:mb-4">
+                        
+                        {/* Bouton retour + titre */}
+                        <div className="flex items-center gap-2 mb-3 sm:mb-0">
+                          <button
+                            onClick={() => setSelectedDomain(null)}
+                            className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors flex-shrink-0"
+                            title="Retour"
+                          >
+                            <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                            </svg>
+                          </button>
 
+                          <h2 className="text-sm sm:text-xl font-bold text-gray-900 truncate">
+                            <span className="text-gray-500 text-xs sm:text-base font-normal">Spécialisations dans </span>
+                            <br className="sm:hidden" />
+                            <span className="text-blue-600">{getDomainNameSync(selectedDomain, domains)}</span>
+                          </h2>
+                        </div>
+
+                        {/* Bouton "Voir les formations" visible uniquement en desktop */}
+                        <div className="block sm:flex sm:justify-end">
+                          <button
+                            onClick={() => {
+                              if (selectedSubdomains.length > 0) {
+                                setShowResults(true);
+                                setSelectedSubdomainFilters(new Set(selectedSubdomains));
+                                handleSearch();
+                              }
+                            }}
+                            disabled={selectedSubdomains.length === 0}
+                            className={`px-6 py-2 rounded-lg font-semibold transition-colors ${
+                              selectedSubdomains.length > 0
+                                ? 'bg-blue-600 text-white hover:bg-blue-700'
+                                : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                            }`}
+                          >
+                            Voir les formations ({programCountForSelected || 0})
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-3">
                     {/* Filtrer pour ne montrer que les sous-domaines avec des programmes */}
                     {getSubdomainsByDomainSync(selectedDomain, domains).map((subdomain) => (
