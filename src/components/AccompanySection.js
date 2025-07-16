@@ -193,12 +193,12 @@ const AccompanySection = () => {
             <div key={offer.id} className="relative">
               {/* Badge */}
               {offer.badge && (
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
-                  <div className={`bg-gradient-to-r ${offer.color} text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg`}>
-                    <Sparkles className="w-3 h-3 inline mr-1" />
-                    {offer.badge}
-                  </div>
-                </div>
+<div className="absolute -top-3 sm:-top-4 left-1/2 transform -translate-x-1/2 z-10">
+  <div className={`bg-gradient-to-r ${offer.color} text-white px-2 sm:px-4 py-1 rounded-full text-xs sm:text-sm font-bold shadow-lg whitespace-nowrap max-w-[140px] sm:max-w-none`}>
+    <Sparkles className="w-3 h-3 inline mr-1 flex-shrink-0" />
+    <span className="truncate">{offer.badge}</span>
+  </div>
+</div>
               )}
 
               {/* Carte de l'offre */}

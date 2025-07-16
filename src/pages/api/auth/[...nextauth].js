@@ -92,6 +92,10 @@ export const authOptions = {
       }
     })
   ],
+  pages: {
+    signIn: '/', // Rediriger vers la page d'accueil en cas d'erreur
+    error: '/', // Page d'erreur personnalisée (redirection vers accueil)
+  },
   callbacks: {
     async signIn({ user, account, profile }) {
       console.log('🔍 [NextAuth] === DÉBUT SIGNIN CALLBACK ===');
@@ -101,36 +105,6 @@ export const authOptions = {
         email: user.email,
         hasFlaskToken: !!user.flaskToken
       });
-      if (account.provider === 'facebook') {
-        console.log('🔍 Facebook login:', {
-          user: user.email,
-          account: account.provider
-        });
-        
-        // Votre logique existante pour Facebook
-        try {
-          const response = await fetch(`${process.env.FLASK_API_URL}/auth/oauth-signin`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              provider: 'facebook',
-              provider_id: account.providerAccountId,
-              email: user.email,
-              firstname: user.name?.split(' ')[0] || '',
-              lastname: user.name?.split(' ').slice(1).join(' ') || '',
-              avatar_url: user.image
-            })
-          });
-          
-          if (response.ok) {
-            const data = await response.json();
-            user.flaskToken = data.token;
-            return true;
-          }
-        } catch (error) {
-          console.error('❌ Facebook OAuth error:', error);
-        }
-      }
       // OAuth Google/Facebook
       if (account.provider === 'google' ) {
         console.log('🔍 [NextAuth] Processing OAuth for:', account.provider);

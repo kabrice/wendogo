@@ -85,6 +85,24 @@ const HomePage = () => {
 
   const [filterOptionsLoaded, setFilterOptionsLoaded] = useState(false);
 
+  const scrollToResults = useCallback(() => {
+    if (window.innerWidth <= 768) {
+      setTimeout(() => {
+        const resultsSection = document.querySelector('[data-results-section]');
+        if (resultsSection) {
+          const offset = 100; // Décalage pour éviter que ça soit collé en haut
+          const elementPosition = resultsSection.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - offset;
+          
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      }, 300);
+    }
+  }, []);
+  
   const [error, setError] = useState(null);
   // 3. REMPLACER LE CHARGEMENT INITIAL (optimisation)
   const loadInitialData = useCallback(async () => {
@@ -364,7 +382,7 @@ const HomePage = () => {
         // ✅ REMPLACER les résultats (pas ajouter)
         setSearchResults(response.data);
         setTotalResults(response.total || 0);
-        console.log(`✅ Page ${targetPage} loaded: ${response.data.length} programs`);
+        scrollToResults();
       } else {
         console.error('❌ Pagination failed:', response.error);
         setCurrentPage(1); // Revenir à la page 1 en cas d'erreur
@@ -1372,48 +1390,50 @@ const HomePage = () => {
           {/* Navigation Tabs dans le Header */}
           <div className="px-4 sm:px-6 lg:px-8 pt-6">
             <div className="max-w-7xl mx-auto">
-              <div className="flex border-b border-white/20">
-                <button
-                  onClick={() => {
-                    setActiveTab('search');
-                    setShowResults(false);
-                    setSelectedDomain(null);
-                    setSelectedSubdomains([]);
-                  }}
-                  className={`flex items-center gap-2 px-6 py-4 font-semibold transition-all duration-300 ${
-                    activeTab === 'search'
-                      ? 'text-white border-b-2 border-white bg-white/10'
-                      : 'text-blue-100 hover:text-white'
-                  }`}
-                >
-                  <Search className="w-5 h-5" />
-                  <span>Rechercher</span>
-                </button>
-                <button
-                  onClick={() => setActiveTab('accompany')}
-                  className={`flex items-center gap-2 px-6 py-4 font-semibold transition-all duration-300 ${
-                    activeTab === 'accompany'
-                      ? 'text-white border-b-2 border-white bg-white/10'
-                      : 'text-blue-100 hover:text-white'
-                  }`}
-                >
-                  <Users className="w-5 h-5" />
-                  <span>Accompagnez-moi</span>
-                </button>
-                <button
-                  onClick={() => setActiveTab('organizations')}
-                  className={`flex items-center gap-2 px-6 py-4 font-semibold transition-all duration-300 ${
-                    activeTab === 'organizations'
-                      ? 'text-white border-b-2 border-white bg-white/10'
-                      : 'text-blue-100 hover:text-white'
-                  }`}
-                >
-                  <Building2 className="w-5 h-5" />
-                  <span>Organismes</span>
-                  {/* <span className="ml-2 bg-yellow-400 text-white text-xs px-2 py-1 rounded-full font-semibold">
-                    Partenaires
-                  </span> */}
-                </button>
+              {/* ✅ CORRECTION : Scroll horizontal + espacement adapté */}
+              <div className="flex border-b border-white/20 overflow-x-auto scrollbar-hide">
+                <div className="flex min-w-max">
+                  <button
+                    onClick={() => {
+                      setActiveTab('search');
+                      setShowResults(false);
+                      setSelectedDomain(null);
+                      setSelectedSubdomains([]);
+                    }}
+                    className={`flex items-center gap-1 sm:gap-2 px-3 sm:px-6 py-3 sm:py-4 font-semibold transition-all duration-300 whitespace-nowrap text-xs sm:text-base ${
+                      activeTab === 'search'
+                        ? 'text-white border-b-2 border-white bg-white/10'
+                        : 'text-blue-100 hover:text-white'
+                    }`}
+                  >
+                    <Search className="w-4 h-4 sm:w-5 sm:h-5" />
+                    <span>Rechercher</span>
+                  </button>
+                  
+                  <button
+                    onClick={() => setActiveTab('accompany')}
+                    className={`flex items-center gap-1 sm:gap-2 px-3 sm:px-6 py-3 sm:py-4 font-semibold transition-all duration-300 whitespace-nowrap text-xs sm:text-base ${
+                      activeTab === 'accompany'
+                        ? 'text-white border-b-2 border-white bg-white/10'
+                        : 'text-blue-100 hover:text-white'
+                    }`}
+                  >
+                    <Users className="w-4 h-4 sm:w-5 sm:h-5" />
+                    <span className="xs:inline">Accompagnez-moi</span>
+                  </button>
+                  
+                  <button
+                    onClick={() => setActiveTab('organizations')}
+                    className={`flex items-center gap-1 sm:gap-2 px-3 sm:px-6 py-3 sm:py-4 font-semibold transition-all duration-300 whitespace-nowrap text-xs sm:text-base ${
+                      activeTab === 'organizations'
+                        ? 'text-white border-b-2 border-white bg-white/10'
+                        : 'text-blue-100 hover:text-white'
+                    }`}
+                  >
+                    <Building2 className="w-4 h-4 sm:w-5 sm:h-5" />
+                    <span>Organismes</span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -1432,19 +1452,18 @@ const HomePage = () => {
                   </p>
 
                   {/* Barre de recherche intégrée dans le header */}
-                  <div ref={dropdownRef} className="max-w-4xl mx-auto mb-6 sm:mb-8 relative z-[100]"> {/* ✅ Réduit mb-8 à mb-6 sm:mb-8 */}
-                    <div className="bg-white/10 backdrop-blur-md rounded-xl p-3 sm:p-6 border border-white/20"> {/* ✅ Réduit padding mobile */}
-                      <div className="relative mb-3 sm:mb-4"  id="search-container"> {/* ✅ Réduit margin mobile */}
-                        <div className="flex flex-col sm:flex-row gap-2 sm:gap-2"> {/* ✅ Stack vertical sur mobile */}
+                  <div ref={dropdownRef} className="max-w-4xl mx-auto mb-4 sm:mb-6 lg:mb-8 relative z-[100]">
+                    <div className="bg-white/10 backdrop-blur-md rounded-xl p-3 sm:p-4 lg:p-6 border border-white/20">
+                      <div className="relative mb-2 sm:mb-3 lg:mb-4" id="search-container">
+                        <div className="flex flex-col space-y-2 sm:space-y-0 sm:flex-row sm:gap-2">
                           <div className="relative flex-1 z-[110]">
-                            <Search className="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 sm:w-5 sm:h-5 z-[111]" />
+                            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 z-[111]" />
                             <input
                               type="text"
                               placeholder="Rechercher une formation, une école..."
                               value={searchQuery}
                               onFocus={() => setShowSuggestions(true)}
                               onBlur={() => {
-                                // Délai pour permettre aux clics sur les suggestions
                                 setTimeout(() => setShowSuggestions(false), 150);
                               }}
                               onChange={(e) => setSearchQuery(e.target.value)}
@@ -1453,9 +1472,8 @@ const HomePage = () => {
                                   handleSearch();
                                 }
                               }}
-                              className="w-full pl-10 sm:pl-12 pr-10 sm:pr-12 py-3 sm:py-4 border border-gray-200 rounded-lg sm:rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-lg bg-white relative z-[111]" 
+                              className="w-full pl-10 pr-10 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base bg-white relative z-[111]" 
                             />
-                            {/* ✅ NOUVEAU : Bouton clear */}
                             {searchQuery && (
                               <button
                                 onClick={() => {
@@ -1466,10 +1484,10 @@ const HomePage = () => {
                                   setShowResults(false);
                                   setCurrentPage(1);
                                 }}
-                                className="absolute right-3 sm:right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors z-[112]"
+                                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors z-[112]"
                                 title="Effacer la recherche"
                               >
-                                <X className="w-4 h-4 sm:w-5 sm:h-5" />
+                                <X className="w-4 h-4" />
                               </button>
                             )}
                           </div>
@@ -1480,18 +1498,16 @@ const HomePage = () => {
                               }
                             }}
                             disabled={isSearching || !searchQuery || !searchQuery.trim()}
-                            className="px-4 sm:px-8 py-3 sm:py-4 bg-white text-blue-600 rounded-lg sm:rounded-xl font-semibold hover:bg-blue-50 transition-colors border border-gray-200 whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base z-[111]" 
+                            className="px-4 sm:px-6 lg:px-8 py-3 bg-white text-blue-600 rounded-lg font-semibold hover:bg-blue-50 transition-colors border border-gray-200 whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base z-[111] w-full sm:w-auto" 
                           >
                             {isSearching ? 'Recherche...' : 'Rechercher'}
                           </button>
                         </div>
                         
-                        {/* Suggestions responsives */}
+                        {/* Suggestions avec largeur adaptée */}
                         {showSuggestions && suggestions.length > 0 && (
-                          <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg mt-1 max-h-48 sm:max-h-60 overflow-y-auto z-[120]"> {/* ✅ Hauteur réduite mobile */}
-                            <div className="p-2">
-                              
-                            </div>
+                          <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg mt-1 max-h-48 overflow-y-auto z-[120]">
+                            <div className="p-2"></div>
                             {suggestions.map((suggestion, index) => (
                               <button
                                 key={index}
@@ -1500,18 +1516,18 @@ const HomePage = () => {
                                   setShowSuggestions(false);
                                   handleSearch(suggestion);
                                 }}
-                                className="w-full text-left px-3 sm:px-4 py-2 sm:py-3 hover:bg-blue-50 flex items-center gap-2 transition-colors"
+                                className="w-full text-left px-3 py-2 hover:bg-blue-50 flex items-center gap-2 transition-colors"
                               >
-                                <Search className="w-3 h-3 sm:w-4 sm:h-4 text-blue-500 flex-shrink-0" />
-                                <span className="text-gray-800 truncate text-sm sm:text-base">{suggestion}</span> {/* ✅ Texte responsif */}
+                                <Search className="w-3 h-3 text-blue-500 flex-shrink-0" />
+                                <span className="text-gray-800 truncate text-sm">{suggestion}</span>
                               </button>
                             ))}
                           </div>
                         )}
                       </div>
 
-                      {/* Boutons et infos en bas - version mobile optimisée */}
-                      <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mt-3 sm:mt-4"> {/* ✅ Stack vertical mobile */}
+                      {/* Boutons et infos en bas - mobile friendly */}
+                      <div className="flex flex-col space-y-2 sm:space-y-0 sm:flex-row sm:items-center sm:justify-between gap-2">
                         <button
                           onClick={() => {
                             setShowFilters(!showFilters);
@@ -1520,21 +1536,23 @@ const HomePage = () => {
                               handleSearch();
                             }
                           }}
-                          className="flex items-center justify-center sm:justify-start gap-2 px-3 sm:px-4 py-2 bg-white/20 border border-white/30 rounded-lg hover:bg-white/30 transition-colors text-white text-sm sm:text-base order-1 sm:order-none"
+                          className="flex items-center justify-center gap-2 px-3 py-2 bg-white/20 border border-white/30 rounded-lg hover:bg-white/30 transition-colors text-white text-sm order-1 sm:order-none"
                         >
                           <Filter className="w-4 h-4" />
                           <span>Filtres avancés</span>
                           <ChevronDown className={`w-4 h-4 transition-transform ${showFilters ? 'rotate-180' : ''}`} />
                         </button>
                         
-                        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 text-xs sm:text-sm text-blue-100 order-2 sm:order-none"> {/* ✅ Stack vertical mobile */}
-                          <span className="text-center sm:text-left">
+                        <div className="flex flex-col text-center sm:text-left space-y-1 sm:space-y-0 text-xs sm:text-sm text-blue-100 order-2 sm:order-none">
+                          <span>
                             {totalResults} formation{totalResults > 1 ? 's' : ''} disponible{totalResults > 1 ? 's' : ''}
                           </span>
-                          <span className="text-center sm:text-left text-blue-200/80">(écoles privées)</span>
-                          <span className="bg-orange-500/20 border border-orange-400/30 text-orange-200 px-2 py-1 rounded-full text-xs font-medium backdrop-blur-sm mx-auto sm:mx-0 w-fit">
-                            BÊTA
-                          </span>
+                          <div className="flex items-center justify-center sm:justify-start gap-2">
+                            <span className="text-blue-200/80">(écoles privées)</span>
+                            <span className="bg-orange-500/20 border border-orange-400/30 text-orange-200 px-2 py-1 rounded-full text-xs font-medium backdrop-blur-sm">
+                              BÊTA
+                            </span>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -1571,7 +1589,7 @@ const HomePage = () => {
           <>
             {/* Sélection par domaines (affichage initial) */}
             <FadeTransition show={!showResults && !selectedDomain && !showFilters}>
-              <div className="mb-12">
+              <div className="mb-12" data-domains-section>
                 <div className="text-center mb-8">
                   <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
                     Découvrez les formations par domaine
@@ -1581,8 +1599,7 @@ const HomePage = () => {
                   </p>
                 </div>
 
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-                  {/* CORRECTION: Utiliser les données de l'état au lieu de getDomainsWithIcons() */}
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4">
                   {domains.map((domain) => (
                     <button
                       key={domain.id}
@@ -1592,17 +1609,27 @@ const HomePage = () => {
                         const domainSubdomains = getSubdomainsByDomainSync(domain.id, domains);
                         setSelectedDomainFilters(new Set([domain.id]));
                         setSelectedSubdomainFilters(new Set(domainSubdomains.map(sd => sd.id)));
+                        if (window.innerWidth <= 768) {
+                          setTimeout(() => {
+                            const subdomainSection = document.querySelector('[data-subdomain-selection]');
+                            if (subdomainSection) {
+                              subdomainSection.scrollIntoView({ 
+                                behavior: 'smooth', 
+                                block: 'start' 
+                              });
+                            }
+                          }, 100);
+                        }
                       }}
-                      className="bg-white rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 group text-center"
+                      className="bg-white rounded-xl p-3 sm:p-4 lg:p-6 shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 group text-center"
                     >
-                      <div className="text-4xl mb-3 group-hover:scale-110 transition-transform">
+                      <div className="text-2xl sm:text-3xl lg:text-4xl mb-2 sm:mb-3 group-hover:scale-110 transition-transform">
                         {DomainApi.getIconForDomain(domain.name)}
                       </div>
-                      <h3 className="font-semibold text-gray-900 text-sm leading-tight">
+                      <h3 className="font-semibold text-gray-900 text-xs sm:text-sm leading-tight">
                         {domain.name}
                       </h3>
-                      {/* NOUVEAU: Afficher le nombre de programmes */}
-                      <div className="text-xs text-gray-500 mt-2">
+                      <div className="text-xs text-gray-500 mt-1 sm:mt-2">
                         {domain.total_programs || 0} formation{(domain.total_programs || 0) > 1 ? 's' : ''}
                       </div>
                     </button>
@@ -1613,77 +1640,109 @@ const HomePage = () => {
 
             {/* Sélection des sous-domaines */}
             <FadeTransition show={selectedDomain && !showResults}>
-              <div className="mb-8">
+              <div className="mb-8" data-subdomain-selection>
                 <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6">
-                  <div className="flex items-center justify-between mb-6">
-                    <div className="flex items-center gap-3">
-                      <button
-                        onClick={() => setSelectedDomain(null)}
-                        className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                      >
-                        ←
-                      </button>
-                      <h2 className="text-xl font-bold text-gray-900">
-                        Spécialisations en {getDomainNameSync(selectedDomain, domains)}
-                      </h2>
-                    </div>
-                    <button
-                      onClick={() => {
-                        if (selectedSubdomains.length > 0) {
-                          setShowResults(true);
-                          // ✅ Déclencher la recherche avec les sous-domaines sélectionnés
-                          setSelectedSubdomainFilters(new Set(selectedSubdomains));
-                          handleSearch(); // ✅ Appeler handleSearch après avoir mis à jour les filtres
-                        }
-                      }}
-                      disabled={selectedSubdomains.length === 0}
-                      className={`px-6 py-2 rounded-lg font-semibold transition-colors ${
-                        selectedSubdomains.length > 0
-                          ? 'bg-blue-600 text-white hover:bg-blue-700'
-                          : 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                      }`}
-                    >
-                      Voir les formations ({programCountForSelected || 0})
-                    </button>
-                  </div>
+<div className="mb-4 sm:mb-6">
+  {/* Mobile: Bouton retour + titre sur une ligne */}
+  <div className="flex items-center gap-2 mb-3 sm:mb-0">
+    <button
+      onClick={() => setSelectedDomain(null)}
+      className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors flex-shrink-0"
+      title="Retour"
+    >
+      <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+      </svg>
+    </button>
+    
+    <h2 className="text-sm sm:text-xl font-bold text-gray-900 truncate">
+      <span className="text-gray-500 text-xs sm:text-base font-normal">Spécialisations dans </span>
+      <br className="sm:hidden" />
+      <span className="text-blue-600">{getDomainNameSync(selectedDomain, domains)}</span>
+    </h2>
+  </div>
+  
+  {/* Bouton séparé sur mobile pour plus d'espace */}
+  <div className="sm:hidden">
+    <button
+      onClick={() => {
+        if (selectedSubdomains.length > 0) {
+          setShowResults(true);
+          setSelectedSubdomainFilters(new Set(selectedSubdomains));
+          // Scroll logic...
+          handleSearch();
+        }
+      }}
+      disabled={selectedSubdomains.length === 0}
+      className={`w-full py-3 rounded-lg font-semibold text-sm transition-colors ${
+        selectedSubdomains.length > 0
+          ? 'bg-blue-600 text-white hover:bg-blue-700'
+          : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+      }`}
+    >
+      Voir les {programCountForSelected || 0} formation{(programCountForSelected || 0) > 1 ? 's' : ''}
+    </button>
+  </div>
+  
+  {/* Desktop: Layout horizontal classique */}
+  <div className="hidden sm:flex sm:items-center sm:justify-between">
+    <div></div> {/* Spacer pour le titre déjà affiché */}
+    <button
+      onClick={() => {
+        if (selectedSubdomains.length > 0) {
+          setShowResults(true);
+          setSelectedSubdomainFilters(new Set(selectedSubdomains));
+          handleSearch();
+        }
+      }}
+      disabled={selectedSubdomains.length === 0}
+      className={`px-6 py-2 rounded-lg font-semibold transition-colors ${
+        selectedSubdomains.length > 0
+          ? 'bg-blue-600 text-white hover:bg-blue-700'
+          : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+      }`}
+    >
+      Voir les formations ({programCountForSelected || 0})
+    </button>
+  </div>
+</div>
 
-                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-3">
                     {/* Filtrer pour ne montrer que les sous-domaines avec des programmes */}
                     {getSubdomainsByDomainSync(selectedDomain, domains).map((subdomain) => (
-                      <button
-                        key={subdomain.id}
-                        onClick={() => {
-                          const newSelected = selectedSubdomains.includes(subdomain.id)
-                            ? selectedSubdomains.filter(id => id !== subdomain.id)
-                            : [...selectedSubdomains, subdomain.id];
-                          setSelectedSubdomains(newSelected);
-                          
-                          setSelectedSubdomainFilters(new Set(newSelected));
-                          if (newSelected.length === 0) {
-                            setSelectedDomainFilters(new Set());
-                          } else {
-                            setSelectedDomainFilters(new Set([selectedDomain]));
-                          }
-                        }}
-                        className={`p-3 rounded-lg border-2 transition-all duration-200 text-sm font-medium ${
-                          selectedSubdomains.includes(subdomain.id)
-                            ? 'border-blue-500 bg-blue-50 text-blue-700'
-                            : 'border-gray-200 bg-white text-gray-700 hover:border-blue-300 hover:bg-blue-50'
-                        }`}
-                      >
-                        <div className="flex items-center justify-between gap-2">
-                          <div className="flex items-center gap-2">
-                            {selectedSubdomains.includes(subdomain.id) && (
-                              <Check className="w-4 h-4 text-blue-600" />
-                            )}
-                            <span>{subdomain.name}</span>
-                          </div>
-                          {/* NOUVEAU: Afficher le nombre de programmes par sous-domaine */}
-                          <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
-                            {subdomain.program_count || 0}
-                          </span>
+                    <button
+                      key={subdomain.id}
+                      onClick={() => {
+                        const newSelected = selectedSubdomains.includes(subdomain.id)
+                          ? selectedSubdomains.filter(id => id !== subdomain.id)
+                          : [...selectedSubdomains, subdomain.id];
+                        setSelectedSubdomains(newSelected);
+                        
+                        setSelectedSubdomainFilters(new Set(newSelected));
+                        if (newSelected.length === 0) {
+                          setSelectedDomainFilters(new Set());
+                        } else {
+                          setSelectedDomainFilters(new Set([selectedDomain]));
+                        }
+                      }}
+                      className={`p-2 sm:p-3 rounded-lg border-2 transition-all duration-200 text-xs sm:text-sm font-medium ${
+                        selectedSubdomains.includes(subdomain.id)
+                          ? 'border-blue-500 bg-blue-50 text-blue-700'
+                          : 'border-gray-200 bg-white text-gray-700 hover:border-blue-300 hover:bg-blue-50'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between gap-1 sm:gap-2">
+                        <div className="flex items-center gap-1 sm:gap-2 min-w-0">
+                          {selectedSubdomains.includes(subdomain.id) && (
+                            <Check className="w-3 h-3 sm:w-4 sm:h-4 text-blue-600 flex-shrink-0" />
+                          )}
+                          <span className="truncate">{subdomain.name}</span>
                         </div>
-                      </button>
+                        <span className="text-xs text-gray-500 bg-gray-100 px-1 sm:px-2 py-0.5 sm:py-1 rounded-full flex-shrink-0">
+                          {subdomain.program_count || 0}
+                        </span>
+                      </div>
+                    </button>
                     ))}
                   </div>
                   
@@ -2030,6 +2089,9 @@ const HomePage = () => {
                           //   message: 'Filtres réinitialisés',
                           //   type: 'info'
                           // });
+                          if (window.innerWidth <= 768) {
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                          }
                         }}
                         className="w-full sm:w-auto px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-sm"
                       >
@@ -2066,18 +2128,18 @@ const HomePage = () => {
 
             {/* Résultats */}
             <FadeTransition show={showResults}>
-              <div className="animate-fade-in">
+              <div className="animate-fade-in" data-results-section>
                   {/* Compteur de résultats */}
-                  <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                    <p className="text-slate-600 text-sm">
+                  <div className="mb-6 flex flex-col space-y-3 sm:space-y-0 sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <p className="text-slate-600 text-sm text-center sm:text-left">
                       {totalResults} formation{totalResults > 1 ? 's' : ''} trouvée{totalResults > 1 ? 's' : ''}
                       {searchQuery && (
                         <span> pour "<strong>{searchQuery}</strong>"</span>
                       )}
                     </p>
                     
-                    {/* Pagination desktop */}
-                    <div className="hidden md:block">
+                    {/* Pagination mobile ET desktop */}
+                    <div className="flex justify-center sm:justify-end">
                       <Pagination />
                     </div>
                   </div>
@@ -2166,7 +2228,7 @@ const HomePage = () => {
                       </div>
                       
                       {/* Pagination en bas */}
-                      <div className="mt-8">
+                      <div className="mt-6 sm:mt-8 flex justify-center">
                         <Pagination />
                       </div>
                     </>
