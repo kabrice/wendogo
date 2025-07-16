@@ -9,7 +9,7 @@ import Link from 'next/link';
 
 const Footer = () => {
     return (
-<div className="Footer__Container-sc-1adny8q-0 fThLJG styles__Footer-sc-kz84w6-4 icxpqI">
+<div className="Footer__Container-sc-1adny8q-0 fThLJG styles__Footer-sc-kz84w6-4 icxpqI" style={{ zIndex: 1 }}>
                   <Image src={ParisCity} alt="ParisCity" className="kldsmk" priority /> 
                   <hr className="Divider-sc-1qii385-0 Footer__Divider-sc-1adny8q-2 iyJAir jUFmLt" />
                   <div className="Footer__Legal-sc-1adny8q-3 AgRYh">
@@ -57,7 +57,7 @@ const Footer = () => {
                       <div className="Menus__MenuTitle-sc-1cdqyiq-2 ekhzHX"> À propos de Wendogo </div>
                       <ul className="Menus__MenuItems-sc-1cdqyiq-3 jdtBKN">
                         <li className="Menus__MenuItem-sc-1cdqyiq-4 iXcfDl">
-                          <span tabIndex={0} className="Bridge__Component-sc-18zyewx-0 fvmjWl Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> <Link href="/wendogo-mission"> Pourquoi passer par Wendogo ?</Link> </span>
+                          <span tabIndex={0} className="Bridge__Component-sc-18zyewx-0 fvmjWl Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> <Link href="/mission"> Pourquoi passer par Wendogo ?</Link> </span>
                         </li>
                         <li className="Menus__MenuItem-sc-1cdqyiq-4 iXcfDl">
                           <span tabIndex={0} className="Bridge__Component-sc-18zyewx-0 fvmjWl Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> <Link href="/about-us"> Qui sommes nous ?</Link> </span>
@@ -74,7 +74,7 @@ const Footer = () => {
                       <div className="Menus__MenuTitle-sc-1cdqyiq-2 ekhzHX">Fondamentaux</div>
                       <ul className="Menus__MenuItems-sc-1cdqyiq-3 jdtBKN">
                         <li className="Menus__MenuItem-sc-1cdqyiq-4 iXcfDl">
-                          <Link href="/wendogo-privacy" className="Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> Respect de la vie privée </Link>
+                          <Link href="/privacy" className="Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> Respect de la vie privée </Link>
                         </li>
                         <li className="Menus__MenuItem-sc-1cdqyiq-4 iXcfDl">
                           <Link href="/legal-notice" className="Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT">Mentions légales </Link>
@@ -88,13 +88,16 @@ const Footer = () => {
                       <div className="Menus__MenuTitle-sc-1cdqyiq-2 ekhzHX"> Les ressources Wendogo </div>
                       <ul className="Menus__MenuItems-sc-1cdqyiq-3 jdtBKN">
                         <li className="Menus__MenuItem-sc-1cdqyiq-4 iXcfDl">
-                          <Link href="/work-permit-steps" className="Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> Permis de travail - Canada </Link>
+                          <Link href="/guides/etudier-en-france" className="Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> Etudier en France </Link>
                         </li>
                         <li className="Menus__MenuItem-sc-1cdqyiq-4 iXcfDl">
-                          <Link href="/scholarship-program-france" className="Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT">Programme de Bourse d'étude </Link>
+                        <Link href="/guides/visa-etudiant" className="Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> Visa étudiant </Link>
                         </li>
                         <li className="Menus__MenuItem-sc-1cdqyiq-4 iXcfDl">
-                        <Link href="/study-in-france" className="Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT">  Etudier en France </Link>
+                          <Link href="/guides/logement" className="Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> Logement </Link>
+                        </li>
+                        <li className="Menus__MenuItem-sc-1cdqyiq-4 iXcfDl">
+                          <Link href="/guides/campus-france" className="Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> Campus France </Link>
                         </li>
                       </ul>
                     </div>

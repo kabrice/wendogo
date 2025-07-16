@@ -15,7 +15,7 @@ const routes = [
     '/study-in-france',
     '/wendogo-mission',
     '/wendogo-cost',
-    '/wendogo-privacy',
+    '/privacy',
     '/about-us',
     '/contact',
     '/legal-notice',

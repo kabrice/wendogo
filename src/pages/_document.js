@@ -1,18 +1,16 @@
-import { Html, Head, Main, NextScript } from 'next/document'; 
+import { Html, Head, Main, NextScript } from 'next/document';
+import { GA_MEASUREMENT_ID } from '../lib/gtag';
 
 export default function Document() {
   return (
-    <Html lang="en">
+    <Html lang="fr">
       <Head>
-        {/* Meta tags */}
+        {/* Meta tags existants */}
         <meta charSet="utf-8" />
-        {/* <meta name="viewport" content="width=device-width, initial-scale=1" /> */}
         <meta name="theme-color" content="#000000" />
-
-        {/* Favicon */}
         <link rel="icon" href="/favicon.ico" />
-
-        {/* Open Graph Metadata */}
+        
+        {/* Open Graph Metadata existants */}
         <meta property="fb:app_id" content="1711396672460430" />
         <meta property="og:url" content="https://wendogo.com/" />
         <meta property="og:type" content="website" />
@@ -31,6 +29,36 @@ export default function Document() {
 
         {/* Manifest for Progressive Web App */}
         <link rel="manifest" href="/manifest.json" />
+
+        {/* ✅ NOUVEAU : Google Analytics */}
+        {GA_MEASUREMENT_ID && (
+          <>
+            <script
+              async
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+            />
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', '${GA_MEASUREMENT_ID}', {
+                    page_path: window.location.pathname,
+                  });
+                `,
+              }}
+            />
+          </>
+        )}
+
+        {/* Debug en développement */}
+        {process.env.NODE_ENV === 'development' && (
+          <>
+            <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+            <script dangerouslySetInnerHTML={{ __html: 'eruda.init();' }} />
+          </>
+        )}
       </Head>
       <body>
         <Main />

@@ -1,1008 +1,2216 @@
-'use client';
-
-
-// Import img 
-import backgroundImg2 from '../assets/optimized/1000_F_534931774_iiLVveToIVDuO89bZdeLs770iR7Lnm2a.webp'; 
-import WorldNoBorders from '../assets/optimized/AdobeStock_559662042_Preview.webp'
-import BlockCourtier1 from '../assets/group-portrait-five-african-business-colleagues-standing-row-office_484651-18709.avif'
-import BlockCourtier2 from '../assets/optimized/240_F_271683964_RV5TD7e4GN67UBFhvBvtltNO4hJ5aTQs.webp'
-import BlockCourtier3 from '../assets/beautiful-woman-standing-front-colleagues-group-african-american-business-people-working-office-together_146671-45002.avif'
-import FighterProgramLogo from '../assets/companies_that_trust_us/fighters_program_logo.png'
-import GlobalVisaFlair from '../assets/companies_that_trust_us/global_visa_flair.jpeg'
-import StationF from '../assets/companies_that_trust_us/station_F_Logo.png'
-import RefusEcole0 from '../assets/refus/Refus_ecole.webp'
-import RefusEcole1 from '../assets/refus/Refus_ecole_1.webp'
-import RefusEcole2 from '../assets/refus/Refus_ecole_2.webp'
-import RefusEcole3 from '../assets/refus/Refus_ecole_3.webp'
-import RefusVisa from '../assets/refus/Refus_visa.webp'
-import ScanningDoc from '../assets/Homepage_pics/dcouments-ligne-scanning.jpg'
-import CVOptimization from '../assets/Homepage_pics/cv_lm_ai.jpg'
-import VisaOnHand from '../assets/Homepage_pics/visa_on_hand.webp'
-import ConferenceCall from '../assets/Homepage_pics/conference call.jpg'
-import WendogoMP4 from '../assets/wendogo_homepage_full.mp4'
-// Import svg
-import WendogoLogo from '../assets/wendogo_logo.svg'
-import  DropDownIcon from '../assets/dropdown_icon.svg' 
-
-
-import Image from 'next/image';
-import Head from 'next/head';  
-
-import { useEffect, useState, useRef } from 'react';
+import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
+import { Search, Filter, Heart, MapPin, Clock, Euro, Calendar, GraduationCap, Building2, Users, ChevronDown, ChevronRight, ChevronLeft, X, Award, Briefcase, Globe, ExternalLink, Check } from 'lucide-react';
 import Link from 'next/link';
-// import Head from 'next/head'
- 
-import { FloatingWhatsApp } from 'react-floating-whatsapp';
-import Footer from '../components/Footer'; 
+import Footer from '../components/Footer';
+import NavBar from '../components/NavBar';
+import { optimizedApi, cacheUtils, CACHE_DURATION } from '../utils/cacheUtils';
 
-function HomePage(){
-  const [currentIndex, setCurrentIndex] = useState(0);
-  
-  // Array of all image sources
-  const images = [RefusEcole0, RefusEcole1, RefusEcole2, RefusEcole3, RefusVisa];
-  
-  // Titles for each slide
-  const titles = [
-    "Niveau insuffisant pour la formation", 
-    "Niveau insuffisant au regard d'autres candidatures", 
-    "Compétences déjà acquises",
-    "Capacité d'accueil atteinte",
-    "Motif du refus de Visa"
-  ];
-  
-  // Descriptions for each slide
-  const descriptions = [
-    "Grâce à notre simulateur doté d’algorithmes puissants,  nous analysons tes bulletins via IA pour te recommander des formations les plus adaptées à ton profil académique évitant ainsi des choix inappropriés",
-    "Nous t'aidons à renforcer ton dossier (CV, lettres de motivation, certifications) pour te démarquer des autres candidats",
-    "L’IA de Wendogo t'oriente  vers des formations plus avancées ou complémentaires pour éviter ce motif de refus",
-    "Nous optimisons ta stratégie de candidature en ciblant des établissements avec une meilleure disponibilité et en diversifiant les options",
-    "Nous t'accompagnons pour un dossier solide et complet (justificatifs, preuve de ressources, lettre de motivation optimisée) afin d’éviter les incohérences et d’augmenter les chances d’acceptation"
-  ];
-  
-  // Handle navigation
-  const handlePrevious = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === 0 ? images.length - 1 : prevIndex - 1));
-  };
-  
-  const handleNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === images.length - 1 ? 0 : prevIndex + 1));
-  };
-   
-  
-  // Update browser width on resize
-  useEffect(() => {
-    const handleResize = () => {
-      setBrowserWidth(window.innerWidth);
-    };
-    
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-    const [countdown, setCountdown] = useState(0)
-    const [bannerAnimationClassList, updateBannerAnimationClassList] = useState(["bEueds", "egKQIA"])
-    //const [progressBarClass, setProgressBarClass] = useState('lahlbf')
-    const [browserWidth, setBrowserWidth] = useState(0) 
-    const [displayOverlayMenu, setDisplayOverlayMenu] = useState(false)
-    const handleClickBurgerButton = () => {
-      setDisplayOverlayMenu(!displayOverlayMenu)
-    }
-    const [displaySubMenu1, setDisplaySubMenu1] = useState(false)
-    const [displaySubMenu2, setDisplaySubMenu2] = useState(false)
-    const [displaySubMenu3, setDisplaySubMenu3] = useState(false)
-    const toggleNavSubMenu1 = () => {
-      setDisplaySubMenu1(!displaySubMenu1)
-      setDisplaySubMenu2(false)
-      setDisplaySubMenu3(false)
-    }
-    const toggleNavSubMenu2 = () => {
-      setDisplaySubMenu2(!displaySubMenu2)
-      setDisplaySubMenu1(false)
-      setDisplaySubMenu3(false)
-    }
-    const toggleNavSubMenu3 = () => {
-      setDisplaySubMenu3(!displaySubMenu3)
-      setDisplaySubMenu1(false)
-      setDisplaySubMenu2(false)
-    }
-    useEffect(() => {
-      function handleResize() {
-        setBrowserWidth(window.innerWidth)
-      }
-      
-      window.addEventListener("resize", handleResize)
-      
-      handleResize()
-      
-      return () => { 
-        window.removeEventListener("resize", handleResize)
-      }
-    }, [])
+import { useRouter } from 'next/router';
+// NOUVEAUX IMPORTS - APIs au lieu des mocks
+import ProgramApi from '../store/apis/programApi';
+import PrivateSchoolApi from '../store/apis/privateSchoolApi';
+import DomainApi from '../store/apis/domainApi';
+import SubdomainApi from '../store/apis/subdomainApi';
+import StatsApi from '../store/apis/statsApi';
+import { getDomainsWithIcons,getDomainNameSync,getSubdomainNamesSync,getSubdomainsByDomainSync,getSubdomainDomainSync,getSubdomainNameSync } from '../utils/apiUtils';
+import { FadeTransition } from '../components/ui';
+import {ProgressLoader, ZenLoader} from '../components/ui/ProgressLoader';
+import RocketLoader from '../components/ui/RocketLoader';
+import FavoriteButton from '../components/FavoriteButton';
+import AccompanySection from '../components/AccompanySection';
+import OrganizationContactSection from '../components/OrganizationContactSection';
+import { trackSearch } from '../lib/gtag';
+// Ajout de l'import ou définition de REST_API_PARAMS
 
-    useEffect(() => {
-      let timeout;
-      if(browserWidth>768){
+const HomePage = () => {
+  // États principaux
+  const [activeTab, setActiveTab] = useState('search');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [showFilters, setShowFilters] = useState(false);
+  const [favorites, setFavorites] = useState(new Set());
+  const [suggestions, setSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [selectedDomain, setSelectedDomain] = useState(null);
+  const [selectedSubdomains, setSelectedSubdomains] = useState([]);
+  const [showResults, setShowResults] = useState(false);
 
-        setTimeout(() => { 
-          console.log('HEHE')
-          if((countdown >= 0 && countdown<5) ){
-            updateBannerAnimationClassList(["bEueds", "egKQIA"])
-            //setProgressBarClass('dctgrL')
-          }
-          if(countdown >= 5 && countdown<10){
-            updateBannerAnimationClassList(["ckXPUg", "egKQIA"])
-          }
-          if(countdown >= 10 && countdown<15){
-            updateBannerAnimationClassList(["PWeEw", "egKQIA"])
-          }
-          if (countdown >= 15) {
-            setCountdown(0)         
-          }else{
-            setCountdown(countdown + 1)
-          }
-        }, 1000) 
-      }else{
-        setCountdown(0)  
-      }
-      if(browserWidth>1024){
-        setDisplaySubMenu1(false)
-        setDisplaySubMenu2(false)
-        setDisplaySubMenu3(false)        
-      }
-      return () => clearTimeout(timeout)
-    }, [countdown, browserWidth])
- 
-    const [scrollTop, setScrollTop] = useState(0)
-    const myElementRef = useRef(null)
-    const [positionLeft, setPositionLeft] = useState(0)
+  // NOUVEAUX ÉTATS pour les données depuis l'API
+  const [programs, setPrograms] = useState([]);
+  const [schools, setSchools] = useState([]);
+  const [domains, setDomains] = useState([]);
+  const [subdomains, setSubdomains] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-    const [widthBanner, setWidthBanner] = useState(0)
+  // NOUVEAUX ÉTATS pour pagination
+  const [searchResults, setSearchResults] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalResults, setTotalResults] = useState(0);
+  const [isSearching, setIsSearching] = useState(false);
+  const itemsPerPage = 12;  
+
+  // États des filtres
+  const [filters, setFilters] = useState({
+    entryLevel: '',
+    grade: '',
+    diplomaType: '',
+    duration: '',
+    deposit: { min: '', max: '' },
+    applicationDate: '',
+    tuition: { min: '', max: '' },
+    alternance: '',
+    city: '',
+    domains: [],
+    language: '',
+    rncpLevel: ''
+  });
   
-    // useLayoutEffect(() => {
-    //   setWidthBanner(myElementRef.current.offsetWidth)
-    // }, [])
-    const logoContainerStyle = {
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      flexWrap: 'wrap',
-      gap: '30px',
-      margin: '20px auto',
-      maxWidth: '1200px'
-    };
-    
-    const logoImageStyle = {
-      objectFit: 'contain',
-      maxHeight: '80px',
-      width: 'auto'
-    };
-    const logoImageStyle1 = {
-      objectFit: 'contain',
-      maxHeight: '180px',
-      width: 'auto'
-    };
-    useEffect(() => {
-      
-      const handleScroll = () => {
-        setScrollTop(window.scrollY)
-        const el = myElementRef.current;
-        if(el){
-          setPositionLeft(el.scrollLeft)
-          setWidthBanner(el.offsetWidth)
+
+  // États pour les dropdowns searchables
+  const [citySearch, setCitySearch] = useState('');
+  const [showCityDropdown, setShowCityDropdown] = useState(false);
+  const [domainSearch, setDomainSearch] = useState('');
+  const [showDomainDropdown, setShowDomainDropdown] = useState(false);
+  const [selectedDomainFilters, setSelectedDomainFilters] = useState(new Set());
+  const [selectedSubdomainFilters, setSelectedSubdomainFilters] = useState(new Set());
+
+  const cityDropdownRef = useRef(null);
+  const domainDropdownRef = useRef(null);
+
+  const [globalStats, setGlobalStats] = useState({
+    total_programs: 0,
+    total_schools: 0,
+    satisfaction_rate: 95,
+    support_availability: '24/7'
+  });
+
+  const [filterOptionsLoaded, setFilterOptionsLoaded] = useState(false);
+
+  const [error, setError] = useState(null);
+  // 3. REMPLACER LE CHARGEMENT INITIAL (optimisation)
+  const loadInitialData = useCallback(async () => {
+      setIsLoading(true);
+      setError(null);
+
+      try {
+        console.log('🚀 Loading initial data with cache...');
+        const startTime = performance.now();
+
+        // Utiliser le cache intelligent pour charger toutes les données
+        const data = await optimizedApi.loadAllInitialData();
+        
+        setDomains(data.domains);
+        setSubdomains(data.allSubdomains);
+        setSchools(data.schools);
+        setFilterOptions(data.filterOptions);
+        setGlobalStats(data.globalStats);
+
+        const endTime = performance.now();
+        console.log(`✅ Initial data loaded in ${Math.round(endTime - startTime)}ms`);
+      } catch (err) {
+        console.error('❌ Error loading initial data:', err);
+        setError(err);
+        
+        // Fallback vers cache expiré si disponible
+        const cachedDomains = cacheUtils.get('domains');
+        const cachedSchools = cacheUtils.get('schools');
+        
+        if (cachedDomains || cachedSchools) {
+          console.log('🔄 Using expired cache as fallback');
+          setDomains(cachedDomains || []);
+          setSchools(cachedSchools || []);
         }
+      } finally {
+        setIsLoading(false);
       }
-      //console.log('positionLeft ', positionLeft, browserWidth, countdown, widthBanner)
-      
-      window.addEventListener('scroll', () => handleScroll())
-      const element = myElementRef.current;
-      element.addEventListener("scroll", () => handleScroll())  
-      console.log('aaaa ', window.pageYOffset)
-      if(browserWidth<=768){
+    }, []);
 
-          if((positionLeft >= widthBanner/2) && (positionLeft < widthBanner)){
-            console.log('2')
-            setCountdown(5)
-            updateBannerAnimationClassList(["ckXPUg", "egKQIA"])
-          }else if( positionLeft>=widthBanner){
-            console.log('3')
-            setCountdown(10)
-            updateBannerAnimationClassList(["PWeEw", "egKQIA"])
-          }else{
-            console.log('1')
-            setCountdown(0)
-            updateBannerAnimationClassList(["bEueds", "egKQIA"])
+  // ✅ OPTIMISATION: Charger au montage
+  useEffect(() => {
+    loadInitialData();
+  }, [loadInitialData]);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    // Gérer les paramètres d'URL pour l'onglet
+    const { tab } = router.query;
+    if (tab === 'accompany') {
+      setActiveTab('accompany');
+      // Scroll vers la section après un court délai
+      setTimeout(() => {
+        const element = document.getElementById('accompany-section');
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    }
+  }, [router.query]);  
+
+  // Pour afficher le nombre de programmes dans un domaine :
+  const getTotalProgramsForDomain = (domainId) => {
+    const domain = domains.find(d => d.id === domainId);
+    return domain ? domain.total_programs || 0 : 0;
+  };
+
+  // Pour afficher le nombre de programmes dans les sous-domaines sélectionnés :
+  const getProgramCountForSelectedSubdomains = () => {
+    let total = 0;
+    selectedSubdomains.forEach(subdomainId => {
+      // Trouver le sous-domaine dans les domaines chargés
+      domains.forEach(domain => {
+        const subdomain = domain.subdomains?.find(sub => sub.id === subdomainId);
+        if (subdomain) {
+          total += subdomain.program_count || 0;
+        }
+      });
+    });
+    return total;
+  }; 
+  // CORRECTION 3: Fermer les suggestions en cliquant à l'extérieur
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (!event.target.closest('.relative')) {
+        setShowSuggestions(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);  
+  
+  // CORRECTION 1: Vérifier le chargement des domaines avec sous-domaines
+  useEffect(() => {
+    console.log('🐛 Debug domains loaded:', {
+      domainsCount: domains.length,
+      firstDomain: domains[0],
+      subdomainsCount: subdomains.length,
+      firstSubdomain: subdomains[0]
+    });
+  }, [domains, subdomains]);
+
+  const handleSearch = useCallback(async (queryOverride = null, forceSearch = false) => {
+    const query = queryOverride || searchQuery;
+
+    console.log('🔍 handleSearch called with:', {
+      query: query.trim(),
+      forceSearch,
+      filters,
+      selectedSubdomainFilters: selectedSubdomainFilters.size,
+      selectedSubdomains: selectedSubdomains.length
+    });
+
+    // ✅ NOUVELLE LOGIQUE : Permettre la recherche si :
+    // 1. forceSearch = true (bouton "Appliquer" ou "Voir toutes")
+    // 2. OU il y a une query de recherche
+    // 3. OU il y a des filtres actifs
+    // 4. OU il y a des sous-domaines sélectionnés
+    const hasActiveFilters = Object.values(filters).some(f => 
+      f !== '' && 
+      !(Array.isArray(f) && f.length === 0) && 
+      !(typeof f === 'object' && f.min === '' && f.max === '')
+    );
+
+    const hasSubdomains = selectedSubdomainFilters.size > 0 || selectedSubdomains.length > 0;
+
+    const shouldSearch = forceSearch || 
+                        query.trim() || 
+                        hasActiveFilters || 
+                        hasSubdomains;
+
+    console.log('🔍 Search decision:', {
+      shouldSearch,
+      forceSearch,
+      hasQuery: !!query.trim(),
+      hasActiveFilters,
+      hasSubdomains
+    });
+
+    if (!shouldSearch) {
+      console.log('❌ Search blocked - no criteria');
+      setSearchResults([]);
+      setTotalResults(0);
+      return;
+    }
+
+    // ✅ FORCER l'affichage des résultats
+    setShowResults(true);
+    setIsSearching(true);
+    setCurrentPage(1);
+
+    try {
+      // ✅ CONSTRUIRE les filtres - TOUS optionnels
+      const searchFilters = {
+        page: 1,
+        limit: itemsPerPage,
+      };
+
+      // Ajouter search seulement si il y a du texte
+      if (query && query.trim()) {
+        searchFilters.search = query.trim();
+      }
+
+      // Ajouter tous les filtres s'ils existent
+      if (filters.grade) searchFilters.grade = filters.grade;
+      if (filters.duration) searchFilters.duration = filters.duration;
+      if (filters.alternance) searchFilters.alternance = filters.alternance;
+      if (filters.city) searchFilters.city = filters.city;
+      if (filters.rncpLevel) searchFilters.rncp_level = filters.rncpLevel;
+      if (filters.entryLevel) searchFilters.entry_level = filters.entryLevel;
+      if (filters.diplomaType) searchFilters.diploma_type = filters.diplomaType;
+      if (filters.language) searchFilters.language = filters.language;
+      if (filters.applicationDate) searchFilters.application_date = filters.applicationDate;
+      if (filters.tuition.min) searchFilters.tuition_min = filters.tuition.min;
+      if (filters.tuition.max) searchFilters.tuition_max = filters.tuition.max;
+      if (filters.deposit.min) searchFilters.deposit_min = filters.deposit.min;
+      if (filters.deposit.max) searchFilters.deposit_max = filters.deposit.max;
+
+      // Ajouter les sous-domaines SEULEMENT s'ils sont sélectionnés
+      const activeSubdomains = selectedSubdomainFilters.size > 0 ? 
+                              [...selectedSubdomainFilters] : 
+                              selectedSubdomains.length > 0 ? selectedSubdomains : null;
+      
+      if (activeSubdomains && activeSubdomains.length > 0) {
+        searchFilters.subdomain_ids = activeSubdomains;
+      }
+
+      console.log('🔍 API call with filters:', searchFilters);
+
+      const response = await ProgramApi.searchPrograms(searchFilters);
+      
+      console.log('🔍 API response:', response);
+      
+      if (response.success) {
+        setSearchResults(response.data);
+        setTotalResults(response.total || 0);
+        //setCurrentPage(1);
+        console.log('✅ Search successful:', response.data.length, 'programs found');
+      } else {
+        console.error('❌ Search failed:', response.error);
+        setSearchResults([]);
+        setTotalResults(0);
+      }
+      trackSearch(query.trim(), response.data.length);
+    } catch (error) {
+      console.error('❌ Erreur lors de la recherche:', error);
+      setSearchResults([]);
+      setTotalResults(0);
+    } finally {
+      setIsSearching(false);
+    }
+  }, [searchQuery, filters, selectedSubdomainFilters, selectedSubdomains, itemsPerPage]);
+
+  // CORRECTION 4: Ajouter un effet pour mettre à jour les résultats quand les filtres changent
+  useEffect(() => {
+    // ✅ Ne faire la recherche automatique QUE si on a déjà des résultats affichés
+    // et qu'il y a vraiment des changements significatifs
+    if (showResults && (searchQuery.trim() || selectedSubdomainFilters.size > 0)) {
+      const timeoutId = setTimeout(() => {
+        handleSearch(null, false); // ✅ forceSearch = false pour auto-search
+      }, 500);
+      
+      return () => clearTimeout(timeoutId);
+    }
+  }, [searchQuery, selectedSubdomainFilters]); 
+ 
+  const goToPage = useCallback(async (targetPage) => {
+    if (targetPage < 1 || targetPage > Math.ceil(totalResults / itemsPerPage) || isSearching) {
+      return;
+    }
+
+    setIsSearching(true);
+    setCurrentPage(targetPage); // ✅ Mettre à jour la page courante AVANT l'appel API
+    
+    try {
+      const searchFilters = {
+        page: targetPage, // ✅ Utiliser la page cible
+        limit: itemsPerPage,
+      };
+
+      // ✅ Reprendre EXACTEMENT les mêmes filtres que la recherche initiale
+      const query = searchQuery;
+      if (query && query.trim()) {
+        searchFilters.search = query.trim();
+      }
+
+      // Ajouter tous les filtres actifs
+      if (filters.grade) searchFilters.grade = filters.grade;
+      if (filters.duration) searchFilters.duration = filters.duration;
+      if (filters.alternance) searchFilters.alternance = filters.alternance;
+      if (filters.city) searchFilters.city = filters.city;
+      if (filters.rncpLevel) searchFilters.rncp_level = filters.rncpLevel;
+      if (filters.entryLevel) searchFilters.entry_level = filters.entryLevel;
+      if (filters.diplomaType) searchFilters.diploma_type = filters.diplomaType;
+      if (filters.language) searchFilters.language = filters.language;
+      if (filters.applicationDate) searchFilters.application_date = filters.applicationDate;
+      if (filters.tuition.min) searchFilters.tuition_min = filters.tuition.min;
+      if (filters.tuition.max) searchFilters.tuition_max = filters.tuition.max;
+      if (filters.deposit.min) searchFilters.deposit_min = filters.deposit.min;
+      if (filters.deposit.max) searchFilters.deposit_max = filters.deposit.max;
+
+      // Ajouter les sous-domaines actifs
+      const activeSubdomains = selectedSubdomainFilters.size > 0 ? 
+                              [...selectedSubdomainFilters] : 
+                              selectedSubdomains.length > 0 ? selectedSubdomains : null;
+      
+      if (activeSubdomains && activeSubdomains.length > 0) {
+        searchFilters.subdomain_ids = activeSubdomains;
+      }
+
+      console.log(`🔍 Pagination: Going to page ${targetPage} with filters:`, searchFilters);
+
+      const response = await ProgramApi.searchPrograms(searchFilters);
+      
+      if (response.success) {
+        // ✅ REMPLACER les résultats (pas ajouter)
+        setSearchResults(response.data);
+        setTotalResults(response.total || 0);
+        console.log(`✅ Page ${targetPage} loaded: ${response.data.length} programs`);
+      } else {
+        console.error('❌ Pagination failed:', response.error);
+        setCurrentPage(1); // Revenir à la page 1 en cas d'erreur
+      }
+    } catch (error) {
+      console.error('❌ Erreur lors de la pagination:', error);
+      setCurrentPage(1); // Revenir à la page 1 en cas d'erreur
+    } finally {
+      setIsSearching(false);
+    }
+  }, [searchQuery, filters, selectedSubdomainFilters, selectedSubdomains, itemsPerPage, totalResults, isSearching]);
+
+  // 4. NOUVELLE FONCTION DE RECHERCHE PAGINÉE
+  const performSearch = useCallback(async (page = 1, resetResults = false) => {
+    if (resetResults) {
+      // ✅ Si c'est un reset, utiliser handleSearch qui remet à page 1
+      return handleSearch();
+    } else {
+      // ✅ Sinon, c'est une pagination normale
+      return goToPage(page);
+    }
+  }, [handleSearch, goToPage]);
+
+  // 6. CORRIGER LA SÉLECTION DE DOMAINE
+  // const handleDomainSelection = (domainId) => {
+  //   setSelectedDomain(domainId);
+  //   setSelectedSubdomains([]);
+    
+  //   // CORRECTION: Utiliser la version synchrone
+  //   const domainSubdomains = getSubdomainsByDomainSync(domainId, domains);
+  //   console.log('🔍 Domain selected:', domainSubdomains)
+  //   // Synchroniser avec les filtres avancés
+  //   setSelectedDomainFilters(new Set([domainId]));
+  //   setSelectedSubdomainFilters(new Set(domainSubdomains.map(sd => sd.id)));
+  // };
+
+//   const debugProgramData = (programs) => {
+//   console.log('🐛 Debug first few programs:');
+//   programs.slice(0, 3).forEach((program, index) => {
+//     console.log(`Program ${index}:`, {
+//       id: program.id,
+//       name: program.title,
+//       name_type: typeof program.title,
+//       school_name: program.school_name,
+//       school_name_type: typeof program.school_name,
+//       description: program.description ? program.description.substring(0, 50) + '...' : null,
+//       school: program.school
+//     });
+//   });
+// };
+
+  // CORRECTION 3: Nouvelles suggestions basées sur l'API
+  const loadSuggestions = useCallback(async (query) => {
+    if (!query || typeof query !== 'string' || query.trim().length < 2) {
+      setSuggestions([]);
+      setShowSuggestions(false);
+      return;
+    }
+
+    try {
+      // Recherche avec limite plus élevée pour avoir plus de choix
+      const response = await ProgramApi.searchPrograms({
+        search: query.trim(),
+        page: 1,
+        limit: 20
+      });
+      
+      if (response.success && response.data.length > 0) {
+        const suggestionMap = new Map();
+        //debugProgramData(response.data);
+        const queryLower = query.toLowerCase();
+        
+        response.data.forEach(program => {
+          const suggestions = [];
+          
+          // PRIORITÉ HAUTE (score 10-6) avec vérifications de sécurité
+          if (program.title && typeof program.title === 'string' && program.title.toLowerCase().includes(queryLower)) {
+            suggestions.push({ text: program.title.trim(), score: 10, type: 'Programme' });
+          }
+          if (program.school_name && typeof program.school_name === 'string' && program.school_name.toLowerCase().includes(queryLower)) {
+            suggestions.push({ text: program.school_name.trim(), score: 9, type: 'École' });
+          }
+          if (program.school?.school_group && typeof program.school.school_group === 'string' && program.school.school_group.toLowerCase().includes(queryLower)) {
+            suggestions.push({ text: program.school.school_group.trim(), score: 8, type: 'Groupe' });
+          }
+          if (program.description && typeof program.description === 'string' && program.description.toLowerCase().includes(queryLower)) {
+            suggestions.push({ text: program.title.trim(), score: 7, type: 'Programme' });
+          }
+          if (program.skills_acquired && typeof program.skills_acquired === 'string' && program.skills_acquired.toLowerCase().includes(queryLower)) {
+            suggestions.push({ text: program.title.trim(), score: 6, type: 'Programme' });
+          }
+          if (program.careers && typeof program.careers === 'string' && program.careers.toLowerCase().includes(queryLower)) {
+            suggestions.push({ text: program.title.trim(), score: 6, type: 'Programme' });
           }
 
+          // PRIORITÉ MOYENNE (score 5-3)
+          if (program.curriculum_highlights && typeof program.curriculum_highlights === 'string' && program.curriculum_highlights.toLowerCase().includes(queryLower)) {
+            suggestions.push({ text: program.title.trim(), score: 4, type: 'Programme' });
+          }
+          if (program.grade && typeof program.grade === 'string' && program.grade.toLowerCase().includes(queryLower)) {
+            suggestions.push({ text: program.grade.trim(), score: 3, type: 'Grade' });
+          }
+          if (program.state_certification_type && typeof program.state_certification_type === 'string' && program.state_certification_type.toLowerCase().includes(queryLower)) {
+            suggestions.push({ text: program.state_certification_type.trim(), score: 3, type: 'Certification' });
+          }
+          if (program.state_certification_type_complement && typeof program.state_certification_type_complement === 'string' && program.state_certification_type_complement.toLowerCase().includes(queryLower)) {
+            suggestions.push({ text: program.state_certification_type_complement.trim(), score: 3, type: 'Certification' });
+          }
+
+          // PRIORITÉ FAIBLE (score 2-1)
+          if (program.special_comment && typeof program.special_comment === 'string' && program.special_comment.toLowerCase().includes(queryLower)) {
+            suggestions.push({ text: program.title.trim(), score: 2, type: 'Programme' });
+          }
+          if (program.corporate_partners && typeof program.corporate_partners === 'string' && program.corporate_partners.toLowerCase().includes(queryLower)) {
+            suggestions.push({ text: program.title.trim(), score: 1, type: 'Programme' });
+          }
+
+          // Ajouter les suggestions avec vérification de sécurité
+          suggestions.forEach(suggestion => {
+            // CORRECTION: Vérifier que suggestion.text existe et n'est pas vide
+            if (suggestion.text && typeof suggestion.text === 'string' && suggestion.text.trim().length > 0) {
+              const key = suggestion.text.toLowerCase().trim();
+              if (!suggestionMap.has(key) || suggestionMap.get(key).score < suggestion.score) {
+                suggestionMap.set(key, {
+                  ...suggestion,
+                  text: suggestion.text.trim() // S'assurer que le texte est nettoyé
+                });
+              }
+            }
+          });
+        });
+        
+        // Trier par score et prendre les 5 meilleurs
+        const sortedSuggestions = Array.from(suggestionMap.values())
+          .filter(s => s.text && s.text.length > 0) // Double vérification
+          .sort((a, b) => b.score - a.score)
+          .slice(0, 5)
+          .map(s => s.text);
+        
+        setSuggestions(sortedSuggestions);
+        setShowSuggestions(sortedSuggestions.length > 0);
+        
+        console.log('✅ Suggestions generated:', sortedSuggestions);
+      } else {
+        setSuggestions([]);
+        setShowSuggestions(false);
+        console.log('ℹ️ No suggestions found for:', query);
+      }
+    } catch (error) {
+      console.error('❌ Erreur lors de la récupération des suggestions:', error);
+      setSuggestions([]);
+      setShowSuggestions(false);
+    }
+  }, []);
+
+
+  // CORRECTION 4: Mettre à jour l'effet des suggestions
+  // CORRECTION SUPPLÉMENTAIRE: Améliorer l'effet de debounce
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (searchQuery && searchQuery.trim().length > 2) {
+        loadSuggestions(searchQuery);
+      } else {
+        // Vider les suggestions si le champ est vide ou trop court
+        setSuggestions([]);
+        setShowSuggestions(false);
+      }
+    }, 300); // Debounce de 300ms
+
+    return () => clearTimeout(timeoutId);
+  }, [searchQuery, loadSuggestions]);
+
+  const dropdownRef = useRef(null);
+  // ✅ Solution - Ajouter un useEffect pour gérer le clic extérieur
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowSuggestions(false); // ou setIsOpen(false)
+      }
+    };
+
+    if (showSuggestions) { // Seulement si ouvert
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showSuggestions]);
+  // 7. COMPOSANT PAGINATION (inspiré de votre code)
+  const Pagination = ({ className = "" }) => {
+    const totalPages = Math.ceil(totalResults / itemsPerPage);
+    
+    if (totalPages <= 1) return null;
+
+    const getVisiblePages = () => {
+      const delta = 2;
+      const range = [];
+      const rangeWithDots = [];
+
+      for (let i = Math.max(2, currentPage - delta); 
+          i <= Math.min(totalPages - 1, currentPage + delta); 
+          i++) {
+        range.push(i);
       }
 
-      return () => {
-        window.removeEventListener('scroll', () => handleScroll())
+      if (currentPage - delta > 2) {
+        rangeWithDots.push(1, '...');
+      } else {
+        rangeWithDots.push(1);
       }
-    }, [browserWidth, widthBanner, positionLeft,countdown])    
 
-    //const router = useRouter()
-    // const goToWaitingList = () => {
-    //   router.push('/waitinglist', { replace: true })
-    // }
+      rangeWithDots.push(...range);
+
+      if (currentPage + delta < totalPages - 1) {
+        rangeWithDots.push('...', totalPages);
+      } else {
+        rangeWithDots.push(totalPages);
+      }
+
+      return rangeWithDots;
+    };
 
     return (
-      <>
-      <Head>
-        <title>Wendogo - Expert en ligne pour organiser vos voyages à l'étranger</title>
-        <meta
-          name="description"
-          content="Wendogo, votre expert en ligne pour simplifier vos démarches de mobilité internationale."
-        />
-        <meta property="og:title" content="Wendogo - Spécialiste en Mobilité Internationale" />
-        <meta
-          property="og:description"
-          content="Expert pour organiser vos voyages à l'étranger."
-        />
-        <meta
-          property="og:image"
-          content="https://wendogo.com/static/media/wendogo_jeu_concours.webp"
-        />
-      </Head>
-        <div >
-            <nav className={"Navbarstyles__Navigation1 "+(scrollTop>900 ? "fBUtVg" : "kebTzo")}>
-              <div className={"Navbarstyles__Navigation2 "+(scrollTop>900 ? "jBwgPO" : "jigKlE")}>
-                <div className="Navbarstyles__Navigation3">
-                  <a aria-current="page" aria-label="Aller à l'accueil" className="Navbarstyles__LogoLink" href="/" >
-                  {/* <Image src={WendogoLogo}  className={scrollTop>900 ? "WendogoLogoText" : ""} alt='WendogoLogo'/> */}
-                    <WendogoLogo className={scrollTop>900 ? "WendogoLogoText" : ""} alt='WendogoLogo'/>
-                  </a>
-                  <button aria-label="Ouvrir le menu" tabIndex={0} type="button" className="Navbarstyles__BurgerButton" onClick={() => handleClickBurgerButton()}>
-                    <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="Navbarstyles__BurgerButtonIcon">
-                      <path d="M4.5,7c0-.28,.22-.5,.5-.5H27c.28,0,.5,.22,.5,.5v2c0,.28-.22,.5-.5,.5H5c-.28,0-.5-.22-.5-.5v-2Zm0,8c0-.28,.22-.5,.5-.5H27c.28,0,.5,.22,.5,.5v2c0,.28-.22,.5-.5,.5H5c-.28,0-.5-.22-.5-.5v-2Zm.5,7.5c-.28,0-.5,.22-.5,.5v2c0,.28,.22,.5,.5,.5H27c.28,0,.5-.22,.5-.5v-2c0-.28-.22-.5-.5-.5H5Z" />
-                    </svg>
-                  </button>
-                  <div className={"Navbarstyles__Overlay "+(displayOverlayMenu ? 'fuelvv' : '')}>
-                    <ul role="menu" className={"Navbarstyles__Menu "+ (displayOverlayMenu ? 'kmMdJe' : '')}>
-                      <li role="none" className="Navbarstyles__MenuTitle-sc-mi7mu3-13 hIKZgg">
-                        <span>Menu</span>
-                        <button type="button" className="Navbarstyles__MenuClose-sc-mi7mu3-11 amWv" onClick={() => handleClickBurgerButton()}>
-                          <svg height={16} viewBox="0 0 16 16" width={16} xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="Navbarstyles__MenuCloseIcon-sc-mi7mu3-12 fdSdbf">
-                            <path d="M13.5,12.16,9.29,8l4.17-4.2L12.16,2.5,8,6.71,3.79,2.54,2.5,3.83,6.71,8,2.54,12.21,3.83,13.5,8,9.29l4.2,4.17Z" />
-                          </svg>
-                        </button>
-                      </li>
-                      <li aria-expanded="false" role="menuitem" tabIndex={0} className="Navbarstyles__MenuItem Navbarstyles__MenuItem-common">
-                        <span className="Navbarstyles__MenuItemLabel" onClick={() => toggleNavSubMenu1()}>
-                          <span>Je me lance</span> 
-                          <DropDownIcon className={`Navbarstyles__MenuItemArrow menu-arrow ${displaySubMenu1 ? 'menu-arrow-rotated' : ''}`} />
-                        </span>
-                        <ul className={"Navbarstyles__SubMenu "+(displaySubMenu1 ? 'lowcCT subMenu1' : '')} >
-                          <li className="Navbarstyles__SubMenuFirstItem">
-                            <a tabIndex={0} className="LinkLabel__Link" href="/simulation/home">
-                              <span href='/simulation/home' className="LinkLabel__Label">Visa pour la France</span>
-                            </a>
-                          </li>
-                          <li>
-                            <a tabIndex={0} className="LinkLabel__Link" href="/simulation/home">
-                            <span href='/simulation/home' className="LinkLabel__Label">Visa pour le Canada </span>
-                            </a>
-                          </li>
-                        </ul>
-                      </li>
-                      <li aria-expanded="false" aria-controls="7d517232" role="menuitem" tabIndex={0} className="Navbarstyles__MenuItem Navbarstyles__MenuItem-common">
-                        <span className="Navbarstyles__MenuItemLabel" onClick={() => toggleNavSubMenu2()}>
-                          <span>Ressources</span>
-                          {/* <Image src={DropDownIcon} style={{transform : (displaySubMenu2 ? "rotate(180deg)" : '')}} alt='DropDownIcon'/> */}
-                          <DropDownIcon className={`Navbarstyles__MenuItemArrow menu-arrow ${displaySubMenu2 ? 'menu-arrow-rotated' : ''}`} />
-                        </span>
-                        <ul id="7d517232" className={"Navbarstyles__SubMenu "+(displaySubMenu2 ? 'lowcCT subMenu2' : '')}>
-                          <li className="Navbarstyles__SubMenuFirstItem">
-                            <a tabIndex={0} className="LinkLabel__Link" href="/work-permit-steps">
-                              <span className="LinkLabel__Label">Permis de travail - Canada</span>
-                            </a>
-                          </li>
-                          <li>
-                            <a tabIndex={0} className="LinkLabel__Link" href="/scholarship-program-canada">
-                              <span className="LinkLabel__Label"> Programme de bourse d'étude </span>
-                            </a>
-                          </li>
-                          <li>
-                            <a tabIndex={0} className="LinkLabel__Link" href="/immigrate-to-canada">
-                              <span className="LinkLabel__Label"> Comment immigrer au Canada ?</span>
-                            </a>
-                          </li>
-                          <li>
-                            <a tabIndex={0} className="LinkLabel__Link" href="/study-in-france">
-                              <span className="LinkLabel__Label"> Etudier en France </span>
-                            </a>
-                          </li>
-                        </ul>
-                      </li>
-                      <li aria-expanded="false" aria-controls="e75b56b9" role="menuitem" tabIndex={0} className="Navbarstyles__MenuItem Navbarstyles__MenuItem-common">
-                          <span className="Navbarstyles__MenuItemLabel" onClick={() => toggleNavSubMenu3()}>
-                            <span>À propos</span>
-                            {/* <Image src={DropDownIcon} style={{transform : (displaySubMenu3 ? "rotate(180deg)" : '')}}  alt='DropDownIcon'/> */}
-                            <DropDownIcon className={`Navbarstyles__MenuItemArrow menu-arrow ${displaySubMenu3 ? 'menu-arrow-rotated' : ''}`} />
-                            {/* <DropDownIcon /> */}
+      <div className={`flex items-center justify-center gap-2 ${className}`}>
+        <button
+          onClick={() => goToPage(currentPage - 1)} // ✅ Utiliser goToPage
+          disabled={currentPage === 1 || isSearching}
+          className="p-2 rounded-lg border border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+        >
+          <ChevronLeft className="w-4 h-4" />
+        </button>
+
+        {getVisiblePages().map((page, index) => (
+          <button
+            key={index}
+            onClick={() => typeof page === 'number' ? goToPage(page) : null} // ✅ Utiliser goToPage
+            disabled={isSearching || page === '...'}
+            className={`px-3 py-2 rounded-lg border text-sm font-medium ${
+              page === currentPage
+                ? 'bg-blue-600 text-white border-blue-600'
+                : page === '...'
+                ? 'border-transparent cursor-default'
+                : 'border-gray-300 hover:bg-gray-50'
+            }`}
+          >
+            {page}
+          </button>
+        ))}
+
+        <button
+          onClick={() => goToPage(currentPage + 1)} // ✅ Utiliser goToPage
+          disabled={currentPage === totalPages || isSearching}
+          className="p-2 rounded-lg border border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+        >
+          <ChevronRight className="w-4 h-4" />
+        </button>
+      </div>
+    );
+  };
+  
+
+  const [filterOptions, setFilterOptions] = useState({
+    grades: [],
+    durations: [],
+    application_dates: [],
+    cities: [],
+    rncp_levels: [],
+    entry_levels: [],
+    languages: []
+  });
+  // ✅ AJOUTER une fonction helper pour les villes filtrées par recherche :
+  const getFilteredCities = useMemo(() => {
+    return filterOptions.cities.filter(city => 
+      city.toLowerCase().includes(citySearch.toLowerCase())
+    );
+  }, [filterOptions.cities, citySearch]);
+
+  // ✅ AJOUTER une fonction helper pour les domaines filtrés par recherche :
+  const getFilteredDomains = useMemo(() => {
+    return domains.filter(domain => 
+      domain && domain.name && domain.name.toLowerCase().includes(domainSearch.toLowerCase())
+    );
+  }, [domains, domainSearch]);
+
+  // Fonction de formatage des langues
+  const formatLanguage = (langCode) => {
+    if (!langCode) return '';
+    return langCode.split(',').map(code => {
+      const [lang, level] = code.trim().split('-');
+      const langName = lang === 'Fr' ? 'Français' : 'Anglais';
+      return `${langName} (${level})`;
+    }).join(', ');
+  };
+
+  // Fonction de recherche avec IA-like scoring (mise à jour pour API)
+  /*const searchPrograms = useMemo(() => {
+    let filteredPrograms = programs;
+    const activeSubdomains = selectedSubdomains.length > 0 ? selectedSubdomains : [...selectedSubdomainFilters];
+    
+    if (activeSubdomains.length > 0) {
+      filteredPrograms = filteredPrograms.filter(program => {
+        const programSubdomains = [program.sub_domain1, program.sub_domain2, program.sub_domain3].filter(Boolean);
+        return activeSubdomains.some(subdomain => programSubdomains.includes(subdomain));
+      });
+    }
+
+    if (!searchQuery.trim() && Object.values(filters).every(f => 
+      f === '' || (Array.isArray(f) && f.length === 0) || 
+      (typeof f === 'object' && f.min === '' && f.max === '')
+    )) {
+      return filteredPrograms.map(program => ({
+        ...program,
+        school: schools.find(s => s.id === program.school_id) || program.school,
+        score: Math.random()
+      }));
+    }
+
+    const query = searchQuery.toLowerCase().trim();
+    
+    return filteredPrograms.map(program => {
+      const school = schools.find(s => s.id === program.school_id) || program.school;
+      let score = 0;
+
+      // Recherche textuelle avec pondération
+      if (query) {
+        // PRIORITÉ HAUTE
+        if (program.title?.toLowerCase().includes(query)) score += 10;
+        if (program.school_name?.toLowerCase().includes(query)) score += 9;
+        if (school?.school_group?.toLowerCase().includes(query)) score += 8;
+        if (school?.description?.toLowerCase().includes(query)) score += 7;
+        if (program.description?.toLowerCase().includes(query)) score += 7;
+        if (program.skills_acquired?.toLowerCase().includes(query)) score += 6;
+        if (program.careers?.toLowerCase().includes(query)) score += 6;
+
+        // PRIORITÉ MOYENNE
+        if (program.curriculum_highlights?.toLowerCase().includes(query)) score += 4;
+        if (program.grade?.toLowerCase().includes(query)) score += 3;
+        if (program.state_certification_type?.toLowerCase().includes(query)) score += 3;
+
+        // Sous-domaines - utiliser une fonction asynchrone en interne n'est pas pratique ici
+        // On peut faire un matching simple sur les IDs pour l'instant
+        const subdomainIds = [
+          program.sub_domain1, 
+          program.sub_domain2, 
+          program.sub_domain3
+        ].filter(Boolean);
+        
+        // CORRECTION: Chercher dans les sous-domaines chargés dans l'état
+        const matchingSubdomains = subdomains.filter(subdomain => 
+          subdomainIds.includes(subdomain.id) && 
+          subdomain.name.toLowerCase().includes(query)
+        );
+        
+        if (matchingSubdomains.length > 0) score += 5;
+
+        // PRIORITÉ FAIBLE
+        if (program.special_comment?.toLowerCase().includes(query)) score += 2;
+        if (program.partner_companies?.toLowerCase().includes(query)) score += 1;
+        if (school?.partnerships?.toLowerCase().includes(query)) score += 1;
+      }
+
+      // Filtres (similaire à l'ancien code)
+      let passesFilters = true;
+
+      if (filters.entryLevel) {
+        const hasMatchingLevel = [1,2,3,4,5].some(year => {
+          const level = program[`y${year}_required_level`];
+          return level && level.includes(filters.entryLevel);
+        });
+        if (!hasMatchingLevel) passesFilters = false;
+      }
+
+      if (filters.grade && program.grade !== filters.grade) passesFilters = false;
+      if (filters.diplomaType && program.state_certification_type_complement !== filters.diplomaType) passesFilters = false;
+      if (filters.duration && program.fi_school_duration !== filters.duration) passesFilters = false;
+      if (filters.alternance && program.alternance_possible.toString() !== filters.alternance) passesFilters = false;
+      if (filters.city && school?.base_city !== filters.city) passesFilters = false;
+      if (filters.rncpLevel && program.rncp_level !== filters.rncpLevel) passesFilters = false;
+      if (filters.applicationDate && program.application_date_comment !== filters.applicationDate) passesFilters = false;
+
+      // Filtre langue
+      if (filters.language && filters.entryLevel) {
+        const levelMap = { 'Bac': 1, 'Bac+1': 2, 'Bac+2': 3, 'Bac+3': 4, 'Bac+4': 5 };
+        const yearLevel = levelMap[filters.entryLevel];
+        const programLanguage = program[`language_tech_level${yearLevel}`];
+        
+        if (!programLanguage) {
+          passesFilters = false;
+        } else {
+          const selectedLang = filters.language;
+          const programLangs = programLanguage.split(',').map(lang => lang.trim());
+          
+          const hasMatchingLanguage = programLangs.some(progLang => {
+            const formatProgLang = progLang.replace('-', ' ').replace('Fr', 'Français').replace('En', 'Anglais');
+            return selectedLang.includes(formatProgLang) || progLang === selectedLang;
+          });
+          
+          if (!hasMatchingLanguage) {
+            passesFilters = false;
+          }
+        }
+      }
+
+      // Filtres prix
+      if (filters.deposit.min || filters.deposit.max) {
+        const deposit = parseInt(program.first_deposit?.replace(/[^\d]/g, '') || '0');
+        if (filters.deposit.min && deposit < parseInt(filters.deposit.min)) passesFilters = false;
+        if (filters.deposit.max && deposit > parseInt(filters.deposit.max)) passesFilters = false;
+      }
+
+      if (filters.tuition.min || filters.tuition.max) {
+        const tuition = parseInt(program.tuition?.replace(/[^\d]/g, '') || '0');
+        if (filters.tuition.min && tuition < parseInt(filters.tuition.min)) passesFilters = false;
+        if (filters.tuition.max && tuition > parseInt(filters.tuition.max)) passesFilters = false;
+      }
+
+      // Scoring école
+      if (school?.rating) {
+        score += parseFloat(school.rating) * 2;
+        if (school.reviews_counter) {
+          score += Math.min(parseFloat(school.reviews_counter) * 0.1, 5);
+        }
+      }
+
+      return passesFilters ? { ...program, school, score } : null;
+    })
+    .filter(Boolean)
+    .sort((a, b) => b.score - a.score);
+  }, [searchQuery, filters, selectedDomain, selectedSubdomains, selectedSubdomainFilters, programs, schools, subdomains]);*/
+
+  // Autosuggestions (mise à jour pour API)
+  useEffect(() => {
+    if (searchQuery.trim().length > 2) {
+      const query = searchQuery.toLowerCase();
+      const suggestions = new Set();
+      
+      programs.forEach(program => {
+        if (program.title.toLowerCase().includes(query)) {
+          suggestions.add(program.title);
+        }
+        if (program.school_name.toLowerCase().includes(query)) {
+          suggestions.add(program.school_name);
+        }
+        
+        // Pour les sous-domaines, on utilise les données chargées
+        const programSubdomainIds = [program.sub_domain1, program.sub_domain2, program.sub_domain3].filter(Boolean);
+        programSubdomainIds.forEach(subdomainId => {
+          const subdomain = subdomains.find(s => s.id === subdomainId);
+          if (subdomain && subdomain.name.toLowerCase().includes(query)) {
+            suggestions.add(subdomain.name);
+          }
+        });
+      });
+
+      setSuggestions([...suggestions].slice(0, 5));
+      setShowSuggestions(true);
+    } else {
+      setSuggestions([]);
+      setShowSuggestions(false);
+    }
+  }, [searchQuery, programs, subdomains]);
+
+  // Gestion des clics extérieurs pour les dropdowns
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (cityDropdownRef.current && !cityDropdownRef.current.contains(event.target)) {
+        setShowCityDropdown(false);
+      }
+      if (domainDropdownRef.current && !domainDropdownRef.current.contains(event.target)) {
+        setShowDomainDropdown(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+  const getProgramCountForSubdomains = useCallback(async (subdomainIds) => {
+    if (!subdomainIds || subdomainIds.length === 0) return 0;
+    
+    try {
+      // Faire un appel API pour compter les programmes avec ces sous-domaines
+      const response = await ProgramApi.searchPrograms({
+        subdomain_ids: subdomainIds,
+        page: 1,
+        limit: 1 // On veut juste le total, pas les données
+      });
+      
+      return response.success ? response.total : 0;
+    } catch (error) {
+      console.error('Erreur lors du comptage des programmes:', error);
+      return 0;
+    }
+  }, []);
+
+  // Ajoutez un état pour stocker le count
+  const [programCountForSelected, setProgramCountForSelected] = useState(0);
+
+  // Ajoutez un effet pour mettre à jour le count quand les sous-domaines changent
+  useEffect(() => {
+    if (selectedSubdomains.length > 0) {
+      const updateCount = async () => {
+        const count = await getProgramCountForSubdomains(selectedSubdomains);
+        setProgramCountForSelected(count);
+      };
+      updateCount();
+    } else {
+      setProgramCountForSelected(0);
+    }
+  }, [selectedSubdomains, getProgramCountForSubdomains]);
+
+
+
+  // Toggle favori
+  const toggleFavorite = (programId) => {
+    const newFavorites = new Set(favorites);
+    if (newFavorites.has(programId)) {
+      newFavorites.delete(programId);
+    } else {
+      newFavorites.add(programId);
+    }
+    setFavorites(newFavorites);
+  };
+
+  // Fonctions utilitaires
+  const formatDuration = (duration) => {
+    if (!duration) return '';
+    const num = parseInt(duration);
+    return num > 1 ? `${num} ans` : `${num} an`;
+  };
+
+  const formatPrice = (price) => {
+    if (!price) return 'Non communiqué';
+    return price.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1 ');
+  };
+
+  // Composant Dropdown avec Checkboxes pour Domaines/Sous-domaines (mise à jour pour API)
+  const DomainCheckboxDropdown = () => {
+    const filteredDomains = getFilteredDomains;
+
+    console.log('🐛 Filtered domains:', filteredDomains.length)
+
+    const toggleDomain = async (domainId) => {
+      const newSelectedDomains = new Set(selectedDomainFilters);
+      
+      // Récupérer les sous-domaines de ce domaine depuis l'API
+      const subdomainsResponse = await SubdomainApi.getSubdomainsByDomain(domainId);
+      const domainSubdomains = subdomainsResponse.success ? subdomainsResponse.data : [];
+      
+      // Filtrer seulement les sous-domaines qui ont des programmes
+      const availableSubdomains = domainSubdomains.filter(subdomain => {
+        return programs.some(program => 
+          [program.sub_domain1, program.sub_domain2, program.sub_domain3]
+            .filter(Boolean)
+            .includes(subdomain.id)
+        );
+      });
+      
+      const newSelectedSubdomains = new Set(selectedSubdomainFilters);
+      
+      if (newSelectedDomains.has(domainId)) {
+        // Désélectionner le domaine et tous ses sous-domaines
+        newSelectedDomains.delete(domainId);
+        availableSubdomains.forEach(subdomain => newSelectedSubdomains.delete(subdomain.id));
+      } else {
+        // Sélectionner le domaine et tous ses sous-domaines disponibles
+        newSelectedDomains.add(domainId);
+        availableSubdomains.forEach(subdomain => newSelectedSubdomains.add(subdomain.id));
+      }
+      
+      setSelectedDomainFilters(newSelectedDomains);
+      setSelectedSubdomainFilters(newSelectedSubdomains);
+    };
+
+    const toggleSubdomain = async (subdomainId, domainId) => {
+      const newSelectedSubdomains = new Set(selectedSubdomainFilters);
+      const newSelectedDomains = new Set(selectedDomainFilters);
+      
+      if (newSelectedSubdomains.has(subdomainId)) {
+        // Désélectionner le sous-domaine
+        newSelectedSubdomains.delete(subdomainId);
+        
+        // Vérifier si il faut désélectionner le domaine parent
+        const subdomainsResponse = await SubdomainApi.getSubdomainsByDomain(domainId);
+        const domainSubdomains = subdomainsResponse.success ? subdomainsResponse.data.filter(subdomain => {
+          return programs.some(program => 
+            [program.sub_domain1, program.sub_domain2, program.sub_domain3]
+              .filter(Boolean)
+              .includes(subdomain.id)
+          );
+        }) : [];
+        
+        const hasOtherSelected = domainSubdomains.some(subdomain => 
+          subdomain.id !== subdomainId && newSelectedSubdomains.has(subdomain.id)
+        );
+        if (!hasOtherSelected) {
+          newSelectedDomains.delete(domainId);
+        }
+      } else {
+        // Sélectionner le sous-domaine
+        newSelectedSubdomains.add(subdomainId);
+        
+        // Vérifier si tous les sous-domaines disponibles sont sélectionnés
+        const subdomainsResponse = await SubdomainApi.getSubdomainsByDomain(domainId);
+        const domainSubdomains = subdomainsResponse.success ? subdomainsResponse.data.filter(subdomain => {
+          return programs.some(program => 
+            [program.sub_domain1, program.sub_domain2, program.sub_domain3]
+              .filter(Boolean)
+              .includes(subdomain.id)
+          );
+        }) : [];
+        
+        const allSelected = domainSubdomains.every(subdomain => 
+          subdomain.id === subdomainId || newSelectedSubdomains.has(subdomain.id)
+        );
+        if (allSelected) {
+          newSelectedDomains.add(domainId);
+        }
+      }
+      
+      setSelectedSubdomainFilters(newSelectedSubdomains);
+      setSelectedDomainFilters(newSelectedDomains);
+    };
+
+    return (
+      <div className="relative" ref={domainDropdownRef}>
+        <button
+          type="button"
+          onClick={() => setShowDomainDropdown(!showDomainDropdown)}
+          className="w-full px-4 py-3 rounded-lg text-left border border-gray-300 bg-white hover:bg-gray-50 focus:ring-2 focus:ring-blue-500 flex items-center justify-between"
+        >
+          <span className={selectedSubdomainFilters.size > 0 ? 'text-gray-900 font-medium' : 'text-gray-500'}>
+            {selectedSubdomainFilters.size > 0 
+              ? `${selectedSubdomainFilters.size} spécialisation${selectedSubdomainFilters.size > 1 ? 's' : ''} sélectionnée${selectedSubdomainFilters.size > 1 ? 's' : ''}`
+              : 'Sélectionner des domaines et spécialisations'
+            }
+          </span>
+          <ChevronDown className={`w-5 h-5 text-gray-400 transition-transform ${showDomainDropdown ? 'rotate-180' : ''}`} />
+        </button>
+
+        {showDomainDropdown && (
+          <div className="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-96 overflow-hidden">
+            {/* Barre de recherche */}
+            <div className="p-3 border-b border-gray-200 bg-gray-50">
+              <input
+                type="text"
+                placeholder="Rechercher un domaine..."
+                value={domainSearch}
+                onChange={(e) => setDomainSearch(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+              />
+            </div>
+
+            {/* Debug info */}
+            {filteredDomains.length === 0 && (
+              <div className="p-4 text-center text-gray-500">
+                <p className="text-sm">Aucun domaine trouvé</p>
+                <p className="text-xs">Total domaines: {domains.length}</p>
+                <p className="text-xs">Recherche: "{domainSearch}"</p>
+              </div>
+            )}
+
+            {/* Liste organisée parent/child */}
+            <div className="max-h-80 overflow-y-auto">
+              {filteredDomains.map((domain) => {
+                // CORRECTION: Vérifier que domain.subdomains existe
+                const domainSubdomains = domain.subdomains?.filter(subdomain => {
+                  if (!subdomain || !subdomain.name) return false;
+                  
+                  const matchesSearch = subdomain.name.toLowerCase().includes(domainSearch.toLowerCase());
+                  // Vérifier si ce sous-domaine a des programmes
+                  const hasPrograms = subdomain.program_count && subdomain.program_count > 0;
+                  return matchesSearch && hasPrograms;
+                }) || [];
+                
+                const isDomainSelected = selectedDomainFilters.has(domain.id);
+
+                console.log(`🐛 Domain ${domain.name}:`, {
+                  totalSubdomains: domain.subdomains?.length || 0,
+                  activeSubdomains: domainSubdomains.length
+                });
+
+                // Ne pas afficher le domaine s'il n'y a aucun sous-domaine disponible
+                if (domainSubdomains.length === 0) {
+                  return null;
+                }
+
+                return (
+                  <div key={domain.id} className="border-b border-gray-100 last:border-b-0">
+                    {/* Parent (Domaine) */}
+                    <div className="parent">
+                      <div className="px-4 py-3 hover:bg-gray-50 cursor-pointer" onClick={() => toggleDomain(domain.id)}>
+                        <div className="flex items-center">
+                          <input
+                            type="checkbox"
+                            checked={isDomainSelected}
+                            onChange={() => {}}
+                            className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500 mr-3"
+                          />
+                          <span className="text-lg mr-3">{DomainApi.getIconForDomain(domain.name)}</span>
+                          <span className="font-semibold text-gray-900">{domain.name}</span>
+                          <span className="ml-auto text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
+                            {domainSubdomains.length}
                           </span>
-                          <ul id="e75b56b9" className={"Navbarstyles__SubMenu "+(displaySubMenu3 ? 'lowcCT subMenu3' : '')}>
-                          <li>
-                            <a tabIndex={0} className="LinkLabel__Link" href="/wendogo-mission">
-                              <span className="LinkLabel__Label"> Pourquoi passer par Wendogo ? </span>
-                            </a>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Children (Sous-domaines) */}
+                    <div>
+                      <ul className="child bg-gray-50">
+                        {domainSubdomains.map((subdomain) => (
+                          <li key={subdomain.id}>
+                            <div 
+                              className="px-8 py-2 hover:bg-gray-100 cursor-pointer"
+                              onClick={() => toggleSubdomain(subdomain.id, domain.id)}
+                            >
+                              <div className="flex items-center justify-between">
+                                <div className="flex items-center">
+                                  <input
+                                    type="checkbox"
+                                    checked={selectedSubdomainFilters.has(subdomain.id)}
+                                    onChange={() => {}}
+                                    className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 mr-3"
+                                  />
+                                  <span className="text-gray-700 text-sm">{subdomain.name}</span>
+                                </div>
+                                <span className="text-xs text-gray-500">
+                                  {subdomain.program_count || 0}
+                                </span>
+                              </div>
+                            </div>
                           </li>
-                          <li>
-                            <a tabIndex={0} className="LinkLabel__Link" href="/about-us">
-                              <span className="LinkLabel__Label"> Qui sommes nous ? </span>
-                            </a>
-                          </li>
-                        </ul>
-                      </li>
-                      <li className="Navbarstyles__MenuButtonItems-sc-mi7mu3-6 eonXWL">
-                        {/* <Link href='/waitinglist' className="ButtonLogin__Button"> Se connecter </Link> */}
-                        <a href='/simulation/home' className="ButtonNavbar__Button">
-                          <span className="ButtonNavbar__Label"> Je me lance </span>
-                          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className="ButtonNavbar__Arrow">
-                            <path d="M15.3,11.17l-2.51-2.49,1.18-1.18,4.53,4.5-4.53,4.5-1.18-1.18,2.51-2.49H5.5v-1.66H15.3Z" />
-                          </svg>
-                        </a>
-                      </li>
-                    </ul>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
+                );
+              })}
+            </div>
+
+            {/* Footer avec actions */}
+            {selectedSubdomainFilters.size > 0 && (
+              <div className="p-3 border-t border-gray-200 bg-gray-50">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-medium text-gray-700">
+                    {selectedSubdomainFilters.size} spécialisation{selectedSubdomainFilters.size > 1 ? 's' : ''} sélectionnée{selectedSubdomainFilters.size > 1 ? 's' : ''}
+                  </span>
+                  <button
+                    onClick={() => {
+                      setSelectedDomainFilters(new Set());
+                      setSelectedSubdomainFilters(new Set());
+                    }}
+                    className="text-sm text-red-600 hover:text-red-700 font-medium"
+                  >
+                    Tout effacer
+                  </button>
                 </div>
               </div>
-            </nav>
-            <Head>
-                {/* Essential Meta Tags */}
-                <title>Wendogo - Expert en orientation pour études en France</title>
-                <meta name="description" content="Évaluez vos chances d'admission et simplifiez vos démarches d'études en France avec Wendogo, votre plateforme d'orientation intelligente." />
-                <meta name="keywords" content="études France, orientation études, visa étudiant, admission université France, études supérieures France, Campus France" />
-                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-                
-                {/* Open Graph / Facebook */}
-                <meta property="og:type" content="website" />
-                <meta property="og:url" content="https://wendogo.com/" />
-                <meta property="og:title" content="Wendogo - Votre avenir étudiant en France commence ici" />
-                <meta property="og:description" content="Évaluez vos chances d'admission et simplifiez vos démarches d'études en France avec Wendogo, votre plateforme d'orientation intelligente." />
-                <meta property="og:image" content={backgroundImg2} />
-                <meta property="og:image:width" content="1200" />
-                <meta property="og:image:height" content="630" />
-                <meta property="og:locale" content="fr_FR" />
-                <meta property="og:site_name" content="Wendogo" />
-
-                {/* Twitter */}
-                <meta name="twitter:card" content="summary_large_image" />
-                <meta name="twitter:url" content="https://wendogo.com/" />
-                <meta name="twitter:title" content="Wendogo - Votre avenir étudiant en France commence ici" />
-                <meta name="twitter:description" content="Évaluez vos chances d'admission et simplifiez vos démarches d'études en France avec Wendogo." />
-                <meta name="twitter:image" content="https://wendogo.com/twitter-image.jpg" />
-
-                {/* Other Important Meta Tags */}
-                <meta name="robots" content="index, follow" />
-                <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-                <meta name="language" content="French" />
-                <meta name="author" content="Wendogo" />
-
-                {/* Favicon */}
-                <link rel="icon" href="/favicon.ico" />
-                <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-
-                {/* Canonical URL */}
-                <link rel="canonical" href="https://wendogo.com/" />
-            </Head> 
-            
-<div className="HeroPictureRatestyles__HeroPictureRateContainer-sc-s8xhxd-0 fCWUzd" style={{background: '#333'}}>
-	<div className="HeroPictureRatestyles__LeftSection-sc-s8xhxd-1 dGQEox" style={{marginTop: '100px'}}>
-		<h1 className="HeroLeft__Title-sc-1axg5uv-3 jDYqud" style={{color:'white'}}> Préparer ses études pour la France n'a jamais été aussi simple </h1>
-		<div className="main-screen__content-subscribe"  style={{color:'white'}}> Avec notre IA experte et plus de 50 000 formations recensées, prépare ton projet d'étude en France plus vite et plus efficacement. </div>
-		<div className="HeroPictureRatestyles__CTAContainer-sc-s8xhxd-4 geqbtd">
-    <button className="PrimaryButton__Container-sc-1vkvp7q-0 iroZSn HeroLeft__PrimaryButton-sc-1axg5uv-6 jJuKZd">
-                      <span className="PrimaryButton__Overlay-sc-1vkvp7q-3 sSEIO">
-                        <span className="PrimaryButton__OverlayBackground-sc-1vkvp7q-4 kxNCsz">
-                          <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="PrimaryButton__Arrow-sc-1vkvp7q-1 crhpBB">
-                            <path d="M20.7454 14.8908L17.1664 11.3187L18.7381 9.75L25 16L18.7381 22.25L17.1664 20.6813L20.7454 17.1092H7V14.8908H20.7454Z" />
-                          </svg>
-                        </span>
-                      </span>
-                      <Link href='/simulation/home' >
-                        <span className="PrimaryButton__Label-sc-1vkvp7q-2 kVCvkJ"> Je me lance </span>
-                      </Link>
-                    </button>
-		</div>
-		<div className="HeroPictureRatestyles__Checks-sc-s8xhxd-8 kNXFIj" /> </div>
-	<div className="HeroPictureRatestyles__RightSection-sc-s8xhxd-9 jbJlkC" style={{marginTop: '100px'}}>
-		<div className="HeroPictureRatestyles__Wrapper-sc-s8xhxd-10 jUWPqd">
-			<div className="HeroPictureRatestyles__ImageWrapper-sc-s8xhxd-11 hqZtQD">
-        <video autoPlay loop muted playsInline>
-          <source src={WendogoMP4} type="video/mp4"/>
-          Votre navigateur ne supporte pas la lecture des vidéos.
-        </video>
-				</div>
-			 
-		</div>
-	</div>
-</div>
-            <div className="content" id="content" style={{paddingTop: '50px'}}>
-              <section className="styles__Main-sc-kz84w6-0">
-                <h2 className="h2" style={{ textAlign: 'center' }}>
-                  Ils nous font confiance <br />
-                </h2>
-                <div style={logoContainerStyle}>
-                  <Image src={StationF} alt="" style={logoImageStyle} />
-                  <Image src={FighterProgramLogo} alt="" style={logoImageStyle} />
-                  <Image src={GlobalVisaFlair} alt="" style={logoImageStyle1} />
-                </div>
-              </section>   
-              <section>
-                  <main className="styles__Main-sc-kz84w6-0 gEFmYD"> 
-                      <div className="styles__Grid-sc-10gqksz-1 iuHviD BlocOutils__Container-sc-10c9hjh-0 fGvXyl">
-                        <div className="BlocOutils__Content-sc-10c9hjh-1 jQpxOw"> 
-                          <h2 className="BlocOutils__Title-sc-10c9hjh-3 wniqW"> Nous minimisons au maximum ces types de refus.</h2>
-                          <p className="BlocOutils__Description-sc-10c9hjh-4 eQpKZn">   </p>
-                          
-                        </div>
-                        {browserWidth > 1024 ? (
-        <div className="Laptop__Container-sc-1henh52-0 ebnCSa">
-          <div className="Sliderstyles__ImageContainer-sc-jd0rgd-6 isxeYt">
-            {images.map((img, index) => (
-              <picture key={index}>
-                <Image 
-                  className={`Sliderstyles__Image-sc-jd0rgd-7 ${index === currentIndex ? "kCpYFv" : "CtOpC"}`} 
-                  src={img} 
-                  alt="" 
-                />
-              </picture>
-            ))}
+            )}
           </div>
-          <div className="Laptop__Content-sc-1henh52-2 bwEaWU">
-            <h3 className="Sliderstyles__Title-sc-jd0rgd-0 kQjOWu">
-              {titles[currentIndex]}
-            </h3>
-            <p className="Sliderstyles__Description-sc-jd0rgd-1 Laptop__Text-sc-1henh52-1 dzJZez hCTNwG">
-              {descriptions[currentIndex]}
-            </p>
-            <div className="Sliderstyles__SlideContainer-sc-jd0rgd-4 exfKJT">
-              {images.map((_, index) => (
-                <hr 
-                  key={index}
-                  className={`Divider-sc-1qii385-0 Sliderstyles__Slide-sc-jd0rgd-5 iyJAir ${index === currentIndex ? "LACWn" : "jaXoBy"}`} 
-                />
-              ))}
-            </div>
-            <div className="Laptop__ArrowContainer-sc-1henh52-3 lgqkPS">
-              <button 
-                aria-label="Précédent" 
-                type="button" 
-                onClick={handlePrevious} 
-                className="ArrowButton__Container-sc-11aiclo-3 hRnQwB Sliderstyles__Previous-sc-jd0rgd-2 ENyIs"
-              >
-                <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="ArrowButton__Arrow-sc-11aiclo-0 ArrowButton__Arrow1-sc-11aiclo-1 fhLDeK">
-                  <path d="M20.7454 14.8908L17.1664 11.3187L18.7381 9.75L25 16L18.7381 22.25L17.1664 20.6813L20.7454 17.1092H7V14.8908H20.7454Z" />
-                </svg>
-                <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="ArrowButton__Arrow-sc-11aiclo-0 ArrowButton__Arrow2-sc-11aiclo-2 fhLDeK">
-                  <path d="M20.7454 14.8908L17.1664 11.3187L18.7381 9.75L25 16L18.7381 22.25L17.1664 20.6813L20.7454 17.1092H7V14.8908H20.7454Z" />
-                </svg>
-              </button>
-              <button 
-                aria-label="Suivant" 
-                type="button" 
-                onClick={handleNext}
-                className="ArrowButton__Container-sc-11aiclo-3 doTHWK Sliderstyles__Next-sc-jd0rgd-3 jZecqw"
-              >
-                <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="ArrowButton__Arrow-sc-11aiclo-0 ArrowButton__Arrow1-sc-11aiclo-1 bJwJPy">
-                  <path d="M20.7454 14.8908L17.1664 11.3187L18.7381 9.75L25 16L18.7381 22.25L17.1664 20.6813L20.7454 17.1092H7V14.8908H20.7454Z" />
-                </svg>
-                <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="ArrowButton__Arrow-sc-11aiclo-0 ArrowButton__Arrow2-sc-11aiclo-2 bJwJPy">
-                  <path d="M20.7454 14.8908L17.1664 11.3187L18.7381 9.75L25 16L18.7381 22.25L17.1664 20.6813L20.7454 17.1092H7V14.8908H20.7454Z" />
-                </svg>
-              </button>
-            </div>
-          </div>
+        )}
+      </div>
+    );
+  };
+
+  const getLanguagesForEntryLevel = useMemo(() => {
+    if (!filters.entryLevel) {
+      return filterOptions.languages; // Toutes les langues disponibles
+    }
+    
+    // Filtrer les langues basées sur le niveau d'entrée sélectionné
+    const levelMap = { 'Bac': 1, 'Bac+1': 2, 'Bac+2': 3, 'Bac+3': 4, 'Bac+4': 5 };
+    const yearLevel = levelMap[filters.entryLevel];
+    
+    if (yearLevel) {
+      // Retourner les langues disponibles dans l'API
+      return filterOptions.languages;
+    }
+    
+    return [];
+  }, [filters.entryLevel, filterOptions.languages]);
+
+  if (isLoading) {
+    return (
+      <>
+        <NavBar />
+        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 flex items-center justify-center">
+          <RocketLoader />
         </div>
-      ) : browserWidth < 1024 && browserWidth > 768 ? (
-        <div className="Tablet__Container-sc-2ocpeo-0 UcQSe">
-          <div className="Tablet__Content-sc-2ocpeo-1 eyLBfp">
-            <h3 className="Sliderstyles__Title-sc-jd0rgd-0 kQjOWu">
-              {titles[currentIndex]}
-            </h3>
-            <p className="Sliderstyles__Description-sc-jd0rgd-1 dzJZez">
-              {descriptions[currentIndex]}
-            </p>
-            <div className="Sliderstyles__SlideContainer-sc-jd0rgd-4 exfKJT">
-              {images.map((_, index) => (
-                <hr 
+      </>
+    );
+  }
+
+  const SearchableDropdown = ({ 
+    options, 
+    value, 
+    onChange, 
+    placeholder, 
+    searchValue, 
+    onSearchChange, 
+    showDropdown, 
+    setShowDropdown, 
+    dropdownRef,
+    renderOption = (option) => option 
+  }) => (
+    <div className="relative" ref={dropdownRef}>
+      <button
+        onClick={() => setShowDropdown(!showDropdown)}
+        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-left focus:ring-2 focus:ring-blue-500 flex items-center justify-between"
+      >
+        <span className={value ? 'text-gray-900' : 'text-gray-500'}>
+          {value || placeholder}
+        </span>
+        <ChevronDown className={`w-4 h-4 transition-transform ${showDropdown ? 'rotate-180' : ''}`} />
+      </button>
+      
+      {showDropdown && (
+        <div className="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-hidden">
+          <div className="p-2 border-b">
+            <input
+              type="text"
+              value={searchValue}
+              onChange={(e) => onSearchChange(e.target.value)}
+              placeholder="Rechercher..."
+              className="w-full px-3 py-2 border border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <div className="max-h-48 overflow-y-auto">
+            {options.length > 0 ? (
+              options.map((option, index) => (
+                <button
                   key={index}
-                  className={`Divider-sc-1qii385-0 Sliderstyles__Slide-sc-jd0rgd-5 iyJAir ${index === currentIndex ? "LACWn" : "jaXoBy"}`} 
-                />
-              ))}
-            </div>
-          </div>
-          <div className="Tablet__ImageController-sc-2ocpeo-2 qqeks">
-            <button 
-              aria-label="Précédent" 
-              type="button" 
-              onClick={handlePrevious}
-              className="ArrowButton__Container-sc-11aiclo-3 hRnQwB Sliderstyles__Previous-sc-jd0rgd-2 ENyIs"
-            >
-              <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="ArrowButton__Arrow-sc-11aiclo-0 ArrowButton__Arrow1-sc-11aiclo-1 fhLDeK">
-                <path d="M20.7454 14.8908L17.1664 11.3187L18.7381 9.75L25 16L18.7381 22.25L17.1664 20.6813L20.7454 17.1092H7V14.8908H20.7454Z" />
-              </svg>
-              <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="ArrowButton__Arrow-sc-11aiclo-0 ArrowButton__Arrow2-sc-11aiclo-2 fhLDeK">
-                <path d="M20.7454 14.8908L17.1664 11.3187L18.7381 9.75L25 16L18.7381 22.25L17.1664 20.6813L20.7454 17.1092H7V14.8908H20.7454Z" />
-              </svg>
-            </button>
-            <div className="Sliderstyles__ImageContainer-sc-jd0rgd-6 isxeYt">
-              {images.map((img, index) => (
-                <picture key={index}>
-                  <Image 
-                    className={`Sliderstyles__Image-sc-jd0rgd-7 ${index === currentIndex ? "kCpYFv" : "CtOpC"}`} 
-                    src={img} 
-                    alt="" 
-                  />
-                </picture>
-              ))}
-            </div>
-            <button 
-              aria-label="Suivant" 
-              type="button" 
-              onClick={handleNext}
-              className="ArrowButton__Container-sc-11aiclo-3 doTHWK Sliderstyles__Next-sc-jd0rgd-3 jZecqw"
-            >
-              <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="ArrowButton__Arrow-sc-11aiclo-0 ArrowButton__Arrow1-sc-11aiclo-1 bJwJPy">
-                <path d="M20.7454 14.8908L17.1664 11.3187L18.7381 9.75L25 16L18.7381 22.25L17.1664 20.6813L20.7454 17.1092H7V14.8908H20.7454Z" />
-              </svg>
-              <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="ArrowButton__Arrow-sc-11aiclo-0 ArrowButton__Arrow2-sc-11aiclo-2 bJwJPy">
-                <path d="M20.7454 14.8908L17.1664 11.3187L18.7381 9.75L25 16L18.7381 22.25L17.1664 20.6813L20.7454 17.1092H7V14.8908H20.7454Z" />
-              </svg>
-            </button>
-          </div>
-        </div>
-      ) : (
-        <div className="Mobile__Container-sc-fyrimv-0 jERalJ">
-          <h3 className="Sliderstyles__Title-sc-jd0rgd-0 kQjOWu">
-            {titles[currentIndex]}
-          </h3>
-          <p className="Sliderstyles__Description-sc-jd0rgd-1 dzJZez">
-            {descriptions[currentIndex]}
-          </p>
-          <div className="Mobile__Navbar-sc-fyrimv-1 kHmjuy">
-            <button 
-              aria-label="Précédent" 
-              type="button" 
-              onClick={handlePrevious}
-              className="ArrowButton__Container-sc-11aiclo-3 hRnQwB Sliderstyles__Previous-sc-jd0rgd-2 ENyIs"
-            >
-              <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="ArrowButton__Arrow-sc-11aiclo-0 ArrowButton__Arrow1-sc-11aiclo-1 fhLDeK">
-                <path d="M20.7454 14.8908L17.1664 11.3187L18.7381 9.75L25 16L18.7381 22.25L17.1664 20.6813L20.7454 17.1092H7V14.8908H20.7454Z" />
-              </svg>
-              <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="ArrowButton__Arrow-sc-11aiclo-0 ArrowButton__Arrow2-sc-11aiclo-2 fhLDeK">
-                <path d="M20.7454 14.8908L17.1664 11.3187L18.7381 9.75L25 16L18.7381 22.25L17.1664 20.6813L20.7454 17.1092H7V14.8908H20.7454Z" />
-              </svg>
-            </button>
-            <div className="Sliderstyles__SlideContainer-sc-jd0rgd-4 exfKJT">
-              {images.map((_, index) => (
-                <hr 
-                  key={index}
-                  className={`Divider-sc-1qii385-0 Sliderstyles__Slide-sc-jd0rgd-5 iyJAir ${index === currentIndex ? "LACWn" : "jaXoBy"}`} 
-                />
-              ))}
-            </div>
-            <button 
-              aria-label="Suivant" 
-              type="button" 
-              onClick={handleNext}
-              className="ArrowButton__Container-sc-11aiclo-3 doTHWK Sliderstyles__Next-sc-jd0rgd-3 jZecqw"
-            >
-              <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="ArrowButton__Arrow-sc-11aiclo-0 ArrowButton__Arrow1-sc-11aiclo-1 bJwJPy">
-                <path d="M20.7454 14.8908L17.1664 11.3187L18.7381 9.75L25 16L18.7381 22.25L17.1664 20.6813L20.7454 17.1092H7V14.8908H20.7454Z" />
-              </svg>
-              <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="ArrowButton__Arrow-sc-11aiclo-0 ArrowButton__Arrow2-sc-11aiclo-2 bJwJPy">
-                <path d="M20.7454 14.8908L17.1664 11.3187L18.7381 9.75L25 16L18.7381 22.25L17.1664 20.6813L20.7454 17.1092H7V14.8908H20.7454Z" />
-              </svg>
-            </button>
-          </div>
-          <div className="Sliderstyles__ImageContainer-sc-jd0rgd-6 isxeYt">
-            {images.map((img, index) => (
-              <picture key={index}>
-                <Image 
-                  className={`Sliderstyles__Image-sc-jd0rgd-7 ${index === currentIndex ? "kCpYFv" : "CtOpC"}`} 
-                  src={img} 
-                  alt="" 
-                />
-              </picture>
-            ))}
+                  onClick={() => {
+                    onChange(typeof option === 'string' ? option : option.name);
+                    setShowDropdown(false);
+                  }}
+                  className="w-full text-left px-3 py-2 hover:bg-gray-100 flex items-center gap-2"
+                >
+                  {renderOption(option)}
+                </button>
+              ))
+            ) : (
+              <div className="px-3 py-2 text-gray-500 text-sm">Aucun résultat</div>
+            )}
           </div>
         </div>
       )}
+    </div>
+  );
 
+  // Composant Card de Programme
+  // Composant ProgramCard amélioré avec layout homogène
+  const ProgramCard = ({ program }) => {
+    const school = program.school;
+    const isFavorite = favorites.has(program.id);
+    const programUrl = `/schools/${program.school.slug}/programs/${program.slug}`;
+    const subdomainNames = getSubdomainNamesSync([
+      program.sub_domain1, 
+      program.sub_domain2, 
+      program.sub_domain3
+    ].filter(Boolean), subdomains);
 
-                      </div>
-                      <div className="ConnectSection-styles__ConnectSectionWrapper-sc-b6er0l-0 cEJUfy">
-	<section className="CommonComponents-styles__Section-sc-1bkhv27-4 kSYCBF">
-		<div style={{ maxWidth: 920, fontFamily: "Uivo, Helvetica, sans-serif" }} className="HomeTitle-styles__StyledTitle-sc-3v9hrw-0 FqeUK">
-			<h3 style={{ margin: 0, textAlign: "center", fontWeight: 600 }} className="BlocOutils__Title-sc-10c9hjh-3 wniqW">
-      Boostez vos chances d’admission avec notre IA et nos experts dédiés.
-      </h3> </div>
-	</section>
-	<div className="PageSection-styled__StyledPageSection-sc-bo1t4i-0 dbQXcz">
-		<div className="CommonComponents-styles__Container-sc-1bkhv27-1 ireHjh">
-			<section className="CommonComponents-styles__Section-sc-1bkhv27-4 TextWithImage-styles__TextWithImageContainer-sc-1h6e103-0 kSYCBF JEoJV">
-				<div className="TextWithImage-styles__TextWithImageColLeft-sc-1h6e103-1 hFREee">
-					<div className="TextWithImage-styles__TextWithImageText-sc-1h6e103-3 gUPPGB">
-						<div style={{ maxWidth: 800, fontFamily: "Uivo, Helvetica, sans-serif" }} className="HomeTitle-styles__StyledTitle-sc-3v9hrw-0 iIqquG">
-							<h3 style={{ margin: 0, textAlign: "left", fontWeight: 700 }} className="Card__Title-sc-1qqjegm-4 bqicpW">
-              Analyse automatique de tes relevés pour des recommandations précises
-
-              
-              </h3> </div> <span className="Card__Text-sc-1qqjegm-5 iOmyQf">
-              Prends en photo ton relevé de notes  et laisse notre IA analyser instantanément ton profil. Plus besoin de remplir manuellement des formulaires ! Nous trouvons les formations les plus adaptées en fonction de tes résultats et aspirations. </span>
-					</div>
-					<div className="TextWithImage-styles__TextWithImageLinkMobile-sc-1h6e103-8 TroxI">
-						<a color="#7E7C91" className="LinkWithArrow-styles__StyledLinkWithArrow-sc-gshyp2-0 iMAHuj" href="/product/interactive-guides"> <span>
-                <span
-                  style={{ fontWeight: 500 }}
-                  className="Text-styles__StyledText-sc-1lbfrxz-0 eIHzDT"
-                >
-                  En savoir plus sur guides{/* */}&nbsp;
-                  <span className="LinkWithArrow-styles__Arrow-sc-gshyp2-3 jyLUtt">
-                    <div
-                      color="#ED216F"
-                      className="AnimatedArrow-styles__StyledAnimatedArrow-sc-1k9se9d-0 biFsGA"
-                    >
-                      <svg
-                        width={18}
-                        height={12}
-                        viewBox="0 0 18 12"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M 0 7.1136 v -2.1136 H 9.7206 C 11.0995 4.9108 13.8946 5.282 15.5293 5.5132 C 14.4499 5.0264 12.8714 4.2292 12.0541 3.432 L 10.1948 1.6187 L 11.8544 0 L 18 6 L 11.8544 12 L 10.1948 10.3813 L 12.0541 8.5679 C 12.8901 7.7525 14.3688 6.9919 15.4295 6.5051 C 13.7698 6.7363 11.0745 7.1075 9.7206 7.1075 H 2.332 Z"
-                          fill="#ED216F"
-                        />
-                      </svg>
-                    </div>
-                  </span> </span>
-							</span>
-						</a>
-					</div>
-				</div>
-				<div className="TextWithImage-styles__TextWithImageColRight-sc-1h6e103-2 dKdAlx">
-					<div className="TextWithImage-styles__TextWithImageWrapper-sc-1h6e103-4 bITtIs">
-						<div>
-							<div className="TextWithImage-styles__TextWithImageImg-sc-1h6e103-6 ZtLxi">
-								<div className="LottieFile-styles__Canvas-sc-t4ls67-0 cOaUIN">
-									 <Image src={ScanningDoc} alt="ScanningDoc" />
-								</div>
-							</div>
-						</div>
-						<div>
-							<div className="TextWithImage-styles__TextWithImageImg-sc-1h6e103-6 kcKwQf"> <img src="https://cdn.stonly.com/website/6b52e978/images/platform-tours.png" alt="tours" /> </div>
-						</div>
-						<div>
-							<div className="TextWithImage-styles__TextWithImageImg-sc-1h6e103-6 kcKwQf"> <img src="https://cdn.stonly.com/website/6b52e978/images/platform-checklists.png" alt="checklist" /> </div>
-						</div>
-						<div>
-							<div className="TextWithImage-styles__TextWithImageImg-sc-1h6e103-6 kcKwQf">
-								<div className="LottieFile-styles__Canvas-sc-t4ls67-0 cOaUIN">
-									 <Image src={CVOptimization} alt="CVOptimization" />
-								</div>
-							</div>
-						</div> <img src="https://cdn.stonly.com/website/6b52e978/images/image-placeholder.png" alt="" className="TextWithImage-styles__TextWithImagePlaceholder-sc-1h6e103-5 HZYXD" /> </div>
-					<div className="TextWithImage-styles__TextWithImageLink-sc-1h6e103-7 gERARq">
-						<a color="#7E7C91" className="LinkWithArrow-styles__StyledLinkWithArrow-sc-gshyp2-0 iMAHuj" href="/product/interactive-guides"> <span>
-                <span
-                  style={{ fontWeight: 500 }}
-                  className="Text-styles__StyledText-sc-1lbfrxz-0 eIHzDT"
-                >
-                  En savoir plus sur l'analyse des relevés de notes{/* */}&nbsp;
-                  <span className="LinkWithArrow-styles__Arrow-sc-gshyp2-3 jyLUtt">
-                    <div
-                      color="#ED216F"
-                      className="AnimatedArrow-styles__StyledAnimatedArrow-sc-1k9se9d-0 biFsGA"
-                    >
-                      <svg
-                        width={18}
-                        height={12}
-                        viewBox="0 0 18 12"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M 0 7.1136 v -2.1136 H 9.7206 C 11.0995 4.9108 13.8946 5.282 15.5293 5.5132 C 14.4499 5.0264 12.8714 4.2292 12.0541 3.432 L 10.1948 1.6187 L 11.8544 0 L 18 6 L 11.8544 12 L 10.1948 10.3813 L 12.0541 8.5679 C 12.8901 7.7525 14.3688 6.9919 15.4295 6.5051 C 13.7698 6.7363 11.0745 7.1075 9.7206 7.1075 H 2.332 Z"
-                          fill="#ED216F"
-                        />
-                      </svg>
-                    </div>
-                  </span> </span>
-							</span>
-						</a>
-					</div>
-				</div>
-			</section>
-		</div>
-	</div>
-	<div className="PageSection-styled__StyledPageSection-sc-bo1t4i-0 bYoQmX">
-		<div className="CommonComponents-styles__Container-sc-1bkhv27-1 ireHjh">
-			<section reversed="" className="CommonComponents-styles__Section-sc-1bkhv27-4 TextWithImage-styles__TextWithImageContainer-sc-1h6e103-0 kSYCBF gLyNk">
-				<div className="TextWithImage-styles__TextWithImageColLeft-sc-1h6e103-1 hFREee">
-					<div className="TextWithImage-styles__TextWithImageText-sc-1h6e103-3 gUPPGB">
-						<div style={{ maxWidth: 800, fontFamily: "Uivo, Helvetica, sans-serif" }} className="HomeTitle-styles__StyledTitle-sc-3v9hrw-0 iIqquG">
-							<h4 style={{ margin: 0, textAlign: "left", fontWeight: 700 }} className="Card__Title-sc-1qqjegm-4 bqicpW">
-              Booste ton CV et tes lettres de motivation avec notre expertise
-              </h4> </div> <span className="Card__Text-sc-1qqjegm-5 iOmyQf">
-              Ton dossier est la clé pour convaincre les écoles ! Wendogo optimise ton CV et tes lettres de motivation pour les rendre plus percutants et adaptés aux attentes des recruteurs académiques. Notre IA analyse les meilleures pratiques et nos experts t’aident à valoriser ton parcours. </span>
-					</div>
-					<div className="TextWithImage-styles__TextWithImageLinkMobile-sc-1h6e103-8 TroxI">
-						<a color="#7E7C91" className="LinkWithArrow-styles__StyledLinkWithArrow-sc-gshyp2-0 iMAHuj" href="/solutions/contact-centers"> <span>
-                <span
-                  style={{ fontWeight: 500 }}
-                  className="Text-styles__StyledText-sc-1lbfrxz-0 eIHzDT"
-                >
-                  En savoir plus sur agents{/* */}&nbsp;
-                  <span className="LinkWithArrow-styles__Arrow-sc-gshyp2-3 jyLUtt">
-                    <div
-                      color="#ED216F"
-                      className="AnimatedArrow-styles__StyledAnimatedArrow-sc-1k9se9d-0 biFsGA"
-                    >
-                      <svg
-                        width={18}
-                        height={12}
-                        viewBox="0 0 18 12"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M 0 7.1136 v -2.1136 H 9.7206 C 11.0995 4.9108 13.8946 5.282 15.5293 5.5132 C 14.4499 5.0264 12.8714 4.2292 12.0541 3.432 L 10.1948 1.6187 L 11.8544 0 L 18 6 L 11.8544 12 L 10.1948 10.3813 L 12.0541 8.5679 C 12.8901 7.7525 14.3688 6.9919 15.4295 6.5051 C 13.7698 6.7363 11.0745 7.1075 9.7206 7.1075 H 2.332 Z"
-                          fill="#ED216F"
-                        />
-                      </svg>
-                    </div>
-                  </span> </span>
-							</span>
-						</a>
-					</div>
-				</div>
-				<div className="TextWithImage-styles__TextWithImageColRight-sc-1h6e103-2 dKdAlx">
-					<div className="TextWithImage-styles__TextWithImageWrapper-sc-1h6e103-4 bITtIs"> 
-						<div> 
-						</div> <Image src={CVOptimization} alt="CVOptimization" /> </div>
-					<div className="TextWithImage-styles__TextWithImageLink-sc-1h6e103-7 gERARq">
-						<a color="#7E7C91" className="LinkWithArrow-styles__StyledLinkWithArrow-sc-gshyp2-0 iMAHuj" href="/solutions/contact-centers"> <span>
-                <span
-                  style={{ fontWeight: 500 }}
-                  className="Text-styles__StyledText-sc-1lbfrxz-0 eIHzDT"
-                >
-                  En savoir plus sur accompagnement des agents{/* */}&nbsp;
-                  <span className="LinkWithArrow-styles__Arrow-sc-gshyp2-3 jyLUtt">
-                    <div
-                      color="#ED216F"
-                      className="AnimatedArrow-styles__StyledAnimatedArrow-sc-1k9se9d-0 biFsGA"
-                    >
-                      <svg
-                        width={18}
-                        height={12}
-                        viewBox="0 0 18 12"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M 0 7.1136 v -2.1136 H 9.7206 C 11.0995 4.9108 13.8946 5.282 15.5293 5.5132 C 14.4499 5.0264 12.8714 4.2292 12.0541 3.432 L 10.1948 1.6187 L 11.8544 0 L 18 6 L 11.8544 12 L 10.1948 10.3813 L 12.0541 8.5679 C 12.8901 7.7525 14.3688 6.9919 15.4295 6.5051 C 13.7698 6.7363 11.0745 7.1075 9.7206 7.1075 H 2.332 Z"
-                          fill="#ED216F"
-                        />
-                      </svg>
-                    </div>
-                  </span> </span>
-							</span>
-						</a>
-					</div>
-				</div>
-			</section>
-		</div>
-	</div>
-	<section className="CommonComponents-styles__Section-sc-1bkhv27-4 LeftRightBlock-styles__LRSection-sc-1y8s2op-0 kSYCBF fZoBWR">
-		<div className="CommonComponents-styles__Container-sc-1bkhv27-1 LeftRightBlock-styles__LRContainer-sc-1y8s2op-1 ireHjh cPfAmK">
-			<div className="LeftRightBlock-styles__LRTextCol-sc-1y8s2op-3 kFAOQK">
-				<div style={{ maxWidth: 800, fontFamily: "Uivo, Helvetica, sans-serif" }} className="HomeTitle-styles__StyledTitle-sc-3v9hrw-0 iIqquG">
-					<h3 style={{ margin: 0, textAlign: "left",   fontWeight: 700 }} className="Card__Title-sc-1qqjegm-4 bqicpW">
-          Prépare ton dossier visa en toute sérénité
-          </h3> </div> <span className="Card__Text-sc-1qqjegm-5 iOmyQf">
-          L’accompagnement Wendogo ne s’arrête pas aux admissions ! Nous t’aidons à monter un dossier visa solide : attestation d’hébergement, preuve de financement, lettres explicatives… Notre IA t’indique les pièces manquantes, et nos experts te conseillent pour maximiser tes chances d’approbation. </span></div>
-			<div className="LeftRightBlock-styles__LRImageCol-sc-1y8s2op-2 fmIcFR">
-				<div className="LottieFile-styles__Canvas-sc-t4ls67-0 cOaUIN LeftRightBlock-styles__StyledLottieFile-sc-1y8s2op-4 duaIKc">
-					 <Image src={VisaOnHand} alt="VisaOnHand" />
-				</div>
-			</div>
-		</div>
-	</section>
-	<section className="CommonComponents-styles__Section-sc-1bkhv27-4 LeftRightBlock-styles__LRSection-sc-1y8s2op-0 kSYCBF fZoBWR">
-		<div className="CommonComponents-styles__Container-sc-1bkhv27-1 LeftRightBlock-styles__LRContainer-sc-1y8s2op-1 ireHjh fMwJxX">
-			<div className="LeftRightBlock-styles__LRTextCol-sc-1y8s2op-3 gWrhJJ">
-				<div style={{ maxWidth: 800, fontFamily: "Uivo, Helvetica, sans-serif" }} className="HomeTitle-styles__StyledTitle-sc-3v9hrw-0 iIqquG">
-					<h3 style={{ margin: 0, textAlign: "left", fontWeight: 700 }} className="Card__Title-sc-1qqjegm-4 bqicpW">
-          Un coaching personnalisé pour tes entretiens
-          </h3> </div> <span className="Card__Text-sc-1qqjegm-5 iOmyQf">
-          Derrière Wendogo, il y a aussi des experts dédiés ! Nous te préparons aux entretiens Campus France, aux appels des écoles et aux démarches post-arrivée. Un accompagnement 360° pour réussir ton projet d’études. </span> </div>
-			<div className="LeftRightBlock-styles__LRImageCol-sc-1y8s2op-2 kpuSbv"> 
-        <Image src={ConferenceCall} alt="ConferenceCall" />
-         </div>
-		</div>
-	</section>
-	<section className="CommonComponents-styles__Section-sc-1bkhv27-4 ConnectSection-styles__BottomConnectSection-sc-b6er0l-6 kSYCBF cYJtCL">
-		<section className="CommonComponents-styles__Section-sc-1bkhv27-4 ConnectSection-styles__ConnectSectionTitle-sc-b6er0l-1 kSYCBF cTwPiO">
-			<div style={{ maxWidth: 800, fontFamily: "Uivo, Helvetica, sans-serif" }} className="HomeTitle-styles__StyledTitle-sc-3v9hrw-0 FqeUK">
-				<h3 style={{ margin: 0, textAlign: "center", fontWeight: 600 }} className="BlocOutils__Title-sc-10c9hjh-3 wniqW">
-          Une plateforme unique pour ton projet d'études en France
-        </h3> </div>
-		</section>
-		<div className="CommonComponents-styles__Container-sc-1bkhv27-1 ConnectSection-styles__ConnectSectionContainer-sc-b6er0l-2 ireHjh bTmQVT">
-			<div className="ConnectSection-styles__ConnectSectionCol-sc-b6er0l-3 bcqcVy">
-				<div className="ConnectSection-styles__ConnectSectionImg-sc-b6er0l-4 enPBZY"> <img src="https://cdn.stonly.com/website/6b52e978/images/connect-bottom-1.png" alt="Resolve customer questions instantly with AI-powered self-service" /> </div>
-				<div className="ConnectSection-styles__ConnectSectionText-sc-b6er0l-5 jqucOt">
-					<div style={{ maxWidth: 800, fontFamily: "Uivo, Helvetica, sans-serif" }} className="HomeTitle-styles__StyledTitle-sc-3v9hrw-0 iIqquG">
-						<h3 style={{ margin: 0, textAlign: "left", fontWeight: 700 }} className="h3">
-            Notre IA t’aide à remplir tes dossiers en un clic et optimise tes candidatures pour maximiser tes chances d’admission.
-            </h3> </div>
-					 
-				</div>
-			</div>
-			<div className="ConnectSection-styles__ConnectSectionCol-sc-b6er0l-3 cqqNLU">
-				<div className="ConnectSection-styles__ConnectSectionImg-sc-b6er0l-4 enPBZY"> 
-          
-          <img src="https://cdn.stonly.com/website/6b52e978/images/connect-bottom-2.png" alt="Améliorez le temps et la qualité de la prise en charge avec des arbres de décision pour vos agents." /> 
+    return (
+      <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 overflow-hidden group flex flex-col h-full">
+        {/* Header avec logo école et favori - HAUTEUR FIXE */}
+        <div className="p-4 pb-2 flex-shrink-0">
+          <div className="flex items-start justify-between mb-3">
+            <div className="flex items-center gap-3 flex-1 min-w-0">
+              {school?.logo_path && (
+                <div className="w-12 h-8 bg-gray-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <img 
+                    src={school.logo_path} 
+                    alt={school.name}
+                    className="max-w-full max-h-full object-contain"
+                  />
+                </div>
+              )}
+              <div className="min-w-0 flex-1">
+                <h4 className="font-medium text-gray-900 text-sm truncate">
+                  {school?.name}
+                </h4>
+                <div className="flex items-center gap-1 text-xs text-gray-500">
+                  <MapPin className="w-3 h-3" />
+                  <span>{school?.base_city}</span>
+                </div>
+              </div>
+            </div>
+            <FavoriteButton programId={program.id} />
           </div>
-				<div className="ConnectSection-styles__ConnectSectionText-sc-b6er0l-5 jqucOt">
-					<div style={{ maxWidth: 800, fontFamily: "Uivo, Helvetica, sans-serif" }} className="HomeTitle-styles__StyledTitle-sc-3v9hrw-0 iIqquG">
-						<h3 style={{ margin: 0, textAlign: "left", fontWeight: 700 }} className="h3">
-            Nos conseillers t'assistent sur tous les aspects de ton projet d'études en France : admissions, entretien, visa, logement, vie étudiante…
-            </h3> </div>
-					 
-				</div>
-			</div>
-		</div>
-	</section>
-</div>
-                        <section className="Courtier__Bloc-sc-431mxx-0 lciTAJ">
-                      <div className="Banner__Content-sc-krte25-0 kIwpz">
-                        <p className="Content__Catchphrase-sc-hd6o8b-0 fCnjcm"> Des conseillers pas comme les autres&nbsp;: </p>
-                        <h2 className="Content__Title-sc-hd6o8b-1 erjsGF"> Leur priorité c’est vous&nbsp;! </h2>
-                        <p className="Content__Description-sc-hd6o8b-2 hhQjSJ"> Un conseiller, c’est bien. Un conseiller expert et pédagogue qui vous comprend, c’est mieux. 
-                                                                                Les conseillers Wendogo vous accompagnent dans votre projet de voyage avec implication et réactivité. </p>
-                        <button className="PrimaryButton__Container-sc-1vkvp7q-0 iroZSn">
-                          <span className="PrimaryButton__Overlay-sc-1vkvp7q-3 sSEIO">
-                            <span className="PrimaryButton__OverlayBackground-sc-1vkvp7q-4 kxNCsz">
-                              <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="PrimaryButton__Arrow-sc-1vkvp7q-1 crhpBB">
-                                <path d="M20.7454 14.8908L17.1664 11.3187L18.7381 9.75L25 16L18.7381 22.25L17.1664 20.6813L20.7454 17.1092H7V14.8908H20.7454Z" />
-                              </svg>
-                            </span>
-                          </span>
-                          <a href='/simulation/home' >
-                            <span className="PrimaryButton__Label-sc-1vkvp7q-2 kVCvkJ"> Je me lance </span>
-                          </a>
+        </div>
+
+        {/* Contenu principal - ZONE FLEXIBLE */}
+        <div className="px-4 flex-1 flex flex-col">
+          {/* Titre du programme - HAUTEUR FIXE (2 lignes max) */}
+          <div className="h-14 mb-3 flex items-start">
+            <h3 className="font-bold text-gray-900 text-lg leading-tight line-clamp-2">
+              {program.title}
+            </h3>
+          </div>
+
+          {/* Badges - HAUTEUR FLEXIBLE MAIS LIMITÉE */}
+          <div className="min-h-[2rem] mb-3">
+            <div className="flex flex-wrap gap-2">
+              <span className="bg-gradient-to-r from-blue-100 to-indigo-100 text-blue-700 px-2 py-1 rounded-full text-xs font-medium">
+                {program.grade}
+              </span>
+              {program.state_certification_type && (
+                <span className="bg-gradient-to-r from-green-100 to-emerald-100 text-green-700 px-2 py-1 rounded-full text-xs font-medium">
+                  {program.state_certification_type}
+                </span>
+              )}
+              {program.alternance_possible && (
+                <span className="bg-gradient-to-r from-purple-100 to-violet-100 text-purple-700 px-2 py-1 rounded-full text-xs font-medium">
+                  Alternance
+                </span>
+              )}
+            </div>
+          </div>
+
+          {/* Description - HAUTEUR FIXE (3 lignes max) */}
+          <div className="h-16 mb-3">
+            <p className="text-gray-600 text-sm line-clamp-3 leading-relaxed">
+              {program.description?.length > 120 
+                ? program.description.substring(0, 120) + '...' 
+                : program.description}
+            </p>
+          </div>
+
+          {/* Sous-domaines - HAUTEUR FIXE */}
+          <div className="h-8 mb-3">
+            {subdomainNames.length > 0 && (
+              <div className="flex flex-wrap gap-1">
+                {subdomainNames.slice(0, 3).map((domain, index) => (
+                  <span key={index} className="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs truncate">
+                    {domain}
+                  </span>
+                ))}
+                {subdomainNames.length > 3 && (
+                  <span className="text-gray-500 text-xs py-1">
+                    +{subdomainNames.length - 3}
+                  </span>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Informations pratiques - HAUTEUR FIXE */}
+        <div className="px-4 py-3 bg-gradient-to-r from-gray-50 to-blue-50 border-t border-gray-100 flex-shrink-0">
+          <div className="grid grid-cols-2 gap-3 text-xs">
+            <div className="flex items-center gap-2">
+              <Clock className="w-4 h-4 text-blue-600 flex-shrink-0" />
+              <span className="text-gray-700 truncate">{formatDuration(program.fi_school_duration)}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Calendar className="w-4 h-4 text-orange-600 flex-shrink-0" />
+              <span className="text-gray-700 truncate">Rentrée: {program.intake}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Euro className="w-4 h-4 text-green-600 flex-shrink-0" />
+              <span className="text-gray-700 font-medium truncate">{formatPrice(program.tuition)}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <GraduationCap className="w-4 h-4 text-red-600 flex-shrink-0" />
+              <span className="text-gray-700 truncate">Deadline: {program.application_date}</span>
+            </div>
+            {program.first_deposit && (
+              <div className="flex items-center gap-2 col-span-2">
+                <Euro className="w-4 h-4 text-purple-600 flex-shrink-0" />
+                <span className="text-gray-700 truncate">Acompte: {formatPrice(program.first_deposit)}</span>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Footer avec bouton full-width - HAUTEUR FIXE */}
+        <div className="p-4 bg-white border-t border-gray-100 flex-shrink-0">
+          <Link href={programUrl} target="_blank" rel="noopener noreferrer" className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 rounded-lg text-sm font-medium hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 flex items-center justify-center gap-2">
+            Voir le programme
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+          </Link>
+                      {/* <Link href={programUrl} target="_blank" rel="noopener noreferrer">
+                <button className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-2 text-sm font-medium">
+                  Voir le programme
+                  <ExternalLink className="w-4 h-4" />
+                </button>
+              </Link> */}
+        </div>
+      </div>
+    );
+  };
+
+
+  return (
+    <>
+    <NavBar />
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
+      {/* Header Hero avec Navigation intégrée */}
+      <div className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 relative">
+        <div className="absolute inset-0 bg-black/10"></div>
+        <div className="relative">
+          {/* Navigation Tabs dans le Header */}
+          <div className="px-4 sm:px-6 lg:px-8 pt-6">
+            <div className="max-w-7xl mx-auto">
+              <div className="flex border-b border-white/20">
+                <button
+                  onClick={() => {
+                    setActiveTab('search');
+                    setShowResults(false);
+                    setSelectedDomain(null);
+                    setSelectedSubdomains([]);
+                  }}
+                  className={`flex items-center gap-2 px-6 py-4 font-semibold transition-all duration-300 ${
+                    activeTab === 'search'
+                      ? 'text-white border-b-2 border-white bg-white/10'
+                      : 'text-blue-100 hover:text-white'
+                  }`}
+                >
+                  <Search className="w-5 h-5" />
+                  <span>Rechercher</span>
+                </button>
+                <button
+                  onClick={() => setActiveTab('accompany')}
+                  className={`flex items-center gap-2 px-6 py-4 font-semibold transition-all duration-300 ${
+                    activeTab === 'accompany'
+                      ? 'text-white border-b-2 border-white bg-white/10'
+                      : 'text-blue-100 hover:text-white'
+                  }`}
+                >
+                  <Users className="w-5 h-5" />
+                  <span>Accompagnez-moi</span>
+                </button>
+                <button
+                  onClick={() => setActiveTab('organizations')}
+                  className={`flex items-center gap-2 px-6 py-4 font-semibold transition-all duration-300 ${
+                    activeTab === 'organizations'
+                      ? 'text-white border-b-2 border-white bg-white/10'
+                      : 'text-blue-100 hover:text-white'
+                  }`}
+                >
+                  <Building2 className="w-5 h-5" />
+                  <span>Organismes</span>
+                  {/* <span className="ml-2 bg-yellow-400 text-white text-xs px-2 py-1 rounded-full font-semibold">
+                    Partenaires
+                  </span> */}
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Contenu du Header selon l'onglet */}
+          <div className="px-4 sm:px-6 lg:px-8 py-8 lg:py-16">
+            <div className="max-w-7xl mx-auto text-center">
+              {activeTab === 'search' && (
+                <>
+                  <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold text-white mb-4 leading-tight">
+                    Votre avenir académique en France vous attend
+                  </h1>
+                  <p className="text-lg sm:text-xl text-blue-100 mb-8 max-w-4xl mx-auto">
+                    Explorez <span className="font-bold text-yellow-300">{globalStats.total_programs.toLocaleString()}+ formations</span> dans <span className="font-bold text-yellow-300">{globalStats.total_schools.toLocaleString()}+ écoles privées</span> françaises. 
+                    Trouvez le programme parfait pour votre parcours international.
+                  </p>
+
+                  {/* Barre de recherche intégrée dans le header */}
+                  <div ref={dropdownRef} className="max-w-4xl mx-auto mb-6 sm:mb-8 relative z-[100]"> {/* ✅ Réduit mb-8 à mb-6 sm:mb-8 */}
+                    <div className="bg-white/10 backdrop-blur-md rounded-xl p-3 sm:p-6 border border-white/20"> {/* ✅ Réduit padding mobile */}
+                      <div className="relative mb-3 sm:mb-4"  id="search-container"> {/* ✅ Réduit margin mobile */}
+                        <div className="flex flex-col sm:flex-row gap-2 sm:gap-2"> {/* ✅ Stack vertical sur mobile */}
+                          <div className="relative flex-1 z-[110]">
+                            <Search className="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 sm:w-5 sm:h-5 z-[111]" />
+                            <input
+                              type="text"
+                              placeholder="Rechercher une formation, une école..."
+                              value={searchQuery}
+                              onFocus={() => setShowSuggestions(true)}
+                              onBlur={() => {
+                                // Délai pour permettre aux clics sur les suggestions
+                                setTimeout(() => setShowSuggestions(false), 150);
+                              }}
+                              onChange={(e) => setSearchQuery(e.target.value)}
+                              onKeyDown={(e) => {
+                                if (e.key === 'Enter') {
+                                  handleSearch();
+                                }
+                              }}
+                              className="w-full pl-10 sm:pl-12 pr-10 sm:pr-12 py-3 sm:py-4 border border-gray-200 rounded-lg sm:rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-lg bg-white relative z-[111]" 
+                            />
+                            {/* ✅ NOUVEAU : Bouton clear */}
+                            {searchQuery && (
+                              <button
+                                onClick={() => {
+                                  setSearchQuery('');
+                                  setShowSuggestions(false);
+                                  setSearchResults([]);
+                                  setTotalResults(0);
+                                  setShowResults(false);
+                                  setCurrentPage(1);
+                                }}
+                                className="absolute right-3 sm:right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors z-[112]"
+                                title="Effacer la recherche"
+                              >
+                                <X className="w-4 h-4 sm:w-5 sm:h-5" />
+                              </button>
+                            )}
+                          </div>
+                          <button
+                            onClick={() => {
+                              if (searchQuery && searchQuery.trim()) {
+                                handleSearch();
+                              }
+                            }}
+                            disabled={isSearching || !searchQuery || !searchQuery.trim()}
+                            className="px-4 sm:px-8 py-3 sm:py-4 bg-white text-blue-600 rounded-lg sm:rounded-xl font-semibold hover:bg-blue-50 transition-colors border border-gray-200 whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base z-[111]" 
+                          >
+                            {isSearching ? 'Recherche...' : 'Rechercher'}
+                          </button>
+                        </div>
+                        
+                        {/* Suggestions responsives */}
+                        {showSuggestions && suggestions.length > 0 && (
+                          <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg mt-1 max-h-48 sm:max-h-60 overflow-y-auto z-[120]"> {/* ✅ Hauteur réduite mobile */}
+                            <div className="p-2">
+                              
+                            </div>
+                            {suggestions.map((suggestion, index) => (
+                              <button
+                                key={index}
+                                onClick={() => {
+                                  setSearchQuery(suggestion);
+                                  setShowSuggestions(false);
+                                  handleSearch(suggestion);
+                                }}
+                                className="w-full text-left px-3 sm:px-4 py-2 sm:py-3 hover:bg-blue-50 flex items-center gap-2 transition-colors"
+                              >
+                                <Search className="w-3 h-3 sm:w-4 sm:h-4 text-blue-500 flex-shrink-0" />
+                                <span className="text-gray-800 truncate text-sm sm:text-base">{suggestion}</span> {/* ✅ Texte responsif */}
+                              </button>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Boutons et infos en bas - version mobile optimisée */}
+                      <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mt-3 sm:mt-4"> {/* ✅ Stack vertical mobile */}
+                        <button
+                          onClick={() => {
+                            setShowFilters(!showFilters);
+                            if (!showFilters && !showResults && searchQuery.trim()) {
+                              setShowResults(true);
+                              handleSearch();
+                            }
+                          }}
+                          className="flex items-center justify-center sm:justify-start gap-2 px-3 sm:px-4 py-2 bg-white/20 border border-white/30 rounded-lg hover:bg-white/30 transition-colors text-white text-sm sm:text-base order-1 sm:order-none"
+                        >
+                          <Filter className="w-4 h-4" />
+                          <span>Filtres avancés</span>
+                          <ChevronDown className={`w-4 h-4 transition-transform ${showFilters ? 'rotate-180' : ''}`} />
                         </button>
-                        {/* <h1>{countdown}</h1>
-                        <h1>dd {positionLeft} - {browserWidth}</h1>
-                        <h1> widthBanner {widthBanner}</h1> */}
-                      </div>
-                      <div className={"Images__Container-sc-2gr022-0 Banner__Images-sc-krte25-1 fCdAKA "+bannerAnimationClassList[0]} ref={myElementRef}>
-                        <div className="Images__BaseImage-sc-2gr022-2 Images__Image1-sc-2gr022-3 ioovUp llLrAK">
-                          {/* <picture>
-                            <source type="image/webp" srcSet="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_320/v1677667256/website/page/home/BlocCourtier-1.webp 320w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_375/v1677667256/website/page/home/BlocCourtier-1.webp 375w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_425/v1677667256/website/page/home/BlocCourtier-1.webp 425w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_768/v1677667256/website/page/home/BlocCourtier-1.webp 768w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_1024/v1677667256/website/page/home/BlocCourtier-1.webp 1024w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_1240/v1677667256/website/page/home/BlocCourtier-1.webp 1240w" />
-                            <source srcSet="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_320/v1677667256/website/page/home/BlocCourtier-1.webp 320w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_375/v1677667256/website/page/home/BlocCourtier-1.webp 375w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_425/v1677667256/website/page/home/BlocCourtier-1.webp 425w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_768/v1677667256/website/page/home/BlocCourtier-1.webp 768w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_1024/v1677667256/website/page/home/BlocCourtier-1.webp 1024w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_1240/v1677667256/website/page/home/BlocCourtier-1.webp 1240w" />
-                            <Image alt="" size="(min-width: 1024px) 50vw, 100vw" loading="lazy" src="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto/v1677667256/website/page/home/BlocCourtier-1.webp" className={"Images__Image-sc-2gr022-1 "+((countdown<5 || countdown===15) ? bannerAnimationClassList[1] : "eXDVgd")} />
-                          </picture> */}
-                          <picture>
-                            {/* <source type="image/webp" srcSet={BlockCourtier1} />
-                            <source srcSet={BlockCourtier1} /> */}
-                            <Image className={"Images__Image-sc-2gr022-1 "+((countdown<5 || countdown===15) ? bannerAnimationClassList[1] : "eXDVgd")} src={BlockCourtier1} alt="" size="(min-width: 1024px) 50vw, 100vw" loading="lazy"  />
-                            {/* <Image alt="v1677658638/website/page/home/Re%CC%81sultat.webp" className="Sliderstyles__Image-sc-jd0rgd-7 kCpYFv" loading="lazy" src="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto/v1677658638/website/page/home/Re%CC%81sultat.webp" /> */}
-                          </picture>
-                        </div>
-                        <div className="Images__BaseImage-sc-2gr022-2 Images__Image2-sc-2gr022-4 ioovUp kUUMLx">
-                          <picture>
-                            {/* <source type="image/webp" srcSet={BlockCourtier2} />
-                            <source srcSet={BlockCourtier2} /> */}
-                            <Image  className={"Images__Image-sc-2gr022-1 "+((countdown >= 5 && countdown<10) ? bannerAnimationClassList[1] : "eXDVgd")} src={BlockCourtier2} alt="" size="(min-width: 1024px) 50vw, 100vw" loading="lazy"  />
-                            {/* <Image alt="v1677658638/website/page/home/Re%CC%81sultat.webp" className="Sliderstyles__Image-sc-jd0rgd-7 kCpYFv" loading="lazy" src="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto/v1677658638/website/page/home/Re%CC%81sultat.webp" /> */}
-                          </picture>
-                          {/* <picture>
-                            <source type="image/webp" srcSet="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_320/v1677668879/website/page/home/BlocCourtier-2.webp 320w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_375/v1677668879/website/page/home/BlocCourtier-2.webp 375w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_425/v1677668879/website/page/home/BlocCourtier-2.webp 425w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_768/v1677668879/website/page/home/BlocCourtier-2.webp 768w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_1024/v1677668879/website/page/home/BlocCourtier-2.webp 1024w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_1240/v1677668879/website/page/home/BlocCourtier-2.webp 1240w" />
-                            <source srcSet="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_320/v1677668879/website/page/home/BlocCourtier-2.webp 320w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_375/v1677668879/website/page/home/BlocCourtier-2.webp 375w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_425/v1677668879/website/page/home/BlocCourtier-2.webp 425w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_768/v1677668879/website/page/home/BlocCourtier-2.webp 768w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_1024/v1677668879/website/page/home/BlocCourtier-2.webp 1024w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_1240/v1677668879/website/page/home/BlocCourtier-2.webp 1240w" />
-                            <Image alt="" size="(min-width: 1024px) 50vw, 100vw" loading="lazy" src="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto/v1677668879/website/page/home/BlocCourtier-2.webp" />
-                          </picture> */}
-                        </div>
-                        <div className="Images__BaseImage-sc-2gr022-2 Images__Image3-sc-2gr022-5 ioovUp gaxwmL">
-                          <picture>
-                            {/* <source type="image/webp" srcSet={BlockCourtier3} />
-                            <source srcSet={BlockCourtier3} /> */}
-                            <Image className={"Images__Image-sc-2gr022-1 "+((countdown >= 10 && countdown<15) ? bannerAnimationClassList[1] : "eXDVgd")} src={BlockCourtier3} alt="" size="(min-width: 1024px) 50vw, 100vw" loading="lazy"  />
-                            {/* <Image alt="v1677658638/website/page/home/Re%CC%81sultat.webp" className="Sliderstyles__Image-sc-jd0rgd-7 kCpYFv" loading="lazy" src="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto/v1677658638/website/page/home/Re%CC%81sultat.webp" /> */}
-                          </picture>
-                          {/* <picture>
-                            <source type="image/webp" srcSet="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_320/v1677668879/website/page/home/BlocCourtier-3.webp 320w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_375/v1677668879/website/page/home/BlocCourtier-3.webp 375w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_425/v1677668879/website/page/home/BlocCourtier-3.webp 425w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_768/v1677668879/website/page/home/BlocCourtier-3.webp 768w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_1024/v1677668879/website/page/home/BlocCourtier-3.webp 1024w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,f_webp,w_1240/v1677668879/website/page/home/BlocCourtier-3.webp 1240w" />
-                            <source srcSet="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_320/v1677668879/website/page/home/BlocCourtier-3.webp 320w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_375/v1677668879/website/page/home/BlocCourtier-3.webp 375w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_425/v1677668879/website/page/home/BlocCourtier-3.webp 425w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_768/v1677668879/website/page/home/BlocCourtier-3.webp 768w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_1024/v1677668879/website/page/home/BlocCourtier-3.webp 1024w, https://res.cloudinary.com/wendogo-fr/image/upload/q_auto,w_1240/v1677668879/website/page/home/BlocCourtier-3.webp 1240w" />
-                            <Image alt="" size="(min-width: 1024px) 50vw, 100vw" loading="lazy" src="https://res.cloudinary.com/wendogo-fr/image/upload/q_auto/v1677668879/website/page/home/BlocCourtier-3.webp" className={"Images__Image-sc-2gr022-1 "+((countdown<15 && countdown>=10) ? bannerAnimationClassList[1] : "eXDVgd")} />
-                          </picture> */}
-                        </div>
-                      </div>
-                      <div className="Rtb__Container-sc-cimcdw-0 JbuWp Courtier__Rtb-sc-431mxx-1 iXwtOb">
-                        <nav className="Rtb__Progress-sc-cimcdw-2 eSCnlS">
-                          <span className={"Rtb__ProgressBar-sc-cimcdw-3 "+((countdown<5 || countdown===15) ? 'dctgrL' : 'dJqKes')}>
-                            {(countdown<5 || countdown===15) ? <span className="Rtb__ProgressBarProgress-sc-cimcdw-4 gwheai" /> : null}
+                        
+                        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 text-xs sm:text-sm text-blue-100 order-2 sm:order-none"> {/* ✅ Stack vertical mobile */}
+                          <span className="text-center sm:text-left">
+                            {totalResults} formation{totalResults > 1 ? 's' : ''} disponible{totalResults > 1 ? 's' : ''}
                           </span>
-                          <span className={"Rtb__ProgressBar-sc-cimcdw-3 "+((countdown<10 && countdown>=5) ? 'dctgrL' : ((countdown<15 && countdown>=10) ? 'dJqKes' : 'lahlbf'))}>
-                            {(countdown<10 && countdown>=5) ? <span className="Rtb__ProgressBarProgress-sc-cimcdw-4 gwheai" /> : null}
+                          <span className="text-center sm:text-left text-blue-200/80">(écoles privées)</span>
+                          <span className="bg-orange-500/20 border border-orange-400/30 text-orange-200 px-2 py-1 rounded-full text-xs font-medium backdrop-blur-sm mx-auto sm:mx-0 w-fit">
+                            BÊTA
                           </span>
-                          <span className={"Rtb__ProgressBar-sc-cimcdw-3 "+((countdown<15 && countdown>=10)? 'dctgrL' : 'lahlbf')}>
-                            {(countdown<15 && countdown>=10) ? <span className="Rtb__ProgressBarProgress-sc-cimcdw-4 gwheai" /> : null}
-                          </span>
-                        </nav>
-                        <div className="Rtb__Blocs-sc-cimcdw-1 bEvzQi">
-                          <div className={"Bloc__Container-sc-abnssq-0 Rtb__Bloc-sc-cimcdw-5 kFnMN "+((countdown<5 || countdown===15) ? 'hCSAAW' : 'KNmFf')}>
-                            {((countdown<5 || countdown===15) || browserWidth>=1024) ?   <><div className="Bloc__CheckContainer-sc-abnssq-1 hlJPnb">
-                              <svg xmlns="http://www.w3.org/2000/svg" width={16} height={16} viewBox="0 0 16 16" fill="currentColor" className="Bloc__Check-sc-abnssq-2 ycIsS">
-                                <path d="M5.8,11.6l8-8.29,1.44,1.38L5.88,14.4.32,9.23,1.68,7.77Z" fillRule="evenodd" />
-                              </svg>
-                            </div>
-                            <p className="Bloc__Description-sc-abnssq-3 iYfojT"> Des conseillers régulièrement formés aux dernières réglementations en vigueur et spécialisés par type de projet. </p>
-                            </> : null}
-                          </div>
-                          <div className={"Bloc__Container-sc-abnssq-0 Rtb__Bloc-sc-cimcdw-5 kFnMN "+((countdown<10 && countdown>=5) ? 'hCSAAW' : ((countdown<15 && countdown>=10) ? 'KNmFf' : 'cSHAph'))}>
-                            {((countdown<10 && countdown>=5) || browserWidth>=1024) ?   <><div className={"Bloc__CheckContainer-sc-abnssq-1 "+((countdown<10 && countdown>=5) || (countdown<15 && countdown>=10)? 'hlJPnb' : 'kPeKBa')}>
-                              <svg xmlns="http://www.w3.org/2000/svg" width={16} height={16} viewBox="0 0 16 16" fill="currentColor" className="Bloc__Check-sc-abnssq-2 ycIsS">
-                                <path d="M5.8,11.6l8-8.29,1.44,1.38L5.88,14.4.32,9.23,1.68,7.77Z" fillRule="evenodd" />
-                              </svg>
-                            </div>
-                            <p className="Bloc__Description-sc-abnssq-3 iYfojT"> Derrière votre expert attitré, des outils puissants et toute une équipe qui œuvre pour votre projet. </p>
-                            </> : null}
-                          </div>
-                          <div className={"Bloc__Container-sc-abnssq-0 Rtb__Bloc-sc-cimcdw-5 kFnMN "+((countdown<15 && countdown>=10)? 'hCSAAW' : 'cSHAph')}>
-                            {((countdown<15 && countdown>=10) || browserWidth>=1024) ?   <><div className={"Bloc__CheckContainer-sc-abnssq-1 "+((countdown<15 && countdown>=10)? 'hlJPnb' : 'kPeKBa')}>
-                              <svg xmlns="http://www.w3.org/2000/svg" width={16} height={16} viewBox="0 0 16 16" fill="currentColor" className="Bloc__Check-sc-abnssq-2 ycIsS">
-                                <path d="M5.8,11.6l8-8.29,1.44,1.38L5.88,14.4.32,9.23,1.68,7.77Z" fillRule="evenodd" />
-                              </svg>
-                            </div>
-                            <p className="Bloc__Description-sc-abnssq-3 iYfojT"> Nos conseillers engagés sont à votre écoute et toujours joignables (SMS, email et téléphone). </p>
-                            </> : null}
-                          </div>
-                        </div>
-                      </div>
-                    </section>
-                    <div className="Footer__Container-sc-1adny8q-0 fThLJG styles__Footer-sc-kz84w6-4 icxpqI ehfzoi">
-                        <div className="Banner__Container-sc-yqcec5-0 TiNYc Footer__Header-sc-1adny8q-1 BGhzp">
-                          <div className="Banner__ImageContainer-sc-yqcec5-1 dwrjaK">
-                          <picture>
-                            {/* <source type="image/webp" sizes="(min-width: 1240px) 288px, (min-width: 1024px) 25vw, (min-width: 768px) 37.5vw, 100vw" srcSet={WorldNoBorders} />
-                            <source sizes="(min-width: 1240px) 288px, (min-width: 1024px) 25vw, (min-width: 768px) 37.5vw, 100vw"  srcSet={WorldNoBorders} /> */}
-                            <Image className="Banner__Image-sc-yqcec5-2 kHAXoZ" alt="v1677669144/website/page/home/BlocFooter.webp" loading="lazy" src={WorldNoBorders}/>
-                          </picture>
-                        </div>
-                        <div className="Banner__Content-sc-yqcec5-3 hKeCKQ">
-                          <div className="Banner__Title-sc-yqcec5-4 zDQmH"> Notre objectif - Créer un monde sans frontières ! <br/>
-                          <span className="BlocOutils__Transparency-sc-10c9hjh-2 jXRqut">Chacun mérite de se sentir libre et de voyager où il veut !</span>
-                          </div>
-                          <div className="Banner__ButtonContainer-sc-yqcec5-5 dGDyrc">
-                            <button className="PrimaryButton__Container-sc-1vkvp7q-0 iroZSn Banner__Cta-sc-yqcec5-6 EFrbM">
-                              <span className="PrimaryButton__Overlay-sc-1vkvp7q-3 sSEIO">
-                                <span className="PrimaryButton__OverlayBackground-sc-1vkvp7q-4 kxNCsz">
-                                  <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="PrimaryButton__Arrow-sc-1vkvp7q-1 crhpBB">
-                                    <path d="M20.7454 14.8908L17.1664 11.3187L18.7381 9.75L25 16L18.7381 22.25L17.1664 20.6813L20.7454 17.1092H7V14.8908H20.7454Z" />
-                                  </svg>
-                                </span>
-                              </span>
-                              <a href='/simulation/home' >
-                                <span className="PrimaryButton__Label-sc-1vkvp7q-2 kVCvkJ"> Je me lance </span>
-                              </a>
-                            </button>
-                            <p className="Banner__Caption-sc-yqcec5-7 elCGHz"> En 3 minutes, sans inscription&nbsp;! </p>
-                          </div>
                         </div>
                       </div>
                     </div>
-                  </main>
-                  <FloatingWhatsApp phoneNumber="330668156073" accountName="Wendogo" avatar="/social_media_logo.webp" statusMessage="Répond en général dans l'heure" 
-                        chatMessage={'Salut toi 🤝 \nPour une assistance rapide, suis ces étapes simples :\n1. Présente-toi brièvement.\n2. Indique l\'objet de ton message \n3. Décris ton problème de manière claire et détaillée 😉.'}
-                        placeholder={"Racontes nous ce qui te préoccupe"} chatboxHeight={500} CSSProperties={{color:'#001435'}}/>
-                  <Footer/>
-                </section>
-            </div>           
-          </div> </>
-  )
+                  </div>
+                </>
+              ) } 
+              {activeTab === 'accompany' && (
+                <>
+                  <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold text-white mb-4 leading-tight">
+                    Accompagnement personnalisé
+                  </h1>
+                  <p className="text-lg sm:text-xl text-blue-100 mb-8 max-w-3xl mx-auto">
+                    Laissez nos experts vous guider vers la formation parfaite selon votre profil et vos objectifs.
+                  </p>
+                </>
+              )}
+              {activeTab === 'organizations' && (
+                <>
+                  <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold text-white mb-4 leading-tight">
+                    Partenaires & Organismes
+                  </h1>
+                  <p className="text-lg sm:text-xl text-blue-100 mb-8 max-w-3xl mx-auto">
+                    Vous représentez une école, une université, un organisme de formation ou une entreprise ? Rejoignez notre réseau de partenaires et donnez plus de visibilité à vos formations.
+                  </p>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
 
-}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
+        {activeTab === 'search' && 
+          <>
+            {/* Sélection par domaines (affichage initial) */}
+            <FadeTransition show={!showResults && !selectedDomain && !showFilters}>
+              <div className="mb-12">
+                <div className="text-center mb-8">
+                  <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
+                    Découvrez les formations par domaine
+                  </h2>
+                  <p className="text-gray-600 text-lg">
+                    Cliquez sur un domaine pour explorer les spécialisations disponibles
+                  </p>
+                </div>
 
-export default HomePage
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+                  {/* CORRECTION: Utiliser les données de l'état au lieu de getDomainsWithIcons() */}
+                  {domains.map((domain) => (
+                    <button
+                      key={domain.id}
+                      onClick={() => {
+                        setSelectedDomain(domain.id);
+                        setSelectedSubdomains([]);
+                        const domainSubdomains = getSubdomainsByDomainSync(domain.id, domains);
+                        setSelectedDomainFilters(new Set([domain.id]));
+                        setSelectedSubdomainFilters(new Set(domainSubdomains.map(sd => sd.id)));
+                      }}
+                      className="bg-white rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 group text-center"
+                    >
+                      <div className="text-4xl mb-3 group-hover:scale-110 transition-transform">
+                        {DomainApi.getIconForDomain(domain.name)}
+                      </div>
+                      <h3 className="font-semibold text-gray-900 text-sm leading-tight">
+                        {domain.name}
+                      </h3>
+                      {/* NOUVEAU: Afficher le nombre de programmes */}
+                      <div className="text-xs text-gray-500 mt-2">
+                        {domain.total_programs || 0} formation{(domain.total_programs || 0) > 1 ? 's' : ''}
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </FadeTransition>
+
+            {/* Sélection des sous-domaines */}
+            <FadeTransition show={selectedDomain && !showResults}>
+              <div className="mb-8">
+                <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6">
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center gap-3">
+                      <button
+                        onClick={() => setSelectedDomain(null)}
+                        className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                      >
+                        ←
+                      </button>
+                      <h2 className="text-xl font-bold text-gray-900">
+                        Spécialisations en {getDomainNameSync(selectedDomain, domains)}
+                      </h2>
+                    </div>
+                    <button
+                      onClick={() => {
+                        if (selectedSubdomains.length > 0) {
+                          setShowResults(true);
+                          // ✅ Déclencher la recherche avec les sous-domaines sélectionnés
+                          setSelectedSubdomainFilters(new Set(selectedSubdomains));
+                          handleSearch(); // ✅ Appeler handleSearch après avoir mis à jour les filtres
+                        }
+                      }}
+                      disabled={selectedSubdomains.length === 0}
+                      className={`px-6 py-2 rounded-lg font-semibold transition-colors ${
+                        selectedSubdomains.length > 0
+                          ? 'bg-blue-600 text-white hover:bg-blue-700'
+                          : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                      }`}
+                    >
+                      Voir les formations ({programCountForSelected || 0})
+                    </button>
+                  </div>
+
+                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                    {/* Filtrer pour ne montrer que les sous-domaines avec des programmes */}
+                    {getSubdomainsByDomainSync(selectedDomain, domains).map((subdomain) => (
+                      <button
+                        key={subdomain.id}
+                        onClick={() => {
+                          const newSelected = selectedSubdomains.includes(subdomain.id)
+                            ? selectedSubdomains.filter(id => id !== subdomain.id)
+                            : [...selectedSubdomains, subdomain.id];
+                          setSelectedSubdomains(newSelected);
+                          
+                          setSelectedSubdomainFilters(new Set(newSelected));
+                          if (newSelected.length === 0) {
+                            setSelectedDomainFilters(new Set());
+                          } else {
+                            setSelectedDomainFilters(new Set([selectedDomain]));
+                          }
+                        }}
+                        className={`p-3 rounded-lg border-2 transition-all duration-200 text-sm font-medium ${
+                          selectedSubdomains.includes(subdomain.id)
+                            ? 'border-blue-500 bg-blue-50 text-blue-700'
+                            : 'border-gray-200 bg-white text-gray-700 hover:border-blue-300 hover:bg-blue-50'
+                        }`}
+                      >
+                        <div className="flex items-center justify-between gap-2">
+                          <div className="flex items-center gap-2">
+                            {selectedSubdomains.includes(subdomain.id) && (
+                              <Check className="w-4 h-4 text-blue-600" />
+                            )}
+                            <span>{subdomain.name}</span>
+                          </div>
+                          {/* NOUVEAU: Afficher le nombre de programmes par sous-domaine */}
+                          <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
+                            {subdomain.program_count || 0}
+                          </span>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                  
+                  {/* Message si aucun sous-domaine disponible */}
+                  {getSubdomainsByDomainSync(selectedDomain, domains).length === 0 && (
+                    <div className="text-center py-8">
+                      <p className="text-gray-500">Aucune formation disponible dans ce domaine pour le moment.</p>
+                      <button
+                        onClick={() => setSelectedDomain(null)}
+                        className="mt-4 text-blue-600 hover:text-blue-700 font-medium"
+                      >
+                        ← Retour aux domaines
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </FadeTransition>
+
+            {/* Panneau de filtres avancés */}
+            <FadeTransition show={showFilters}>
+              <div className="bg-white rounded-xl shadow-lg border border-gray-100 mb-4 sm:mb-8"> {/* ✅ Margin réduite mobile */}
+                <div className="p-4 sm:p-6 bg-gray-50 border-b border-gray-200"> {/* ✅ Padding réduit mobile */}
+                  <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">Filtres avancés</h3> {/* ✅ Taille titre responsive */}
+
+                  {/* {!filterOptionsLoaded && (
+                    <div className="p-3 sm:p-4 text-center text-gray-500 mb-3 sm:mb-4"> 
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600 mx-auto mb-2"></div>
+                      <p className="text-xs sm:text-sm">Chargement des options de filtres...</p>
+                    </div>
+                  )} */}
+
+                  {/* Section Domaines avec padding mobile optimisé */}
+                  <div className="mb-4 sm:mb-6 p-3 sm:p-4 bg-white rounded-lg border border-gray-200"> {/* ✅ Padding responsive */}
+                    <label className="block text-sm font-medium text-gray-700 mb-2 sm:mb-3">
+                      <span className="flex items-center gap-2">
+                        🎯 Domaines d'étude et spécialisations
+                        {selectedSubdomainFilters.size > 0 && (
+                          <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs">
+                            {selectedSubdomainFilters.size} sélectionnée{selectedSubdomainFilters.size > 1 ? 's' : ''}
+                          </span>
+                        )}
+                      </span>
+                    </label>
+                    <DomainCheckboxDropdown />
+                    
+                    {/* Tags sélectionnés - optimisés mobile */}
+                    {selectedSubdomainFilters.size > 0 && (
+                      <div className="mt-2 sm:mt-3 flex flex-wrap gap-1 sm:gap-2"> {/* ✅ Gap réduit mobile */}
+                        {[...selectedSubdomainFilters].slice(0, 4).map(subdomainId => { {/* ✅ Moins de tags sur mobile */}
+                          const subdomain = subdomains.find(s => s.id === subdomainId);
+                          const subdomainName = subdomain ? subdomain.name : subdomainId;
+                          
+                          return (
+                            <span 
+                              key={subdomainId} 
+                              className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs flex items-center gap-1" 
+                            >
+                              <span className="truncate max-w-[120px] sm:max-w-none">{subdomainName}</span> {/* ✅ Truncate mobile */}
+                              <button
+                                onClick={() => {
+                                  const newSelected = new Set(selectedSubdomainFilters);
+                                  newSelected.delete(subdomainId);
+                                  setSelectedSubdomainFilters(newSelected);
+                                }}
+                                className="hover:text-blue-900 hover:bg-blue-200 rounded-full w-4 h-4 flex items-center justify-center text-xs"
+                              >
+                                ×
+                              </button>
+                            </span>
+                          );
+                        })}
+                        {selectedSubdomainFilters.size > 4 && (
+                          <span className="text-xs text-gray-500 py-1 px-2 bg-gray-100 rounded-full">
+                            +{selectedSubdomainFilters.size - 4} autres
+                          </span>
+                        )}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Grille de filtres - responsive */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4"> {/* ✅ 1 colonne mobile */}
+                    
+                    {/* Niveau d'entrée */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Niveau d'entrée
+                      </label>
+                      <select
+                        value={filters.entryLevel}
+                        onChange={(e) => setFilters({...filters, entryLevel: e.target.value, language: ''})}
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500" 
+                      >
+                        <option value="">Tous niveaux</option>
+                        {filterOptions.entry_levels.map(level => (
+                          <option key={level} value={level}>{level}</option>
+                        ))}
+                      </select>
+                    </div>
+
+                    {/* Type de grade/diplôme */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Type de grade/diplôme
+                      </label>
+                      <select
+                        value={filters.grade}
+                        onChange={(e) => setFilters({...filters, grade: e.target.value})}
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500"
+                      >
+                        <option value="">Tous diplômes</option>
+                        {filterOptions.grades.map(grade => (
+                          <option key={grade} value={grade}>{grade}</option>
+                        ))}
+                      </select>
+                    </div>
+
+                    {/* Durée */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Durée
+                      </label>
+                      <select
+                        value={filters.duration}
+                        onChange={(e) => setFilters({...filters, duration: e.target.value})}
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500"
+                      >
+                        <option value="">Toutes durées</option>
+                        {filterOptions.durations.map(duration => (
+                          <option key={duration} value={duration}>{duration}</option>
+                        ))}
+                      </select>
+                    </div>
+
+                    {/* Alternance */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Alternance
+                      </label>
+                      <select
+                        value={filters.alternance}
+                        onChange={(e) => setFilters({...filters, alternance: e.target.value})}
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500"
+                      >
+                        <option value="">Peu importe</option>
+                        <option value="true">Oui</option>
+                        <option value="false">Non</option>
+                      </select>
+                    </div>
+
+                    {/* Ville */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Ville
+                      </label>
+                      <SearchableDropdown
+                        options={['Toutes villes', ...filterOptions.cities]}
+                        value={filters.city}
+                        onChange={(value) => {
+                          const cityValue = value === 'Toutes villes' ? '' : value;
+                          setFilters({...filters, city: cityValue});
+                        }}
+                        placeholder="Toutes villes"
+                        searchValue={citySearch}
+                        onSearchChange={setCitySearch}
+                        showDropdown={showCityDropdown}
+                        setShowDropdown={setShowCityDropdown}
+                        dropdownRef={cityDropdownRef}
+                      />
+                    </div>
+
+                    {/* Langue d'enseignement */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Langue d'enseignement
+                      </label>
+                      <select
+                        value={filters.language}
+                        onChange={(e) => setFilters({...filters, language: e.target.value})}
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500"
+                      >
+                        <option value="">Toutes langues</option>
+                        {filterOptions.languages.map(lang => (
+                          <option key={lang} value={lang}>
+                            {ProgramApi.formatLanguageLevels(lang)}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    {/* Niveau RNCP */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Niveau RNCP
+                      </label>
+                      <select
+                        value={filters.rncpLevel}
+                        onChange={(e) => setFilters({...filters, rncpLevel: e.target.value})}
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500"
+                      >
+                        <option value="">Tous niveaux</option>
+                        {filterOptions.rncp_levels.map(level => (
+                          <option key={level} value={level}>Niveau {level}</option>
+                        ))}
+                      </select>
+                    </div>
+
+                    {/* Dates de candidature */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Dates de candidature
+                      </label>
+                      <select
+                        value={filters.applicationDate}
+                        onChange={(e) => setFilters({...filters, applicationDate: e.target.value})}
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500"
+                      >
+                        <option value="">Toutes périodes</option>
+                        {filterOptions.application_dates.map(date => (
+                          <option key={date} value={date}>{date}</option>
+                        ))}
+                      </select>
+                    </div>
+
+                    {/* Frais de scolarité - mobile optimisé */}
+                    <div className="sm:col-span-2">
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Frais de scolarité (€/an)
+                      </label>
+                      <div className="flex gap-2">
+                        <input
+                          type="number"
+                          placeholder="Min"
+                          value={filters.tuition.min}
+                          onChange={(e) => setFilters({
+                            ...filters, 
+                            tuition: {...filters.tuition, min: e.target.value}
+                          })}
+                          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500"
+                        />
+                        <input
+                          type="number"
+                          placeholder="Max"
+                          value={filters.tuition.max}
+                          onChange={(e) => setFilters({
+                            ...filters, 
+                            tuition: {...filters.tuition, max: e.target.value}
+                          })}
+                          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Acompte - mobile optimisé */}
+                    <div className="sm:col-span-2">
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Acompte (€)
+                      </label>
+                      <div className="flex gap-2">
+                        <input
+                          type="number"
+                          placeholder="Min"
+                          value={filters.deposit.min}
+                          onChange={(e) => setFilters({
+                            ...filters, 
+                            deposit: {...filters.deposit, min: e.target.value}
+                          })}
+                          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500"
+                        />
+                        <input
+                          type="number"
+                          placeholder="Max"
+                          value={filters.deposit.max}
+                          onChange={(e) => setFilters({
+                            ...filters, 
+                            deposit: {...filters.deposit, max: e.target.value}
+                          })}
+                          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Boutons d'action - mobile optimisé */}
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-2 mt-4 sm:mt-6"> {/* ✅ Stack vertical mobile */}
+                    <button
+                        onClick={() => {
+                          // ✅ ANCIEN CODE (incomplet)
+                          // setFilters({
+                          //   entryLevel: '', grade: '', diplomaType: '', duration: '',
+                          //   deposit: { min: '', max: '' }, applicationDate: '',
+                          //   tuition: { min: '', max: '' }, alternance: '', city: '',
+                          //   domains: [], language: '', rncpLevel: ''
+                          // });
+
+                          // ✅ NOUVEAU CODE (complet)
+                          // 1. Réinitialiser TOUS les filtres
+                          setFilters({
+                            entryLevel: '', 
+                            grade: '', 
+                            diplomaType: '', 
+                            duration: '',
+                            deposit: { min: '', max: '' }, 
+                            applicationDate: '',
+                            tuition: { min: '', max: '' }, 
+                            alternance: '', 
+                            city: '',
+                            domains: [], 
+                            language: '', 
+                            rncpLevel: ''
+                          });
+
+                          // 2. ✅ RÉINITIALISER les recherches de dropdowns
+                          setCitySearch('');
+                          setDomainSearch('');
+
+                          // 3. ✅ RÉINITIALISER les sélections de domaines/sous-domaines
+                          setSelectedDomain(null);
+                          setSelectedSubdomains([]);
+                          setSelectedDomainFilters(new Set());
+                          setSelectedSubdomainFilters(new Set());
+
+                          // 4. ✅ RÉINITIALISER la recherche textuelle
+                          setSearchQuery('');
+                          setSuggestions([]);
+                          setShowSuggestions(false);
+
+                          // 5. ✅ RÉINITIALISER les résultats et l'affichage
+                          setSearchResults([]);
+                          setTotalResults(0);
+                          setShowResults(false);
+                          setCurrentPage(1);
+
+                          // 6. ✅ FERMER le panneau de filtres
+                          setShowFilters(false);
+
+                          // 7. ✅ OPTIONNEL : Afficher notification de succès
+                          console.log('🔄 Tous les filtres ont été réinitialisés');
+                          
+                          // Si vous avez le système de notifications :
+                          // setToast({
+                          //   show: true,
+                          //   message: 'Filtres réinitialisés',
+                          //   type: 'info'
+                          // });
+                        }}
+                        className="w-full sm:w-auto px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-sm"
+                      >
+                        Réinitialiser
+                    </button>
+                    
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => {
+                          setShowFilters(false);
+                          if (!showResults && !searchQuery.trim()) {
+                            setShowResults(false);
+                          }
+                        }}
+                        className="flex-1 sm:flex-none px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-sm"
+                      >
+                        Fermer filtres
+                      </button>
+                      <button
+                        onClick={() => {
+                          console.log('🔵 Appliquer button clicked');
+                          setShowResults(true);
+                          handleSearch(null, true); // ✅ RESTAURER : forceSearch = true
+                        }}
+                        className="flex-1 sm:flex-none px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+                      >
+                        Appliquer les filtres
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </FadeTransition>
+
+            {/* Résultats */}
+            <FadeTransition show={showResults}>
+              <div className="animate-fade-in">
+                  {/* Compteur de résultats */}
+                  <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <p className="text-slate-600 text-sm">
+                      {totalResults} formation{totalResults > 1 ? 's' : ''} trouvée{totalResults > 1 ? 's' : ''}
+                      {searchQuery && (
+                        <span> pour "<strong>{searchQuery}</strong>"</span>
+                      )}
+                    </p>
+                    
+                    {/* Pagination desktop */}
+                    <div className="hidden md:block">
+                      <Pagination />
+                    </div>
+                  </div>
+
+                  {/* Grille des résultats */}
+                  {isSearching && currentPage === 1 ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {[...Array(6)].map((_, i) => (
+                        <div key={i} className="bg-white rounded-xl shadow-md border border-gray-100 p-6 animate-pulse">
+                          <div className="h-4 bg-gray-200 rounded mb-4"></div>
+                          <div className="h-6 bg-gray-200 rounded mb-2"></div>
+                          <div className="h-4 bg-gray-200 rounded mb-4"></div>
+                          <div className="h-20 bg-gray-200 rounded"></div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : searchResults.length === 0 ? (
+                    <div className="text-center py-12">
+                      <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 max-w-md mx-auto">
+                        <Search className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                        <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                          {totalResults === 0 ? 'Aucune formation trouvée' : 'Chargement...'}
+                        </h3>
+                        <p className="text-gray-600 mb-4">
+                          {selectedSubdomainFilters.size > 0 || selectedSubdomains.length > 0 ? 
+                            'Aucune formation ne correspond à vos critères dans les domaines sélectionnés.' :
+                            'Aucune formation ne correspond à vos critères. Essayez de modifier vos filtres.'
+                          }
+                        </p>
+                        <div className="space-y-2">
+                          <button
+                            onClick={() => {
+                              console.log('🔵 Voir toutes button clicked');
+                              // Reset tous les filtres
+                              setSearchQuery('');
+                              setFilters({
+                                entryLevel: '', grade: '', diplomaType: '', duration: '',
+                                deposit: { min: '', max: '' }, applicationDate: '',
+                                tuition: { min: '', max: '' }, alternance: '', city: '',
+                                domains: [], language: '', rncpLevel: ''
+                              });
+                              setSelectedDomain(null);
+                              setSelectedSubdomains([]);
+                              setSelectedDomainFilters(new Set());
+                              setSelectedSubdomainFilters(new Set());
+                              
+                              // ✅ Forcer la recherche pour TOUTES les formations
+                              setShowResults(true);
+                              setTimeout(() => {
+                                handleSearch('', true); // ✅ forceSearch = true, query vide
+                              }, 100);
+                            }}
+                            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors mr-2"
+                          >
+                            Voir toutes les formations
+                          </button>
+                          <button
+                            onClick={() => {
+                              setSearchQuery('');
+                              setFilters({
+                                entryLevel: '', grade: '', diplomaType: '', duration: '',
+                                deposit: { min: '', max: '' }, applicationDate: '',
+                                tuition: { min: '', max: '' }, alternance: '', city: '',
+                                domains: [], language: '', rncpLevel: ''
+                              });
+                              setSelectedDomain(null);
+                              setSelectedSubdomains([]);
+                              setSelectedDomainFilters(new Set());
+                              setSelectedSubdomainFilters(new Set());
+                              setShowResults(false);
+                              setShowFilters(false);
+                            }}
+                            className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors"
+                          >
+                            Nouvelle recherche
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <>
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {searchResults.map((program) => (
+                          <ProgramCard key={program.id} program={program} />
+                        ))}
+                      </div>
+                      
+                      {/* Pagination en bas */}
+                      <div className="mt-8">
+                        <Pagination />
+                      </div>
+                    </>
+                  )}
+              </div>
+            </FadeTransition>
+          </>
+        } 
+        {activeTab === 'accompany' && (
+          <AccompanySection />
+        )}
+        {activeTab === 'organizations' && (
+          <OrganizationContactSection />
+        )}
+      </div>
+
+
+      {/* Statistiques en bas */}
+      <div className="bg-gradient-to-r from-gray-900 to-blue-900 text-white py-12 mt-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div>
+              <div className="text-3xl font-bold text-yellow-400 mb-2">{globalStats.total_programs.toLocaleString()}+</div>
+              <div className="text-blue-200">Formations</div>
+            </div>
+            <div>
+              <div className="text-3xl font-bold text-yellow-400 mb-2">{globalStats.total_schools.toLocaleString()}+</div>
+              <div className="text-blue-200">Écoles</div>
+            </div>
+            <div>
+              <div className="text-3xl font-bold text-yellow-400 mb-2">95%</div>
+              <div className="text-blue-200">Taux de satisfaction</div>
+            </div>
+            <div>
+              <div className="text-3xl font-bold text-yellow-400 mb-2">24/7</div>
+              <div className="text-blue-200">Support disponible</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <Footer/>
+    </div>
+    </>
+  );
+};
+
+export default HomePage;

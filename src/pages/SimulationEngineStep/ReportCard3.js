@@ -56,7 +56,7 @@ const ReportCard3 = () => {
                 mark: { value: '', validated: true },
                 rank: { value: '', validated: true }
             };
-
+            //alert('ReportCard3 initializeData AAA '+user?.reportCard3?.length);
             setSubjectStates(Array(periods).fill(initialSubjectState));
             setSubjectLists((user?.reportCard3?.length === periods ? user?.reportCard3 : Array(periods).fill([])) || Array(periods).fill([]));
             setReferenceIncs(Array(periods).fill(0));

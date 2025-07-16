@@ -1,18 +1,52 @@
-// src/pages/schools/[slug].js - Version Mobile-First Responsive
+// src/pages/schools/[slug].js - Version mise à jour avec nouvelles données CSV
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { MapPin, Users, Globe, Award, ExternalLink, Facebook, Twitter, Linkedin, Instagram, Shield, CheckCircle, ChevronDown, ChevronUp, Phone, Mail, Star, Building, GraduationCap, Menu, X } from 'lucide-react';
+import { MapPin, Users, Globe, Award, ExternalLink, Facebook, Twitter, Linkedin, Instagram, Shield, CheckCircle, ChevronDown, ChevronUp, Phone, Mail, Star, Building, GraduationCap, Menu, X, AlertTriangle } from 'lucide-react';
 import PrivateSchoolApi from '../../store/apis/privateSchoolApi';
 import ProgramApi from '../../store/apis/programApi';
+import SubdomainApi from '../../store/apis/subdomainApi';
 import OptimizedImage from '../../components/OptimizedImage';
+import Footer from '../../components/Footer';
+import NavBar from '../../components/NavBar';
+import HeaderMenuBar from '../../components/HeaderMenuBar';
+import { getSubdomainNamesSync } from '../../utils/apiUtils';
+import { LinkWithLoading, FadeTransition } from '../../components/ui';
+import RocketLoader from '../../components/ui/RocketLoader';
+import { trackSchoolView } from '../../lib/gtag';
 
 const SchoolPage = ({ school, programs, similarSchools, error }) => {
   const router = useRouter();
-  const [expandedSections, setExpandedSections] = useState(new Set(['presentation'])); // Permet plusieurs sections ouvertes
+  const [expandedSections, setExpandedSections] = useState(new Set(['presentation']));
   const [showAllPrograms, setShowAllPrograms] = useState(false);
+  const [subdomains, setSubdomains] = useState([]);
+  const [subdomainsLoaded, setSubdomainsLoaded] = useState(false);
+
+  console.log('Écoles similaires (côté client):', similarSchools);
+
+  useEffect(() => {
+    if (school) {
+      trackSchoolView(school.slug, school.name);
+    }
+  }, [school]);
+  
+  useEffect(() => {
+    const loadSubdomains = async () => {
+      try {
+        const response = await SubdomainApi.getAllSubdomains();
+        if (response.success) {
+          setSubdomains(response.data);
+        }
+      } catch (error) {
+        console.error('Erreur lors du chargement des sous-domaines:', error);
+      } finally {
+        setSubdomainsLoaded(true);
+      }
+    };
+
+    loadSubdomains();
+  }, []);  
 
   // Gérer le cas d'erreur
   if (error) {
@@ -21,9 +55,9 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
         <div className="text-center max-w-md">
           <h1 className="text-xl font-bold text-gray-900 mb-4">École non trouvée</h1>
           <p className="text-gray-600 mb-6 text-sm">{error}</p>
-          <Link href="/schools" className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm">
+          <LinkWithLoading href="/schools" className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm">
             Retour aux écoles
-          </Link>
+          </LinkWithLoading>
         </div>
       </div>
     );
@@ -32,16 +66,19 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
   // Loading state
   if (router.isFallback) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600 text-sm">Chargement...</p>
-        </div>
+      // <div className="min-h-screen flex items-center justify-center p-4">
+      //   <div className="text-center">
+      //     <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto"></div>
+      //     <p className="mt-4 text-gray-600 text-sm">Chargement...</p>
+      //   </div>
+      // </div>
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 flex items-center justify-center">
+        <RocketLoader />
       </div>
     );
   }
 
-  // Fonction pour toggle les sections FAQ (permet plusieurs ouvertes)
+  // Fonction pour toggle les sections FAQ
   const toggleSection = (section) => {
     const newExpandedSections = new Set(expandedSections);
     if (newExpandedSections.has(section)) {
@@ -50,6 +87,35 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
       newExpandedSections.add(section);
     }
     setExpandedSections(newExpandedSections);
+  };
+
+  // Fonction pour formater le numéro de téléphone
+  const formatPhoneNumber = (phone) => {
+    if (!phone) return '';
+    // Si le numéro commence déjà par +33, ne rien faire
+    if (phone.startsWith('+33')) return phone;
+    // Si c'est un numéro français (commence par 0), remplacer par +33
+    if (phone.startsWith('0')) {
+      return '+33 ' + phone.substring(1);
+    }
+    return phone;
+  };
+
+  // Fonction pour parser l'email (peut être email, URL, ou email|url)
+  const parseContactEmail = (emailField) => {
+    if (!emailField) return { email: null, url: null };
+    
+    if (emailField.includes('|')) {
+      // Forme 3: email|url
+      const [email, url] = emailField.split('|').map(s => s.trim());
+      return { email, url };
+    } else if (emailField.startsWith('http')) {
+      // Forme 2: URL seulement
+      return { email: null, url: emailField };
+    } else {
+      // Forme 1: Email seulement
+      return { email: emailField, url: null };
+    }
   };
 
   // Widget des programmes avec pagination
@@ -67,123 +133,121 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
 
     return (
       <div className="space-y-3">
-        <div className="flex items-center justify-between">
-          <h4 className="font-bold text-slate-800 text-sm sm:text-base flex items-center gap-2">
-            <GraduationCap className="w-4 h-4 text-blue-600" />
-            Programmes disponibles ({programs.length})
-          </h4>
-          {programs.length > 3 && (
-            <button
-              onClick={() => setShowAllPrograms(!showAllPrograms)}
-              className="text-blue-600 hover:text-blue-700 text-xs font-medium"
-            >
-              {showAllPrograms ? 'Voir moins' : `Voir tous (${programs.length})`}
-            </button>
-          )}
-        </div>
-        
-        <div className="space-y-2">
-          {displayedPrograms.map((program) => (
-            <Link key={program.id} href={"/programs/" + program.slug}>
-              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-3 border border-blue-200 hover:shadow-md transition-all duration-200 cursor-pointer group">
-                <div className="flex items-start justify-between gap-3">
-                  <div className="flex-1 min-w-0">
-                    <h5 className="font-semibold text-blue-800 text-sm leading-tight group-hover:text-blue-900 transition-colors">
-                      {program.title}
-                    </h5>
-                    <div className="flex flex-wrap items-center gap-2 mt-1">
-                      <span className="bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full text-xs font-medium">
-                        {program.grade}
-                      </span>
-                      <span className="text-blue-600 text-xs">•</span>
-                      <span className="text-blue-600 text-xs">{program.fi_school_duration}</span>
-                      <span className="text-blue-600 text-xs">•</span>
-                      <span className="text-blue-600 text-xs font-medium">{program.fi_annual_tuition_fee}/an</span>
-                      {program.alternance_possible && (
-                        <>
-                          <span className="text-blue-600 text-xs">•</span>
-                          <span className="bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full text-xs font-medium">
-                            Alternance
-                          </span>
-                        </>
-                      )}
-                    </div>
-                  </div>
-                  <div className="flex-shrink-0">
-                    <div className="w-6 h-6 bg-blue-200 rounded-full flex items-center justify-center group-hover:bg-blue-300 transition-colors">
-                      <ChevronUp className="w-3 h-3 text-blue-600 transform rotate-45" />
-                    </div>
-                  </div>
-                </div>
-                
-                {/* Preview des compétences sur les 3 premiers programmes */}
+
+      <div className="flex items-center justify-between">
+        <h4 className="font-bold text-slate-800 text-sm sm:text-base flex items-center gap-2">
+        <GraduationCap className="w-4 h-4 text-blue-600" />
+        Programmes disponibles ({programs.length})
+        </h4>
+        {programs.length > 3 && (
+        <button
+          onClick={() => setShowAllPrograms(!showAllPrograms)}
+          className="text-blue-600 hover:text-blue-700 text-xs font-medium"
+        >
+          {showAllPrograms ? 'Voir moins' : `Voir tous (${programs.length})`}
+        </button>
+        )}
+      </div>
+      
+      <div className="space-y-4">
+        {displayedPrograms.map((program) => (
+        <LinkWithLoading key={program.id} href={program.full_url_path || `/schools/${program.school_slug}/programs/${program.slug}`}   target="_blank" rel="noopener noreferrer">
+          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-4 border border-blue-200 hover:shadow-lg hover:border-blue-300 transition-all duration-300 cursor-pointer group">
+          <div className="flex items-start justify-between gap-3">
+            <div className="flex-1 min-w-0">
+            <h5 className="font-semibold text-blue-800 text-sm leading-tight group-hover:text-blue-900 transition-colors">
+              {program.title}
+            </h5>
+            <div className="flex flex-wrap items-center gap-2 mt-1">
+              <span className="bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full text-xs font-medium">
+              {program.state_certification_type_complement || program.state_certification_type_complement2}
+              </span>
+              <span className="text-blue-600 text-xs">•</span>
+              <span className="text-blue-600 text-xs">{program.fi_school_duration}</span>
+              <span className="text-blue-600 text-xs">•</span>
+              <span className="text-blue-600 text-xs font-medium">{PrivateSchoolApi.formatFee(program.tuition)}</span>
+              {program.alternance_possible && (
+              <>
+                <span className="text-blue-600 text-xs">•</span>
+                <span className="bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full text-xs font-medium">
+                Alternance
+                </span>
+              </>
+              )}
+            </div>
+            </div>
+            <div className="flex-shrink-0">
+            <div className="w-6 h-6 bg-blue-200 rounded-full flex items-center justify-center group-hover:bg-blue-300 transition-colors">
+              <ChevronUp className="w-3 h-3 text-blue-600 transform rotate-45" />
+            </div>
+            </div>
+          </div>
+                  {/* Preview des compétences sur les 3 premiers programmes */}
                 {programs.indexOf(program) < 3 && program.skills_acquired && (
                   <div className="mt-2 pt-2 border-t border-blue-200">
                     <div className="flex flex-wrap gap-1">
-                      {program.skills_acquired.split(', ').slice(0, 3).map((skill, index) => (
+                      {splitSkills(program.skills_acquired).slice(0, 4).map((skill, index) => (
                         <span key={index} className="bg-white/70 text-blue-700 px-1.5 py-0.5 rounded text-xs">
-                          {skill}
+                          {skill.charAt(0).toUpperCase() + skill.slice(1)}
                         </span>
                       ))}
-                      {program.skills_acquired.split(', ').length > 3 && (
-                        <span className="text-blue-600 text-xs">+{program.skills_acquired.split(', ').length - 3} autres</span>
+                      {splitSkills(program.skills_acquired).length > 4 && (
+                        <span className="text-blue-600 text-xs">+{splitSkills(program.skills_acquired).length - 4} autres</span>
                       )}
                     </div>
                   </div>
                 )}
-              </div>
-            </Link>
-          ))}
+          </div>
+        </LinkWithLoading>
+        ))}
+      </div>
+      
+      {programs.length > 3 && !showAllPrograms && (
+        <div className="text-center">
+        <LinkWithLoading href={`/schools/${school.slug}/programs`}>
+          <button className="text-blue-600 hover:text-blue-700 font-medium text-sm bg-blue-50 hover:bg-blue-100 px-4 py-2 rounded-lg transition-colors">
+          Voir tous les {programs.length} programmes →
+          </button>
+        </LinkWithLoading>
         </div>
-        
-        {programs.length > 3 && !showAllPrograms && (
-          <div className="text-center">
-            <button
-              onClick={() => setShowAllPrograms(true)}
-              className="text-blue-600 hover:text-blue-700 font-medium text-sm bg-blue-50 hover:bg-blue-100 px-4 py-2 rounded-lg transition-colors"
-            >
-              Découvrir {programs.length - 3} autres programmes →
-            </button>
-          </div>
-        )}
-
-        {/* Filtres rapides pour les programmes */}
-        {programs.length > 5 && (
-          <div className="mt-4 p-3 bg-slate-50 rounded-lg">
-            <div className="text-xs font-semibold text-slate-700 mb-2">Filtres rapides :</div>
-            <div className="flex flex-wrap gap-2">
-              {/* Filtre par niveau */}
-              {[...new Set(programs.map(p => p.grade))].map((grade, index) => (
-                <button
-                  key={index}
-                  className="bg-white text-slate-600 hover:text-blue-600 hover:bg-blue-50 px-2 py-1 rounded text-xs border border-slate-200 transition-colors"
-                >
-                  {grade} ({programs.filter(p => p.grade === grade).length})
-                </button>
-              ))}
-              
-              {/* Filtre alternance */}
-              {programs.some(p => p.alternance_possible) && (
-                <button className="bg-purple-100 text-purple-700 hover:bg-purple-200 px-2 py-1 rounded text-xs border border-purple-200 transition-colors">
-                  Alternance ({programs.filter(p => p.alternance_possible).length})
-                </button>
-              )}
-            </div>
-          </div>
-        )}
+      )}
       </div>
     );
   };
 
+  function splitSkills(str) {
+    if (!str) return [];
+    const result = [];
+    let current = '';
+    let parenLevel = 0;
+    for (let i = 0; i < str.length; i++) {
+      const char = str[i];
+      if (char === '(') {
+        parenLevel++;
+        current += char;
+      } else if (char === ')') {
+        parenLevel = Math.max(0, parenLevel - 1);
+        current += char;
+      } else if (char === ',' && parenLevel === 0) {
+        result.push(current.trim());
+        current = '';
+      } else {
+        current += char;
+      }
+    }
+    if (current.trim()) result.push(current.trim().replace(/\./g, ''));
+    return result;
+  }
+
   // Génération du JSON-LD pour le SEO
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "EducationalOrganization",
+    "@type": "EducationalOrganization", 
     "name": school.name,
     "description": school.description,
     "url": school.url,
-    "logo": school.logo_url,
-    "image": school.cover_page_url,
+    "logo": school.logo_path,
+    "image": school.cover_page_path,
     "address": {
       "@type": "PostalAddress",
       "streetAddress": school.address,
@@ -192,12 +256,10 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
     },
     "contactPoint": {
       "@type": "ContactPoint",
-      "telephone": school.phone,
-      "email": school.email,
+      "telephone": formatPhoneNumber(school.phone),
+      "email": parseContactEmail(school.email).email,
       "contactType": "admissions"
     },
-    "foundingDate": school.founded_year,
-    "numberOfEmployees": school.teacher_count,
     "sameAs": [
       school.facebook_url,
       school.x_url,
@@ -206,83 +268,96 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
     ].filter(Boolean)
   };
 
-  // Points forts pour étudiants internationaux - Version mobile
+  // Points forts pour étudiants internationaux
   const internationalHighlights = [
     {
       icon: Shield,
       title: "Reconnaissances",
-      value: school.acknoledgement.split(', ').length + "+ accréditations",
-      description: "CTI, EUR-ACE, ParisTech...",
+      value: school?.acknoledgement?.split(', ').length + "+ accréditations",
+      description: school?.acknoledgement?.split(', ').slice(0, 3).join(', ') + '...',
       color: "from-blue-500 to-indigo-600"
     },
     {
       icon: Globe,
       title: "Campus France",
-      value: school.connection_campus_france ? "✓ Partenaire" : "Non partenaire",
-      description: "Procédures simplifiées",
+      value: school.connection_campus_france ? "✓ Connectée" : "Non Connectée",
+      description: school.connection_campus_france ? "Procédures simplifiées" : "Peut-être procédure parrallèle",
       color: "from-green-500 to-emerald-600"
     },
     {
       icon: Users,
       title: "International",
-      value: school.international_student_rate,
-      description: "Étudiants étrangers",
+      value: (() => {
+        const rate = school.international_student_rate || "";
+        const percentIdx = rate.indexOf("%");
+        return percentIdx !== -1 ? rate.substring(0, percentIdx + 1) : rate;
+      })(),
+      description: (() => {
+        const rate = school.international_student_rate || "";
+        const percentIdx = rate.indexOf("-");
+        return percentIdx !== -1
+          ? "Étudiants étrangers en " + rate.substring(percentIdx + 1).trim()
+          : "Étudiants étrangers";
+      })(),
       color: "from-purple-500 to-violet-600"
     }
   ];
 
+  // Parsing des contacts
+  const contactInfo = parseContactEmail(school.email);
+
   const faqSections = [
     {
       id: 'presentation',
-      title: school.name.length > 30 ? 'Qu\'est-ce que ' + school.name.substring(0, 20) + '... ?' : 'Qu\'est-ce que ' + school.name + ' ?',
+      title: 'À propos de l\'école',
       content: (
         <div className="space-y-4">
           <p className="text-slate-700 leading-relaxed text-sm sm:text-base">
-            <a href={school.url} className="text-blue-600 font-medium hover:text-blue-700" target="_blank" rel="noopener">
-              {school.name}
-            </a> {school.long_description || school.description}
-          </p>
-          <p className="text-slate-700 leading-relaxed text-sm sm:text-base">
-            L'établissement accueille plus de {school.student_count?.toLocaleString()} étudiants dont{' '}
-            <strong>{school.international_student_rate} d'étudiants internationaux</strong> {school.international_student_comment}.
+            {school.description}
           </p>
           
-          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-4 border border-blue-200">
-            <h4 className="font-bold text-blue-800 mb-3 flex items-center gap-2 text-sm sm:text-base">
-              <Award className="w-4 h-4" />
-              Reconnaissances internationales
-            </h4>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-              {school.acknoledgement.split(', ').map((acc, index) => (
-                <div key={index} className="flex items-center gap-2">
-                  <CheckCircle className="w-3 h-3 text-green-600 flex-shrink-0" />
-                  <span className="text-blue-700 font-medium text-xs sm:text-sm">{acc}</span>
-                </div>
-              ))}
+          {/* Commentaire sur les étudiants internationaux avec HTML */}
+          {school.international_student_comment && (
+            <p 
+              className="text-slate-700 leading-relaxed text-sm sm:text-base"
+              dangerouslySetInnerHTML={{ __html: school.international_student_comment }}
+            />
+          )}
+
+          {school.acknoledgement && school.acknoledgement.trim() !== "" && (
+            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-4 border border-blue-200">
+              <h4 className="font-bold text-blue-800 mb-3 flex items-center gap-2 text-sm sm:text-base">
+                <Award className="w-4 h-4" />
+                Reconnaissances et accréditations
+              </h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                {school?.acknoledgement?.split(', ').map((acc, index) => (
+                  <div key={index} className="flex items-center gap-2">
+                    <CheckCircle className="w-3 h-3 text-green-600 flex-shrink-0" />
+                    <span className="text-blue-700 font-medium text-xs sm:text-sm">{acc}</span>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-        </div>
-      )
-    },
-    {
-      id: 'access',
-      title: 'Comment venir à ' + school.base_city + ' ?',
-      content: (
-        <div className="space-y-3">
-          <p className="text-slate-700 leading-relaxed text-sm sm:text-base">
-            Le campus {school.name} est situé à {school.base_city}. L'école est facilement accessible 
-            en transports en commun et dispose de toutes les commodités nécessaires.
-          </p>
-          <div className="bg-green-50 rounded-lg p-3 border border-green-200">
-            <h4 className="font-semibold text-green-800 mb-2 text-sm">📍 Adresse complète</h4>
-            <p className="text-green-700 text-xs sm:text-sm">{school.address}</p>
-          </div>
-          <p className="text-slate-700 text-sm">
-            Pour plus d'informations sur l'accès, consultez le{' '}
-            <a href={school.url} className="text-blue-600 font-medium hover:text-blue-700" target="_blank" rel="noopener">
-              site officiel de l'école
-            </a>.
-          </p>
+          )}
+
+          {/* Rankings */}
+          {(school.national_ranking || school.international_ranking) && (
+            <div className="space-y-3">
+              {school.national_ranking && (
+                <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg p-3 border border-green-200">
+                  <h4 className="font-semibold text-green-800 mb-1 text-sm">🏆 Rayonnement national</h4>
+                  <p className="text-green-700 text-xs sm:text-sm">{school.national_ranking}</p>
+                </div>
+              )}
+              {school.international_ranking && (
+                <div className="bg-gradient-to-r from-orange-50 to-red-50 rounded-lg p-3 border border-orange-200">
+                  <h4 className="font-semibold text-orange-800 mb-1 text-sm">🌍 Rayonnement international</h4>
+                  <p className="text-orange-700 text-xs sm:text-sm">{school.international_ranking}</p>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       )
     },
@@ -292,19 +367,29 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
       content: (
         <div className="space-y-4">
           <p className="text-slate-700 leading-relaxed text-sm sm:text-base">
-            {school.name} propose <strong>{school.programs_count} programmes de formation</strong> reconnus internationalement dans les domaines suivants :
+            {school.name} propose des programmes de formation reconnus  dans les domaines suivants :
           </p>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {school.specialties?.map((specialty, index) => (
-              <div key={index} className="bg-white rounded-lg border border-slate-200 p-3">
-                <div className="flex items-center gap-2">
-                  <GraduationCap className="w-4 h-4 text-blue-600 flex-shrink-0" />
-                  <span className="font-medium text-slate-800 text-sm">{specialty}</span>
+          {/* Spécialités basées sur les sous-domaines des programmes */}
+          {programs.length > 0 && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {[...new Set(programs.flatMap(p => [p.sub_domain1, p.sub_domain2, p.sub_domain3].filter(Boolean)))].slice(0, 6).map((subdomainId, index) => (
+                <div key={index} className="bg-white rounded-lg border border-slate-200 p-3">
+                  <div className="flex items-center gap-2">
+                    <GraduationCap className="w-4 h-4 text-blue-600 flex-shrink-0" />
+                    <span className="font-medium text-slate-800 text-sm">
+                      {(() => {
+                        const subdomainNames = subdomainsLoaded 
+                          ? getSubdomainNamesSync([subdomainId], subdomains)
+                          : [subdomainId];
+                        return subdomainNames[0] || subdomainId;
+                      })()}
+                    </span>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
 
           {/* Widget des programmes */}
           <ProgramsWidget />
@@ -344,20 +429,18 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
             <div className="bg-white rounded-lg border border-slate-200 p-3">
               <h4 className="font-bold text-slate-800 mb-2 text-sm">Conditions générales</h4>
               <ul className="text-slate-600 text-xs space-y-1">
-                <li>• Diplôme reconnu du pays d'origine</li>
-                <li>• Niveau de langue requis selon programme</li>
-                <li>• Dossier académique complet</li>
-                <li>• Lettre de motivation</li>
+                {school.general_entry_requirements.split('-').map((req, index) => (
+                  <li key={index}>• {req.trim().charAt(0).toUpperCase() + req.trim().slice(1)}</li>
+                ))}
               </ul>
             </div>
             
             <div className="bg-white rounded-lg border border-slate-200 p-3">
               <h4 className="font-bold text-slate-800 mb-2 text-sm">Support international</h4>
               <ul className="text-slate-600 text-xs space-y-1">
-                <li>• Service d'accueil dédié</li>
-                <li>• Aide au logement</li>
-                <li>• Accompagnement administratif</li>
-                <li>• Parrainage étudiant</li>
+                {school.international_support_before_coming.split(',').map((support, index) => (
+                  <li key={index}>• {support.trim().charAt(0).toUpperCase()+ support.trim().slice(1)}</li>
+                ))}
               </ul>
             </div>
           </div>
@@ -369,10 +452,12 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
       title: 'Formations en alternance',
       content: (
         <div className="space-y-4">
-          <p className="text-slate-700 leading-relaxed text-sm sm:text-base">
-            {school.name} propose des formations en <strong>alternance</strong> avec un taux de {school.alternance_rate}. 
-            {school.alternance_comment}
-          </p>
+          <div 
+            className="text-slate-700 leading-relaxed text-sm sm:text-base"
+            dangerouslySetInnerHTML={{ 
+              __html: `${school.work_study_programs}` 
+            }}
+          />
           
           <div className="bg-gradient-to-r from-purple-50 to-violet-50 rounded-lg p-4 border border-purple-200">
             <h4 className="font-bold text-purple-800 mb-3 flex items-center gap-2 text-sm sm:text-base">
@@ -404,8 +489,7 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
       content: (
         <div className="space-y-4">
           <p className="text-slate-700 leading-relaxed text-sm sm:text-base">
-            Le campus de {school.name} offre un environnement d'études exceptionnel avec plus de {school.student_count} étudiants 
-            et {school.teacher_count} enseignants-chercheurs.
+            Le campus de {school.name} offre un environnement d'études exceptionnel avec des infrastructures modernes et un accompagnement personnalisé.
           </p>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -415,8 +499,8 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
                 Infrastructures
               </h4>
               <ul className="text-slate-600 space-y-1 text-xs">
-                {school.facilities?.map((facility, index) => (
-                  <li key={index}>• {facility}</li>
+                {school.facilities.split(', ').map((facility, index) => (
+                  <li key={index}>• {facility.trim().charAt(0).toUpperCase()+ facility.trim().slice(1).replace(/\./g, '')}</li>
                 ))}
               </ul>
             </div>
@@ -424,13 +508,15 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
             <div className="bg-white rounded-lg border border-slate-200 p-3">
               <h4 className="font-bold text-slate-800 mb-2 flex items-center gap-2 text-sm">
                 <Users className="w-3 h-3 text-green-600" />
-                Vie étudiante
+                Partenariats
               </h4>
               <ul className="text-slate-600 space-y-1 text-xs">
-                <li>• Associations étudiantes actives</li>
-                <li>• Bureau des étudiants internationaux</li>
-                <li>• Événements interculturels</li>
-                <li>• Clubs sportifs et culturels</li>
+                {school.partnerships.split(', ').slice(0, 10).map((partnership, index) => (
+                  <li key={index}>• {partnership.trim().charAt(0).toUpperCase()+ partnership.trim().slice(1).replace(/\./g, '')}</li>
+                ))}
+                {school.partnerships.split(', ').length > 10 && (
+                  <li className="text-blue-600 text-xs">+{school.partnerships.split(', ').length - 10} autres</li>
+                )}
               </ul>
             </div>
           </div>
@@ -438,13 +524,12 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
           <div className="bg-gradient-to-r from-orange-50 to-red-50 rounded-lg p-3 border border-orange-200">
             <h4 className="font-semibold text-orange-800 mb-2 flex items-center gap-2 text-sm">
               <Globe className="w-3 h-3" />
-              Support spécial étudiants internationaux
+              Accompagnement après arrivée
             </h4>
             <ul className="text-orange-700 space-y-1 text-xs">
-              <li>• Service d'accueil dédié aux internationaux</li>
-              <li>• Aide au logement et démarches administratives</li>
-              <li>• Cours de français langue étrangère (FLE)</li>
-              <li>• Accompagnement personnalisé</li>
+              {school.international_support_after_coming.split(', ').map((support, index) => (
+                <li key={index}>• {support.trim().charAt(0).toUpperCase()+ support.trim().slice(1).replace(/\./g, '')}</li>
+              ))}
             </ul>
           </div>
         </div>
@@ -464,13 +549,13 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
         <meta property="og:url" content={"https://wendogo.com/schools/" + school.slug} />
         <meta property="og:title" content={school.seo_title || school.name} />
         <meta property="og:description" content={school.seo_description || school.description} />
-        <meta property="og:image" content={school.cover_page_url} />
+        <meta property="og:image" content={school.cover_page_path} />
 
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content={"https://wendogo.com/schools/" + school.slug} />
         <meta property="twitter:title" content={school.seo_title || school.name} />
         <meta property="twitter:description" content={school.seo_description || school.description} />
-        <meta property="twitter:image" content={school.cover_page_url} />
+        <meta property="twitter:image" content={school.cover_page_path} />
 
         <link rel="canonical" href={"https://wendogo.com/schools/" + school.slug} />
 
@@ -479,102 +564,164 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </Head>
-
+      <style jsx>{`
+            /* Pour les très petits écrans (iPhone SE, etc.) */
+            @media (max-width: 375px) and (max-height: 667px) {
+              .mobile-header {
+                min-height: 320px !important;
+                height: 45vh !important;
+              }
+              
+              .mobile-logo {
+                height: 2.5rem !important; /* 40px */
+              }
+              
+              .mobile-title {
+                font-size: 1.125rem !important; /* 18px */
+                line-height: 1.4 !important;
+              }
+            }
+            
+            /* Pour les écrans en mode paysage */
+            @media (max-height: 500px) and (orientation: landscape) {
+              .mobile-header {
+                height: 80vh !important;
+                min-height: 240px !important;
+              }
+            }
+              
+          `}</style>
+      {/* <HeaderMenuBar /> */}
+      <NavBar 
+        variant="simple"
+        // showDropdowns={false}
+        // showAllMenuItems={false}
+      />
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
         {/* Header Mobile-First */}
-        <div className="relative h-48 sm:h-56 md:h-64 lg:h-80 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-900/85 via-indigo-800/75 to-blue-700/65 z-10"></div>
+        <div className="relative min-h-[280px] h-[45vh] sm:min-h-[320px] sm:h-[40vh] md:h-64 lg:h-80 overflow-hidden mobile-header">
+          {/* Gradient overlay avec la couleur #0154c0 */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0154c0]/85 via-[#0154c0]/75 to-[#0154c0]/65 z-10"></div>
+          
+          {/* Image de couverture avec meilleur positioning */}
           <OptimizedImage 
-            src={school.cover_page_url} 
+            src={school.cover_page_path} 
             alt={"Campus " + school.name}
             className="w-full h-full object-cover"
+            style={{ objectPosition: '50% 35%' }} // ✅ Position plus haute de l'image
             width={800}
             height={400}
             priority
           />
           
           <div className="absolute inset-0 z-20 flex items-end">
-            <div className="w-full px-4 sm:px-6 lg:px-8 pb-4 sm:pb-6">
+            <div className="w-full px-4 sm:px-6 lg:px-8 pb-6 sm:pb-8">
               <div className="max-w-7xl mx-auto">
-                <div className="flex flex-col sm:flex-row items-start sm:items-end gap-3 sm:gap-4">
-                  <div className="bg-white/95 backdrop-blur-sm rounded-lg p-2 sm:p-3 shadow-lg">
+                <div className="flex flex-col md:gap-4 sm:flex-row sm:items-end sm:gap-6 gap-4">
+                  
+                  {/* Container logo avec taille adaptative */}
+                <div className="bg-white/95 backdrop-blur-sm rounded-lg p-4 lg:p-5 xl:p-6 2xl:p-8 shadow-lg w-fit mx-auto sm:mx-0">
+                  <div className="flex items-center justify-center">
                     <OptimizedImage 
-                      src={school.logo_url} 
+                      src={school.logo_path} 
                       alt={"Logo " + school.name}
-                      className="h-8 sm:h-10 md:h-12 lg:h-16 w-auto mb-2"
+                      className="h-16 sm:h-18 md:h-20 lg:h-22 xl:h-24  w-auto object-contain"
+                      // ✅ Plus de padding sur larges écrans pour équilibrer
                       width={120}
                       height={80}
                     />
-                    {school.connection_campus_france && (
-                      <div className="flex items-center gap-1 bg-green-100 text-green-700 px-2 py-0.5 rounded-full text-xs font-semibold">
-                        <CheckCircle className="w-2 h-2" />
-                        Campus France
-                      </div>
-                    )}
                   </div>
+                </div>
                   
+                  {/* Informations école */}
                   <div className="flex-1 text-white min-w-0">
-                    <div className="flex flex-wrap gap-1 sm:gap-2 mb-2">
-                      {school.acknoledgement.split(', ').slice(0, 2).map((acc, index) => (
-                        <span key={index} className="bg-blue-500/20 backdrop-blur-sm text-blue-100 px-2 py-0.5 rounded-full text-xs font-medium">
+                    <div className="flex flex-wrap gap-2 mb-3">
+                      {school?.acknoledgement?.split(', ').slice(0, 5).map((acc, index) => (
+                        <span key={index} className="bg-white/20 backdrop-blur-sm text-white px-3 py-1 rounded-full text-xs font-medium">
                           {acc}
                         </span>
                       ))}
                     </div>
                     
-                    <h1 className="text-lg sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-1 sm:mb-2 leading-tight">
+                    {/* Titre avec taille responsive améliorée */}
+                    <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-2 sm:mb-3 leading-tight mobile-title ">
                       {school.name}
                     </h1>
                     
-                    <div className="flex items-center gap-1 sm:gap-2 text-blue-100 text-sm sm:text-base">
-                      <MapPin className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
+                    {/* Groupe d'école en subtitle */}
+                    {school.school_group && (
+                      <p className="text-white/90 text-sm sm:text-base mb-2">
+                        Groupe {school.school_group}
+                      </p>
+                    )}
+                    
+                    <div className="flex items-center gap-2 text-white/90 text-sm sm:text-base">
+                      <MapPin className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
                       <span>{school.base_city}</span>
                     </div>
                   </div>
+                </div>
+
+                {/* Badges avec layout amélioré pour mobile */}
+                <div className="flex md:flex-wrap flex-start mt-3 gap-1 sm:gap-2">
+                  {school.connection_campus_france && (
+                    <div className="flex items-center justify-center gap-1 bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs font-semibold">
+                      <CheckCircle className="w-3 h-3" />
+                      <span className="xs:inline md:inline">Campus France</span> 
+                    </div>
+                  )}
+                  {school.hors_contrat && (
+                    <div className="flex items-center justify-center gap-1 bg-orange-100 text-orange-700 px-2 py-1 rounded-full text-xs font-semibold">
+                      <AlertTriangle className="w-3 h-3" />
+                      <span className="xs:inline md:inline">Hors contrat</span> 
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Points forts pour internationaux Mobile */}
-        <div className="px-4 sm:px-6 lg:px-8 -mt-4 sm:-mt-6 relative z-10">
-          <div className="max-w-7xl mx-auto">
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
-              {internationalHighlights.map((highlight, index) => {
-                const IconComponent = highlight.icon;
-                return (
-                  <div key={index} className="bg-white rounded-lg p-4 shadow-lg border border-slate-100">
-                    <div className="flex items-start gap-3">
-                      <div className={"bg-gradient-to-br " + highlight.color + " p-2 rounded-lg shadow-md flex-shrink-0"}>
-                        <IconComponent className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <h3 className="font-bold text-slate-800 text-sm sm:text-base">{highlight.title}</h3>
-                        <div className="text-base sm:text-lg font-bold text-slate-800 truncate">{highlight.value}</div>
-                        <p className="text-xs text-slate-600">{highlight.description}</p>
-                      </div>
-                    </div>
+          <div className="px-4 sm:px-6 lg:px-8 -mt-6 sm:-mt-8 relative z-10">
+            <div className="max-w-7xl mx-auto px-2 sm:px-0">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
+                {internationalHighlights
+            .filter((highlight) => highlight.value && highlight.value.trim())
+            .map((highlight, index) => {
+              const IconComponent = highlight.icon;
+              return (
+                <div key={index} className="bg-white rounded-lg p-4 shadow-lg border border-slate-100">
+                  <div className="flex items-center gap-3">
+              <div className={"bg-gradient-to-br " + highlight.color + " p-2 rounded-lg shadow-md flex-shrink-0"}>
+                <IconComponent className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <h3 className="font-bold text-slate-800 text-sm sm:text-base">{highlight.title}</h3>
+                <div className="text-lg sm:text-xl font-bold text-slate-800">{highlight.value}</div>
+                <p className="text-xs text-slate-600">{highlight.description}</p>
+              </div>
                   </div>
-                );
-              })}
+                </div>
+              );
+            })}
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* FAQ Section Mobile */}
+          {/* FAQ Section Mobile */}
         <div className="px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12">
-          <div className="max-w-7xl mx-auto">
-            <div className="space-y-6 lg:grid lg:grid-cols-3 lg:gap-8 lg:space-y-0">
+          <div className="max-w-7xl mx-auto px-2 sm:px-0">
+            <div className="space-y-6 xl:grid xl:grid-cols-3 xl:gap-8 xl:space-y-0">
               {/* FAQ principale */}
               <div className="lg:col-span-2">
-                <div className="space-y-3 sm:space-y-4">
-                  {faqSections.map((section) => (
+                <div className="space-y-4 sm:space-y-4">
+                  {faqSections.map((section) =>
+                    (section.id==='alternance'&& !school.work_study_programs)? '' : (
                     <div key={section.id} className="border border-black rounded-lg overflow-hidden bg-white shadow-sm">
                       <button
-                        onClick={() => toggleSection(section.id)}
-                        className="w-full px-4 sm:px-6 py-4 sm:py-6 flex items-center justify-between hover:bg-slate-50 transition-colors"
-                      >
+                          onClick={() => toggleSection(section.id)}
+                          className="w-full px-4 sm:px-6 py-5 sm:py-6 flex items-center justify-between hover:bg-slate-50 transition-colors touch-manipulation"
+                        >
                         <h2 className="font-bold text-base sm:text-lg lg:text-xl text-left text-slate-800 pr-2">
                           {section.title}
                         </h2>
@@ -584,56 +731,75 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
                           <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 flex-shrink-0" />
                         )}
                       </button>
-                      
-                      {expandedSections.has(section.id) && (
-                        <div className="px-4 sm:px-6 pb-4 sm:pb-6">
+                      <FadeTransition show={expandedSections.has(section.id)}>
+                        <div className="px-4 sm:px-6 pb-4 sm:pb-6 animate-slide-down">
                           {section.content}
                         </div>
-                      )}
+                      </FadeTransition>  
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* Sidebar mobile - devient des sections empilées */}
-              <div className="space-y-4 lg:space-y-6">
+              {/* Sidebar mobile */}
+              <div className="space-y-6 lg:space-y-6">
                 {/* Informations de contact */}
                 <div className="border border-black rounded-lg bg-white shadow-sm">
-                  <div className="px-4 sm:px-6 py-4 sm:py-6">
-                    <h3 className="font-bold text-lg sm:text-xl text-slate-800 mb-4 sm:mb-5">
-                      {school.name.length > 25 ? school.name.substring(0, 25) + '...' : school.name}
+                  <div className="px-4 sm:px-6 py-5 sm:py-6">
+                    <h3 className="font-bold text-lg sm:text-xl text-slate-800 mb-4 sm:mb-5 break-words leading-tight">
+                      <span className="sm:hidden">
+                        {school.name.length > 45 ? school.name.substring(0, 45) + '...' : school.name}
+                      </span>
+                      <span className="hidden sm:inline">
+                        {school.name.length > 35 ? school.name.substring(0, 35) + '...' : school.name}
+                      </span>
                     </h3>
                     
-                    <div className="space-y-3 sm:space-y-4">
+                    <div className="space-y-4 sm:space-y-4">
                       <div className="flex items-start gap-2 sm:gap-3">
                         <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-black mt-1 flex-shrink-0" />
-                        <div className="min-w-0 flex-1">
-                          <div className="font-medium text-slate-800 text-sm sm:text-base">{school.base_city}</div>
-                          <div className="text-xs sm:text-sm text-slate-600 break-words">{school.address}</div>
+                        <div className="min-w-0 flex-1"> 
+                          <a 
+                            href={`https://maps.google.com/?q=${encodeURIComponent(school.address)}`}
+                            target="_blank"
+                            rel="noopener"
+                            className="text-xs sm:text-sm text-slate-800  hover:text-blue-600 break-words underline cursor-pointer"
+                          >
+                            {school.address}
+                          </a>
                         </div>
                       </div>
                       
                       <div className="flex items-center gap-2 sm:gap-3">
                         <Phone className="w-4 h-4 sm:w-5 sm:h-5 text-black flex-shrink-0" />
-                        <a href={"tel:" + school.phone} className="text-slate-800 hover:text-blue-600 text-sm sm:text-base">
-                          {school.phone}
+                        <a href={"tel:" + formatPhoneNumber(school.phone)} className="text-slate-800 hover:text-blue-600 text-sm sm:text-base">
+                          {formatPhoneNumber(school.phone)}
                         </a>
                       </div>
                       
-                      <div className="flex items-center gap-2 sm:gap-3">
-                        <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-black flex-shrink-0" />
-                        <a href={"mailto:" + school.email} className="text-slate-800 hover:text-blue-600 text-sm sm:text-base break-all">
-                          {school.email}
-                        </a>
+                      <div className="flex items-start gap-2 sm:gap-3">
+                        <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-black mt-1 flex-shrink-0" />
+                        <div className="min-w-0 flex-1">
+                          {contactInfo.email && (
+                            <a href={"mailto:" + contactInfo.email} className="text-slate-800 hover:text-blue-600 text-sm sm:text-base break-all block">
+                              {contactInfo.email}
+                            </a>
+                          )}
+                          {contactInfo.url && (
+                            <a href={contactInfo.url} target="_blank" rel="noopener" className="text-blue-600 hover:text-blue-700 text-sm sm:text-base break-all underline block mt-1">
+                              Formulaire de contact
+                            </a>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>
                   
                   <hr className="border-t border-gray-400" />
                   
-                  <div className="px-4 sm:px-6 py-4 sm:py-6">
+                  <div className="px-4 sm:px-6 py-5 sm:py-6">
                     <h3 className="font-bold text-lg sm:text-xl text-slate-800 mb-4 sm:mb-5">
-                      Suivre {school.name.split(' ')[0]}
+                      Suivre {school.name.length > 25 ? school.name.substring(0, 25) + '...' : school.name}
                     </h3>
                     <div className="flex gap-3 sm:gap-4">
                       <a href={school.url} target="_blank" rel="noopener" className="text-black hover:text-blue-600 transition-colors">
@@ -665,16 +831,53 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
 
                 {/* Écoles similaires Mobile */}
                 {similarSchools.length > 0 && (
-                  <div className="bg-white rounded-lg p-4 shadow-lg border border-slate-100">
+                  <div className="bg-white rounded-lg p-4 sm:p-5 shadow-lg border border-slate-100">
                     <h3 className="text-lg font-bold text-slate-800 mb-3">Écoles similaires</h3>
-                    <div className="space-y-2">
+                    <div className="space-y-3">
                       {similarSchools.slice(0, 3).map((similarSchool) => (
-                        <Link key={similarSchool.id} href={"/schools/" + similarSchool.slug}>
-                          <div className="p-2 border border-slate-200 rounded-lg hover:shadow-md transition-shadow cursor-pointer">
-                            <h4 className="font-medium text-slate-800 text-sm leading-tight">{similarSchool.name}</h4>
-                            <p className="text-xs text-slate-600">{similarSchool.base_city}</p>
+                        <LinkWithLoading key={similarSchool.id} href={"/schools/" + similarSchool.slug}>
+                          <div className="p-3 border border-slate-200 rounded-lg hover:shadow-md transition-shadow cursor-pointer">
+                            <div className="flex items-start gap-3">
+                              {/* ✅ NOUVEAU : Logo de l'école */}
+                              <div className="w-12 h-8 bg-gray-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <OptimizedImage 
+                                  src={similarSchool.logo_path || '/images/default-school-logo.svg'} 
+                                  alt={"Logo " + similarSchool.name}
+                                  className="max-w-full max-h-full object-contain"
+                                  width={48}
+                                  height={32}
+                                />
+                              </div>
+                              
+                              {/* Informations école */}
+                              <div className="flex-1 min-w-0">
+                                <h4 className="font-medium text-slate-800 text-sm leading-tight line-clamp-2">
+                                  {similarSchool.name}
+                                </h4>
+                                <p className="text-xs text-slate-600 mt-1">{similarSchool.base_city}</p>
+                                
+                                {/* ✅ NOUVEAU : Badges informatifs */}
+                                <div className="flex flex-wrap gap-1 mt-2">
+                                  {similarSchool.connection_campus_france && (
+                                    <span className="bg-green-100 text-green-700 px-2 py-0.5 rounded-full text-xs">
+                                      Campus France
+                                    </span>
+                                  )}
+                                  {similarSchool.school_group && (
+                                    <span className="bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full text-xs">
+                                      {similarSchool.school_group}
+                                    </span>
+                                  )}
+                                  {similarSchool.similarity_score && (
+                                    <span className="bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full text-xs">
+                                      {Math.round(similarSchool.similarity_score * 20)}% similaire
+                                    </span>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
                           </div>
-                        </Link>
+                        </LinkWithLoading>
                       ))}
                     </div>
                   </div>
@@ -682,18 +885,45 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
 
                 {/* Call to action Mobile */}
                 <div className="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-lg p-4 text-white shadow-lg">
-                  <h3 className="text-lg font-bold mb-2">Découvrez nos formations</h3>
+                  <h3 className="text-lg font-bold mb-2">Découvrez les formations</h3>
                   <p className="text-blue-100 mb-4 text-sm">Explorez toutes les formations disponibles avec reconnaissance internationale.</p>
-                  <Link href={"/schools/" + school.slug + "/programs"}>
-                    <button className="w-full bg-white text-blue-600 font-semibold py-2.5 px-4 rounded-lg hover:bg-blue-50 transition-colors text-sm">
+                  <LinkWithLoading href={`/schools/${school.slug}/programs`}>
+                    <button className="w-full bg-white text-blue-600 font-semibold py-3 px-4 rounded-lg hover:bg-blue-50 transition-colors text-sm sm:text-base">
                       Voir les {programs.length} formations
                     </button>
-                  </Link>
+                  </LinkWithLoading>
+                </div>
+                <div className="bg-gradient-to-br from-green-600 to-emerald-700 rounded-xl p-4 text-white shadow-lg">
+                  <h3 className="text-lg font-bold mb-2">Votre réussite, notre mission</h3>
+                  <p className="text-green-100 mb-3 text-sm">Accompagnement dédié aux étudiants étrangers</p>
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2 text-green-100">
+                      <CheckCircle className="w-3 h-3" />
+                      <span className="text-xs">Aide visa & logement</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-green-100">
+                      <CheckCircle className="w-3 h-3" />
+                      <span className="text-xs">Intégration campus</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-green-100">
+                      <CheckCircle className="w-3 h-3" />
+                      <span className="text-xs">Support administratif</span>
+                    </div>
+                  </div>
+                  <button 
+                    onClick={() => {
+                      router.push('/?tab=accompany#accompany-section');
+                    }}
+                    className="w-full bg-white text-green-600 font-semibold py-2 px-4 rounded-lg hover:bg-green-50 transition-colors mt-3 text-sm"
+                  >
+                    Découvez nos services
+                  </button>
                 </div>
               </div>
             </div>
           </div>
         </div>
+        <Footer/>
       </div>
     </>
   );
@@ -747,7 +977,7 @@ export async function getStaticProps({ params }) {
 
     const similarSchoolsResponse = await PrivateSchoolApi.getSimilarSchools(school.id, 3);
     const similarSchools = similarSchoolsResponse.success ? similarSchoolsResponse.data : [];
-
+   
     return {
       props: {
         school,

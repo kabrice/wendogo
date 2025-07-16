@@ -39,7 +39,7 @@ const SchoolYear2 = ({ schoolYears, isErrorPage }) => {
             
             setSelectedSchoolYear2(
                 user?.selectedSchoolYear2 || 
-                { name: (user?.selectedSchoolYear3.name - 1).toString(), validated: false }
+                { name: (user?.selectedSchoolYear3?.name - 1).toString(), validated: false }
             );
             setIsInitializing(false);
         };

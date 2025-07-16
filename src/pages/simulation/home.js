@@ -127,7 +127,7 @@ const SimulationHome = ({ leadStatus=[], isErrorHomePage=false }) => {
           date: new Date().toISOString(),
         }
         console.log('XXXupdatedUser userToProcess userToProcess', userToProcess, user?.userId );
-        const response = await (user?.userId ? updateUser(userToProcess) : addUser(userToProcess));
+        const response = await (user?.userId ? updateUser(userToProcess) : (console.log('xxx'), addUser(userToProcess)));
         console.log('XXXupdatedUser response 11', response);
         if(response.data.status){  
           const updatedUser = {

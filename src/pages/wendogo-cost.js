@@ -111,13 +111,13 @@ function WendogoCost(){
 
                         <ul className="styles__List-sc-b6pzbt-1 Nbkao">
                         <li className="styles__BaseTypo-sc-198xhmk-0 dCHWzO styles__ListItem-sc-b6pzbt-2 bQzhkc">
-                            <a aria-current="page" className="styles__ListItemLink-sc-b6pzbt-8 jmsNjc" href="/wendogo-mission"> Mission </a>
+                            <a aria-current="page" className="styles__ListItemLink-sc-b6pzbt-8 jmsNjc" href="/mission"> Mission </a>
                         </li>
                         <li className="styles__BaseTypo-sc-198xhmk-0 dCHWzO styles__ListItem-sc-b6pzbt-2 fdQKqN">
                             <a className="styles__ListItemLink-sc-b6pzbt-8 jmsNjc" href="/wendogo-cost"> Combien coûte Wendogo </a>
                         </li>
                         <li className="styles__BaseTypo-sc-198xhmk-0 dCHWzO styles__ListItem-sc-b6pzbt-2 bQzhkc">
-                            <a className="styles__ListItemLink-sc-b6pzbt-8 jmsNjc" href="/wendogo-privacy"> Vos données </a>
+                            <a className="styles__ListItemLink-sc-b6pzbt-8 jmsNjc" href="/privacy"> Vos données </a>
                         </li>
                         </ul>
                         <button disabled="" className="styles__ListItemButton-sc-b6pzbt-3 styles__ListItemButtonRight-sc-b6pzbt-6 bnJCXg cqfNya">

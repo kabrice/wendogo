@@ -1,13 +1,30 @@
+
 const IPINFO_URL = 'https://ipinfo.io/json?token=3089ed2a513bd9';
-//http://127.0.0.1:5000
+//http://127.0.0.1:5000 => Test on Localhost PC
+//http://192.168.1.191:5000 => Test on Mobile
 //https://wendogo.online
-const REST_API_PARAMS = {baseUrl: 'https://wendogo.online', prepareHeaders: (headers, { getState }) => {
-    headers.set('Content-Type', 'application/json')
-    headers.set('Access-Control-Allow-Origin', '*')
-    headers.set('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization')
-    headers.set('Access-Control-Request-Method', 'GET, POST, DELETE, PUT, OPTIONS')
-    return headers
-}}
+
+// CORRECTION: Simplifier la configuration des headers
+const REST_API_PARAMS = {
+    baseUrl: 'http://127.0.0.1:5000',
+    // prepareHeaders: (headers, { getState }) => {
+    //     // Pour Next.js, on retourne un objet simple avec les headers
+    //     return {
+    //         ...headers,
+    //         'Content-Type': 'application/json',
+    //         'Access-Control-Allow-Origin': '*',
+    //         'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
+    //         'Access-Control-Request-Method': 'GET, POST, DELETE, PUT, OPTIONS'
+    //     };
+    // },
+    // NOUVEAU: Configuration simple pour les APIs JavaScript
+    headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
+        'Access-Control-Request-Method': 'GET, POST, DELETE, PUT, OPTIONS'
+    }
+};
 
 const  ERROR_TEXT = <p>Une erreur est survenue. Nous en sommes désolé. Veuillez nous soumettre le problème 
                         <a href="https://m.me/wendogoHQ" style={{color: "rgb(1, 84, 192)"}}><b> ici.</b></a>
@@ -128,6 +145,202 @@ const PROGRESS_BAR_STEPS = {
   COORDONNEES : 7
 }
  
+// URLs et configurations existantes
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
-export{REST_API_PARAMS, ERROR_TEXT, FRANCOPHONE_COUNTRIES, CAMPUS_FRANCE_CRITERIA, SIMULATION_ENGINE_STEPS, PROGRESS_BAR_STEPS, IPINFO_URL}
+// ✅ NOUVEAU: URLs pour les APIs de taux de change
+const EXCHANGE_RATE_APIS = {
+  primary: 'https://api.exchangerate-api.com/v4/latest/EUR', // Gratuit jusqu'à 1500 req/mois
+  fallback: 'https://api.fixer.io/latest?access_key=YOUR_FIXER_KEY&base=EUR', // Alternative
+  backup: 'https://open.er-api.com/v6/latest/EUR' // Backup gratuit
+};
+
+// ✅ NOUVEAU: Configuration des devises supportées
+const SUPPORTED_CURRENCIES = {
+  // Europe
+  'FR': 'EUR', 'BE': 'EUR', 'LU': 'EUR', 'DE': 'EUR', 'IT': 'EUR', 'ES': 'EUR',
+  'CH': 'CHF', 'GB': 'GBP', 'NO': 'NOK', 'SE': 'SEK', 'DK': 'DKK',
+  
+  // Afrique francophone (principales destinations Wendogo)
+  'CM': 'XAF', 'SN': 'XOF', 'CI': 'XOF', 'TG': 'XOF', 'BJ': 'XOF', 
+  'BF': 'XOF', 'ML': 'XOF', 'NE': 'XOF', 'TD': 'XAF', 'GA': 'XAF',
+  'CG': 'XAF', 'CD': 'CDF', 'CF': 'XAF', 'GN': 'GNF', 'RW': 'RWF',
+  'BI': 'BIF', 'DJ': 'DJF', 'KM': 'KMF', 'MG': 'MGA', 'SC': 'SCR',
+  
+  // Afrique du Nord
+  'MA': 'MAD', 'TN': 'TND', 'DZ': 'DZD', 'EG': 'EGP',
+  
+  // Amériques
+  'US': 'USD', 'CA': 'CAD', 'BR': 'BRL', 'AR': 'ARS', 'MX': 'MXN', 'HT': 'HTG',
+  
+  // Asie (étudiants internationaux)
+  'CN': 'CNY', 'JP': 'JPY', 'IN': 'INR', 'KR': 'KRW', 'TH': 'THB',
+  'VN': 'VND', 'SG': 'SGD', 'MY': 'MYR', 'ID': 'IDR', 'PH': 'PHP',
+  
+  // Autres
+  'AU': 'AUD', 'NZ': 'NZD', 'ZA': 'ZAR', 'RU': 'RUB', 'TR': 'TRY'
+};
+
+// ✅ NOUVEAU: Symboles des devises pour l'affichage
+const CURRENCY_SYMBOLS = {
+  'EUR': '€', 'USD': '$', 'GBP': '£', 'CHF': 'CHF', 'CAD': 'CAD$',
+  'XAF': 'FCFA', 'XOF': 'FCFA', 'MAD': 'DH', 'TND': 'TND', 'DZD': 'DA',
+  'CDF': 'FC', 'GNF': 'FG', 'RWF': 'RF', 'BIF': 'FBu', 'DJF': 'Fdj',
+  'KMF': 'CF', 'MGA': 'Ar', 'SCR': 'SR', 'EGP': 'LE', 'HTG': 'G',
+  'CNY': '¥', 'JPY': '¥', 'INR': '₹', 'KRW': '₩', 'BRL': 'R$',
+  'AUD': 'A$', 'NZD': 'NZ$', 'ZAR': 'R', 'RUB': '₽'
+};
+
+// ✅ NOUVEAU: Noms des pays en français
+const COUNTRY_NAMES = {
+  'FR': 'France', 'CM': 'Cameroun', 'SN': 'Sénégal', 'CI': 'Côte d\'Ivoire',
+  'MA': 'Maroc', 'TN': 'Tunisie', 'DZ': 'Algérie', 'US': 'États-Unis',
+  'CA': 'Canada', 'GB': 'Royaume-Uni', 'CH': 'Suisse', 'BE': 'Belgique',
+  'TG': 'Togo', 'BJ': 'Bénin', 'BF': 'Burkina Faso', 'ML': 'Mali',
+  'NE': 'Niger', 'TD': 'Tchad', 'GA': 'Gabon', 'CG': 'Congo',
+  'CD': 'RD Congo', 'CF': 'Centrafrique', 'GN': 'Guinée', 'RW': 'Rwanda',
+  'BI': 'Burundi', 'DJ': 'Djibouti', 'KM': 'Comores', 'MG': 'Madagascar',
+  'SC': 'Seychelles', 'EG': 'Égypte', 'HT': 'Haïti'
+};
+
+// ✅ NOUVEAU: Configuration des offres d'accompagnement
+const ACCOMPANY_OFFERS = {
+  ORIENTATION: {
+    id: 'orientation',
+    name: 'Pack Orientation Premium',
+    basePrice: 100,
+    description: 'Trouvez LA formation qui transformera votre avenir'
+  },
+  VISA: {
+    id: 'visa',
+    name: 'Pack Visa & Préparation',
+    basePrice: 200,
+    description: 'Obtenez votre visa sans stress'
+  },
+  INSTALLATION: {
+    id: 'installation',
+    name: 'Pack Installation France',
+    basePrice: 150,
+    description: 'Intégrez-vous facilement en France'
+  }
+};
+
+// ✅ NOUVEAU: Configuration des notifications
+const NOTIFICATION_CONFIG = {
+  admin: {
+    email: 'hello@wendogo.com',
+    phone: '+33755097584' // Pour SMS si service gratuit disponible
+  },
+  emailTemplates: {
+    accompanyRequest: 'accompany_request_notification',
+    organizationContact: 'organization_contact_notification'
+  }
+};
+
+// ✅ NOUVEAU: Statuts des demandes d'accompagnement
+const ACCOMPANY_STATUS = {
+  PENDING: 'pending',
+  CONTACTED: 'contacted',
+  IN_PROGRESS: 'in_progress',
+  COMPLETED: 'completed',
+  CANCELLED: 'cancelled'
+};
+
+// ✅ NOUVEAU: Niveaux d'urgence
+const URGENCY_LEVELS = {
+  NORMAL: 'normal',
+  URGENT: 'urgent',
+  VERY_URGENT: 'very_urgent'
+};
+
+// ✅ NOUVEAU: Types de préférences de contact
+const CONTACT_PREFERENCES = {
+  EMAIL: 'email',
+  WHATSAPP: 'whatsapp',
+  PHONE: 'phone'
+};
+
+// URLs existantes (à conserver)
+const REGISTRATION_URL = `${API_BASE_URL}/auth/register`;
+const LOGIN_URL = `${API_BASE_URL}/auth/login`;
+const OAUTH_SIGNIN_URL = `${API_BASE_URL}/auth/oauth-signin`;
+
+// ✅ NOUVEAU: URLs pour les nouvelles fonctionnalités
+const ACCOMPANY_REQUEST_URL = `${API_BASE_URL}/api/accompany/request`;
+const ORGANIZATION_CONTACT_URL = `${API_BASE_URL}/api/organizations/contact`;
+const USER_DASHBOARD_URL = `${API_BASE_URL}/api/user/dashboard`;
+
+// Messages d'erreur localisés
+const ERROR_MESSAGES = {
+  NETWORK_ERROR: 'Erreur de connexion. Veuillez vérifier votre connexion internet.',
+  VALIDATION_ERROR: 'Veuillez vérifier les informations saisies.',
+  SERVER_ERROR: 'Erreur serveur. Veuillez réessayer plus tard.',
+  CURRENCY_ERROR: 'Impossible de charger les taux de change.',
+  GEOLOCATION_ERROR: 'Impossible de détecter votre localisation.'
+};
+
+// ✅ NOUVEAU: Configuration du cache pour les taux de change
+const CACHE_CONFIG = {
+  exchangeRates: {
+    duration: 3600000, // 1 heure en millisecondes
+    key: 'wendogo_exchange_rates'
+  },
+  userLocation: {
+    duration: 86400000, // 24 heures en millisecondes
+    key: 'wendogo_user_location'
+  }
+};
+
+// Regex patterns utiles
+const PATTERNS = {
+  email: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+  phone: /^[+]?[\d\s\-\(\)]{8,}$/,
+  // ✅ NOUVEAU: Pattern pour validation des prix
+  price: /^\d+(\.\d{1,2})?$/
+};
+
+// ✅ NOUVEAU: Configuration des services SMS gratuits/peu chers
+const SMS_SERVICES = {
+  // Options gratuites ou très peu chères pour les notifications SMS
+  textbelt: {
+    url: 'https://textbelt.com/text',
+    free: true,
+    dailyLimit: 1
+  },
+  smsTo: {
+    url: 'https://api.sms.to/sms/send',
+    free: false,
+    costPerSMS: 0.05 // 5 centimes
+  }
+  // À configurer selon vos besoins et budget
+};
+export {
+  REST_API_PARAMS,
+  ERROR_TEXT,
+  FRANCOPHONE_COUNTRIES,
+  CAMPUS_FRANCE_CRITERIA,
+  SIMULATION_ENGINE_STEPS,
+  PROGRESS_BAR_STEPS,
+  IPINFO_URL,
+  API_BASE_URL,
+  SUPPORTED_CURRENCIES,
+  CURRENCY_SYMBOLS,
+  COUNTRY_NAMES,
+  ACCOMPANY_OFFERS,
+  NOTIFICATION_CONFIG,
+  EXCHANGE_RATE_APIS,
+  REGISTRATION_URL,
+  LOGIN_URL,
+  OAUTH_SIGNIN_URL,
+  ACCOMPANY_REQUEST_URL,
+  ORGANIZATION_CONTACT_URL,
+  USER_DASHBOARD_URL,
+  ERROR_MESSAGES,
+  CACHE_CONFIG,
+  PATTERNS,
+  SMS_SERVICES,
+  ACCOMPANY_STATUS,
+  URGENCY_LEVELS,
+  CONTACT_PREFERENCES
+};
 

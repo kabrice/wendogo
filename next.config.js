@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode: true,
   transpilePackages: ['flag-icons'],
   images: { 
     formats: ['image/avif', 'image/webp'],
@@ -85,8 +86,8 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: '/api/:path*',
-        destination: 'https://wendogo-f972c21756e5.herokuapp.com/api/:path*',
+        source: '/api/flask/:path*',
+        destination: 'http://127.0.0.1:5000/:path*',
       },
     ];
   },

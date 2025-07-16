@@ -73,7 +73,7 @@ const Validation = () => {
     };
 
     const goToCGU = () => window.open('/cgu', '_blank');
-    const goToPrivacy = () => window.open('/wendogo-privacy', '_blank');
+    const goToPrivacy = () => window.open('/privacy', '_blank');
 
     if (isInitializing) {
         return (

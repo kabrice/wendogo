@@ -1,12 +1,12 @@
 import React from 'react';
 import { Shield, Eye, Lock, Trash2, Mail, Globe, UserCheck, FileText } from 'lucide-react';
-import HeaderMenuBarOnlyWithLogo from '../components/HeaderMenuBarOnlyWithLogo';
+import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
 
 const PrivacyPolicy = () => {
   return (
     <>
-      <HeaderMenuBarOnlyWithLogo />
+      <NavBar variant="simple" />
       
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

@@ -24613,4 +24613,36 @@ border-color: initial;
 .cXKRul span{z-index:1;position:relative;}
 .cXKRul::after{content:"";position:absolute;height:100%;width:0px;background:rgb(181, 204, 232);left:0px;top:0px;}
 
+  @media (max-width: 640px) {
+    .mobile-safe-padding {
+      padding-left: max(1rem, env(safe-area-inset-left));
+      padding-right: max(1rem, env(safe-area-inset-right));
+    }
+  }
+  @media (max-width: 375px) and (max-height: 667px) {
+    .mobile-header {
+      min-height: 320px !important;
+      height: 45vh !important;
+    }
+    
+    .mobile-logo {
+      height: 2.5rem !important; /* 40px */
+    }
+    
+    .mobile-title {
+      font-size: 1.125rem !important; /* 18px */
+      line-height: 1.4 !important;
+    }
+  }
+  
+  /* Pour les écrans en mode paysage */
+  @media (max-height: 500px) and (orientation: landscape) {
+    .mobile-header {
+      height: 80vh !important;
+      min-height: 240px !important;
+    }
+  }
 
+  html {
+  overflow-x: hidden;
+}

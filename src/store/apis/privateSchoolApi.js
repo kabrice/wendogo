@@ -1,24 +1,41 @@
-// src/store/apis/privateSchoolApi.js
+// src/store/apis/privateSchoolApi.js (mis à jour pour utiliser l'API Flask)
 
-import { mockSchools, getSchoolBySlug, getAllSchoolSlugs, getSchoolsPreview } from '../../data/mockSchools';
+import { REST_API_PARAMS } from '../../utils/Constants';
 
 /**
  * API pour la gestion des écoles privées
  */
 class PrivateSchoolApi {
   
+  static baseUrl = REST_API_PARAMS.baseUrl;
+  static headers = REST_API_PARAMS.prepareHeaders ? REST_API_PARAMS.prepareHeaders({}, {}).headers : {
+    'Content-Type': 'application/json'
+  };
+
   /**
    * Récupère toutes les écoles
-   * @returns {Promise<Array>} Liste de toutes les écoles
+   * @returns {Promise<Object>} Liste de toutes les écoles
    */
   static async getAllSchools() {
     try {
-      // Simulation d'un délai d'API
-      await new Promise(resolve => setTimeout(resolve, 100));
+      const response = await fetch(`${this.baseUrl}/schools`, {
+        method: 'GET',
+        headers: this.headers
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      
+      // Transformer les données
+      const transformedData = data.map(school => this.transformSchoolData(school));
+      
       return {
         success: true,
-        data: mockSchools,
-        total: mockSchools.length
+        data: transformedData,
+        total: transformedData.length
       };
     } catch (error) {
       console.error('Erreur lors de la récupération des écoles:', error);
@@ -31,29 +48,73 @@ class PrivateSchoolApi {
   }
 
   /**
+   * Récupère une école par son ID
+   * @param {string} schoolId - L'ID de l'école
+   * @returns {Promise<Object>} Données de l'école
+   */
+  static async getSchoolById(schoolId) {
+    try {
+      const response = await fetch(`${this.baseUrl}/schools/${schoolId}`, {
+        method: 'GET',
+        headers: this.headers
+      });
+      
+      if (!response.ok) {
+        if (response.status === 404) {
+          return {
+            success: false,
+            error: 'École non trouvée',
+            data: null
+          };
+        }
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      return {
+        success: true,
+        data: this.transformSchoolData(data)
+      };
+    } catch (error) {
+      console.error('Erreur lors de la récupération de l\'école:', error);
+      return {
+        success: false,
+        error: error.message,
+        data: null
+      };
+    }
+  }
+
+  /**
    * Récupère une école par son slug
    * @param {string} slug - Le slug de l'école
    * @returns {Promise<Object>} Données de l'école
    */
   static async getSchoolBySlug(slug) {
     try {
-      await new Promise(resolve => setTimeout(resolve, 50));
-      const school = getSchoolBySlug(slug);
+      const response = await fetch(`${this.baseUrl}/schools/slug/${slug}`, {
+        method: 'GET',
+        headers: this.headers
+      });
       
-      if (!school) {
-        return {
-          success: false,
-          error: 'École non trouvée',
-          data: null
-        };
+      if (!response.ok) {
+        if (response.status === 404) {
+          return {
+            success: false,
+            error: 'École non trouvée',
+            data: null
+          };
+        }
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
-
+      
+      const data = await response.json();
       return {
         success: true,
-        data: school
+        data: this.transformSchoolData(data)
       };
     } catch (error) {
-      console.error('Erreur lors de la récupération de l\'école:', error);
+      console.error('Erreur lors de la récupération de l\'école par slug:', error);
       return {
         success: false,
         error: error.message,
@@ -68,13 +129,103 @@ class PrivateSchoolApi {
    */
   static async getAllSchoolSlugs() {
     try {
-      await new Promise(resolve => setTimeout(resolve, 50));
+      const response = await fetch(`${this.baseUrl}/schools/slugs`, {
+        method: 'GET',
+        headers: this.headers
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
       return {
         success: true,
-        data: getAllSchoolSlugs()
+        data: data
       };
     } catch (error) {
-      console.error('Erreur lors de la récupération des slugs:', error);
+      console.error('Erreur lors de la récupération des slugs des écoles:', error);
+      return {
+        success: false,
+        error: error.message,
+        data: []
+      };
+    }
+  }
+
+  /**
+   * Recherche d'écoles avec filtres
+   * @param {Object} filters - Filtres de recherche
+   * @returns {Promise<Array>} Écoles filtrées
+   */
+  static async searchSchools(filters = {}) {
+    try {
+      const response = await fetch(`${this.baseUrl}/schools/search`, {
+        method: 'POST',
+        headers: this.headers,
+        body: JSON.stringify(filters)
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      
+      // Transformer les données
+      const transformedData = data.map(school => this.transformSchoolData(school));
+      
+      return {
+        success: true,
+        data: transformedData,
+        total: transformedData.length,
+        filters: filters
+      };
+    } catch (error) {
+      console.error('Erreur lors de la recherche d\'écoles:', error);
+      return {
+        success: false,
+        error: error.message,
+        data: []
+      };
+    }
+  }
+
+  /**
+   * Récupère les écoles similaires
+   * @param {string} schoolId - ID de l'école de référence
+   * @param {number} limit - Nombre d'écoles à retourner
+   * @returns {Promise<Array>} Écoles similaires
+   */
+  static async getSimilarSchools(schoolId, limit = 3) {
+    try {
+      const response = await fetch(`${this.baseUrl}/schools/${schoolId}/similar?limit=${limit}`, {
+        method: 'GET',
+        headers: this.headers
+      });
+      
+      if (!response.ok) {
+        if (response.status === 404) {
+          return {
+            success: false,
+            error: 'École de référence non trouvée',
+            data: []
+          };
+        }
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      
+      // Transformer les données
+      const transformedData = data.map(school => this.transformSchoolData(school));
+      
+      return {
+        success: true,
+        data: transformedData
+      };
+    } catch (error) {
+      console.error('Erreur lors de la récupération des écoles similaires:', error);
       return {
         success: false,
         error: error.message,
@@ -89,10 +240,19 @@ class PrivateSchoolApi {
    */
   static async getSchoolsPreview() {
     try {
-      await new Promise(resolve => setTimeout(resolve, 50));
+      const response = await fetch(`${this.baseUrl}/schools/preview`, {
+        method: 'GET',
+        headers: this.headers
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
       return {
         success: true,
-        data: getSchoolsPreview()
+        data: data
       };
     } catch (error) {
       console.error('Erreur lors de la récupération de l\'aperçu des écoles:', error);
@@ -105,70 +265,81 @@ class PrivateSchoolApi {
   }
 
   /**
-   * Recherche d'écoles avec filtres
-   * @param {Object} filters - Filtres de recherche
-   * @param {string} filters.query - Terme de recherche
-   * @param {string} filters.city - Ville
-   * @param {boolean} filters.campus_france - Partenaire Campus France
-   * @param {Array} filters.accreditations - Accréditations
-   * @returns {Promise<Array>} Écoles filtrées
+   * Transforme les données de l'API Flask vers le format attendu par le frontend
+   * @param {Object} school - Données de l'école depuis l'API
+   * @returns {Object} École transformée
    */
-  static async searchSchools(filters = {}) {
-    try {
-      await new Promise(resolve => setTimeout(resolve, 100));
+  static transformSchoolData(school) {
+    return {
+      // Mapping des champs de base
+      id: school.id,
+      slug: school.slug,
+      name: school.name,
+      school_group: school.school_group,
+      base_city: school.base_city,
       
-      let filteredSchools = [...mockSchools];
+      // URLs et médias
+      logo_path: '/images/schools/logos/'+school.logo_path,
+      cover_page_path: '/images/schools/covers/'+school.cover_page_path,
+      url: school.url,
+      
+      // Contact
+      address: school.address,
+      phone: school.phone,
+      email: school.email,
+      
+      // Description et contenu
+      description: school.description,
+      
+      // Statut et accréditations
+      hors_contrat: school.hors_contrat,
+      acknoledgement: school.acknowledgement, // Garder le nom de l'ancien format
+      
+      // Statistiques
+      alternance_rate: school.alternance_rate,
+      work_study_programs: school.work_study_programs,
+      international_student_rate_tech: school.international_student_rate_tech,
+      international_student_comment: school.international_student_comment,
+      
+      // Campus France et évaluations
+      connection_campus_france: school.connection_campus_france,
+      rating: school.rating,
+      reviews_counter: school.reviews_counter,
+      
+      // Réseaux sociaux
+      facebook_url: school.facebook_url,
+      x_url: school.x_url,
+      linkedin_url: school.linkedin_url,
+      instagram_url: school.instagram_url,
+      
+      // Rankings
+      national_ranking: school.national_ranking,
+      international_ranking: school.international_ranking,
+      
+      // Support international
+      international_support_before_coming: school.international_support_before_coming,
+      international_support_after_coming: school.international_support_after_coming,
+      
+      // Admission et partenariats
+      general_entry_requirements: school.general_entry_requirements,
+      partnerships: school.partnerships,
+      facilities: school.facilities,
+      
+      // SEO
+      seo_title: school.seo_title,
+      seo_description: school.seo_description,
+      seo_keywords: school.seo_keywords
+    };
+  }
 
-      // Filtre par terme de recherche
-      if (filters.query) {
-        const query = filters.query.toLowerCase();
-        filteredSchools = filteredSchools.filter(school => 
-          school.name.toLowerCase().includes(query) ||
-          school.description.toLowerCase().includes(query) ||
-          school.base_city.toLowerCase().includes(query) ||
-          school.specialties?.some(specialty => 
-            specialty.toLowerCase().includes(query)
-          )
-        );
-      }
-
-      // Filtre par ville
-      if (filters.city) {
-        filteredSchools = filteredSchools.filter(school => 
-          school.base_city.toLowerCase().includes(filters.city.toLowerCase())
-        );
-      }
-
-      // Filtre Campus France
-      if (filters.campus_france !== undefined) {
-        filteredSchools = filteredSchools.filter(school => 
-          school.connection_campus_france === filters.campus_france
-        );
-      }
-
-      // Filtre par accréditations
-      if (filters.accreditations && filters.accreditations.length > 0) {
-        filteredSchools = filteredSchools.filter(school => 
-          filters.accreditations.some(accreditation => 
-            school.acknoledgement.toLowerCase().includes(accreditation.toLowerCase())
-          )
-        );
-      }
-
-      return {
-        success: true,
-        data: filteredSchools,
-        total: filteredSchools.length,
-        filters: filters
-      };
-    } catch (error) {
-      console.error('Erreur lors de la recherche d\'écoles:', error);
-      return {
-        success: false,
-        error: error.message,
-        data: []
-      };
-    }
+  /**
+   * Formate les frais (fonction utilitaire)
+   * @param {string} fee - Frais à formater
+   * @returns {string} Frais formatés
+   */
+  static formatFee(fee) {
+    if (!fee) return 'Non communiqué';
+    return fee.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1 ');
   }
 
   /**
@@ -177,101 +348,44 @@ class PrivateSchoolApi {
    */
   static async getSchoolsStats() {
     try {
-      await new Promise(resolve => setTimeout(resolve, 50));
-      
-      const campusFranceCount = mockSchools.filter(school => school.connection_campus_france).length;
-      const avgInternationalRate = mockSchools.reduce((sum, school) => {
-        return sum + parseFloat(school.international_student_rate.replace('%', ''));
-      }, 0) / mockSchools.length;
+      const response = await this.getAllSchools();
+      if (!response.success) {
+        return {
+          success: false,
+          error: 'Erreur lors de la récupération des écoles',
+          data: null
+        };
+      }
 
-      const topCities = mockSchools.reduce((acc, school) => {
-        acc[school.base_city] = (acc[school.base_city] || 0) + 1;
+      const schools = response.data;
+      const campusFranceCount = schools.filter(school => school.connection_campus_france).length;
+      const horsContratCount = schools.filter(school => school.hors_contrat).length;
+
+      const cityDistribution = schools.reduce((acc, school) => {
+        if (school.base_city) {
+          acc[school.base_city] = (acc[school.base_city] || 0) + 1;
+        }
         return acc;
       }, {});
 
       return {
         success: true,
         data: {
-          total_schools: mockSchools.length,
-          campus_france_partners: campusFranceCount,
-          average_international_rate: Math.round(avgInternationalRate),
-          top_cities: Object.entries(topCities)
-            .sort(([,a], [,b]) => b - a)
-            .slice(0, 5)
+          total_schools: schools.length,
+          campus_france_connected: campusFranceCount,
+          hors_contrat: horsContratCount,
+          city_distribution: Object.entries(cityDistribution)
             .map(([city, count]) => ({ city, count }))
+            .sort((a, b) => b.count - a.count)
+            .slice(0, 10) // Top 10 des villes
         }
       };
     } catch (error) {
-      console.error('Erreur lors de la récupération des statistiques:', error);
+      console.error('Erreur lors de la récupération des statistiques des écoles:', error);
       return {
         success: false,
         error: error.message,
         data: null
-      };
-    }
-  }
-
-  /**
-   * Récupère les écoles similaires
-   * @param {string} schoolId - ID de l'école de référence
-   * @param {number} limit - Nombre d'écoles à retourner
-   * @returns {Promise<Array>} Écoles similaires
-   */
-  static async getSimilarSchools(schoolId, limit = 3) {
-    try {
-      await new Promise(resolve => setTimeout(resolve, 50));
-      
-      const currentSchool = mockSchools.find(school => school.id === parseInt(schoolId));
-      if (!currentSchool) {
-        return {
-          success: false,
-          error: 'École de référence non trouvée',
-          data: []
-        };
-      }
-
-      // Logique de similarité basée sur les spécialités et la ville
-      const similarSchools = mockSchools
-        .filter(school => school.id !== parseInt(schoolId))
-        .map(school => {
-          let similarity = 0;
-          
-          // Similarité par spécialités
-          if (school.specialties && currentSchool.specialties) {
-            const commonSpecialties = school.specialties.filter(specialty => 
-              currentSchool.specialties.includes(specialty)
-            );
-            similarity += commonSpecialties.length * 2;
-          }
-          
-          // Similarité par ville
-          if (school.base_city === currentSchool.base_city) {
-            similarity += 1;
-          }
-          
-          // Similarité par type d'établissement (accréditations)
-          const currentAccreds = currentSchool.acknoledgement.split(', ');
-          const schoolAccreds = school.acknoledgement.split(', ');
-          const commonAccreds = currentAccreds.filter(accred => 
-            schoolAccreds.includes(accred)
-          );
-          similarity += commonAccreds.length;
-
-          return { ...school, similarity };
-        })
-        .sort((a, b) => b.similarity - a.similarity)
-        .slice(0, limit);
-
-      return {
-        success: true,
-        data: similarSchools
-      };
-    } catch (error) {
-      console.error('Erreur lors de la récupération des écoles similaires:', error);
-      return {
-        success: false,
-        error: error.message,
-        data: []
       };
     }
   }
