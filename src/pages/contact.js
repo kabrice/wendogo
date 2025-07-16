@@ -88,8 +88,8 @@ function Contact() {
       setSubmitMessage('Erreur de connexion. Veuillez vérifier votre connexion internet et réessayer.');
 
       // Track form submission error
-      if (typeof gtag !== 'undefined') {
-        gtag('event', 'form_error', {
+      if (typeof event !== 'undefined') {
+        event('event', 'form_error', {
           event_category: 'error',
           event_label: 'contact_form_error',
           value: 0
