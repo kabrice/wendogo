@@ -424,7 +424,7 @@ function LegalNotice() {
             conformément aux obligations légales en vigueur.
           </p>
           <div className="mt-4 text-sm text-gray-500">
-            Dernière mise à jour : 15 décembre 2024
+            Dernière mise à jour : 17 Juillet 2025
           </div>
         </div>
 
