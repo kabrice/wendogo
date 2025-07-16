@@ -152,8 +152,8 @@ function EtudierEnFranceGuide() {
                 "url": "https://wendogo.com/logo.png"
               }
             },
-            "datePublished": "2024-01-15",
-            "dateModified": "2024-12-15"
+            "datePublished": "2025-05-15",
+            "dateModified": "2025-07-15"
           })
         }} />
       </Head>
@@ -489,7 +489,7 @@ function EtudierEnFranceGuide() {
 
               <div className="bg-white border border-gray-200 rounded-xl p-6 lg:p-8">
                 <h3 className="text-xl font-semibold text-gray-900 mb-6">
-                  Calendrier Parcoursup 2024
+                  Calendrier Parcoursup
                 </h3>
                 <div className="space-y-4">
                   {[

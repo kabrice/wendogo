@@ -139,19 +139,19 @@ function CampusFranceGuide() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Head>
-        <title>Guide Campus France 2024 - Procédure complète étape par étape</title>
-        <meta name="description" content="Guide complet Campus France 2024 : 6 étapes détaillées pour étudier en France. Procédure, documents, conseils d'experts et erreurs à éviter." />
+        <title>Guide Campus France - Procédure complète étape par étape</title>
+        <meta name="description" content="Guide complet Campus France : 6 étapes détaillées pour étudier en France. Procédure, documents, conseils d'experts et erreurs à éviter." />
         <meta name="keywords" content="Campus France, étudier en France, procédure Campus France, dossier étudiant, visa étudiant, TCF, DELF, DALF" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         
-        <meta property="og:title" content="Guide Campus France 2024 - Procédure complète" />
+        <meta property="og:title" content="Guide Campus France - Procédure complète" />
         <meta property="og:description" content="Découvrez les 6 étapes clés pour réussir votre dossier Campus France et étudier en France" />
         <meta property="og:type" content="article" />
         <meta property="og:url" content="https://wendogo.com/guides/campus-france" />
         <meta property="og:image" content="https://wendogo.com/images/guide-campus-france.jpg" />
         
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Guide Campus France 2024 - Procédure complète" />
+        <meta name="twitter:title" content="Guide Campus France - Procédure complète" />
         <meta name="twitter:description" content="6 étapes clés pour réussir votre dossier Campus France" />
         
         <link rel="canonical" href="https://wendogo.com/guides/campus-france" />
@@ -160,7 +160,7 @@ function CampusFranceGuide() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "HowTo",
-            "name": "Guide Campus France 2024",
+            "name": "Guide Campus France",
             "description": "Guide complet pour réussir sa procédure Campus France",
             "image": "https://wendogo.com/images/guide-campus-france.jpg",
             "totalTime": "PT6M",
@@ -213,7 +213,7 @@ function CampusFranceGuide() {
                 </div>
                 <div>
                   <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-2">
-                    Guide Campus France 2024
+                    Guide Campus France
                   </h1>
                   <p className="text-lg text-green-100">
                     6 étapes clés pour réussir votre dossier

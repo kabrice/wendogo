@@ -243,12 +243,12 @@ function VisaEtudiantGuide() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Head>
-        <title>Guide Visa Étudiant France 2024 - Procédure complète et conseils</title>
-        <meta name="description" content="Guide complet visa étudiant France 2024 : types, documents, procédure, délais, conseils. Tout pour réussir votre demande de visa d'études." />
+        <title>Guide Visa Étudiant France - Procédure complète et conseils</title>
+        <meta name="description" content="Guide complet visa étudiant France : types, documents, procédure, délais, conseils. Tout pour réussir votre demande de visa d'études." />
         <meta name="keywords" content="visa étudiant France, VLS-TS, Campus France, documents visa, procédure visa, délais visa, justificatifs financiers" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         
-        <meta property="og:title" content="Guide Visa Étudiant France 2024 - Procédure complète" />
+        <meta property="og:title" content="Guide Visa Étudiant France - Procédure complète" />
         <meta property="og:description" content="Tout savoir sur le visa étudiant France : types, documents, procédure et conseils d'experts" />
         <meta property="og:type" content="article" />
         <meta property="og:url" content="https://wendogo.com/guides/visa-etudiant" />
@@ -260,7 +260,7 @@ function VisaEtudiantGuide() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Article",
-            "headline": "Guide Visa Étudiant France 2024",
+            "headline": "Guide Visa Étudiant France",
             "description": "Guide complet pour obtenir son visa étudiant pour la France",
             "author": {
               "@type": "Organization",
@@ -288,7 +288,7 @@ function VisaEtudiantGuide() {
               </div>
             </div>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">
-              Guide Visa Étudiant France 2024
+              Guide Visa Étudiant France
             </h1>
             <p className="text-lg sm:text-xl text-blue-100 max-w-3xl mx-auto mb-8">
               Obtenez votre visa étudiant pour la France : types, documents requis, 
