@@ -1,4 +1,4 @@
-// pages/api/auth/[...nextauth].js - VERSION AVEC LOGS DÉTAILLÉS
+// pages/api/auth/[...nextauth].js - VERSION CORRIGÉE POUR PRODUCTION
 import NextAuth from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 import FacebookProvider from 'next-auth/providers/facebook'
@@ -21,183 +21,129 @@ export const authOptions = {
         password: { label: 'Password', type: 'password' }
       },
       async authorize(credentials) {
-        console.log('🔍 [NextAuth] === DÉBUT AUTHORIZE ===');
-        console.log('🔍 [NextAuth] Credentials:', { email: credentials.email, password: '***' });
+        console.log('🔍 [NextAuth] Authorize credentials for:', credentials.email);
         console.log('🔍 [NextAuth] FLASK_API_URL:', process.env.FLASK_API_URL);
         
         try {
-          const requestBody = {
-            email: credentials.email,
-            password: credentials.password
-          };
-          console.log('🔍 [NextAuth] Request body:', requestBody);
-          
           const response = await fetch(`${process.env.FLASK_API_URL}/auth/login`, {
             method: 'POST',
             headers: { 
               'Content-Type': 'application/json',
-              'Accept': 'application/json'
             },
-            body: JSON.stringify(requestBody)
+            body: JSON.stringify({
+              email: credentials.email,
+              password: credentials.password
+            })
           });
 
-          console.log('📡 [NextAuth] Response status:', response.status);
-          console.log('📡 [NextAuth] Response headers:', Object.fromEntries(response.headers.entries()));
+          console.log('📡 [NextAuth] Flask response status:', response.status);
           
-          const responseText = await response.text();
-          console.log('📡 [NextAuth] Response text:', responseText);
-          
-          let data;
-          try {
-            data = JSON.parse(responseText);
-            console.log('📡 [NextAuth] Parsed data:', data);
-          } catch (parseError) {
-            console.error('❌ [NextAuth] JSON parse error:', parseError);
-            console.log('📡 [NextAuth] Raw response:', responseText);
-            return null;
-          }
-
-          if (response.ok && data.success) {
-            console.log('✅ [NextAuth] Flask response OK');
-            console.log('✅ [NextAuth] Token received:', data.token ? 'YES' : 'NO');
-            console.log('✅ [NextAuth] Token preview:', data.token ? data.token.substring(0, 30) + '...' : 'NULL');
+          if (response.ok) {
+            const data = await response.json();
+            console.log('✅ [NextAuth] Flask login success:', data.success);
             
-            const userObject = {
-              id: data.user.id.toString(),
-              email: data.user.email,
-              name: `${data.user.firstname || ''} ${data.user.lastname || ''}`.trim(),
-              firstname: data.user.firstname,
-              lastname: data.user.lastname,
-              image: data.user.avatar_url,
-              flaskToken: data.token, // ✅ STOCKAGE DU TOKEN
-            };
-            
-            console.log('✅ [NextAuth] User object created:', {
-              ...userObject,
-              flaskToken: userObject.flaskToken ? 'PRESENT' : 'MISSING'
-            });
-            
-            return userObject;
-          } else {
-            console.error('❌ [NextAuth] Flask response not OK:', { status: response.status, data });
-            return null;
+            if (data.success && data.token) {
+              return {
+                id: data.user.id.toString(),
+                email: data.user.email,
+                name: `${data.user.firstname || ''} ${data.user.lastname || ''}`.trim(),
+                flaskToken: data.token, // ✅ Token Flask stocké
+              };
+            }
           }
           
-        } catch (error) {
-          console.error('❌ [NextAuth] Network/other error:', error);
+          console.error('❌ [NextAuth] Flask login failed');
           return null;
-        } finally {
-          console.log('🔍 [NextAuth] === FIN AUTHORIZE ===');
+        } catch (error) {
+          console.error('❌ [NextAuth] Login error:', error);
+          return null;
         }
       }
     })
   ],
-  pages: {
-    signIn: '/', // Rediriger vers la page d'accueil en cas d'erreur
-    error: '/', // Page d'erreur personnalisée (redirection vers accueil)
-  },
+  
   callbacks: {
     async signIn({ user, account, profile }) {
-      console.log('🔍 [NextAuth] === DÉBUT SIGNIN CALLBACK ===');
-      console.log('🔍 [NextAuth] SignIn - Provider:', account.provider);
-      console.log('🔍 [NextAuth] SignIn - User:', {
-        id: user.id,
-        email: user.email,
-        hasFlaskToken: !!user.flaskToken
-      });
-      // OAuth Google/Facebook
-      if (account.provider === 'google' ) {
+      console.log('🔍 [NextAuth] SignIn callback - Provider:', account?.provider);
+      
+      // ✅ SIMPLIFICATION : Traiter tous les OAuth ensemble
+      if (account && (account.provider === 'google' || account.provider === 'facebook')) {
         console.log('🔍 [NextAuth] Processing OAuth for:', account.provider);
         
         try {
-          const requestBody = {
-            provider: account.provider,
-            provider_id: account.providerAccountId,
-            email: user.email,
-            firstname: user.name?.split(' ')[0] || '',
-            lastname: user.name?.split(' ').slice(1).join(' ') || '',
-            avatar_url: user.image
-          };
-          console.log('🔍 [NextAuth] OAuth request body:', requestBody);
+          const flaskApiUrl = process.env.FLASK_API_URL || 'https://wendogo.online';
+          console.log('🔍 [NextAuth] Using Flask API:', flaskApiUrl);
           
-          const response = await fetch(`${process.env.FLASK_API_URL}/auth/oauth-signin`, {
+          const response = await fetch(`${flaskApiUrl}/auth/oauth-signin`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(requestBody)
+            body: JSON.stringify({
+              provider: account.provider,
+              provider_id: account.providerAccountId,
+              email: user.email,
+              firstname: user.name?.split(' ')[0] || '',
+              lastname: user.name?.split(' ').slice(1).join(' ') || '',
+              avatar_url: user.image
+            })
           });
 
           console.log('📡 [NextAuth] OAuth response status:', response.status);
           
-          const data = await response.json();
-          console.log('📡 [NextAuth] OAuth response data:', data);
-
-          if (response.ok && data.success && data.token) {
-            console.log('✅ [NextAuth] OAuth token received:', data.token.substring(0, 30) + '...');
+          if (response.ok) {
+            const data = await response.json();
+            console.log('✅ [NextAuth] OAuth success:', data.success);
             
-            // ✅ MODIFIER L'OBJET USER DIRECTEMENT
-            user.id = data.user.id.toString();
-            user.firstname = data.user.firstname;
-            user.lastname = data.user.lastname;
-            user.flaskToken = data.token;
-            
-            console.log('✅ [NextAuth] User object updated with Flask token');
+            if (data.success && data.token) {
+              // ✅ STOCKER LE TOKEN DANS L'OBJET USER
+              user.flaskToken = data.token;
+              user.id = data.user.id.toString();
+              console.log('✅ [NextAuth] Flask token stored in user object');
+            }
           } else {
-            console.error('❌ [NextAuth] OAuth Flask failed:', data);
+            console.error('❌ [NextAuth] OAuth Flask failed:', response.status);
           }
         } catch (error) {
           console.error('❌ [NextAuth] OAuth error:', error);
         }
       }
       
-      console.log('🔍 [NextAuth] === FIN SIGNIN CALLBACK ===');
       return true;
     },
     
     async jwt({ token, user, account }) {
-      console.log('🔍 [NextAuth] === DÉBUT JWT CALLBACK ===');
-      console.log('🔍 [NextAuth] JWT - Has user:', !!user);
-      console.log('🔍 [NextAuth] JWT - Current token keys:', Object.keys(token));
+      console.log('🔍 [NextAuth] JWT callback');
       
-      if (user) {
-        console.log('🔍 [NextAuth] JWT - User has flaskToken:', !!user.flaskToken);
-        console.log('🔍 [NextAuth] JWT - Token preview:', user.flaskToken ? user.flaskToken.substring(0, 30) + '...' : 'NONE');
-        
+      // ✅ PREMIÈRE CONNEXION : Stocker le token Flask
+      if (user && user.flaskToken) {
+        console.log('✅ [NextAuth] Storing Flask token in JWT');
+        token.flaskToken = user.flaskToken;
         token.id = user.id;
-        token.firstname = user.firstname;
-        token.lastname = user.lastname;
-        token.flaskToken = user.flaskToken; // ✅ STOCKAGE DANS JWT
-        
-        console.log('✅ [NextAuth] JWT - Token stored in JWT:', !!token.flaskToken);
       }
       
-      console.log('🔍 [NextAuth] JWT - Final token keys:', Object.keys(token));
-      console.log('🔍 [NextAuth] === FIN JWT CALLBACK ===');
       return token;
     },
     
     async session({ session, token }) {
-      console.log('🔍 [NextAuth] === DÉBUT SESSION CALLBACK ===');
-      console.log('🔍 [NextAuth] Session - Token keys:', Object.keys(token));
-      console.log('🔍 [NextAuth] Session - Has flaskToken in token:', !!token.flaskToken);
+      console.log('🔍 [NextAuth] Session callback');
+      console.log('🔍 [NextAuth] Token has flaskToken:', !!token.flaskToken);
       
+      // ✅ TRANSMETTRE LE TOKEN À LA SESSION
+      session.accessToken = token.flaskToken;
       session.user.id = token.id;
-      session.user.firstname = token.firstname;
-      session.user.lastname = token.lastname;
-      session.accessToken = token.flaskToken; // ✅ MISE À DISPOSITION
       
-      console.log('✅ [NextAuth] Session - accessToken set:', !!session.accessToken);
-      console.log('✅ [NextAuth] Session - accessToken preview:', session.accessToken ? session.accessToken.substring(0, 30) + '...' : 'NONE');
-      console.log('🔍 [NextAuth] === FIN SESSION CALLBACK ===');
+      console.log('✅ [NextAuth] accessToken set in session:', !!session.accessToken);
       
       return session;
     }
   },
+  
   session: { 
     strategy: 'jwt',
     maxAge: 24 * 60 * 60, // 24 heures
   },
+  
   secret: process.env.NEXTAUTH_SECRET,
-  debug: true, // ✅ LOGS NEXTAUTH ACTIVÉS
+  debug: process.env.NODE_ENV === 'development', // Logs seulement en dev
 }
 
 export default NextAuth(authOptions)
