@@ -53,10 +53,10 @@ const AdminPasswordManager = () => {
         if (accessToken) {
           const response = await fetch(`${REST_API_PARAMS.baseUrl}/api/admin/password-manager/verify-access`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json',
-                        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
-        'Access-Control-Request-Method': 'GET, POST, DELETE, PUT, OPTIONS'
+            headers: { 'Content-Type': 'application/json'
+        //                 'Access-Control-Allow-Origin': '*',
+        // 'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
+        // 'Access-Control-Request-Method': 'GET, POST, DELETE, PUT, OPTIONS'
             },
             
             body: JSON.stringify({ token: accessToken, email: emailParam })
