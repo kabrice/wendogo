@@ -417,8 +417,8 @@ class ProgramApi {
       // Admissions par année
       y1_required_level: program.y1_required_level,
       required_degree1: program.required_degree1,
-      application_details_for_year_1: program.application_details_for_year_1,
-      teaching_language_with_required_level_for_year_1: program.teaching_language_with_required_level_for_year_1,
+      y1_admission_details: program.y1_admission_details,
+      y1_teaching_language_with_required_level: program.y1_teaching_language_with_required_level,
       language_tech_level1: program.language_tech_level1,
       
       y2_required_level: program.y2_required_level,
@@ -442,7 +442,7 @@ class ProgramApi {
       y4_admission_details: program.y4_admission_details,
       y4_admission_method: program.y4_admission_method,
       y4_application_date: program.y4_application_date,
-      teaching_language_with_required_level_for_year_4: program.teaching_language_with_required_level_for_year_4,
+      y4_teaching_language_with_required_level: program.y4_teaching_language_with_required_level,
       language_tech_level4: program.language_tech_level4,
       
       y5_required_level: program.y5_required_level,
@@ -458,6 +458,32 @@ class ProgramApi {
       employment_rate_among_graduates: program.employment_rate_among_graduates,
       Success_rate_of_the_program: program.success_rate_of_the_program,
       starting_salary: program.starting_salary,
+      
+      // Campus France et evaluations
+      eef_name: program.eef_name,
+      is_active: program.is_active,
+      parallel_procedure: program.parallel_procedure,
+      bienvenue_en_france_level: program.bienvenue_en_france_level,
+      contact: program.contact,
+      language_tech_level_unofficial1: program.language_tech_level_unofficial1,
+      language_tech_level_unofficial2: program.language_tech_level_unofficial2,
+      language_tech_level_unofficial3: program.language_tech_level_unofficial3,
+      language_tech_level_unofficial4: program.language_tech_level_unofficial4,
+      language_tech_level_unofficial5: program.language_tech_level_unofficial5,
+      is_referenced_in_eef: program.is_referenced_in_eef,
+      address: program.address,
+      phone: program.phone,
+      email: program.email,
+      exoneration_tuition: program.school?.exoneration_tuition,
+      exoneration_tuition_comment: program.school?.exoneration_tuition_comment,
+      connection_campus_france: program.school?.connection_campus_france,
+      desired_profiles: program.desired_profiles,
+
+      y1_tuition : program.y1_tuition,
+      y2_tuition : program.y2_tuition,
+      y3_tuition : program.y3_tuition,
+      y4_tuition : program.y4_tuition,
+      y5_tuition : program.y5_tuition,
       
       // SEO
       seo_title: program.seo_title,
@@ -488,7 +514,10 @@ class ProgramApi {
       connection_campus_france: school.connection_campus_france,
       international_student_rate_tech: school.international_student_rate_tech,
       hors_contrat: school.hors_contrat,
-      url: school.url
+      school_group: school.school_group,
+      url: school.url,
+      exoneration_tuition: school.exoneration_tuition,
+      exoneration_tuition_comment: school.exoneration_tuition_comment
     };
   }
 
@@ -602,7 +631,7 @@ class ProgramApi {
         'Licence': programs.filter(p => p.grade === 'Licence'),
         'Alternance': programs.filter(p => p.alternance_possible),
         'International': programs.filter(p => 
-          p.teaching_language_with_required_level_for_year_1?.toLowerCase().includes('anglais')
+          p.y1_teaching_language_with_required_level?.toLowerCase().includes('anglais')
         ),
         'Courte durée': programs.filter(p => p.fi_school_duration === '1 an'),
         'Longue durée': programs.filter(p => p.fi_school_duration === '3 ans' || p.fi_school_duration === '5 ans')

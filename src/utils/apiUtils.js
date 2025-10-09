@@ -136,8 +136,8 @@ class DataTransformers {
       // Admissions par année
       y1_required_level: program.y1_required_level,
       required_degree1: program.required_degree1,
-      application_details_for_year_1: program.application_details_for_year_1,
-      teaching_language_with_required_level_for_year_1: program.teaching_language_with_required_level_for_year_1,
+      y1_admission_details: program.y1_admission_details,
+      y1_teaching_language_with_required_level: program.y1_teaching_language_with_required_level,
       language_tech_level1: program.language_tech_level1,
       
       y2_required_level: program.y2_required_level,
@@ -161,7 +161,7 @@ class DataTransformers {
       y4_admission_details: program.y4_admission_details,
       y4_admission_method: program.y4_admission_method,
       y4_application_date: program.y4_application_date,
-      teaching_language_with_required_level_for_year_4: program.teaching_language_with_required_level_for_year_4,
+      y4_teaching_language_with_required_level: program.y4_teaching_language_with_required_level,
       language_tech_level4: program.language_tech_level4,
       
       y5_required_level: program.y5_required_level,

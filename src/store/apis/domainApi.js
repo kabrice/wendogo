@@ -144,7 +144,7 @@ class DomainApi {
       'arts': '🎨',
       'biologie': '🧬',
       'chimie': '⚗️',
-      'communication': '📰',
+      'journalisme': '📰',
       'droit': '⚖️',
       'informatique': '💻',
       'langues': '📚',
@@ -158,7 +158,9 @@ class DomainApi {
       'gestion': '💼',
       'technologies': '📡',
       'humaines': '👥',
-      'transport': '🚛'
+      'transport': '🚛',
+      'éducation': '🎓',
+      'tourisme': '✈️',
     };
     
     const lowerName = domainName.toLowerCase();

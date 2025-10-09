@@ -5,7 +5,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import Footer from '../../components/Footer';
 import NavBar from '../../components/NavBar';
-import { Clock, MapPin, Users, GraduationCap, Euro, Calendar, Award, Briefcase, Target, Globe, ChevronDown, ChevronUp, Star, CreditCard, CheckCircle, AlertCircle, Banknote, Phone, Mail, Menu, X, Building, BookOpen, TrendingUp } from 'lucide-react';
+import { Clock, MapPin, Users, GraduationCap, Euro, Calendar, Award, Briefcase, Target, Globe, CreditCard, CheckCircle, AlertCircle, BadgeCheck, BadgePercent, BadgeDollarSign, Mail } from 'lucide-react';
 import ProgramApi from '../../store/apis/programApi';
 import PrivateSchoolApi from '../../store/apis/privateSchoolApi';
 import SubdomainApi from '../../store/apis/subdomainApi';
@@ -103,44 +103,112 @@ const ProgramPage = ({ program, school, similarPrograms, error }) => {
     "courseMode": "full-time",
     "educationalCredentialAwarded": program.grade,
     "timeRequired": program.fi_school_duration,
-    "applicationStartDate": program.application_date,
-    "applicationDeadline": program.application_date,
+    "applicationStartDate": program.is_referenced_in_eef ? 'Consulter votre calendrier Campus France' : program.application_date,
+    "applicationDeadline": program.is_referenced_in_eef ? 'Consulter votre calendrier Campus France' : program.application_date,
     "startDate": program.intake,
     "teaches": program.skills_acquired ? program.skills_acquired.split(', ') : [],
     "occupationalCategory": program.careers ? program.careers.split(', ') : []
   };
 
   // Informations financières clés
-  const financialHighlights = [
-    {
-      icon: Euro,
-      title: "Frais annuel",
-      value: program.tuition,
-      subtitle: program.tuition_comment,
-      color: "from-blue-500 to-indigo-600"
-    },
-    {
-      icon: CreditCard,
-      title: "Acompte",
-      value: program.first_deposit,
-      subtitle: program.first_deposit_comment,
-      color: "from-green-500 to-emerald-600"
-    },
-    {
-      icon: Briefcase,
-      title: "Alternance",
-      value: program.alternance_possible ? "✓" : "✗",
-      subtitle: program.ca_school_duration || (program.alternance_possible ? "Possible" : "Non disponible"),
-      color: program.alternance_possible ? "from-purple-500 to-violet-600" : "from-gray-400 to-gray-500"
+  // Informations financières clés - MISE À JOUR
+  const financialHighlights = (() => {
+    const highlights = [];
+    
+    // 🆕 BLOC CAMPUS FRANCE
+    //alert('xxx ' + program.connection_campus_france);
+    if (school.connection_campus_france) {
+      highlights.push({
+        icon: Globe,
+        title: "Campus France",
+        value: "✓ Connecté",
+        subtitle: "Procédure d'admission via Campus France",
+        color: "from-green-500 to-emerald-600"
+      });
     }
-  ];
+    
+    // 🆕 BLOC PROCÉDURE PARALLÈLE
+    if (program.parallel_procedure) {
+      highlights.push({
+        icon: AlertCircle,
+        title: "Procédure",
+        value: "Parallèle",
+        subtitle: "Soumis à une procédure d'admission parallèle",
+        color: "from-orange-500 to-amber-600"
+      });
+    }
+    
+    // 🆕 BLOC EXONÉRATION (remplace Frais annuel si EEF)
+    if (program.is_referenced_in_eef) {
+      if (program.exoneration_tuition === 1) {
+        highlights.push({
+          icon: BadgeCheck,
+          title: "Exonération",
+          value: "Totale",
+          subtitle: "Frais de scolarité totalement exonérés",
+          color: "from-green-500 to-emerald-600"
+        });
+      } else if (program.exoneration_tuition === -1) {
+        highlights.push({
+          icon: BadgePercent,
+          title: "Exonération",
+          value: "Partielle",
+          subtitle: "Réduction sur les frais de scolarité",
+          color: "from-orange-500 to-yellow-600"
+        });
+      } else if (program.exoneration_tuition === 0) {
+        highlights.push({
+          icon: BadgeDollarSign,
+          title: "Exonération",
+          value: "Aucune",
+          subtitle: "Frais de scolarité standards",
+          color: "from-red-500 to-rose-600"
+        });
+      }
+    } else {
+      // Bloc Frais annuel classique si PAS EEF
+      if (program.tuition) {
+        highlights.push({
+          icon: Euro,
+          title: "Frais annuel",
+          value: program.tuition,
+          subtitle: program.tuition_comment,
+          color: "from-blue-500 to-indigo-600"
+        });
+      }
+    }
+    
+    // Acompte
+    if (program.first_deposit) {
+      highlights.push({
+        icon: CreditCard,
+        title: "Acompte",
+        value: program.first_deposit,
+        subtitle: program.first_deposit_comment,
+        color: "from-green-500 to-emerald-600"
+      });
+    }
+    
+    // Alternance
+    if (program.alternance_possible) {
+      highlights.push({
+        icon: Briefcase,
+        title: "Alternance",
+        value: "✓",
+        subtitle: program.ca_school_duration || "Possible",
+        color: "from-purple-500 to-violet-600"
+      });
+    }
+    
+    return highlights;
+  })();
 
   // Dates importantes
   const importantDates = [
     {
       icon: Calendar,
       title: "Candidatures",
-      date: program.application_date,
+      date: program.is_referenced_in_eef ? 'Consulter votre calendrier Campus France' : program.application_date,
       subtitle: program.application_date_comment,
       status: "urgent"
     },
@@ -171,7 +239,7 @@ const ProgramPage = ({ program, school, similarPrograms, error }) => {
           year: i,
           level: level,
           degree: program[`required_degree${i}`] || program[`y${i}_required_degree`],
-          method: program[`y${i}_admission_details`] || program[`application_details_for_year_${i}`],
+          method: program[`y${i}_admission_details`],
           applicationDate: program[`y${i}_application_date`],
           language: program[`y${i}_teaching_language_with_required_level`] || program[`teaching_language_with_required_level_for_year_${i}`],
           languageTech: program[`language_tech_level${i}`]
@@ -263,6 +331,18 @@ const ProgramPage = ({ program, school, similarPrograms, error }) => {
     );
   };
 
+  const getFirstLanguageLevel = (program) => {
+  const fields = [
+    'language_tech_level1', 'language_tech_level2', 'language_tech_level3', 
+    'language_tech_level4', 'language_tech_level5',
+    'language_tech_level_unofficial1', 'language_tech_level_unofficial2',
+    'language_tech_level_unofficial3', 'language_tech_level_unofficial4',
+    'language_tech_level_unofficial5'
+  ];
+  
+  return fields.find(field => program[field]) || null;
+};
+
   const tabs = [
     { id: 'overview', label: 'Aperçu', icon: Target },
     { id: 'finances', label: 'Prix', icon: Euro },
@@ -307,6 +387,9 @@ const ProgramPage = ({ program, school, similarPrograms, error }) => {
         <div className="bg-gradient-to-r from-indigo-600 via-blue-600 to-cyan-500 relative overflow-hidden">
           <div className="absolute inset-0 bg-black/10"></div>
           
+          {/* Badge Bienvenue en France - Position absolue en haut à gauche */}
+
+          
           <div className="relative px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-12">
             <div className="max-w-7xl mx-auto">
               {/* Breadcrumb Mobile */}
@@ -323,9 +406,10 @@ const ProgramPage = ({ program, school, similarPrograms, error }) => {
                 <div className="lg:col-span-3">
                   {/* Badges Mobile - Scroll horizontal */}
                   <div className="flex gap-2 mb-4 overflow-x-auto pb-2 scrollbar-hide">
+                    {program.grade && (
                     <span className="bg-white/20 backdrop-blur-sm text-white px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap">
                       {program.grade}
-                    </span>
+                    </span>)}
                     {certifications.slice(0, 4).map((cert, index) => (
                       <span key={index} className="bg-green-500/20 backdrop-blur-sm text-green-100 px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap">
                         {cert}
@@ -347,65 +431,77 @@ const ProgramPage = ({ program, school, similarPrograms, error }) => {
                   <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-3 leading-tight">
                     {program.title}
                   </h1>
-                  
-                  {/* École Mobile */}
-                  <div className="flex items-center gap-2 text-blue-100 text-sm sm:text-base mb-4">
-                    <MapPin className="w-4 h-4 flex-shrink-0" />
-                    <LinkWithLoading href={"/schools/" + school.slug} className="hover:text-white truncate">
-                      {school.name}
-                    </LinkWithLoading>
-                  </div>
 
-                  {/* Sous-domaines */}
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {(() => {
-                      // ✅ Utiliser getSubdomainNamesSync comme dans index.js
-                      const subdomainIds = [
-                        program.sub_domain1, 
-                        program.sub_domain2, 
-                        program.sub_domain3
-                      ].filter(Boolean);
-                      
-                      if (subdomainIds.length === 0) return null;
-                      
-                      // ✅ Récupérer les vrais noms depuis l'API
-                      const subdomainNames = subdomainsLoaded 
-                        ? getSubdomainNamesSync(subdomainIds, subdomains)
-                        : subdomainIds; // Fallback vers IDs si pas encore chargé
-                      
-                      return subdomainNames.map((subdomainName, index) => (
-                        <span 
-                          key={index} 
-                          className="bg-blue-500/20 backdrop-blur-sm text-blue-100 px-2 py-1 rounded text-xs"
-                        >
-                          {subdomainName}
-                        </span>
-                      ));
-                    })()}
+                  {/* 🆕 Badge EEF - Entre titre et école */}
+                  {program.is_referenced_in_eef && program.eef_name && (
+                    <div className="bg-white/10 backdrop-blur-md border border-white/30 rounded-lg p-3 mb-4 w-fit">
+                      <div className="flex items-start gap-2">
+                        <div className="">
+                          <div className="text-white font-semibold text-xs sm:text-sm mb-1">
+                            ✅ Référencé sur Études en France
+                          </div>
+                          <div className="text-blue-100 text-xs leading-relaxed">
+                            <span className="font-medium">Nom de recherche :</span>{' '}
+                            <span className="italic">{program.eef_name}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  {/* 🆕 Section École + Badge Bienvenue - Alignement horizontal/vertical */}
+                  <div className="flex flex-col sm:flex-row sm:items-start  gap-4 mb-4">
+                    {/* Colonne gauche : École + Sous-domaines */}
+                    <div className="min-w-0">
+                      {/* École Mobile */}
+                      <div className="flex items-center gap-2 text-blue-100 text-sm sm:text-base mb-3">
+                        <MapPin className="w-4 h-4 flex-shrink-0" />
+                        <LinkWithLoading href={"/schools/" + school.slug} className="hover:text-white truncate">
+                          {program.is_referenced_in_eef ? school.school_group : school.name }
+                        </LinkWithLoading>
+                      </div>
+
+                      {/* Sous-domaines */}
+                      <div className="flex flex-wrap gap-2">
+                        {(() => {
+                          const subdomainIds = [
+                            program.sub_domain1, 
+                            program.sub_domain2, 
+                            program.sub_domain3
+                          ].filter(Boolean);
+                          
+                          if (subdomainIds.length === 0) return null;
+                          
+                          const subdomainNames = subdomainsLoaded 
+                            ? getSubdomainNamesSync(subdomainIds, subdomains)
+                            : subdomainIds;
+                          
+                          return subdomainNames.map((subdomainName, index) => (
+                            <span 
+                              key={index} 
+                              className="bg-blue-500/20 backdrop-blur-sm text-blue-100 px-2 py-1 rounded text-xs"
+                            >
+                              {subdomainName}
+                            </span>
+                          ));
+                        })()}
+                      </div>
+                    </div>
+
+                    {/* Colonne droite : Badge Bienvenue en France */}
+                    {program.bienvenue_en_france_level && program.bienvenue_en_france_level > 0 && (
+                      <div className="flex-shrink-0 self-start">
+                        <OptimizedImage 
+                          src={`/images/schools/label_bienvenueenfrance_${program.bienvenue_en_france_level}Etoil.png`}
+                          alt={`Label Bienvenue en France - ${program.bienvenue_en_france_level} étoile${program.bienvenue_en_france_level > 1 ? 's' : ''}`}
+                          className="w-16 h-16 sm:w-20 sm:h-20 object-contain drop-shadow-lg"
+                          width={80}
+                          height={80}
+                        />
+                      </div>
+                    )}
                   </div>
                 </div>
 
-                {/* CTA Mobile */}
-                {/* <div className="w-full lg:w-auto">
-                  <div className="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/20">
-                    <div className="text-center">
-                      <div className="text-xs text-blue-100 mb-1">Frais de formation</div>
-                      <div className="text-2xl sm:text-3xl font-bold text-white mb-2">{program.tuition}</div>
-                      <div className="text-blue-100 text-xs mb-4">Acompte: {program.first_deposit}</div>
-                      <button className="w-full bg-white text-blue-600 font-semibold py-2.5 px-4 rounded-lg hover:bg-blue-50 transition-all duration-300 text-sm">
-                        Candidater
-                      </button>
-                      <div className="text-xs text-blue-200 mt-2">
-                        Limite: {program.application_date}
-                      </div>
-                    </div>
-                  </div>
-                </div> */}
-                  {/* <FavoriteButton 
-                    programId={program.id} 
-                    className="absolute top-4 right-4 z-10"
-                    size="w-6 h-6"
-                  /> */}
                 <div className="flex-shrink-0">
                   <FavoriteButton 
                     programId={program.id} 
@@ -515,6 +611,7 @@ const ProgramPage = ({ program, school, similarPrograms, error }) => {
                 {tabs.map((tab) => {
                   const IconComponent = tab.icon;
                   const isActive = activeTab === tab.id;
+                  if( tab.id === 'career' && program.is_referenced_in_eef) return null; // Ne pas afficher l'onglet Débouchés si pas de données
                   return (
                     <button
                       key={tab.id}
@@ -550,9 +647,77 @@ const ProgramPage = ({ program, school, similarPrograms, error }) => {
                           <p className="text-slate-600 leading-relaxed text-sm sm:text-base mb-4">
                             {program.description}
                           </p>
+                          {program.desired_profiles && (
+                            <div className="mt-4">
+                              <h4 className="text-md font-semibold text-slate-800 mb-2">Profils recherchés</h4>
+                              {(() => {
+                                const profiles = program.desired_profiles;
+                                
+                                // Détecter si c'est une liste numérotée (1. 2. 3.) ou avec tirets/puces
+                                const hasNumberedList = /\d+\.\s/.test(profiles);
+                                const hasBulletList = /[-•]\s/.test(profiles);
+                                
+                                if (hasNumberedList) {
+                                  // Split par numéros suivis d'un point et espace
+                                  const items = profiles
+                                    .split(/\d+\.\s/)
+                                    .filter(item => item.trim().length > 0)
+                                    .map(item => item.trim());
+                                  
+                                  return (
+                                    <ol className="space-y-2 list-decimal list-inside">
+                                      {items.map((item, index) => (
+                                        <li key={index} className="text-slate-600 leading-relaxed text-sm sm:text-base pl-2">
+                                          <span className="inline">{item}</span>
+                                        </li>
+                                      ))}
+                                    </ol>
+                                  );
+                                } else if (hasBulletList) {
+                                  // Split par tirets ou puces
+                                  const items = profiles
+                                    .split(/[-•]\s/)
+                                    .filter(item => item.trim().length > 0)
+                                    .map(item => item.trim());
+                                  
+                                  return (
+                                    <ul className="space-y-2 list-disc list-inside">
+                                      {items.map((item, index) => (
+                                        <li key={index} className="text-slate-600 leading-relaxed text-sm sm:text-base pl-2">
+                                          <span className="inline">{item}</span>
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  );
+                                } else {
+                                  // Texte simple sans structure de liste
+                                  return (
+                                    <p className="text-slate-600 leading-relaxed text-sm sm:text-base">
+                                      {profiles}
+                                    </p>
+                                  );
+                                }
+                              })()}
+                              <br/>
+                              
+                            </div>
+                          )}
                           {program.special_comment && (
                             <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-3 sm:p-4 border border-blue-200">
-                              <p className="text-blue-700 font-medium text-sm">💡 {program.special_comment}</p>
+                              {/* Badge EEF data source */}
+                                {program.is_referenced_in_eef && (
+                                <div className="inline-block bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-xs font-semibold mb-2">
+                                  Données issues d’EEF pour l’année 2024-2025
+                                </div>
+                                )}
+                              <div className="text-blue-700 font-medium text-sm flex items-start gap-2">
+                                <span className="flex-shrink-0">💡</span>
+                                <div 
+                                  className="prose prose-sm prose-blue max-w-none special-comment-links"
+                                  style={{ lineHeight: '1.8' }}
+                                  dangerouslySetInnerHTML={{ __html: program.special_comment }}
+                                />
+                              </div>
                             </div>
                           )}
                         </div>
@@ -650,53 +815,180 @@ const ProgramPage = ({ program, school, similarPrograms, error }) => {
                       <div className="space-y-6">
                         <div>
                           <h3 className="text-lg sm:text-xl font-bold text-slate-800 mb-4">Structure des coûts</h3>
-                          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-4 border border-blue-200">
-                            <div className="space-y-4">
-                              <div>
-                                <h4 className="font-semibold text-blue-800 mb-3 text-sm sm:text-base">Frais de formation</h4>
-                                <div className="space-y-2 text-sm">
-                                  {program.tuition && 
-                                  <div className="flex justify-between">
-                                    <span className="text-slate-600">Frais annuels</span>
-                                    <span className="font-semibold">{program.tuition}</span>
-                                  </div>}
-                                  {program.fi_school_duration &&  
-                                    <div className="flex justify-between">
-                                      <span className="text-slate-600">Durée</span>
-                                      <span className="font-semibold">{program.fi_school_duration}</span>
-                                    </div>}
-                                  {program.fi_registration_fee &&                                   <div className="flex justify-between">
-                                    <span className="text-slate-600">Frais d'inscription</span>
-                                    <span className="font-semibold">{program.fi_registration_fee}</span>
-                                  </div>}
-                                </div>
-                                {program.tuition_comment && (
-                                  <div className="mt-3 text-xs text-blue-700 bg-blue-100 rounded p-2">
-                                    💡 {program.tuition_comment}
+                          
+                          {/* 🆕 CAS EEF AVEC EXONÉRATION */}
+                          {program.is_referenced_in_eef && (program.exoneration_tuition === 1 || program.exoneration_tuition === -1 || program.exoneration_tuition === 0) ? (
+                            <div className={`rounded-lg p-4 border-2 ${
+                              program.exoneration_tuition === 1 
+                                ? 'bg-gradient-to-r from-green-50 to-emerald-50 border-green-300'
+                                : program.exoneration_tuition === -1
+                                  ? 'bg-gradient-to-r from-orange-50 to-yellow-50 border-orange-300'
+                                  : 'bg-gradient-to-r from-red-50 to-rose-50 border-red-300'
+                            }`}>
+                              <div className="space-y-4">
+                                {/* Type d'exonération */}
+                                <div>
+                                  <div className="flex items-center gap-2 mb-3">
+                                    {program.exoneration_tuition === 1 ? (
+                                      <>
+                                        <BadgeCheck className="w-6 h-6 text-green-600" />
+                                        <h4 className="font-bold text-green-800 text-base sm:text-lg">Exonération Totale des Frais</h4>
+                                      </>
+                                    ) : program.exoneration_tuition === -1 ? (
+                                      <>
+                                        <BadgePercent className="w-6 h-6 text-orange-600" />
+                                        <h4 className="font-bold text-orange-800 text-base sm:text-lg">Exonération Partielle des Frais</h4>
+                                      </>
+                                    ) : (
+                                      <>
+                                        <BadgeDollarSign className="w-6 h-6 text-red-600" />
+                                        <h4 className="font-bold text-red-800 text-base sm:text-lg">Aucune Exonération</h4>
+                                      </>
+                                    )}
                                   </div>
-                                )}
-                              </div>
-                              
-                              {program.first_deposit && program.first_deposit_comment && 
-                              <div>
-                                <h4 className="font-semibold text-blue-800 mb-3 text-sm sm:text-base">Modalités de paiement</h4>
-                                <div className="bg-white rounded-lg p-3 border border-blue-200">
-                                  <div className="flex items-center gap-2 mb-1">
-                                    <CreditCard className="w-4 h-4 text-green-600" />
-                                    <span className="font-semibold text-green-800 text-sm">Premier acompte</span>
-                                  </div>
-                                  <div className="text-xl font-bold text-green-600">{program.first_deposit}</div>
-                                  {program.first_deposit_comment && (
-                                    <div className="text-xs text-green-700 mt-1">
-                                      {program.first_deposit_comment}
+                                  
+                                  {/* Commentaire exonération */}
+                                  {program.exoneration_tuition_comment && (
+                                    <div className={`rounded-lg p-3 text-sm ${
+                                      program.exoneration_tuition === 1 
+                                        ? 'bg-green-100 text-green-800 border border-green-200'
+                                        : program.exoneration_tuition === -1
+                                          ? 'bg-orange-100 text-orange-800 border border-orange-200'
+                                          : 'bg-red-100 text-red-800 border border-red-200'
+                                            
+                                    }`}>
+                                      <p className="leading-relaxed">{program.exoneration_tuition_comment}</p>
                                     </div>
                                   )}
                                 </div>
-                              </div>}
+
+                                {/* Frais par année */}
+                                {(() => {
+                                  const yearlyTuitions = [
+                                    { year: 1, amount: program.y1_tuition },
+                                    { year: 2, amount: program.y2_tuition },
+                                    { year: 3, amount: program.y3_tuition },
+                                    { year: 4, amount: program.y4_tuition },
+                                    { year: 5, amount: program.y5_tuition }
+                                  ].filter(item => item.amount && item.amount > 0);
+
+                                  if (yearlyTuitions.length > 0) {
+                                    return (
+                                      <div>
+                                        <h4 className="font-semibold text-slate-800 mb-3 text-sm sm:text-base">Frais de scolarité par année</h4>
+                                        <div className="bg-white rounded-lg p-3 border border-slate-200">
+                                          <div className="space-y-2 text-sm">
+                                            {yearlyTuitions.map(({ year, amount }) => (
+                                              <div key={year} className="flex justify-between items-center">
+                                                <span className="text-slate-600">Année {year}</span>
+                                                <span className="font-semibold text-slate-800">{amount.toLocaleString('fr-FR')} €</span>
+                                              </div>
+                                            ))}
+                                          </div>
+                                        </div>
+                                      </div>
+                                    );
+                                  }
+                                  return null;
+                                })()}
+
+                                {/* Durée */}
+                                {program.fi_school_duration && (
+                                  <div className="flex justify-between items-center text-sm">
+                                    <span className="text-slate-600 font-medium">Durée du programme</span>
+                                    <span className="font-semibold text-slate-800">{program.fi_school_duration}</span>
+                                  </div>
+                                )}
+
+                                {/* Frais d'inscription */}
+                                {program.fi_registration_fee && (
+                                  <div className="bg-white rounded-lg p-3 border border-slate-200">
+                                    <div className="flex justify-between items-center text-sm">
+                                      <span className="text-slate-600">Frais d'inscription</span>
+                                      <span className="font-semibold text-slate-800">{program.fi_registration_fee}</span>
+                                    </div>
+                                  </div>
+                                )}
+                              </div>
                             </div>
-                          </div>
+                          ) : (
+                            /* CAS STANDARD (non-EEF ou sans exonération) */
+                            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-4 border border-blue-200">
+                              <div className="space-y-4">
+                                <div>
+                                  <h4 className="font-semibold text-blue-800 mb-3 text-sm sm:text-base">Frais de formation</h4>
+                                  <div className="space-y-2 text-sm">
+                                    {program.tuition && (
+                                      <div className="flex justify-between">
+                                        <span className="text-slate-600">Frais annuels</span>
+                                        <span className="font-semibold">{program.tuition}</span>
+                                      </div>
+                                    )}
+                                    
+                                    {/* Frais par année si disponibles */}
+                                    {(() => {
+                                      const yearlyTuitions = [
+                                        { year: 1, amount: program.y1_tuition },
+                                        { year: 2, amount: program.y2_tuition },
+                                        { year: 3, amount: program.y3_tuition },
+                                        { year: 4, amount: program.y4_tuition },
+                                        { year: 5, amount: program.y5_tuition }
+                                      ].filter(item => item.amount && item.amount > 0);
+
+                                      if (yearlyTuitions.length > 0 && !program.tuition) {
+                                        return yearlyTuitions.map(({ year, amount }) => (
+                                          <div key={year} className="flex justify-between">
+                                            <span className="text-slate-600">Année {year}</span>
+                                            <span className="font-semibold">{amount.toLocaleString('fr-FR')} €</span>
+                                          </div>
+                                        ));
+                                      }
+                                      return null;
+                                    })()}
+
+                                    {program.fi_school_duration && (
+                                      <div className="flex justify-between">
+                                        <span className="text-slate-600">Durée</span>
+                                        <span className="font-semibold">{program.fi_school_duration}</span>
+                                      </div>
+                                    )}
+                                    {program.fi_registration_fee && (
+                                      <div className="flex justify-between">
+                                        <span className="text-slate-600">Frais d'inscription</span>
+                                        <span className="font-semibold">{program.fi_registration_fee}</span>
+                                      </div>
+                                    )}
+                                  </div>
+                                  {program.tuition_comment && (
+                                    <div className="mt-3 text-xs text-blue-700 bg-blue-100 rounded p-2">
+                                      💡 {program.tuition_comment}
+                                    </div>
+                                  )}
+                                </div>
+                                
+                                {program.first_deposit && program.first_deposit_comment && (
+                                  <div>
+                                    <h4 className="font-semibold text-blue-800 mb-3 text-sm sm:text-base">Modalités de paiement</h4>
+                                    <div className="bg-white rounded-lg p-3 border border-blue-200">
+                                      <div className="flex items-center gap-2 mb-1">
+                                        <CreditCard className="w-4 h-4 text-green-600" />
+                                        <span className="font-semibold text-green-800 text-sm">Premier acompte</span>
+                                      </div>
+                                      <div className="text-xl font-bold text-green-600">{program.first_deposit}</div>
+                                      {program.first_deposit_comment && (
+                                        <div className="text-xs text-green-700 mt-1">
+                                          {program.first_deposit_comment}
+                                        </div>
+                                      )}
+                                    </div>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          )}
                         </div>
 
+                        {/* Bloc Alternance (reste inchangé) */}
                         {program.alternance_possible && (
                           <div>
                             <h3 className="text-lg sm:text-xl font-bold text-slate-800 mb-3">Financement par alternance</h3>
@@ -796,10 +1088,14 @@ const ProgramPage = ({ program, school, similarPrograms, error }) => {
                           </div>
                         </div>}
                         <div>
+                          
+                          {admissionCriteria.length > 0 &&
                           <h3 className="text-lg sm:text-xl font-bold text-slate-800 mb-3">Conditions d'admission par année</h3>
+                          }
                           
                           {/* Sélecteur d'année */}
                           {admissionCriteria.length > 1 && (
+                            
                             <div className="flex gap-2 mb-4 overflow-x-auto">
                               {admissionCriteria.map((criteria) => (
                                 <button
@@ -819,8 +1115,9 @@ const ProgramPage = ({ program, school, similarPrograms, error }) => {
 
                           {/* Affichage des critères pour l'année sélectionnée */}
                           {admissionCriteria.map((criteria) => {
-                            if (selectedAdmissionYear !== `y${criteria.year}`) return null;
-                            
+
+                            if (selectedAdmissionYear !== `y${criteria.year}` && admissionCriteria.length > 1) return null;
+
                             return (
                               <div key={criteria.year} className="bg-slate-50 rounded-lg p-4">
                                 <h4 className="font-bold text-slate-800 mb-3">
@@ -845,8 +1142,19 @@ const ProgramPage = ({ program, school, similarPrograms, error }) => {
                                   )} */}
                                   {criteria.method && (
                                     <div>
-                                      <span className="font-semibold text-slate-700 text-sm">Méthode d'admission:</span>
-                                      <p className="text-slate-600 text-sm">{criteria.method}</p>
+                                      <span className="font-semibold text-slate-700 text-sm">Modalités d’admission:</span>
+                                      <br/>
+                                      {/* Badge EEF data source */}
+                                      {program.is_referenced_in_eef && (
+                                      <span className="inline-block bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-xs font-semibold mb-2">
+                                        Données issues d’EEF pour l’année 2024-2025
+                                      </span>
+                                      )}
+                                      <p 
+                                        className="text-slate-600 text-sm special-comment-links"
+                                        style={{ lineHeight: '1.8' }}
+                                        dangerouslySetInnerHTML={{ __html: criteria.method }}
+                                      />
                                     </div>
                                   )}
                                   {criteria.language && (
@@ -884,7 +1192,7 @@ const ProgramPage = ({ program, school, similarPrograms, error }) => {
                                   <div className="flex items-center justify-between mb-2">
                                     <h4 className="font-semibold text-red-800">Candidatures</h4>
                                     <span className="text-red-600 font-bold text-sm bg-red-100 px-2 py-1 rounded">
-                                      {program.application_date}
+                                      {program.is_referenced_in_eef ? 'Consulter votre calendrier Campus France' : program.application_date}
                                     </span>
                                   </div>
                                   {program.application_date_comment && (
@@ -1072,7 +1380,7 @@ const ProgramPage = ({ program, school, similarPrograms, error }) => {
                     <div className="border-t border-blue-400 pt-2">
                       <div className="flex justify-between items-center mb-3">
                         <span className="text-blue-100 text-sm">Date de candidature</span>
-                        <span className="font-semibold text-sm">{program.application_date}</span>
+                        <span className="font-semibold text-sm">{program.is_referenced_in_eef ? 'Consulter votre calendrier Campus France' : program.application_date}</span>
                       </div>
                       <a    href={program.url_application}
                             target="_blank"
@@ -1114,8 +1422,12 @@ const ProgramPage = ({ program, school, similarPrograms, error }) => {
                         <span className="text-slate-600 text-sm">Langue</span>
                       </div>
                       <span className="font-semibold text-slate-800 text-sm">
-                        {(program.language_tech_level1 && ProgramApi.formatLanguageLevels(program.language_tech_level1))
-                         || (program.language_tech_level2 && ProgramApi.formatLanguageLevels(program.language_tech_level2))}
+                        {(() => {
+                          const languageField = getFirstLanguageLevel(program);
+                          return languageField 
+                            ? ProgramApi.formatLanguageLevels(program[languageField]) 
+                            : 'Non spécifié';
+                        })()}
                       </span>
                     </div>
                     { program.intake_capacity && 
@@ -1154,16 +1466,89 @@ const ProgramPage = ({ program, school, similarPrograms, error }) => {
                                   Campus France
                                 </span>
                               )}
-                              <span className="bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full text-xs">
+                              {school.international_student_rate_tech && (
+                                <span className="bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full text-xs">
                                   {school.international_student_rate_tech && school.international_student_rate_tech.includes('-')
-                                      ? school.international_student_rate_tech.replace(/\s*-\s*/, ' d\'internationaux en ')
-                                      : school.international_student_rate_tech}
-                              </span>
+                                    ? school.international_student_rate_tech.replace(/\s*-\s*/, ' d\'internationaux en ')
+                                    : school.international_student_rate_tech}
+                                </span>
+                              )}
                             </div>
                           </div>
                         </div>
                       </div>
                     </LinkWithLoading>
+
+                    {/* 🆕 Informations supplémentaires si EEF */}
+                    {program.is_referenced_in_eef && (
+                      <div className="mt-3 pt-3 border-t border-slate-200 space-y-3">
+                        {/* Adresse */}
+                        {program.address && (
+                          <div className="flex items-start gap-2">
+                            <MapPin className="w-4 h-4 text-slate-500 flex-shrink-0 mt-0.5" />
+                            <div 
+                              className="text-xs text-slate-600 leading-relaxed [&_br]:hidden [&_br]:sm:block"
+                              dangerouslySetInnerHTML={{ 
+                                __html: program.address
+                                  .replace(/<br\s*\/?>/gi, ', ') // Remplace <br> par virgule sur mobile
+                                  .trim()
+                              }}
+                            />
+                          </div>
+                        )}
+
+                        {/* Contact */}
+                        {program.contact && (
+                          <div className="flex items-start gap-2">
+                            <Mail className="w-4 h-4 text-slate-500 flex-shrink-0 mt-0.5" />
+                            <div className="text-xs text-slate-600 leading-relaxed">
+                              {(() => {
+                                // Parser le contact pour extraire email, nom et téléphone
+                                const contactText = program.contact;
+                                
+                                // Regex pour détecter email
+                                const emailMatch = contactText.match(/([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/);
+                                const email = emailMatch ? emailMatch[0] : null;
+                                
+                                // Regex pour détecter téléphone
+                                const phoneMatch = contactText.match(/(\+?\d[\d\s\-.()]{8,})/);
+                                const phone = phoneMatch ? phoneMatch[0].trim() : null;
+                                
+                                // Extraire le nom (texte entre : et éventuel parenthèse ou fin)
+                                const nameMatch = contactText.match(/:\s*([^(]+?)(?:\s*\(|$)/);
+                                const name = nameMatch ? nameMatch[1].trim() : null;
+                                
+                                return (
+                                  <div className="space-y-1">
+                                    {email && (
+                                      <a 
+                                        href={`mailto:${email}`}
+                                        className="block text-blue-600 hover:text-blue-800 font-medium break-all"
+                                        onClick={(e) => e.stopPropagation()} // Empêche la navigation vers l'école
+                                      >
+                                        {email}
+                                      </a>
+                                    )}
+                                    {name && email !== contactText && (
+                                      <div className="text-slate-700">{name}</div>
+                                    )}
+                                    {phone && (
+                                      <a 
+                                        href={`tel:${phone.replace(/\s/g, '')}`}
+                                        className="block text-slate-600 hover:text-slate-800"
+                                        onClick={(e) => e.stopPropagation()}
+                                      >
+                                        {phone}
+                                      </a>
+                                    )}
+                                  </div>
+                                );
+                              })()}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </div>
                 )}
 
@@ -1176,9 +1561,25 @@ const ProgramPage = ({ program, school, similarPrograms, error }) => {
                         <LinkWithLoading key={similarProgram.id} href={similarProgram.full_url_path || `/schools/${similarProgram.school_slug}/programs/${similarProgram.slug}`}>
                           <div className="p-3 border border-slate-200 rounded-lg hover:shadow-md transition-shadow cursor-pointer">
                             <h4 className="font-medium text-slate-800 text-sm leading-tight line-clamp-2">{similarProgram.title}</h4>
-                            <p className="text-xs text-slate-600 mt-1">{ similarProgram.school.name}</p>
+                            <p className="text-xs text-slate-600 mt-1">{similarProgram.is_referenced_in_eef? similarProgram.school.school_group: similarProgram.school.name}</p>
                             <div className="flex items-center gap-2 mt-1">
-                              <span className="text-xs text-blue-600">{similarProgram.tuition}</span>
+                              <span className="text-xs text-blue-600">
+                                    { similarProgram.tuition ? PrivateSchoolApi.formatFee(similarProgram.tuition) : (
+                                      similarProgram.y1_tuition ? PrivateSchoolApi.formatFee(similarProgram.y1_tuition) + ' €' :
+                                      similarProgram.y2_tuition ? PrivateSchoolApi.formatFee(similarProgram.y2_tuition) + ' €' :
+                                      similarProgram.y3_tuition ? PrivateSchoolApi.formatFee(similarProgram.y3_tuition) + ' €' :
+                                      similarProgram.y4_tuition ? PrivateSchoolApi.formatFee(similarProgram.y4_tuition) + ' €' :
+                                      similarProgram.y5_tuition ? PrivateSchoolApi.formatFee(similarProgram.y5_tuition) + ' €' :
+                                                                    (similarProgram.is_referenced_in_eef
+                                      ? (
+                                          similarProgram.school.exoneration_tuition === 1
+                                            ? "Exonération Totale"
+                                            : similarProgram.school.exoneration_tuition === -1
+                                              ? "Exonération Partielle"
+                                              : "Aucune exonération"
+                                        )
+                                      : 'Non communiqué'))}
+                                  </span>
                               <span className="text-xs text-slate-500">•</span>
                               <span className="text-xs text-slate-500">{similarProgram.fi_school_duration}</span>
                             </div>

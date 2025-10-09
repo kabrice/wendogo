@@ -1287,12 +1287,19 @@ const HomePage = () => {
           {/* Badges - HAUTEUR FLEXIBLE MAIS LIMITÉE */}
           <div className="min-h-[2rem] mb-3">
             <div className="flex flex-wrap gap-2">
-              <span className="bg-gradient-to-r from-blue-100 to-indigo-100 text-blue-700 px-2 py-1 rounded-full text-xs font-medium">
-                {program.grade}
-              </span>
+              {program.grade && (!program.is_referenced_in_eef)&& (
+                <span className="bg-gradient-to-r from-blue-100 to-indigo-100 text-blue-700 px-2 py-1 rounded-full text-xs font-medium">
+                  {program.grade}
+                </span>
+              )}
               {program.state_certification_type && (
                 <span className="bg-gradient-to-r from-green-100 to-emerald-100 text-green-700 px-2 py-1 rounded-full text-xs font-medium">
                   {program.state_certification_type}
+                </span>
+              )}
+              {!program.state_certification_type && program.state_certification_type_complement && (
+                <span className="bg-gradient-to-r from-yellow-100 to-amber-100 text-yellow-700 px-2 py-1 rounded-full text-xs font-medium">
+                  {program.state_certification_type_complement}
                 </span>
               )}
               {program.alternance_possible && (
@@ -1302,7 +1309,83 @@ const HomePage = () => {
               )}
             </div>
           </div>
-
+          {/* Infos additionnelles du programme */}
+          {/* <div className="mb-3">
+            <div className="grid grid-cols-1 gap-1 text-xs">
+              {program.parallel_procedure && (
+                <div>
+                  <span className="font-semibold text-gray-700">Procédure parallèle :</span>{" "}
+                  <span className="text-gray-600">{program.parallel_procedure ? 1 : 0}</span>
+                </div>
+              )}
+              {program.bienvenue_en_france_level && (
+                <div>
+                  <span className="font-semibold text-gray-700">Bienvenue en France :</span>{" "}
+                  <span className="text-gray-600">{program.bienvenue_en_france_level}</span>
+                </div>
+              )}
+              {program.contact && (
+                <div>
+                  <span className="font-semibold text-gray-700">Contact :</span>{" "}
+                  <span className="text-gray-600">{program.contact}</span>
+                </div>
+              )}
+              {program.language_tech_level_unofficial1 && (
+                <div>
+                  <span className="font-semibold text-gray-700">Langue niveau 1 :</span>{" "}
+                  <span className="text-gray-600">{program.language_tech_level_unofficial1}</span>
+                </div>
+              )}
+              {program.language_tech_level_unofficial2 && (
+                <div>
+                  <span className="font-semibold text-gray-700">Langue niveau 2 :</span>{" "}
+                  <span className="text-gray-600">{program.language_tech_level_unofficial2}</span>
+                </div>
+              )}
+              {program.language_tech_level_unofficial3 && (
+                <div>
+                  <span className="font-semibold text-gray-700">Langue niveau 3 :</span>{" "}
+                  <span className="text-gray-600">{program.language_tech_level_unofficial3}</span>
+                </div>
+              )}
+              {program.language_tech_level_unofficial4 && (
+                <div>
+                  <span className="font-semibold text-gray-700">Langue niveau 4 :</span>{" "}
+                  <span className="text-gray-600">{program.language_tech_level_unofficial4}</span>
+                </div>
+              )}
+              {program.language_tech_level_unofficial5 && (
+                <div>
+                  <span className="font-semibold text-gray-700">Langue niveau 5 :</span>{" "}
+                  <span className="text-gray-600">{program.language_tech_level_unofficial5}</span>
+                </div>
+              )}
+              {typeof program.is_referenced_in_eef !== "undefined" && (
+                <div>
+                  <span className="font-semibold text-gray-700">Référencé EEF :</span>{" "}
+                  <span className="text-gray-600">{program.is_referenced_in_eef ? "Oui" : "Non"}</span>
+                </div>
+              )}
+              {program.address && (
+                <div>
+                  <span className="font-semibold text-gray-700">Adresse :</span>{" "}
+                  <span className="text-gray-600">{program.address}</span>
+                </div>
+              )}
+              {program.exoneration_tuition && (
+                <div>
+                  <span className="font-semibold text-gray-700">Exonération de frais :</span>{" "}
+                  <span className="text-gray-600">{program.exoneration_tuition}</span>
+                </div>
+              )}
+              {program.email && (
+                <div>
+                  <span className="font-semibold text-gray-700">Email :</span>{" "}
+                  <span className="text-gray-600">{program.email}</span>
+                </div>
+              )}
+            </div>
+          </div> */}
           {/* Description - HAUTEUR FIXE (3 lignes max) */}
           <div className="h-16 mb-3">
             <p className="text-gray-600 text-sm line-clamp-3 leading-relaxed">
@@ -1343,12 +1426,39 @@ const HomePage = () => {
               <span className="text-gray-700 truncate">Rentrée: {program.intake}</span>
             </div>
             <div className="flex items-center gap-2">
-              <Euro className="w-4 h-4 text-green-600 flex-shrink-0" />
-              <span className="text-gray-700 font-medium truncate">{formatPrice(program.tuition)}</span>
+                {program.is_referenced_in_eef ? (
+                  // Programme référencé EEF - Afficher Award avec couleur selon exonération
+                  <Award 
+                    className={`w-4 h-4 inline-block mr-1 ${
+                      program.exoneration_tuition === 1 
+                        ? 'text-green-500' // Exonération totale - vert
+                        : program.exoneration_tuition === -1 
+                          ? 'text-orange-500' // Exonération partielle - orange
+                          : 'text-red-500' // Aucune exonération - rouge
+                    }`}
+                  />
+                ) : (
+                  // Programme non-EEF - Afficher Euro
+                  <Euro className="w-4 h-4 text-green-600 flex-shrink-0 mr-1" />
+                )}
+
+                {/* Texte affiché */}
+                <span className="text-gray-700 font-medium truncate">
+                  {program.is_referenced_in_eef
+                    ? (
+                        program.exoneration_tuition === 1
+                          ? "Exonération Totale"
+                          : program.exoneration_tuition === -1
+                            ? "Exonération Partielle"
+                            : "Aucune exonération"
+                      )
+                    : formatPrice(program.tuition)
+                  }
+                </span>
             </div>
             <div className="flex items-center gap-2">
               <GraduationCap className="w-4 h-4 text-red-600 flex-shrink-0" />
-              <span className="text-gray-700 truncate">Deadline: {program.application_date}</span>
+              <span className="text-gray-700 truncate">Deadline: {program.is_referenced_in_eef ? 'Calendrier Campus France' : program.application_date}</span>
             </div>
             {program.first_deposit && (
               <div className="flex items-center gap-2 col-span-2">
@@ -1447,8 +1557,8 @@ const HomePage = () => {
                     Votre avenir académique en France vous attend
                   </h1>
                   <p className="text-lg sm:text-xl text-blue-100 mb-8 max-w-4xl mx-auto">
-                    Explorez <span className="font-bold text-yellow-300">{globalStats.total_programs.toLocaleString()}+ formations</span> dans <span className="font-bold text-yellow-300">{globalStats.total_schools.toLocaleString()}+ écoles privées</span> françaises. 
-                    Trouvez le programme parfait pour votre parcours international.
+                    Découvrez la plus grande sélection de formations en France — <span className="font-bold text-yellow-300">{globalStats.total_programs.toLocaleString()}+ programmes</span> incluant 100 % des formations Campus France dans plus de <span className="font-bold text-yellow-300">{globalStats.total_schools.toLocaleString()} établissements </span>. 
+                    <br />Comparez, choisissez, et lancez votre parcours international en toute confiance.
                   </p>
 
                   {/* Barre de recherche intégrée dans le header */}
@@ -1661,7 +1771,7 @@ const HomePage = () => {
                           <h2 className="text-sm sm:text-xl font-bold text-gray-900 truncate">
                             <span className="text-gray-500 text-xs sm:text-base font-normal">Spécialisations dans </span>
                             <br className="sm:hidden" />
-                            <span className="text-blue-600">{getDomainNameSync(selectedDomain, domains)}</span>
+                            <span className="text-blue-600">{getDomainNameSync(selectedDomain, domains)} {selectedDomain ? DomainApi.getIconForDomain(getDomainNameSync(selectedDomain, domains)) : ''}</span>
                           </h2>
                         </div>
 

@@ -324,7 +324,10 @@ class PrivateSchoolApi {
       general_entry_requirements: school.general_entry_requirements,
       partnerships: school.partnerships,
       facilities: school.facilities,
-      
+
+      exoneration_tuition: school.exoneration_tuition,
+      exoneration_tuition_comment: school.exoneration_tuition_comment,
+
       // SEO
       seo_title: school.seo_title,
       seo_description: school.seo_description,

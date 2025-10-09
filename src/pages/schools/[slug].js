@@ -88,6 +88,7 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
     }
     setExpandedSections(newExpandedSections);
   };
+  
 
   // Fonction pour formater le numéro de téléphone
   const formatPhoneNumber = (phone) => {
@@ -151,6 +152,7 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
       
       <div className="space-y-4">
         {displayedPrograms.map((program) => (
+          
         <LinkWithLoading key={program.id} href={program.full_url_path || `/schools/${program.school_slug}/programs/${program.slug}`}   target="_blank" rel="noopener noreferrer">
           <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-4 border border-blue-200 hover:shadow-lg hover:border-blue-300 transition-all duration-300 cursor-pointer group">
           <div className="flex items-start justify-between gap-3">
@@ -160,12 +162,29 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
             </h5>
             <div className="flex flex-wrap items-center gap-2 mt-1">
               <span className="bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full text-xs font-medium">
-              {program.state_certification_type_complement || program.state_certification_type_complement2}
+              { program.state_certification_type_complement || program.state_certification_type_complement2}
               </span>
               <span className="text-blue-600 text-xs">•</span>
               <span className="text-blue-600 text-xs">{program.fi_school_duration}</span>
               <span className="text-blue-600 text-xs">•</span>
-              <span className="text-blue-600 text-xs font-medium">{PrivateSchoolApi.formatFee(program.tuition)}</span>
+              <span className="text-blue-600 text-xs font-medium">
+                                            { program.tuition ? PrivateSchoolApi.formatFee(program.tuition) : (
+                                              program.y1_tuition ? PrivateSchoolApi.formatFee(program.y1_tuition) + ' €' :
+                                              program.y2_tuition ? PrivateSchoolApi.formatFee(program.y2_tuition) + ' €' :
+                                              program.y3_tuition ? PrivateSchoolApi.formatFee(program.y3_tuition) + ' €' :
+                                              program.y4_tuition ? PrivateSchoolApi.formatFee(program.y4_tuition) + ' €' :
+                                              program.y5_tuition ? PrivateSchoolApi.formatFee(program.y5_tuition) + ' €' :
+                                                                            (program.is_referenced_in_eef
+                                              ? (
+                                                  program.school.exoneration_tuition === 1
+                                                    ? "Exonération Totale"
+                                                    : program.school.exoneration_tuition === -1
+                                                      ? "Exonération Partielle"
+                                                      : "Aucune exonération"
+                                                )
+                                              : 'Non communiqué'))}
+
+              </span>
               {program.alternance_possible && (
               <>
                 <span className="text-blue-600 text-xs">•</span>
@@ -270,20 +289,20 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
 
   // Points forts pour étudiants internationaux
   const internationalHighlights = [
-    {
+    school?.acknoledgement && {
       icon: Shield,
       title: "Reconnaissances",
-      value: school?.acknoledgement?.split(', ').length + "+ accréditations",
-      description: school?.acknoledgement?.split(', ').slice(0, 3).join(', ') + '...',
+      value: school.acknoledgement.split(', ').length + "+ accréditations",
+      description: school.acknoledgement.split(', ').slice(0, 3).join(', ') + '...',
       color: "from-blue-500 to-indigo-600"
     },
-    {
-      icon: Globe,
-      title: "Campus France",
-      value: school.connection_campus_france ? "✓ Connectée" : "Non Connectée",
-      description: school.connection_campus_france ? "Procédures simplifiées" : "Peut-être procédure parrallèle",
-      color: "from-green-500 to-emerald-600"
-    },
+    // {
+    //   icon: Globe,
+    //   title: "Campus France",
+    //   value: school.connection_campus_france ? "✓ Connectée" : "Non Connectée",
+    //   description: school.connection_campus_france ? "Procédures simplifiées" : "Peut-être procédure parallèle",
+    //   color: "from-green-500 to-emerald-600"
+    // },
     {
       icon: Users,
       title: "International",
@@ -301,7 +320,7 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
       })(),
       color: "from-purple-500 to-violet-600"
     }
-  ];
+  ].filter(Boolean); // ✅ Filtre les valeurs false/null/undefined
 
   // Parsing des contacts
   const contactInfo = parseContactEmail(school.email);
@@ -425,16 +444,18 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
             </div>
           )}
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div className="bg-white rounded-lg border border-slate-200 p-3">
-              <h4 className="font-bold text-slate-800 mb-2 text-sm">Conditions générales</h4>
-              <ul className="text-slate-600 text-xs space-y-1">
-                {school.general_entry_requirements.split('-').map((req, index) => (
-                  <li key={index}>• {req.trim().charAt(0).toUpperCase() + req.trim().slice(1)}</li>
-                ))}
-              </ul>
-            </div>
-            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {school.general_entry_requirements &&
+              <div className="bg-white rounded-lg border border-slate-200 p-3">
+                <h4 className="font-bold text-slate-800 mb-2 text-sm">Conditions générales</h4>
+                <ul className="text-slate-600 text-xs space-y-1">
+                  {school.general_entry_requirements.split('-').map((req, index) => (
+                    <li key={index}>• {req.trim().charAt(0).toUpperCase() + req.trim().slice(1)}</li>
+                  ))}
+                </ul>
+              </div>
+            }
+            {school.international_support_before_coming &&
             <div className="bg-white rounded-lg border border-slate-200 p-3">
               <h4 className="font-bold text-slate-800 mb-2 text-sm">Support international</h4>
               <ul className="text-slate-600 text-xs space-y-1">
@@ -443,6 +464,7 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
                 ))}
               </ul>
             </div>
+      } 
           </div>
         </div>
       )
@@ -493,6 +515,7 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
           </p>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            { school.facilities &&
             <div className="bg-white rounded-lg border border-slate-200 p-3">
               <h4 className="font-bold text-slate-800 mb-2 flex items-center gap-2 text-sm">
                 <Building className="w-3 h-3 text-blue-600" />
@@ -504,7 +527,8 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
                 ))}
               </ul>
             </div>
-            
+            }
+            {school.partnerships &&
             <div className="bg-white rounded-lg border border-slate-200 p-3">
               <h4 className="font-bold text-slate-800 mb-2 flex items-center gap-2 text-sm">
                 <Users className="w-3 h-3 text-green-600" />
@@ -519,8 +543,10 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
                 )}
               </ul>
             </div>
+            }
           </div>
           
+          {school.international_support_after_coming &&
           <div className="bg-gradient-to-r from-orange-50 to-red-50 rounded-lg p-3 border border-orange-200">
             <h4 className="font-semibold text-orange-800 mb-2 flex items-center gap-2 text-sm">
               <Globe className="w-3 h-3" />
@@ -532,6 +558,7 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
               ))}
             </ul>
           </div>
+          }
         </div>
       )
     }
