@@ -1702,11 +1702,17 @@ export async function getStaticProps({ params }) {
     // ✅ PRÉCHARGER programmes similaires
     const similarPrograms = await optimizedApi.getSimilarPrograms?.(program.id, 3) || [];
 
+    // ✅ NETTOYER ET SÉRIALISER TOUTES LES DONNÉES
     return {
-      props: { program, school, similarPrograms },
-      revalidate: 86400 // ✅ 24h au lieu de 1h
+      props: { 
+        program: JSON.parse(JSON.stringify(program)),
+        school: JSON.parse(JSON.stringify(school)),
+        similarPrograms: JSON.parse(JSON.stringify(similarPrograms))
+      },
+      revalidate: 86400
     };
   } catch (error) {
+    console.error('Erreur getStaticProps:', error);
     return {
       props: { error: 'Erreur lors du chargement' },
       revalidate: 60
