@@ -20,6 +20,7 @@ import FavoriteButton from '../components/FavoriteButton';
 import AccompanySection from '../components/AccompanySection';
 import OrganizationContactSection from '../components/OrganizationContactSection';
 import { trackSearch } from '../lib/gtag';
+import ActiveFiltersBar from '../components/ActiveFiltersBar';
 // Ajout de l'import ou définition de REST_API_PARAMS
 
 const HomePage = () => {
@@ -894,7 +895,59 @@ const HomePage = () => {
     }
   }, [selectedSubdomains, getProgramCountForSubdomains]);
 
-
+  // Remplacer l'useEffect existant qui gère router.query par :
+  useEffect(() => {
+    const { tab, domain: domainSlug, subdomains: subdomainSlugs, view } = router.query;
+    
+    // Gérer l'onglet actif
+    if (tab && ['search', 'accompany', 'organizations'].includes(tab)) {
+      setActiveTab(tab);
+      
+      if (tab === 'accompany') {
+        setTimeout(() => {
+          const element = document.getElementById('accompany-section');
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+          }
+        }, 100);
+      }
+    }
+    
+    // Gérer la sélection de domaine depuis l'URL
+    if (tab === 'search' && domainSlug && domains.length > 0) {
+      const domain = getDomainBySlug(domainSlug);
+      if (domain) {
+        setSelectedDomain(domain.id);
+        const domainSubdomains = getSubdomainsByDomainSync(domain.id, domains);
+        setSelectedDomainFilters(new Set([domain.id]));
+        
+        // ✅ NOUVEAU : Si on a des sous-domaines dans l'URL
+        if (subdomainSlugs) {
+          const subdomainSlugArray = subdomainSlugs.split(',');
+          const matchingSubdomains = domainSubdomains.filter(sd => 
+            subdomainSlugArray.includes(toSlug(sd.name))
+          );
+          const subdomainIds = matchingSubdomains.map(sd => sd.id);
+          setSelectedSubdomains(subdomainIds);
+          setSelectedSubdomainFilters(new Set(subdomainIds));
+          
+          // ✅ NOUVEAU : Lancer la recherche SEULEMENT si view=results
+          if (view === 'results' && subdomainIds.length > 0) {
+            setShowResults(true);
+            setTimeout(() => handleSearch(null, true), 100);
+          } else {
+            // Sinon, juste afficher le widget de sélection
+            setShowResults(false);
+          }
+        } else {
+          // ✅ NOUVEAU : Sans sous-domaines, afficher le widget de sélection
+          setShowResults(false);
+          setSelectedSubdomains([]);
+          // Ne pas sélectionner automatiquement tous les sous-domaines
+        }
+      }
+    }
+  }, [router.query, domains, subdomains]);
 
   // Toggle favori
   const toggleFavorite = (programId) => {
@@ -1149,33 +1202,28 @@ const HomePage = () => {
     );
   };
 
-  const getLanguagesForEntryLevel = useMemo(() => {
-    if (!filters.entryLevel) {
-      return filterOptions.languages; // Toutes les langues disponibles
-    }
-    
-    // Filtrer les langues basées sur le niveau d'entrée sélectionné
-    const levelMap = { 'Bac': 1, 'Bac+1': 2, 'Bac+2': 3, 'Bac+3': 4, 'Bac+4': 5 };
-    const yearLevel = levelMap[filters.entryLevel];
-    
-    if (yearLevel) {
-      // Retourner les langues disponibles dans l'API
-      return filterOptions.languages;
-    }
-    
-    return [];
-  }, [filters.entryLevel, filterOptions.languages]);
+  // Ajouter ces fonctions au début du composant HomePage, après les imports
 
-  if (isLoading) {
-    return (
-      <>
-        <NavBar />
-        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 flex items-center justify-center">
-          <RocketLoader />
-        </div>
-      </>
-    );
-  }
+  // Helper pour convertir un nom en slug URL-friendly
+  const toSlug = (text) => {
+    if (!text) return '';
+    return text
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '') // Retire les accents
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+  };
+
+  // Helper pour retrouver un domaine par son slug
+  const getDomainBySlug = (slug) => {
+    return domains.find(d => toSlug(d.name) === slug);
+  };
+
+  // Helper pour retrouver des sous-domaines par leurs slugs
+  const getSubdomainsByIds = (ids) => {
+    return subdomains.filter(s => ids.includes(s.id));
+  };
 
   const SearchableDropdown = ({ 
     options, 
@@ -1426,7 +1474,7 @@ const HomePage = () => {
               <span className="text-gray-700 truncate">Rentrée: {program.intake}</span>
             </div>
             <div className="flex items-center gap-2">
-                {program.is_referenced_in_eef ? (
+                {program.is_referenced_in_eef && !program.tuition ? (
                   // Programme référencé EEF - Afficher Award avec couleur selon exonération
                   <Award 
                     className={`w-4 h-4 inline-block mr-1 ${
@@ -1444,7 +1492,7 @@ const HomePage = () => {
 
                 {/* Texte affiché */}
                 <span className="text-gray-700 font-medium truncate">
-                  {program.is_referenced_in_eef
+                  {program.is_referenced_in_eef && !program.tuition
                     ? (
                         program.exoneration_tuition === 1
                           ? "Exonération Totale"
@@ -1509,6 +1557,7 @@ const HomePage = () => {
                       setShowResults(false);
                       setSelectedDomain(null);
                       setSelectedSubdomains([]);
+                      router.push('/?tab=search', undefined, { shallow: true }); // ✅ AJOUT
                     }}
                     className={`flex items-center gap-1 sm:gap-2 px-3 sm:px-6 py-3 sm:py-4 font-semibold transition-all duration-300 whitespace-nowrap text-xs sm:text-base ${
                       activeTab === 'search'
@@ -1521,7 +1570,10 @@ const HomePage = () => {
                   </button>
                   
                   <button
-                    onClick={() => setActiveTab('accompany')}
+                    onClick={() => {
+                      setActiveTab('accompany');
+                      router.push('/?tab=accompany', undefined, { shallow: true }); // ✅ AJOUT
+                    }}
                     className={`flex items-center gap-1 sm:gap-2 px-3 sm:px-6 py-3 sm:py-4 font-semibold transition-all duration-300 whitespace-nowrap text-xs sm:text-base ${
                       activeTab === 'accompany'
                         ? 'text-white border-b-2 border-white bg-white/10'
@@ -1533,7 +1585,10 @@ const HomePage = () => {
                   </button>
                   
                   <button
-                    onClick={() => setActiveTab('organizations')}
+                    onClick={() => {
+                      setActiveTab('organizations');
+                      router.push('/?tab=organizations', undefined, { shallow: true }); // ✅ AJOUT
+                    }}
                     className={`flex items-center gap-1 sm:gap-2 px-3 sm:px-6 py-3 sm:py-4 font-semibold transition-all duration-300 whitespace-nowrap text-xs sm:text-base ${
                       activeTab === 'organizations'
                         ? 'text-white border-b-2 border-white bg-white/10'
@@ -1621,10 +1676,12 @@ const HomePage = () => {
                             {suggestions.map((suggestion, index) => (
                               <button
                                 key={index}
-                                onClick={() => {
+                                onMouseDown={(e) => {  // ✅ CHANGEMENT ICI : onClick → onMouseDown
+                                  e.preventDefault();   // ✅ IMPORTANT : Empêche le onBlur de l'input
                                   setSearchQuery(suggestion);
                                   setShowSuggestions(false);
-                                  handleSearch(suggestion);
+                                  setShowResults(true);  // ✅ AJOUT : Force l'affichage des résultats
+                                  handleSearch(suggestion, true); // ✅ AJOUT : forceSearch = true
                                 }}
                                 className="w-full text-left px-3 py-2 hover:bg-blue-50 flex items-center gap-2 transition-colors"
                               >
@@ -1641,6 +1698,13 @@ const HomePage = () => {
                         <button
                           onClick={() => {
                             setShowFilters(!showFilters);
+                            
+                            // ✅ AJOUTER : Réinitialiser la sélection de domaine quand on ouvre les filtres
+                            if (!showFilters) {
+                              setSelectedDomain(null);
+                              setSelectedSubdomains([]);
+                            }
+                            
                             if (!showFilters && !showResults && searchQuery.trim()) {
                               setShowResults(true);
                               handleSearch();
@@ -1711,28 +1775,37 @@ const HomePage = () => {
 
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4">
                   {domains.map((domain) => (
-                    <button
-                      key={domain.id}
-                      onClick={() => {
-                        setSelectedDomain(domain.id);
-                        setSelectedSubdomains([]);
-                        const domainSubdomains = getSubdomainsByDomainSync(domain.id, domains);
-                        setSelectedDomainFilters(new Set([domain.id]));
-                        setSelectedSubdomainFilters(new Set(domainSubdomains.map(sd => sd.id)));
-                        if (window.innerWidth <= 768) {
-                          setTimeout(() => {
-                            const subdomainSection = document.querySelector('[data-subdomain-selection]');
-                            if (subdomainSection) {
-                              subdomainSection.scrollIntoView({ 
-                                behavior: 'smooth', 
-                                block: 'start' 
-                              });
-                            }
-                          }, 100);
-                        }
-                      }}
-                      className="bg-white rounded-xl p-3 sm:p-4 lg:p-6 shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 group text-center"
-                    >
+                      <button
+                        key={domain.id}
+                        onClick={() => {
+                          setSelectedDomain(domain.id);
+                          setSelectedSubdomains([]);
+                          const domainSubdomains = getSubdomainsByDomainSync(domain.id, domains);
+                          setSelectedDomainFilters(new Set([domain.id]));
+                          setSelectedSubdomainFilters(new Set(domainSubdomains.map(sd => sd.id)));
+                          
+                          // ✅ AJOUT : Mettre à jour l'URL
+                          const domainSlug = toSlug(domain.name);
+                          router.push(
+                            `/?tab=search&domain=${domainSlug}`, 
+                            undefined, 
+                            { shallow: true }
+                          );
+                          
+                          if (window.innerWidth <= 768) {
+                            setTimeout(() => {
+                              const subdomainSection = document.querySelector('[data-subdomain-selection]');
+                              if (subdomainSection) {
+                                subdomainSection.scrollIntoView({ 
+                                  behavior: 'smooth', 
+                                  block: 'start' 
+                                });
+                              }
+                            }, 100);
+                          }
+                        }}
+                        className="bg-white rounded-xl p-3 sm:p-4 lg:p-6 shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 group text-center"
+                      >
                       <div className="text-2xl sm:text-3xl lg:text-4xl mb-2 sm:mb-3 group-hover:scale-110 transition-transform">
                         {DomainApi.getIconForDomain(domain.name)}
                       </div>
@@ -1749,7 +1822,7 @@ const HomePage = () => {
             </FadeTransition>
 
             {/* Sélection des sous-domaines */}
-            <FadeTransition show={selectedDomain && !showResults}>
+            <FadeTransition show={selectedDomain && !showResults && !showFilters}>
               <div className="mb-8" data-subdomain-selection>
                 <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6">
                     <div className="mb-4">
@@ -1759,7 +1832,13 @@ const HomePage = () => {
                         {/* Bouton retour + titre */}
                         <div className="flex items-center gap-2 mb-3 sm:mb-0">
                           <button
-                            onClick={() => setSelectedDomain(null)}
+                            onClick={() => {
+                              setSelectedDomain(null);
+                              setSelectedSubdomains([]);
+                              setSelectedDomainFilters(new Set());
+                              setSelectedSubdomainFilters(new Set());
+                              router.push('/?tab=search', undefined, { shallow: true }); // ✅ AJOUT
+                            }}
                             className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors flex-shrink-0"
                             title="Retour"
                           >
@@ -1782,7 +1861,19 @@ const HomePage = () => {
                               if (selectedSubdomains.length > 0) {
                                 setShowResults(true);
                                 setSelectedSubdomainFilters(new Set(selectedSubdomains));
-                                handleSearch();
+                                
+                                // ✅ MODIFIER : Mettre à jour l'URL avec view=results
+                                const domainSlug = toSlug(getDomainNameSync(selectedDomain, domains));
+                                const selectedSubdomainsData = getSubdomainsByIds(selectedSubdomains);
+                                const subdomainSlugs = selectedSubdomainsData.map(sd => toSlug(sd.name)).join(',');
+                                
+                                router.push(
+                                  `/?tab=search&domain=${domainSlug}&subdomains=${subdomainSlugs}&view=results`,
+                                  undefined,
+                                  { shallow: true }
+                                );
+                                
+                                handleSearch(null, true);
                               }
                             }}
                             disabled={selectedSubdomains.length === 0}
@@ -2219,6 +2310,19 @@ const HomePage = () => {
             {/* Résultats */}
             <FadeTransition show={showResults}>
               <div className="animate-fade-in" data-results-section>
+                  <ActiveFiltersBar 
+                    showResults={showResults}
+                    selectedSubdomainFilters={selectedSubdomainFilters}
+                    subdomains={subdomains}
+                    selectedDomain={selectedDomain}
+                    domains={domains}
+                    setSelectedSubdomainFilters={setSelectedSubdomainFilters}
+                    setSelectedSubdomains={setSelectedSubdomains}
+                    setShowResults={setShowResults}
+                    setSelectedDomain={setSelectedDomain}
+                    handleSearch={handleSearch}
+                    toSlug={toSlug}
+                  />
                   {/* Compteur de résultats */}
                   <div className="mb-6 flex flex-col space-y-3 sm:space-y-0 sm:flex-row sm:items-center sm:justify-between gap-4">
                     <p className="text-slate-600 text-sm text-center sm:text-left">
