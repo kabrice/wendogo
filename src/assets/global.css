@@ -24646,3 +24646,64 @@ border-color: initial;
   html {
   overflow-x: hidden;
 }
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Breakpoint xs pour très petits écrans */
+@media (min-width: 475px) {
+  .xs\:inline {
+    display: inline;
+  }
+  .xs\:hidden {
+    display: none;
+  }
+}
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 3s infinite;
+}
+
+/* Styles pour les liens dans special_comment */
+.special-comment-links a {
+  color: #2563eb; /* text-blue-600 */
+  font-weight: 500; /* font-medium */
+  text-decoration: underline;
+  text-decoration-color: rgb(59, 130, 246);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 2px;
+  transition: all 0.2s ease;
+  word-break: break-all; /* Pour éviter que les longues URLs débordent */
+}
+
+.special-comment-links a:hover {
+  color: #1e40af; /* hover:text-blue-800 */
+  text-decoration-color: rgb(30, 64, 175);
+  text-decoration-thickness: 2px;
+}
+
+/* Espacement pour les <br> */
+.special-comment-links br {
+  display: block;
+  content: "";
+  margin: 0.5em 0;
+}
+
+/* Légère amélioration des <strong> */
+.special-comment-links strong {
+  font-weight: 600; /* font-semibold */
+  color: #1e40af;   /* text-blue-800 */
+}

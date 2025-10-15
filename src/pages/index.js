@@ -22,6 +22,44 @@ import OrganizationContactSection from '../components/OrganizationContactSection
 import { trackSearch } from '../lib/gtag';
 import ActiveFiltersBar from '../components/ActiveFiltersBar';
 // Ajout de l'import ou définition de REST_API_PARAMS
+// Ajouter au début du fichier, après les imports
+/**
+ * Extrait les années d'une chaîne de durée
+ * "1 an" -> [1]
+ * "2 à 5 ans" -> [2, 3, 4, 5]
+ */
+const extractYearsFromDuration = (duration) => {
+  if (!duration) return [];
+  
+  const match = duration.match(/(\d+)(?:\s*à\s*(\d+))?\s*ans?/);
+  if (!match) return [];
+  
+  const start = parseInt(match[1]);
+  const end = match[2] ? parseInt(match[2]) : start;
+  
+  const years = [];
+  for (let i = start; i <= end; i++) {
+    years.push(i);
+  }
+  return years;
+};
+
+/**
+ * Vérifie si une durée inclut une année cible
+ */
+const durationIncludesYear = (duration, targetYear) => {
+  const years = extractYearsFromDuration(duration);
+  return years.includes(targetYear);
+};
+
+/**
+ * Obtient toutes les durées qui incluent une année donnée
+ */
+const getDurationsForYear = (targetYear, allDurations) => {
+  return allDurations.filter(duration => 
+    durationIncludesYear(duration, targetYear)
+  );
+};
 
 const HomePage = () => {
   // États principaux
@@ -54,7 +92,8 @@ const HomePage = () => {
     entryLevel: '',
     grade: '',
     diplomaType: '',
-    duration: '',
+    selectedYear: null, 
+    durations: [],
     deposit: { min: '', max: '' },
     applicationDate: '',
     tuition: { min: '', max: '' },
@@ -64,7 +103,36 @@ const HomePage = () => {
     language: '',
     rncpLevel: ''
   });
-  
+
+  // Ajouter après les états existants
+  const [showFilterSection, setShowFilterSection] = useState({
+    domains: true, 
+    general: false,
+    cost: false,
+    language: false,
+    admission: false,
+    campusFrance: false
+  });
+
+  // Nouveaux filtres
+  const [campusFranceFilters, setCampusFranceFilters] = useState({
+    connected: false,
+    parallelProcedure: false,
+    exoneration: null, // null, 1, -1, 0
+    bienvenueFrance: null // null, 1, 2, 3, 4
+  });
+
+  // Pour les langues - séparer langue et niveau
+  const [languageFilter, setLanguageFilter] = useState({
+    language: '', // Fr, En, Es
+    minLevel: '' // A1, A2, B1, B2, C1, C2
+  });
+
+  // Pour les dates - utiliser des mois
+  const [dateRangeFilter, setDateRangeFilter] = useState({
+    startMonth: 0, // 0-11 (0=Toute l'année)
+    endMonth: 0
+  });  
 
   // États pour les dropdowns searchables
   const [citySearch, setCitySearch] = useState('');
@@ -116,6 +184,7 @@ const HomePage = () => {
 
         // Utiliser le cache intelligent pour charger toutes les données
         const data = await optimizedApi.loadAllInitialData();
+        console.log('✅ Initial data fetched:', {data});
         
         setDomains(data.domains);
         setSubdomains(data.allSubdomains);
@@ -207,6 +276,60 @@ const HomePage = () => {
     });
   }, [domains, subdomains]);
 
+  /**
+   * Réinitialise tous les filtres avancés (garde uniquement la recherche textuelle)
+   */
+  const resetAdvancedFilters = useCallback(() => {
+    console.log('🔄 Resetting all advanced filters');
+    
+    // Réinitialiser tous les états de filtres
+    setFilters({
+      entryLevel: '',
+      grade: '',
+      diplomaType: '',
+      selectedYear: null,
+      durations: [],
+      deposit: { min: '', max: '' },
+      applicationDate: '',
+      tuition: { min: '', max: '' },
+      alternance: '',
+      city: '',
+      domains: [],
+      language: '',
+      rncpLevel: ''
+    });
+    
+    // Réinitialiser les filtres de domaines
+    setSelectedDomain(null);
+    setSelectedSubdomains([]);
+    setSelectedDomainFilters(new Set());
+    setSelectedSubdomainFilters(new Set());
+    
+    // Réinitialiser les filtres Campus France
+    setCampusFranceFilters({
+      connected: false,
+      parallelProcedure: false,
+      exoneration: null,
+      bienvenueFrance: null
+    });
+    
+    // Réinitialiser le filtre langue
+    setLanguageFilter({
+      language: '',
+      minLevel: ''
+    });
+    
+    // Réinitialiser les recherches de dropdowns
+    setCitySearch('');
+    setDomainSearch('');
+    
+    // Fermer le panneau de filtres si ouvert
+    setShowFilters(false);
+    
+    console.log('✅ All advanced filters reset');
+  }, []);
+
+
   const handleSearch = useCallback(async (queryOverride = null, forceSearch = false) => {
     const query = queryOverride || searchQuery;
 
@@ -214,6 +337,7 @@ const HomePage = () => {
       query: query.trim(),
       forceSearch,
       filters,
+      campusFranceFilters,
       selectedSubdomainFilters: selectedSubdomainFilters.size,
       selectedSubdomains: selectedSubdomains.length
     });
@@ -223,11 +347,28 @@ const HomePage = () => {
     // 2. OU il y a une query de recherche
     // 3. OU il y a des filtres actifs
     // 4. OU il y a des sous-domaines sélectionnés
-    const hasActiveFilters = Object.values(filters).some(f => 
-      f !== '' && 
-      !(Array.isArray(f) && f.length === 0) && 
-      !(typeof f === 'object' && f.min === '' && f.max === '')
-    );
+    // ✅ CODE CORRIGÉ
+    const hasActiveFilters = Object.entries(filters).some(([key, value]) => {
+      // Ignorer les valeurs vides/null
+      if (value === '' || value === null || value === undefined) return false;
+      
+      // selectedYear : actif si !== null
+      if (key === 'selectedYear') return value !== null;
+      
+      // Objets avec min/max (deposit, tuition)
+      if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+        // Vérifier que l'objet a bien les propriétés min et max
+        if ('min' in value && 'max' in value) {
+          return value.min !== '' || value.max !== '';
+        }
+      }
+      
+      // Arrays
+      if (Array.isArray(value)) return value.length > 0;
+      
+      // Valeurs simples (string, number, boolean)
+      return value !== '';
+    });
 
     const hasSubdomains = selectedSubdomainFilters.size > 0 || selectedSubdomains.length > 0;
 
@@ -270,7 +411,18 @@ const HomePage = () => {
 
       // Ajouter tous les filtres s'ils existent
       if (filters.grade) searchFilters.grade = filters.grade;
-      if (filters.duration) searchFilters.duration = filters.duration;
+
+      // ✅ CORRECTION : Calculer les durées à partir de l'année sélectionnée
+      if (filters.selectedYear !== null) {
+        const year = filters.selectedYear;
+        const matchingDurations = getDurationsForYear(year, filterOptions.durations);
+        searchFilters.durations = matchingDurations;
+        console.log(`🔍 Year ${year} selected, matching durations:`, matchingDurations);
+      }
+
+      if (filters.durations && filters.durations.length > 0) {
+        searchFilters.durations = filters.durations;
+      }
       if (filters.alternance) searchFilters.alternance = filters.alternance;
       if (filters.city) searchFilters.city = filters.city;
       if (filters.rncpLevel) searchFilters.rncp_level = filters.rncpLevel;
@@ -283,6 +435,22 @@ const HomePage = () => {
       if (filters.deposit.min) searchFilters.deposit_min = filters.deposit.min;
       if (filters.deposit.max) searchFilters.deposit_max = filters.deposit.max;
 
+      if (campusFranceFilters.connected) {
+        searchFilters.campus_france_connected = true;
+      }
+      console.log('🔍 Search Campus France Filters:', campusFranceFilters);
+      if (campusFranceFilters.parallelProcedure) {
+        searchFilters.parallel_procedure = true;
+      }
+      
+      if (campusFranceFilters.exoneration !== null) {
+        searchFilters.exoneration = campusFranceFilters.exoneration;
+      }
+      
+      if (campusFranceFilters.bienvenueFrance !== null) {
+        searchFilters.bienvenue_france_level = campusFranceFilters.bienvenueFrance;
+      }
+    
       // Ajouter les sous-domaines SEULEMENT s'ils sont sélectionnés
       const activeSubdomains = selectedSubdomainFilters.size > 0 ? 
                               [...selectedSubdomainFilters] : 
@@ -316,8 +484,51 @@ const HomePage = () => {
     } finally {
       setIsSearching(false);
     }
-  }, [searchQuery, filters, selectedSubdomainFilters, selectedSubdomains, itemsPerPage]);
+  }, [searchQuery, filters, campusFranceFilters, selectedSubdomainFilters, selectedSubdomains, itemsPerPage]);
 
+  // Ajouter cette fonction au début du composant HomePage, avant le return
+  const getActiveFiltersCount = useCallback(() => {
+    let count = 0;
+    
+    // Parcourir tous les filtres
+    Object.entries(filters).forEach(([key, value]) => {
+      if (key === 'selectedYear') {
+        // selectedYear est actif si !== null
+        if (value !== null) count++;
+      } else if (key === 'deposit' || key === 'tuition') {
+        // deposit/tuition sont actifs si min ou max rempli
+        if (value.min !== '' || value.max !== '') count++;
+      } else if (Array.isArray(value)) {
+        // Arrays sont actifs si non vides
+        if (value.length > 0) count++;
+      } else {
+        // Autres valeurs sont actives si !== ''
+        if (value !== '' && value !== null) count++;
+      }
+    });
+    
+    // Ajouter les sous-domaines
+    count += selectedSubdomainFilters.size;
+    
+    return count;
+  }, [filters, selectedSubdomainFilters]);
+  /**
+   * Lance une recherche simple (uniquement texte, sans filtres avancés)
+   */
+  const handleSimpleSearch = useCallback(() => {
+    console.log('🔍 Simple search triggered with query:', searchQuery);
+    
+    // Réinitialiser tous les filtres avancés
+    resetAdvancedFilters();
+    
+    // Lancer la recherche avec uniquement le texte
+    setShowResults(true);
+    setTimeout(() => {
+      handleSearch(searchQuery, true);
+    }, 100); // Petit délai pour que les états soient bien mis à jour
+  }, [searchQuery, resetAdvancedFilters, handleSearch]);  
+  
+  
   // CORRECTION 4: Ajouter un effet pour mettre à jour les résultats quand les filtres changent
   useEffect(() => {
     // ✅ Ne faire la recherche automatique QUE si on a déjà des résultats affichés
@@ -353,7 +564,16 @@ const HomePage = () => {
 
       // Ajouter tous les filtres actifs
       if (filters.grade) searchFilters.grade = filters.grade;
-      if (filters.duration) searchFilters.duration = filters.duration;
+      // ✅ Calculer les durées
+      if (filters.selectedYear !== null) {
+        const year = filters.selectedYear;
+        const matchingDurations = getDurationsForYear(year, filterOptions.durations);
+        searchFilters.durations = matchingDurations;
+      }
+    
+      if (filters.durations && filters.durations.length > 0) {
+        searchFilters.durations = filters.durations;
+      }
       if (filters.alternance) searchFilters.alternance = filters.alternance;
       if (filters.city) searchFilters.city = filters.city;
       if (filters.rncpLevel) searchFilters.rncp_level = filters.rncpLevel;
@@ -365,6 +585,21 @@ const HomePage = () => {
       if (filters.tuition.max) searchFilters.tuition_max = filters.tuition.max;
       if (filters.deposit.min) searchFilters.deposit_min = filters.deposit.min;
       if (filters.deposit.max) searchFilters.deposit_max = filters.deposit.max;
+
+      // ✅ Campus France
+      if (campusFranceFilters.connected) {
+        searchFilters.campus_france_connected = true;
+      }
+      console.log('🔍 Pagination Campus France Filters:', campusFranceFilters);
+      if (campusFranceFilters.parallelProcedure) {
+        searchFilters.parallel_procedure = true;
+      }
+      if (campusFranceFilters.exoneration !== null) {
+        searchFilters.exoneration = campusFranceFilters.exoneration;
+      }
+      if (campusFranceFilters.bienvenueFrance !== null) {
+        searchFilters.bienvenue_france_level = campusFranceFilters.bienvenueFrance;
+      }      
 
       // Ajouter les sous-domaines actifs
       const activeSubdomains = selectedSubdomainFilters.size > 0 ? 
@@ -678,142 +913,6 @@ const HomePage = () => {
       return `${langName} (${level})`;
     }).join(', ');
   };
-
-  // Fonction de recherche avec IA-like scoring (mise à jour pour API)
-  /*const searchPrograms = useMemo(() => {
-    let filteredPrograms = programs;
-    const activeSubdomains = selectedSubdomains.length > 0 ? selectedSubdomains : [...selectedSubdomainFilters];
-    
-    if (activeSubdomains.length > 0) {
-      filteredPrograms = filteredPrograms.filter(program => {
-        const programSubdomains = [program.sub_domain1, program.sub_domain2, program.sub_domain3].filter(Boolean);
-        return activeSubdomains.some(subdomain => programSubdomains.includes(subdomain));
-      });
-    }
-
-    if (!searchQuery.trim() && Object.values(filters).every(f => 
-      f === '' || (Array.isArray(f) && f.length === 0) || 
-      (typeof f === 'object' && f.min === '' && f.max === '')
-    )) {
-      return filteredPrograms.map(program => ({
-        ...program,
-        school: schools.find(s => s.id === program.school_id) || program.school,
-        score: Math.random()
-      }));
-    }
-
-    const query = searchQuery.toLowerCase().trim();
-    
-    return filteredPrograms.map(program => {
-      const school = schools.find(s => s.id === program.school_id) || program.school;
-      let score = 0;
-
-      // Recherche textuelle avec pondération
-      if (query) {
-        // PRIORITÉ HAUTE
-        if (program.title?.toLowerCase().includes(query)) score += 10;
-        if (program.school_name?.toLowerCase().includes(query)) score += 9;
-        if (school?.school_group?.toLowerCase().includes(query)) score += 8;
-        if (school?.description?.toLowerCase().includes(query)) score += 7;
-        if (program.description?.toLowerCase().includes(query)) score += 7;
-        if (program.skills_acquired?.toLowerCase().includes(query)) score += 6;
-        if (program.careers?.toLowerCase().includes(query)) score += 6;
-
-        // PRIORITÉ MOYENNE
-        if (program.curriculum_highlights?.toLowerCase().includes(query)) score += 4;
-        if (program.grade?.toLowerCase().includes(query)) score += 3;
-        if (program.state_certification_type?.toLowerCase().includes(query)) score += 3;
-
-        // Sous-domaines - utiliser une fonction asynchrone en interne n'est pas pratique ici
-        // On peut faire un matching simple sur les IDs pour l'instant
-        const subdomainIds = [
-          program.sub_domain1, 
-          program.sub_domain2, 
-          program.sub_domain3
-        ].filter(Boolean);
-        
-        // CORRECTION: Chercher dans les sous-domaines chargés dans l'état
-        const matchingSubdomains = subdomains.filter(subdomain => 
-          subdomainIds.includes(subdomain.id) && 
-          subdomain.name.toLowerCase().includes(query)
-        );
-        
-        if (matchingSubdomains.length > 0) score += 5;
-
-        // PRIORITÉ FAIBLE
-        if (program.special_comment?.toLowerCase().includes(query)) score += 2;
-        if (program.partner_companies?.toLowerCase().includes(query)) score += 1;
-        if (school?.partnerships?.toLowerCase().includes(query)) score += 1;
-      }
-
-      // Filtres (similaire à l'ancien code)
-      let passesFilters = true;
-
-      if (filters.entryLevel) {
-        const hasMatchingLevel = [1,2,3,4,5].some(year => {
-          const level = program[`y${year}_required_level`];
-          return level && level.includes(filters.entryLevel);
-        });
-        if (!hasMatchingLevel) passesFilters = false;
-      }
-
-      if (filters.grade && program.grade !== filters.grade) passesFilters = false;
-      if (filters.diplomaType && program.state_certification_type_complement !== filters.diplomaType) passesFilters = false;
-      if (filters.duration && program.fi_school_duration !== filters.duration) passesFilters = false;
-      if (filters.alternance && program.alternance_possible.toString() !== filters.alternance) passesFilters = false;
-      if (filters.city && school?.base_city !== filters.city) passesFilters = false;
-      if (filters.rncpLevel && program.rncp_level !== filters.rncpLevel) passesFilters = false;
-      if (filters.applicationDate && program.application_date_comment !== filters.applicationDate) passesFilters = false;
-
-      // Filtre langue
-      if (filters.language && filters.entryLevel) {
-        const levelMap = { 'Bac': 1, 'Bac+1': 2, 'Bac+2': 3, 'Bac+3': 4, 'Bac+4': 5 };
-        const yearLevel = levelMap[filters.entryLevel];
-        const programLanguage = program[`language_tech_level${yearLevel}`];
-        
-        if (!programLanguage) {
-          passesFilters = false;
-        } else {
-          const selectedLang = filters.language;
-          const programLangs = programLanguage.split(',').map(lang => lang.trim());
-          
-          const hasMatchingLanguage = programLangs.some(progLang => {
-            const formatProgLang = progLang.replace('-', ' ').replace('Fr', 'Français').replace('En', 'Anglais');
-            return selectedLang.includes(formatProgLang) || progLang === selectedLang;
-          });
-          
-          if (!hasMatchingLanguage) {
-            passesFilters = false;
-          }
-        }
-      }
-
-      // Filtres prix
-      if (filters.deposit.min || filters.deposit.max) {
-        const deposit = parseInt(program.first_deposit?.replace(/[^\d]/g, '') || '0');
-        if (filters.deposit.min && deposit < parseInt(filters.deposit.min)) passesFilters = false;
-        if (filters.deposit.max && deposit > parseInt(filters.deposit.max)) passesFilters = false;
-      }
-
-      if (filters.tuition.min || filters.tuition.max) {
-        const tuition = parseInt(program.tuition?.replace(/[^\d]/g, '') || '0');
-        if (filters.tuition.min && tuition < parseInt(filters.tuition.min)) passesFilters = false;
-        if (filters.tuition.max && tuition > parseInt(filters.tuition.max)) passesFilters = false;
-      }
-
-      // Scoring école
-      if (school?.rating) {
-        score += parseFloat(school.rating) * 2;
-        if (school.reviews_counter) {
-          score += Math.min(parseFloat(school.reviews_counter) * 0.1, 5);
-        }
-      }
-
-      return passesFilters ? { ...program, school, score } : null;
-    })
-    .filter(Boolean)
-    .sort((a, b) => b.score - a.score);
-  }, [searchQuery, filters, selectedDomain, selectedSubdomains, selectedSubdomainFilters, programs, schools, subdomains]);*/
 
   // Autosuggestions (mise à jour pour API)
   useEffect(() => {
@@ -1612,7 +1711,7 @@ const HomePage = () => {
                     Votre avenir académique en France vous attend
                   </h1>
                   <p className="text-lg sm:text-xl text-blue-100 mb-8 max-w-4xl mx-auto">
-                    Découvrez la plus grande sélection de formations en France — <span className="font-bold text-yellow-300">{globalStats.total_programs.toLocaleString()}+ programmes</span> incluant 100 % des formations Campus France dans plus de <span className="font-bold text-yellow-300">{globalStats.total_schools.toLocaleString()} établissements </span>. 
+                    Découvrez la plus grande sélection de formations en France — plus de <span className="font-bold text-yellow-300">{/*globalStats.total_programs.toLocaleString()*/ 3800} programmes</span> incluant 100 % des formations Campus France dans plus de <span className="font-bold text-yellow-300">{/*globalStats.total_schools.toLocaleString()*/ 1000} établissements partenaires</span>. 
                     <br />Comparez, choisissez, et lancez votre parcours international en toute confiance.
                   </p>
 
@@ -1634,7 +1733,7 @@ const HomePage = () => {
                               onChange={(e) => setSearchQuery(e.target.value)}
                               onKeyDown={(e) => {
                                 if (e.key === 'Enter') {
-                                  handleSearch();
+                                  handleSimpleSearch();
                                 }
                               }}
                               className="w-full pl-10 pr-10 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base bg-white relative z-[111]" 
@@ -1659,7 +1758,7 @@ const HomePage = () => {
                           <button
                             onClick={() => {
                               if (searchQuery && searchQuery.trim()) {
-                                handleSearch();
+                                handleSimpleSearch();
                               }
                             }}
                             disabled={isSearching || !searchQuery || !searchQuery.trim()}
@@ -1681,6 +1780,7 @@ const HomePage = () => {
                                   setSearchQuery(suggestion);
                                   setShowSuggestions(false);
                                   setShowResults(true);  // ✅ AJOUT : Force l'affichage des résultats
+                                  resetAdvancedFilters();
                                   handleSearch(suggestion, true); // ✅ AJOUT : forceSearch = true
                                 }}
                                 className="w-full text-left px-3 py-2 hover:bg-blue-50 flex items-center gap-2 transition-colors"
@@ -1721,12 +1821,12 @@ const HomePage = () => {
                           <span>
                             {totalResults} formation{totalResults > 1 ? 's' : ''} disponible{totalResults > 1 ? 's' : ''}
                           </span>
-                          <div className="flex items-center justify-center sm:justify-start gap-2">
+                          {/* <div className="flex items-center justify-center sm:justify-start gap-2">
                             <span className="text-blue-200/80">(écoles privées)</span>
                             <span className="bg-orange-500/20 border border-orange-400/30 text-orange-200 px-2 py-1 rounded-full text-xs font-medium backdrop-blur-sm">
                               BÊTA
                             </span>
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                     </div>
@@ -1944,339 +2044,800 @@ const HomePage = () => {
             </FadeTransition>
 
             {/* Panneau de filtres avancés */}
+            {/* Panneau de filtres avancés - VERSION AMÉLIORÉE */}
             <FadeTransition show={showFilters}>
-              <div className="bg-white rounded-xl shadow-lg border border-gray-100 mb-4 sm:mb-8"> {/* ✅ Margin réduite mobile */}
-                <div className="p-4 sm:p-6 bg-gray-50 border-b border-gray-200"> {/* ✅ Padding réduit mobile */}
-                  <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">Filtres avancés</h3> {/* ✅ Taille titre responsive */}
+              <div className="bg-white rounded-xl shadow-lg border border-gray-100 mb-4 sm:mb-8">
+                {/* Header avec compteur */}
+                <div className="p-4 sm:p-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-gray-200 rounded-t-xl">
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="text-base sm:text-lg font-bold text-gray-900 flex items-center gap-2">
+                      <Filter className="w-5 h-5 text-blue-600" />
+                      Filtres avancés
+                    </h3>
+                    <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-xs font-semibold">
+                        {(() => {
+                            const count = getActiveFiltersCount();
+                            return `${count} actif${count > 1 ? 's' : ''}`;
+                          })()}
+                    </span>
+                  </div>
+                  <p className="text-sm text-gray-600">
+                    Affinez votre recherche pour trouver la formation idéale
+                  </p>
+                </div>
 
-                  {/* {!filterOptionsLoaded && (
-                    <div className="p-3 sm:p-4 text-center text-gray-500 mb-3 sm:mb-4"> 
-                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600 mx-auto mb-2"></div>
-                      <p className="text-xs sm:text-sm">Chargement des options de filtres...</p>
-                    </div>
-                  )} */}
-
-                  {/* Section Domaines avec padding mobile optimisé */}
-                  <div className="mb-4 sm:mb-6 p-3 sm:p-4 bg-white rounded-lg border border-gray-200"> {/* ✅ Padding responsive */}
-                    <label className="block text-sm font-medium text-gray-700 mb-2 sm:mb-3">
-                      <span className="flex items-center gap-2">
-                        🎯 Domaines d'étude et spécialisations
+                <div className="p-4 sm:p-6 space-y-4">
+                  
+                  {/* ========== SECTION 1 : DOMAINES ========== */}
+                  <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-4 border border-purple-200">
+                    <button
+                      onClick={() => setShowFilterSection({...showFilterSection, domains: !showFilterSection.domains})}
+                      className="w-full flex items-center justify-between mb-3"
+                    >
+                      <div className="flex items-center gap-2">
+                        <GraduationCap className="w-5 h-5 text-purple-600" />
+                        <h4 className="font-semibold text-gray-900">Domaines & Spécialisations</h4>
                         {selectedSubdomainFilters.size > 0 && (
-                          <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs">
-                            {selectedSubdomainFilters.size} sélectionnée{selectedSubdomainFilters.size > 1 ? 's' : ''}
+                          <span className="bg-purple-600 text-white px-2 py-0.5 rounded-full text-xs">
+                            {selectedSubdomainFilters.size}
                           </span>
                         )}
-                      </span>
-                    </label>
-                    <DomainCheckboxDropdown />
-                    
-                    {/* Tags sélectionnés - optimisés mobile */}
-                    {selectedSubdomainFilters.size > 0 && (
-                      <div className="mt-2 sm:mt-3 flex flex-wrap gap-1 sm:gap-2"> {/* ✅ Gap réduit mobile */}
-                        {[...selectedSubdomainFilters].slice(0, 4).map(subdomainId => { {/* ✅ Moins de tags sur mobile */}
-                          const subdomain = subdomains.find(s => s.id === subdomainId);
-                          const subdomainName = subdomain ? subdomain.name : subdomainId;
-                          
-                          return (
-                            <span 
-                              key={subdomainId} 
-                              className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs flex items-center gap-1" 
-                            >
-                              <span className="truncate max-w-[120px] sm:max-w-none">{subdomainName}</span> {/* ✅ Truncate mobile */}
-                              <button
-                                onClick={() => {
-                                  const newSelected = new Set(selectedSubdomainFilters);
-                                  newSelected.delete(subdomainId);
-                                  setSelectedSubdomainFilters(newSelected);
-                                }}
-                                className="hover:text-blue-900 hover:bg-blue-200 rounded-full w-4 h-4 flex items-center justify-center text-xs"
-                              >
-                                ×
-                              </button>
-                            </span>
-                          );
-                        })}
-                        {selectedSubdomainFilters.size > 4 && (
-                          <span className="text-xs text-gray-500 py-1 px-2 bg-gray-100 rounded-full">
-                            +{selectedSubdomainFilters.size - 4} autres
-                          </span>
+                      </div>
+                      <ChevronDown className={`w-5 h-5 text-gray-500 transition-transform ${showFilterSection.domains ? 'rotate-180' : ''}`} />
+                    </button>
+
+                    {showFilterSection.domains && (
+                      <div className="space-y-3">
+                        <DomainCheckboxDropdown />
+                        
+                        {/* Tags sélectionnés */}
+                        {selectedSubdomainFilters.size > 0 && (
+                          <div className="flex flex-wrap gap-2 pt-2">
+                            {[...selectedSubdomainFilters].slice(0, 5).map(subdomainId => {
+                              const subdomain = subdomains.find(s => s.id === subdomainId);
+                              const subdomainName = subdomain ? subdomain.name : subdomainId;
+                              
+                              return (
+                                <span 
+                                  key={subdomainId} 
+                                  className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-xs flex items-center gap-1.5"
+                                >
+                                  <span className="truncate max-w-[150px]">{subdomainName}</span>
+                                  <button
+                                    onClick={() => {
+                                      const newSelected = new Set(selectedSubdomainFilters);
+                                      newSelected.delete(subdomainId);
+                                      setSelectedSubdomainFilters(newSelected);
+                                    }}
+                                    className="hover:bg-purple-200 rounded-full w-4 h-4 flex items-center justify-center"
+                                  >
+                                    ×
+                                  </button>
+                                </span>
+                              );
+                            })}
+                            {selectedSubdomainFilters.size > 5 && (
+                              <span className="text-xs text-gray-500 py-1 px-2 bg-gray-100 rounded-full">
+                                +{selectedSubdomainFilters.size - 5}
+                              </span>
+                            )}
+                          </div>
                         )}
                       </div>
                     )}
                   </div>
 
-                  {/* Grille de filtres - responsive */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4"> {/* ✅ 1 colonne mobile */}
+                  {/* ========== SECTION 2 : CRITÈRES GÉNÉRAUX ========== */}
+                  <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl p-4 border border-blue-200">
+                    <button
+                      onClick={() => setShowFilterSection({...showFilterSection, general: !showFilterSection.general})}
+                      className="w-full flex items-center justify-between mb-3"
+                    >
+                      <div className="flex items-center gap-2">
+                        <Award className="w-5 h-5 text-blue-600" />
+                        <h4 className="font-semibold text-gray-900">Critères généraux</h4>
+                      </div>
+                      <ChevronDown className={`w-5 h-5 text-gray-500 transition-transform ${showFilterSection.general ? 'rotate-180' : ''}`} />
+                    </button>
                     
-                    {/* Niveau d'entrée */}
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Niveau d'entrée
-                      </label>
-                      <select
-                        value={filters.entryLevel}
-                        onChange={(e) => setFilters({...filters, entryLevel: e.target.value, language: ''})}
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500" 
-                      >
-                        <option value="">Tous niveaux</option>
-                        {filterOptions.entry_levels.map(level => (
-                          <option key={level} value={level}>{level}</option>
-                        ))}
-                      </select>
-                    </div>
+                    {showFilterSection.general && (
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        
+                        {/* Niveau d'entrée */}
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-1">
+                            <Users className="w-4 h-4 text-blue-500" />
+                            Niveau d'entrée
+                          </label>
+                          <select
+                            value={filters.entryLevel}
+                            onChange={(e) => setFilters({...filters, entryLevel: e.target.value, language: ''})}
+                            className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 bg-white"
+                          >
+                            <option value="">Tous niveaux</option>
+                            {filterOptions.entry_levels.map(level => (
+                              <option key={level} value={level}>{level}</option>
+                            ))}
+                          </select>
+                        </div>
 
-                    {/* Type de grade/diplôme */}
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Type de grade/diplôme
-                      </label>
-                      <select
-                        value={filters.grade}
-                        onChange={(e) => setFilters({...filters, grade: e.target.value})}
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500"
-                      >
-                        <option value="">Tous diplômes</option>
-                        {filterOptions.grades.map(grade => (
-                          <option key={grade} value={grade}>{grade}</option>
-                        ))}
-                      </select>
-                    </div>
+                        {/* Type de diplôme - AMÉLIORÉ avec groupes */}
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-1">
+                            <Award className="w-4 h-4 text-blue-500" />
+                            Type de diplôme
+                          </label>
+                          <select
+                            value={filters.grade}
+                            onChange={(e) => setFilters({...filters, grade: e.target.value})}
+                            className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 bg-white"
+                          >
+                            <option value="">Tous diplômes</option>
+                            
+                            <optgroup label="🎓 Licences & Bachelors">
+                              <option value="Licence">Licence</option>
+                              <option value="Licence 2">Licence 2</option>
+                              <option value="Licence professionnelle">Licence professionnelle</option>
+                              <option value="Bachelor">Bachelor</option>
+                              <option value="Bachelor visé">Bachelor visé</option>
+                              <option value="Bachelor universitaire de technologie (BUT)">BUT</option>
+                              <option value="DUT">DUT</option>
+                            </optgroup>
+                            
+                            <optgroup label="🎯 Masters">
+                              <option value="Master">Master</option>
+                              <option value="Master 2">Master 2</option>
+                              <option value="Master professionnel">Master professionnel</option>
+                              <option value="Master recherche">Master recherche</option>
+                              <option value="Master of science">Master of Science</option>
+                              <option value="Master of arts">Master of Arts</option>
+                            </optgroup>
+                            
+                            <optgroup label="⭐ Mastères & MBA">
+                              <option value="Mastère">Mastère</option>
+                              <option value="Mastère Spécialisé">Mastère Spécialisé</option>
+                              <option value="Mastère en sciences (MSc)">MSc</option>
+                              <option value="MBA">MBA</option>
+                            </optgroup>
+                            
+                            <optgroup label="🏆 Diplômes spécialisés">
+                              <option value="Diplôme d'ingénieur">Diplôme d'ingénieur</option>
+                              <option value="Diplôme d'école de commerce visé de niveau bac + 4 ou 5">École de commerce visé</option>
+                              <option value="PGE (Programme Grande École)">Programme Grande École</option>
+                              <option value="Diplôme d'Etat en santé">Diplôme d'État en santé</option>
+                              <option value="DCG">DCG</option>
+                            </optgroup>
+                            
+                            <optgroup label="📚 Autres">
+                              <option value="Diplôme visé">Diplôme visé</option>
+                              <option value="Titre d'établissement">Titre d'établissement</option>
+                              <option value="PhD Doctorat">PhD / Doctorat</option>
+                            </optgroup>
+                          </select>
+                        </div>
 
-                    {/* Durée */}
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Durée
-                      </label>
-                      <select
-                        value={filters.duration}
-                        onChange={(e) => setFilters({...filters, duration: e.target.value})}
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500"
-                      >
-                        <option value="">Toutes durées</option>
-                        {filterOptions.durations.map(duration => (
-                          <option key={duration} value={duration}>{duration}</option>
-                        ))}
-                      </select>
-                    </div>
+                        {/* Durée */}
+                        {/* Durée - VERSION SIMPLIFIÉE */}
+                        <div className="sm:col-span-2">
+                          <label className="block text-sm font-medium text-gray-700 mb-3 flex items-center gap-1">
+                            <Clock className="w-4 h-4 text-blue-500" />
+                            Durée de formation
+                          </label>
+                          
+                          <div className="flex flex-wrap gap-2">
+                            {/* Bouton "Toutes durées" */}
+                            <button
+                              onClick={() => setFilters({...filters, selectedYear: null})}
+                              className={`px-3 py-2 rounded-lg border-2 text-sm font-medium transition-all ${
+                                filters.selectedYear === null
+                                  ? 'border-gray-600 bg-gray-600 text-white'
+                                  : 'border-gray-200 bg-white text-gray-700 hover:border-gray-300'
+                              }`}
+                            >
+                              Toutes durées
+                            </button>
+                            
+                            {/* Boutons pour chaque année (1 à 9) */}
+                            {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(year => {
+                              const isSelected = filters.selectedYear === year;
+                              
+                              return (
+                                <button
+                                  key={year}
+                                  onClick={() => {
+                                    // Toggle : si déjà sélectionné, désélectionner
+                                    if (isSelected) {
+                                      setFilters({...filters, selectedYear: null});
+                                    } else {
+                                      setFilters({...filters, selectedYear: year});
+                                    }
+                                  }}
+                                  className={`px-3 py-2 rounded-lg border-2 text-sm font-medium transition-all ${
+                                    isSelected
+                                      ? 'border-blue-600 bg-blue-600 text-white shadow-md'
+                                      : 'border-gray-200 bg-white text-gray-700 hover:border-blue-300 hover:bg-blue-50'
+                                  }`}
+                                >
+                                  <div className="flex items-center gap-2">
+                                    <Clock className="w-4 h-4" />
+                                    <span>{year} an{year > 1 ? 's' : ''}</span>
+                                  </div>
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </div>
 
-                    {/* Alternance */}
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Alternance
-                      </label>
-                      <select
-                        value={filters.alternance}
-                        onChange={(e) => setFilters({...filters, alternance: e.target.value})}
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500"
-                      >
-                        <option value="">Peu importe</option>
-                        <option value="true">Oui</option>
-                        <option value="false">Non</option>
-                      </select>
-                    </div>
+                        {/* Alternance */}
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-1">
+                            <Briefcase className="w-4 h-4 text-blue-500" />
+                            Alternance
+                          </label>
+                          <select
+                            value={filters.alternance}
+                            onChange={(e) => setFilters({...filters, alternance: e.target.value})}
+                            className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 bg-white"
+                          >
+                            <option value="">Peu importe</option>
+                            <option value="true">✓ Disponible</option>
+                            <option value="false">✗ Non disponible</option>
+                          </select>
+                        </div>
 
-                    {/* Ville */}
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Ville
-                      </label>
-                      <SearchableDropdown
-                        options={['Toutes villes', ...filterOptions.cities]}
-                        value={filters.city}
-                        onChange={(value) => {
-                          const cityValue = value === 'Toutes villes' ? '' : value;
-                          setFilters({...filters, city: cityValue});
-                        }}
-                        placeholder="Toutes villes"
-                        searchValue={citySearch}
-                        onSearchChange={setCitySearch}
-                        showDropdown={showCityDropdown}
-                        setShowDropdown={setShowCityDropdown}
-                        dropdownRef={cityDropdownRef}
-                      />
-                    </div>
-
-                    {/* Langue d'enseignement */}
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Langue d'enseignement
-                      </label>
-                      <select
-                        value={filters.language}
-                        onChange={(e) => setFilters({...filters, language: e.target.value})}
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500"
-                      >
-                        <option value="">Toutes langues</option>
-                        {filterOptions.languages.map(lang => (
-                          <option key={lang} value={lang}>
-                            {ProgramApi.formatLanguageLevels(lang)}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-
-                    {/* Niveau RNCP */}
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Niveau RNCP
-                      </label>
-                      <select
-                        value={filters.rncpLevel}
-                        onChange={(e) => setFilters({...filters, rncpLevel: e.target.value})}
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500"
-                      >
-                        <option value="">Tous niveaux</option>
-                        {filterOptions.rncp_levels.map(level => (
-                          <option key={level} value={level}>Niveau {level}</option>
-                        ))}
-                      </select>
-                    </div>
-
-                    {/* Dates de candidature */}
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Dates de candidature
-                      </label>
-                      <select
-                        value={filters.applicationDate}
-                        onChange={(e) => setFilters({...filters, applicationDate: e.target.value})}
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500"
-                      >
-                        <option value="">Toutes périodes</option>
-                        {filterOptions.application_dates.map(date => (
-                          <option key={date} value={date}>{date}</option>
-                        ))}
-                      </select>
-                    </div>
-
-                    {/* Frais de scolarité - mobile optimisé */}
-                    <div className="sm:col-span-2">
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Frais de scolarité (€/an)
-                      </label>
-                      <div className="flex gap-2">
-                        <input
-                          type="number"
-                          placeholder="Min"
-                          value={filters.tuition.min}
-                          onChange={(e) => setFilters({
-                            ...filters, 
-                            tuition: {...filters.tuition, min: e.target.value}
-                          })}
-                          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500"
-                        />
-                        <input
-                          type="number"
-                          placeholder="Max"
-                          value={filters.tuition.max}
-                          onChange={(e) => setFilters({
-                            ...filters, 
-                            tuition: {...filters.tuition, max: e.target.value}
-                          })}
-                          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500"
-                        />
+                        {/* Ville - CORRIGÉ */}
+                        <div className="sm:col-span-2">
+                          <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-1">
+                            <MapPin className="w-4 h-4 text-blue-500" />
+                            Ville
+                          </label>
+                          <div className="relative" ref={cityDropdownRef}>
+                            <button
+                              onClick={() => setShowCityDropdown(!showCityDropdown)}
+                              className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-left focus:ring-2 focus:ring-blue-500 flex items-center justify-between bg-white text-sm"
+                            >
+                              <span className={filters.city ? 'text-gray-900' : 'text-gray-500'}>
+                                {filters.city || 'Toutes les villes'}
+                              </span>
+                              <ChevronDown className={`w-4 h-4 transition-transform ${showCityDropdown ? 'rotate-180' : ''}`} />
+                            </button>
+                            
+                            {showCityDropdown && (
+                              <div className="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-hidden">
+                                <div className="p-2 border-b sticky top-0 bg-white">
+                                  <input
+                                    type="text"
+                                    value={citySearch}
+                                    onChange={(e) => setCitySearch(e.target.value)}
+                                    placeholder="Rechercher une ville..."
+                                    className="w-full px-3 py-2 border border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                                    onClick={(e) => e.stopPropagation()}
+                                  />
+                                </div>
+                                <div className="max-h-48 overflow-y-auto">
+                                  <button
+                                    onClick={() => {
+                                      setFilters({...filters, city: ''});
+                                      setShowCityDropdown(false);
+                                      setCitySearch('');
+                                    }}
+                                    className="w-full text-left px-3 py-2 hover:bg-blue-50 text-sm text-gray-700"
+                                  >
+                                    Toutes les villes
+                                  </button>
+                                  {getFilteredCities.length > 0 ? (
+                                    getFilteredCities.map((city, index) => (
+                                      <button
+                                        key={index}
+                                        onClick={() => {
+                                          setFilters({...filters, city: city});
+                                          setShowCityDropdown(false);
+                                          setCitySearch('');
+                                        }}
+                                        className="w-full text-left px-3 py-2 hover:bg-blue-50 text-sm text-gray-700"
+                                      >
+                                        {city}
+                                      </button>
+                                    ))
+                                  ) : (
+                                    <div className="px-3 py-2 text-gray-500 text-sm">Aucune ville trouvée</div>
+                                  )}
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        </div>
                       </div>
-                    </div>
-
-                    {/* Acompte - mobile optimisé */}
-                    <div className="sm:col-span-2">
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Acompte (€)
-                      </label>
-                      <div className="flex gap-2">
-                        <input
-                          type="number"
-                          placeholder="Min"
-                          value={filters.deposit.min}
-                          onChange={(e) => setFilters({
-                            ...filters, 
-                            deposit: {...filters.deposit, min: e.target.value}
-                          })}
-                          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500"
-                        />
-                        <input
-                          type="number"
-                          placeholder="Max"
-                          value={filters.deposit.max}
-                          onChange={(e) => setFilters({
-                            ...filters, 
-                            deposit: {...filters.deposit, max: e.target.value}
-                          })}
-                          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500"
-                        />
-                      </div>
-                    </div>
+                    )}
                   </div>
 
-                  {/* Boutons d'action - mobile optimisé */}
-                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-2 mt-4 sm:mt-6"> {/* ✅ Stack vertical mobile */}
+                  {/* ========== SECTION 3 : COÛTS ========== */}
+                  <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-4 border border-green-200">
                     <button
-                        onClick={() => {
-                          // ✅ ANCIEN CODE (incomplet)
-                          // setFilters({
-                          //   entryLevel: '', grade: '', diplomaType: '', duration: '',
-                          //   deposit: { min: '', max: '' }, applicationDate: '',
-                          //   tuition: { min: '', max: '' }, alternance: '', city: '',
-                          //   domains: [], language: '', rncpLevel: ''
-                          // });
+                      onClick={() => setShowFilterSection({...showFilterSection, cost: !showFilterSection.cost})}
+                      className="w-full flex items-center justify-between mb-3"
+                    >
+                      <div className="flex items-center gap-2">
+                        <Euro className="w-5 h-5 text-green-600" />
+                        <h4 className="font-semibold text-gray-900">Frais & Coûts</h4>
+                      </div>
+                      <ChevronDown className={`w-5 h-5 text-gray-500 transition-transform ${showFilterSection.cost ? 'rotate-180' : ''}`} />
+                    </button>
+                    
+                    {showFilterSection.cost && (
+                      <div className="space-y-4">
+                        {/* Frais de scolarité avec slider */}
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-3">
+                            Frais de scolarité annuels (€)
+                          </label>
+                          <div className="flex gap-3 items-center mb-2">
+                            <input
+                              type="number"
+                              placeholder="Min"
+                              value={filters.tuition.min}
+                              onChange={(e) => setFilters({
+                                ...filters, 
+                                tuition: {...filters.tuition, min: e.target.value}
+                              })}
+                              className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-green-500"
+                            />
+                            <span className="text-gray-500">→</span>
+                            <input
+                              type="number"
+                              placeholder="Max"
+                              value={filters.tuition.max}
+                              onChange={(e) => setFilters({
+                                ...filters, 
+                                tuition: {...filters.tuition, max: e.target.value}
+                              })}
+                              className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-green-500"
+                            />
+                          </div>
+                          {/* Suggestions rapides */}
+                          <div className="flex flex-wrap gap-2">
+                            <button
+                              onClick={() => setFilters({...filters, tuition: {min: '', max: '5000'}})}
+                              className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs hover:bg-green-200"
+                            >
+                              &lt; 5000€
+                            </button>
+                            <button
+                              onClick={() => setFilters({...filters, tuition: {min: '5000', max: '10000'}})}
+                              className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs hover:bg-green-200"
+                            >
+                              5000€ - 10000€
+                            </button>
+                            <button
+                              onClick={() => setFilters({...filters, tuition: {min: '10000', max: ''}})}
+                              className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs hover:bg-green-200"
+                            >
+                              &gt; 10000€
+                            </button>
+                          </div>
+                        </div>
 
-                          // ✅ NOUVEAU CODE (complet)
-                          // 1. Réinitialiser TOUS les filtres
-                          setFilters({
-                            entryLevel: '', 
-                            grade: '', 
-                            diplomaType: '', 
-                            duration: '',
-                            deposit: { min: '', max: '' }, 
-                            applicationDate: '',
-                            tuition: { min: '', max: '' }, 
-                            alternance: '', 
-                            city: '',
-                            domains: [], 
-                            language: '', 
-                            rncpLevel: ''
-                          });
+                        {/* Acompte */}
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-3">
+                            Acompte requis (€)
+                          </label>
+                          <div className="flex gap-3 items-center">
+                            <input
+                              type="number"
+                              placeholder="Min"
+                              value={filters.deposit.min}
+                              onChange={(e) => setFilters({
+                                ...filters, 
+                                deposit: {...filters.deposit, min: e.target.value}
+                              })}
+                              className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-green-500"
+                            />
+                            <span className="text-gray-500">→</span>
+                            <input
+                              type="number"
+                              placeholder="Max"
+                              value={filters.deposit.max}
+                              onChange={(e) => setFilters({
+                                ...filters, 
+                                deposit: {...filters.deposit, max: e.target.value}
+                              })}
+                              className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-green-500"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
 
-                          // 2. ✅ RÉINITIALISER les recherches de dropdowns
-                          setCitySearch('');
-                          setDomainSearch('');
+                  {/* ========== SECTION 4 : LANGUES ========== */}
+                  <div className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl p-4 border border-orange-200">
+                    <button
+                      onClick={() => setShowFilterSection({...showFilterSection, language: !showFilterSection.language})}
+                      className="w-full flex items-center justify-between mb-3"
+                    >
+                      <div className="flex items-center gap-2">
+                        <Globe className="w-5 h-5 text-orange-600" />
+                        <h4 className="font-semibold text-gray-900">Langue d'enseignement</h4>
+                      </div>
+                      <ChevronDown className={`w-5 h-5 text-gray-500 transition-transform ${showFilterSection.language ? 'rotate-180' : ''}`} />
+                    </button>
+                    
+                    {showFilterSection.language && (
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        {/* Langue */}
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Langue
+                          </label>
+                          <select
+                            value={languageFilter.language}
+                            onChange={(e) => {
+                              setLanguageFilter({...languageFilter, language: e.target.value});
+                              // Mettre à jour le filtre principal
+                              if (e.target.value && languageFilter.minLevel) {
+                                setFilters({...filters, language: `${e.target.value}-${languageFilter.minLevel}`});
+                              } else {
+                                setFilters({...filters, language: ''});
+                              }
+                            }}
+                            className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-orange-500 bg-white"
+                          >
+                            <option value="">Toutes les langues</option>
+                            <option value="Fr">🇫🇷 Français</option>
+                            <option value="En">🇬🇧 Anglais</option>
+                            <option value="Es">🇪🇸 Espagnol</option>
+                          </select>
+                        </div>
 
-                          // 3. ✅ RÉINITIALISER les sélections de domaines/sous-domaines
-                          setSelectedDomain(null);
-                          setSelectedSubdomains([]);
-                          setSelectedDomainFilters(new Set());
-                          setSelectedSubdomainFilters(new Set());
+                        {/* Niveau minimum */}
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Niveau minimum requis
+                          </label>
+                          <select
+                            value={languageFilter.minLevel}
+                            onChange={(e) => {
+                              setLanguageFilter({...languageFilter, minLevel: e.target.value});
+                              // Mettre à jour le filtre principal
+                              if (languageFilter.language && e.target.value) {
+                                setFilters({...filters, language: `${languageFilter.language}-${e.target.value}`});
+                              } else {
+                                setFilters({...filters, language: ''});
+                              }
+                            }}
+                            disabled={!languageFilter.language}
+                            className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-orange-500 bg-white disabled:bg-gray-100 disabled:cursor-not-allowed"
+                          >
+                            <option value="">Tous niveaux</option>
+                            <option value="A1">A1 - Débutant</option>
+                            <option value="A2">A2 - Élémentaire</option>
+                            <option value="B1">B1 - Intermédiaire</option>
+                            <option value="B2">B2 - Intermédiaire avancé</option>
+                            <option value="C1">C1 - Avancé</option>
+                            <option value="C2">C2 - Maîtrise</option>
+                          </select>
+                        </div>
 
-                          // 4. ✅ RÉINITIALISER la recherche textuelle
-                          setSearchQuery('');
-                          setSuggestions([]);
-                          setShowSuggestions(false);
+                        {/* Indicateur visuel 
+                        {filters.language && (
+                          <div className="sm:col-span-2 bg-orange-100 border border-orange-200 rounded-lg p-3">
+                            <p className="text-sm text-orange-800 flex items-center gap-2">
+                              <Check className="w-4 h-4" />
+                              Filtrage : {languageFilter.language === 'Fr' ? 'Français' : languageFilter.language === 'En' ? 'Anglais' : 'Espagnol'} niveau {languageFilter.minLevel} minimum
+                            </p>
+                          </div>
+                        )}*/}
+                      </div>
+                    )}
+                  </div>
 
-                          // 5. ✅ RÉINITIALISER les résultats et l'affichage
-                          setSearchResults([]);
-                          setTotalResults(0);
-                          setShowResults(false);
-                          setCurrentPage(1);
-
-                          // 6. ✅ FERMER le panneau de filtres
-                          setShowFilters(false);
-
-                          // 7. ✅ OPTIONNEL : Afficher notification de succès
-                          console.log('🔄 Tous les filtres ont été réinitialisés');
+                  {/* ========== SECTION 5 : ADMISSION ========== */}
+                  <div className="bg-gradient-to-br from-red-50 to-pink-50 rounded-xl p-4 border border-red-200">
+                    <button
+                      onClick={() => setShowFilterSection({...showFilterSection, admission: !showFilterSection.admission})}
+                      className="w-full flex items-center justify-between mb-3"
+                    >
+                      <div className="flex items-center gap-2">
+                        <Calendar className="w-5 h-5 text-red-600" />
+                        <h4 className="font-semibold text-gray-900">Calendrier & Admission</h4>
+                      </div>
+                      <ChevronDown className={`w-5 h-5 text-gray-500 transition-transform ${showFilterSection.admission ? 'rotate-180' : ''}`} />
+                    </button>
+                    
+                    {showFilterSection.admission && (
+                      <div className="space-y-4">
+                        {/* Dates de candidature - SIMPLIFIÉ avec boutons */}
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-3">
+                            Période de candidature
+                          </label>
+                          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                            <button
+                              onClick={() => setFilters({...filters, applicationDate: ''})}
+                              className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                                !filters.applicationDate 
+                                  ? 'bg-red-600 text-white' 
+                                  : 'bg-red-100 text-red-700 hover:bg-red-200'
+                              }`}
+                            >
+                              Toute l'année
+                            </button>
+                            
+                            <button
+                              onClick={() => setFilters({...filters, applicationDate: 'Janvier'})}
+                              className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                                filters.applicationDate?.includes('Janvier') 
+                                  ? 'bg-red-600 text-white' 
+                                  : 'bg-red-100 text-red-700 hover:bg-red-200'
+                              }`}
+                            >
+                              🗓️ Janvier-Mars
+                            </button>
+                            
+                            <button
+                              onClick={() => setFilters({...filters, applicationDate: 'Avril'})}
+                              className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                                filters.applicationDate?.includes('Avril') 
+                                  ? 'bg-red-600 text-white' 
+                                  : 'bg-red-100 text-red-700 hover:bg-red-200'
+                              }`}
+                            >
+                              🌸 Avril-Juin
+                            </button>
+                            
+                            <button
+                              onClick={() => setFilters({...filters, applicationDate: 'Septembre'})}
+                              className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                                filters.applicationDate?.includes('Septembre') 
+                                  ? 'bg-red-600 text-white' 
+                                  : 'bg-red-100 text-red-700 hover:bg-red-200'
+                              }`}
+                            >
+                              🍂 Sept-Nov
+                            </button>
+                            
+                            <button
+                              onClick={() => setFilters({...filters, applicationDate: 'Décembre'})}
+                              className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                                filters.applicationDate?.includes('Décembre') 
+                                  ? 'bg-red-600 text-white' 
+                                  : 'bg-red-100 text-red-700 hover:bg-red-200'
+                              }`}
+                            >
+                              ❄️ Déc-Fév
+                            </button>
+                            
+                            <button
+                              onClick={() => setShowCityDropdown(true)} 
+                              className="px-3 py-2 rounded-lg text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200"
+                            >
+                              ⚙️ Avancé
+                            </button>
+                          </div>
                           
-                          // Si vous avez le système de notifications :
-                          // setToast({
-                          //   show: true,
-                          //   message: 'Filtres réinitialisés',
-                          //   type: 'info'
-                          // });
-                          if (window.innerWidth <= 768) {
-                            window.scrollTo({ top: 0, behavior: 'smooth' });
-                          }
-                        }}
-                        className="w-full sm:w-auto px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-sm"
-                      >
-                        Réinitialiser
+                          {/* Dropdown complet en cas de besoin */}
+                          {showCityDropdown && (
+                            <div className="mt-3">
+                              <select
+                                value={filters.applicationDate}
+                                onChange={(e) => {
+                                  setFilters({...filters, applicationDate: e.target.value});
+                                  setShowCityDropdown(false);
+                                }}
+                                className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-red-500"
+                              >
+                                <option value="">Toutes périodes</option>
+                                {filterOptions.application_dates
+                                  .sort((a, b) => a.localeCompare(b))
+                                  .map(date => (
+                                    <option key={date} value={date}>{date}</option>
+                                  ))
+                                }
+                              </select>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Niveau RNCP */}
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Niveau RNCP
+                          </label>
+                          <select
+                            value={filters.rncpLevel}
+                            onChange={(e) => setFilters({...filters, rncpLevel: e.target.value})}
+                            className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-red-500 bg-white"
+                          >
+                            <option value="">Tous niveaux</option>
+                            {filterOptions.rncp_levels.map(level => (
+                              <option key={level} value={level}>Niveau {level}</option>
+                            ))}
+                          </select>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* ========== SECTION 6 : CAMPUS FRANCE (NOUVEAU) ========== */}
+                  <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl p-4 border border-indigo-200">
+                    <button
+                      onClick={() => setShowFilterSection({...showFilterSection, campusFrance: !showFilterSection.campusFrance})}
+                      className="w-full flex items-center justify-between mb-3"
+                    >
+                      <div className="flex items-center gap-2">
+                        <Award className="w-5 h-5 text-indigo-600" />
+                        <h4 className="font-semibold text-gray-900">Campus France & Labels</h4>
+                      </div>
+                      <ChevronDown className={`w-5 h-5 text-gray-500 transition-transform ${showFilterSection.campusFrance ? 'rotate-180' : ''}`} />
+                    </button>
+                    
+                    {showFilterSection.campusFrance && (
+                      <div className="space-y-4">
+                        
+                        {/* Connexion Campus France */}
+                        <label className="flex items-center gap-3 p-3 bg-white rounded-lg border border-indigo-200 hover:bg-indigo-50 cursor-pointer transition-colors">
+                          <input
+                            type="checkbox"
+                            checked={campusFranceFilters.connected}
+                            onChange={(e) => setCampusFranceFilters({...campusFranceFilters, connected: e.target.checked})}
+                            className="w-5 h-5 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                          />
+                          <div className="flex-1">
+                            <div className="font-medium text-gray-900 flex items-center gap-2">
+                              <Globe className="w-4 h-4 text-indigo-600" />
+                              École connectée à Campus France
+                            </div>
+                            <p className="text-xs text-gray-600 mt-0.5">
+                              Écoles ayant un compte Campus France pour dépôt de dossiers
+                            </p>
+                          </div>
+                        </label>
+
+                        {/* Procédure parallèle */}
+                        <label className="flex items-center gap-3 p-3 bg-white rounded-lg border border-indigo-200 hover:bg-indigo-50 cursor-pointer transition-colors">
+                          <input
+                            type="checkbox"
+                            checked={campusFranceFilters.parallelProcedure}
+                            onChange={(e) => setCampusFranceFilters({...campusFranceFilters, parallelProcedure: e.target.checked})}
+                            className="w-5 h-5 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                          />
+                          <div className="flex-1">
+                            <div className="font-medium text-gray-900 flex items-center gap-2">
+                              <Award className="w-4 h-4 text-indigo-600" />
+                              Procédure parallèle Campus France
+                            </div>
+                            <p className="text-xs text-gray-600 mt-0.5">
+                              Possibilité de candidature en dehors de la plateforme
+                            </p>
+                          </div>
+                        </label>
+
+                        {/* Exonération des frais */}
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Exonération des frais de scolarité
+                          </label>
+                          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                            <button
+                              onClick={() => setCampusFranceFilters({...campusFranceFilters, exoneration: campusFranceFilters.exoneration === 1 ? null : 1})}
+                              className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors flex items-center justify-center gap-1 ${
+                                campusFranceFilters.exoneration === 1
+                                  ? 'bg-green-600 text-white' 
+                                  : 'bg-green-100 text-green-700 hover:bg-green-200'
+                              }`}
+                            >
+                              <Check className="w-4 h-4" />
+                              Totale
+                            </button>
+                            
+                            <button
+                              onClick={() => setCampusFranceFilters({...campusFranceFilters, exoneration: campusFranceFilters.exoneration === -1 ? null : -1})}
+                              className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                                campusFranceFilters.exoneration === -1
+                                  ? 'bg-orange-600 text-white' 
+                                  : 'bg-orange-100 text-orange-700 hover:bg-orange-200'
+                              }`}
+                            >
+                              Partielle
+                            </button>
+                            
+                            <button
+                              onClick={() => setCampusFranceFilters({...campusFranceFilters, exoneration: campusFranceFilters.exoneration === 0 ? null : 0})}
+                              className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                                campusFranceFilters.exoneration === 0
+                                  ? 'bg-red-600 text-white' 
+                                  : 'bg-red-100 text-red-700 hover:bg-red-200'
+                              }`}
+                            >
+                              Aucune
+                            </button>
+                          </div>
+                        </div>
+
+                        {/* Label Bienvenue en France */}
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Label "Bienvenue en France"
+                          </label>
+                          <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+                            {[1, 2, 3].map(level => (
+                              <button
+                                key={level}
+                                onClick={() => setCampusFranceFilters({
+                                  ...campusFranceFilters, 
+                                  bienvenueFrance: campusFranceFilters.bienvenueFrance === level ? null : level
+                                })}
+                                className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                                  campusFranceFilters.bienvenueFrance === level
+                                    ? 'bg-indigo-600 text-white' 
+                                    : 'bg-indigo-100 text-indigo-700 hover:bg-indigo-200'
+                                }`}
+                              >
+                                {'⭐'.repeat(level)}
+                              </button>
+                            ))}
+                            <button
+                              onClick={() => setCampusFranceFilters({...campusFranceFilters, bienvenueFrance: null})}
+                              className={`px-3 py-2 rounded-lg text-sm font-medium ${
+                                !campusFranceFilters.bienvenueFrance
+                                  ? 'bg-gray-600 text-white' 
+                                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                              }`}
+                            >
+                              Tous
+                            </button>
+                          </div>
+                          <p className="text-xs text-gray-500 mt-2">
+                            Le label évalue la qualité de l'accueil des étudiants internationaux
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Boutons d'action */}
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 pt-4 border-t border-gray-200">
+                    <button
+                      onClick={() => {
+                        // Réinitialiser TOUS les filtres
+                        setFilters({
+                          entryLevel: '', grade: '', diplomaType: '',
+                          duration: '', selectedYear: null,
+                          durations: [],
+                          deposit: { min: '', max: '' }, applicationDate: '',
+                          tuition: { min: '', max: '' }, alternance: '', city: '',
+                          domains: [], language: '', rncpLevel: ''
+                        });
+                        setCitySearch('');
+                        setDomainSearch('');
+                        setSelectedDomain(null);
+                        setSelectedSubdomains([]);
+                        setSelectedDomainFilters(new Set());
+                        setSelectedSubdomainFilters(new Set());
+                        setSearchQuery('');
+                        setSuggestions([]);
+                        setShowSuggestions(false);
+                        setSearchResults([]);
+                        setTotalResults(0);
+                        setShowResults(false);
+                        setCurrentPage(1);
+                        setCampusFranceFilters({
+                          connected: false,
+                          parallelProcedure: false,
+                          exoneration: null,
+                          bienvenueFrance: null
+                        });
+                        setLanguageFilter({language: '', minLevel: ''});
+                        
+                        if (window.innerWidth <= 768) {
+                          window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }
+                      }}
+                      className="w-full sm:w-auto px-6 py-2.5 border-2 border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-sm font-medium flex items-center justify-center gap-2"
+                    >
+                      <X className="w-4 h-4" />
+                      Réinitialiser tout
                     </button>
                     
                     <div className="flex gap-2">
@@ -2287,19 +2848,19 @@ const HomePage = () => {
                             setShowResults(false);
                           }
                         }}
-                        className="flex-1 sm:flex-none px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-sm"
+                        className="flex-1 sm:flex-none px-6 py-2.5 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-sm font-medium"
                       >
-                        Fermer filtres
+                        Fermer
                       </button>
                       <button
                         onClick={() => {
-                          console.log('🔵 Appliquer button clicked');
                           setShowResults(true);
-                          handleSearch(null, true); // ✅ RESTAURER : forceSearch = true
+                          handleSearch(null, true);
                         }}
-                        className="flex-1 sm:flex-none px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+                        className="flex-1 sm:flex-none px-6 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-colors text-sm font-medium flex items-center justify-center gap-2 shadow-lg"
                       >
-                        Appliquer les filtres
+                        <Search className="w-4 h-4" />
+                        Rechercher
                       </button>
                     </div>
                   </div>

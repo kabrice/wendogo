@@ -1,4 +1,4 @@
-// src/pages/dashboard.js - Version améliorée avec accompagnement
+// src/pages/dashboard.js - Version avec questions forum
 
 import React, { useState, useEffect, startTransition } from 'react';
 import { useSession } from 'next-auth/react';
@@ -6,7 +6,6 @@ import { useRouter } from 'next/router';
 import { REST_API_PARAMS } from '../utils/Constants';
 import OptimizedImage from '../components/OptimizedImage';
 import FooterSingleRow from '../components/FooterSingleRow';
-import { trackDashboardView } from '../lib/gtag';
 import { 
   TrendingUp, 
   Eye, 
@@ -25,7 +24,9 @@ import {
   Phone,
   MessageSquare,
   ArrowRight,
-  Sparkles
+  Sparkles,
+  ThumbsUp,
+  MessageCircle
 } from 'lucide-react';
 import NavBar from '../components/NavBar';
 import SubdomainApi from '../store/apis/subdomainApi';
@@ -40,7 +41,6 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (status === 'loading') return;
-    
     if (!session) {
       startTransition(() => {
         router.push('/');
@@ -66,9 +66,6 @@ const Dashboard = () => {
           headers: { 
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${session.accessToken}`
-            // 'Access-Control-Allow-Origin': '*',
-            // 'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
-            // 'Access-Control-Request-Method': 'GET, POST, DELETE, PUT, OPTIONS' 
           },
       });
 
@@ -110,7 +107,107 @@ const Dashboard = () => {
     }
   };
 
-  // ✅ NOUVEAU: Composant pour afficher les demandes d'accompagnement
+  // ✅ NOUVEAU: Composant pour les questions du forum
+  const ForumQuestions = ({ userQuestions = [] }) => {
+    const CATEGORIES = {
+      'orientation': { label: 'Orientation', icon: '🎯' },
+      'visa': { label: 'Visa', icon: '📝' },
+      'logement': { label: 'Logement', icon: '🏠' },
+      'finance': { label: 'Finance', icon: '💰' },
+      'vie-etudiante': { label: 'Vie étudiante', icon: '🎓' },
+      'emploi': { label: 'Emploi', icon: '💼' },
+      'autres': { label: 'Autres', icon: '💬' }
+    };
+
+    if (!userQuestions || userQuestions.length === 0) {
+      return (
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <div className="flex items-center gap-3 mb-4">
+            <MessageSquare className="w-6 h-6 text-blue-600" />
+            <h3 className="text-lg font-semibold text-gray-900">Mes questions</h3>
+          </div>
+          <div className="text-center py-8">
+            <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <MessageSquare className="w-8 h-8 text-blue-600" />
+            </div>
+            <p className="text-gray-500 mb-4">Aucune question posée</p>
+            <p className="text-sm text-gray-400 mb-6">
+              Posez vos questions sur les études en France et obtenez des réponses de la communauté
+            </p>
+            <a 
+              href="/forum"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
+            >
+              <MessageSquare className="w-4 h-4" />
+              Poser une question
+            </a>
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-3">
+            <MessageSquare className="w-6 h-6 text-blue-600" />
+            <h3 className="text-lg font-semibold text-gray-900">Mes questions</h3>
+          </div>
+          <a 
+            href="/forum"
+            className="text-sm text-blue-600 hover:text-blue-700 font-medium"
+          >
+            Voir toutes
+          </a>
+        </div>
+
+        <div className="space-y-4">
+          {userQuestions.slice(0, 3).map((question) => {
+            const categoryInfo = CATEGORIES[question.category] || { icon: '💬', label: question.category };
+            
+            return (
+              <div 
+                key={question.id}
+                className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer"
+                onClick={() => router.push(`/forum/${question.id}/${question.slug}`)}
+              >
+                <h4 className="font-medium text-gray-900 line-clamp-2 mb-2">
+                  {question.title}
+                </h4>
+                
+                <div className="flex items-center gap-3 mb-2">
+                  <span className="inline-flex items-center gap-1 px-2 py-1 bg-purple-100 text-purple-700 rounded-full text-xs">
+                    {categoryInfo.icon} {categoryInfo.label}
+                  </span>
+                </div>
+                
+                <div className="flex items-center gap-4 text-sm text-gray-600">
+                  <span className="flex items-center gap-1">
+                    <ThumbsUp className="w-4 h-4" />
+                    {question.likes_count}
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <MessageCircle className="w-4 h-4" />
+                    {question.answers_count}
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <Eye className="w-4 h-4" />
+                    {question.views_count}
+                  </span>
+                  <span className="flex items-center gap-1 ml-auto">
+                    <Clock className="w-4 h-4" />
+                    {new Date(question.created_at).toLocaleDateString('fr-FR')}
+                  </span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  };
+
+  // Composant existant pour les demandes d'accompagnement
   const AccompanyRequests = ({ accompanyRequests = [] }) => {
     const getStatusConfig = (status) => {
       const configs = {
@@ -241,7 +338,7 @@ const Dashboard = () => {
     );
   };
 
-  // ✅ NOUVEAU: Composant pour les recommandations
+  // Composant existant pour les recommandations
   const Recommendations = ({ recommendations = [] }) => {
     if (!recommendations || recommendations.length === 0) {
       return null;
@@ -259,13 +356,6 @@ const Dashboard = () => {
             <div key={index} className="bg-white rounded-lg p-4 border border-blue-100">
               <h4 className="font-medium text-gray-900 mb-2">{rec.title}</h4>
               <p className="text-sm text-gray-600 mb-3">{rec.description}</p>
-              {/* <a 
-                href={rec.link}
-                className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 text-sm font-medium"
-              >
-                {rec.action}
-                <ArrowRight className="w-3 h-3" />
-              </a> */}
             </div>
           ))}
         </div>
@@ -469,7 +559,6 @@ const Dashboard = () => {
   }
 
   if (!session) {
-    router.push('/');
     return null;
   }
 
@@ -488,7 +577,7 @@ const Dashboard = () => {
           </p>
         </div>
 
-        {/* ✅ STATISTIQUES AMÉLIORÉES avec accompagnement */}
+        {/* ✅ STATISTIQUES AMÉLIORÉES avec forum */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
             <div className="flex items-center gap-3">
@@ -502,7 +591,20 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {/* ✅ NOUVELLE STATISTIQUE: Accompagnements */}
+          {/* ✅ NOUVELLE STATISTIQUE: Questions */}
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <div className="flex items-center gap-3">
+              <MessageSquare className="w-8 h-8 text-blue-600" />
+              <div>
+                <h3 className="text-2xl font-bold text-gray-900">
+                  {dashboard?.statistics?.questions_count || 0}
+                </h3>
+                <p className="text-gray-600">Questions posées</p>
+              </div>
+            </div>
+          </div>
+
+          {/* STATISTIQUE: Accompagnements */}
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
             <div className="flex items-center gap-3">
               <GraduationCap className="w-8 h-8 text-purple-600" />
@@ -511,18 +613,6 @@ const Dashboard = () => {
                   {dashboard?.statistics?.accompany_requests_count || 0}
                 </h3>
                 <p className="text-gray-600">Accompagnements</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-            <div className="flex items-center gap-3">
-              <TrendingUp className="w-8 h-8 text-blue-600" />
-              <div>
-                <h3 className="text-2xl font-bold text-gray-900">
-                  {dashboard?.domain_preferences?.length || 0}
-                </h3>
-                <p className="text-gray-600">Domaines d'intérêt</p>
               </div>
             </div>
           </div>
@@ -545,23 +635,28 @@ const Dashboard = () => {
 
         {/* ✅ CONTENU PRINCIPAL AMÉLIORÉ */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          {/* Nouvelles demandes d'accompagnement */}
+          {/* ✅ NOUVEAU: Questions du forum */}
+          <ForumQuestions 
+            userQuestions={dashboard?.user_questions || []}
+          />
+          
+          {/* Demandes d'accompagnement */}
           <AccompanyRequests 
             accompanyRequests={dashboard?.accompany_requests || []}
           />
           
-          {/* Favoris récents (existant) */}
+          {/* Favoris récents */}
           <RecentFavorites 
             recentFavorites={dashboard?.recent_favorites || []}
           />
           
-          {/* Domaines d'intérêt (existant) */}
+          {/* Domaines d'intérêt */}
           <DomainInterests 
             domainPreferences={dashboard?.domain_preferences || []} 
             domainNames={domainNames}
           />
           
-          {/* Nouvelles recommandations */}
+          {/* Recommandations */}
           <Recommendations 
             recommendations={dashboard?.recommendations || []}
           />
@@ -593,7 +688,19 @@ const Dashboard = () => {
               </div>
             </a>
             
-            {/* ✅ NOUVELLE ACTION: Accompagnement */}
+            {/* ✅ NOUVELLE ACTION: Forum */}
+            <a 
+              href="/forum"
+              className="flex items-center gap-3 p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+            >
+              <MessageSquare className="w-6 h-6 text-blue-600" />
+              <div>
+                <h4 className="font-medium text-gray-900">Forum</h4>
+                <p className="text-sm text-gray-600">Poser une question</p>
+              </div>
+            </a>
+            
+            {/* ACTION: Accompagnement */}
             <a 
               href="/#accompany-section"
               className="flex items-center gap-3 p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
@@ -602,17 +709,6 @@ const Dashboard = () => {
               <div>
                 <h4 className="font-medium text-gray-900">Accompagnement</h4>
                 <p className="text-sm text-gray-600">Être accompagné</p>
-              </div>
-            </a>
-            
-            <a 
-              href="/account"
-              className="flex items-center gap-3 p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
-            >
-              <User className="w-6 h-6 text-gray-600" />
-              <div>
-                <h4 className="font-medium text-gray-900">Mon compte</h4>
-                <p className="text-sm text-gray-600">Paramètres du profil</p>
               </div>
             </a>
           </div>

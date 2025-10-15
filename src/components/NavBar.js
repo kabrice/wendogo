@@ -1,7 +1,7 @@
 // src/components/NavBar.js - Version avec authentification intégrée
 
 import React, { useState, useEffect, useRef, startTransition, useCallback } from 'react';
-import { ChevronDown, Search, User, Menu, X, Globe, GraduationCap, MapPin, FileText, Heart, Users, ArrowRight, LogOut, BarChart3 } from 'lucide-react';
+import { ChevronDown, Search, User, Menu, X, Globe, GraduationCap, MapPin, FileText, Heart, Users, ArrowRight, LogOut, BarChart3, MessageSquare } from 'lucide-react';
 import { useSession, signOut } from 'next-auth/react';
 import { useFavorites } from '../contexts/FavoritesContext';
 // import AuthModal from './AuthModal';
@@ -174,12 +174,12 @@ const NavBar = ({
     // }
 
     return [
-      // {
-      //   title: 'Formations',
-      //   href: '/',
-      //   hasDropdown: false,
-      //   icon: <Search className="w-4 h-4" />
-      // },
+      {
+        title: 'Forum',
+        hasDropdown: false,
+        href: '/forum',
+        icon: <MessageSquare className="w-4 h-4" />
+      },
       {
         title: 'Orientation & Ressources',
         hasDropdown: true,

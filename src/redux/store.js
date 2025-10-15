@@ -25,6 +25,7 @@ import { nationalityApi } from '../store/apis/nationalityApi'
 import { schoolApi } from '../store/apis/schoolApi'
 import { majorApi } from '../store/apis/majorApi'  
 import { uploadToDriveApi } from '../store/apis/uploadToDriveApi'
+import { forumApi } from '../store/apis/forumApi'
 import helper from '../utils/Helper';
 
 let store;
@@ -58,7 +59,8 @@ export function initializeStore(preloadedState = undefined) {
       [nationalityApi.reducerPath]: nationalityApi.reducer,
       [schoolApi.reducerPath]: schoolApi.reducer,
       [majorApi.reducerPath]: majorApi.reducer,
-      [uploadToDriveApi.reducerPath]: uploadToDriveApi.reducer
+      [uploadToDriveApi.reducerPath]: uploadToDriveApi.reducer,
+      [forumApi.reducerPath]: forumApi.reducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(userApi.middleware)
                                             .concat(leadstatusApi.middleware)
@@ -78,6 +80,7 @@ export function initializeStore(preloadedState = undefined) {
                                             .concat(schoolApi.middleware)
                                             .concat(majorApi.middleware)
                                             .concat(uploadToDriveApi.middleware)
+                                            .concat(forumApi.middleware)
   })
 }
 

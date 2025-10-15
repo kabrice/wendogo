@@ -165,18 +165,18 @@ const ProgramPage = ({ program, school, similarPrograms, error }) => {
           color: "from-red-500 to-rose-600"
         });
       }
-    } else {
+    } 
       // Bloc Frais annuel classique si PAS EEF
-      if (program.tuition) {
-        highlights.push({
-          icon: Euro,
-          title: "Frais annuel",
-          value: program.tuition,
-          subtitle: program.tuition_comment,
-          color: "from-blue-500 to-indigo-600"
-        });
-      }
+    if (program.tuition) {
+      highlights.push({
+        icon: Euro,
+        title: "Frais annuel",
+        value: program.tuition,
+        subtitle: program.tuition_comment,
+        color: "from-blue-500 to-indigo-600"
+      });
     }
+    
     
     // Acompte
     if (program.first_deposit) {
@@ -242,7 +242,7 @@ const ProgramPage = ({ program, school, similarPrograms, error }) => {
           method: program[`y${i}_admission_details`],
           applicationDate: program[`y${i}_application_date`],
           language: program[`y${i}_teaching_language_with_required_level`] || program[`teaching_language_with_required_level_for_year_${i}`],
-          languageTech: program[`language_tech_level${i}`]
+          languageTech: program[`language_tech_level${i}`] || program[`language_tech_level_unofficial${i}`],
         });
       }
     }
@@ -1160,7 +1160,7 @@ const ProgramPage = ({ program, school, similarPrograms, error }) => {
                                   {criteria.language && (
                                     <div>
                                       <span className="font-semibold text-slate-700 text-sm">Langues:</span>
-                                      <p className="text-slate-600 text-sm">{criteria.language}</p>
+                                      <p className="text-slate-600 text-sm">{ProgramApi.formatLanguageLevels(criteria.languageTech)}</p>
                                     </div>
                                   )}
                                   {/* {criteria.applicationDate && (
@@ -1382,13 +1382,19 @@ const ProgramPage = ({ program, school, similarPrograms, error }) => {
                         <span className="text-blue-100 text-sm">Date de candidature</span>
                         <span className="font-semibold text-sm">{program.is_referenced_in_eef ? 'Consulter votre calendrier Campus France' : program.application_date}</span>
                       </div>
-                      <a    href={program.url_application}
+                      <a      href={
+                              (program.url_application && program.url_application.trim())
+                              ? program.url_application
+                              : `https://www.google.com/search?q=${encodeURIComponent(
+                                (program.name || program.title || '') + ' à ' + (program.school?.school_group || school?.name || '')
+                                )}`
+                            }
                             target="_blank"
                             rel="noopener noreferrer"
                             className="block w-full bg-white text-blue-600 font-semibold py-2.5 px-4 rounded-lg hover:bg-blue-50 transition-colors text-sm text-center border border-blue-200"
                           >
                             <div className="flex items-center justify-center gap-2">
-                              <span>Candidater maintenant</span>
+                              <span>En savoir plus</span>
                               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                               </svg>

@@ -528,10 +528,10 @@ class ProgramApi {
    */
   static formatLanguageLevels(input) {
     if (!input) return '';
-    
     const map = {
       Fr: "Français",
-      En: "Anglais"
+      En: "Anglais",
+      Es: "Espagnol"
     };
 
     return input
