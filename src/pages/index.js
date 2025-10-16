@@ -642,34 +642,6 @@ const HomePage = () => {
     }
   }, [handleSearch, goToPage]);
 
-  // 6. CORRIGER LA SÉLECTION DE DOMAINE
-  // const handleDomainSelection = (domainId) => {
-  //   setSelectedDomain(domainId);
-  //   setSelectedSubdomains([]);
-    
-  //   // CORRECTION: Utiliser la version synchrone
-  //   const domainSubdomains = getSubdomainsByDomainSync(domainId, domains);
-  //   console.log('🔍 Domain selected:', domainSubdomains)
-  //   // Synchroniser avec les filtres avancés
-  //   setSelectedDomainFilters(new Set([domainId]));
-  //   setSelectedSubdomainFilters(new Set(domainSubdomains.map(sd => sd.id)));
-  // };
-
-//   const debugProgramData = (programs) => {
-//   console.log('🐛 Debug first few programs:');
-//   programs.slice(0, 3).forEach((program, index) => {
-//     console.log(`Program ${index}:`, {
-//       id: program.id,
-//       name: program.title,
-//       name_type: typeof program.title,
-//       school_name: program.school_name,
-//       school_name_type: typeof program.school_name,
-//       description: program.description ? program.description.substring(0, 50) + '...' : null,
-//       school: program.school
-//     });
-//   });
-// };
-
   // CORRECTION 3: Nouvelles suggestions basées sur l'API
   const loadSuggestions = useCallback(async (query) => {
     if (!query || typeof query !== 'string' || query.trim().length < 2) {
