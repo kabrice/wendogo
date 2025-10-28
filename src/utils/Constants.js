@@ -6,7 +6,7 @@ const IPINFO_URL = 'https://ipinfo.io/json?token=3089ed2a513bd9';
 
 // CORRECTION: Simplifier la configuration des headers
 const REST_API_PARAMS = {
-    baseUrl: 'https://wendogo.online', // Mettre l'URL de votre API principale
+    baseUrl: 'https://wendogo.online',
     // prepareHeaders: (headers, { getState }) => {
     //     // Pour Next.js, on retourne un objet simple avec les headers
     //     return {
@@ -146,8 +146,7 @@ const PROGRESS_BAR_STEPS = {
 }
  
 // URLs et configurations existantes
-//const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
-const API_BASE_URL = 'https://wendogo.online';
+const API_BASE_URL = "https://wendogo.online";
 
 // ✅ NOUVEAU: URLs pour les APIs de taux de change
 const EXCHANGE_RATE_APIS = {

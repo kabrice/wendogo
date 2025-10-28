@@ -434,5 +434,22 @@
   "favoriteButton": {
     "add": "Ajouter aux favoris",
     "remove": "Retirer des favoris"
-  }
+  },
+  "forgotPassword": {
+    "errors": {
+      "methodNotAllowed": "Méthode non autorisée",
+      "emailRequired": "Email requis",
+      "tokenSaveError": "Erreur lors de la sauvegarde du token",
+      "emailSendError": "Erreur lors de l'envoi de l'email",
+      "generalError": "Erreur lors de l'envoi des instructions"
+    },
+    "success": {
+      "emailSentIfExists": "Si cet email existe, vous recevrez un lien de réinitialisation",
+      "instructionsSent": "Instructions de réinitialisation envoyées par email"
+    },
+    "email": {
+      "subject": "Réinitialisation de votre mot de passe Wendogo",
+      "expiresIn": "1 heure"
+    }
+  }  
 }

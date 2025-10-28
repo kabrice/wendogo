@@ -109,5 +109,61 @@
     "termsLink": "terms of use",
     "and": "and our",
     "privacyLink": "privacy policy"
+  },
+  "resetPassword": {
+    "loading": {
+      "title": "Verifying...",
+      "description": "Verifying reset link"
+    },
+    "invalid": {
+      "title": "Invalid Link",
+      "description": "This reset link is invalid or has expired.",
+      "requestNewLink": "Request a new link"
+    },
+    "success": {
+      "title": "🎉 Password Reset!",
+      "description": "Your password has been successfully changed. You can now log in.",
+      "redirect": "Automatic redirect in 3 seconds..."
+    },
+    "form": {
+      "title": "New Password",
+      "description": "Choose a new secure password",
+      "newPassword": "New password",
+      "newPasswordPlaceholder": "Minimum 6 characters",
+      "confirmPassword": "Confirm password",
+      "confirmPasswordPlaceholder": "Retype your password",
+      "submitButton": "Reset Password"
+    },
+    "errors": {
+      "passwordRequired": "Password required",
+      "passwordTooShort": "Password too short (min 6 characters)",
+      "confirmRequired": "Confirmation required",
+      "passwordMismatch": "Passwords do not match",
+      "resetError": "Error during password reset",
+      "connectionError": "Connection error"
+    }
+  },
+  "verifyEmail": {
+    "verifying": {
+      "title": "Verifying...",
+      "description": "We are verifying your email. Please wait."
+    },
+    "success": {
+      "title": "🎉 Email Verified!",
+      "message": "Your email has been successfully verified! You can now log in.",
+      "discoverButton": "Discover Wendogo",
+      "redirect": "Automatic redirect in 10 seconds..."
+    },
+    "error": {
+      "title": "Verification Error",
+      "backButton": "Back to home",
+      "requestNewLink": "Request a new link",
+      "verificationError": "Error verifying email.",
+      "connectionError": "Connection error during verification."
+    },
+    "support": {
+      "question": "Questions? Contact us at",
+      "email": "support@wendogo.com"
+    }
   }
 }

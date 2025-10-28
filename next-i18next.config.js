@@ -8,7 +8,7 @@ module.exports = {
     localeDetection: false,
   },
   defaultNS: 'common',
-  ns: ['common', 'programs', 'authModal'], // ✅ ajoute ton namespace ici
+  ns: ['common', 'programs', 'authModal', 'schools'], // ✅ ajoute ton namespace ici
   localePath: path.resolve('./public/locales'),
   reloadOnPrerender: process.env.NODE_ENV === 'development',
   react: { useSuspense: false },

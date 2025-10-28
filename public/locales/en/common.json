@@ -434,5 +434,22 @@
   "favoriteButton": {
     "add": "Add to favorites",
     "remove": "Remove from favorites"
-  }
+  },
+  "forgotPassword": {
+    "errors": {
+      "methodNotAllowed": "Method not allowed",
+      "emailRequired": "Email required",
+      "tokenSaveError": "Error saving token",
+      "emailSendError": "Error sending email",
+      "generalError": "Error sending instructions"
+    },
+    "success": {
+      "emailSentIfExists": "If this email exists, you will receive a reset link",
+      "instructionsSent": "Reset instructions sent by email"
+    },
+    "email": {
+      "subject": "Reset your Wendogo password",
+      "expiresIn": "1 hour"
+    }
+  }  
 }

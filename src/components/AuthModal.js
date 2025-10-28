@@ -8,9 +8,11 @@ import { parsePhoneNumberWithError } from 'libphonenumber-js';
 import { IPINFO_URL } from '../utils/Constants';
 import { trackUserSignup } from '../lib/gtag';
 import { useTranslation } from 'next-i18next';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const PasswordInput = ({ value, onChange, errors, isSignUp = false }) => {
-  const { t, i18n } = useTranslation('authModal');
+  const { t } = useTranslation('authModal');
   const [showPassword, setShowPassword] = useState(false);
   const [showRequirements, setShowRequirements] = useState(false);
   // useEffect(() => {
@@ -194,6 +196,8 @@ export const validatePassword = (password, t) => {
 
 const AuthModal = () => {
   const { t } = useTranslation('authModal');
+  const router = useRouter();
+  const currentLocale = router.locale || 'fr';
   const { showAuthModal, setShowAuthModal } = useFavorites();
   const [isLoading, setIsLoading] = useState('');
   const [isSignUp, setIsSignUp] = useState(false);
@@ -249,7 +253,7 @@ const AuthModal = () => {
       const response = await fetch('/api/auth/forgot-password', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: formData.email })
+        body: JSON.stringify({ email: formData.email, locale: currentLocale }),
       });
 
       const data = await response.json();
@@ -414,7 +418,8 @@ const AuthModal = () => {
         const registrationData = {
           ...formData,
           phone: formattedPhone,
-          country: formData.countryIso2
+          country: formData.countryIso2,
+          locale: currentLocale
         };
         
         const response = await fetch('/api/auth/register', {

@@ -5,9 +5,11 @@ import { CheckCircle, XCircle, Loader2, Mail, ArrowRight } from 'lucide-react';
 import NavBar from '../../components/NavBar';
 import Footer from '../../components/Footer';
 import Link from 'next/link';
+import { useTranslation } from 'next-i18next';
 
 const VerifyEmail = () => {
   const router = useRouter();
+  const { t } = useTranslation(['common', 'authModal']);
   const { token, email } = router.query;
   const [status, setStatus] = useState('verifying'); // 'verifying', 'success', 'error'
   const [message, setMessage] = useState('');
@@ -34,7 +36,7 @@ const VerifyEmail = () => {
 
         if (response.ok && data.success) {
           setStatus('success');
-          setMessage('Votre email a été vérifié avec succès ! Vous pouvez maintenant vous connecter.');
+          setMessage(t('authModal:verifyEmail.success.message'));
           
           // Rediriger vers la page d'accueil après 10 secondes
           setTimeout(() => {
@@ -42,17 +44,17 @@ const VerifyEmail = () => {
           }, 10000);
         } else {
           setStatus('error');
-          setMessage(data.error || 'Erreur lors de la vérification de l\'email.');
+          setMessage(data.error || t('authModal:verifyEmail.error.verificationError'));
         }
       } catch (error) {
         console.error('Erreur vérification:', error);
         setStatus('error');
-        setMessage('Erreur de connexion lors de la vérification.');
+        setMessage(t('authModal:verifyEmail.error.connectionError'));
       }
     };
 
     verifyEmail();
-  }, [token, email, router]);
+  }, [token, email, router, t]);
 
   return (
     <>
@@ -69,10 +71,10 @@ const VerifyEmail = () => {
                   <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
                 </div>
                 <h1 className="text-2xl font-bold text-gray-900 mb-4">
-                  Vérification en cours...
+                  {t('authModal:verifyEmail.verifying.title')}
                 </h1>
                 <p className="text-gray-600">
-                  Nous vérifions votre email. Veuillez patienter.
+                  {t('authModal:verifyEmail.verifying.description')}
                 </p>
               </>
             )}
@@ -83,7 +85,7 @@ const VerifyEmail = () => {
                   <CheckCircle className="w-8 h-8 text-green-600" />
                 </div>
                 <h1 className="text-2xl font-bold text-gray-900 mb-4">
-                  🎉 Email vérifié !
+                  {t('authModal:verifyEmail.success.title')}
                 </h1>
                 <p className="text-gray-600 mb-6">
                   {message}
@@ -92,13 +94,13 @@ const VerifyEmail = () => {
                 <div className="space-y-3">
                   <Link href="/">
                     <div className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium cursor-pointer">
-                      Découvrir Wendogo
+                      {t('authModal:verifyEmail.success.discoverButton')}
                       <ArrowRight className="w-4 h-4" />
                     </div>
                   </Link>
                   
                   <p className="text-sm text-gray-500">
-                    Redirection automatique dans 10 secondes...
+                    {t('authModal:verifyEmail.success.redirect')}
                   </p>
                 </div>
               </>
@@ -110,7 +112,7 @@ const VerifyEmail = () => {
                   <XCircle className="w-8 h-8 text-red-600" />
                 </div>
                 <h1 className="text-2xl font-bold text-gray-900 mb-4">
-                  Erreur de vérification
+                  {t('authModal:verifyEmail.error.title')}
                 </h1>
                 <p className="text-red-600 mb-6">
                   {message}
@@ -119,7 +121,7 @@ const VerifyEmail = () => {
                 <div className="space-y-3">
                   <Link href="/">
                     <div className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors font-medium cursor-pointer">
-                      Retour à l'accueil
+                      {t('authModal:verifyEmail.error.backButton')}
                       <ArrowRight className="w-4 h-4" />
                     </div>
                   </Link>
@@ -129,7 +131,7 @@ const VerifyEmail = () => {
                     className="w-full flex items-center justify-center gap-2 px-6 py-3 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition-colors font-medium"
                   >
                     <Mail className="w-4 h-4" />
-                    Demander un nouveau lien
+                    {t('authModal:verifyEmail.error.requestNewLink')}
                   </button>
                 </div>
               </>
@@ -140,9 +142,9 @@ const VerifyEmail = () => {
           {/* Informations supplémentaires */}
           <div className="mt-8 text-center">
             <p className="text-sm text-gray-500">
-              Des questions ? Contactez-nous à{' '}
-              <a href="mailto:support@wendogo.com" className="text-blue-600 hover:underline">
-                support@wendogo.com
+              {t('authModal:verifyEmail.support.question')} {' '}
+              <a href={`mailto:${t('authModal:verifyEmail.support.email')}`} className="text-blue-600 hover:underline">
+                {t('authModal:verifyEmail.support.email')}
               </a>
             </p>
           </div>
@@ -154,5 +156,13 @@ const VerifyEmail = () => {
     </>
   );
 };
-
+export async function getStaticProps({ locale }) {
+  const { serverSideTranslations } = await import('next-i18next/serverSideTranslations');
+  
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['authModal', 'common'])),
+    },
+  };
+}
 export default VerifyEmail;

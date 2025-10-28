@@ -1,5 +1,5 @@
-// src/pages/api/auth/verify-email.js - CONTENU CORRECT POUR L'API ROUTE
 import { REST_API_PARAMS } from '../../../utils/Constants';
+import { getApiMessages } from '../../../utils/apiMessages';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -7,52 +7,49 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { token, email } = req.body;
+    const { token, email, locale = 'fr' } = req.body;
+    const messages = getApiMessages(locale);
 
     if (!token || !email) {
       return res.status(400).json({ 
         success: false, 
-        error: 'Token et email requis' 
+        error: messages.TOKEN_REQUIRED
       });
     }
 
-    console.log('🔍 Vérification email:', { email, token: token.substring(0, 10) + '...' });
-
-    // Vérifier le token via l'API Flask
+    // Vérifier le token via Flask
     const verifyResponse = await fetch(`${REST_API_PARAMS.baseUrl}/auth/verify-token`, {
       method: 'POST',
       headers: REST_API_PARAMS.headers,
       body: JSON.stringify({ 
-        token: token, 
-        email: email 
+        token, 
+        email,
+        locale
       })
     });
 
     const result = await verifyResponse.json();
-    
-    console.log('📥 Réponse Flask:', { 
-      status: verifyResponse.status, 
-      success: result.success,
-      message: result.message 
-    });
 
     if (verifyResponse.ok && result.success) {
       return res.status(200).json({
         success: true,
-        message: result.message || 'Email vérifié avec succès'
+        message: result.message || messages.EMAIL_VERIFIED
       });
     } else {
       return res.status(400).json({
         success: false,
-        error: result.error || 'Token invalide ou expiré'
+        error: result.error || messages.VERIFICATION_ERROR
       });
     }
 
   } catch (error) {
-    console.error('❌ Erreur vérification email:', error);
+    console.error('Erreur vérification email:', error);
+    const locale = req.body?.locale || 'fr';
+    const messages = getApiMessages(locale);
+    
     return res.status(500).json({ 
       success: false,
-      error: 'Erreur interne lors de la vérification' 
+      error: messages.VERIFICATION_ERROR
     });
   }
 }

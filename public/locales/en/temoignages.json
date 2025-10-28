@@ -1,0 +1,205 @@
+{
+  "meta": {
+    "title": "Student Testimonials - Wendogo Transformed Their Journey",
+    "description": "Discover authentic testimonials from students supported by Wendogo. Over 2,100 students have achieved their dream of studying in France thanks to our personalized support.",
+    "keywords": "Wendogo student testimonials, Campus France reviews, study France success, international student support",
+    "ogTitle": "Student Testimonials - Wendogo Transformed Their Journey",
+    "ogDescription": "Over 2,100 students have achieved their dream of studying in France with Wendogo. Discover their inspiring stories.",
+    "twitterTitle": "Student Testimonials - Wendogo",
+    "twitterDescription": "Discover how Wendogo transformed the journey of over 2,100 students"
+  },
+  "hero": {
+    "title": "They Achieved Their Dream of Studying in France",
+    "description": "Discover the authentic testimonials of over 2,100 students who transformed their journey thanks to Wendogo's personalized support.",
+    "ctaPrimary": "Get Support",
+    "ctaSecondary": "Speak to an Advisor"
+  },
+  "stats": {
+    "studentsHelped": {
+      "number": "2,100+",
+      "label": "Students Supported"
+    },
+    "successRate": {
+      "number": "95%",
+      "label": "Success Rate"
+    },
+    "averageRating": {
+      "number": "4.9/5",
+      "label": "Average Rating"
+    },
+    "countriesRepresented": {
+      "number": "50+",
+      "label": "Countries Represented"
+    }
+  },
+  "filters": {
+    "country": {
+      "title": "Filter by country:",
+      "all": "All countries",
+      "morocco": "Morocco 🇲🇦",
+      "cameroon": "Cameroon 🇨🇲",
+      "algeria": "Algeria 🇩🇿",
+      "senegal": "Senegal 🇸🇳",
+      "ivoryCoast": "Ivory Coast 🇨🇮"
+    },
+    "domain": {
+      "title": "Filter by field:",
+      "all": "All fields",
+      "sciences": "Sciences",
+      "health": "Health",
+      "business": "Business",
+      "engineering": "Engineering",
+      "computerScience": "Computer Science",
+      "accountingManagement": "Accounting / Management",
+      "sciencesPo": "Political Science"
+    }
+  },
+  "testimonials": {
+    "1": {
+      "name": "Achraf M.",
+      "country": "Morocco",
+      "flag": "🇲🇦",
+      "city": "Casablanca",
+      "university": "University of Orléans",
+      "program": "Master in Physical Sciences",
+      "year": "2024",
+      "domain": "Sciences",
+      "testimonial": "I got my baccalaureate in physical sciences with French option (BIOF) in 2019. At first, I knew nothing about Campus France and visa procedures. The Wendogo team supported me from A to Z. Edgar helped me choose between Orléans and Angers - Orléans turned out to be perfect for my studies in pure sciences. The most reassuring part? I only paid once I got my visa!",
+      "journey": [
+        "BIOF physical sciences baccalaureate obtained",
+        "Discovery of Campus France procedures",
+        "Personalized Wendogo support",
+        "Choice between Orléans and Angers",
+        "Visa successfully obtained"
+      ],
+      "advice": "Trust Wendogo, they know the procedures perfectly. Don't hesitate to ask all your questions, even the most basic ones."
+    },
+    "2": {
+      "name": "Marie K.",
+      "country": "Cameroon",
+      "flag": "🇨🇲",
+      "city": "Yaoundé",
+      "university": "Claude Bernard University Lyon 1",
+      "program": "Master in Health Sciences",
+      "year": "2024",
+      "domain": "Health",
+      "testimonial": "Health programs are very regulated in France, I couldn't find any private schools. Edgar explained that everything goes through Campus France and guided me toward Paris-Saclay in parallel. His advice for the Campus France interview was invaluable. Result: accepted at Lyon 1! I'm grateful for this support.",
+      "journey": [
+        "Unsuccessful search for private schools",
+        "Explanation of official pathways",
+        "Parallel Paris-Saclay application",
+        "Campus France interview preparation",
+        "Lyon 1 acceptance obtained"
+      ],
+      "advice": "For health programs, stick to official pathways. The Campus France interview is crucial - prepare well!"
+    },
+    "3": {
+      "name": "Ahmed B.",
+      "country": "Algeria",
+      "flag": "🇩🇿",
+      "city": "Algiers",
+      "university": "ESSEC Business School",
+      "program": "Master in Management",
+      "year": "2024",
+      "domain": "Business",
+      "testimonial": "After my engineering degree in Algeria, I wanted to switch to management. The Wendogo team helped me target the right business schools and prepare a strong application. Their knowledge of Algerian specifics saved me months. Now at ESSEC, I highly recommend them!",
+      "journey": [
+        "Engineering degree in Algeria",
+        "Management career change project",
+        "Business school targeting",
+        "Application optimized by Wendogo",
+        "ESSEC admission successful"
+      ],
+      "advice": "Don't hesitate to change paths - Wendogo will help you showcase your previous experience."
+    },
+    "4": {
+      "name": "Fatima S.",
+      "country": "Senegal",
+      "flag": "🇸🇳",
+      "city": "Dakar",
+      "university": "Sorbonne Paris Nord University",
+      "program": "Master in Computer Science",
+      "year": "2024",
+      "domain": "Computer Science",
+      "testimonial": "As a woman in tech in Senegal, I wanted to specialize in France. Wendogo not only helped me with Campus France but also finding student housing in Paris. Their support goes beyond administrative procedures - they think of everything!",
+      "journey": [
+        "Computer engineer in Senegal",
+        "France specialization project",
+        "Campus France support",
+        "Paris housing search assistance",
+        "Successful Sorbonne installation"
+      ],
+      "advice": "Wendogo thinks about all aspects of your project - not just official procedures."
+    },
+    "5": {
+      "name": "Mariama S.",
+      "country": "Ivory Coast",
+      "flag": "🇨🇮",
+      "city": "Abidjan",
+      "university": "ESG Finance",
+      "program": "Master in Audit and Management Control",
+      "year": "2025",
+      "domain": "Accounting / Management",
+      "testimonial": "I obtained my bachelor's degree in accounting, control and audit in 2017, then worked as an accounting assistant. In 2024, I decided to resume my studies in France. Thanks to Wendogo, I was perfectly supported in preparing for the ESG Finance entrance exam. I was finally admitted! Their support also helped me better understand the banking issues related to my visa application. Thank you so much!",
+      "journey": [
+        "Bachelor's degree obtained in 2017",
+        "Professional accounting experience",
+        "ESG Finance exam preparation with Wendogo",
+        "Successful admission in 2025",
+        "Visa assistance and banking support"
+      ],
+      "advice": "Even if you left school a long time ago, it's never too late. Wendogo supports you with dedication and kindness at every step."
+    },
+    "6": {
+      "name": "Amina L.",
+      "country": "Morocco",
+      "flag": "🇲🇦",
+      "city": "Rabat",
+      "university": "Sciences Po Bordeaux",
+      "program": "Master in International Relations",
+      "year": "2024",
+      "domain": "Political Science",
+      "testimonial": "Sciences Po was my dream! But the admission procedures are complex. Wendogo guided me through the specific IEP process, helped me prepare for the entrance exam and interviews. Their expertise in French grandes écoles makes all the difference.",
+      "journey": [
+        "Dream of joining Sciences Po",
+        "Complex IEP procedures",
+        "Specialized support",
+        "Exam and interview preparation",
+        "Sciences Po Bordeaux admission"
+      ],
+      "advice": "For grandes écoles, specialized expertise is essential. Wendogo knows all the codes."
+    }
+  },
+  "featuredTestimonial": {
+    "title": "Featured Testimonial",
+    "subtitle": "Discover the inspiring story of our students who succeeded in their study project in France.",
+    "labels": {
+      "program": "Program",
+      "university": "University",
+      "advice": "Their advice:",
+      "journey": "Their Journey with Wendogo",
+      "result": "Result",
+      "resultDescription": "Successful admission and installation in France with complete Wendogo support.",
+      "accompanied": "Support:"
+    },
+    "navigation": {
+      "previous": "Previous",
+      "next": "Next"
+    }
+  },
+  "allTestimonials": {
+    "title": "All Testimonials",
+    "subtitle": "Browse all testimonials from our successfully supported students.",
+    "readFullStory": "Read the full story",
+    "noResults": {
+      "title": "No testimonials found",
+      "description": "Try changing your filters to see more testimonials."
+    }
+  },
+  "cta": {
+    "title": "Ready to Write Your Own Success Story?",
+    "description": "Join over 2,100 students who have achieved their dream of studying in France thanks to Wendogo's personalized support.",
+    "primaryButton": "Get Support",
+    "secondaryButton": "Contact Us"
+  }
+}

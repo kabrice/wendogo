@@ -26,10 +26,11 @@ import {
   ChevronLeft,
   ChevronRight
 } from 'lucide-react';
-import Image from 'next/image';
+import { useTranslation } from 'next-i18next';
 import Link from 'next/link';
 
 function Temoignages() {
+  const { t } = useTranslation(['common', 'temoignages']);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [filterCountry, setFilterCountry] = useState('all');
   const [filterDomain, setFilterDomain] = useState('all');
@@ -39,163 +40,163 @@ function Temoignages() {
   }, []);
 
   const stats = [
-    { number: '2,100+', label: 'Étudiants accompagnés', icon: Users },
-    { number: '95%', label: 'Taux de réussite', icon: TrendingUp },
-    { number: '4.9/5', label: 'Note moyenne', icon: Star },
-    { number: '50+', label: 'Pays représentés', icon: Globe }
+    { number: t('temoignages:stats.studentsHelped.number'), label: t('temoignages:stats.studentsHelped.label'), icon: Users },
+    { number: t('temoignages:stats.successRate.number'), label: t('temoignages:stats.successRate.label'), icon: TrendingUp },
+    { number: t('temoignages:stats.averageRating.number'), label: t('temoignages:stats.averageRating.label'), icon: Star },
+    { number: t('temoignages:stats.countriesRepresented.number'), label: t('temoignages:stats.countriesRepresented.label'), icon: Globe }
   ];
 
   const testimonials = [
     {
       id: 1,
-      name: 'Achraf M.',
-      country: 'Maroc',
-      flag: '🇲🇦',
-      city: 'Casablanca',
-      university: 'Université d\'Orléans',
-      program: 'Master Sciences Physiques',
-      year: '2024',
+      name: t('temoignages:testimonials.1.name'),
+      country: t('temoignages:testimonials.1.country'),
+      flag: t('temoignages:testimonials.1.flag'),
+      city: t('temoignages:testimonials.1.city'),
+      university: t('temoignages:testimonials.1.university'),
+      program: t('temoignages:testimonials.1.program'),
+      year: t('temoignages:testimonials.1.year'),
       rating: 5,
-      domain: 'Sciences',
+      domain: t('temoignages:filters.domain.sciences'),
       photo: '/images/student-placeholder.jpg',
-      testimonial: "J'ai obtenu mon bac sciences physiques option française (BIOF) en 2019. Au début, je ne savais rien des démarches Campus France et visa. L'équipe Wendogo m'a accompagné de A à Z. Edgar m'a aidé à choisir entre Orléans et Angers - finalement Orléans était parfait pour mes études en sciences pures. Le plus rassurant ? Je ne payais qu'une fois mon visa obtenu !",
+      testimonial: t('temoignages:testimonials.1.testimonial'),
       journey: [
-        "Bac sciences physiques BIOF obtenu",
-        "Découverte des démarches Campus France",
-        "Accompagnement personnalisé Wendogo",
-        "Choix entre Orléans et Angers",
-        "Visa obtenu avec succès"
+        t('temoignages:testimonials.1.journey.0'),
+        t('temoignages:testimonials.1.journey.1'),
+        t('temoignages:testimonials.1.journey.2'),
+        t('temoignages:testimonials.1.journey.3'),
+        t('temoignages:testimonials.1.journey.4')
       ],
-      advice: "Faites confiance à Wendogo, ils connaissent parfaitement les démarches. N'hésitez pas à poser toutes vos questions, même les plus basiques."
+      advice: t('temoignages:testimonials.1.advice')
     },
     {
       id: 2,
-      name: 'Marie K.',
-      country: 'Cameroun',
-      flag: '🇨🇲',
-      city: 'Yaoundé',
-      university: 'Université Claude Bernard Lyon 1',
-      program: 'Master Sciences de la Santé',
-      year: '2024',
+      name: t('temoignages:testimonials.2.name'),
+      country: t('temoignages:testimonials.2.country'),
+      flag: t('temoignages:testimonials.2.flag'),
+      city: t('temoignages:testimonials.2.city'),
+      university: t('temoignages:testimonials.2.university'),
+      program: t('temoignages:testimonials.2.program'),
+      year: t('temoignages:testimonials.2.year'),
       rating: 5,
-      domain: 'Santé',
+      domain: t('temoignages:filters.domain.health'),
       photo: '/images/student-placeholder.jpg',
-      testimonial: "Les formations en santé sont très encadrées en France, je ne trouvais pas d'école privée. Edgar m'a expliqué que tout passe par Campus France et m'a orientée vers Paris-Saclay en parallèle. Ses conseils pour l'entretien Campus France ont été précieux. Résultat : acceptée à Lyon 1 ! Je suis reconnaissante pour cet accompagnement.",
+      testimonial: t('temoignages:testimonials.2.testimonial'),
       journey: [
-        "Recherche infructueuse d'écoles privées",
-        "Explication des voies officielles",
-        "Candidature Paris-Saclay parallèle",
-        "Préparation entretien Campus France",
-        "Acceptation Lyon 1 obtenue"
+        t('temoignages:testimonials.2.journey.0'),
+        t('temoignages:testimonials.2.journey.1'),
+        t('temoignages:testimonials.2.journey.2'),
+        t('temoignages:testimonials.2.journey.3'),
+        t('temoignages:testimonials.2.journey.4')
       ],
-      advice: "Pour les formations en santé, restez sur les voies officielles. L'entretien Campus France est crucial - préparez-vous bien !"
+      advice: t('temoignages:testimonials.2.advice')
     },
     {
       id: 3,
-      name: 'Ahmed B.',
-      country: 'Algérie',
-      flag: '🇩🇿',
-      city: 'Alger',
-      university: 'ESSEC Business School',
-      program: 'Master Management',
-      year: '2024',
+      name: t('temoignages:testimonials.3.name'),
+      country: t('temoignages:testimonials.3.country'),
+      flag: t('temoignages:testimonials.3.flag'),
+      city: t('temoignages:testimonials.3.city'),
+      university: t('temoignages:testimonials.3.university'),
+      program: t('temoignages:testimonials.3.program'),
+      year: t('temoignages:testimonials.3.year'),
       rating: 5,
-      domain: 'Business',
+      domain: t('temoignages:filters.domain.business'),
       photo: '/images/student-placeholder.jpg',
-      testimonial: "Après mon diplôme d'ingénieur en Algérie, je voulais me reconvertir en management. L'équipe Wendogo m'a aidé à cibler les bonnes écoles de commerce et à préparer un dossier solide. Leur connaissance des spécificités algériennes m'a fait gagner des mois. Maintenant à l'ESSEC, je recommande vivement !",
+      testimonial: t('temoignages:testimonials.3.testimonial'),
       journey: [
-        "Diplôme ingénieur en Algérie",
-        "Projet reconversion management",
-        "Ciblage écoles de commerce",
-        "Dossier optimisé par Wendogo",
-        "Admission ESSEC réussie"
+        t('temoignages:testimonials.3.journey.0'),
+        t('temoignages:testimonials.3.journey.1'),
+        t('temoignages:testimonials.3.journey.2'),
+        t('temoignages:testimonials.3.journey.3'),
+        t('temoignages:testimonials.3.journey.4')
       ],
-      advice: "N'hésitez pas à changer de voie - Wendogo vous aidera à valoriser votre parcours antérieur."
+      advice: t('temoignages:testimonials.3.advice')
     },
     {
       id: 4,
-      name: 'Fatima S.',
-      country: 'Sénégal',
-      flag: '🇸🇳',
-      city: 'Dakar',
-      university: 'Université Sorbonne Paris Nord',
-      program: 'Master Informatique',
-      year: '2024',
+      name: t('temoignages:testimonials.4.name'),
+      country: t('temoignages:testimonials.4.country'),
+      flag: t('temoignages:testimonials.4.flag'),
+      city: t('temoignages:testimonials.4.city'),
+      university: t('temoignages:testimonials.4.university'),
+      program: t('temoignages:testimonials.4.program'),
+      year: t('temoignages:testimonials.4.year'),
       rating: 4,
-      domain: 'Informatique',
+      domain: t('temoignages:filters.domain.computerScience'),
       photo: '/images/student-placeholder.jpg',
-      testimonial: "En tant que femme dans la tech au Sénégal, je voulais me spécialiser en France. Wendogo m'a non seulement aidée pour Campus France mais aussi pour trouver un logement étudiant à Paris. Leur accompagnement va au-delà des démarches administratives - ils pensent à tout !",
+      testimonial: t('temoignages:testimonials.4.testimonial'),
       journey: [
-        "Ingénieure informatique au Sénégal",
-        "Projet spécialisation France",
-        "Accompagnement Campus France",
-        "Aide recherche logement Paris",
-        "Installation réussie Sorbonne"
+        t('temoignages:testimonials.4.journey.0'),
+        t('temoignages:testimonials.4.journey.1'),
+        t('temoignages:testimonials.4.journey.2'),
+        t('temoignages:testimonials.4.journey.3'),
+        t('temoignages:testimonials.4.journey.4')
       ],
-      advice: "Wendogo pense à tous les aspects de votre projet - pas seulement les démarches officielles."
+      advice: t('temoignages:testimonials.4.advice')
     },
     {
     id: 5,
-    name: 'Mariama S.',
-    country: 'Côte d\'Ivoire',
-    flag: '🇨🇮',
-    city: 'Abidjan',
-    university: 'ESG Finance',
-    program: 'Master Audit et Contrôle de Gestion',
-    year: '2025',
+    name: t('temoignages:testimonials.5.name'),
+    country: t('temoignages:testimonials.5.country'),
+    flag: t('temoignages:testimonials.5.flag'),
+    city: t('temoignages:testimonials.5.city'),
+    university: t('temoignages:testimonials.5.university'),
+    program: t('temoignages:testimonials.5.program'),
+    year: t('temoignages:testimonials.5.year'),
     rating: 5,
-    domain: 'Comptabilité / Gestion',
+    domain: t('temoignages:filters.domain.accountingManagement'),
     photo: '/images/student-placeholder.jpg',
-    testimonial: "J'avais obtenu ma licence en comptabilité, contrôle et audit en 2017, puis j'ai travaillé comme assistante comptable. En 2024, j'ai décidé de reprendre mes études en France. Grâce à Wendogo, j'ai été parfaitement accompagnée pour préparer le concours d'entrée à ESG Finance. J'ai finalement été admise ! Leur soutien m’a aussi aidée à mieux comprendre les questions bancaires liées à ma demande de visa. Merci infiniment !",
+    testimonial: t('temoignages:testimonials.5.testimonial'),
     journey: [
-        "Licence obtenue en 2017",
-        "Expérience pro en comptabilité",
-        "Préparation au concours ESG Finance avec Wendogo",
-        "Admission réussie en 2025",
-        "Assistance visa et soutien bancaire"
+        t('temoignages:testimonials.5.journey.0'),
+        t('temoignages:testimonials.5.journey.1'),
+        t('temoignages:testimonials.5.journey.2'),
+        t('temoignages:testimonials.5.journey.3'),
+        t('temoignages:testimonials.5.journey.4')
     ],
-    advice: "Même si vous avez quitté l’école depuis longtemps, il n’est jamais trop tard. Wendogo vous accompagne avec sérieux et bienveillance à chaque étape."
+    advice: t('temoignages:testimonials.5.advice')
     },
     {
       id: 6,
-      name: 'Amina L.',
-      country: 'Maroc',
-      flag: '🇲🇦',
-      city: 'Rabat',
-      university: 'Sciences Po Bordeaux',
-      program: 'Master Relations Internationales',
-      year: '2024',
+      name: t('temoignages:testimonials.6.name'),
+      country: t('temoignages:testimonials.6.country'),
+      flag: t('temoignages:testimonials.6.flag'),
+      city: t('temoignages:testimonials.6.city'),
+      university: t('temoignages:testimonials.6.university'),
+      program: t('temoignages:testimonials.6.program'),
+      year: t('temoignages:testimonials.6.year'),
       rating: 5,
-      domain: 'Sciences Po',
+      domain: t('temoignages:filters.domain.sciencesPo'),
       photo: '/images/student-placeholder.jpg',
-      testimonial: "Sciences Po, c'était mon rêve ! Mais les procédures d'admission sont complexes. Wendogo m'a guidée dans le processus spécifique aux IEP, m'a aidée à préparer le concours d'entrée et les entretiens. Leur expertise des grandes écoles françaises fait la différence.",
+      testimonial: t('temoignages:testimonials.6.testimonial'),
       journey: [
-        "Rêve d'intégrer Sciences Po",
-        "Procédures IEP complexes",
-        "Accompagnement spécialisé",
-        "Préparation concours et entretiens",
-        "Admission Sciences Po Bordeaux"
+        t('temoignages:testimonials.6.journey.0'),
+        t('temoignages:testimonials.6.journey.1'),
+        t('temoignages:testimonials.6.journey.2'),
+        t('temoignages:testimonials.6.journey.3'),
+        t('temoignages:testimonials.6.journey.4')
       ],
-      advice: "Pour les grandes écoles, l'expertise spécialisée est indispensable. Wendogo connaît tous les codes."
+      advice: t('temoignages:testimonials.6.advice')
     }
   ];
 
   const countries = [
-    { value: 'all', label: 'Tous les pays', count: testimonials.length },
-    { value: 'Maroc', label: 'Maroc 🇲🇦', count: testimonials.filter(t => t.country === 'Maroc').length },
-    { value: 'Cameroun', label: 'Cameroun 🇨🇲', count: testimonials.filter(t => t.country === 'Cameroun').length },
-    { value: 'Algérie', label: 'Algérie 🇩🇿', count: testimonials.filter(t => t.country === 'Algérie').length },
-    { value: 'Sénégal', label: 'Sénégal 🇸🇳', count: testimonials.filter(t => t.country === 'Sénégal').length },
-    { value: 'Côte d\'Ivoire', label: 'Côte d\'Ivoire 🇨🇮', count: testimonials.filter(t => t.country === 'Côte d\'Ivoire').length }
+    { value: 'all', label: t('temoignages:filters.country.all'), count: testimonials.length },
+    { value: t('temoignages:testimonials.1.country'), label: t('temoignages:filters.country.morocco'), count: testimonials.filter(tes => tes.country === testimonials[0].country).length },
+    { value: t('temoignages:testimonials.2.country'), label: t('temoignages:filters.country.cameroon'), count: testimonials.filter(tes => tes.country === testimonials[1].country).length },
+    { value: t('temoignages:testimonials.3.country'), label: t('temoignages:filters.country.algeria'), count: testimonials.filter(tes => tes.country === testimonials[2].country).length },
+    { value: t('temoignages:testimonials.4.country'), label: t('temoignages:filters.country.senegal'), count: testimonials.filter(tes => tes.country === testimonials[3].country).length },
+    { value: t('temoignages:testimonials.5.country'), label: t('temoignages:filters.country.ivoryCoast'), count: testimonials.filter(tes => tes.country === testimonials[4].country).length }
   ];
 
   const domains = [
-    { value: 'all', label: 'Tous les domaines', count: testimonials.length },
-    { value: 'Sciences', label: 'Sciences', count: testimonials.filter(t => t.domain === 'Sciences').length },
-    { value: 'Santé', label: 'Santé', count: testimonials.filter(t => t.domain === 'Santé').length },
-    { value: 'Business', label: 'Business', count: testimonials.filter(t => t.domain === 'Business').length },
-    { value: 'Ingénierie', label: 'Ingénierie', count: testimonials.filter(t => t.domain === 'Ingénierie').length },
-    { value: 'Informatique', label: 'Informatique', count: testimonials.filter(t => t.domain === 'Informatique').length }
+    { value: 'all', label: t('temoignages:filters.domain.all'), count: testimonials.length },
+    { value: t('temoignages:filters.domain.sciences'), label: t('temoignages:filters.domain.sciences'), count: testimonials.filter(tes => tes.domain === t('temoignages:filters.domain.sciences')).length },
+    { value: t('temoignages:filters.domain.health'), label: t('temoignages:filters.domain.health'), count: testimonials.filter(tes => tes.domain === t('temoignages:filters.domain.health')).length },
+    { value: t('temoignages:filters.domain.business'), label: t('temoignages:filters.domain.business'), count: testimonials.filter(tes => tes.domain === t('temoignages:filters.domain.business')).length },
+    { value: t('temoignages:filters.domain.engineering'), label: t('temoignages:filters.domain.engineering'), count: testimonials.filter(tes => tes.domain === t('temoignages:filters.domain.engineering')).length },
+    { value: t('temoignages:filters.domain.computerScience'), label: t('temoignages:filters.domain.computerScience'), count: testimonials.filter(tes => tes.domain === t('temoignages:filters.domain.computerScience')).length }
   ];
 
   const filteredTestimonials = testimonials.filter(testimonial => {
@@ -224,20 +225,20 @@ function Temoignages() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Head>
-        <title>Témoignages d'étudiants - Wendogo a transformé leur parcours</title>
-        <meta name="description" content="Découvrez les témoignages authentiques d'étudiants accompagnés par Wendogo. Plus de 2100 étudiants ont réalisé leur rêve d'étudier en France grâce à notre accompagnement personnalisé." />
-        <meta name="keywords" content="témoignages étudiants Wendogo, avis Campus France, réussite études France, accompagnement étudiant international" />
+        <title>{t('temoignages:meta.title')}</title>
+        <meta name="description" content={t('temoignages:meta.description')} />
+        <meta name="keywords" content={t('temoignages:meta.keywords')} />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         
-        <meta property="og:title" content="Témoignages d'étudiants - Wendogo a transformé leur parcours" />
-        <meta property="og:description" content="Plus de 2100 étudiants ont réalisé leur rêve d'étudier en France avec Wendogo. Découvrez leurs histoires inspirantes." />
+        <meta property="og:title" content={t('temoignages:meta.ogTitle')} />
+        <meta property="og:description" content={t('temoignages:meta.ogDescription')} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://wendogo.com/temoignages" />
         <meta property="og:image" content="https://wendogo.com/images/temoignages-hero.jpg" />
         
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Témoignages d'étudiants - Wendogo" />
-        <meta name="twitter:description" content="Découvrez comment Wendogo a transformé le parcours de plus de 2100 étudiants" />
+        <meta name="twitter:title" content={t('temoignages:meta.twitterTitle')} />
+        <meta name="twitter:description" content={t('temoignages:meta.twitterDescription')} />
         
         <link rel="canonical" href="https://wendogo.com/temoignages" />
         
@@ -283,18 +284,17 @@ function Temoignages() {
               </div>
             </div>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">
-              Ils ont réalisé leur rêve d'étudier en France
+              {t('temoignages:hero.title')}
             </h1>
             <p className="text-lg sm:text-xl text-blue-100 max-w-3xl mx-auto mb-8">
-              Découvrez les témoignages authentiques de plus de 2100 étudiants qui ont 
-              transformé leur parcours grâce à l'accompagnement personnalisé Wendogo.
+              {t('temoignages:hero.description')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/?tab=accompany#accompany-section" className="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
-                Accompagnez-moi
+                {t('temoignages:hero.ctaPrimary')}
               </Link>
               {/* <Link href="/contact" className="border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors">
-                Parler à un conseiller
+                {t('temoignages:hero.ctaSecondary')}
               </Link> */}
             </div>
           </div>
@@ -323,7 +323,7 @@ function Temoignages() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row gap-6 items-center justify-between">
             <div className="flex-1">
-              <h3 className="text-lg font-semibold text-gray-900 mb-3">Filtrer par pays :</h3>
+              <h3 className="text-lg font-semibold text-gray-900 mb-3">{t('temoignages:filters.country.title')}</h3>
               <div className="flex flex-wrap gap-2">
                 {countries.map(country => (
                   <button
@@ -342,7 +342,7 @@ function Temoignages() {
             </div>
             
             <div className="flex-1">
-              <h3 className="text-lg font-semibold text-gray-900 mb-3">Filtrer par domaine :</h3>
+              <h3 className="text-lg font-semibold text-gray-900 mb-3">{t('temoignages:filters.domain.title')}</h3>
               <div className="flex flex-wrap gap-2">
                 {domains.map(domain => (
                   <button
@@ -362,17 +362,16 @@ function Temoignages() {
           </div>
         </div>
       </section>
-
       {/* Featured Testimonial */}
       {filteredTestimonials.length > 0 && (
         <section className="py-16 bg-gradient-to-r from-purple-50 to-indigo-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                Témoignage mis en avant
+                {t('temoignages:featuredTestimonial.title')}
               </h2>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                Découvrez l'histoire inspirante de nos étudiants qui ont réussi leur projet d'études en France.
+                {t('temoignages:featuredTestimonial.subtitle')}
               </p>
             </div>
 
@@ -415,21 +414,21 @@ function Temoignages() {
                     <div>
                       <div className="flex items-center mb-2">
                         <GraduationCap className="w-4 h-4 text-purple-600 mr-2" />
-                        <span className="text-sm font-medium text-gray-900">Formation</span>
+                        <span className="text-sm font-medium text-gray-900">{t('temoignages:featuredTestimonial.labels.program')}</span>
                       </div>
                       <p className="text-sm text-gray-600">{filteredTestimonials[activeTestimonial].program}</p>
                     </div>
                     <div>
                       <div className="flex items-center mb-2">
                         <MapPin className="w-4 h-4 text-purple-600 mr-2" />
-                        <span className="text-sm font-medium text-gray-900">Université</span>
+                        <span className="text-sm font-medium text-gray-900">{t('temoignages:featuredTestimonial.labels.university')}</span>
                       </div>
                       <p className="text-sm text-gray-600">{filteredTestimonials[activeTestimonial].university}</p>
                     </div>
                   </div>
 
                   <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                    <h4 className="font-semibold text-green-900 mb-2">Son conseil :</h4>
+                    <h4 className="font-semibold text-green-900 mb-2">{t('temoignages:featuredTestimonial.labels.advice')}</h4>
                     <p className="text-sm text-green-800 italic">
                       "{filteredTestimonials[activeTestimonial].advice}"
                     </p>
@@ -439,7 +438,7 @@ function Temoignages() {
                 {/* Journey Section */}
                 <div className="bg-gradient-to-br from-gray-50 to-blue-50 p-8 lg:p-12">
                   <h4 className="text-xl font-semibold text-gray-900 mb-6">
-                    Son parcours avec Wendogo
+                    {t('temoignages:featuredTestimonial.labels.journey')}
                   </h4>
                   <div className="space-y-4">
                     {filteredTestimonials[activeTestimonial].journey.map((step, index) => (
@@ -455,14 +454,14 @@ function Temoignages() {
                   <div className="mt-8 p-6 bg-white rounded-xl shadow-sm">
                     <div className="flex items-center mb-3">
                       <CheckCircle className="w-5 h-5 text-green-500 mr-2" />
-                      <span className="font-semibold text-gray-900">Résultat</span>
+                      <span className="font-semibold text-gray-900">{t('temoignages:featuredTestimonial.labels.result')}</span>
                     </div>
                     <p className="text-gray-700 mb-4">
-                      Admission réussie et installation en France avec l'accompagnement complet Wendogo.
+                      {t('temoignages:featuredTestimonial.labels.resultDescription')}
                     </p>
                     <div className="flex items-center text-sm text-gray-500">
                       <Calendar className="w-4 h-4 mr-1" />
-                      <span>Accompagnement : {filteredTestimonials[activeTestimonial].year}</span>
+                      <span>{t('temoignages:featuredTestimonial.labels.accompanied')} {filteredTestimonials[activeTestimonial].year}</span>
                     </div>
                   </div>
                 </div>
@@ -475,7 +474,7 @@ function Temoignages() {
                   className="flex items-center px-4 py-2 text-gray-600 hover:text-gray-900 transition-colors"
                 >
                   <ChevronLeft className="w-4 h-4 mr-1" />
-                  Précédent
+                  {t('temoignages:featuredTestimonial.navigation.previous')}
                 </button>
                 
                 <div className="flex space-x-2">
@@ -494,7 +493,7 @@ function Temoignages() {
                   onClick={nextTestimonial}
                   className="flex items-center px-4 py-2 text-gray-600 hover:text-gray-900 transition-colors"
                 >
-                  Suivant
+                  {t('temoignages:featuredTestimonial.navigation.next')}
                   <ChevronRight className="w-4 h-4 ml-1" />
                 </button>
               </div>
@@ -508,10 +507,10 @@ function Temoignages() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Tous les témoignages
+              {t('temoignages:allTestimonials.title')}
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Parcourez l'ensemble des témoignages de nos étudiants accompagnés avec succès.
+              {t('temoignages:allTestimonials.subtitle')}
             </p>
           </div>
 
@@ -555,12 +554,12 @@ function Temoignages() {
 
                 <button
                   onClick={() => {
-                    setActiveTestimonial(filteredTestimonials.findIndex(t => t.id === testimonial.id));
+                    setActiveTestimonial(filteredTestimonials.findIndex(tes => tes.id === testimonial.id));
                     document.querySelector('.bg-gradient-to-r.from-purple-50').scrollIntoView({ behavior: 'smooth' });
                   }}
                   className="text-blue-600 hover:text-blue-800 text-sm font-medium flex items-center"
                 >
-                  Lire l'histoire complète
+                  {t('temoignages:allTestimonials.readFullStory')}
                   <ArrowRight className="w-4 h-4 ml-1" />
                 </button>
               </div>
@@ -571,10 +570,10 @@ function Temoignages() {
             <div className="text-center py-12">
               <MessageSquare className="w-16 h-16 text-gray-400 mx-auto mb-4" />
               <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                Aucun témoignage trouvé
+                {t('temoignages:allTestimonials.noResults.title')}
               </h3>
               <p className="text-gray-600">
-                Essayez de modifier vos filtres pour voir plus de témoignages.
+                {t('temoignages:allTestimonials.noResults.description')}
               </p>
             </div>
           )}
@@ -585,18 +584,17 @@ function Temoignages() {
       <section className="py-16 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold mb-6">
-            Prêt à écrire votre propre histoire de réussite ?
+            {t('temoignages:cta.title')}
           </h2>
           <p className="text-xl mb-8 text-blue-100">
-            Rejoignez plus de 2100 étudiants qui ont réalisé leur rêve d'étudier en France 
-            grâce à l'accompagnement personnalisé Wendogo.
+            {t('temoignages:cta.description')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/?tab=accompany#accompany-section" className="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
-              Accompagnez-moi
+              {t('temoignages:cta.primaryButton')}
             </Link>
             {/* <Link href="/contact" className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors">
-              Nous contacter
+              {t('temoignages:cta.secondaryButton')}
             </Link> */}
           </div>
         </div>
@@ -607,4 +605,13 @@ function Temoignages() {
   );
 }
 
+export async function getStaticProps({ locale }) {
+  const { serverSideTranslations } = await import('next-i18next/serverSideTranslations');
+  
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['authModal', 'common', 'temoignages'])),
+    },
+  };
+}
 export default Temoignages;

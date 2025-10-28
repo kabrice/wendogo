@@ -1,8 +1,7 @@
-// src/pages/api/auth/register.js - Route d'inscription Next.js CORRIGÉE
-
 import bcrypt from 'bcryptjs';
 import { parsePhoneNumberWithError } from 'libphonenumber-js';
 import { REST_API_PARAMS } from '../../../utils/Constants';
+import { getApiMessages } from '../../../utils/apiMessages';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -10,41 +9,53 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { email, password, firstname, lastname, phone, birthdate, country } = req.body;
+    const { 
+      email, 
+      password, 
+      firstname, 
+      lastname, 
+      phone, 
+      birthdate, 
+      country,
+      locale = 'fr' // 🔥 Recevoir la locale
+    } = req.body;
 
-    // Validation des données obligatoires
+    // 🔥 Obtenir les messages dans la bonne langue
+    const messages = getApiMessages(locale);
+
+    // Validation
     if (!email || !password || !firstname || !lastname || !phone || !birthdate || !country) {
-      return res.status(400).json({ error: 'Tous les champs sont requis' });
+      return res.status(400).json({ error: messages.ALL_FIELDS_REQUIRED });
     }
 
     if (password.length < 6) {
-      return res.status(400).json({ error: 'Le mot de passe doit contenir au moins 6 caractères' });
+      return res.status(400).json({ error: messages.PASSWORD_TOO_SHORT });
     }
 
-    // Validation du numéro de téléphone
+    // Validation du téléphone
     try {
       const phoneNumberObj = parsePhoneNumberWithError(phone, country);
       if (!phoneNumberObj.isValid()) {
-        return res.status(400).json({ error: 'Numéro de téléphone invalide' });
+        return res.status(400).json({ error: messages.INVALID_PHONE });
       }
     } catch (error) {
-      return res.status(400).json({ error: 'Numéro de téléphone invalide pour ce pays' });
+      return res.status(400).json({ error: messages.INVALID_PHONE_COUNTRY });
     }
 
-    // Validation de la date de naissance
+    // Validation de l'âge
     const birthDate = new Date(birthdate);
     const today = new Date();
     const age = today.getFullYear() - birthDate.getFullYear();
     
     if (age < 13) {
-      return res.status(400).json({ error: 'Vous devez avoir au moins 13 ans' });
+      return res.status(400).json({ error: messages.MIN_AGE });
     }
     
     if (age > 120 || birthDate > today) {
-      return res.status(400).json({ error: 'Date de naissance invalide' });
+      return res.status(400).json({ error: messages.INVALID_BIRTHDATE });
     }
 
-    // Vérifier si l'email existe déjà via l'API Flask
+    // Vérifier si l'email existe
     const checkUserResponse = await fetch(`${REST_API_PARAMS.baseUrl}/auth/check-email`, {
       method: 'POST',
       headers: REST_API_PARAMS.headers,
@@ -54,17 +65,15 @@ export default async function handler(req, res) {
     if (checkUserResponse.ok) {
       const userData = await checkUserResponse.json();
       if (userData.exists) {
-        return res.status(400).json({ error: 'Cet email est déjà utilisé' });
+        return res.status(400).json({ error: messages.EMAIL_EXISTS });
       }
     }
 
     // Hasher le mot de passe
     const hashedPassword = await bcrypt.hash(password, 12);
-
-    // Formater la date de naissance pour MySQL (YYYY-MM-DD)
     const formattedBirthdate = new Date(birthdate).toISOString().split('T')[0];
 
-    // Créer l'utilisateur via l'API Flask
+    // Créer l'utilisateur
     const createUserResponse = await fetch(`${REST_API_PARAMS.baseUrl}/auth/register`, {
       method: 'POST',
       headers: REST_API_PARAMS.headers,
@@ -75,7 +84,8 @@ export default async function handler(req, res) {
         lastname,
         phone,
         birthdate: formattedBirthdate,
-        country
+        country,
+        locale // 🔥 Passer la locale au backend Flask
       })
     });
 
@@ -83,24 +93,25 @@ export default async function handler(req, res) {
       const newUser = await createUserResponse.json();
       return res.status(201).json({
         success: true,
-        message: 'Compte créé avec succès',
+        message: messages.ACCOUNT_CREATED,
         user: {
           id: newUser.id,
           email: newUser.email,
           firstname: newUser.firstname,
-          lastname: newUser.lastname,
-          phone: newUser.phone,
-          birthdate: newUser.birthdate,
-          country: newUser.country
+          lastname: newUser.lastname
         }
       });
     } else {
       const error = await createUserResponse.json();
-      return res.status(400).json({ error: error.message || 'Erreur lors de la création du compte' });
+      return res.status(400).json({ 
+        error: error.message || messages.ERROR_CREATING_ACCOUNT 
+      });
     }
 
   } catch (error) {
     console.error('Erreur inscription:', error);
-    return res.status(500).json({ error: 'Erreur serveur lors de l\'inscription' });
+    const locale = req.body?.locale || 'fr';
+    const messages = getApiMessages(locale);
+    return res.status(500).json({ error: messages.SERVER_ERROR });
   }
 }

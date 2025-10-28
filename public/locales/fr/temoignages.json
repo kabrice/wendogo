@@ -1,0 +1,205 @@
+{
+  "meta": {
+    "title": "Témoignages d'étudiants - Wendogo a transformé leur parcours",
+    "description": "Découvrez les témoignages authentiques d'étudiants accompagnés par Wendogo. Plus de 2100 étudiants ont réalisé leur rêve d'étudier en France grâce à notre accompagnement personnalisé.",
+    "keywords": "témoignages étudiants Wendogo, avis Campus France, réussite études France, accompagnement étudiant international",
+    "ogTitle": "Témoignages d'étudiants - Wendogo a transformé leur parcours",
+    "ogDescription": "Plus de 2100 étudiants ont réalisé leur rêve d'étudier en France avec Wendogo. Découvrez leurs histoires inspirantes.",
+    "twitterTitle": "Témoignages d'étudiants - Wendogo",
+    "twitterDescription": "Découvrez comment Wendogo a transformé le parcours de plus de 2100 étudiants"
+  },
+  "hero": {
+    "title": "Ils ont réalisé leur rêve d'étudier en France",
+    "description": "Découvrez les témoignages authentiques de plus de 2100 étudiants qui ont transformé leur parcours grâce à l'accompagnement personnalisé Wendogo.",
+    "ctaPrimary": "Accompagnez-moi",
+    "ctaSecondary": "Parler à un conseiller"
+  },
+  "stats": {
+    "studentsHelped": {
+      "number": "2,100+",
+      "label": "Étudiants accompagnés"
+    },
+    "successRate": {
+      "number": "95%",
+      "label": "Taux de réussite"
+    },
+    "averageRating": {
+      "number": "4.9/5",
+      "label": "Note moyenne"
+    },
+    "countriesRepresented": {
+      "number": "50+",
+      "label": "Pays représentés"
+    }
+  },
+  "filters": {
+    "country": {
+      "title": "Filtrer par pays :",
+      "all": "Tous les pays",
+      "morocco": "Maroc 🇲🇦",
+      "cameroon": "Cameroun 🇨🇲",
+      "algeria": "Algérie 🇩🇿",
+      "senegal": "Sénégal 🇸🇳",
+      "ivoryCoast": "Côte d'Ivoire 🇨🇮"
+    },
+    "domain": {
+      "title": "Filtrer par domaine :",
+      "all": "Tous les domaines",
+      "sciences": "Sciences",
+      "health": "Santé",
+      "business": "Business",
+      "engineering": "Ingénierie",
+      "computerScience": "Informatique",
+      "accountingManagement": "Comptabilité / Gestion",
+      "sciencesPo": "Sciences Po"
+    }
+  },
+  "testimonials": {
+    "1": {
+      "name": "Achraf M.",
+      "country": "Maroc",
+      "flag": "🇲🇦",
+      "city": "Casablanca",
+      "university": "Université d'Orléans",
+      "program": "Master Sciences Physiques",
+      "year": "2024",
+      "domain": "Sciences",
+      "testimonial": "J'ai obtenu mon bac sciences physiques option française (BIOF) en 2019. Au début, je ne savais rien des démarches Campus France et visa. L'équipe Wendogo m'a accompagné de A à Z. Edgar m'a aidé à choisir entre Orléans et Angers - finalement Orléans était parfait pour mes études en sciences pures. Le plus rassurant ? Je ne payais qu'une fois mon visa obtenu !",
+      "journey": [
+        "Bac sciences physiques BIOF obtenu",
+        "Découverte des démarches Campus France",
+        "Accompagnement personnalisé Wendogo",
+        "Choix entre Orléans et Angers",
+        "Visa obtenu avec succès"
+      ],
+      "advice": "Faites confiance à Wendogo, ils connaissent parfaitement les démarches. N'hésitez pas à poser toutes vos questions, même les plus basiques."
+    },
+    "2": {
+      "name": "Marie K.",
+      "country": "Cameroun",
+      "flag": "🇨🇲",
+      "city": "Yaoundé",
+      "university": "Université Claude Bernard Lyon 1",
+      "program": "Master Sciences de la Santé",
+      "year": "2024",
+      "domain": "Santé",
+      "testimonial": "Les formations en santé sont très encadrées en France, je ne trouvais pas d'école privée. Edgar m'a expliqué que tout passe par Campus France et m'a orientée vers Paris-Saclay en parallèle. Ses conseils pour l'entretien Campus France ont été précieux. Résultat : acceptée à Lyon 1 ! Je suis reconnaissante pour cet accompagnement.",
+      "journey": [
+        "Recherche infructueuse d'écoles privées",
+        "Explication des voies officielles",
+        "Candidature Paris-Saclay parallèle",
+        "Préparation entretien Campus France",
+        "Acceptation Lyon 1 obtenue"
+      ],
+      "advice": "Pour les formations en santé, restez sur les voies officielles. L'entretien Campus France est crucial - préparez-vous bien !"
+    },
+    "3": {
+      "name": "Ahmed B.",
+      "country": "Algérie",
+      "flag": "🇩🇿",
+      "city": "Alger",
+      "university": "ESSEC Business School",
+      "program": "Master Management",
+      "year": "2024",
+      "domain": "Business",
+      "testimonial": "Après mon diplôme d'ingénieur en Algérie, je voulais me reconvertir en management. L'équipe Wendogo m'a aidé à cibler les bonnes écoles de commerce et à préparer un dossier solide. Leur connaissance des spécificités algériennes m'a fait gagner des mois. Maintenant à l'ESSEC, je recommande vivement !",
+      "journey": [
+        "Diplôme ingénieur en Algérie",
+        "Projet reconversion management",
+        "Ciblage écoles de commerce",
+        "Dossier optimisé par Wendogo",
+        "Admission ESSEC réussie"
+      ],
+      "advice": "N'hésitez pas à changer de voie - Wendogo vous aidera à valoriser votre parcours antérieur."
+    },
+    "4": {
+      "name": "Fatima S.",
+      "country": "Sénégal",
+      "flag": "🇸🇳",
+      "city": "Dakar",
+      "university": "Université Sorbonne Paris Nord",
+      "program": "Master Informatique",
+      "year": "2024",
+      "domain": "Informatique",
+      "testimonial": "En tant que femme dans la tech au Sénégal, je voulais me spécialiser en France. Wendogo m'a non seulement aidée pour Campus France mais aussi pour trouver un logement étudiant à Paris. Leur accompagnement va au-delà des démarches administratives - ils pensent à tout !",
+      "journey": [
+        "Ingénieure informatique au Sénégal",
+        "Projet spécialisation France",
+        "Accompagnement Campus France",
+        "Aide recherche logement Paris",
+        "Installation réussie Sorbonne"
+      ],
+      "advice": "Wendogo pense à tous les aspects de votre projet - pas seulement les démarches officielles."
+    },
+    "5": {
+      "name": "Mariama S.",
+      "country": "Côte d'Ivoire",
+      "flag": "🇨🇮",
+      "city": "Abidjan",
+      "university": "ESG Finance",
+      "program": "Master Audit et Contrôle de Gestion",
+      "year": "2025",
+      "domain": "Comptabilité / Gestion",
+      "testimonial": "J'avais obtenu ma licence en comptabilité, contrôle et audit en 2017, puis j'ai travaillé comme assistante comptable. En 2024, j'ai décidé de reprendre mes études en France. Grâce à Wendogo, j'ai été parfaitement accompagnée pour préparer le concours d'entrée à ESG Finance. J'ai finalement été admise ! Leur soutien m'a aussi aidée à mieux comprendre les questions bancaires liées à ma demande de visa. Merci infiniment !",
+      "journey": [
+        "Licence obtenue en 2017",
+        "Expérience pro en comptabilité",
+        "Préparation au concours ESG Finance avec Wendogo",
+        "Admission réussie en 2025",
+        "Assistance visa et soutien bancaire"
+      ],
+      "advice": "Même si vous avez quitté l'école depuis longtemps, il n'est jamais trop tard. Wendogo vous accompagne avec sérieux et bienveillance à chaque étape."
+    },
+    "6": {
+      "name": "Amina L.",
+      "country": "Maroc",
+      "flag": "🇲🇦",
+      "city": "Rabat",
+      "university": "Sciences Po Bordeaux",
+      "program": "Master Relations Internationales",
+      "year": "2024",
+      "domain": "Sciences Po",
+      "testimonial": "Sciences Po, c'était mon rêve ! Mais les procédures d'admission sont complexes. Wendogo m'a guidée dans le processus spécifique aux IEP, m'a aidée à préparer le concours d'entrée et les entretiens. Leur expertise des grandes écoles françaises fait la différence.",
+      "journey": [
+        "Rêve d'intégrer Sciences Po",
+        "Procédures IEP complexes",
+        "Accompagnement spécialisé",
+        "Préparation concours et entretiens",
+        "Admission Sciences Po Bordeaux"
+      ],
+      "advice": "Pour les grandes écoles, l'expertise spécialisée est indispensable. Wendogo connaît tous les codes."
+    }
+  },
+  "featuredTestimonial": {
+    "title": "Témoignage mis en avant",
+    "subtitle": "Découvrez l'histoire inspirante de nos étudiants qui ont réussi leur projet d'études en France.",
+    "labels": {
+      "program": "Formation",
+      "university": "Université",
+      "advice": "Son conseil :",
+      "journey": "Son parcours avec Wendogo",
+      "result": "Résultat",
+      "resultDescription": "Admission réussie et installation en France avec l'accompagnement complet Wendogo.",
+      "accompanied": "Accompagnement :"
+    },
+    "navigation": {
+      "previous": "Précédent",
+      "next": "Suivant"
+    }
+  },
+  "allTestimonials": {
+    "title": "Tous les témoignages",
+    "subtitle": "Parcourez l'ensemble des témoignages de nos étudiants accompagnés avec succès.",
+    "readFullStory": "Lire l'histoire complète",
+    "noResults": {
+      "title": "Aucun témoignage trouvé",
+      "description": "Essayez de modifier vos filtres pour voir plus de témoignages."
+    }
+  },
+  "cta": {
+    "title": "Prêt à écrire votre propre histoire de réussite ?",
+    "description": "Rejoignez plus de 2100 étudiants qui ont réalisé leur rêve d'étudier en France grâce à l'accompagnement personnalisé Wendogo.",
+    "primaryButton": "Accompagnez-moi",
+    "secondaryButton": "Nous contacter"
+  }
+}

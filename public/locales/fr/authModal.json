@@ -109,5 +109,61 @@
     "termsLink": "conditions d'utilisation",
     "and": "et notre",
     "privacyLink": "politique de confidentialité"
+  },
+  "resetPassword": {
+    "loading": {
+      "title": "Vérification...",
+      "description": "Vérification du lien de réinitialisation"
+    },
+    "invalid": {
+      "title": "Lien invalide",
+      "description": "Ce lien de réinitialisation est invalide ou a expiré.",
+      "requestNewLink": "Demander un nouveau lien"
+    },
+    "success": {
+      "title": "🎉 Mot de passe réinitialisé !",
+      "description": "Votre mot de passe a été modifié avec succès. Vous pouvez maintenant vous connecter.",
+      "redirect": "Redirection automatique dans 3 secondes..."
+    },
+    "form": {
+      "title": "Nouveau mot de passe",
+      "description": "Choisissez un nouveau mot de passe sécurisé",
+      "newPassword": "Nouveau mot de passe",
+      "newPasswordPlaceholder": "Minimum 6 caractères",
+      "confirmPassword": "Confirmer le mot de passe",
+      "confirmPasswordPlaceholder": "Retapez votre mot de passe",
+      "submitButton": "Réinitialiser le mot de passe"
+    },
+    "errors": {
+      "passwordRequired": "Mot de passe requis",
+      "passwordTooShort": "Mot de passe trop court (min 6 caractères)",
+      "confirmRequired": "Confirmation requise",
+      "passwordMismatch": "Les mots de passe ne correspondent pas",
+      "resetError": "Erreur lors de la réinitialisation",
+      "connectionError": "Erreur de connexion"
+    }
+  },
+  "verifyEmail": {
+    "verifying": {
+      "title": "Vérification en cours...",
+      "description": "Nous vérifions votre email. Veuillez patienter."
+    },
+    "success": {
+      "title": "🎉 Email vérifié !",
+      "message": "Votre email a été vérifié avec succès ! Vous pouvez maintenant vous connecter.",
+      "discoverButton": "Découvrir Wendogo",
+      "redirect": "Redirection automatique dans 10 secondes..."
+    },
+    "error": {
+      "title": "Erreur de vérification",
+      "backButton": "Retour à l'accueil",
+      "requestNewLink": "Demander un nouveau lien",
+      "verificationError": "Erreur lors de la vérification de l'email.",
+      "connectionError": "Erreur de connexion lors de la vérification."
+    },
+    "support": {
+      "question": "Des questions ? Contactez-nous à",
+      "email": "support@wendogo.com"
+    }
   }
 }
