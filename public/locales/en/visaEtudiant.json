@@ -1,0 +1,300 @@
+{
+  "meta": {
+    "title": "Complete Guide to French Student Visa 2025 | Wendogo",
+    "description": "Complete guide to obtaining your French student visa: types, required documents, detailed procedure and expert advice. Everything you need to know for a successful application."
+  },
+  "hero": {
+    "badge": "Complete Guide 2025",
+    "title": "French Student Visa",
+    "subtitle": "Everything you need to know to obtain your visa",
+    "description": "Complete and updated guide to successfully apply for your student visa for France. Procedure, documents, timelines and expert advice."
+  },
+  "quickStats": {
+    "visaFees": "Visa fees",
+    "monthlyResources": "Resources/month",
+    "processingTime": "Weeks processing",
+    "initialValidity": "Initial validity"
+  },
+  "tabs": {
+    "types": "Visa types",
+    "documents": "Required documents",
+    "procedure": "Procedure",
+    "conseils": "Advice"
+  },
+  "types": {
+    "title": "Student visa types",
+    "subtitle": "Choose the visa that matches your situation",
+    "vls": {
+      "title": "Long-stay student visa (VLS-TS)",
+      "description": "For studies longer than 3 months",
+      "duration": "1 year renewable",
+      "requirements": "Admission + resources"
+    },
+    "short": {
+      "title": "Short-stay student visa",
+      "description": "For studies shorter than 3 months",
+      "duration": "90 days maximum",
+      "requirements": "Registration + accommodation"
+    },
+    "concours": {
+      "title": "Exam visa - entrance exam",
+      "description": "To take an entrance exam",
+      "duration": "90 days",
+      "requirements": "Invitation + guarantees"
+    },
+    "moreInfo": "More information",
+    "infoBox": {
+      "title": "What's the difference?",
+      "description": "The long-stay student visa (VLS-TS) is the most common and allows you to stay in France for the duration of your studies. It must be validated with OFII within 3 months of your arrival in France."
+    }
+  },
+  "documents": {
+    "title": "Required documents",
+    "subtitle": "Complete list of documents needed for your application",
+    "personal": {
+      "category": "Personal documents",
+      "passport": {
+        "name": "Passport",
+        "detail": "Valid + 3 months after end of stay"
+      },
+      "photos": {
+        "name": "ID photos",
+        "detail": "2 recent photos 35x45mm format"
+      },
+      "form": {
+        "name": "Visa form",
+        "detail": "Completed and signed"
+      },
+      "birthCert": {
+        "name": "Birth certificate",
+        "detail": "Original + translation"
+      }
+    },
+    "academic": {
+      "category": "Academic documents",
+      "campusFrance": {
+        "name": "Campus France certificate",
+        "detail": "Mandatory validation"
+      },
+      "admission": {
+        "name": "Admission letter",
+        "detail": "University or school"
+      },
+      "diplomas": {
+        "name": "Previous diplomas",
+        "detail": "Originals + translations"
+      },
+      "transcripts": {
+        "name": "Transcripts",
+        "detail": "Last 3 years"
+      }
+    },
+    "financial": {
+      "category": "Financial documents",
+      "resources": {
+        "name": "Proof of resources",
+        "detail": "€615/month minimum"
+      },
+      "bankStatements": {
+        "name": "Bank statements",
+        "detail": "Last 3 months"
+      },
+      "guarantor": {
+        "name": "Guarantor certificate",
+        "detail": "If applicable"
+      },
+      "scholarship": {
+        "name": "Scholarship",
+        "detail": "Certificate if recipient"
+      }
+    },
+    "housing": {
+      "category": "Housing documents",
+      "proof": {
+        "name": "Accommodation certificate",
+        "detail": "First month minimum"
+      },
+      "contract": {
+        "name": "Rental contract",
+        "detail": "Or accommodation booking"
+      },
+      "guarantorRental": {
+        "name": "Guarantor certificate",
+        "detail": "For rental"
+      }
+    },
+    "urgent": "Urgent",
+    "important": "Important",
+    "warningBox": {
+      "title": "⚠️ Important points",
+      "point1": "All documents must be recent (less than 6 months)",
+      "point2": "Certified translations required for non-French documents",
+      "point3": "Photocopies AND originals required",
+      "point4": "Check specific requirements of your country's consulate"
+    }
+  },
+  "procedure": {
+    "title": "Step-by-step procedure",
+    "subtitle": "Follow these 6 steps to obtain your student visa stress-free.",
+    "step1": {
+      "title": "Campus France validation",
+      "description": "Mandatory before any application",
+      "detail1": "Complete Campus France file",
+      "detail2": "Pass educational interview",
+      "detail3": "Obtain validation certificate",
+      "detail4": "Download official document",
+      "duration": "4-6 weeks"
+    },
+    "step2": {
+      "title": "Document gathering",
+      "description": "Prepare complete file",
+      "detail1": "Check document list",
+      "detail2": "Get certified translations",
+      "detail3": "Obtain necessary certificates",
+      "detail4": "Organize in required order",
+      "duration": "2-3 weeks"
+    },
+    "step3": {
+      "title": "Appointment booking",
+      "description": "Book consular slots",
+      "detail1": "Create VFS/TLScontact account",
+      "detail2": "Choose available date",
+      "detail3": "Pay fees online",
+      "detail4": "Confirm appointment",
+      "duration": "1-2 weeks"
+    },
+    "step4": {
+      "title": "File submission",
+      "description": "Presentation at consulate",
+      "detail1": "Arrive on time",
+      "detail2": "Present original documents",
+      "detail3": "Pay additional fees",
+      "detail4": "Submission receipt",
+      "duration": "1-2 hours"
+    },
+    "step5": {
+      "title": "Processing and decision",
+      "description": "Consulate processing",
+      "detail1": "Document verification",
+      "detail2": "Investigation if necessary",
+      "detail3": "Consular decision",
+      "detail4": "Result notification",
+      "duration": "2-8 weeks"
+    },
+    "step6": {
+      "title": "Visa collection",
+      "description": "Passport retrieval",
+      "detail1": "Check visa information",
+      "detail2": "Verify validity dates",
+      "detail3": "Prepare travel",
+      "detail4": "OFII validation in France",
+      "duration": "1-2 days"
+    },
+    "timeline": {
+      "title": "Expected timelines",
+      "normal": {
+        "duration": "2-4 wks",
+        "label": "Normal processing"
+      },
+      "high": {
+        "duration": "4-8 wks",
+        "label": "Peak period"
+      },
+      "start": {
+        "duration": "3 months",
+        "label": "Start before"
+      }
+    }
+  },
+  "conseils": {
+    "title": "Expert advice",
+    "subtitle": "Maximize your chances of obtaining your visa with these proven tips.",
+    "anticipation": {
+      "title": "Anticipation",
+      "description": "Start 3 months in advance",
+      "tip1": "Summer peak period = longer delays",
+      "tip2": "Plan for administrative delays",
+      "tip3": "Book appointment early",
+      "tip4": "Avoid last minute"
+    },
+    "quality": {
+      "title": "File quality",
+      "description": "Pay attention to every detail",
+      "tip1": "Legible and complete documents",
+      "tip2": "Certified translations",
+      "tip3": "Logical organization",
+      "tip4": "Additional copies"
+    },
+    "financial": {
+      "title": "Financial resources",
+      "description": "Prove solvency",
+      "tip1": "€615 per month minimum",
+      "tip2": "Stable accounts",
+      "tip3": "French guarantor if possible",
+      "tip4": "Scholarships valued"
+    },
+    "interview": {
+      "title": "Consular interview",
+      "description": "Prepare mentally",
+      "tip1": "Clear study project",
+      "tip2": "Sincere motivation",
+      "tip3": "Consistency with background",
+      "tip4": "Knowledge of institution"
+    },
+    "communication": {
+      "title": "Communication",
+      "description": "Stay reachable",
+      "tip1": "Valid email",
+      "tip2": "Accessible phone",
+      "tip3": "Check mail",
+      "tip4": "Respond quickly"
+    },
+    "backup": {
+      "title": "Plan B",
+      "description": "Anticipate contingencies",
+      "tip1": "Digital copies of documents",
+      "tip2": "Additional documents",
+      "tip3": "Emergency budget",
+      "tip4": "Flexible departure dates"
+    },
+    "errors": {
+      "title": "Common mistakes to avoid",
+      "error1": "Incomplete or disorganized file",
+      "error2": "Expired or poorly translated documents",
+      "error3": "Insufficient financial resources",
+      "error4": "Inconsistent study project",
+      "error5": "Missing Campus France",
+      "error6": "Too late appointment"
+    },
+    "checklist": {
+      "title": "Final checklist before submission",
+      "documents": {
+        "title": "Documents",
+        "item1": "Valid passport",
+        "item2": "Completed form",
+        "item3": "Compliant photos",
+        "item4": "Campus France certificate"
+      },
+      "finances": {
+        "title": "Finances",
+        "item1": "Proof of €615/month",
+        "item2": "Bank statements",
+        "item3": "€99 visa fee",
+        "item4": "Health insurance"
+      },
+      "housing": {
+        "title": "Housing",
+        "item1": "Accommodation certificate",
+        "item2": "Contract or booking",
+        "item3": "Owner's contact",
+        "item4": "Access plan"
+      }
+    }
+  },
+  "cta": {
+    "title": "Need help with your student visa?",
+    "description": "Our experts accompany you through all the steps to obtain your French student visa quickly and stress-free.",
+    "button1": "Personalized support",
+    "button2": "Campus France Guide"
+  }
+}

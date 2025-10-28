@@ -1,0 +1,33 @@
+{
+  "auth": {
+    "required": "Login required",
+    "loginMessage": "Please log in to view your favorites."
+  },
+  "header": {
+    "title": "My favorite programs",
+    "count_one": "{{count}} program",
+    "count_other": "{{count}} programs",
+    "searchResults_one": "found for \"{{query}}\"",
+    "searchResults_other": "found for \"{{query}}\""
+  },
+  "search": {
+    "placeholder": "Search in your favorites..."
+  },
+  "empty": {
+    "noResults": "No results found",
+    "noFavorites": "No favorite programs",
+    "tryOtherKeywords": "Try with different keywords",
+    "startAdding": "Start adding programs to your favorites to find them here",
+    "discoverButton": "Discover programs"
+  },
+  "card": {
+    "alternance": "Work-study",
+    "addedOn": "Added on {{date}}",
+    "viewButton": "View"
+  },
+  "pagination": {
+    "showing": "Showing {{start}} to {{end}} of {{total}} results",
+    "previous": "Previous",
+    "next": "Next"
+  }
+}

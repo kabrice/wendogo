@@ -15,8 +15,10 @@ import {
 } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import { useFavorites } from '../contexts/FavoritesContext';
+import { useTranslation } from 'next-i18next';
 
 const AccompanyModal = ({ offer, isOpen, onClose, userCurrency, convertPrice }) => {
+  const { t } = useTranslation('accompanyModal');
   const { data: session } = useSession();
   const { setShowAuthModal } = useFavorites();
   const [step, setStep] = useState(1);
@@ -57,9 +59,9 @@ const AccompanyModal = ({ offer, isOpen, onClose, userCurrency, convertPrice }) 
     const newErrors = {};
 
     if (!formData.projectDescription.trim()) {
-      newErrors.projectDescription = 'Veuillez décrire votre projet d\'études';
+      newErrors.projectDescription = t('accompanyModal:errors.projectDescriptionRequired');
     } else if (formData.projectDescription.trim().length < 50) {
-      newErrors.projectDescription = 'Veuillez donner plus de détails (minimum 50 caractères)';
+      newErrors.projectDescription = t('accompanyModal:errors.projectDescriptionTooShort');
     }
 
     setErrors(newErrors);
@@ -132,18 +134,16 @@ const AccompanyModal = ({ offer, isOpen, onClose, userCurrency, convertPrice }) 
       }
     } catch (error) {
       console.error('Erreur soumission:', error);
-      setErrors({ submit: 'Erreur lors de l\'envoi. Veuillez réessayer.' });
+      setErrors({ submit: t('accompanyModal:errors.submitError') });
     } finally {
       setIsLoading(false);
     }
   };
   const getPlaceholderByOffer = (offerId) => {
     const placeholders = {
-      orientation: "Exemple: Je souhaite étudier l'informatique en Master à Paris. J'ai un Bachelor en mathématiques et je veux me spécialiser en Intelligence Artificielle. Mon objectif est de travailler dans une entreprise tech française après mes études. J'aimerais des conseils pour choisir entre EPITECH, EPITA et l'Université Paris-Saclay...",
-      
-      visa: "Exemple: J'ai été admis à l'ESSEC Business School pour un Master en Management. Je dois maintenant préparer mon dossier de visa étudiant. Je viens du Cameroun et j'ai besoin d'aide pour le compte bloqué, la recherche de logement et la préparation de l'entretien consulaire. Mon budget est de 15 000€ par an...",
-      
-      installation: "Exemple: J'ai obtenu mon visa étudiant et j'arrive à Paris en septembre pour intégrer l'ESILV. Je cherche de l'aide pour ouvrir un compte bancaire, m'inscrire à la sécurité sociale, trouver un job étudiant et comprendre le système de transport parisien. Je logerai dans le 15ème arrondissement..."
+      orientation: t('accompanyModal:step3.projectDescription.placeholder.orientation'),
+      visa: t('accompanyModal:step3.projectDescription.placeholder.visa'),
+      installation: t('accompanyModal:step3.projectDescription.placeholder.installation')
     };
     
     return placeholders[offerId] || placeholders.orientation;
@@ -176,7 +176,7 @@ const AccompanyModal = ({ offer, isOpen, onClose, userCurrency, convertPrice }) 
         {/* Progress Bar */}
         <div className="p-4 border-b">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm text-gray-600">Étape {step} sur 4</span>
+            <span className="text-sm text-gray-600">{t('accompanyModal:step.label')} {step} {t('accompanyModal:step.of')} 4</span>
             <span className="text-sm text-gray-600">{Math.round((step / 4) * 100)}%</span>
           </div>
           <div className="w-full bg-gray-200 rounded-full h-2">
@@ -197,33 +197,33 @@ const AccompanyModal = ({ offer, isOpen, onClose, userCurrency, convertPrice }) 
               </div>
               
               <h4 className="text-2xl font-bold text-gray-900 mb-4">
-                Commençons votre accompagnement
+                {t('accompanyModal:step1.title')}
               </h4>
               
               {!session ? (
                 <>
                   <p className="text-gray-600 mb-6">
-                    Pour personnaliser votre accompagnement, nous avons besoin de vous connaître.
+                    {t('accompanyModal:step1.notConnected.description')}
                   </p>
                   
                   <button
                     onClick={() => setShowAuthModal(true)}
                     className="w-full py-3 px-6 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors"
                   >
-                    Se connecter / Créer un compte
+                    {t('accompanyModal:step1.notConnected.button')}
                   </button>
                 </>
               ) : (
                 <>
                   <p className="text-gray-600 mb-6">
-                    Parfait ! Vous êtes connecté en tant que <strong>{session.user.name}</strong>
+                    {t('accompanyModal:step1.connected.description')} <strong>{session.user.name}</strong>
                   </p>
                   
                   <button
                     onClick={handleNext}
                     className="w-full py-3 px-6 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors"
                   >
-                    Continuer
+                    {t('accompanyModal:step1.connected.button')}
                   </button>
                 </>
               )}
@@ -238,23 +238,22 @@ const AccompanyModal = ({ offer, isOpen, onClose, userCurrency, convertPrice }) 
               </div>
               
               <h4 className="text-2xl font-bold text-gray-900 mb-4">
-                {isProfileComplete() ? 'Profil vérifié !' : 'Complétez votre profil'}
+                {isProfileComplete() ? t('accompanyModal:step2.title.complete') : t('accompanyModal:step2.title.incomplete')}
               </h4>
               
               {isProfileComplete() ? (
                 <>
                   <p className="text-gray-600 mb-6">
-                    Parfait ! Votre profil est complet. Nous avons toutes les informations nécessaires 
-                    pour vous offrir le meilleur accompagnement personnalisé.
+                    {t('accompanyModal:step2.profileComplete.description')}
                   </p>
                   
                   <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
-                    <h5 className="font-semibold text-green-800 mb-2">✅ Informations complètes :</h5>
+                    <h5 className="font-semibold text-green-800 mb-2">{t('accompanyModal:step2.profileComplete.sectionTitle')}</h5>
                     <ul className="text-left text-green-700 space-y-1">
-                      <li>• Nom et prénom : {userProfile?.firstname} {userProfile?.lastname}</li>
-                      <li>• Téléphone WhatsApp : {userProfile?.phone}</li>
-                      <li>• Date de naissance : {userProfile?.birthdate ? new Date(userProfile.birthdate).toLocaleDateString('fr-FR') : 'Renseignée'}</li>
-                      <li>• Pays de résidence : {userProfile?.country}</li>
+                      <li>• {t('accompanyModal:step2.profileComplete.fields.name')} {userProfile?.firstname} {userProfile?.lastname}</li>
+                      <li>• {t('accompanyModal:step2.profileComplete.fields.phone')} {userProfile?.phone}</li>
+                      <li>• {t('accompanyModal:step2.profileComplete.fields.birthdate')} {userProfile?.birthdate ? new Date(userProfile.birthdate).toLocaleDateString('fr-FR') : 'Renseignée'}</li>
+                      <li>• {t('accompanyModal:step2.profileComplete.fields.country')} {userProfile?.country}</li>
                     </ul>
                   </div>
                   
@@ -268,15 +267,15 @@ const AccompanyModal = ({ offer, isOpen, onClose, userCurrency, convertPrice }) 
               ) : (
                 <>
                   <p className="text-gray-600 mb-6">
-                    Pour vous offrir le meilleur accompagnement, nous avons besoin de quelques informations supplémentaires.
+                    {t('accompanyModal:step2.profileIncomplete.description')}
                   </p>
                   
                   <div className="bg-orange-50 border border-orange-200 rounded-lg p-4 mb-6">
-                    <h5 className="font-semibold text-orange-800 mb-2">Informations manquantes :</h5>
+                    <h5 className="font-semibold text-orange-800 mb-2">{t('accompanyModal:step2.profileIncomplete.sectionTitle')}</h5>
                     <ul className="text-left text-orange-700 space-y-1">
-                      {!userProfile?.phone && <li>• Numéro de téléphone (WhatsApp)</li>}
-                      {!userProfile?.birthdate && <li>• Date de naissance</li>}
-                      {!userProfile?.country && <li>• Pays de résidence</li>}
+                      {!userProfile?.phone && <li>• {t('accompanyModal:step2.profileIncomplete.missingFields.phone')}</li>}
+                      {!userProfile?.birthdate && <li>• {t('accompanyModal:step2.profileIncomplete.missingFields.birthdate')}</li>}
+                      {!userProfile?.country && <li>• {t('accompanyModal:step2.profileIncomplete.missingFields.country')}</li>}
                     </ul>
                   </div>
                   
@@ -284,14 +283,14 @@ const AccompanyModal = ({ offer, isOpen, onClose, userCurrency, convertPrice }) 
                     onClick={() => window.open('/account', '_blank')}
                     className="w-full py-3 px-6 bg-orange-600 text-white font-semibold rounded-lg hover:bg-orange-700 transition-colors mb-3"
                   >
-                    Compléter mon profil
+                    {t('accompanyModal:step2.profileIncomplete.button')}
                   </button>
                   
                   <button
                     onClick={handleNext}
                     className="w-full py-2 px-4 text-gray-600 hover:text-gray-800 transition-colors"
                   >
-                    Ignorer pour le moment
+                    {t('accompanyModal:step2.profileIncomplete.skipButton')}
                   </button>
                 </>
               )}
@@ -307,10 +306,10 @@ const AccompanyModal = ({ offer, isOpen, onClose, userCurrency, convertPrice }) 
                 </div>
                 
                 <h4 className="text-2xl font-bold text-gray-900 mb-2">
-                  Parlez-nous de votre projet
+                  {t('accompanyModal:step3.title')}
                 </h4>
                 <p className="text-gray-600">
-                  Plus nous en savons, mieux nous pourrons vous accompagner
+                  {t('accompanyModal:step3.subtitle')}
                 </p>
               </div>
 
@@ -318,7 +317,7 @@ const AccompanyModal = ({ offer, isOpen, onClose, userCurrency, convertPrice }) 
                 {/* Description du projet */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Décrivez votre projet d'études en France *
+                    {t('accompanyModal:step3.projectDescription.label')}
                   </label>
                   <textarea
                     value={formData.projectDescription}
@@ -333,19 +332,19 @@ const AccompanyModal = ({ offer, isOpen, onClose, userCurrency, convertPrice }) 
                     <p className="mt-1 text-sm text-red-600">{errors.projectDescription}</p>
                   )}
                   <p className="mt-1 text-sm text-gray-500">
-                    {formData.projectDescription.length}/500 caractères
+                    {t('accompanyModal:step3.projectDescription.charactersCount', { count: formData.projectDescription.length })}
                   </p>
                 </div>
 
                 {/* Informations supplémentaires */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Informations supplémentaires (optionnel)
+                    {t('accompanyModal:step3.additionalInfo.label')}
                   </label>
                   <textarea
                     value={formData.additionalInfo}
                     onChange={(e) => setFormData({...formData, additionalInfo: e.target.value})}
-                    placeholder="Budget disponible, contraintes particulières, questions spécifiques..."
+                    placeholder={t('accompanyModal:step3.additionalInfo.placeholder')}
                     rows={3}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   />
@@ -354,7 +353,7 @@ const AccompanyModal = ({ offer, isOpen, onClose, userCurrency, convertPrice }) 
                 {/* Préférence de contact */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Comment préférez-vous être contacté ?
+                    {t('accompanyModal:step3.contactPreference.label')}
                   </label>
                   <div className="space-y-2">
                     <label className="flex items-center">
@@ -366,7 +365,7 @@ const AccompanyModal = ({ offer, isOpen, onClose, userCurrency, convertPrice }) 
                         onChange={(e) => setFormData({...formData, preferredContact: e.target.value})}
                         className="mr-2"
                       />
-                      <span>WhatsApp (recommandé)</span>
+                      <span>{t('accompanyModal:step3.contactPreference.options.whatsapp')}</span>
                     </label>
                     <label className="flex items-center">
                       <input
@@ -377,7 +376,7 @@ const AccompanyModal = ({ offer, isOpen, onClose, userCurrency, convertPrice }) 
                         onChange={(e) => setFormData({...formData, preferredContact: e.target.value})}
                         className="mr-2"
                       />
-                      <span>Email</span>
+                      <span>{t('accompanyModal:step3.contactPreference.options.email')}</span>
                     </label>
                     <label className="flex items-center">
                       <input
@@ -388,7 +387,7 @@ const AccompanyModal = ({ offer, isOpen, onClose, userCurrency, convertPrice }) 
                         onChange={(e) => setFormData({...formData, preferredContact: e.target.value})}
                         className="mr-2"
                       />
-                      <span>Appel téléphonique</span>
+                      <span>{t('accompanyModal:step3.contactPreference.options.phone')}</span>
                     </label>
                   </div>
                 </div>
@@ -396,16 +395,16 @@ const AccompanyModal = ({ offer, isOpen, onClose, userCurrency, convertPrice }) 
                 {/* Urgence */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Quelle est l'urgence de votre demande ?
+                    {t('accompanyModal:step3.urgency.label')}
                   </label>
                   <select
                     value={formData.urgency}
                     onChange={(e) => setFormData({...formData, urgency: e.target.value})}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   >
-                    <option value="normal">Normal (réponse sous 24-48h)</option>
-                    <option value="urgent">Urgent (réponse sous 24h)</option>
-                    <option value="very_urgent">Très urgent (réponse immédiate)</option>
+                    <option value="normal">{t('accompanyModal:step3.urgency.options.normal')}</option>
+                    <option value="urgent">{t('accompanyModal:step3.urgency.options.urgent')}</option>
+                    <option value="very_urgent">{t('accompanyModal:step3.urgency.options.veryUrgent')}</option>
                   </select>
                 </div>
 
@@ -426,30 +425,30 @@ const AccompanyModal = ({ offer, isOpen, onClose, userCurrency, convertPrice }) 
               </div>
               
               <h4 className="text-2xl font-bold text-gray-900 mb-4">
-                Demande envoyée avec succès !
+                {t('accompanyModal:step4.title')}
               </h4>
               
-              <p className="text-gray-600 mb-6">
-                Votre demande d'accompagnement <strong>{offer.name}</strong> a été transmise à nos conseillers.
-              </p>
+              <p className="text-gray-600 mb-6" dangerouslySetInnerHTML={{ 
+                __html: t('accompanyModal:step4.description', { offerName: offer.name }) 
+              }} />
               
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
                 <div className="flex items-center gap-3 mb-2">
                   <Clock className="w-5 h-5 text-blue-600" />
-                  <span className="font-semibold text-blue-800">Prochaines étapes</span>
+                  <span className="font-semibold text-blue-800">{t('accompanyModal:step4.nextSteps.title')}</span>
                 </div>
                 <ul className="text-left text-blue-700 space-y-1">
-                  <li>• Un conseiller vous contactera sous 24h</li>
-                  <li>• Entretien gratuit de 30 minutes pour affiner votre projet</li>
-                  <li>• Proposition d'accompagnement personnalisé</li>
-                  <li>• Début de votre parcours vers la réussite !</li>
+                  <li>• {t('accompanyModal:step4.nextSteps.steps.0')}</li>
+                  <li>• {t('accompanyModal:step4.nextSteps.steps.1')}</li>
+                  <li>• {t('accompanyModal:step4.nextSteps.steps.2')}</li>
+                  <li>• {t('accompanyModal:step4.nextSteps.steps.3')}</li>
                 </ul>
               </div>
               
               <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
                 <div className="flex items-center gap-3">
                   <Shield className="w-5 h-5 text-green-600" />
-                  <span className="font-semibold text-green-800">Garantie satisfaction 100%</span>
+                  <span className="font-semibold text-green-800">{t('accompanyModal:step4.guarantee')}</span>
                 </div>
               </div>
               
@@ -457,7 +456,7 @@ const AccompanyModal = ({ offer, isOpen, onClose, userCurrency, convertPrice }) 
                 onClick={onClose}
                 className="w-full py-3 px-6 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors"
               >
-                Parfait, merci !
+                {t('accompanyModal:step4.button')}
               </button>
             </div>
           )}
@@ -471,7 +470,7 @@ const AccompanyModal = ({ offer, isOpen, onClose, userCurrency, convertPrice }) 
                 onClick={() => setStep(step - 1)}
                 className="flex-1 py-2 px-4 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
               >
-                Retour
+                {t('accompanyModal:navigation.back')}
               </button>
               
               <button
@@ -482,10 +481,10 @@ const AccompanyModal = ({ offer, isOpen, onClose, userCurrency, convertPrice }) 
                 {isLoading ? (
                   <>
                     <Loader2 className="w-4 h-4 animate-spin" />
-                    <span>Envoi...</span>
+                    <span>{t('accompanyModal:navigation.sending')}</span>
                   </>
                 ) : (
-                  <span>{step === 3 ? 'Envoyer ma demande' : 'Continuer'}</span>
+                  <span>{step === 3 ? t('accompanyModal:navigation.submit') : t('accompanyModal:navigation.continue')}</span>
                 )}
               </button>
             </div>

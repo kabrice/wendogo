@@ -1,0 +1,103 @@
+{
+  "meta": {
+    "title": "Contact Us - Wendogo",
+    "description": "Contact the Wendogo team for any questions about your study project in France. Support available 24/7."
+  },
+  "header": {
+    "title": "Contact the Wendogo Team",
+    "description": "Our team of experts is here to support you in your study project in France. We answer all your questions quickly and with care."
+  },
+  "availability": {
+    "title": "Availability",
+    "supportTitle": "📞 Support available 24/7",
+    "supportDescription": "Our team is available to support you at any time, wherever you are in the world."
+  },
+  "contactMethods": {
+    "email": {
+      "title": "Email",
+      "responseTime": "Average response in 2 hours",
+      "address": "hello@wendogo.com"
+    },
+    "whatsapp": {
+      "title": "WhatsApp",
+      "responseTime": "Immediate response",
+      "number": "+33 6 68 15 60 73"
+    },
+    "messenger": {
+      "title": "Messenger",
+      "responseTime": "Real-time chat",
+      "linkText": "@wendogo.officiel"
+    },
+    "location": {
+      "title": "Address",
+      "info": "Paris, France",
+      "address": "50 Avenue des Champs Elysées, 75008 Paris"
+    }
+  },
+  "form": {
+    "title": "Send Us a Message",
+    "projectType": {
+      "label": "Project Type *",
+      "placeholder": "Select your project",
+      "options": {
+        "orientation": "Academic guidance and program search",
+        "visa": "Student visa support",
+        "campusFrance": "Campus France procedure",
+        "parcoursup": "Parcoursup questions",
+        "housing": "Housing assistance",
+        "general": "General question",
+        "other": "Other"
+      }
+    },
+    "name": {
+      "label": "Full Name *",
+      "placeholder": "Your first and last name"
+    },
+    "email": {
+      "label": "Email *",
+      "placeholder": "your@email.com"
+    },
+    "subject": {
+      "label": "Subject *",
+      "placeholder": "Summary of your request"
+    },
+    "message": {
+      "label": "Message *",
+      "placeholder": "Describe your project or ask your question..."
+    },
+    "submit": {
+      "sending": "Sending...",
+      "send": "Send Message"
+    },
+    "errors": {
+      "default": "Error sending message",
+      "connection": "Connection error. Please check your internet connection and try again.",
+      "persist": "If the problem persists, contact us directly:"
+    },
+    "privacy": "* Required fields. Your data is protected according to our ",
+    "privacyLink": "privacy policy"
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "items": {
+      "formation": {
+        "title": "🎓 Which program to choose?",
+        "description": "Our advisors analyze your profile to suggest the most suitable programs for you."
+      },
+      "visa": {
+        "title": "📋 How to prepare my visa?",
+        "description": "Complete support to build your file and maximize your chances."
+      },
+      "timing": {
+        "title": "⏰ When to start?",
+        "description": "Ideally 8-12 months before your enrollment to prepare your project calmly."
+      }
+    }
+  },
+  "whatsapp": {
+    "accountName": "Wendogo",
+    "statusMessage": "Usually replies within an hour",
+    "chatMessage": "Hi! 🎓\n\nI can help you with:\n• Program search\n• Visa support\n• Campus France questions\n\nTell me how I can help you!",
+    "placeholder": "Your message..."
+  }
+}

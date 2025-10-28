@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next';
 import { MapPin, Users, Globe, Award, ExternalLink, Facebook, Twitter, Linkedin, Instagram, Shield, CheckCircle, ChevronDown, ChevronUp, Phone, Mail, Star, Building, GraduationCap, Menu, X, AlertTriangle } from 'lucide-react';
 import PrivateSchoolApi from '../../store/apis/privateSchoolApi';
 import ProgramApi from '../../store/apis/programApi';
@@ -18,6 +19,8 @@ import { trackSchoolView } from '../../lib/gtag';
 
 const SchoolPage = ({ school, programs, similarSchools, error }) => {
   const router = useRouter();
+  const locale = router.locale
+  const { t } = useTranslation(['common', 'schools']);
   const [expandedSections, setExpandedSections] = useState(new Set(['presentation']));
   const [showAllPrograms, setShowAllPrograms] = useState(false);
   const [subdomains, setSubdomains] = useState([]);
@@ -34,7 +37,7 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
   useEffect(() => {
     const loadSubdomains = async () => {
       try {
-        const response = await SubdomainApi.getAllSubdomains();
+        const response = await SubdomainApi.getAllSubdomains(locale);
         if (response.success) {
           setSubdomains(response.data);
         }
@@ -53,10 +56,10 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
         <div className="text-center max-w-md">
-          <h1 className="text-xl font-bold text-gray-900 mb-4">École non trouvée</h1>
+          <h1 className="text-xl font-bold text-gray-900 mb-4">{t('schools:error.notFound')}</h1>
           <p className="text-gray-600 mb-6 text-sm">{error}</p>
           <LinkWithLoading href="/schools" className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm">
-            Retour aux écoles
+            {t('schools:error.backToSchools')}
           </LinkWithLoading>
         </div>
       </div>
@@ -127,7 +130,7 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
       return (
         <div className="bg-slate-50 rounded-lg p-4 text-center">
           <GraduationCap className="w-8 h-8 text-slate-400 mx-auto mb-2" />
-          <p className="text-slate-600 text-sm">Aucun programme disponible pour le moment</p>
+          <p className="text-slate-600 text-sm">{t('schools:programs.none')}</p>
         </div>
       );
     }
@@ -138,14 +141,14 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
       <div className="flex items-center justify-between">
         <h4 className="font-bold text-slate-800 text-sm sm:text-base flex items-center gap-2">
         <GraduationCap className="w-4 h-4 text-blue-600" />
-        Programmes disponibles ({programs.length})
+          {t('schools:programs.title')} ({programs.length})
         </h4>
         {programs.length > 3 && (
         <button
           onClick={() => setShowAllPrograms(!showAllPrograms)}
           className="text-blue-600 hover:text-blue-700 text-xs font-medium"
         >
-          {showAllPrograms ? 'Voir moins' : `Voir tous (${programs.length})`}
+          {showAllPrograms ? t('schools:programs.viewLess') : t('schools:programs.seeAll', { count: programs.length }) }
         </button>
         )}
       </div>
@@ -177,19 +180,19 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
                                                                             (program.is_referenced_in_eef
                                               ? (
                                                   program.school.exoneration_tuition === 1
-                                                    ? "Exonération Totale"
+                                                    ? t('schools:tuitionExoneration.total')
                                                     : program.school.exoneration_tuition === -1
-                                                      ? "Exonération Partielle"
-                                                      : "Aucune exonération"
+                                                      ? t('schools:tuitionExoneration.partial')
+                                                      : t('schools:tuitionExoneration.none')
                                                 )
-                                              : 'Non communiqué'))}
+                                              : t('schools:tuitionExoneration.notCommunicated')))}
 
               </span>
               {program.alternance_possible && (
               <>
                 <span className="text-blue-600 text-xs">•</span>
                 <span className="bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full text-xs font-medium">
-                Alternance
+                {t('schools:programs.alternance')}
                 </span>
               </>
               )}
@@ -211,7 +214,7 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
                         </span>
                       ))}
                       {splitSkills(program.skills_acquired).length > 4 && (
-                        <span className="text-blue-600 text-xs">+{splitSkills(program.skills_acquired).length - 4} autres</span>
+                        <span className="text-blue-600 text-xs"> {t('schools:programs.moreSkills', { count: splitSkills(program.skills_acquired).length - 4 })} </span>
                       )}
                     </div>
                   </div>
@@ -225,7 +228,7 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
         <div className="text-center">
         <LinkWithLoading href={`/schools/${school.slug}/programs`}>
           <button className="text-blue-600 hover:text-blue-700 font-medium text-sm bg-blue-50 hover:bg-blue-100 px-4 py-2 rounded-lg transition-colors">
-          Voir tous les {programs.length} programmes →
+            {t('schools:programs.viewAll', { count: programs.length })} →
           </button>
         </LinkWithLoading>
         </div>
@@ -291,8 +294,8 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
   const internationalHighlights = [
     school?.acknoledgement && {
       icon: Shield,
-      title: "Reconnaissances",
-      value: school.acknoledgement.split(', ').length + "+ accréditations",
+      title: t('schools:stats.recognitions'),
+      value: t('schools:stats.accreditations', { count: school.acknoledgement.split(', ').length }),
       description: school.acknoledgement.split(', ').slice(0, 3).join(', ') + '...',
       color: "from-blue-500 to-indigo-600"
     },
@@ -315,8 +318,10 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
         const rate = school.international_student_rate || "";
         const percentIdx = rate.indexOf("-");
         return percentIdx !== -1
-          ? "Étudiants étrangers en " + rate.substring(percentIdx + 1).trim()
-          : "Étudiants étrangers";
+          ? t('schools:stats.foreignStudentsIn', { 
+              year: rate.substring(percentIdx + 1).trim() 
+            })
+          : t('schools:stats.foreignStudents');
       })(),
       color: "from-purple-500 to-violet-600"
     }
@@ -328,7 +333,7 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
   const faqSections = [
     {
       id: 'presentation',
-      title: 'À propos de l\'école',
+      title: t('schools:about.title'),
       content: (
         <div className="space-y-4">
           <p className="text-slate-700 leading-relaxed text-sm sm:text-base">
@@ -347,7 +352,7 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
             <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-4 border border-blue-200">
               <h4 className="font-bold text-blue-800 mb-3 flex items-center gap-2 text-sm sm:text-base">
                 <Award className="w-4 h-4" />
-                Reconnaissances et accréditations
+                {t('schools:about.recognitionsTitle')}
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {school?.acknoledgement?.split(', ').map((acc, index) => (
@@ -365,13 +370,13 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
             <div className="space-y-3">
               {school.national_ranking && (
                 <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg p-3 border border-green-200">
-                  <h4 className="font-semibold text-green-800 mb-1 text-sm">🏆 Rayonnement national</h4>
+                  <h4 className="font-semibold text-green-800 mb-1 text-sm"> {t('schools:about.nationalReach')}</h4>
                   <p className="text-green-700 text-xs sm:text-sm">{school.national_ranking}</p>
                 </div>
               )}
               {school.international_ranking && (
                 <div className="bg-gradient-to-r from-orange-50 to-red-50 rounded-lg p-3 border border-orange-200">
-                  <h4 className="font-semibold text-orange-800 mb-1 text-sm">🌍 Rayonnement international</h4>
+                  <h4 className="font-semibold text-orange-800 mb-1 text-sm">{t('schools:about.internationalReach')}</h4>
                   <p className="text-orange-700 text-xs sm:text-sm">{school.international_ranking}</p>
                 </div>
               )}
@@ -382,11 +387,11 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
     },
     {
       id: 'programs',
-      title: 'Quels diplômes peut-on obtenir ?',
+      title: t('schools:degrees.title'),
       content: (
         <div className="space-y-4">
           <p className="text-slate-700 leading-relaxed text-sm sm:text-base">
-            {school.name} propose des programmes de formation reconnus  dans les domaines suivants :
+              {t('schools:degrees.description', { schoolName: school.name })}
           </p>
           
           {/* Spécialités basées sur les sous-domaines des programmes */}
@@ -417,27 +422,23 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
     },
     {
       id: 'admission',
-      title: 'Modalités d\'admission pour étudiants internationaux',
+      title: t('schools:campusFrance.admissionTitle'),
       content: (
         <div className="space-y-4">
           {school.connection_campus_france && (
             <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-4 border border-blue-200">
               <div className="flex items-center gap-2 mb-3">
                 <Shield className="w-5 h-5 text-blue-600 flex-shrink-0" />
-                <h4 className="font-bold text-blue-800 text-sm sm:text-base">Procédure Campus France</h4>
+                <h4 className="font-bold text-blue-800 text-sm sm:text-base"> {t('schools:campusFrance.title')}</h4>
               </div>
               <p className="text-blue-700 mb-3 text-sm">
-                {school.name} est partenaire officiel de Campus France, facilitant vos démarches visa et d'inscription.
+                {t('schools:campusFrance.description', { schoolName: school.name })}
               </p>
               <div className="space-y-2">
-                {[
-                  'Candidature via plateforme "Études en France"',
-                  'Support personnalisé pour les démarches visa',
-                  'Procédures simplifiées et accélérées'
-                ].map((item, index) => (
+                {(t('schools:campusFrance.procedures', { returnObjects: true }) || []).map((procedure, index) => (
                   <div key={index} className="flex items-start gap-2">
                     <CheckCircle className="w-3 h-3 text-green-600 mt-1 flex-shrink-0" />
-                    <span className="text-blue-700 text-xs">{item}</span>
+                    <span className="text-blue-700 text-xs">{procedure}</span>
                   </div>
                 ))}
               </div>
@@ -447,7 +448,7 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {school.general_entry_requirements &&
               <div className="bg-white rounded-lg border border-slate-200 p-3">
-                <h4 className="font-bold text-slate-800 mb-2 text-sm">Conditions générales</h4>
+                <h4 className="font-bold text-slate-800 mb-2 text-sm">{t('schools:campusFrance.generalConditions')}</h4>
                 <ul className="text-slate-600 text-xs space-y-1">
                   {school.general_entry_requirements.split('-').map((req, index) => (
                     <li key={index}>• {req.trim().charAt(0).toUpperCase() + req.trim().slice(1)}</li>
@@ -457,7 +458,7 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
             }
             {school.international_support_before_coming &&
             <div className="bg-white rounded-lg border border-slate-200 p-3">
-              <h4 className="font-bold text-slate-800 mb-2 text-sm">Support international</h4>
+              <h4 className="font-bold text-slate-800 mb-2 text-sm">{t('schools:campusFrance.internationalSupport')}</h4>
               <ul className="text-slate-600 text-xs space-y-1">
                 {school.international_support_before_coming.split(',').map((support, index) => (
                   <li key={index}>• {support.trim().charAt(0).toUpperCase()+ support.trim().slice(1)}</li>
@@ -471,7 +472,7 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
     },
     {
       id: 'alternance',
-      title: 'Formations en alternance',
+      title: t('schools:alternancePrograms.title'),
       content: (
         <div className="space-y-4">
           <div 
@@ -484,14 +485,14 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
           <div className="bg-gradient-to-r from-purple-50 to-violet-50 rounded-lg p-4 border border-purple-200">
             <h4 className="font-bold text-purple-800 mb-3 flex items-center gap-2 text-sm sm:text-base">
               <Building className="w-4 h-4" />
-              Avantages de l'alternance
+              {t('schools:alternancePrograms.advantagesTitle')}
             </h4>
             <div className="space-y-2">
               {[
-                'Frais de scolarité pris en charge par l\'entreprise',
-                'Rémunération pendant les études (55-80% du SMIC)',
-                'Expérience professionnelle valorisante',
-                'Facilite l\'insertion professionnelle'
+                t('schools:alternancePrograms.advantages.tuitionCovered'),
+                t('schools:alternancePrograms.advantages.salary'),
+                t('schools:alternancePrograms.advantages.experience'),
+                t('schools:alternancePrograms.advantages.employment')
               ].map((advantage, index) => (
                 <div key={index} className="bg-white/50 rounded-lg p-2">
                   <div className="flex items-start gap-2">
@@ -507,11 +508,11 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
     },
     {
       id: 'campus-life',
-      title: 'La vie de campus',
+      title: t('schools:campusLife.title'),
       content: (
         <div className="space-y-4">
           <p className="text-slate-700 leading-relaxed text-sm sm:text-base">
-            Le campus de {school.name} offre un environnement d'études exceptionnel avec des infrastructures modernes et un accompagnement personnalisé.
+            {t('schools:campusLife.description', { schoolName: school.name })}
           </p>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -519,7 +520,7 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
             <div className="bg-white rounded-lg border border-slate-200 p-3">
               <h4 className="font-bold text-slate-800 mb-2 flex items-center gap-2 text-sm">
                 <Building className="w-3 h-3 text-blue-600" />
-                Infrastructures
+                {t('schools:campusLife.infrastructure')}
               </h4>
               <ul className="text-slate-600 space-y-1 text-xs">
                 {school.facilities.split(', ').map((facility, index) => (
@@ -532,14 +533,14 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
             <div className="bg-white rounded-lg border border-slate-200 p-3">
               <h4 className="font-bold text-slate-800 mb-2 flex items-center gap-2 text-sm">
                 <Users className="w-3 h-3 text-green-600" />
-                Partenariats
+                {t('schools:campusLife.partnerships')}
               </h4>
               <ul className="text-slate-600 space-y-1 text-xs">
                 {school.partnerships.split(', ').slice(0, 10).map((partnership, index) => (
                   <li key={index}>• {partnership.trim().charAt(0).toUpperCase()+ partnership.trim().slice(1).replace(/\./g, '')}</li>
                 ))}
                 {school.partnerships.split(', ').length > 10 && (
-                  <li className="text-blue-600 text-xs">+{school.partnerships.split(', ').length - 10} autres</li>
+                  <li className="text-blue-600 text-xs">{t('schools:campusLife.morePartnerships', { count: school.partnerships.split(', ').length - 10 })}</li>
                 )}
               </ul>
             </div>
@@ -550,7 +551,7 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
           <div className="bg-gradient-to-r from-orange-50 to-red-50 rounded-lg p-3 border border-orange-200">
             <h4 className="font-semibold text-orange-800 mb-2 flex items-center gap-2 text-sm">
               <Globe className="w-3 h-3" />
-              Accompagnement après arrivée
+              {t('schools:campusLife.arrivalSupport')}
             </h4>
             <ul className="text-orange-700 space-y-1 text-xs">
               {school.international_support_after_coming.split(', ').map((support, index) => (
@@ -567,9 +568,9 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
   return (
     <>
       <Head>
-        <title>{school.seo_title || school.name + " - École Internationale | Wendogo"}</title>
+        <title> {String(school.seo_title || t('schools:seo.defaultTitle', { schoolName: school.name }))} </title>
         <meta name="description" content={school.seo_description || school.description} />
-        <meta name="keywords" content={school.seo_keywords || school.name + ", école internationale, étudiants étrangers"} />
+        <meta name="keywords" content={school.seo_keywords || t('schools:seo.defaultKeywords', { schoolName: school.name })} />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         
         <meta property="og:type" content="website" />
@@ -621,6 +622,7 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
       {/* <HeaderMenuBar /> */}
       <NavBar 
         variant="simple"
+        languageSelectorVariant="light"
         // showDropdowns={false}
         // showAllMenuItems={false}
       />
@@ -678,7 +680,7 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
                     {/* Groupe d'école en subtitle */}
                     {school.school_group && (
                       <p className="text-white/90 text-sm sm:text-base mb-2">
-                        Groupe {school.school_group}
+                        {t('schools:header.group', { groupName: school.school_group })}
                       </p>
                     )}
                     
@@ -700,7 +702,7 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
                   {school.hors_contrat && (
                     <div className="flex items-center justify-center gap-1 bg-orange-100 text-orange-700 px-2 py-1 rounded-full text-xs font-semibold">
                       <AlertTriangle className="w-3 h-3" />
-                      <span className="xs:inline md:inline">Hors contrat</span> 
+                      <span className="xs:inline md:inline">{t('schools:header.privateContract')}</span> 
                     </div>
                   )}
                 </div>
@@ -814,7 +816,7 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
                           )}
                           {contactInfo.url && (
                             <a href={contactInfo.url} target="_blank" rel="noopener" className="text-blue-600 hover:text-blue-700 text-sm sm:text-base break-all underline block mt-1">
-                              Formulaire de contact
+                               {t('schools:contact.form')}
                             </a>
                           )}
                         </div>
@@ -826,7 +828,7 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
                   
                   <div className="px-4 sm:px-6 py-5 sm:py-6">
                     <h3 className="font-bold text-lg sm:text-xl text-slate-800 mb-4 sm:mb-5">
-                      Suivre {school.name.length > 25 ? school.name.substring(0, 25) + '...' : school.name}
+                      {t('schools:contact.follow', { schoolName: school.name.length > 25 ? school.name.substring(0, 25) + '...' : school.name })}
                     </h3>
                     <div className="flex gap-3 sm:gap-4">
                       <a href={school.url} target="_blank" rel="noopener" className="text-black hover:text-blue-600 transition-colors">
@@ -859,7 +861,7 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
                 {/* Écoles similaires Mobile */}
                 {similarSchools.length > 0 && (
                   <div className="bg-white rounded-lg p-4 sm:p-5 shadow-lg border border-slate-100">
-                    <h3 className="text-lg font-bold text-slate-800 mb-3">Écoles similaires</h3>
+                    <h3 className="text-lg font-bold text-slate-800 mb-3">{t('schools:similar.title')}</h3>
                     <div className="space-y-3">
                       {similarSchools.slice(0, 3).map((similarSchool) => (
                         <LinkWithLoading key={similarSchool.id} href={"/schools/" + similarSchool.slug}>
@@ -897,7 +899,7 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
                                   )}
                                   {similarSchool.similarity_score && (
                                     <span className="bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full text-xs">
-                                      {Math.round(similarSchool.similarity_score * 20)}% similaire
+                                      {t('schools:similar.similarity', { percent: Math.round(similarSchool.similarity_score * 20) })}
                                     </span>
                                   )}
                                 </div>
@@ -912,29 +914,29 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
 
                 {/* Call to action Mobile */}
                 <div className="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-lg p-4 text-white shadow-lg">
-                  <h3 className="text-lg font-bold mb-2">Découvrez les formations</h3>
-                  <p className="text-blue-100 mb-4 text-sm">Explorez toutes les formations disponibles avec reconnaissance internationale.</p>
+                  <h3 className="text-lg font-bold mb-2">{t('schools:cta.discoverPrograms.title')}</h3>
+                  <p className="text-blue-100 mb-4 text-sm">{t('schools:cta.discoverPrograms.description')}</p>
                   <LinkWithLoading href={`/schools/${school.slug}/programs`}>
                     <button className="w-full bg-white text-blue-600 font-semibold py-3 px-4 rounded-lg hover:bg-blue-50 transition-colors text-sm sm:text-base">
-                      Voir les {programs.length} formations
+                      {t('schools:cta.discoverPrograms.button', { count: programs.length })}
                     </button>
                   </LinkWithLoading>
                 </div>
                 <div className="bg-gradient-to-br from-green-600 to-emerald-700 rounded-xl p-4 text-white shadow-lg">
-                  <h3 className="text-lg font-bold mb-2">Votre réussite, notre mission</h3>
-                  <p className="text-green-100 mb-3 text-sm">Accompagnement dédié aux étudiants étrangers</p>
+                  <h3 className="text-lg font-bold mb-2">{t('schools:cta.ourMission.title')}</h3>
+                  <p className="text-green-100 mb-3 text-sm">{t('schools:cta.ourMission.description')}</p>
                   <div className="space-y-1">
                     <div className="flex items-center gap-2 text-green-100">
                       <CheckCircle className="w-3 h-3" />
-                      <span className="text-xs">Aide visa & logement</span>
+                      <span className="text-xs">{t('schools:cta.ourMission.visaHelp')}</span>
                     </div>
                     <div className="flex items-center gap-2 text-green-100">
                       <CheckCircle className="w-3 h-3" />
-                      <span className="text-xs">Intégration campus</span>
+                      <span className="text-xs">{t('schools:cta.ourMission.integration')}</span>
                     </div>
                     <div className="flex items-center gap-2 text-green-100">
                       <CheckCircle className="w-3 h-3" />
-                      <span className="text-xs">Support administratif</span>
+                      <span className="text-xs">{t('schools:cta.ourMission.adminSupport')}</span>
                     </div>
                   </div>
                   <button 
@@ -943,7 +945,7 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
                     }}
                     className="w-full bg-white text-green-600 font-semibold py-2 px-4 rounded-lg hover:bg-green-50 transition-colors mt-3 text-sm"
                   >
-                    Découvez nos services
+                    {t('schools:cta.ourMission.button')}
                   </button>
                 </div>
               </div>
@@ -956,41 +958,71 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
   );
 };
 
-// Génération statique des pages pour le SEO
+// ✅ Fonction utilitaire pour nettoyer les données
+const sanitizeData = (obj) => {
+  if (obj === null || obj === undefined) return null;
+  if (Array.isArray(obj)) return obj.map(sanitizeData);
+  if (typeof obj !== 'object') return obj;
+  
+  const cleaned = {};
+  for (const key in obj) {
+    const value = obj[key];
+    if (value === undefined) {
+      cleaned[key] = null;
+    } else if (value && typeof value === 'object') {
+      cleaned[key] = sanitizeData(value);
+    } else {
+      cleaned[key] = value;
+    }
+  }
+  return cleaned;
+};
+
 export async function getStaticPaths() {
   try {
-    const response = await PrivateSchoolApi.getAllSchoolSlugs();
+    const schoolsResponse = await PrivateSchoolApi.getAllSchools();
     
-    if (!response.success) {
-      return {
-        paths: [],
-        fallback: true
-      };
+    if (!schoolsResponse.success) {
+      return { paths: [], fallback: 'blocking' };
     }
 
-    const paths = response.data.map((slug) => ({
-      params: { slug }
-    }));
+    // ✅ Générer les paths pour toutes les locales
+    const locales = ['fr', 'en'];
+    const paths = [];
+
+    schoolsResponse.data
+      .slice(0, 50) // Limiter pour le build initial
+      .forEach((school) => {
+        locales.forEach((locale) => {
+          paths.push({
+            params: { slug: school.slug },
+            locale,
+          });
+        });
+      });
+
+    console.log(`Generated ${paths.length} paths for schools`);
 
     return {
       paths,
-      fallback: true
+      fallback: 'blocking'
     };
   } catch (error) {
-    console.error('Erreur lors de la génération des paths:', error);
+    console.error('Error generating school paths:', error);
     return {
       paths: [],
-      fallback: true
+      fallback: 'blocking'
     };
   }
 }
 
-export async function getStaticProps({ params }) {
+export async function getStaticProps({ params, locale}) {
   try {
+    const { serverSideTranslations } = await import('next-i18next/serverSideTranslations');
     const { slug } = params;
-    
-    const schoolResponse = await PrivateSchoolApi.getSchoolBySlug(slug);
-    
+
+    const schoolResponse = await PrivateSchoolApi.getSchoolBySlug(slug, locale);
+
     if (!schoolResponse.success) {
       return {
         notFound: true
@@ -999,17 +1031,22 @@ export async function getStaticProps({ params }) {
 
     const school = schoolResponse.data;
 
-    const programsResponse = await ProgramApi.getProgramsBySchoolId(school.id);
+    const programsResponse = await ProgramApi.getProgramsBySchoolId(school.id, locale);
     const programs = programsResponse.success ? programsResponse.data : [];
 
-    const similarSchoolsResponse = await PrivateSchoolApi.getSimilarSchools(school.id, 3);
+    const similarSchoolsResponse = await PrivateSchoolApi.getSimilarSchools(school.id, 3, locale);
     const similarSchools = similarSchoolsResponse.success ? similarSchoolsResponse.data : [];
    
+    const cleanedSchool = sanitizeData(school);
+    const cleanedPrograms = sanitizeData(programs);
+    const cleanedSimilarSchools = sanitizeData(similarSchools);
+
     return {
       props: {
-        school,
-        programs,
-        similarSchools
+        school: cleanedSchool,
+        programs: cleanedPrograms,
+        similarSchools: cleanedSimilarSchools,
+        ...(await serverSideTranslations(locale, ['authModal', 'common', 'schools'])),
       },
       revalidate: 3600
     };

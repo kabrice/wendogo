@@ -6,7 +6,7 @@ import EdgarHead from '../assets/optimized/edgar_head.webp'
 import QuestionsOnTopic from '../components/QuestionsOnTopic';
 
 import Link from 'next/link';
-
+import { useTranslation } from 'next-i18next';
 import Footer from '../components/Footer';
 import HeaderMenuBar from '../components/HeaderMenuBar';
 import Head from 'next/head';
@@ -14,6 +14,8 @@ import helper from '../utils/Helper';
 import Image from 'next/image';
 
 function StudyInFrance(){
+    const { t } = useTranslation(['common', 'studyInFrance']);
+
     const whatsapp =  <svg className="ButtonLinkstyles__Picto-sc-1s2ygn0-1 hkJOZg" width="24px" height="24.6350302px" viewBox="0 0 24 24.6350302" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
                         <title>whatsapp</title>
                         <g id="Page-1" stroke="none" strokeWidth={1} fill="none" fillRule="evenodd">
@@ -51,11 +53,11 @@ function StudyInFrance(){
             <Head>
               <meta property="og:url"           content="https://wendogo.com/study-in-france" />
               <meta property="og:type"          content="article" />
-              <meta property="og:title"         content="Comment postuler pour étudier dans une université en France" />
-              <meta property="og:description"   content="Pour être admis dans une université en France, vous devez remplir plusieurs conditions. Dans cet article, nous allons voir les étapes à franchir pour être admis dans une université publique ou privée en France en tant qu’étranger en 2024." />
+              <meta property="og:title"         content={t('studyInFrance:meta_title')} />
+              <meta property="og:description"   content={t('studyInFrance:meta_description')} />
               <meta property="og:image"         content={'https://wendogo.com'+StudyInFranceImg} /> 
-              <title>Comment postuler pour étudier dans une université en France</title>
-              <meta name="description"          content="Pour être admis dans une université en France, vous devez remplir plusieurs conditions. Dans cet article, nous allons voir les étapes à franchir pour être admis dans une université publique ou privée en France en tant qu’étranger en 2024."/>
+              <title>{t('studyInFrance:meta_title')}</title>
+              <meta name="description"          content={t('studyInFrance:meta_description')}/>
             </Head>        
             <HeaderMenuBar/>   
             <div className='container-24' style={{maxWidth: 'inherit'}}>
@@ -68,7 +70,7 @@ function StudyInFrance(){
                         <div>
                           <ol aria-label="Breadcrumb" className="styles__Breadcrumb-sc-k0ssrw-0 hoUFOh" style={{listStyle : 'none'}}>
                             <li className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__Item-sc-k0ssrw-2 iNCHhD">
-                              <a href="/" className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__ItemLink-sc-k0ssrw-3 fleJZl"> Accueil </a>
+                              <Link href="/" className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__ItemLink-sc-k0ssrw-3 fleJZl"> {t('studyInFrance:breadcrumb_home')} </Link>
                             </li>
                             <li className="styles__PictoContainer-sc-k0ssrw-5 ffQWyI">
                               <svg height={16} viewBox="0 0 16 16" width={16} xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="styles__Picto-sc-k0ssrw-6 hrBFSt">
@@ -76,12 +78,12 @@ function StudyInFrance(){
                               </svg>
                             </li>
                             <li className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__Item-sc-k0ssrw-2 iNCHhD">
-                              <div  className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__Title-sc-k0ssrw-4 gwJOSc">Comment postuler pour étudier dans une université en France</div>
+                              <div  className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__Title-sc-k0ssrw-4 gwJOSc">{t('studyInFrance:breadcrumb_title')}</div>
                             </li>
                           </ol>
                           <ol aria-label="none" className="styles__Breadcrumb-sc-k0ssrw-0 styles__HiddenBreadcrumb-sc-k0ssrw-1 hoUFOh jKdNmR">
                             <li className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__Item-sc-k0ssrw-2 iNCHhD">
-                              <div className="styles__BaseTypo-sc-198xhmk-0 djwbck"> Accueil </div>
+                              <div className="styles__BaseTypo-sc-198xhmk-0 djwbck"> {t('studyInFrance:breadcrumb_home')} </div>
                             </li>
                             <li className="styles__PictoContainer-sc-k0ssrw-5 ffQWyI">
                               <svg height={16} viewBox="0 0 16 16" width={16} xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="styles__Picto-sc-k0ssrw-6 hrBFSt">
@@ -89,7 +91,7 @@ function StudyInFrance(){
                               </svg>
                             </li>
                             <li className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__Item-sc-k0ssrw-2 iNCHhD">
-                              <div className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__Title-sc-k0ssrw-4 gwJOSc">Comment postuler pour étudier dans une université en France</div>
+                              <div className="styles__BaseTypo-sc-198xhmk-0 djwbck styles__Title-sc-k0ssrw-4 gwJOSc">{t('studyInFrance:breadcrumb_title')}</div>
                             </li>
                           </ol>
                         </div>
@@ -102,7 +104,7 @@ function StudyInFrance(){
                         <div className="Defautstyles__Header-sc-1tnudyr-0 hAkdZW">
                           <div className="styles__Hero-sc-s3dlnp-0 gMynSv">
                             <div className="styles__Title-sc-s3dlnp-2 iUyMl">
-                              <h1 size="large" className="styles__HeadingBridge-sc-6txi54-0 hzNvHf"> Comment postuler pour étudier dans une université en France</h1>
+                              <h1 size="large" className="styles__HeadingBridge-sc-6txi54-0 hzNvHf"> {t('studyInFrance:page_title')}</h1>
                             </div>
                             {/* <div style={{float : 'right'}} className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh kmzeo">
                              <Link>Cliquer ici pour la version 🇫🇷</Link>
@@ -118,45 +120,45 @@ function StudyInFrance(){
                                     </div>
                                   </div>
                                   <div className="AuthorInfosstyles__AuthorInformation-sc-1v2nwgf-2 gPPLmh">
-                                    <div className="AuthorInfosstyles__Title-sc-1v2nwgf-3 hpWifG"> Edgar Kamdem </div>
-                                    <div className="AuthorInfosstyles__SubTitle-sc-1v2nwgf-4 KkeWN"> Mis à jour le 15 jan. 2024 </div>
+                                    <div className="AuthorInfosstyles__Title-sc-1v2nwgf-3 hpWifG"> {t('studyInFrance:author_name')} </div>
+                                    <div className="AuthorInfosstyles__SubTitle-sc-1v2nwgf-4 KkeWN"> {t('studyInFrance:updated_on')} </div>
                                   </div>
                                 </div>
                                 <div className="SharingLinksstyles__SharingLinks-sc-13jf7g7-0 cuaEfY">
                                   <div className="SharingLinksstyles__SharingLinksDesktop-sc-13jf7g7-2 dAIRMX">
-                                    <div className="SharingLinksstyles__Title-sc-13jf7g7-3 eZpqGZ"> Partager : </div>
+                                    <div className="SharingLinksstyles__Title-sc-13jf7g7-3 eZpqGZ"> {t('studyInFrance:share_label')} </div>
                                     <div className="Tooltipstyles__TooltipContainer-sc-ynyslw-0 iMhBNO SharingLinksstyles__Tooltip-sc-13jf7g7-4 eUmNLd">
                                     <Link target="_blank" href="https://api.whatsapp.com/send/?text=https://wendogo.com/study-in-france" >
                                       <button className="ButtonLinkstyles__ButtonLink-sc-1s2ygn0-0 iPwlpd">
                                         {whatsapp}
                                         <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh kmzeo"> 
-                                           WhatsApp 
+                                           {t('studyInFrance:share_whatsapp')} 
                                         </div>
                                       </button>
                                       </Link> 
-                                      <div role="tooltip" className="Tooltipstyles__Tooltip-sc-ynyslw-1 hrixxN"> Partager sur WhatsApp </div>
+                                      <div role="tooltip" className="Tooltipstyles__Tooltip-sc-ynyslw-1 hrixxN"> {t('studyInFrance:share_whatsapp_tooltip')} </div>
                                     </div>
                                     <div className="Tooltipstyles__TooltipContainer-sc-ynyslw-0 iMhBNO SharingLinksstyles__Tooltip-sc-13jf7g7-4 eUmNLd">
                                     <div onClick={() => helper.openFacebookOnPopup('study-in-france')} className="fb-xfbml-parse-ignore" rel="noreferrer">
                                       <button className="ButtonLinkstyles__ButtonLink-sc-1s2ygn0-0 iPwlpd">
                                         {facebook}
                                         <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh kmzeo"> 
-                                        Facebook
+                                        {t('studyInFrance:share_facebook')}
                                          </div>
                                       </button>
                                       </div>
-                                      <div role="tooltip" className="Tooltipstyles__Tooltip-sc-ynyslw-1 hrixxN"> Partager sur Facebook </div>
+                                      <div role="tooltip" className="Tooltipstyles__Tooltip-sc-ynyslw-1 hrixxN"> {t('studyInFrance:share_facebook_tooltip')} </div>
                                     </div>
                                     <div className="Tooltipstyles__TooltipContainer-sc-ynyslw-0 iMhBNO SharingLinksstyles__Tooltip-sc-13jf7g7-4 eUmNLd" onClick={() => copyTextToClipboard(1)}>
                                       <button className="ButtonLinkstyles__ButtonLink-sc-1s2ygn0-0 iPwlpd">
                                         <svg height={24} viewBox="0 0 24 24" width={24} xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="ButtonLinkstyles__Picto-sc-1s2ygn0-1 hkJOZg">
                                           <path d="M14.85,11.92a4.06,4.06,0,0,0-1-1.75,4,4,0,0,0-5.66,0l-5,5a4,4,0,0,0,5.66,5.66L12.67,17H13a5.86,5.86,0,0,0,1.19-.12L9.53,21.54a5,5,0,0,1-7.07-7.07l5-5a5,5,0,0,1,7.07,0,4.93,4.93,0,0,1,1.11,1.67Zm-5.7.15a4.1,4.1,0,0,0,1,1.76,4,4,0,0,0,5.66,0l5-5a4,4,0,1,0-5.66-5.66L11.33,7H11a5.86,5.86,0,0,0-1.19.12l4.66-4.66a5,5,0,0,1,7.07,7.07l-5,5a5,5,0,0,1-7.07,0,4.74,4.74,0,0,1-1.11-1.68Z" />
                                         </svg>
-                                        <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh kmzeo"> Lien </div>
+                                        <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh kmzeo"> {t('studyInFrance:share_link')} </div>
                                       </button>
                                       <div role="tooltip" className="Tooltipstyles__Tooltip-sc-ynyslw-1 hrixxN"> 
                                       
-                                      {isCopied1 ? 'Lien copié' : 'Copier le lien'} </div>
+                                      {isCopied1 ? t('studyInFrance:share_link_copied') : t('studyInFrance:share_copy_link')} </div>
                                     </div>
                                   </div>
                                 </div>
@@ -171,85 +173,73 @@ function StudyInFrance(){
                           <div className="styles__Content-sc-1b5sr4l-4 euNroP">
                             <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
                               <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> 
-                              Êtes-vous enthousiaste et prêt à postuler pour votre nouveau parcours académique en France ? Nous espérons que vous l’êtes ! Le processus de candidature aux universités françaises 
-                              n’est pas exigeant du tout puisque nous avons rassemblé toutes les étapes importantes à suivre pour être admis dans l’université française de votre choix.
+                              {t('studyInFrance:intro_text')}
                               </p>
                             </div>
                             <div className="styles__Block-sc-1b5sr4l-5 styles__BlockHeading-sc-1b5sr4l-8 lhYawK lngqIb">
-                              <h2 id="quel-type-de-logement-acheter-maison-ou-appartementnbsp" size="large" format="default" className="styles__SubHeading-sc-xwwv8k-0 PVMuW">1 - Choisissez votre spécialisation</h2>
+                              <h2 id="quel-type-de-logement-acheter-maison-ou-appartementnbsp" size="large" format="default" className="styles__SubHeading-sc-xwwv8k-0 PVMuW">{t('studyInFrance:step1_title')}</h2>
                             </div>
                             <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
                               <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv">  
-                              C’est probablement l’étape la plus importante et peut-être la plus difficile. Le choix de votre spécialisation définira votre vie et votre carrière. 
-                              Imaginez-vous dans le futur et prenez en considération les nombreux diplômes que la France a à vous proposer dans des disciplines variées. 
-                              Vous souhaitez étudier l'informatique dans l'un des pays les plus dynamiques dans le domaine ou obtenir un diplôme de commerce d'une Grande école ? Le choix vous appartient!
+                              {t('studyInFrance:step1_content')}
                               </p>
                             </div> 
                             <div className="styles__Block-sc-1b5sr4l-5 styles__BlockHeading-sc-1b5sr4l-8 lhYawK lngqIb">
-                              <h2 id="quel-type-de-logement-acheter-maison-ou-appartementnbsp" size="large" format="default" className="styles__SubHeading-sc-xwwv8k-0 PVMuW">2 - Vérifiez les conditions d'admission </h2>
+                              <h2 id="quel-type-de-logement-acheter-maison-ou-appartementnbsp" size="large" format="default" className="styles__SubHeading-sc-xwwv8k-0 PVMuW">{t('studyInFrance:step2_title')} </h2>
                             </div>
                             <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
                               <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv">  
-                              Selon votre objectif, votre nationalité et le niveau académique de vos études, il existe des conditions d'admission particulières auxquelles vous devez prêter une attention particulière lors 
-                              de la préparation de votre candidature dans les universités françaises. Faites un plan, sélectionnez les universités et les spécialisations de votre choix. Contactez l'ambassade de France de votre 
-                              pays d'origine ou contactez les universités auxquelles vous souhaitez postuler ainsi que les services d'accompagnement existants comme Campus France afin de trouver les réponses à vos éventuelles questions.                                    
+                              {t('studyInFrance:step2_content')}
                               </p>
                             </div> 
                             <div className="styles__Block-sc-1b5sr4l-5 styles__BlockHeading-sc-1b5sr4l-8 lhYawK lngqIb">
-                              <h2 id="quel-type-de-logement-acheter-maison-ou-appartementnbsp" size="large" format="default" className="styles__SubHeading-sc-xwwv8k-0 PVMuW">3 - Préparez les documents nécessaires</h2>
+                              <h2 id="quel-type-de-logement-acheter-maison-ou-appartementnbsp" size="large" format="default" className="styles__SubHeading-sc-xwwv8k-0 PVMuW">{t('studyInFrance:step3_title')}</h2>
                             </div>
                             <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
                               <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv">  
-                              Commencez à rassembler les documents nécessaires dès que possible. C'est une étape qui prend du temps. Tenez compte des exigences particulières en matière de documentation concernant 
-                              votre nationalité, votre niveau d'études et l'université de votre choix. N'oubliez pas que vous pourriez avoir besoin de traductions en français de vos documents originaux. L'ambassade
-                               de France de votre pays d'origine peut fournir ces services. La plupart des candidatures aux universités françaises comprennent : 
-                                                                  </p>
+                              {t('studyInFrance:step3_content')}
+                              </p>
                             </div> 
                             <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
                               <ul className="TextList-sc-100qkuv-0 enKgYQ">
-                                <li>Un formulaire de candidature complété et signé par les autorités officielles</li>
-                                <li>Autorisation Campus France</li>
-                                <li>Une attestation de responsabilité civile</li>
-                                <li>Photos d'identité</li>
-                                <li>Passeport</li>
-                                <li>Relevés de notes du secondaire</li>
-                                <li>Un CV (si demandé par l'université)</li>
-                                <li>Preuve de compétence linguistique en anglais ou en français selon le programme</li>
-                                <li>Preuve de paiement des frais de dossier (AVI)</li>
+                                <li>{t('studyInFrance:doc_item1')}</li>
+                                <li>{t('studyInFrance:doc_item2')}</li>
+                                <li>{t('studyInFrance:doc_item3')}</li>
+                                <li>{t('studyInFrance:doc_item4')}</li>
+                                <li>{t('studyInFrance:doc_item5')}</li>
+                                <li>{t('studyInFrance:doc_item6')}</li>
+                                <li>{t('studyInFrance:doc_item7')}</li>
+                                <li>{t('studyInFrance:doc_item8')}</li>
+                                <li>{t('studyInFrance:doc_item9')}</li>
                               </ul>
                             </div>
                             <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
                             <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv"> 
-                            il pourra aussi vous être demandé de fournir des documents supplémentaires tels que votre acte de naissance, un justificatif de soutien financier pour vos études et,
-                             après admission, votre visa étudiant français. Veuillez noter que chaque programme peut demander des documents supplémentaires, alors assurez-vous d'avoir le temps 
-                             d'évaluer ce qui est nécessaire de votre côté.                                       </p>
+                            {t('studyInFrance:step3_additional')}
+                            </p>
                             </div>
                             <div className="styles__Block-sc-1b5sr4l-5 styles__BlockHeading-sc-1b5sr4l-8 lhYawK lngqIb">
-                              <h2 id="quel-type-de-logement-acheter-maison-ou-appartementnbsp" size="large" format="default" className="styles__SubHeading-sc-xwwv8k-0 PVMuW">4 - Soumettez votre candidature </h2>
+                              <h2 id="quel-type-de-logement-acheter-maison-ou-appartementnbsp" size="large" format="default" className="styles__SubHeading-sc-xwwv8k-0 PVMuW">{t('studyInFrance:step4_title')} </h2>
                             </div>
                             <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
                               <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv">  
-                               Vous devez ici réussir l'admission préliminaire ou "Demande d'Admission Préalable - DAP" pour postuler dans les établissements français et
-                               par la suite postuler en ligne via Campus France .
-                                                                                                </p>
-                            </div> 
-                            <div className="styles__Block-sc-1b5sr4l-5 styles__BlockHeading-sc-1b5sr4l-8 lhYawK lngqIb">
-                              <h2 id="quel-type-de-logement-acheter-maison-ou-appartementnbsp" size="large" format="default" className="styles__SubHeading-sc-xwwv8k-0 PVMuW">5 - Demander un visa étudiant français</h2>
-                            </div>
-                            <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
-                              <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv">  
-                              Félicitations ! Vous êtes officiellement étudiant en France ! Lorsque vous recevez votre lettre d'acceptation, contactez votre université afin de payer le premier versement 
-                              de vos frais de scolarité le cas échéant. Ensuite, vous devez demander un visa étudiant français dès que possible. Décidez du type de visa dont vous avez besoin, de courte ou 
-                              de longue durée, et lisez attentivement les règles qui s'appliquent à votre situation. Contactez l'ambassade de France de votre pays d'origine si vous avez besoin d'aide pour la procédure de visa.                              
+                               {t('studyInFrance:step4_content')}
                               </p>
                             </div> 
                             <div className="styles__Block-sc-1b5sr4l-5 styles__BlockHeading-sc-1b5sr4l-8 lhYawK lngqIb">
-                              <h2 id="quel-type-de-logement-acheter-maison-ou-appartementnbsp" size="large" format="default" className="styles__SubHeading-sc-xwwv8k-0 PVMuW">6 - Arriver en France </h2>
+                              <h2 id="quel-type-de-logement-acheter-maison-ou-appartementnbsp" size="large" format="default" className="styles__SubHeading-sc-xwwv8k-0 PVMuW">{t('studyInFrance:step5_title')}</h2>
                             </div>
                             <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
                               <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv">  
-                              Après avoir obtenu votre visa étudiant français et préparé tous les documents nécessaires, préparez vos bagages et montez dans l'avion pour la France. Ce n'est que le début.
-                               Vous êtes sur le point de vivre et d’étudier dans les pays les plus sophistiqués, modernes et romantiques du monde !                             
+                              {t('studyInFrance:step5_content')}
+                              </p>
+                            </div> 
+                            <div className="styles__Block-sc-1b5sr4l-5 styles__BlockHeading-sc-1b5sr4l-8 lhYawK lngqIb">
+                              <h2 id="quel-type-de-logement-acheter-maison-ou-appartementnbsp" size="large" format="default" className="styles__SubHeading-sc-xwwv8k-0 PVMuW">{t('studyInFrance:step6_title')} </h2>
+                            </div>
+                            <div className="styles__Block-sc-1b5sr4l-5 lhYawK">
+                              <p size="medium" variant="inherit" format="default" className="styles__Text-sc-1kfu7o1-0 kitxIv">  
+                              {t('studyInFrance:step6_content')}
                               </p>
                             </div> 
                             
@@ -261,7 +251,7 @@ function StudyInFrance(){
                               </div>
                               <div className="styles__Author-sc-ifmuzk-3 SbOJi">
                                 <div className="BlocAuthorEndstyles__BlocAuthorEnd-sc-1vpghvk-0 GXTeA">
-                                  <div className="BlocAuthorEndstyles__Update-sc-1vpghvk-1 ducFrV"> Mis à jour le 15 jan. 2024 </div>
+                                  <div className="BlocAuthorEndstyles__Update-sc-1vpghvk-1 ducFrV"> {t('studyInFrance:updated_on')} </div>
                                   <div className="BlocAuthorEndstyles__Content-sc-1vpghvk-2 ejbaUW">
                                     <div className="AuthorInfosstyles__AuthorInfos-sc-1v2nwgf-0 kVLKSc">
                                       <div className="Avatarstyles__AvatarContainer-sc-168giry-2 glDTmS">
@@ -271,51 +261,50 @@ function StudyInFrance(){
                                         </div>
                                       </div>
                                       <div className="AuthorInfosstyles__AuthorInformation-sc-1v2nwgf-2 gPPLmh">
-                                        <div className="AuthorInfosstyles__Title-sc-1v2nwgf-3 hpWifG"> Edgar Kamdem </div>
-                                        <div className="AuthorInfosstyles__SubTitle-sc-1v2nwgf-4 gdZZXb"> Co-fondateur & CEO </div>
+                                        <div className="AuthorInfosstyles__Title-sc-1v2nwgf-3 hpWifG"> {t('studyInFrance:author_name')} </div>
+                                        <div className="AuthorInfosstyles__SubTitle-sc-1v2nwgf-4 gdZZXb"> {t('studyInFrance:author_role')} </div>
                                       </div>
                                     </div>
                                     <div className="SharingLinksstyles__SharingLinks-sc-13jf7g7-0 cuaEfY">
                                       <div className="SharingLinksstyles__SharingLinksDesktop-sc-13jf7g7-2 dAIRMX">
-                                        <div className="SharingLinksstyles__Title-sc-13jf7g7-3 eZpqGZ"> Partager : </div>
+                                        <div className="SharingLinksstyles__Title-sc-13jf7g7-3 eZpqGZ"> {t('studyInFrance:share_label')} </div>
                                         <div className="Tooltipstyles__TooltipContainer-sc-ynyslw-0 iMhBNO SharingLinksstyles__Tooltip-sc-13jf7g7-4 eUmNLd">
                                         <Link target="_blank" href="https://api.whatsapp.com/send/?text=https://wendogo.com/study-in-france" >
                                           <button className="ButtonLinkstyles__ButtonLink-sc-1s2ygn0-0 iPwlpd">
                                           {whatsapp}
                                           <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh kmzeo"> 
-                                             WhatsApp 
+                                             {t('studyInFrance:share_whatsapp')} 
                                           </div>
                                           </button>
                                           </Link> 
-                                          <div role="tooltip" className="Tooltipstyles__Tooltip-sc-ynyslw-1 hrixxN"> Partager par WhatsApp </div>
+                                          <div role="tooltip" className="Tooltipstyles__Tooltip-sc-ynyslw-1 hrixxN"> {t('studyInFrance:share_whatsapp_tooltip')} </div>
                                         </div>
                                         <div className="Tooltipstyles__TooltipContainer-sc-ynyslw-0 iMhBNO SharingLinksstyles__Tooltip-sc-13jf7g7-4 eUmNLd">
                                         <div onClick={() => helper.openFacebookOnPopup('study-in-france')} className="fb-xfbml-parse-ignore" rel="noreferrer">
                                           <button className="ButtonLinkstyles__ButtonLink-sc-1s2ygn0-0 iPwlpd">
                                             {facebook}
                                             <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh kmzeo"> 
-                                            Facebook
+                                            {t('studyInFrance:share_facebook')}
                                             </div>
                                           </button>
                                           </div>
-                                          <div role="tooltip" className="Tooltipstyles__Tooltip-sc-ynyslw-1 hrixxN"> Partager sur Facebook </div>
+                                          <div role="tooltip" className="Tooltipstyles__Tooltip-sc-ynyslw-1 hrixxN"> {t('studyInFrance:share_facebook_tooltip')} </div>
                                         </div>
                                         <div className="Tooltipstyles__TooltipContainer-sc-ynyslw-0 iMhBNO SharingLinksstyles__Tooltip-sc-13jf7g7-4 eUmNLd" onClick={() => copyTextToClipboard(2)}>
                                           <button className="ButtonLinkstyles__ButtonLink-sc-1s2ygn0-0 iPwlpd">
                                             <svg height={24} viewBox="0 0 24 24" width={24} xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="ButtonLinkstyles__Picto-sc-1s2ygn0-1 hkJOZg">
                                               <path d="M14.85,11.92a4.06,4.06,0,0,0-1-1.75,4,4,0,0,0-5.66,0l-5,5a4,4,0,0,0,5.66,5.66L12.67,17H13a5.86,5.86,0,0,0,1.19-.12L9.53,21.54a5,5,0,0,1-7.07-7.07l5-5a5,5,0,0,1,7.07,0,4.93,4.93,0,0,1,1.11,1.67Zm-5.7.15a4.1,4.1,0,0,0,1,1.76,4,4,0,0,0,5.66,0l5-5a4,4,0,1,0-5.66-5.66L11.33,7H11a5.86,5.86,0,0,0-1.19.12l4.66-4.66a5,5,0,0,1,7.07,7.07l-5,5a5,5,0,0,1-7.07,0,4.74,4.74,0,0,1-1.11-1.68Z" />
                                             </svg>
-                                            <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh kmzeo"> Lien </div>
+                                            <div className="ButtonLinkstyles__Anchor-sc-1s2ygn0-2 kuldYh kmzeo"> {t('studyInFrance:share_link')} </div>
                                           </button>
                                           <div role="tooltip" className="Tooltipstyles__Tooltip-sc-ynyslw-1 hrixxN"> 
                                           
-                                          {isCopied2 ? 'Lien copié' : 'Copier le lien'} </div>
+                                          {isCopied2 ? t('studyInFrance:share_link_copied') : t('studyInFrance:share_copy_link')} </div>
                                         </div>
                                       </div>
                                     </div>
                                   </div>
-                                  <div className="BlocAuthorEndstyles__Text-sc-1vpghvk-3 dxlmwf"> Edgar est le co-fondateur de Wendogo. Ingénieur de formation il possède une vaste expérience dans les processus applicatifs liés au web, 
-                                  il a créé Wendogo après avoir eu lui-même beaucoup de mal à faire voyager ses proches au travers de certains organismes en place. </div>
+                                  <div className="BlocAuthorEndstyles__Text-sc-1vpghvk-3 dxlmwf"> {t('studyInFrance:author_bio')} </div>
                                 </div>
                               </div>
                             </div>
@@ -332,6 +321,15 @@ function StudyInFrance(){
             <Footer/>                    
           </div>
 
+}
+export async function getStaticProps({ locale }) {
+  const { serverSideTranslations } = await import('next-i18next/serverSideTranslations');
+  
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['authModal', 'common', 'studyInFrance'])),
+    },
+  };
 }
 
 export default StudyInFrance

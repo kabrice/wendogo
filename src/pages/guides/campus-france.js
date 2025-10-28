@@ -6,6 +6,7 @@ import { trackPageView } from '../../lib/gtag';
 import Head from 'next/head';
 import Footer from '../../components/Footer';
 import NavBar from '../../components/NavBar';
+import { useTranslation } from 'next-i18next';
 import { 
   FileText, 
   Globe, 
@@ -35,6 +36,7 @@ import {
 import Link from 'next/link';
 
 function CampusFranceGuide() {
+  const { t } = useTranslation(['common', 'campusFrance']);
   const [activeStep, setActiveStep] = useState(0);
   const [expandedSection, setExpandedSection] = useState(null);
 
@@ -49,110 +51,110 @@ function CampusFranceGuide() {
   const steps = [
     {
       id: 'preparation',
-      title: 'Phase préparatoire',
-      subtitle: '6-8 mois avant',
-      duration: '6-8 mois',
+      title: t('campusFrance:step_preparation'),
+      subtitle: t('campusFrance:step_preparation_subtitle'),
+      duration: t('campusFrance:step_preparation_duration'),
       icon: Target,
       color: 'blue'
     },
     {
       id: 'inscription',
-      title: 'Inscription Campus France',
-      subtitle: 'Octobre-Février',
-      duration: '2-3 mois',
+      title: t('campusFrance:step_inscription'),
+      subtitle: t('campusFrance:step_inscription_subtitle'),
+      duration: t('campusFrance:step_inscription_duration'),
       icon: FileText,
       color: 'green'
     },
     {
       id: 'candidatures',
-      title: 'Candidatures',
-      subtitle: 'Janvier-Mars',
-      duration: '1-2 mois',
+      title: t('campusFrance:step_candidatures'),
+      subtitle: t('campusFrance:step_candidatures_subtitle'),
+      duration: t('campusFrance:step_candidatures_duration'),
       icon: MessageSquare,
       color: 'purple'
     },
     {
       id: 'financier',
-      title: 'Aspects financiers',
-      subtitle: 'Prévoir budget',
-      duration: 'Continue',
+      title: t('campusFrance:step_financier'),
+      subtitle: t('campusFrance:step_financier_subtitle'),
+      duration: t('campusFrance:step_financier_duration'),
       icon: DollarSign,
       color: 'yellow-500 '
     },
     {
       id: 'erreurs',
-      title: 'Erreurs à éviter',
-      subtitle: 'Points d\'attention',
-      duration: 'Toujours',
+      title: t('campusFrance:step_erreurs'),
+      subtitle: t('campusFrance:step_erreurs_subtitle'),
+      duration: t('campusFrance:step_erreurs_duration'),
       icon: AlertTriangle,
       color: 'red'
     },
     {
       id: 'conseils',
-      title: 'Conseils pratiques',
-      subtitle: 'Astuces d\'expert',
-      duration: 'Toujours',
+      title: t('campusFrance:step_conseils'),
+      subtitle: t('campusFrance:step_conseils_subtitle'),
+      duration: t('campusFrance:step_conseils_duration'),
       icon: Star,
       color: 'indigo'
     }
   ];
 
   const quickStats = [
-    { number: '100+', label: 'Pays concernés', icon: Globe },
-    { number: '7', label: 'Vœux maximum', icon: Target },
-    { number: '615€', label: 'Ressources/mois', icon: DollarSign },
-    { number: '6-8', label: 'Mois de préparation', icon: Clock }
+    { number: '100+', label: t('campusFrance:stat_countries'), icon: Globe },
+    { number: '7', label: t('campusFrance:stat_voeux'), icon: Target },
+    { number: '615€', label: t('campusFrance:stat_resources'), icon: DollarSign },
+    { number: '6-8', label: t('campusFrance:stat_preparation'), icon: Clock }
   ];
 
   const testsLangue = [
-    { name: 'TCF', description: 'Test de Connaissance du Français', level: 'Tous niveaux' },
-    { name: 'DELF', description: 'Diplôme d\'Études en Langue Française', level: 'A1 à B2' },
-    { name: 'DALF', description: 'Diplôme Approfondi de Langue Française', level: 'C1 à C2' }
+    { name: t('campusFrance:test_tcf_name'), description: t('campusFrance:test_tcf_description'), level: t('campusFrance:test_tcf_level') },
+    { name: t('campusFrance:test_delf_name'), description: t('campusFrance:test_delf_description'), level: t('campusFrance:test_delf_level') },
+    { name: t('campusFrance:test_dalf_name'), description: t('campusFrance:test_dalf_description'), level: t('campusFrance:test_dalf_level') }
   ];
 
   const documentsRequis = [
-    { title: 'Diplômes traduits', description: 'Traduction officielle de tous les diplômes', urgent: true },
-    { title: 'Relevés de notes', description: '3 dernières années + baccalauréat tamponnés', urgent: true },
-    { title: 'CV français', description: 'Format chronologique, maximum 2 pages', urgent: false },
-    { title: 'Lettres de motivation', description: 'Spécifiques pour chaque école', urgent: true },
-    { title: 'Photos d\'identité', description: 'Format officiel 3,5 x 4,5 cm, fond blanc', urgent: false },
-    { title: 'Attestations travail', description: 'Si applicable, stages et expériences', urgent: false },
-    { title: 'Portfolio', description: 'Si pertinent pour la formation', urgent: false }
+    { title: t('campusFrance:doc_diplomes'), description: t('campusFrance:doc_diplomes_desc'), urgent: true },
+    { title: t('campusFrance:doc_releves'), description: t('campusFrance:doc_releves_desc'), urgent: true },
+    { title: t('campusFrance:doc_cv'), description: t('campusFrance:doc_cv_desc'), urgent: false },
+    { title: t('campusFrance:doc_lettres'), description: t('campusFrance:doc_lettres_desc'), urgent: true },
+    { title: t('campusFrance:doc_photos'), description: t('campusFrance:doc_photos_desc'), urgent: false },
+    { title: t('campusFrance:doc_attestations'), description: t('campusFrance:doc_attestations_desc'), urgent: false },
+    { title: t('campusFrance:doc_portfolio'), description: t('campusFrance:doc_portfolio_desc'), urgent: false }
   ];
 
   const erreursCourantes = [
-    { title: 'Attendre la dernière minute', impact: 'Stress et erreurs' },
-    { title: 'Négliger le formulaire', impact: 'Dossier incomplet' },
-    { title: 'Lettres génériques', impact: 'Manque de personnalisation' },
-    { title: 'Choix trop sélectifs', impact: 'Risque de refus' },
-    { title: 'Sous-estimer le temps', impact: 'Précipitation' },
-    { title: 'Scans de mauvaise qualité', impact: 'Documents illisibles' }
+    { title: t('campusFrance:error_derniere_minute'), impact: t('campusFrance:error_derniere_minute_impact') },
+    { title: t('campusFrance:error_formulaire'), impact: t('campusFrance:error_formulaire_impact') },
+    { title: t('campusFrance:error_lettres_generiques'), impact: t('campusFrance:error_lettres_generiques_impact') },
+    { title: t('campusFrance:error_choix_selectifs'), impact: t('campusFrance:error_choix_selectifs_impact') },
+    { title: t('campusFrance:error_sous_estimer_temps'), impact: t('campusFrance:error_sous_estimer_temps_impact') },
+    { title: t('campusFrance:error_scans_qualite'), impact: t('campusFrance:error_scans_qualite_impact') }
   ];
 
   const conseilsStrategie = [
-    { title: 'Diversifier géographiquement', description: 'Ne pas se limiter aux grandes villes' },
-    { title: 'Mélanger les niveaux', description: 'Universités sélectives + accessibles' },
-    { title: 'Préparer un plan B', description: 'Écoles privées ou non connectées' },
-    { title: 'Anticiper les obstacles', description: 'Prévoir solutions alternatives' }
+    { title: t('campusFrance:conseil_diversifier'), description: t('campusFrance:conseil_diversifier_desc') },
+    { title: t('campusFrance:conseil_melanger_niveaux'), description: t('campusFrance:conseil_melanger_niveaux_desc') },
+    { title: t('campusFrance:conseil_plan_b'), description: t('campusFrance:conseil_plan_b_desc') },
+    { title: t('campusFrance:conseil_anticiper'), description: t('campusFrance:conseil_anticiper_desc') }
   ];
 
   return (
     <div className="min-h-screen bg-gray-50">
       <Head>
-        <title>Guide Campus France - Procédure complète étape par étape</title>
-        <meta name="description" content="Guide complet Campus France : 6 étapes détaillées pour étudier en France. Procédure, documents, conseils d'experts et erreurs à éviter." />
-        <meta name="keywords" content="Campus France, étudier en France, procédure Campus France, dossier étudiant, visa étudiant, TCF, DELF, DALF" />
+        <title>{t('campusFrance:meta_title')}</title>
+        <meta name="description" content={t('campusFrance:meta_description')} />
+        <meta name="keywords" content={t('campusFrance:meta_keywords')} />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        
-        <meta property="og:title" content="Guide Campus France - Procédure complète" />
-        <meta property="og:description" content="Découvrez les 6 étapes clés pour réussir votre dossier Campus France et étudier en France" />
+                
+        <meta property="og:title" content={t('campusFrance:meta_og_title')} />
+        <meta property="og:description" content={t('campusFrance:meta_og_description')} />
         <meta property="og:type" content="article" />
         <meta property="og:url" content="https://wendogo.com/guides/campus-france" />
         <meta property="og:image" content="https://wendogo.com/images/guide-campus-france.jpg" />
         
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Guide Campus France - Procédure complète" />
-        <meta name="twitter:description" content="6 étapes clés pour réussir votre dossier Campus France" />
+        <meta name="twitter:title" content={t('campusFrance:meta_twitter_title')} />
+        <meta name="twitter:description" content={t('campusFrance:meta_twitter_description')} />
         
         <link rel="canonical" href="https://wendogo.com/guides/campus-france" />
         
@@ -160,8 +162,8 @@ function CampusFranceGuide() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "HowTo",
-            "name": "Guide Campus France",
-            "description": "Guide complet pour réussir sa procédure Campus France",
+            "name": t('campusFrance:schema_howto_name'),
+            "description": t('campusFrance:schema_howto_description'),
             "image": "https://wendogo.com/images/guide-campus-france.jpg",
             "totalTime": "PT6M",
             "estimatedCost": {
@@ -172,35 +174,35 @@ function CampusFranceGuide() {
             "supply": [
               {
                 "@type": "HowToSupply",
-                "name": "Documents académiques"
+                "name": t('campusFrance:schema_supply_documents')
               },
               {
                 "@type": "HowToSupply", 
-                "name": "Test de langue"
+                "name": t('campusFrance:schema_supply_test')
               }
             ],
             "step": [
               {
                 "@type": "HowToStep",
-                "name": "Phase préparatoire",
-                "text": "Préparer tous les documents nécessaires 6-8 mois avant"
+                "name": t('campusFrance:schema_step_preparation_name'),
+                "text": t('campusFrance:schema_step_preparation_text')
               },
               {
                 "@type": "HowToStep",
-                "name": "Inscription Campus France",
-                "text": "Créer son compte et saisir le dossier"
+                "name": t('campusFrance:schema_step_inscription_name'),
+                "text": t('campusFrance:schema_step_inscription_text')
               },
               {
                 "@type": "HowToStep",
-                "name": "Candidatures",
-                "text": "Soumettre les dossiers et passer l'entretien"
+                "name": t('campusFrance:schema_step_candidatures_name'),
+                "text": t('campusFrance:schema_step_candidatures_text')
               }
             ]
           })
         }} />
       </Head>
 
-      <NavBar variant="simple" />
+      <NavBar variant="simple" languageSelectorVariant="light" />
 
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-green-600 via-blue-600 to-indigo-700 text-white">
@@ -213,24 +215,20 @@ function CampusFranceGuide() {
                 </div>
                 <div>
                   <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-2">
-                    Guide Campus France
+                    {t('campusFrance:hero_title')}
                   </h1>
                   <p className="text-lg text-green-100">
-                    6 étapes clés pour réussir votre dossier
+                    {t('campusFrance:hero_subtitle')}
                   </p>
                 </div>
               </div>
               <p className="text-lg sm:text-xl text-green-100 mb-8">
-                Découvrez la procédure complète Campus France avec tous les conseils 
-                d'experts pour maximiser vos chances d'admission dans les universités françaises.
+                {t('campusFrance:hero_description')}
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link href="/?tab=accompany#accompany-section" className="bg-white text-green-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors text-center">
-                  Accompagnez-moi
+                  {t('campusFrance:hero_cta_accompany')}
                 </Link>
-                {/* <Link href="/contact" className="border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-green-600 transition-colors text-center">
-                  Accompagnement personnalisé
-                </Link> */}
               </div>
             </div>
             
@@ -239,7 +237,7 @@ function CampusFranceGuide() {
               <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-xl font-semibold text-white">
-                    Vidéo explicative
+                    {t('campusFrance:video_title')}
                   </h3>
                   <Youtube className="w-6 h-6 text-red-400" />
                 </div>
@@ -254,7 +252,7 @@ function CampusFranceGuide() {
                   />
                 </div>
                 <p className="text-sm text-green-100 mt-3 text-center">
-                  Guide vidéo Campus France par nos experts
+                  {t('campusFrance:video_caption')}
                 </p>
               </div>
             </div>
@@ -316,25 +314,23 @@ function CampusFranceGuide() {
                   <Target className="w-8 h-8 text-blue-600" />
                 </div>
                 <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
-                  Phase préparatoire (6-8 mois avant)
+                 {t('campusFrance:phase_prep_title')}
                 </h2>
                 <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                  La préparation est cruciale pour le succès de votre dossier Campus France. 
-                  Commencez tôt pour éviter le stress et maximiser vos chances.
+                  {t('campusFrance:phase_prep_description')}
                 </p>
               </div>
 
               {/* Tests de langue */}
               <div>
                 <h3 className="text-xl lg:text-2xl font-semibold text-gray-900 mb-6">
-                  Tests de langue française
+                  {t('campusFrance:tests_langue_title')}
                 </h3>
                 <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
                   <div className="flex items-center mb-4">
                     <BookOpen className="w-6 h-6 text-blue-600 mr-3" />
                     <p className="text-blue-800 font-medium">
-                      Non obligatoire si vous avez déjà un cursus francophone et résidez 
-                      dans un pays officiellement francophone
+                      {t('campusFrance:tests_langue_info')}
                     </p>
                   </div>
                 </div>
@@ -356,27 +352,27 @@ function CampusFranceGuide() {
               {/* Choix des formations */}
               <div>
                 <h3 className="text-xl lg:text-2xl font-semibold text-gray-900 mb-6">
-                  Choix des formations
+                  {t('campusFrance:choix_formations_title')}
                 </h3>
                 <div className="bg-green-50 border border-green-200 rounded-lg p-6 mb-6">
                   <div className="flex items-center mb-4">
                     <Trophy className="w-6 h-6 text-green-600 mr-3" />
                     <p className="text-green-800 font-medium">
-                      Maximum 7 vœux autorisés - Choisissez stratégiquement !
+                     {t('campusFrance:choix_formations_info')}
                     </p>
                   </div>
                 </div>
                 <div className="grid md:grid-cols-2 gap-8">
                   <div>
-                    <h4 className="font-semibold text-gray-900 mb-4">Points à vérifier :</h4>
+                    <h4 className="font-semibold text-gray-900 mb-4">{t('campusFrance:choix_formations_points_title')}</h4>
                     <ul className="space-y-3">
                       {[
-                        'Catalogue Campus France',
-                        'Coûts de formation',
-                        'Taux de réussite/insertion',
-                        'Possibilités de poursuite',
-                        'Prérequis spécifiques',
-                        'Dates limites'
+                          t('campusFrance:choix_point_catalogue'),
+                          t('campusFrance:choix_point_couts'),
+                          t('campusFrance:choix_point_taux'),
+                          t('campusFrance:choix_point_poursuite'),
+                          t('campusFrance:choix_point_prerequis'),
+                          t('campusFrance:choix_point_dates')
                       ].map((item, index) => (
                         <li key={index} className="flex items-center">
                           <CheckCircle className="w-4 h-4 text-green-500 mr-3" />
@@ -387,13 +383,13 @@ function CampusFranceGuide() {
                   </div>
                   <div className="bg-amber-50 border border-amber-200 rounded-lg p-6">
                     <h4 className="font-semibold text-amber-900 mb-3">
-                      Conseils stratégiques
+                      {t('campusFrance:conseils_strategiques_title')}
                     </h4>
                     <ul className="space-y-2 text-amber-800 text-sm">
-                      <li>• Diversifiez vos choix géographiques</li>
-                      <li>• Mélangez formations sélectives et accessibles</li>
-                      <li>• Vérifiez les débouchés professionnels</li>
-                      <li>• Consultez les avis d'anciens étudiants</li>
+                      <li>{t('campusFrance:conseil_strat_1')}</li>
+                      <li>{t('campusFrance:conseil_strat_2')}</li>
+                      <li>{t('campusFrance:conseil_strat_3')}</li>
+                      <li>{t('campusFrance:conseil_strat_4')}</li>
                     </ul>
                   </div>
                 </div>
@@ -402,7 +398,7 @@ function CampusFranceGuide() {
               {/* Documents à préparer */}
               <div>
                 <h3 className="text-xl lg:text-2xl font-semibold text-gray-900 mb-6">
-                  Documents à préparer
+                  {t('campusFrance:documents_preparer_title')}
                 </h3>
                 <div className="grid gap-4">
                   {documentsRequis.map((doc, index) => (
@@ -419,7 +415,7 @@ function CampusFranceGuide() {
                         </div>
                         {doc.urgent && (
                           <span className="bg-red-100 text-red-800 px-3 py-1 rounded-full text-xs font-medium">
-                            Urgent
+                            {t('campusFrance:doc_urgent_label')}
                           </span>
                         )}
                       </div>
@@ -438,18 +434,17 @@ function CampusFranceGuide() {
                   <FileText className="w-8 h-8 text-green-600" />
                 </div>
                 <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
-                  Inscription Campus France (Octobre-Février)
+                   {t('campusFrance:inscription_title')}
                 </h2>
                 <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                  Créez votre compte et saisissez méticuleusement votre dossier sur la 
-                  plateforme "Études en France".
+                  {t('campusFrance:inscription_description')}
                 </p>
               </div>
 
               <div className="grid lg:grid-cols-2 gap-12">
                 <div>
                   <h3 className="text-xl font-semibold text-gray-900 mb-6">
-                    Création du compte
+                    {t('campusFrance:creation_compte_title')}
                   </h3>
                   <div className="bg-white border border-gray-200 rounded-xl p-6 mb-6">
                     <div className="flex items-center mb-4">
@@ -465,10 +460,10 @@ function CampusFranceGuide() {
                     </div>
                     <ul className="space-y-3">
                       {[
-                        'Remplir informations personnelles',
-                        'Vérifier emails régulièrement',
-                        'Garder accès sécurisés',
-                        'Noter identifiants dans lieu sûr'
+                         t('campusFrance:creation_step_1'),
+                         t('campusFrance:creation_step_2'),
+                         t('campusFrance:creation_step_3'),
+                         t('campusFrance:creation_step_4')
                       ].map((step, index) => (
                         <li key={index} className="flex items-center">
                           <CheckCircle className="w-4 h-4 text-green-500 mr-3" />
@@ -481,16 +476,16 @@ function CampusFranceGuide() {
 
                 <div>
                   <h3 className="text-xl font-semibold text-gray-900 mb-6">
-                    Saisie du dossier
+                    {t('campusFrance:saisie_dossier_title')}
                   </h3>
                   <div className="space-y-4">
                     {[
-                      'Parcours académique détaillé',
-                      'Expériences professionnelles',
-                      'Stages et formations',
-                      'Compétences linguistiques',
-                      'Projet de Formation Motivé',
-                      'Détailler toutes les compétences'
+                      t('campusFrance:saisie_item_1'),
+                      t('campusFrance:saisie_item_2'),
+                      t('campusFrance:saisie_item_3'),
+                      t('campusFrance:saisie_item_4'),
+                      t('campusFrance:saisie_item_5'),
+                      t('campusFrance:saisie_item_6')
                     ].map((item, index) => (
                       <div key={index} className="bg-gray-50 p-4 rounded-lg">
                         <div className="flex items-center">
@@ -507,26 +502,26 @@ function CampusFranceGuide() {
 
               <div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-6">
-                  Numérisation des documents
+                  {t('campusFrance:numerisation_title')}
                 </h3>
                 <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
-                      <h4 className="font-semibold text-blue-900 mb-3">Qualité technique</h4>
+                      <h4 className="font-semibold text-blue-900 mb-3">{t('campusFrance:numerisation_qualite_title')}</h4>
                       <ul className="space-y-2 text-blue-800 text-sm">
-                        <li>• Scanner en haute qualité (300 dpi min)</li>
-                        <li>• Vérifier la lisibilité</li>
-                        <li>• Respecter formats demandés</li>
-                        <li>• Éviter les photos de documents</li>
+                        <li>{t('campusFrance:numerisation_qualite_item_1')}</li>
+                        <li>{t('campusFrance:numerisation_qualite_item_2')}</li>
+                        <li>{t('campusFrance:numerisation_qualite_item_3')}</li>
+                        <li>{t('campusFrance:numerisation_qualite_item_4')}</li>
                       </ul>
                     </div>
                     <div>
-                      <h4 className="font-semibold text-blue-900 mb-3">Organisation</h4>
+                      <h4 className="font-semibold text-blue-900 mb-3">{t('campusFrance:numerisation_organisation_title')}</h4>
                       <ul className="space-y-2 text-blue-800 text-sm">
-                        <li>• Nommer clairement les fichiers</li>
-                        <li>• Créer dossier backup</li>
-                        <li>• Tester l'ouverture des fichiers</li>
-                        <li>• Garder versions originales</li>
+                        <li>{t('campusFrance:numerisation_organisation_item_1')}</li>
+                        <li>{t('campusFrance:numerisation_organisation_item_2')}</li>
+                        <li>{t('campusFrance:numerisation_organisation_item_3')}</li>
+                        <li>{t('campusFrance:numerisation_organisation_item_4')}</li>
                       </ul>
                     </div>
                   </div>
@@ -543,11 +538,10 @@ function CampusFranceGuide() {
                   <MessageSquare className="w-8 h-8 text-purple-600" />
                 </div>
                 <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
-                  Comment candidater selon votre niveau d'études
+                  {t('campusFrance:candidatures_main_title')}
                 </h2>
                 <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                  Les modalités de candidature varient selon votre niveau d'études visé 
-                  et votre situation personnelle. Découvrez la procédure qui vous concerne.
+                  {t('campusFrance:candidatures_main_description')}
                 </p>
               </div>
 
@@ -558,8 +552,8 @@ function CampusFranceGuide() {
                     <div className="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4">
                       <span className="font-bold">L1</span>
                     </div>
-                    <h3 className="font-semibold text-blue-900 mb-2">1ère année Licence</h3>
-                    <p className="text-sm text-blue-800">Parcoursup ou DAP selon votre profil</p>
+                    <h3 className="font-semibold text-blue-900 mb-2"> {t('campusFrance:level_l1_title')}</h3>
+                    <p className="text-sm text-blue-800"> {t('campusFrance:level_l1_description')}</p>
                   </div>
                 </div>
                 
@@ -568,8 +562,8 @@ function CampusFranceGuide() {
                     <div className="bg-green-600 text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4">
                       <span className="font-bold">L2+</span>
                     </div>
-                    <h3 className="font-semibold text-green-900 mb-2">Licence 2/3 & Master</h3>
-                    <p className="text-sm text-green-800">Procédure "Études en France"</p>
+                    <h3 className="font-semibold text-green-900 mb-2">{t('campusFrance:level_l2_title')}</h3>
+                    <p className="text-sm text-green-800">{t('campusFrance:level_l2_description')}</p>
                   </div>
                 </div>
                 
@@ -578,8 +572,8 @@ function CampusFranceGuide() {
                     <div className="bg-purple-600 text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4">
                       <span className="font-bold">PhD</span>
                     </div>
-                    <h3 className="font-semibold text-purple-900 mb-2">Doctorat</h3>
-                    <p className="text-sm text-purple-800">Contact direct avec les laboratoires</p>
+                    <h3 className="font-semibold text-purple-900 mb-2">{t('campusFrance:level_phd_title')}</h3>
+                    <p className="text-sm text-purple-800">{t('campusFrance:level_phd_description')}</p>
                   </div>
                 </div>
               </div>
@@ -590,16 +584,16 @@ function CampusFranceGuide() {
                   <div className="bg-blue-100 p-2 rounded-lg mr-3">
                     <GraduationCap className="w-6 h-6 text-blue-600" />
                   </div>
-                  Candidater en 1ère année de Licence
+                  {t('campusFrance:section_l1_title')}
                 </h3>
                 
                 <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6">
                   <div className="flex items-center mb-2">
                     <AlertCircle className="w-5 h-5 text-amber-600 mr-2" />
-                    <p className="font-medium text-amber-800">La procédure dépend de votre situation</p>
+                    <p className="font-medium text-amber-800"> {t('campusFrance:section_l1_alert_title')}</p>
                   </div>
                   <p className="text-amber-700 text-sm">
-                    Vérifiez d'abord si vous résidez dans un pays relevant de la procédure "Études en France"
+                    {t('campusFrance:section_l1_alert_description')}
                   </p>
                 </div>
 
@@ -607,35 +601,35 @@ function CampusFranceGuide() {
                   {/* Cas 1 : Nationalité du pays de résidence */}
                   <div className="bg-blue-50 rounded-lg p-6">
                     <h4 className="font-semibold text-blue-900 mb-4">
-                      🏠 Vous résidez ET avez la nationalité du même pays Campus France
+                      {t('campusFrance:section_l1_alert_same_country')}
                     </h4>
                     <p className="text-sm text-blue-800 mb-4">
-                      Exemple : Vous habitez au Maroc et avez la nationalité marocaine
+                      {t('campusFrance:case_non_eu_note')}
                     </p>
                     
                     <div className="space-y-4">
                       <div className="bg-white border border-blue-200 rounded-lg p-4">
                         <h5 className="font-medium text-blue-900 mb-2">
-                          📚 Baccalauréat français ou européen
+                           {t('campusFrance:case_bac_fr_title')}
                         </h5>
                         <div className="flex items-start">
                           <ArrowRight className="w-4 h-4 text-blue-600 mr-2 mt-1" />
                           <div>
-                            <p className="text-sm text-blue-800 font-medium">Parcoursup + Campus France</p>
-                            <p className="text-xs text-blue-700">Procédure parallèle obligatoire</p>
+                            <p className="text-sm text-blue-800 font-medium">{t('campusFrance:case_bac_fr_procedure')}</p>
+                            <p className="text-xs text-blue-700">{t('campusFrance:case_bac_fr_note')}</p>
                           </div>
                         </div>
                       </div>
                       
                       <div className="bg-white border border-blue-200 rounded-lg p-4">
                         <h5 className="font-medium text-blue-900 mb-2">
-                          🎓 Autre diplôme national
+                          {t('campusFrance:case_bac_other_title')}
                         </h5>
                         <div className="flex items-start">
                           <ArrowRight className="w-4 h-4 text-blue-600 mr-2 mt-1" />
                           <div>
-                            <p className="text-sm text-blue-800 font-medium">DAP via "Études en France"</p>
-                            <p className="text-xs text-blue-700">Demande d'Admission Préalable en ligne</p>
+                            <p className="text-sm text-blue-800 font-medium">{t('campusFrance:case_bac_other_procedure')}</p>
+                            <p className="text-xs text-blue-700">{t('campusFrance:case_bac_other_note')}</p>
                           </div>
                         </div>
                       </div>
@@ -645,22 +639,22 @@ function CampusFranceGuide() {
                   {/* Cas 2 : Nationalité UE */}
                   <div className="bg-green-50 rounded-lg p-6">
                     <h4 className="font-semibold text-green-900 mb-4">
-                      🇪🇺 Vous avez une nationalité européenne
+                      {t('campusFrance:case_eu_title')}
                     </h4>
                     <p className="text-sm text-green-800 mb-4">
-                      Exemple : Vous habitez au Sénégal mais avez la nationalité allemande
+                      {t('campusFrance:case_eu_example')}
                     </p>
                     
                     <div className="bg-white border border-green-200 rounded-lg p-4">
                       <h5 className="font-medium text-green-900 mb-2">
-                        ✅ Procédure simplifiée
+                        {t('campusFrance:case_eu_simplified_title')}
                       </h5>
                       <div className="flex items-center mb-2">
                         <CheckCircle className="w-4 h-4 text-green-600 mr-2" />
-                        <span className="text-sm text-green-800 font-medium">Uniquement Parcoursup</span>
+                        <span className="text-sm text-green-800 font-medium">{t('campusFrance:case_eu_parcoursup_only')}</span>
                       </div>
                       <p className="text-xs text-green-700">
-                        Pays concernés : UE + Norvège, Islande, Liechtenstein, Suisse, Andorre, Monaco
+                        {t('campusFrance:case_eu_countries')}
                       </p>
                     </div>
                   </div>
@@ -668,31 +662,47 @@ function CampusFranceGuide() {
 
                 {/* Calendrier */}
                 <div className="mt-8">
-                  <h4 className="text-xl font-semibold text-gray-900 mb-6">Calendrier général des candidatures</h4>
+                  <h4 className="text-xl font-semibold text-gray-900 mb-6">{t('campusFrance:calendar_general_title')}</h4>
                   
                   <div className="grid md:grid-cols-2 gap-6">
                     {/* Parcoursup */}
                     <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-6">
                       <h5 className="font-semibold text-indigo-900 mb-4 flex items-center">
                         <Calendar className="w-5 h-5 mr-2" />
-                        Calendrier Parcoursup
+                        {t('campusFrance:calendar_parcoursup_title')}
                       </h5>
                       <div className="space-y-3">
                         <div className="flex justify-between items-center">
-                          <span className="text-sm text-indigo-800">Découverte formations</span>
-                          <span className="text-xs bg-indigo-100 px-2 py-1 rounded">Mi-décembre</span>
+                          <span className="text-sm text-indigo-800">
+                            {t('campusFrance:calendar_parcoursup_discovery')}
+                          </span>
+                          <span className="text-xs bg-indigo-100 px-2 py-1 rounded">
+                            {t('campusFrance:calendar_parcoursup_discovery_period')}
+                          </span>
                         </div>
                         <div className="flex justify-between items-center">
-                          <span className="text-sm text-indigo-800">Inscriptions et vœux</span>
-                          <span className="text-xs bg-indigo-100 px-2 py-1 rounded">Jan-mars</span>
+                          <span className="text-sm text-indigo-800">
+                            {t('campusFrance:calendar_parcoursup_registration')}
+                          </span>
+                          <span className="text-xs bg-indigo-100 px-2 py-1 rounded">
+                            {t('campusFrance:calendar_parcoursup_registration_period')}
+                          </span>
                         </div>
                         <div className="flex justify-between items-center">
-                          <span className="text-sm text-indigo-800">Confirmation vœux</span>
-                          <span className="text-xs bg-indigo-100 px-2 py-1 rounded">Début avril</span>
+                          <span className="text-sm text-indigo-800">
+                            {t('campusFrance:calendar_parcoursup_confirmation')}
+                          </span>
+                          <span className="text-xs bg-indigo-100 px-2 py-1 rounded">
+                            {t('campusFrance:calendar_parcoursup_confirmation_period')}
+                          </span>
                         </div>
                         <div className="flex justify-between items-center">
-                          <span className="text-sm text-indigo-800">Réponses admissions</span>
-                          <span className="text-xs bg-indigo-100 px-2 py-1 rounded">Juin-juillet</span>
+                          <span className="text-sm text-indigo-800">
+                            {t('campusFrance:calendar_parcoursup_responses')}
+                          </span>
+                          <span className="text-xs bg-indigo-100 px-2 py-1 rounded">
+                            {t('campusFrance:calendar_parcoursup_responses_period')}
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -701,24 +711,40 @@ function CampusFranceGuide() {
                     <div className="bg-orange-50 border border-orange-200 rounded-lg p-6">
                       <h5 className="font-semibold text-orange-900 mb-4 flex items-center">
                         <Calendar className="w-5 h-5 mr-2" />
-                        Calendrier DAP
+                        {t('campusFrance:calendar_dap_title')}
                       </h5>
                       <div className="space-y-3">
                         <div className="flex justify-between items-center">
-                          <span className="text-sm text-orange-800">Ouverture inscriptions</span>
-                          <span className="text-xs bg-orange-100 px-2 py-1 rounded">1er octobre</span>
+                          <span className="text-sm text-orange-800">
+                            {t('campusFrance:calendar_dap_opening')}
+                          </span>
+                          <span className="text-xs bg-orange-100 px-2 py-1 rounded">
+                            {t('campusFrance:calendar_dap_opening_date')}
+                          </span>
                         </div>
                         <div className="flex justify-between items-center">
-                          <span className="text-sm text-orange-800">Clôture inscriptions</span>
-                          <span className="text-xs bg-orange-100 px-2 py-1 rounded">15 décembre</span>
+                          <span className="text-sm text-orange-800">
+                            {t('campusFrance:calendar_dap_closing')}
+                          </span>
+                          <span className="text-xs bg-orange-100 px-2 py-1 rounded">
+                            {t('campusFrance:calendar_dap_closing_date')}
+                          </span>
                         </div>
                         <div className="flex justify-between items-center">
-                          <span className="text-sm text-orange-800">Réponses universités</span>
-                          <span className="text-xs bg-orange-100 px-2 py-1 rounded">Avant 30 avril</span>
+                          <span className="text-sm text-orange-800">
+                            {t('campusFrance:calendar_dap_university_response')}
+                          </span>
+                          <span className="text-xs bg-orange-100 px-2 py-1 rounded">
+                            {t('campusFrance:calendar_dap_university_response_date')}
+                          </span>
                         </div>
                         <div className="flex justify-between items-center">
-                          <span className="text-sm text-orange-800">Réponse étudiant</span>
-                          <span className="text-xs bg-orange-100 px-2 py-1 rounded">Avant 31 mai</span>
+                          <span className="text-sm text-orange-800">
+                            {t('campusFrance:calendar_dap_student_response')}
+                          </span>
+                          <span className="text-xs bg-orange-100 px-2 py-1 rounded">
+                            {t('campusFrance:calendar_dap_student_response_date')}
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -732,40 +758,39 @@ function CampusFranceGuide() {
                   <div className="bg-green-100 p-2 rounded-lg mr-3">
                     <BookOpen className="w-6 h-6 text-green-600" />
                   </div>
-                  Candidater en Licence 2/3 ou Master
+                 {t('campusFrance:section_l2_master_title')}
                 </h3>
                 
                 <div className="bg-green-50 border border-green-200 rounded-lg p-6">
                   <h4 className="font-semibold text-green-900 mb-4">
-                    📋 Procédure "Études en France" uniquement
+                    {t('campusFrance:section_l2_procedure_title')}
                   </h4>
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
-                      <h5 className="font-medium text-green-800 mb-3">✅ Étapes à suivre :</h5>
+                      <h5 className="font-medium text-green-800 mb-3"> {t('campusFrance:section_l2_steps_title')}</h5>
                       <ul className="space-y-2 text-sm text-green-700">
                         <li className="flex items-center">
                           <CheckCircle className="w-4 h-4 mr-2" />
-                          Créer votre dossier électronique
+                          {t('campusFrance:section_l2_step_1')}
                         </li>
                         <li className="flex items-center">
                           <CheckCircle className="w-4 h-4 mr-2" />
-                          Suivre la procédure guidée
+                          {t('campusFrance:section_l2_step_2')}
                         </li>
                         <li className="flex items-center">
                           <CheckCircle className="w-4 h-4 mr-2" />
-                          Obtenir l'attestation Campus France
+                          {t('campusFrance:section_l2_step_3')}
                         </li>
                         <li className="flex items-center">
                           <CheckCircle className="w-4 h-4 mr-2" />
-                          Demander votre visa étudiant
+                          {t('campusFrance:section_l2_step_4')}
                         </li>
                       </ul>
                     </div>
                     <div>
-                      <h5 className="font-medium text-green-800 mb-3">📅 Calendrier variable :</h5>
+                      <h5 className="font-medium text-green-800 mb-3">{t('campusFrance:section_l2_calendar_title')}</h5>
                       <p className="text-sm text-green-700 mb-3">
-                        Consultez le site Campus France de votre pays pour connaître 
-                        le calendrier spécifique aux formations hors DAP.
+                        {t('campusFrance:section_l2_calendar_note')}
                       </p>
                       <a 
                         href="https://www.campusfrance.org/fr/espaces" 
@@ -774,7 +799,7 @@ function CampusFranceGuide() {
                         className="inline-flex items-center text-sm text-green-800 hover:text-green-900 font-medium"
                       >
                         <ExternalLink className="w-4 h-4 mr-1" />
-                        Trouver votre espace Campus France
+                        {t('campusFrance:section_l2_find_office')}
                       </a>
                     </div>
                   </div>
@@ -787,44 +812,43 @@ function CampusFranceGuide() {
                   <div className="bg-purple-100 p-2 rounded-lg mr-3">
                     <Award className="w-6 h-6 text-purple-600" />
                   </div>
-                  Candidater en Doctorat
+                  {t('campusFrance:section_phd_title')}
                 </h3>
                 
                 <div className="bg-purple-50 border border-purple-200 rounded-lg p-6">
                   <h4 className="font-semibold text-purple-900 mb-4">
-                    🔬 Procédure directe avec les laboratoires
+                    {t('campusFrance:section_phd_procedure_title')}
                   </h4>
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
-                      <h5 className="font-medium text-purple-800 mb-3">📚 Démarches :</h5>
+                      <h5 className="font-medium text-purple-800 mb-3">{t('campusFrance:section_phd_steps_title')}</h5>
                       <ul className="space-y-2 text-sm text-purple-700">
                         <li className="flex items-center">
                           <ArrowRight className="w-4 h-4 mr-2" />
-                          Contactez directement les écoles doctorales
+                          {t('campusFrance:section_phd_step_1')}
                         </li>
                         <li className="flex items-center">
                           <ArrowRight className="w-4 h-4 mr-2" />
-                          Recherchez les sujets qui vous intéressent
+                          {t('campusFrance:section_phd_step_2')}
                         </li>
                         <li className="flex items-center">
                           <ArrowRight className="w-4 h-4 mr-2" />
-                          Consultez les catalogues Campus France
+                          {t('campusFrance:section_phd_step_3')}
                         </li>
                         <li className="flex items-center">
                           <ArrowRight className="w-4 h-4 mr-2" />
-                          Obtenez une réponse positive d'admission
+                          {t('campusFrance:section_phd_step_4')}
                         </li>
                       </ul>
                     </div>
                     <div>
-                      <h5 className="font-medium text-purple-800 mb-3">🛂 Visa spécifique :</h5>
+                      <h5 className="font-medium text-purple-800 mb-3">{t('campusFrance:section_phd_visa_title')}</h5>
                       <div className="bg-white border border-purple-200 rounded-lg p-4">
                         <p className="text-sm text-purple-700 mb-2">
-                          <strong>Visa "Passeport Talent - Chercheur"</strong>
+                          <strong>{t('campusFrance:section_phd_visa_name')}</strong>
                         </p>
                         <p className="text-xs text-purple-600">
-                          À demander auprès du consulat après obtention 
-                          de votre acceptation en doctorat
+                          {t('campusFrance:section_phd_visa_note')}
                         </p>
                       </div>
                     </div>
@@ -836,11 +860,10 @@ function CampusFranceGuide() {
               <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-8">
                 <div className="text-center">
                   <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                    🤝 Accompagnement Campus France
+                    {t('campusFrance:accompaniment_title')}
                   </h3>
                   <p className="text-gray-700 mb-6">
-                    Quelle que soit votre situation, l'Espace Campus France de votre pays 
-                    est à votre disposition pour vous accompagner dans vos démarches.
+                     {t('campusFrance:accompaniment_description')}
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     <a
@@ -850,7 +873,7 @@ function CampusFranceGuide() {
                       className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
                     >
                       <ExternalLink className="w-5 h-5 mr-2" />
-                      Trouver mon espace Campus France
+                      {t('campusFrance:accompaniment_find_office')}
                     </a>
                     {/* <Link
                       href="/contact"
@@ -873,27 +896,50 @@ function CampusFranceGuide() {
                   <DollarSign className="w-8 h-8 text-yellow-600" />
                 </div>
                 <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
-                  Aspects financiers
+                  {t('campusFrance:aspects_financiers_title')}
                 </h2>
                 <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                  Préparez votre budget et les justificatifs financiers nécessaires 
-                  pour votre dossier Campus France.
+                  {t('campusFrance:aspects_financiers_description')}
                 </p>
               </div>
 
               <div className="grid lg:grid-cols-2 gap-12">
                 <div>
                   <h3 className="text-xl font-semibold text-gray-900 mb-6">
-                    Budget à prévoir
+                    {t('campusFrance:budget_title')}
                   </h3>
                   <div className="space-y-4">
                     {[
-                      { item: 'Frais de dossier Campus France', amount: '130-200€', urgent: true },
-                      { item: 'Coût du test de langue', amount: '100-200€', urgent: false },
-                      { item: 'Traductions officielles', amount: '50-150€', urgent: true },
-                      { item: 'Frais de visa', amount: '99€', urgent: true },
-                      { item: 'Assurance santé', amount: '200-400€', urgent: true },
-                      { item: 'Logement et caution', amount: '500-1500€', urgent: true }
+                      { 
+                        item: t('campusFrance:budget_item_campus_fees'), 
+                        amount: t('campusFrance:budget_amount_campus_fees'), 
+                        urgent: true 
+                      },
+                      { 
+                        item: t('campusFrance:budget_item_language_test'), 
+                        amount: t('campusFrance:budget_amount_language_test'), 
+                        urgent: false 
+                      },
+                      { 
+                        item: t('campusFrance:budget_item_translations'), 
+                        amount: t('campusFrance:budget_amount_translations'), 
+                        urgent: true 
+                      },
+                      { 
+                        item: t('campusFrance:budget_item_visa'), 
+                        amount: t('campusFrance:budget_amount_visa'), 
+                        urgent: true 
+                      },
+                      { 
+                        item: t('campusFrance:budget_item_insurance'), 
+                        amount: t('campusFrance:budget_amount_insurance'), 
+                        urgent: true 
+                      },
+                      { 
+                        item: t('campusFrance:budget_item_housing'), 
+                        amount: t('campusFrance:budget_amount_housing'), 
+                        urgent: true 
+                      }
                     ].map((cost, index) => (
                       <div key={index} className={`border rounded-lg p-4 ${
                         cost.urgent ? 'border-red-200 bg-red-50' : 'border-gray-200 bg-white'
@@ -909,31 +955,31 @@ function CampusFranceGuide() {
 
                 <div>
                   <h3 className="text-xl font-semibold text-gray-900 mb-6">
-                    Ressources financières
+                    {t('campusFrance:resources_title')}
                   </h3>
                   <div className="bg-green-50 border border-green-200 rounded-lg p-6 mb-6">
                     <div className="flex items-center mb-4">
                       <Shield className="w-6 h-6 text-green-600 mr-3" />
                       <h4 className="font-semibold text-green-900">
-                        Justifier 615€/mois minimum
+                        {t('campusFrance:resources_minimum_title')}
                       </h4>
                     </div>
                     <p className="text-green-800 text-sm">
-                      Montant minimum requis pour couvrir les frais de subsistance en France
+                      {t('campusFrance:resources_minimum_note')}
                     </p>
                   </div>
                   
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-4">
-                      Garanties financières acceptées :
+                      {t('campusFrance:resources_guarantees_title')}
                     </h4>
                     <div className="space-y-3">
                       {[
-                        'Garant français ou étranger',
-                        'Bourse gouvernementale',
-                        'Compte bloqué en France',
-                        'Relevés bancaires personnels',
-                        'Attestation de ressources parentales'
+                        t('campusFrance:garantie_garant_francais'),
+                        t('campusFrance:garantie_bourse'),
+                        t('campusFrance:garantie_compte_bloque'),
+                        t('campusFrance:garantie_releves_bancaires'),
+                        t('campusFrance:garantie_attestation')
                       ].map((guarantee, index) => (
                         <div key={index} className="flex items-center">
                           <CheckCircle className="w-4 h-4 text-green-500 mr-3" />
@@ -955,11 +1001,10 @@ function CampusFranceGuide() {
                   <AlertTriangle className="w-8 h-8 text-red-600" />
                 </div>
                 <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
-                  Erreurs à éviter absolument
+                  {t('campusFrance:erreurs_eviter_title')}
                 </h2>
                 <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                  Apprenez des erreurs les plus fréquentes pour ne pas compromettre 
-                  votre candidature Campus France.
+                  {t('campusFrance:erreurs_eviter_description')}
                 </p>
               </div>
 
@@ -979,25 +1024,25 @@ function CampusFranceGuide() {
 
               <div className="bg-gradient-to-r from-amber-50 to-yellow-50 rounded-2xl p-8">
                 <h3 className="text-xl font-semibold text-amber-900 mb-6">
-                  Conseils pour éviter ces erreurs
+                  {t('campusFrance:conseils_eviter_erreurs_title')}
                 </h3>
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <h4 className="font-semibold text-amber-900 mb-3">Organisation</h4>
+                    <h4 className="font-semibold text-amber-900 mb-3">{t('campusFrance:organisation_title')}</h4>
                     <ul className="space-y-2 text-amber-800 text-sm">
-                      <li>• Créer un calendrier détaillé</li>
-                      <li>• Commencer 6-8 mois avant</li>
-                      <li>• Faire des listes de contrôle</li>
-                      <li>• Demander aide si nécessaire</li>
+                      <li>{t('campusFrance:organisation_item_1')}</li>
+                      <li>{t('campusFrance:organisation_item_2')}</li>
+                      <li>{t('campusFrance:organisation_item_3')}</li>
+                      <li>{t('campusFrance:organisation_item_4')}</li>
                     </ul>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-amber-900 mb-3">Qualité</h4>
+                    <h4 className="font-semibold text-amber-900 mb-3">{t('campusFrance:qualite_title')}</h4>
                     <ul className="space-y-2 text-amber-800 text-sm">
-                      <li>• Relire plusieurs fois</li>
-                      <li>• Faire relire par quelqu'un</li>
-                      <li>• Personnaliser chaque candidature</li>
-                      <li>• Vérifier tous les documents</li>
+                      <li>{t('campusFrance:qualite_item_1')}</li>
+                      <li>{t('campusFrance:qualite_item_2')}</li>
+                      <li>{t('campusFrance:qualite_item_3')}</li>
+                      <li>{t('campusFrance:qualite_item_4')}</li>
                     </ul>
                   </div>
                 </div>
@@ -1013,27 +1058,26 @@ function CampusFranceGuide() {
                   <Star className="w-8 h-8 text-indigo-600" />
                 </div>
                 <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
-                  Conseils pratiques d'experts
+                  {t('campusFrance:conseils_pratiques_title')}
                 </h2>
                 <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                  Stratégies éprouvées et astuces pour optimiser vos chances de succès 
-                  dans votre démarche Campus France.
+                  {t('campusFrance:conseils_pratiques_description')}
                 </p>
               </div>
 
               <div className="grid lg:grid-cols-2 gap-12">
                 <div>
                   <h3 className="text-xl font-semibold text-gray-900 mb-6">
-                    Organisation optimale
+                    {t('campusFrance:organisation_optimale_title')}
                   </h3>
                   <div className="space-y-4">
                     {[
-                      'Ne rien faire dans le stress',
-                      'Prendre le temps de bien préparer',
-                      'Faire les choses sereinement',
-                      'Créer un calendrier personnalisé',
-                      'Faire des copies de tous documents',
-                      'Avoir un dossier numérique backup'
+                      t('campusFrance:org_opt_item_1'),
+                      t('campusFrance:org_opt_item_2'),
+                      t('campusFrance:org_opt_item_3'),
+                      t('campusFrance:org_opt_item_4'),
+                      t('campusFrance:org_opt_item_5'),
+                      t('campusFrance:org_opt_item_6')
                     ].map((conseil, index) => (
                       <div key={index} className="flex items-center bg-indigo-50 p-4 rounded-lg">
                         <CheckCircle className="w-5 h-5 text-indigo-600 mr-3" />
@@ -1045,7 +1089,7 @@ function CampusFranceGuide() {
 
                 <div>
                   <h3 className="text-xl font-semibold text-gray-900 mb-6">
-                    Stratégies gagnantes
+                    {t('campusFrance:strategies_gagnantes_title')}
                   </h3>
                   <div className="space-y-6">
                     {conseilsStrategie.map((conseil, index) => (
@@ -1060,25 +1104,25 @@ function CampusFranceGuide() {
 
               <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-2xl p-8">
                 <h3 className="text-xl font-semibold text-gray-900 mb-6">
-                  Checklist finale avant soumission
+                  {t('campusFrance:checklist_finale_title')}
                 </h3>
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <h4 className="font-semibold text-green-900 mb-3">Documents</h4>
+                    <h4 className="font-semibold text-green-900 mb-3">{t('campusFrance:checklist_documents_title')}</h4>
                     <ul className="space-y-2 text-green-800 text-sm">
-                      <li>☑️ Tous les documents traduits</li>
-                      <li>☑️ Scans de qualité (300 dpi)</li>
-                      <li>☑️ Fichiers bien nommés</li>
-                      <li>☑️ Backup sécurisé</li>
+                      <li>{t('campusFrance:checklist_doc_1')}</li>
+                      <li>{t('campusFrance:checklist_doc_2')}</li>
+                      <li>{t('campusFrance:checklist_doc_3')}</li>
+                      <li>{t('campusFrance:checklist_doc_4')}</li>
                     </ul>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-blue-900 mb-3">Candidature</h4>
+                    <h4 className="font-semibold text-blue-900 mb-3">{t('campusFrance:checklist_candidature_title')}</h4>
                     <ul className="space-y-2 text-blue-800 text-sm">
-                      <li>☑️ Lettres personnalisées</li>
-                      <li>☑️ Orthographe vérifiée</li>
-                      <li>☑️ Cohérence du projet</li>
-                      <li>☑️ Preuves de paiement</li>
+                      <li>{t('campusFrance:checklist_cand_1')}</li>
+                      <li>{t('campusFrance:checklist_cand_2')}</li>
+                      <li>{t('campusFrance:checklist_cand_3')}</li>
+                      <li>{t('campusFrance:checklist_cand_4')}</li>
                     </ul>
                   </div>
                 </div>
@@ -1092,15 +1136,14 @@ function CampusFranceGuide() {
       <section className="py-16 bg-gradient-to-r from-green-600 to-blue-600 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-2xl lg:text-3xl font-bold mb-6">
-            Besoin d'aide pour votre dossier Campus France ?
+           {t('campusFrance:cta_title')}
           </h2>
           <p className="text-lg lg:text-xl mb-8 text-green-100">
-            Nos experts vous accompagnent personnellement dans chaque étape de votre 
-            procédure Campus France pour maximiser vos chances d'admission.
+             {t('campusFrance:cta_description')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/?tab=accompany#accompany-section" className="bg-white text-green-600 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
-              Accompagnement personnalisé
+              {t('campusFrance:cta_button')}
             </Link>
             {/* <Link href="/simulation/home" className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-green-600 transition-colors">
               Évaluer mon profil
@@ -1114,4 +1157,13 @@ function CampusFranceGuide() {
   );
 }
 
+export async function getStaticProps({ locale }) {
+  const { serverSideTranslations } = await import('next-i18next/serverSideTranslations');
+  
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['authModal', 'common', 'campusFrance'])),
+    },
+  };
+}
 export default CampusFranceGuide;

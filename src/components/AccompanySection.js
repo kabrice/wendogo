@@ -20,10 +20,12 @@ import {
 import { useSession } from 'next-auth/react';
 import AccompanyModal from './AccompanyModal';
 import { useCurrencyConverter } from '../hooks/useCurrencyConverter';
+import { useTranslation } from 'next-i18next';
 
 const AccompanySection = () => {
   const { data: session } = useSession();
   const { convertPrice, userCurrency } = useCurrencyConverter();
+  const { t } = useTranslation(['common', 'accompanyModal']);
   const [selectedOffer, setSelectedOffer] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [expandedOffer, setExpandedOffer] = useState(null);
@@ -32,126 +34,126 @@ const AccompanySection = () => {
   const offers = [
     {
       id: 'orientation',
-      name: '🎯 Pack Orientation+',
-      tagline: 'De l\'idée au choix parfait',
-      description: 'Trouvez LA formation qui transformera votre avenir',
+      name: t('accompany.orientation.name'),
+      tagline: t('accompany.orientation.tagline'),
+      description: t('accompany.orientation.description'),
       price: 100,
       originalPrice: 150,
-      badge: 'Le plus populaire',
+      badge: t('accompany.orientation.mostPopular'),
       color: 'from-blue-500 to-indigo-600',
       borderColor: 'border-blue-500',
       icon: <GraduationCap className="w-8 h-8" />,
       features: [
-        'Analyse personnalisée de votre profil',
-        'Recommandations d\'écoles sur-mesure',
-        'Aide à la constitution du dossier',
-        'Suivi jusqu\'à l\'admission garantie'
+        t('accompany.orientation.features.analysis'),
+        t('accompany.orientation.features.recommendations'),
+        t('accompany.orientation.features.dossier'),
+        t('accompany.orientation.features.followup')
       ],
       detailedFeatures: [
         {
-          title: 'Conseil Stratégique et Orientation Personnalisée',
+          title: t('accompany.orientation.detailed.strategy.title'),
           items: [
-            'Analyse complète de votre parcours académique et professionnel',
-            'Identification de vos atouts et domaines d\'amélioration',
-            'Recommandations sur-mesure des formations alignées avec vos objectifs',
-            'Guide complet des démarches administratives',
-            'Orientation financière et solutions de financement'
+            t('accompany.orientation.detailed.strategy.items.analysis'),
+            t('accompany.orientation.detailed.strategy.items.strengths'),
+            t('accompany.orientation.detailed.strategy.items.recommendations'),
+            t('accompany.orientation.detailed.strategy.items.guide'),
+            t('accompany.orientation.detailed.strategy.items.financing')
           ]
         },
         {
-          title: 'Préparation Optimale des Dossiers',
+          title: t('accompany.orientation.detailed.preparation.title'),
           items: [
-            'Assistance complète pour votre dossier Campus France',
-            'Sélection stratégique des établissements',
-            'Structuration de votre projet académique et professionnel',
-            'Rédaction de lettres de motivation percutantes',
-            'Préparation intensive à l\'entretien Campus France'
+            t('accompany.orientation.detailed.preparation.items.campusFrance'),
+            t('accompany.orientation.detailed.preparation.items.selection'),
+            t('accompany.orientation.detailed.preparation.items.structure'),
+            t('accompany.orientation.detailed.preparation.items.motivation'),
+            t('accompany.orientation.detailed.preparation.items.interview')
           ]
         }
       ],
-      specialMessage: 'Rassurez-vous, nous vous guidons vers les écoles les plus adaptées pour vous.'
+      specialMessage: t('accompany.orientation.specialMessage')
     },
     {
       id: 'visa',
-      name: '🛂 Pack Visa & Préparation',
-      tagline: 'Votre passeport pour la France',
-      description: 'Obtenez votre visa sans stress, nous nous occupons de tout',
+      name: t('accompany.visa.name'),
+      tagline: t('accompany.visa.tagline'),
+      description: t('accompany.visa.description'),
       price: 200,
       originalPrice: 300,
-      badge: 'Le plus complet',
+      badge: t('accompany.visa.mostComplete'),
       color: 'from-emerald-500 to-teal-600',
       borderColor: 'border-emerald-500',
       icon: <FileCheck className="w-8 h-8" />,
       features: [
-        'Montage complet du dossier visa',
-        'Préparation à l\'entretien consulaire',
-        'Garantie financière & logement',
-        'Assistance en cas de refus'
+        t('accompany.visa.features.dossier'),
+        t('accompany.visa.features.interview'),
+        t('accompany.visa.features.guarantee'),
+        t('accompany.visa.features.support')
       ],
       detailedFeatures: [
         {
-          title: 'Assistance Visa Complète',
+          title: t('accompany.visa.detailed.assistance.title'),
           items: [
-            'Montage professionnel du dossier de visa longue durée',
-            'Coaching pour l\'interview consulaire',
-            'Stratégies en cas de refus de visa',
-            'Solutions financières (compte bloqué, garant)',
-            'Préparation de tous les documents de voyage'
+            t('accompany.visa.detailed.assistance.items.dossier'),
+            t('accompany.visa.detailed.assistance.items.coaching'),
+            t('accompany.visa.detailed.assistance.items.strategies'),
+            t('accompany.visa.detailed.assistance.items.financial'),
+            t('accompany.visa.detailed.assistance.items.documents')
           ]
         },
         {
-          title: 'Préparation Logement & Finances',
+          title: t('accompany.visa.detailed.housing.title'),
           items: [
-            'Recherche et sécurisation du logement étudiant',
-            'Assistance pour les garanties financières',
-            'Conseils sur l\'assurance voyage et santé',
-            'Préparation du budget de vie en France',
-            'Aide pour les démarches bancaires'
+            t('accompany.visa.detailed.housing.items.search'),
+            t('accompany.visa.detailed.housing.items.guarantee'),
+            t('accompany.visa.detailed.housing.items.insurance'),
+            t('accompany.visa.detailed.housing.items.budget'),
+            t('accompany.visa.detailed.housing.items.banking')
           ]
         }
       ],
-      specialMessage: 'Votre tranquillité d\'esprit : nous sécurisons votre visa.'
+      specialMessage: t('accompany.visa.specialMessage')
     },
     {
       id: 'installation',
-      name: '🏠 Pack Installation France',
-      tagline: 'Votre nouvelle vie commence ici',
-      description: 'Intégrez-vous facilement et rapidement dans votre nouvelle vie française',
+      name: t('accompany.installation.name'),
+      tagline: t('accompany.installation.tagline'),
+      description: t('accompany.installation.description'),
       price: 150,
       originalPrice: 200,
-      badge: 'Succès garanti',
+      badge: t('accompany.installation.successGuaranteed'),
       color: 'from-purple-500 to-pink-600',
       borderColor: 'border-purple-500',
       icon: <MapPin className="w-8 h-8" />,
       features: [
-        'Ouverture compte bancaire',
-        'Inscription universitaire facilitée',
-        'Sécurité sociale & mutuelle',
-        'Intégration vie étudiante'
+        t('accompany.installation.features.banking'),
+        t('accompany.installation.features.university'),
+        t('accompany.installation.features.social'),
+        t('accompany.installation.features.integration')
       ],
       detailedFeatures: [
         {
-          title: 'Démarches Administratives Essentielles',
+          title: t('accompany.installation.detailed.administrative.title'),
           items: [
-            'Assistance ouverture compte bancaire français',
-            'Accompagnement inscription universitaire',
-            'Inscription sécurité sociale et mutuelle étudiante',
-            'Régularisation du titre de séjour',
-            'Obtention des cartes de réduction étudiantes'
+            t('accompany.installation.detailed.administrative.items.banking'),
+            t('accompany.installation.detailed.administrative.items.university'),
+            t('accompany.installation.detailed.administrative.items.social'),
+            t('accompany.installation.detailed.administrative.items.residence'),
+            t('accompany.installation.detailed.administrative.items.cards')
           ]
         },
         {
-          title: 'Intégration et Vie Étudiante',
+          title: t('accompany.installation.detailed.integration.title'),
           items: [
-            'Coaching d\'intégration dans la vie française',
-            'Aide à la recherche de jobs étudiants',
-            'Accompagnement pour trouver des stages',
-            'Accès aux réseaux étudiants et associatifs',
-            'Support continu pendant les premiers mois'
+            t('accompany.installation.detailed.integration.items.coaching'),
+            t('accompany.installation.detailed.integration.items.jobs'),
+            t('accompany.installation.detailed.integration.items.internships'),
+            t('accompany.installation.detailed.integration.items.network'),
+            t('accompany.installation.detailed.integration.items.support')
           ]
         }
       ],
-      specialMessage: 'Nous vous accompagnons dans vos premiers pas en France.'
+      specialMessage: t('accompany.installation.specialMessage')
     }
   ];
 
@@ -174,15 +176,15 @@ const AccompanySection = () => {
           <div className="flex flex-wrap justify-center gap-6 mb-12">
             <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-lg shadow-sm">
               <Shield className="w-5 h-5 text-green-600" />
-              <span className="text-sm font-medium text-gray-700">Garantie satisfaction 100%</span>
+              <span className="text-sm font-medium text-gray-700">{t('accompany.guarantees.satisfaction')}</span>
             </div>
             <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-lg shadow-sm">
               <Award className="w-5 h-5 text-blue-600" />
-              <span className="text-sm font-medium text-gray-700">+500 étudiants accompagnées</span>
+              <span className="text-sm font-medium text-gray-700">{t('accompany.guarantees.students')}</span>
             </div>
             <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-lg shadow-sm">
               <Users className="w-5 h-5 text-purple-600" />
-              <span className="text-sm font-medium text-gray-700">Conseillers bilingues</span>
+              <span className="text-sm font-medium text-gray-700">{t('accompany.guarantees.advisors')}</span>
             </div>
           </div>
         </div>
@@ -221,7 +223,7 @@ const AccompanySection = () => {
                     <span className="text-lg text-gray-500 line-through">{convertPrice(offer.originalPrice)}</span>
                   </div>
                   <div className="text-green-600 font-semibold text-sm">
-                    Économisez {convertPrice(offer.originalPrice - offer.price)} !
+                    {t('accompany.savings', { amount: convertPrice(offer.originalPrice - offer.price) })}
                   </div>
                 </div>
 
@@ -248,7 +250,7 @@ const AccompanySection = () => {
                     onClick={() => handleOfferSelect(offer)}
                     className={`w-full py-4 px-6 bg-gradient-to-r ${offer.color} text-white font-bold rounded-xl hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1`}
                   >
-                    Choisir cette offre
+                    {t('accompany.chooseOffer')}
                     <ArrowRight className="w-5 h-5 inline ml-2" />
                   </button>
                   
@@ -256,7 +258,7 @@ const AccompanySection = () => {
                     onClick={() => toggleExpanded(offer.id)}
                     className="w-full py-2 px-4 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors flex items-center justify-center gap-2"
                   >
-                    <span>En savoir plus</span>
+                    <span>{t('accompany.learnMore')}</span>
                     {expandedOffer === offer.id ? 
                       <ChevronUp className="w-4 h-4" /> : 
                       <ChevronDown className="w-4 h-4" />
@@ -290,7 +292,7 @@ const AccompanySection = () => {
         {/* Section de confiance supplémentaire */}
         <div className="bg-white rounded-2xl shadow-lg p-8 text-center">
           <h3 className="text-2xl font-bold text-gray-900 mb-4">
-            Pourquoi ils nous font confiance ?
+            {t('accompany.trust.title')}
           </h3>
           
           <div className="grid md:grid-cols-3 gap-6">
@@ -298,24 +300,24 @@ const AccompanySection = () => {
               <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
                 <Shield className="w-6 h-6 text-green-600" />
               </div>
-              <h4 className="font-semibold text-gray-900 mb-2">Sécurité & Transparence</h4>
-              <p className="text-gray-600 text-sm">Suivi en temps réel et communication constante avec nos étudiants</p>
+              <h4 className="font-semibold text-gray-900 mb-2">{t('accompany.trust.security.title')}</h4>
+              <p className="text-gray-600 text-sm">{t('accompany.trust.security.description')}</p>
             </div>
             
             <div className="text-center">
               <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
                 <Award className="w-6 h-6 text-blue-600" />
               </div>
-              <h4 className="font-semibold text-gray-900 mb-2">Expertise Reconnue</h4>
-              <p className="text-gray-600 text-sm">Équipe d'anciens étudiants en France et de professionnels de l'éducation</p>
+              <h4 className="font-semibold text-gray-900 mb-2">{t('accompany.trust.expertise.title')}</h4>
+              <p className="text-gray-600 text-sm">{t('accompany.trust.expertise.description')}</p>
             </div>
             
             <div className="text-center">
               <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3">
                 <Heart className="w-6 h-6 text-purple-600" />
               </div>
-              <h4 className="font-semibold text-gray-900 mb-2">Accompagnement Humain</h4>
-              <p className="text-gray-600 text-sm">Un conseiller dédié qui croit en votre potentiel disponible 7j/7</p>
+              <h4 className="font-semibold text-gray-900 mb-2">{t('accompany.trust.human.title')}</h4>
+              <p className="text-gray-600 text-sm">{t('accompany.trust.human.description')}</p>
             </div>
           </div>
         </div>
@@ -334,5 +336,13 @@ const AccompanySection = () => {
     </div>
   );
 };
-
+// export async function getStaticProps({ locale }) {
+//   const { serverSideTranslations } = await import('next-i18next/serverSideTranslations');
+  
+//   return {
+//     props: {
+//       ...(await serverSideTranslations(locale, ['authModal', 'common', 'accompanyModal'])),
+//     },
+//   };
+// }
 export default AccompanySection;

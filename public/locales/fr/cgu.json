@@ -1,0 +1,132 @@
+{
+  "meta": {
+    "title": "Conditions Générales d'Utilisation - Wendogo",
+    "description": "Conditions Générales d'Utilisation et de Vente de Wendogo, plateforme d'accompagnement pour vos études en France."
+  },
+  "header": {
+    "title": "Conditions Générales d'Utilisation",
+    "description": "Conditions régissant l'utilisation de la plateforme Wendogo et nos services d'accompagnement pour vos études en France.",
+    "version": "Version 2024-002 - Dernière mise à jour : 15 décembre 2024"
+  },
+  "preamble": {
+    "title": "Préambule",
+    "content": "Les présentes Conditions Générales d'Utilisation et de Vente (CGU-CGV) régissent l'utilisation de la plateforme Wendogo.com et de ses services d'accompagnement pour les projets d'études en France.",
+    "warning": {
+      "label": "⚠️ Important",
+      "text": "Toute utilisation de la plateforme Wendogo implique l'acceptation préalable et sans réserve des présentes conditions. Si vous n'acceptez pas ces conditions, vous ne devez pas utiliser nos services."
+    }
+  },
+  "definitions": {
+    "title": "1. Définitions",
+    "platform": {
+      "title": "PLATEFORME WENDOGO",
+      "description": "Site internet wendogo.com et applications correspondantes proposant des services d'accompagnement pour les études en France."
+    },
+    "user": {
+      "title": "UTILISATEUR",
+      "description": "Personne physique utilisant les services de la plateforme Wendogo pour son projet d'études en France."
+    },
+    "services": {
+      "title": "SERVICES",
+      "description": "Ensemble des fonctionnalités et services d'accompagnement proposés : recherche de formations, accompagnement visa, orientation personnalisée."
+    },
+    "operator": {
+      "title": "OPÉRATEUR",
+      "description": "Société WENDOGO SAS, éditeur et opérateur de la plateforme."
+    }
+  },
+  "purpose": {
+    "title": "2. Objet des services",
+    "description": "Wendogo propose une plateforme complète d'accompagnement pour la réalisation de projets d'études en France, comprenant :",
+    "academic": {
+      "title": "🎓 Orientation académique",
+      "items": [
+        "• Recherche de formations adaptées",
+        "• Conseils personnalisés",
+        "• Accompagnement candidatures"
+      ]
+    },
+    "visa": {
+      "title": "📋 Accompagnement visa",
+      "items": [
+        "• Préparation dossier visa étudiant",
+        "• Suivi procédure Campus France",
+        "• Support administratif"
+      ]
+    }
+  },
+  "obligations": {
+    "title": "3. Obligations de l'utilisateur",
+    "subtitle": "Vous vous engagez à :",
+    "items": [
+      "Fournir des informations exactes et à jour sur votre profil académique",
+      "Utiliser la plateforme conformément aux lois en vigueur",
+      "Respecter les droits de propriété intellectuelle",
+      "Maintenir la confidentialité de vos identifiants de connexion"
+    ]
+  },
+  "pricing": {
+    "title": "4. Tarification et paiement",
+    "subtitle": "Principe de tarification",
+    "description": "Nos services sont proposés selon une tarification transparente et fixe, communiquée avant tout engagement.",
+    "packs": {
+      "orientation": {
+        "title": "Pack Orientation",
+        "price": "À partir de 100€"
+      },
+      "visa": {
+        "title": "Pack Visa",
+        "price": "À partir de 200€"
+      },
+      "complete": {
+        "title": "Pack Complet",
+        "price": "À partir de 300€"
+      }
+    }
+  },
+  "dataProtection": {
+    "title": "5. Protection des données",
+    "description": "Nous collectons et traitons vos données personnelles dans le strict respect du RGPD et pour les finalités suivantes :",
+    "purposes": [
+      "• Fourniture des services d'accompagnement",
+      "• Amélioration de nos services",
+      "• Communication relative à votre projet"
+    ],
+    "moreInfo": "Pour plus d'informations : ",
+    "privacyLink": "Politique de confidentialité"
+  },
+  "contact": {
+    "title": "6. Contact et réclamations",
+    "subtitle": "Nous contacter",
+    "email": {
+      "label": "📧 Email",
+      "value": "hello@wendogo.com"
+    },
+    "address": {
+      "label": "📍 Adresse",
+      "lines": [
+        "WENDOGO SAS",
+        "50 Avenue des Champs Elysées",
+        "75008 Paris"
+      ]
+    }
+  },
+  "legal": {
+    "title": "7. Informations légales",
+    "publisher": {
+      "title": "Éditeur",
+      "lines": [
+        "WENDOGO SAS",
+        "Capital social : 10 000€",
+        "RCS : Paris B 123 456 789"
+      ]
+    },
+    "director": {
+      "title": "Directeur de publication",
+      "lines": [
+        "Edgar Kamdem",
+        "Co-fondateur & CEO"
+      ]
+    }
+  }
+}

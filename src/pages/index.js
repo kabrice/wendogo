@@ -1,26 +1,24 @@
+//src/pages/index.js
 import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
-import { Search, Filter, Heart, MapPin, Clock, Euro, Calendar, GraduationCap, Building2, Users, ChevronDown, ChevronRight, ChevronLeft, X, Award, Briefcase, Globe, ExternalLink, Check } from 'lucide-react';
+import { Search, Filter, MapPin, Clock, Euro, Calendar, GraduationCap, Building2, Users, ChevronDown, ChevronRight, ChevronLeft, X, Award, Briefcase, Globe, Check } from 'lucide-react';
 import Link from 'next/link';
 import Footer from '../components/Footer';
 import NavBar from '../components/NavBar';
 import { optimizedApi, cacheUtils, CACHE_DURATION } from '../utils/cacheUtils';
-
+import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 // NOUVEAUX IMPORTS - APIs au lieu des mocks
 import ProgramApi from '../store/apis/programApi';
-import PrivateSchoolApi from '../store/apis/privateSchoolApi';
 import DomainApi from '../store/apis/domainApi';
 import SubdomainApi from '../store/apis/subdomainApi';
-import StatsApi from '../store/apis/statsApi';
-import { getDomainsWithIcons,getDomainNameSync,getSubdomainNamesSync,getSubdomainsByDomainSync,getSubdomainDomainSync,getSubdomainNameSync } from '../utils/apiUtils';
+import {getDomainNameSync,getSubdomainNamesSync,getSubdomainsByDomainSync,getSubdomainDomainSync,getSubdomainNameSync } from '../utils/apiUtils';
 import { FadeTransition } from '../components/ui';
-import {ProgressLoader, ZenLoader} from '../components/ui/ProgressLoader';
-import RocketLoader from '../components/ui/RocketLoader';
 import FavoriteButton from '../components/FavoriteButton';
 import AccompanySection from '../components/AccompanySection';
 import OrganizationContactSection from '../components/OrganizationContactSection';
 import { trackSearch } from '../lib/gtag';
 import ActiveFiltersBar from '../components/ActiveFiltersBar';
+
 // Ajout de l'import ou définition de REST_API_PARAMS
 // Ajouter au début du fichier, après les imports
 /**
@@ -62,6 +60,9 @@ const getDurationsForYear = (targetYear, allDurations) => {
 };
 
 const HomePage = () => {
+  const { t } = useTranslation('common');
+  const router = useRouter();
+  const locale = router.locale;
   // États principaux
   const [activeTab, setActiveTab] = useState('search');
   const [searchQuery, setSearchQuery] = useState('');
@@ -79,7 +80,7 @@ const HomePage = () => {
   const [domains, setDomains] = useState([]);
   const [subdomains, setSubdomains] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-
+  const [isLoadingDomains, setIsLoadingDomains] = useState(true);
   // NOUVEAUX ÉTATS pour pagination
   const [searchResults, setSearchResults] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -144,6 +145,7 @@ const HomePage = () => {
 
   const cityDropdownRef = useRef(null);
   const domainDropdownRef = useRef(null);
+  const filtersDropdownRef = useRef(null);
 
   const [globalStats, setGlobalStats] = useState({
     total_programs: 0,
@@ -176,6 +178,7 @@ const HomePage = () => {
   // 3. REMPLACER LE CHARGEMENT INITIAL (optimisation)
   const loadInitialData = useCallback(async () => {
       setIsLoading(true);
+      setIsLoadingDomains(true); 
       setError(null);
 
       try {
@@ -183,7 +186,8 @@ const HomePage = () => {
         const startTime = performance.now();
 
         // Utiliser le cache intelligent pour charger toutes les données
-        const data = await optimizedApi.loadAllInitialData();
+        console.log(`🚀 Loading initial data with locale: ${locale}`);
+        const data = await optimizedApi.loadAllInitialData(locale);
         console.log('✅ Initial data fetched:', {data});
         
         setDomains(data.domains);
@@ -194,10 +198,11 @@ const HomePage = () => {
 
         const endTime = performance.now();
         console.log(`✅ Initial data loaded in ${Math.round(endTime - startTime)}ms`);
+        setIsLoadingDomains(false);
       } catch (err) {
         console.error('❌ Error loading initial data:', err);
         setError(err);
-        
+        setIsLoadingDomains(false);
         // Fallback vers cache expiré si disponible
         const cachedDomains = cacheUtils.get('domains');
         const cachedSchools = cacheUtils.get('schools');
@@ -217,7 +222,6 @@ const HomePage = () => {
     loadInitialData();
   }, [loadInitialData]);
 
-  const router = useRouter();
 
   useEffect(() => {
     // Gérer les paramètres d'URL pour l'onglet
@@ -275,6 +279,45 @@ const HomePage = () => {
       firstSubdomain: subdomains[0]
     });
   }, [domains, subdomains]);
+
+  useEffect(() => {
+      const handleClickOutside = (event) => {
+        // Fermer le panneau de filtres si on clique à l'extérieur
+        if (showFilters && 
+            filtersDropdownRef.current && 
+            !filtersDropdownRef.current.contains(event.target)) {
+          
+          // ✅ Vérifier aussi qu'on ne clique pas sur le bouton qui ouvre les filtres
+          const filterButton = event.target.closest('[data-filter-toggle]');
+          if (!filterButton) {
+            setShowFilters(false);
+          }
+        }
+      };
+
+      // Ajouter l'écouteur seulement si le panneau est ouvert
+      if (showFilters) {
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+      }
+    }, [showFilters]);    
+    
+    // 🎁 BONUS : Fermer le panneau avec la touche Escape
+    useEffect(() => {
+      const handleKeyDown = (event) => {
+        if (event.key === 'Escape' && showFilters) {
+          console.log('🔒 Fermeture du panneau de filtres (Escape)');
+          setShowFilters(false);
+        }
+      };
+
+      if (showFilters) {
+        document.addEventListener('keydown', handleKeyDown);
+        return () => {
+          document.removeEventListener('keydown', handleKeyDown);
+        };
+      }
+    }, [showFilters]);
 
   /**
    * Réinitialise tous les filtres avancés (garde uniquement la recherche textuelle)
@@ -462,7 +505,7 @@ const HomePage = () => {
 
       console.log('🔍 API call with filters:', searchFilters);
 
-      const response = await ProgramApi.searchPrograms(searchFilters);
+      const response = await ProgramApi.searchPrograms(searchFilters, locale);
       
       console.log('🔍 API response:', response);
       
@@ -484,7 +527,7 @@ const HomePage = () => {
     } finally {
       setIsSearching(false);
     }
-  }, [searchQuery, filters, campusFranceFilters, selectedSubdomainFilters, selectedSubdomains, itemsPerPage]);
+  }, [searchQuery, filters, campusFranceFilters, selectedSubdomainFilters, selectedSubdomains, itemsPerPage, locale]);
 
   // Ajouter cette fonction au début du composant HomePage, avant le return
   const getActiveFiltersCount = useCallback(() => {
@@ -612,7 +655,7 @@ const HomePage = () => {
 
       console.log(`🔍 Pagination: Going to page ${targetPage} with filters:`, searchFilters);
 
-      const response = await ProgramApi.searchPrograms(searchFilters);
+      const response = await ProgramApi.searchPrograms(searchFilters, locale);
       
       if (response.success) {
         // ✅ REMPLACER les résultats (pas ajouter)
@@ -629,7 +672,7 @@ const HomePage = () => {
     } finally {
       setIsSearching(false);
     }
-  }, [searchQuery, filters, selectedSubdomainFilters, selectedSubdomains, itemsPerPage, totalResults, isSearching]);
+  }, [searchQuery, filters, selectedSubdomainFilters, selectedSubdomains, itemsPerPage, totalResults, isSearching, locale, campusFranceFilters]);
 
   // 4. NOUVELLE FONCTION DE RECHERCHE PAGINÉE
   const performSearch = useCallback(async (page = 1, resetResults = false) => {
@@ -656,7 +699,7 @@ const HomePage = () => {
         search: query.trim(),
         page: 1,
         limit: 20
-      });
+      }, locale);
       
       if (response.success && response.data.length > 0) {
         const suggestionMap = new Map();
@@ -902,6 +945,7 @@ const HomePage = () => {
         
         // Pour les sous-domaines, on utilise les données chargées
         const programSubdomainIds = [program.sub_domain1, program.sub_domain2, program.sub_domain3].filter(Boolean);
+        console.log('🐛 Debug program subdomain IDs:', programSubdomainIds) ;
         programSubdomainIds.forEach(subdomainId => {
           const subdomain = subdomains.find(s => s.id === subdomainId);
           if (subdomain && subdomain.name.toLowerCase().includes(query)) {
@@ -918,7 +962,18 @@ const HomePage = () => {
     }
   }, [searchQuery, programs, subdomains]);
 
-  // Gestion des clics extérieurs pour les dropdowns
+  useEffect(() => {
+    // ✅ Réinitialiser les résultats quand searchQuery est complètement effacé
+    if (searchQuery === '' && showResults) {
+      console.log('🔄 SearchQuery vide - Réinitialisation des résultats');
+      setSearchResults([]);
+      setTotalResults(0);
+      setShowResults(false);
+      setCurrentPage(1);
+    }
+  }, [searchQuery]); 
+
+    // Gestion des clics extérieurs pour les dropdowns
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (cityDropdownRef.current && !cityDropdownRef.current.contains(event.target)) {
@@ -941,7 +996,7 @@ const HomePage = () => {
         subdomain_ids: subdomainIds,
         page: 1,
         limit: 1 // On veut juste le total, pas les données
-      });
+      }, locale);
       
       return response.success ? response.total : 0;
     } catch (error) {
@@ -983,7 +1038,7 @@ const HomePage = () => {
         }, 100);
       }
     }
-    
+
     // Gérer la sélection de domaine depuis l'URL
     if (tab === 'search' && domainSlug && domains.length > 0) {
       const domain = getDomainBySlug(domainSlug);
@@ -1034,8 +1089,28 @@ const HomePage = () => {
   // Fonctions utilitaires
   const formatDuration = (duration) => {
     if (!duration) return '';
-    const num = parseInt(duration);
-    return num > 1 ? `${num} ans` : `${num} an`;
+    // extraire deux nombres si la durée est une plage (ex: "2 à 5 ans")
+    const match = duration.match(/(\d+)(?:\D+(\d+))?/);
+    if (!match) return duration;
+
+    const start = parseInt(match[1], 10);
+    const end = match[2] ? parseInt(match[2], 10) : null;
+
+    const lang = (locale || 'fr').split('-')[0];
+
+    const localeMap = {
+      fr: { singular: 'an', plural: 'ans', rangeSep: '–' },
+      en: { singular: 'year', plural: 'years', rangeSep: '–' }
+    };
+
+    const words = localeMap[lang] || localeMap.default;
+
+    if (end && end !== start) {
+      return `${start}${words.rangeSep}${end} ${words.plural}`;
+    }
+
+    const unit = start > 1 ? words.plural : words.singular;
+    return `${start} ${unit}`;
   };
 
   const formatPrice = (price) => {
@@ -1049,39 +1124,36 @@ const HomePage = () => {
 
     console.log('🐛 Filtered domains:', filteredDomains.length)
 
-    const toggleDomain = async (domainId) => {
+    const toggleDomain = (domainId) => {
       const newSelectedDomains = new Set(selectedDomainFilters);
       
-      // Récupérer les sous-domaines de ce domaine depuis l'API
-      const subdomainsResponse = await SubdomainApi.getSubdomainsByDomain(domainId);
-      const domainSubdomains = subdomainsResponse.success ? subdomainsResponse.data : [];
+      // ✅ UTILISER LES DONNÉES DÉJÀ CHARGÉES au lieu d'une requête API
+      const domain = domains.find(d => d.id === domainId);
+      if (!domain) return;
       
-      // Filtrer seulement les sous-domaines qui ont des programmes
-      const availableSubdomains = domainSubdomains.filter(subdomain => {
-        return programs.some(program => 
-          [program.sub_domain1, program.sub_domain2, program.sub_domain3]
-            .filter(Boolean)
-            .includes(subdomain.id)
-        );
-      });
+      // Récupérer les sous-domaines de ce domaine depuis les données chargées
+      const domainSubdomains = domain.subdomains?.filter(subdomain => {
+        // Filtrer seulement les sous-domaines qui ont des programmes
+        return subdomain.program_count && subdomain.program_count > 0;
+      }) || [];
       
       const newSelectedSubdomains = new Set(selectedSubdomainFilters);
       
       if (newSelectedDomains.has(domainId)) {
-        // Désélectionner le domaine et tous ses sous-domaines
+        // ✅ Désélectionner le domaine et TOUS ses sous-domaines
         newSelectedDomains.delete(domainId);
-        availableSubdomains.forEach(subdomain => newSelectedSubdomains.delete(subdomain.id));
+        domainSubdomains.forEach(subdomain => newSelectedSubdomains.delete(subdomain.id));
       } else {
-        // Sélectionner le domaine et tous ses sous-domaines disponibles
+        // ✅ Sélectionner le domaine et TOUS ses sous-domaines disponibles
         newSelectedDomains.add(domainId);
-        availableSubdomains.forEach(subdomain => newSelectedSubdomains.add(subdomain.id));
+        domainSubdomains.forEach(subdomain => newSelectedSubdomains.add(subdomain.id));
       }
       
       setSelectedDomainFilters(newSelectedDomains);
       setSelectedSubdomainFilters(newSelectedSubdomains);
     };
 
-    const toggleSubdomain = async (subdomainId, domainId) => {
+    const toggleSubdomain = (subdomainId, domainId) => {
       const newSelectedSubdomains = new Set(selectedSubdomainFilters);
       const newSelectedDomains = new Set(selectedDomainFilters);
       
@@ -1089,19 +1161,17 @@ const HomePage = () => {
         // Désélectionner le sous-domaine
         newSelectedSubdomains.delete(subdomainId);
         
-        // Vérifier si il faut désélectionner le domaine parent
-        const subdomainsResponse = await SubdomainApi.getSubdomainsByDomain(domainId);
-        const domainSubdomains = subdomainsResponse.success ? subdomainsResponse.data.filter(subdomain => {
-          return programs.some(program => 
-            [program.sub_domain1, program.sub_domain2, program.sub_domain3]
-              .filter(Boolean)
-              .includes(subdomain.id)
-          );
-        }) : [];
+        // ✅ UTILISER LES DONNÉES DÉJÀ CHARGÉES
+        const domain = domains.find(d => d.id === domainId);
+        const domainSubdomains = domain?.subdomains?.filter(subdomain => 
+          subdomain.program_count && subdomain.program_count > 0
+        ) || [];
         
+        // Vérifier s'il reste des sous-domaines sélectionnés pour ce domaine
         const hasOtherSelected = domainSubdomains.some(subdomain => 
           subdomain.id !== subdomainId && newSelectedSubdomains.has(subdomain.id)
         );
+        
         if (!hasOtherSelected) {
           newSelectedDomains.delete(domainId);
         }
@@ -1109,19 +1179,17 @@ const HomePage = () => {
         // Sélectionner le sous-domaine
         newSelectedSubdomains.add(subdomainId);
         
-        // Vérifier si tous les sous-domaines disponibles sont sélectionnés
-        const subdomainsResponse = await SubdomainApi.getSubdomainsByDomain(domainId);
-        const domainSubdomains = subdomainsResponse.success ? subdomainsResponse.data.filter(subdomain => {
-          return programs.some(program => 
-            [program.sub_domain1, program.sub_domain2, program.sub_domain3]
-              .filter(Boolean)
-              .includes(subdomain.id)
-          );
-        }) : [];
+        // ✅ UTILISER LES DONNÉES DÉJÀ CHARGÉES
+        const domain = domains.find(d => d.id === domainId);
+        const domainSubdomains = domain?.subdomains?.filter(subdomain => 
+          subdomain.program_count && subdomain.program_count > 0
+        ) || [];
         
+        // Vérifier si TOUS les sous-domaines disponibles sont maintenant sélectionnés
         const allSelected = domainSubdomains.every(subdomain => 
           subdomain.id === subdomainId || newSelectedSubdomains.has(subdomain.id)
         );
+        
         if (allSelected) {
           newSelectedDomains.add(domainId);
         }
@@ -1140,8 +1208,8 @@ const HomePage = () => {
         >
           <span className={selectedSubdomainFilters.size > 0 ? 'text-gray-900 font-medium' : 'text-gray-500'}>
             {selectedSubdomainFilters.size > 0 
-              ? `${selectedSubdomainFilters.size} spécialisation${selectedSubdomainFilters.size > 1 ? 's' : ''} sélectionnée${selectedSubdomainFilters.size > 1 ? 's' : ''}`
-              : 'Sélectionner des domaines et spécialisations'
+              ? t('subdomainSelection.selected', { count: selectedSubdomainFilters.size })
+              : t('subdomainSelection.selectPrompt')
             }
           </span>
           <ChevronDown className={`w-5 h-5 text-gray-400 transition-transform ${showDomainDropdown ? 'rotate-180' : ''}`} />
@@ -1163,9 +1231,9 @@ const HomePage = () => {
             {/* Debug info */}
             {filteredDomains.length === 0 && (
               <div className="p-4 text-center text-gray-500">
-                <p className="text-sm">Aucun domaine trouvé</p>
-                <p className="text-xs">Total domaines: {domains.length}</p>
-                <p className="text-xs">Recherche: "{domainSearch}"</p>
+                <p className="text-sm">{t('domainSelection.noDomainFound')}</p>
+                <p className="text-xs">{t('domainSelection.totalDomains', { count: domains.length })}</p>
+                <p className="text-xs">{t('domainSelection.searchQuery', { query: domainSearch })}</p>
               </div>
             )}
 
@@ -1253,7 +1321,7 @@ const HomePage = () => {
               <div className="p-3 border-t border-gray-200 bg-gray-50">
                 <div className="flex items-center justify-between">
                   <span className="text-sm font-medium text-gray-700">
-                    {selectedSubdomainFilters.size} spécialisation{selectedSubdomainFilters.size > 1 ? 's' : ''} sélectionnée{selectedSubdomainFilters.size > 1 ? 's' : ''}
+                     {t('subdomainSelection.selected', { count: selectedSubdomainFilters.size })}
                   </span>
                   <button
                     onClick={() => {
@@ -1262,7 +1330,7 @@ const HomePage = () => {
                     }}
                     className="text-sm text-red-600 hover:text-red-700 font-medium"
                   >
-                    Tout effacer
+                    {t('subdomainSelection.clearAll')}
                   </button>
                 </div>
               </div>
@@ -1295,63 +1363,6 @@ const HomePage = () => {
   const getSubdomainsByIds = (ids) => {
     return subdomains.filter(s => ids.includes(s.id));
   };
-
-  const SearchableDropdown = ({ 
-    options, 
-    value, 
-    onChange, 
-    placeholder, 
-    searchValue, 
-    onSearchChange, 
-    showDropdown, 
-    setShowDropdown, 
-    dropdownRef,
-    renderOption = (option) => option 
-  }) => (
-    <div className="relative" ref={dropdownRef}>
-      <button
-        onClick={() => setShowDropdown(!showDropdown)}
-        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-left focus:ring-2 focus:ring-blue-500 flex items-center justify-between"
-      >
-        <span className={value ? 'text-gray-900' : 'text-gray-500'}>
-          {value || placeholder}
-        </span>
-        <ChevronDown className={`w-4 h-4 transition-transform ${showDropdown ? 'rotate-180' : ''}`} />
-      </button>
-      
-      {showDropdown && (
-        <div className="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-hidden">
-          <div className="p-2 border-b">
-            <input
-              type="text"
-              value={searchValue}
-              onChange={(e) => onSearchChange(e.target.value)}
-              placeholder="Rechercher..."
-              className="w-full px-3 py-2 border border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-          <div className="max-h-48 overflow-y-auto">
-            {options.length > 0 ? (
-              options.map((option, index) => (
-                <button
-                  key={index}
-                  onClick={() => {
-                    onChange(typeof option === 'string' ? option : option.name);
-                    setShowDropdown(false);
-                  }}
-                  className="w-full text-left px-3 py-2 hover:bg-gray-100 flex items-center gap-2"
-                >
-                  {renderOption(option)}
-                </button>
-              ))
-            ) : (
-              <div className="px-3 py-2 text-gray-500 text-sm">Aucun résultat</div>
-            )}
-          </div>
-        </div>
-      )}
-    </div>
-  );
 
   // Composant Card de Programme
   // Composant ProgramCard amélioré avec layout homogène
@@ -1423,88 +1434,11 @@ const HomePage = () => {
               )}
               {program.alternance_possible && (
                 <span className="bg-gradient-to-r from-purple-100 to-violet-100 text-purple-700 px-2 py-1 rounded-full text-xs font-medium">
-                  Alternance
+                   {t('program.alternance')}
                 </span>
               )}
             </div>
           </div>
-          {/* Infos additionnelles du programme */}
-          {/* <div className="mb-3">
-            <div className="grid grid-cols-1 gap-1 text-xs">
-              {program.parallel_procedure && (
-                <div>
-                  <span className="font-semibold text-gray-700">Procédure parallèle :</span>{" "}
-                  <span className="text-gray-600">{program.parallel_procedure ? 1 : 0}</span>
-                </div>
-              )}
-              {program.bienvenue_en_france_level && (
-                <div>
-                  <span className="font-semibold text-gray-700">Bienvenue en France :</span>{" "}
-                  <span className="text-gray-600">{program.bienvenue_en_france_level}</span>
-                </div>
-              )}
-              {program.contact && (
-                <div>
-                  <span className="font-semibold text-gray-700">Contact :</span>{" "}
-                  <span className="text-gray-600">{program.contact}</span>
-                </div>
-              )}
-              {program.language_tech_level_unofficial1 && (
-                <div>
-                  <span className="font-semibold text-gray-700">Langue niveau 1 :</span>{" "}
-                  <span className="text-gray-600">{program.language_tech_level_unofficial1}</span>
-                </div>
-              )}
-              {program.language_tech_level_unofficial2 && (
-                <div>
-                  <span className="font-semibold text-gray-700">Langue niveau 2 :</span>{" "}
-                  <span className="text-gray-600">{program.language_tech_level_unofficial2}</span>
-                </div>
-              )}
-              {program.language_tech_level_unofficial3 && (
-                <div>
-                  <span className="font-semibold text-gray-700">Langue niveau 3 :</span>{" "}
-                  <span className="text-gray-600">{program.language_tech_level_unofficial3}</span>
-                </div>
-              )}
-              {program.language_tech_level_unofficial4 && (
-                <div>
-                  <span className="font-semibold text-gray-700">Langue niveau 4 :</span>{" "}
-                  <span className="text-gray-600">{program.language_tech_level_unofficial4}</span>
-                </div>
-              )}
-              {program.language_tech_level_unofficial5 && (
-                <div>
-                  <span className="font-semibold text-gray-700">Langue niveau 5 :</span>{" "}
-                  <span className="text-gray-600">{program.language_tech_level_unofficial5}</span>
-                </div>
-              )}
-              {typeof program.is_referenced_in_eef !== "undefined" && (
-                <div>
-                  <span className="font-semibold text-gray-700">Référencé EEF :</span>{" "}
-                  <span className="text-gray-600">{program.is_referenced_in_eef ? "Oui" : "Non"}</span>
-                </div>
-              )}
-              {program.address && (
-                <div>
-                  <span className="font-semibold text-gray-700">Adresse :</span>{" "}
-                  <span className="text-gray-600">{program.address}</span>
-                </div>
-              )}
-              {program.exoneration_tuition && (
-                <div>
-                  <span className="font-semibold text-gray-700">Exonération de frais :</span>{" "}
-                  <span className="text-gray-600">{program.exoneration_tuition}</span>
-                </div>
-              )}
-              {program.email && (
-                <div>
-                  <span className="font-semibold text-gray-700">Email :</span>{" "}
-                  <span className="text-gray-600">{program.email}</span>
-                </div>
-              )}
-            </div>
-          </div> */}
           {/* Description - HAUTEUR FIXE (3 lignes max) */}
           <div className="h-16 mb-3">
             <p className="text-gray-600 text-sm line-clamp-3 leading-relaxed">
@@ -1542,7 +1476,7 @@ const HomePage = () => {
             </div>
             <div className="flex items-center gap-2">
               <Calendar className="w-4 h-4 text-orange-600 flex-shrink-0" />
-              <span className="text-gray-700 truncate">Rentrée: {program.intake}</span>
+              <span className="text-gray-700 truncate">{t('program.intake')}: {program.intake}</span>
             </div>
             <div className="flex items-center gap-2">
                 {program.is_referenced_in_eef && !program.tuition ? (
@@ -1566,10 +1500,10 @@ const HomePage = () => {
                   {program.is_referenced_in_eef && !program.tuition
                     ? (
                         program.exoneration_tuition === 1
-                          ? "Exonération Totale"
+                          ? t('program.exonerationFull')
                           : program.exoneration_tuition === -1
-                            ? "Exonération Partielle"
-                            : "Aucune exonération"
+                            ? t('program.exonerationPartial')
+                            : t('program.exonerationNone')
                       )
                     : formatPrice(program.tuition)
                   }
@@ -1577,12 +1511,14 @@ const HomePage = () => {
             </div>
             <div className="flex items-center gap-2">
               <GraduationCap className="w-4 h-4 text-red-600 flex-shrink-0" />
-              <span className="text-gray-700 truncate">Deadline: {program.is_referenced_in_eef ? 'Calendrier Campus France' : program.application_date}</span>
+              <span className="text-gray-700 truncate">
+                {t('program.deadline')}: {program.is_referenced_in_eef ? t('program.campusFranceCalendar') : program.application_date}
+              </span>
             </div>
             {program.first_deposit && (
               <div className="flex items-center gap-2 col-span-2">
                 <Euro className="w-4 h-4 text-purple-600 flex-shrink-0" />
-                <span className="text-gray-700 truncate">Acompte: {formatPrice(program.first_deposit)}</span>
+                <span className="text-gray-700 truncate">{t('program.deposit')}: {formatPrice(program.first_deposit)}</span>
               </div>
             )}
           </div>
@@ -1591,17 +1527,11 @@ const HomePage = () => {
         {/* Footer avec bouton full-width - HAUTEUR FIXE */}
         <div className="p-4 bg-white border-t border-gray-100 flex-shrink-0">
           <Link href={programUrl} target="_blank" rel="noopener noreferrer" className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 rounded-lg text-sm font-medium hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 flex items-center justify-center gap-2">
-            Voir le programme
+            {t('program.viewProgram')}
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
             </svg>
           </Link>
-                      {/* <Link href={programUrl} target="_blank" rel="noopener noreferrer">
-                <button className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-2 text-sm font-medium">
-                  Voir le programme
-                  <ExternalLink className="w-4 h-4" />
-                </button>
-              </Link> */}
         </div>
       </div>
     );
@@ -1637,7 +1567,7 @@ const HomePage = () => {
                     }`}
                   >
                     <Search className="w-4 h-4 sm:w-5 sm:h-5" />
-                    <span>Rechercher</span>
+                    <span>{t('tabs.search')}</span>
                   </button>
                   
                   <button
@@ -1652,7 +1582,7 @@ const HomePage = () => {
                     }`}
                   >
                     <Users className="w-4 h-4 sm:w-5 sm:h-5" />
-                    <span className="xs:inline">Accompagnez-moi</span>
+                    <span className="xs:inline">{t('tabs.accompany')}</span>
                   </button>
                   
                   <button
@@ -1667,7 +1597,7 @@ const HomePage = () => {
                     }`}
                   >
                     <Building2 className="w-4 h-4 sm:w-5 sm:h-5" />
-                    <span>Organismes</span>
+                    <span>{t('tabs.organizations')}</span>
                   </button>
                 </div>
               </div>
@@ -1680,13 +1610,20 @@ const HomePage = () => {
               {activeTab === 'search' && (
                 <>
                   <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold text-white mb-4 leading-tight">
-                    Votre avenir académique en France vous attend
+                    {t('hero.title')}
                   </h1>
-                  <p className="text-lg sm:text-xl text-blue-100 mb-8 max-w-4xl mx-auto">
-                    Découvrez la plus grande sélection de formations en France — plus de <span className="font-bold text-yellow-300">{/*globalStats.total_programs.toLocaleString()*/ 3800} programmes</span> incluant 100 % des formations Campus France dans plus de <span className="font-bold text-yellow-300">{/*globalStats.total_schools.toLocaleString()*/ 1000} établissements partenaires</span>. 
-                    <br />Comparez, choisissez, et lancez votre parcours international en toute confiance.
-                  </p>
-
+                  <div className="text-lg sm:text-xl text-blue-100 mb-8 max-w-4xl mx-auto">
+                    {t('hero.description_part1')}{' '}
+                    <span className="font-bold text-yellow-300">
+                      {t('hero.programs_count')} {t('hero.programs_label')}
+                    </span>{' '}
+                    {t('hero.description_part2')}{' '}
+                    <span className="font-bold text-yellow-300">
+                      {t('hero.schools_count')} {t('hero.schools_label')}
+                    </span>.
+                    <br/><br />
+                    {t('hero.description_cta')}
+                  </div>
                   {/* Barre de recherche intégrée dans le header */}
                   <div ref={dropdownRef} className="max-w-4xl mx-auto mb-4 sm:mb-6 lg:mb-8 relative z-[100]">
                     <div className="bg-white/10 backdrop-blur-md rounded-xl p-3 sm:p-4 lg:p-6 border border-white/20">
@@ -1696,7 +1633,7 @@ const HomePage = () => {
                             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 z-[111]" />
                             <input
                               type="text"
-                              placeholder="Rechercher une formation, une école..."
+                              placeholder={t('hero.searchPlaceholder')}
                               value={searchQuery}
                               onFocus={() => setShowSuggestions(true)}
                               onBlur={() => {
@@ -1721,7 +1658,7 @@ const HomePage = () => {
                                   setCurrentPage(1);
                                 }}
                                 className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors z-[112]"
-                                title="Effacer la recherche"
+                                title={t('hero.clearSearch')}
                               >
                                 <X className="w-4 h-4" />
                               </button>
@@ -1736,7 +1673,7 @@ const HomePage = () => {
                             disabled={isSearching || !searchQuery || !searchQuery.trim()}
                             className="px-4 sm:px-6 lg:px-8 py-3 bg-white text-blue-600 rounded-lg font-semibold hover:bg-blue-50 transition-colors border border-gray-200 whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base z-[111] w-full sm:w-auto" 
                           >
-                            {isSearching ? 'Recherche...' : 'Rechercher'}
+                            {isSearching ? t('hero.searching') : t('hero.search')}
                           </button>
                         </div>
                         
@@ -1768,6 +1705,7 @@ const HomePage = () => {
                       {/* Boutons et infos en bas - mobile friendly */}
                       <div className="flex flex-col space-y-2 sm:space-y-0 sm:flex-row sm:items-center sm:justify-between gap-2">
                         <button
+                          data-filter-toggle
                           onClick={() => {
                             setShowFilters(!showFilters);
                             
@@ -1785,20 +1723,14 @@ const HomePage = () => {
                           className="flex items-center justify-center gap-2 px-3 py-2 bg-white/20 border border-white/30 rounded-lg hover:bg-white/30 transition-colors text-white text-sm order-1 sm:order-none"
                         >
                           <Filter className="w-4 h-4" />
-                          <span>Filtres avancés</span>
+                          <span>{t('hero.advancedFilters')}</span>
                           <ChevronDown className={`w-4 h-4 transition-transform ${showFilters ? 'rotate-180' : ''}`} />
                         </button>
                         
                         <div className="flex flex-col text-center sm:text-left space-y-1 sm:space-y-0 text-xs sm:text-sm text-blue-100 order-2 sm:order-none">
                           <span>
-                            {totalResults} formation{totalResults > 1 ? 's' : ''} disponible{totalResults > 1 ? 's' : ''}
+                             {t('hero.resultsCount', { count: totalResults })}
                           </span>
-                          {/* <div className="flex items-center justify-center sm:justify-start gap-2">
-                            <span className="text-blue-200/80">(écoles privées)</span>
-                            <span className="bg-orange-500/20 border border-orange-400/30 text-orange-200 px-2 py-1 rounded-full text-xs font-medium backdrop-blur-sm">
-                              BÊTA
-                            </span>
-                          </div> */}
                         </div>
                       </div>
                     </div>
@@ -1808,20 +1740,20 @@ const HomePage = () => {
               {activeTab === 'accompany' && (
                 <>
                   <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold text-white mb-4 leading-tight">
-                    Accompagnement personnalisé
+                    {t('accompany_tab.title')}
                   </h1>
                   <p className="text-lg sm:text-xl text-blue-100 mb-8 max-w-3xl mx-auto">
-                    Laissez nos experts vous guider vers la formation parfaite selon votre profil et vos objectifs.
+                    {t('accompany_tab.description')}
                   </p>
                 </>
               )}
               {activeTab === 'organizations' && (
                 <>
                   <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold text-white mb-4 leading-tight">
-                    Partenaires & Organismes
+                    {t('organizations_tab.title')}
                   </h1>
                   <p className="text-lg sm:text-xl text-blue-100 mb-8 max-w-3xl mx-auto">
-                    Vous représentez une école, une université, un organisme de formation ou une entreprise ? Rejoignez notre réseau de partenaires et donnez plus de visibilité à vos formations.
+                    {t('organizations_tab.description')}
                   </p>
                 </>
               )}
@@ -1838,15 +1770,35 @@ const HomePage = () => {
               <div className="mb-12" data-domains-section>
                 <div className="text-center mb-8">
                   <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
-                    Découvrez les formations par domaine
+                    {t('domainSelection.title')}
                   </h2>
                   <p className="text-gray-600 text-lg">
-                    Cliquez sur un domaine pour explorer les spécialisations disponibles
+                    {t('domainSelection.description')}
                   </p>
                 </div>
 
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4">
-                  {domains.map((domain) => (
+                    {isLoadingDomains ? (
+                      // ✅ SKELETON LOADER pendant le chargement
+                      [...Array(10)].map((_, index) => (
+                        <div 
+                          key={index}
+                          className="bg-white rounded-xl p-3 sm:p-4 lg:p-6 shadow-md border border-gray-100 animate-pulse"
+                        >
+                          {/* Icône skeleton */}
+                          <div className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 bg-gray-200 rounded-full mx-auto mb-2 sm:mb-3"></div>
+                          {/* Titre skeleton */}
+                          <div className="h-4 bg-gray-200 rounded mb-2"></div>
+                          {/* Compteur skeleton */}
+                          <div className="h-3 bg-gray-200 rounded w-20 mx-auto"></div>
+                        </div>
+                      ))
+                    ) : domains.length === 0 ? (
+                      // ✅ MESSAGE SI AUCUN DOMAINE
+                      <div className="col-span-full text-center py-12">
+                        <p className="text-gray-500 text-lg">{t('domainSelection.noDomains')}</p>
+                      </div>
+                    ) : (domains.map((domain) => (
                       <button
                         key={domain.id}
                         onClick={() => {
@@ -1888,12 +1840,13 @@ const HomePage = () => {
                         {domain.total_programs || 0} formation{(domain.total_programs || 0) > 1 ? 's' : ''}
                       </div>
                     </button>
-                  ))}
+                  )))}
                 </div>
               </div>
             </FadeTransition>
 
             {/* Sélection des sous-domaines */}
+            
             <FadeTransition show={selectedDomain && !showResults && !showFilters}>
               <div className="mb-8" data-subdomain-selection>
                 <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6">
@@ -1920,7 +1873,7 @@ const HomePage = () => {
                           </button>
 
                           <h2 className="text-sm sm:text-xl font-bold text-gray-900 truncate">
-                            <span className="text-gray-500 text-xs sm:text-base font-normal">Spécialisations dans </span>
+                            <span className="text-gray-500 text-xs sm:text-base font-normal">{t('hero.specializations_in')} </span>
                             <br className="sm:hidden" />
                             <span className="text-blue-600">{getDomainNameSync(selectedDomain, domains)} {selectedDomain ? DomainApi.getIconForDomain(getDomainNameSync(selectedDomain, domains)) : ''}</span>
                           </h2>
@@ -1955,7 +1908,7 @@ const HomePage = () => {
                                 : 'bg-gray-200 text-gray-400 cursor-not-allowed'
                             }`}
                           >
-                            Voir les formations ({programCountForSelected || 0})
+                            {t('hero.viewPrograms')} ({programCountForSelected || 0})
                           </button>
                         </div>
                       </div>
@@ -2002,12 +1955,12 @@ const HomePage = () => {
                   {/* Message si aucun sous-domaine disponible */}
                   {getSubdomainsByDomainSync(selectedDomain, domains).length === 0 && (
                     <div className="text-center py-8">
-                      <p className="text-gray-500">Aucune formation disponible dans ce domaine pour le moment.</p>
+                      <p className="text-gray-500">{t('domainSelection.noResults')}</p>
                       <button
                         onClick={() => setSelectedDomain(null)}
                         className="mt-4 text-blue-600 hover:text-blue-700 font-medium"
                       >
-                        ← Retour aux domaines
+                        {t('domainSelection.backToDomains')}
                       </button>
                     </div>
                   )}
@@ -2018,23 +1971,20 @@ const HomePage = () => {
             {/* Panneau de filtres avancés */}
             {/* Panneau de filtres avancés - VERSION AMÉLIORÉE */}
             <FadeTransition show={showFilters}>
-              <div className="bg-white rounded-xl shadow-lg border border-gray-100 mb-4 sm:mb-8">
+              <div className="bg-white rounded-xl shadow-lg border border-gray-100 mb-4 sm:mb-8" ref={filtersDropdownRef}>
                 {/* Header avec compteur */}
                 <div className="p-4 sm:p-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-gray-200 rounded-t-xl">
                   <div className="flex items-center justify-between mb-2">
                     <h3 className="text-base sm:text-lg font-bold text-gray-900 flex items-center gap-2">
                       <Filter className="w-5 h-5 text-blue-600" />
-                      Filtres avancés
+                      {t('filters.title')}
                     </h3>
                     <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-xs font-semibold">
-                        {(() => {
-                            const count = getActiveFiltersCount();
-                            return `${count} actif${count > 1 ? 's' : ''}`;
-                          })()}
+                      {t('filters.active_filters', { count: getActiveFiltersCount() })}
                     </span>
                   </div>
                   <p className="text-sm text-gray-600">
-                    Affinez votre recherche pour trouver la formation idéale
+                    {t('filters.subtitle')}
                   </p>
                 </div>
 
@@ -2048,7 +1998,7 @@ const HomePage = () => {
                     >
                       <div className="flex items-center gap-2">
                         <GraduationCap className="w-5 h-5 text-purple-600" />
-                        <h4 className="font-semibold text-gray-900">Domaines & Spécialisations</h4>
+                        <h4 className="font-semibold text-gray-900">{t('filters.general.domainsAndSpecializations')}</h4>
                         {selectedSubdomainFilters.size > 0 && (
                           <span className="bg-purple-600 text-white px-2 py-0.5 rounded-full text-xs">
                             {selectedSubdomainFilters.size}
@@ -2107,7 +2057,7 @@ const HomePage = () => {
                     >
                       <div className="flex items-center gap-2">
                         <Award className="w-5 h-5 text-blue-600" />
-                        <h4 className="font-semibold text-gray-900">Critères généraux</h4>
+                        <h4 className="font-semibold text-gray-900">{t('filters.general.generalCriteria')}</h4>
                       </div>
                       <ChevronDown className={`w-5 h-5 text-gray-500 transition-transform ${showFilterSection.general ? 'rotate-180' : ''}`} />
                     </button>
@@ -2119,14 +2069,14 @@ const HomePage = () => {
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-1">
                             <Users className="w-4 h-4 text-blue-500" />
-                            Niveau d'entrée
+                            {t('filters.general.entryLevel')}
                           </label>
                           <select
                             value={filters.entryLevel}
                             onChange={(e) => setFilters({...filters, entryLevel: e.target.value, language: ''})}
                             className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 bg-white"
                           >
-                            <option value="">Tous niveaux</option>
+                            <option value="">{t('filters.general.entryLevel.all')}</option>
                             {filterOptions.entry_levels.map(level => (
                               <option key={level} value={level}>{level}</option>
                             ))}
@@ -2137,15 +2087,15 @@ const HomePage = () => {
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-1">
                             <Award className="w-4 h-4 text-blue-500" />
-                            Type de diplôme
+                            {t('filters.general.degreeType')}
                           </label>
                           <select
                             value={filters.grade}
                             onChange={(e) => setFilters({...filters, grade: e.target.value})}
                             className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 bg-white"
                           >
-                            <option value="">Tous diplômes</option>
-                            
+                            <option value="">{t('filters.general.degreeType.all')}</option>
+                            {locale === 'fr' ? <>
                             <optgroup label="🎓 Licences & Bachelors">
                               <option value="Licence">Licence</option>
                               <option value="Licence 2">Licence 2</option>
@@ -2184,7 +2134,53 @@ const HomePage = () => {
                               <option value="Diplôme visé">Diplôme visé</option>
                               <option value="Titre d'établissement">Titre d'établissement</option>
                               <option value="PhD Doctorat">PhD / Doctorat</option>
-                            </optgroup>
+                            </optgroup></> : <>
+                                              <optgroup label="🎓 Bachelor's Degrees">
+                                                <option value="Bachelor">Bachelor</option>
+                                                <option value="Accredited Bachelor">Accredited Bachelor</option>
+                                                <option value="Public bachelor">Public Bachelor</option>
+                                                <option value="Professional public bachelor">Professional Public Bachelor</option>
+                                                <option value="University Bachelor's degree in technology (BUT)">Bachelor's in Technology (BUT)</option>
+                                              </optgroup>
+
+                                              <optgroup label="🎯 Master's Degrees">
+                                                <option value="Master">Master</option>
+                                                <option value="Master 2">Master 2</option>
+                                                <option value="Undifferentiated Master's (Research and Professional)">Master's (Research & Professional)</option>
+                                                <option value="Professional Master's">Professional Master's</option>
+                                                <option value="Research Master's">Research Master's</option>
+                                                <option value="Master of Science">Master of Science</option>
+                                                <option value="Master of science">Master of Science (MSc)</option>
+                                                <option value="Master of Arts">Master of Arts</option>
+                                                <option value="Master's degree">Master's Degree</option>
+                                              </optgroup>
+
+                                              <optgroup label="⭐ Postgraduate Programs & MBA">
+                                                <option value="Postgraduate Program">Postgraduate Program</option>
+                                                <option value="Postgraduate Program 2">Postgraduate Program 2</option>
+                                                <option value="Postgraduate MSc Program">Postgraduate MSc Program</option>
+                                                <option value="Postgraduate Professional Program">Postgraduate Professional Program</option>
+                                                <option value="Specialized Postgraduate Program">Specialized Postgraduate Program</option>
+                                                <option value="MBA">MBA</option>
+                                              </optgroup>
+
+                                              <optgroup label="🏆 Specialized Degrees">
+                                                <option value="Engineering Degree">Engineering Degree</option>
+                                                <option value="Specialized engineering degree">Specialized Engineering Degree</option>
+                                                <option value="Accredited Business School Degree">Accredited Business School Degree</option>
+                                                <option value="PGE (Grande École Program)">Grande École Program (PGE)</option>
+                                                <option value="Specialized School Training">Specialized School Training</option>
+                                              </optgroup>
+
+                                              <optgroup label="📚 Other Degrees">
+                                                <option value="Accredited degree">Accredited Degree</option>
+                                                <option value="National degree">National Degree</option>
+                                                <option value="State-recognized degree">State-Recognized Degree</option>
+                                                <option value="Institutional degree">Institutional Degree</option>
+                                                <option value="Title from the Ministry of Labor, Full Employment and Integration.">Ministry of Labor Title</option>
+                                                <option value="PhD">PhD / Doctorate</option>
+                                              </optgroup>
+                            </>}
                           </select>
                         </div>
 
@@ -2193,7 +2189,7 @@ const HomePage = () => {
                         <div className="sm:col-span-2">
                           <label className="block text-sm font-medium text-gray-700 mb-3 flex items-center gap-1">
                             <Clock className="w-4 h-4 text-blue-500" />
-                            Durée de formation
+                            {t('filters.general.duration')}
                           </label>
                           
                           <div className="flex flex-wrap gap-2">
@@ -2206,7 +2202,7 @@ const HomePage = () => {
                                   : 'border-gray-200 bg-white text-gray-700 hover:border-gray-300'
                               }`}
                             >
-                              Toutes durées
+                              {t('filters.general.duration.all')}
                             </button>
                             
                             {/* Boutons pour chaque année (1 à 9) */}
@@ -2232,7 +2228,7 @@ const HomePage = () => {
                                 >
                                   <div className="flex items-center gap-2">
                                     <Clock className="w-4 h-4" />
-                                    <span>{year} an{year > 1 ? 's' : ''}</span>
+                                     {t('filters.general.year', { count: year })}
                                   </div>
                                 </button>
                               );
@@ -2244,16 +2240,16 @@ const HomePage = () => {
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-1">
                             <Briefcase className="w-4 h-4 text-blue-500" />
-                            Alternance
+                            {t('filters.general.alternance')}
                           </label>
                           <select
                             value={filters.alternance}
                             onChange={(e) => setFilters({...filters, alternance: e.target.value})}
                             className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 bg-white"
                           >
-                            <option value="">Peu importe</option>
-                            <option value="true">✓ Disponible</option>
-                            <option value="false">✗ Non disponible</option>
+                            <option value="">{t('filters.general.filter_any')}</option>
+                            <option value="true">{t('filters.general.filter_available')}</option>
+                            <option value="false">{t('filters.general.filter_not_available')}</option>
                           </select>
                         </div>
 
@@ -2261,7 +2257,7 @@ const HomePage = () => {
                         <div className="sm:col-span-2">
                           <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-1">
                             <MapPin className="w-4 h-4 text-blue-500" />
-                            Ville
+                            {t('filters.general.city')}
                           </label>
                           <div className="relative" ref={cityDropdownRef}>
                             <button
@@ -2269,7 +2265,7 @@ const HomePage = () => {
                               className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-left focus:ring-2 focus:ring-blue-500 flex items-center justify-between bg-white text-sm"
                             >
                               <span className={filters.city ? 'text-gray-900' : 'text-gray-500'}>
-                                {filters.city || 'Toutes les villes'}
+                                {filters.city || t('filters.general.city.all')}
                               </span>
                               <ChevronDown className={`w-4 h-4 transition-transform ${showCityDropdown ? 'rotate-180' : ''}`} />
                             </button>
@@ -2281,7 +2277,7 @@ const HomePage = () => {
                                     type="text"
                                     value={citySearch}
                                     onChange={(e) => setCitySearch(e.target.value)}
-                                    placeholder="Rechercher une ville..."
+                                    placeholder={t('filters.general.city.search')}
                                     className="w-full px-3 py-2 border border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                                     onClick={(e) => e.stopPropagation()}
                                   />
@@ -2295,7 +2291,7 @@ const HomePage = () => {
                                     }}
                                     className="w-full text-left px-3 py-2 hover:bg-blue-50 text-sm text-gray-700"
                                   >
-                                    Toutes les villes
+                                    {t('filters.general.city.all')}
                                   </button>
                                   {getFilteredCities.length > 0 ? (
                                     getFilteredCities.map((city, index) => (
@@ -2312,7 +2308,7 @@ const HomePage = () => {
                                       </button>
                                     ))
                                   ) : (
-                                    <div className="px-3 py-2 text-gray-500 text-sm">Aucune ville trouvée</div>
+                                    <div className="px-3 py-2 text-gray-500 text-sm">{t('filters.general.city.no_results')}</div>
                                   )}
                                 </div>
                               </div>
@@ -2331,22 +2327,22 @@ const HomePage = () => {
                     >
                       <div className="flex items-center gap-2">
                         <Euro className="w-5 h-5 text-green-600" />
-                        <h4 className="font-semibold text-gray-900">Frais & Coûts</h4>
+                        <h4 className="font-semibold text-gray-900">{t('filters.cost.title')}</h4>
                       </div>
                       <ChevronDown className={`w-5 h-5 text-gray-500 transition-transform ${showFilterSection.cost ? 'rotate-180' : ''}`} />
                     </button>
                     
                     {showFilterSection.cost && (
                       <div className="space-y-4">
-                        {/* Frais de scolarité avec slider */}
+                        {/* Frais de scolarité */}
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-3">
-                            Frais de scolarité annuels (€)
+                            {t('filters.cost.tuition_label')}
                           </label>
                           <div className="flex gap-3 items-center mb-2">
                             <input
                               type="number"
-                              placeholder="Min"
+                              placeholder={t('filters.cost.min_placeholder')}
                               value={filters.tuition.min}
                               onChange={(e) => setFilters({
                                 ...filters, 
@@ -2357,7 +2353,7 @@ const HomePage = () => {
                             <span className="text-gray-500">→</span>
                             <input
                               type="number"
-                              placeholder="Max"
+                              placeholder={t('filters.cost.max_placeholder')}
                               value={filters.tuition.max}
                               onChange={(e) => setFilters({
                                 ...filters, 
@@ -2372,19 +2368,19 @@ const HomePage = () => {
                               onClick={() => setFilters({...filters, tuition: {min: '', max: '5000'}})}
                               className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs hover:bg-green-200"
                             >
-                              &lt; 5000€
+                              {t('filters.cost.quick_filter_less_5000')}
                             </button>
                             <button
                               onClick={() => setFilters({...filters, tuition: {min: '5000', max: '10000'}})}
                               className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs hover:bg-green-200"
                             >
-                              5000€ - 10000€
+                              {t('filters.cost.quick_filter_5000_10000')}
                             </button>
                             <button
                               onClick={() => setFilters({...filters, tuition: {min: '10000', max: ''}})}
                               className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs hover:bg-green-200"
                             >
-                              &gt; 10000€
+                              {t('filters.cost.quick_filter_more_10000')}
                             </button>
                           </div>
                         </div>
@@ -2392,12 +2388,12 @@ const HomePage = () => {
                         {/* Acompte */}
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-3">
-                            Acompte requis (€)
+                            {t('filters.cost.deposit_label')}
                           </label>
                           <div className="flex gap-3 items-center">
                             <input
                               type="number"
-                              placeholder="Min"
+                              placeholder={t('filters.cost.min_placeholder')}
                               value={filters.deposit.min}
                               onChange={(e) => setFilters({
                                 ...filters, 
@@ -2408,7 +2404,7 @@ const HomePage = () => {
                             <span className="text-gray-500">→</span>
                             <input
                               type="number"
-                              placeholder="Max"
+                              placeholder={t('filters.cost.max_placeholder')}
                               value={filters.deposit.max}
                               onChange={(e) => setFilters({
                                 ...filters, 
@@ -2430,7 +2426,7 @@ const HomePage = () => {
                     >
                       <div className="flex items-center gap-2">
                         <Globe className="w-5 h-5 text-orange-600" />
-                        <h4 className="font-semibold text-gray-900">Langue d'enseignement</h4>
+                        <h4 className="font-semibold text-gray-900">{t('filters.language.title')}</h4>
                       </div>
                       <ChevronDown className={`w-5 h-5 text-gray-500 transition-transform ${showFilterSection.language ? 'rotate-180' : ''}`} />
                     </button>
@@ -2440,13 +2436,12 @@ const HomePage = () => {
                         {/* Langue */}
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Langue
+                            {t('filters.language.language_label')}
                           </label>
                           <select
                             value={languageFilter.language}
                             onChange={(e) => {
                               setLanguageFilter({...languageFilter, language: e.target.value});
-                              // Mettre à jour le filtre principal
                               if (e.target.value && languageFilter.minLevel) {
                                 setFilters({...filters, language: `${e.target.value}-${languageFilter.minLevel}`});
                               } else {
@@ -2455,23 +2450,22 @@ const HomePage = () => {
                             }}
                             className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-orange-500 bg-white"
                           >
-                            <option value="">Toutes les langues</option>
-                            <option value="Fr">🇫🇷 Français</option>
-                            <option value="En">🇬🇧 Anglais</option>
-                            <option value="Es">🇪🇸 Espagnol</option>
+                            <option value="">{t('filters.language.all_languages')}</option>
+                            <option value="Fr">{t('filters.language.languages.french')}</option>
+                            <option value="En">{t('filters.language.languages.english')}</option>
+                            <option value="Es">{t('filters.language.languages.spanish')}</option>
                           </select>
                         </div>
 
                         {/* Niveau minimum */}
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Niveau minimum requis
+                            {t('filters.language.min_level_label')}
                           </label>
                           <select
                             value={languageFilter.minLevel}
                             onChange={(e) => {
                               setLanguageFilter({...languageFilter, minLevel: e.target.value});
-                              // Mettre à jour le filtre principal
                               if (languageFilter.language && e.target.value) {
                                 setFilters({...filters, language: `${languageFilter.language}-${e.target.value}`});
                               } else {
@@ -2481,29 +2475,18 @@ const HomePage = () => {
                             disabled={!languageFilter.language}
                             className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-orange-500 bg-white disabled:bg-gray-100 disabled:cursor-not-allowed"
                           >
-                            <option value="">Tous niveaux</option>
-                            <option value="A1">A1 - Débutant</option>
-                            <option value="A2">A2 - Élémentaire</option>
-                            <option value="B1">B1 - Intermédiaire</option>
-                            <option value="B2">B2 - Intermédiaire avancé</option>
-                            <option value="C1">C1 - Avancé</option>
-                            <option value="C2">C2 - Maîtrise</option>
+                            <option value="">{t('filters.language.all_levels')}</option>
+                            <option value="A1">{t('filters.language.levels.a1')}</option>
+                            <option value="A2">{t('filters.language.levels.a2')}</option>
+                            <option value="B1">{t('filters.language.levels.b1')}</option>
+                            <option value="B2">{t('filters.language.levels.b2')}</option>
+                            <option value="C1">{t('filters.language.levels.c1')}</option>
+                            <option value="C2">{t('filters.language.levels.c2')}</option>
                           </select>
                         </div>
-
-                        {/* Indicateur visuel 
-                        {filters.language && (
-                          <div className="sm:col-span-2 bg-orange-100 border border-orange-200 rounded-lg p-3">
-                            <p className="text-sm text-orange-800 flex items-center gap-2">
-                              <Check className="w-4 h-4" />
-                              Filtrage : {languageFilter.language === 'Fr' ? 'Français' : languageFilter.language === 'En' ? 'Anglais' : 'Espagnol'} niveau {languageFilter.minLevel} minimum
-                            </p>
-                          </div>
-                        )}*/}
                       </div>
                     )}
                   </div>
-
                   {/* ========== SECTION 5 : ADMISSION ========== */}
                   <div className="bg-gradient-to-br from-red-50 to-pink-50 rounded-xl p-4 border border-red-200">
                     <button
@@ -2512,7 +2495,7 @@ const HomePage = () => {
                     >
                       <div className="flex items-center gap-2">
                         <Calendar className="w-5 h-5 text-red-600" />
-                        <h4 className="font-semibold text-gray-900">Calendrier & Admission</h4>
+                        <h4 className="font-semibold text-gray-900">{t('filters.admission.title')}</h4>
                       </div>
                       <ChevronDown className={`w-5 h-5 text-gray-500 transition-transform ${showFilterSection.admission ? 'rotate-180' : ''}`} />
                     </button>
@@ -2522,7 +2505,7 @@ const HomePage = () => {
                         {/* Dates de candidature - SIMPLIFIÉ avec boutons */}
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-3">
-                            Période de candidature
+                            {t('filters.admission.application_period_label')}
                           </label>
                           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                             <button
@@ -2533,7 +2516,7 @@ const HomePage = () => {
                                   : 'bg-red-100 text-red-700 hover:bg-red-200'
                               }`}
                             >
-                              Toute l'année
+                              {t('filters.admission.all_year')}
                             </button>
                             
                             <button
@@ -2544,7 +2527,7 @@ const HomePage = () => {
                                   : 'bg-red-100 text-red-700 hover:bg-red-200'
                               }`}
                             >
-                              🗓️ Janvier-Mars
+                              {t('filters.admission.periods.jan_mar')}
                             </button>
                             
                             <button
@@ -2555,7 +2538,7 @@ const HomePage = () => {
                                   : 'bg-red-100 text-red-700 hover:bg-red-200'
                               }`}
                             >
-                              🌸 Avril-Juin
+                              {t('filters.admission.periods.apr_jun')}
                             </button>
                             
                             <button
@@ -2566,7 +2549,7 @@ const HomePage = () => {
                                   : 'bg-red-100 text-red-700 hover:bg-red-200'
                               }`}
                             >
-                              🍂 Sept-Nov
+                              {t('filters.admission.periods.sep_nov')}
                             </button>
                             
                             <button
@@ -2577,14 +2560,14 @@ const HomePage = () => {
                                   : 'bg-red-100 text-red-700 hover:bg-red-200'
                               }`}
                             >
-                              ❄️ Déc-Fév
+                              {t('filters.admission.periods.dec_feb')}
                             </button>
                             
                             <button
                               onClick={() => setShowCityDropdown(true)} 
                               className="px-3 py-2 rounded-lg text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200"
                             >
-                              ⚙️ Avancé
+                              {t('filters.admission.advanced')} 
                             </button>
                           </div>
                           
@@ -2599,7 +2582,7 @@ const HomePage = () => {
                                 }}
                                 className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-red-500"
                               >
-                                <option value="">Toutes périodes</option>
+                                <option value="">{t('filters.admission.all_periods')}</option>
                                 {filterOptions.application_dates
                                   .sort((a, b) => a.localeCompare(b))
                                   .map(date => (
@@ -2614,16 +2597,16 @@ const HomePage = () => {
                         {/* Niveau RNCP */}
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Niveau RNCP
+                            {t('filters.admission.rncp_level_label')}
                           </label>
                           <select
                             value={filters.rncpLevel}
                             onChange={(e) => setFilters({...filters, rncpLevel: e.target.value})}
                             className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-red-500 bg-white"
                           >
-                            <option value="">Tous niveaux</option>
+                            <option value="">{t('filters.admission.rncp_all_levels')}</option>
                             {filterOptions.rncp_levels.map(level => (
-                              <option key={level} value={level}>Niveau {level}</option>
+                              <option key={level} value={level}>{t('filters.admission.rncp_level', { level })}</option>
                             ))}
                           </select>
                         </div>
@@ -2639,7 +2622,7 @@ const HomePage = () => {
                     >
                       <div className="flex items-center gap-2">
                         <Award className="w-5 h-5 text-indigo-600" />
-                        <h4 className="font-semibold text-gray-900">Campus France & Labels</h4>
+                        <h4 className="font-semibold text-gray-900">{t('filters.campus_france.title')}</h4>
                       </div>
                       <ChevronDown className={`w-5 h-5 text-gray-500 transition-transform ${showFilterSection.campusFrance ? 'rotate-180' : ''}`} />
                     </button>
@@ -2658,10 +2641,10 @@ const HomePage = () => {
                           <div className="flex-1">
                             <div className="font-medium text-gray-900 flex items-center gap-2">
                               <Globe className="w-4 h-4 text-indigo-600" />
-                              École connectée à Campus France
+                              {t('filters.campus_france.connected_school')}
                             </div>
                             <p className="text-xs text-gray-600 mt-0.5">
-                              Écoles ayant un compte Campus France pour dépôt de dossiers
+                              {t('filters.campus_france.connected_school_help')}
                             </p>
                           </div>
                         </label>
@@ -2677,10 +2660,10 @@ const HomePage = () => {
                           <div className="flex-1">
                             <div className="font-medium text-gray-900 flex items-center gap-2">
                               <Award className="w-4 h-4 text-indigo-600" />
-                              Procédure parallèle Campus France
+                              {t('filters.campus_france.parallel_procedure')}
                             </div>
                             <p className="text-xs text-gray-600 mt-0.5">
-                              Possibilité de candidature en dehors de la plateforme
+                              {t('filters.campus_france.parallel_procedure_help')}
                             </p>
                           </div>
                         </label>
@@ -2688,7 +2671,7 @@ const HomePage = () => {
                         {/* Exonération des frais */}
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Exonération des frais de scolarité
+                            {t('filters.campus_france.tuition_exemption')}
                           </label>
                           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                             <button
@@ -2700,7 +2683,7 @@ const HomePage = () => {
                               }`}
                             >
                               <Check className="w-4 h-4" />
-                              Totale
+                              {t('filters.campus_france.exemption_total')}
                             </button>
                             
                             <button
@@ -2711,7 +2694,7 @@ const HomePage = () => {
                                   : 'bg-orange-100 text-orange-700 hover:bg-orange-200'
                               }`}
                             >
-                              Partielle
+                              {t('filters.campus_france.exemption_partial')}
                             </button>
                             
                             <button
@@ -2722,7 +2705,7 @@ const HomePage = () => {
                                   : 'bg-red-100 text-red-700 hover:bg-red-200'
                               }`}
                             >
-                              Aucune
+                              {t('filters.campus_france.exemption_none')}
                             </button>
                           </div>
                         </div>
@@ -2730,7 +2713,7 @@ const HomePage = () => {
                         {/* Label Bienvenue en France */}
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Label "Bienvenue en France"
+                            {t('filters.campus_france.welcome_label')}
                           </label>
                           <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
                             {[1, 2, 3].map(level => (
@@ -2757,11 +2740,11 @@ const HomePage = () => {
                                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                               }`}
                             >
-                              Tous
+                              {t('filters.campus_france.welcome_label_all')}
                             </button>
                           </div>
                           <p className="text-xs text-gray-500 mt-2">
-                            Le label évalue la qualité de l'accueil des étudiants internationaux
+                            {t('filters.campus_france.welcome_label_help')}
                           </p>
                         </div>
                       </div>
@@ -2809,7 +2792,7 @@ const HomePage = () => {
                       className="w-full sm:w-auto px-6 py-2.5 border-2 border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-sm font-medium flex items-center justify-center gap-2"
                     >
                       <X className="w-4 h-4" />
-                      Réinitialiser tout
+                      {t('filters.reset_all')}
                     </button>
                     
                     <div className="flex gap-2">
@@ -2822,24 +2805,35 @@ const HomePage = () => {
                         }}
                         className="flex-1 sm:flex-none px-6 py-2.5 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-sm font-medium"
                       >
-                        Fermer
+                        {t('filters.close')}
                       </button>
                       <button
                         onClick={() => {
                           setShowResults(true);
                           handleSearch(null, true);
+                          setShowFilters(false);
                         }}
                         className="flex-1 sm:flex-none px-6 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-colors text-sm font-medium flex items-center justify-center gap-2 shadow-lg"
                       >
                         <Search className="w-4 h-4" />
-                        Rechercher
+                        {t('hero.search')}
                       </button>
                     </div>
                   </div>
                 </div>
               </div>
             </FadeTransition>
-
+  {/* "results": {
+    "found_one": "{{count}} formation trouvée",
+    "found_other": "{{count}} formations trouvées",
+    "noResults": "Aucune formation trouvée",
+    "noResultsSubdomains": "Aucune formation ne correspond à vos critères dans les domaines sélectionnés.",
+    "noResultsFilters": "Aucune formation ne correspond à vos critères. Essayez de modifier vos filtres.",
+    "viewAllPrograms": "Voir toutes les formations",
+    "newSearch": "Nouvelle recherche",
+    "for": "pour",
+    "loading": "Chargement..."
+  }, */}
             {/* Résultats */}
             <FadeTransition show={showResults}>
               <div className="animate-fade-in" data-results-section>
@@ -2855,14 +2849,16 @@ const HomePage = () => {
                     setSelectedDomain={setSelectedDomain}
                     handleSearch={handleSearch}
                     toSlug={toSlug}
+                    selectedDomainFilters={selectedDomainFilters} // ✅ AJOUT
+                    setSelectedDomainFilters={setSelectedDomainFilters} // ✅ AJOUT pour handleModifyFilters
                   />
                   {/* Compteur de résultats */}
                   <div className="mb-6 flex flex-col space-y-3 sm:space-y-0 sm:flex-row sm:items-center sm:justify-between gap-4">
                     <p className="text-slate-600 text-sm text-center sm:text-left">
-                      {totalResults} formation{totalResults > 1 ? 's' : ''} trouvée{totalResults > 1 ? 's' : ''}
+                      {t('results.found', { count: totalResults })}
                       {searchQuery && (
-                        <span> pour "<strong>{searchQuery}</strong>"</span>
-                      )}
+                        <span> {t('results.for')} "<strong>{searchQuery}</strong>"</span>
+                      )}                   
                     </p>
                     
                     {/* Pagination mobile ET desktop */}
@@ -2888,12 +2884,12 @@ const HomePage = () => {
                       <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 max-w-md mx-auto">
                         <Search className="w-12 h-12 text-gray-400 mx-auto mb-4" />
                         <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                          {totalResults === 0 ? 'Aucune formation trouvée' : 'Chargement...'}
+                          {totalResults === 0 ? t('results.noResults') : t('results.loading')}
                         </h3>
                         <p className="text-gray-600 mb-4">
                           {selectedSubdomainFilters.size > 0 || selectedSubdomains.length > 0 ? 
-                            'Aucune formation ne correspond à vos critères dans les domaines sélectionnés.' :
-                            'Aucune formation ne correspond à vos critères. Essayez de modifier vos filtres.'
+                            t('results.noResultsSubdomains') :
+                            t('results.noResultsFilters')
                           }
                         </p>
                         <div className="space-y-2">
@@ -2921,7 +2917,7 @@ const HomePage = () => {
                             }}
                             className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors mr-2"
                           >
-                            Voir toutes les formations
+                            {t('results.viewAllPrograms')}
                           </button>
                           <button
                             onClick={() => {
@@ -2941,7 +2937,7 @@ const HomePage = () => {
                             }}
                             className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors"
                           >
-                            Nouvelle recherche
+                            {t('results.newSearch')}
                           </button>
                         </div>
                       </div>
@@ -2979,19 +2975,19 @@ const HomePage = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div>
               <div className="text-3xl font-bold text-yellow-400 mb-2">{globalStats.total_programs.toLocaleString()}+</div>
-              <div className="text-blue-200">Formations</div>
+              <div className="text-blue-200">{t('stats.programs')}</div>
             </div>
             <div>
               <div className="text-3xl font-bold text-yellow-400 mb-2">{globalStats.total_schools.toLocaleString()}+</div>
-              <div className="text-blue-200">Écoles</div>
+              <div className="text-blue-200">{t('stats.schools')}</div>
             </div>
             <div>
               <div className="text-3xl font-bold text-yellow-400 mb-2">95%</div>
-              <div className="text-blue-200">Taux de satisfaction</div>
+              <div className="text-blue-200">{t('stats.satisfactionRate')}</div>
             </div>
             <div>
               <div className="text-3xl font-bold text-yellow-400 mb-2">24/7</div>
-              <div className="text-blue-200">Support disponible</div>
+              <div className="text-blue-200">{t('stats.supportAvailable')}</div>
             </div>
           </div>
         </div>
@@ -3001,5 +2997,16 @@ const HomePage = () => {
     </>
   );
 };
+
+export async function getStaticProps({ locale }) {
+  const { serverSideTranslations } = await import('next-i18next/serverSideTranslations');
+  
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['authModal', 'common', 'accompanyModal'])),
+    },
+  };
+}
+
 
 export default HomePage;

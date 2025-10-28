@@ -1,0 +1,465 @@
+{
+  "hero": {
+    "title": "Student Housing Guide France",
+    "subtitle": "Find your student housing in France: types, prices, procedures, financial aid. Everything you need to know to find accommodation easily.",
+    "ctaHelp": "Housing Assistance",
+    "ctaCampusFrance": "Campus France Guide"
+  },
+  "quickStats": {
+    "budget": "Average budget",
+    "surface": "Studio size",
+    "notice": "Notice period",
+    "apl": "Average APL"
+  },
+  "tabs": {
+    "types": "Housing types",
+    "search": "Search",
+    "cities": "Prices by city",
+    "aids": "Financial aid",
+    "documents": "Documents"
+  },
+  "types": {
+    "title": "Student housing types",
+    "subtitle": "Discover the different housing options available for students in France.",
+    "crous": {
+      "title": "CROUS university residence",
+      "description": "Most economical public student housing",
+      "price": "150-400€/month",
+      "advantages": {
+        "1": "Very affordable price",
+        "2": "Close to campuses",
+        "3": "Student community",
+        "4": "Simplified procedures"
+      },
+      "disadvantages": {
+        "1": "Difficult to obtain",
+        "2": "Basic comfort",
+        "3": "Strict rules",
+        "4": "Apply very early"
+      }
+    },
+    "privateResidence": {
+      "title": "Private student residence",
+      "description": "Modern housing with included services",
+      "price": "400-800€/month",
+      "advantages": {
+        "1": "Modern comfort",
+        "2": "Services included",
+        "3": "Security",
+        "4": "Furnished equipped"
+      },
+      "disadvantages": {
+        "1": "More expensive",
+        "2": "Long contract",
+        "3": "Application fees",
+        "4": "High deposit"
+      }
+    },
+    "privateApartment": {
+      "title": "Private apartment",
+      "description": "Classic rental on the private market",
+      "price": "400-1200€/month",
+      "advantages": {
+        "1": "Varied choice",
+        "2": "Independence",
+        "3": "Negotiation possible",
+        "4": "No rules"
+      },
+      "disadvantages": {
+        "1": "Expensive",
+        "2": "Guarantor required",
+        "3": "Furniture to buy",
+        "4": "Long procedures"
+      }
+    },
+    "flatShare": {
+      "title": "Flat share",
+      "description": "Apartment sharing with other students",
+      "price": "300-600€/month",
+      "advantages": {
+        "1": "Economical",
+        "2": "Friendly",
+        "3": "Shared charges",
+        "4": "Less guarantor"
+      },
+      "disadvantages": {
+        "1": "Roommates",
+        "2": "Joint responsibility",
+        "3": "Reduced privacy",
+        "4": "Common rules"
+      }
+    },
+    "homestay": {
+      "title": "Room in a French home",
+      "description": "Housing with a French family",
+      "price": "300-500€/month",
+      "advantages": {
+        "1": "Cultural immersion",
+        "2": "Security",
+        "3": "Daily help",
+        "4": "Practice French"
+      },
+      "disadvantages": {
+        "1": "Less privacy",
+        "2": "Family rules",
+        "3": "Schedules",
+        "4": "Dependence"
+      }
+    },
+    "hostel": {
+      "title": "Youth hostel",
+      "description": "Temporary solution upon arrival",
+      "price": "20-50€/night",
+      "advantages": {
+        "1": "Flexible",
+        "2": "Immediate",
+        "3": "No guarantor",
+        "4": "Social"
+      },
+      "disadvantages": {
+        "1": "Temporary",
+        "2": "Not private",
+        "3": "Expensive long-term",
+        "4": "Little comfort"
+      }
+    },
+    "advantagesLabel": "Advantages:",
+    "disadvantagesLabel": "Disadvantages:",
+    "recommendations": {
+      "title": "Recommendations by profile",
+      "limited": {
+        "title": "Student with limited budget:",
+        "1": "1st priority: CROUS residence",
+        "2": "2nd option: Flat share",
+        "3": "3rd choice: Room in home"
+      },
+      "comfortable": {
+        "title": "Student with comfortable budget:",
+        "1": "1st priority: Private residence",
+        "2": "2nd option: Private studio",
+        "3": "3rd choice: High-end flat share"
+      }
+    }
+  },
+  "search": {
+    "title": "Effective search method",
+    "subtitle": "Follow these steps to find your student housing quickly.",
+    "steps": {
+      "1": {
+        "title": "Define the budget",
+        "description": "Calculate real financial capacity",
+        "duration": "1 week",
+        "details": {
+          "1": "Max rent = 30% of income",
+          "2": "Include charges and insurance",
+          "3": "Plan installation costs",
+          "4": "Check APL eligibility"
+        }
+      },
+      "2": {
+        "title": "Choose the area",
+        "description": "Select target neighborhoods",
+        "duration": "1 week",
+        "details": {
+          "1": "Proximity to university/school",
+          "2": "Public transport available",
+          "3": "Shops and services",
+          "4": "Neighborhood safety"
+        }
+      },
+      "3": {
+        "title": "Active search",
+        "description": "Use all channels",
+        "duration": "2-4 weeks",
+        "details": {
+          "1": "Specialized student sites",
+          "2": "General platforms",
+          "3": "Social networks",
+          "4": "Real estate agencies"
+        }
+      },
+      "4": {
+        "title": "Prepare the file",
+        "description": "Gather required documents",
+        "duration": "1 week",
+        "details": {
+          "1": "Identification document",
+          "2": "Income proof",
+          "3": "French guarantor",
+          "4": "Housing insurance"
+        }
+      },
+      "5": {
+        "title": "Visit and apply",
+        "description": "Organize visits and applications",
+        "duration": "1-2 weeks",
+        "details": {
+          "1": "Schedule quickly",
+          "2": "Visit during day",
+          "3": "Ask right questions",
+          "4": "Apply immediately"
+        }
+      },
+      "6": {
+        "title": "Sign and move in",
+        "description": "Finalize contract and move",
+        "duration": "1 week",
+        "details": {
+          "1": "Read contract carefully",
+          "2": "Do inventory",
+          "3": "Subscribe insurance",
+          "4": "Request APL"
+        }
+      }
+    },
+    "sites": {
+      "title": "Recommended search websites",
+      "lokaviz": {
+        "description": "Official CROUS platform",
+        "type": "Free",
+        "specialty": "University residences"
+      },
+      "studapart": {
+        "description": "Specialized student housing",
+        "type": "Free",
+        "specialty": "All housing types"
+      },
+      "seloger": {
+        "description": "French real estate leader",
+        "type": "Free",
+        "specialty": "Private market"
+      },
+      "leboncoin": {
+        "description": "Classified ads between individuals",
+        "type": "Free",
+        "specialty": "Individuals"
+      },
+      "appartager": {
+        "description": "Flat share specialist",
+        "type": "Free",
+        "specialty": "Flat share"
+      },
+      "adele": {
+        "description": "Student residences network",
+        "type": "Free",
+        "specialty": "Private residences"
+      },
+      "visit": "Visit"
+    },
+    "tips": {
+      "title": "Tips for effective search",
+      "timing": {
+        "title": "Timing:",
+        "1": "Start 3-4 months before term",
+        "2": "Peak offers: May-July",
+        "3": "Visit quickly",
+        "4": "Apply same day"
+      },
+      "strategy": {
+        "title": "Strategy:",
+        "1": "Expand geographic area",
+        "2": "Create automatic alerts",
+        "3": "Prepare complete file",
+        "4": "Be flexible on criteria"
+      }
+    }
+  },
+  "cities": {
+    "title": "Prices by student city",
+    "subtitle": "Discover the price ranges for major French student cities.",
+    "studios": "Studios:",
+    "coloc": "Flat share:",
+    "crous": "CROUS:",
+    "advice": "Advice:",
+    "paris": {
+      "studios": "600-1200€",
+      "coloc": "500-800€",
+      "crous": "300-500€",
+      "tips": "Search in suburbs, transport included"
+    },
+    "lyon": {
+      "studios": "400-700€",
+      "coloc": "350-550€",
+      "crous": "200-350€",
+      "tips": "Student areas: Guillotière, Croix-Rousse"
+    },
+    "marseille": {
+      "studios": "350-600€",
+      "coloc": "300-450€",
+      "crous": "200-300€",
+      "tips": "Avoid city center, prefer student areas"
+    },
+    "toulouse": {
+      "studios": "350-550€",
+      "coloc": "280-420€",
+      "crous": "200-320€",
+      "tips": "Capitole expensive, search towards Mirail, Rangueil"
+    },
+    "lille": {
+      "studios": "350-550€",
+      "coloc": "280-400€",
+      "crous": "200-300€",
+      "tips": "Old Lille expensive, Wazemmes more affordable"
+    },
+    "bordeaux": {
+      "studios": "400-650€",
+      "coloc": "320-480€",
+      "crous": "200-350€",
+      "tips": "Avoid historic center, search periphery"
+    },
+    "priceFactors": {
+      "title": "Factors influencing prices",
+      "increase": {
+        "title": "Increase prices:",
+        "1": "City center",
+        "2": "Close to transport",
+        "3": "Furnished equipped",
+        "4": "Large surfaces"
+      },
+      "reduce": {
+        "title": "Reduce prices:",
+        "1": "Periphery",
+        "2": "Unfurnished",
+        "3": "Popular neighborhoods",
+        "4": "Flat share"
+      }
+    }
+  },
+  "aids": {
+    "title": "Student housing aid",
+    "subtitle": "Discover all available aid to reduce your housing budget.",
+    "amount": "Amount:",
+    "conditions": "Conditions:",
+    "procedure": "Procedure:",
+    "apl": {
+      "name": "APL (Personalized Housing Aid)",
+      "description": "CAF aid based on income",
+      "montant": "50-300€/month",
+      "conditions": {
+        "1": "Modest income",
+        "2": "Decent housing",
+        "3": "Student or employee"
+      },
+      "demarche": "Online CAF application"
+    },
+    "als": {
+      "name": "ALS (Social Housing Allowance)",
+      "description": "Alternative to APL",
+      "montant": "50-250€/month",
+      "conditions": {
+        "1": "Not eligible for APL",
+        "2": "Suitable housing",
+        "3": "Limited resources"
+      },
+      "demarche": "Online CAF application"
+    },
+    "visale": {
+      "name": "Visale Guarantee",
+      "description": "Free rental guarantee",
+      "montant": "Free",
+      "conditions": {
+        "1": "Student under 30",
+        "2": "Salary <1500€",
+        "3": "Housing <800€"
+      },
+      "demarche": "Online Visale application"
+    },
+    "mobilijeune": {
+      "name": "Mobili-Jeune",
+      "description": "Aid for young people in training",
+      "montant": "10-100€/month",
+      "conditions": {
+        "1": "Vocational training",
+        "2": "Apprenticeship",
+        "3": "Under 30"
+      },
+      "demarche": "Application via employer"
+    },
+    "simulation": {
+      "title": "Savings simulation",
+      "aplAverage": "Average APL",
+      "mobiliMax": "Mobili-Jeune max",
+      "totalSavings": "Total savings",
+      "description": "A student can reduce their housing budget by 200 to 300€/month with aid"
+    }
+  },
+  "documents": {
+    "title": "Required documents",
+    "subtitle": "Prepare all necessary documents to build a strong file.",
+    "identity": {
+      "title": "Identity",
+      "1": "ID card or passport",
+      "2": "Residence permit (foreign students)",
+      "3": "Student card",
+      "4": "Proof of enrollment"
+    },
+    "income": {
+      "title": "Income",
+      "1": "Tax notice or non-tax notice",
+      "2": "Pay slips (last 3)",
+      "3": "Scholarship certificate",
+      "4": "Bank statements (3 months)"
+    },
+    "guarantor": {
+      "title": "Guarantor",
+      "1": "Guarantor's ID",
+      "2": "Guarantor's income proof",
+      "3": "Guarantor's employer certificate",
+      "4": "Signed guarantee deed"
+    },
+    "insurance": {
+      "title": "Insurance",
+      "1": "Home insurance certificate",
+      "2": "Civil liability certificate",
+      "3": "School insurance proof",
+      "4": "Health coverage"
+    },
+    "foreignStudents": {
+      "title": "Foreign student specifics",
+      "additional": {
+        "title": "Additional documents:",
+        "1": "Residence permit or visa",
+        "2": "Campus France certificate",
+        "3": "Translated documents",
+        "4": "French guarantor required"
+      },
+      "difficulties": {
+        "title": "Common difficulties:",
+        "1": "No rental history",
+        "2": "Foreign income",
+        "3": "Unfamiliarity with codes",
+        "4": "Language barrier"
+      }
+    },
+    "checklist": {
+      "title": "Perfect file checklist",
+      "beforeVisit": {
+        "title": "Before visit:",
+        "1": "Complete digitized file",
+        "2": "Originals in folder",
+        "3": "Guarantor mobilized",
+        "4": "Insurance subscribed"
+      },
+      "duringVisit": {
+        "title": "During visit:",
+        "1": "Neat presentation",
+        "2": "Motivation expressed",
+        "3": "Relevant questions",
+        "4": "Immediate application"
+      }
+    }
+  },
+  "cta": {
+    "title": "Need help finding your housing?",
+    "description": "Our specialized advisors support you in your student housing search and help you optimize your budget.",
+    "helpButton": "Housing assistance",
+    "visaGuideButton": "Student visa guide"
+  },
+  "meta": {
+    "title": "Student Housing Guide France 2024 - Find your accommodation",
+    "description": "Complete student housing guide France 2024: types, prices, procedures, aid. Everything to find your student housing quickly.",
+    "keywords": "student housing France, CROUS, student residence, flat share, APL, guarantor, housing visa",
+    "ogTitle": "Student Housing Guide France 2024 - Find your accommodation",
+    "ogDescription": "Housing types, prices, procedures and aid for students in France"
+  }
+}

@@ -1,0 +1,132 @@
+{
+  "meta": {
+    "title": "Terms and Conditions - Wendogo",
+    "description": "Terms and Conditions of Use and Sale of Wendogo, support platform for your studies in France."
+  },
+  "header": {
+    "title": "Terms and Conditions of Use",
+    "description": "Terms governing the use of the Wendogo platform and our support services for your studies in France.",
+    "version": "Version 2024-002 - Last updated: December 15, 2024"
+  },
+  "preamble": {
+    "title": "Preamble",
+    "content": "These Terms and Conditions of Use and Sale (T&C) govern the use of the Wendogo.com platform and its support services for study projects in France.",
+    "warning": {
+      "label": "⚠️ Important",
+      "text": "Any use of the Wendogo platform implies prior and unreserved acceptance of these terms. If you do not accept these terms, you must not use our services."
+    }
+  },
+  "definitions": {
+    "title": "1. Definitions",
+    "platform": {
+      "title": "WENDOGO PLATFORM",
+      "description": "Website wendogo.com and corresponding applications offering support services for studies in France."
+    },
+    "user": {
+      "title": "USER",
+      "description": "Individual using the Wendogo platform services for their study project in France."
+    },
+    "services": {
+      "title": "SERVICES",
+      "description": "Set of features and support services offered: program search, visa support, personalized guidance."
+    },
+    "operator": {
+      "title": "OPERATOR",
+      "description": "WENDOGO SAS company, publisher and operator of the platform."
+    }
+  },
+  "purpose": {
+    "title": "2. Purpose of Services",
+    "description": "Wendogo offers a complete support platform for carrying out study projects in France, including:",
+    "academic": {
+      "title": "🎓 Academic Guidance",
+      "items": [
+        "• Search for suitable programs",
+        "• Personalized advice",
+        "• Application support"
+      ]
+    },
+    "visa": {
+      "title": "📋 Visa Support",
+      "items": [
+        "• Student visa file preparation",
+        "• Campus France procedure follow-up",
+        "• Administrative support"
+      ]
+    }
+  },
+  "obligations": {
+    "title": "3. User Obligations",
+    "subtitle": "You commit to:",
+    "items": [
+      "Provide accurate and up-to-date information about your academic profile",
+      "Use the platform in accordance with applicable laws",
+      "Respect intellectual property rights",
+      "Maintain the confidentiality of your login credentials"
+    ]
+  },
+  "pricing": {
+    "title": "4. Pricing and Payment",
+    "subtitle": "Pricing Principle",
+    "description": "Our services are offered according to transparent and fixed pricing, communicated before any commitment.",
+    "packs": {
+      "orientation": {
+        "title": "Guidance Package",
+        "price": "From €100"
+      },
+      "visa": {
+        "title": "Visa Package",
+        "price": "From €200"
+      },
+      "complete": {
+        "title": "Complete Package",
+        "price": "From €300"
+      }
+    }
+  },
+  "dataProtection": {
+    "title": "5. Data Protection",
+    "description": "We collect and process your personal data in strict compliance with GDPR for the following purposes:",
+    "purposes": [
+      "• Provision of support services",
+      "• Improvement of our services",
+      "• Communication related to your project"
+    ],
+    "moreInfo": "For more information: ",
+    "privacyLink": "Privacy Policy"
+  },
+  "contact": {
+    "title": "6. Contact and Claims",
+    "subtitle": "Contact Us",
+    "email": {
+      "label": "📧 Email",
+      "value": "hello@wendogo.com"
+    },
+    "address": {
+      "label": "📍 Address",
+      "lines": [
+        "WENDOGO SAS",
+        "50 Avenue des Champs Elysées",
+        "75008 Paris"
+      ]
+    }
+  },
+  "legal": {
+    "title": "7. Legal Information",
+    "publisher": {
+      "title": "Publisher",
+      "lines": [
+        "WENDOGO SAS",
+        "Share capital: €10,000",
+        "RCS: Paris B 123 456 789"
+      ]
+    },
+    "director": {
+      "title": "Publication Director",
+      "lines": [
+        "Edgar Kamdem",
+        "Co-founder & CEO"
+      ]
+    }
+  }
+}

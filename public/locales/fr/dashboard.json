@@ -1,0 +1,85 @@
+{
+  "categories": {
+    "orientation": "Orientation",
+    "visa": "Visa",
+    "logement": "Logement",
+    "finance": "Finance",
+    "vieEtudiante": "Vie étudiante",
+    "emploi": "Emploi",
+    "autres": "Autres"
+  },
+  "myQuestions": {
+    "title": "Mes questions",
+    "empty": "Aucune question posée",
+    "description": "Posez vos questions sur les études en France et obtenez des réponses de la communauté",
+    "askQuestion": "Poser une question",
+    "viewAll": "Voir toutes"
+  },
+  "supportStatus": {
+    "pending": "En attente",
+    "contacted": "Contacté",
+    "inProgress": "En cours",
+    "completed": "Terminé",
+    "cancelled": "Annulé"
+  },
+  "mySupport": {
+    "title": "Mes accompagnements",
+    "empty": "Aucun accompagnement en cours",
+    "description": "Bénéficiez d'un accompagnement personnalisé pour réussir vos études en France",
+    "discoverOffers": "Découvrir nos offres",
+    "viewAll": "Voir tout",
+    "counselor": "Conseiller : {{name}}"
+  },
+  "recommended": {
+    "title": "Recommandé pour vous"
+  },
+  "interestDomains": {
+    "title": "Domaines d'intérêt",
+    "empty": "Aucun domaine d'intérêt détecté pour le moment",
+    "emptyDescription": "Ajoutez des formations à vos favoris pour voir vos préférences apparaître ici",
+    "discoverPrograms": "Découvrir les formations",
+    "count_one": "{{count}} domaine",
+    "count_other": "{{count}} domaines",
+    "programCount_one": "{{count}} formation",
+    "programCount_other": "{{count}} formations",
+    "domainLabel": "Domaine {{id}}",
+    "showLess": "Afficher moins",
+    "showMore": "Voir tous les domaines ({{count}} de plus)",
+    "helpText": "Ces domaines sont déterminés en fonction de vos formations favorites. Plus vous ajoutez de favoris, plus cette analyse devient précise."
+  },
+  "recentFavorites": {
+    "title": "Favoris récents",
+    "empty": "Aucun favori pour le moment",
+    "discoverPrograms": "Découvrir les formations",
+    "viewAll": "Voir tous les favoris"
+  },
+  "welcome": {
+    "greeting": "Bonjour {{name}} ! 👋",
+    "subtitle": "Voici un aperçu de votre activité sur Wendogo"
+  },
+  "statistics": {
+    "favoritesCount": "Formations favorites",
+    "questionsCount": "Questions posées",
+    "supportCount": "Accompagnements",
+    "lastVisit": "Dernière visite"
+  },
+  "quickActions": {
+    "title": "Actions rapides",
+    "search": {
+      "title": "Rechercher",
+      "description": "Parcourir le catalogue"
+    },
+    "favorites": {
+      "title": "Mes favoris",
+      "description": "Gérer mes formations"
+    },
+    "forum": {
+      "title": "Forum",
+      "description": "Poser une question"
+    },
+    "support": {
+      "title": "Accompagnement",
+      "description": "Être accompagné"
+    }
+  }
+}

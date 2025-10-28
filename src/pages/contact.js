@@ -11,8 +11,12 @@ import Image from 'next/image';
 import SocialMediaLogo from '../assets/optimized/social_media_logo.webp';
 import { FloatingWhatsApp } from 'react-floating-whatsapp';
 import { REST_API_PARAMS } from '../utils/Constants';
+import { useTranslation } from 'next-i18next';
+import Link from 'next/link';
 
 function Contact() {
+  const { t } = useTranslation(['common', 'contact']);  
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -79,13 +83,13 @@ function Contact() {
 
       } else {
         setSubmitStatus('error');
-        setSubmitMessage(result.error || 'Erreur lors de l\'envoi du message');
+        setSubmitMessage(result.error || t('contact:form.errors.default'));
       }
 
     } catch (error) {
       console.error('Error submitting form:', error);
       setSubmitStatus('error');
-      setSubmitMessage('Erreur de connexion. Veuillez vérifier votre connexion internet et réessayer.');
+      setSubmitMessage(t('contact:form.errors.connection'));
 
       // Track form submission error
       if (typeof event !== 'undefined') {
@@ -106,24 +110,23 @@ function Contact() {
       <Head>
         <meta property="og:url" content="https://wendogo.com/contact" />
         <meta property="og:type" content="article" />
-        <meta property="og:title" content="Contactez-nous - Wendogo" />
-        <meta property="og:description" content="Contactez l'équipe Wendogo pour toute question sur votre projet d'études en France. Support disponible 24h/24." />
+        <meta property="og:title" content={t('contact:meta.title')} />
+        <meta property="og:description" content={t('contact:meta.description')} />
         <meta property="og:image" content={'https://wendogo.com' + SocialMediaLogo} />
-        <title>Contactez-nous - Wendogo</title>
-        <meta name="description" content="Contactez l'équipe Wendogo pour toute question sur votre projet d'études en France. Support disponible 24h/24." />
+        <title>{t('contact:meta.title')}</title>
+        <meta name="description" content={t('contact:meta.description')} />
       </Head>
 
-      <NavBar variant="simple" />
+      <NavBar variant="simple" languageSelectorVariant="light" />
 
       <main className="max-w-7xl mx-auto px-6 py-12">
         {/* Header */}
         <div className="text-center mb-16">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            Contactez l'équipe Wendogo
+            {t('contact:header.title')}
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Notre équipe d'experts est là pour vous accompagner dans votre projet d'études en France. 
-            Nous répondons à toutes vos questions rapidement et avec bienveillance.
+            {t('contact:header.description')}
           </p>
         </div>
 
@@ -133,15 +136,14 @@ function Contact() {
             <div className="bg-white rounded-2xl shadow-lg p-8">
               <h2 className="text-2xl font-semibold text-gray-900 mb-6 flex items-center">
                 <Clock className="w-6 h-6 text-blue-600 mr-3" />
-                Disponibilité
+                {t('contact:availability.title')}
               </h2>
               <div className="bg-green-50 border border-green-200 rounded-lg p-4">
                 <p className="text-green-800 font-semibold mb-2">
-                  📞 Support disponible 24h/24, 7j/7
+                  {t('contact:availability.supportTitle')}
                 </p>
                 <p className="text-green-700">
-                  Notre équipe est disponible pour vous accompagner à tout moment, 
-                  où que vous soyez dans le monde.
+                  {t('contact:availability.supportDescription')}
                 </p>
               </div>
             </div>
@@ -155,15 +157,15 @@ function Contact() {
                     <Mail className="w-6 h-6 text-blue-600" />
                   </div>
                   <div className="ml-4">
-                    <h3 className="font-semibold text-gray-900">Email</h3>
-                    <p className="text-gray-600">Réponse sous 2h en moyenne</p>
+                    <h3 className="font-semibold text-gray-900">{t('contact:contactMethods.email.title')}</h3>
+                    <p className="text-gray-600">{t('contact:contactMethods.email.responseTime')}</p>
                   </div>
                 </div>
                 <a 
                   href="mailto:hello@wendogo.com" 
                   className="text-blue-600 hover:text-blue-800 font-medium text-lg"
                 >
-                  hello@wendogo.com
+                  {t('contact:contactMethods.email.address')}
                 </a>
               </div>
 
@@ -174,15 +176,15 @@ function Contact() {
                     <MessageCircle className="w-6 h-6 text-green-600" />
                   </div>
                   <div className="ml-4">
-                    <h3 className="font-semibold text-gray-900">WhatsApp</h3>
-                    <p className="text-gray-600">Réponse immédiate</p>
+                    <h3 className="font-semibold text-gray-900">{t('contact:contactMethods.whatsapp.title')}</h3>
+                    <p className="text-gray-600">{t('contact:contactMethods.whatsapp.responseTime')}</p>
                   </div>
                 </div>
                 <a 
                   href="https://wa.me/33668156073" 
                   className="text-green-600 hover:text-green-800 font-medium text-lg"
                 >
-                  +33 6 68 15 60 73
+                  {t('contact:contactMethods.whatsapp.number')}
                 </a>
               </div>
 
@@ -193,35 +195,32 @@ function Contact() {
                     <Users className="w-6 h-6 text-blue-600" />
                   </div>
                   <div className="ml-4">
-                    <h3 className="font-semibold text-gray-900">Messenger</h3>
-                    <p className="text-gray-600">Chat en temps réel</p>
+                    <h3 className="font-semibold text-gray-900">{t('contact:contactMethods.messenger.title')}</h3>
+                    <p className="text-gray-600">{t('contact:contactMethods.messenger.responseTime')}</p>
                   </div>
                 </div>
                 <a 
-                  href="https://m.me/wendogoHQ" 
-                  className="text-blue-600 hover:text-blue-800 font-medium"
+                  href="https://m.me/wendogo.officiel" 
+                  className="text-blue-600 hover:text-blue-800 font-medium text-lg"
                 >
-                  Écrivez-nous sur Messenger
+                  {t('contact:contactMethods.messenger.linkText')}
                 </a>
               </div>
 
-              {/* Adresse */}
-              <div className="bg-white rounded-2xl shadow-lg p-6">
+              {/* Localisation */}
+              <div className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-shadow">
                 <div className="flex items-center mb-4">
                   <div className="bg-purple-100 p-3 rounded-full">
                     <MapPin className="w-6 h-6 text-purple-600" />
                   </div>
                   <div className="ml-4">
-                    <h3 className="font-semibold text-gray-900">Adresse</h3>
-                    <p className="text-gray-600">Siège social</p>
+                    <h3 className="font-semibold text-gray-900">{t('contact:contactMethods.location.title')}</h3>
+                    <p className="text-gray-600">{t('contact:contactMethods.location.info')}</p>
                   </div>
                 </div>
-                <address className="text-gray-700 not-italic">
-                  WENDOGO SAS<br />
-                  50 Avenue des Champs Elysées<br />
-                  75008 Paris<br />
-                  France
-                </address>
+                <p className="text-purple-600 font-medium">
+                  {t('contact:contactMethods.location.address')}
+                </p>
               </div>
             </div>
           </div>
@@ -230,14 +229,14 @@ function Contact() {
           <div className="bg-white rounded-2xl shadow-lg p-8">
             <h2 className="text-2xl font-semibold text-gray-900 mb-6 flex items-center">
               <Send className="w-6 h-6 text-blue-600 mr-3" />
-              Envoyez-nous un message
+              {t('contact:form.title')}
             </h2>
 
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Type de projet */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Type de projet *
+                  {t('contact:form.projectType.label')}
                 </label>
                 <select
                   name="projectType"
@@ -246,21 +245,21 @@ function Contact() {
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   required
                 >
-                  <option value="">Sélectionnez votre projet</option>
-                  <option value="orientation">Orientation et recherche de formations</option>
-                  <option value="visa">Accompagnement visa étudiant</option>
-                  <option value="campus-france">Procédure Campus France</option>
-                  <option value="parcoursup">Questions Parcoursup</option>
-                  <option value="logement">Aide au logement</option>
-                  <option value="general">Question générale</option>
-                  <option value="other">Autre</option>
+                  <option value="">{t('contact:form.projectType.placeholder')}</option>
+                  <option value="orientation">{t('contact:form.projectType.options.orientation')}</option>
+                  <option value="visa">{t('contact:form.projectType.options.visa')}</option>
+                  <option value="campus-france">{t('contact:form.projectType.options.campusFrance')}</option>
+                  <option value="parcoursup">{t('contact:form.projectType.options.parcoursup')}</option>
+                  <option value="logement">{t('contact:form.projectType.options.housing')}</option>
+                  <option value="general">{t('contact:form.projectType.options.general')}</option>
+                  <option value="other">{t('contact:form.projectType.options.other')}</option>
                 </select>
               </div>
 
               {/* Nom */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Nom complet *
+                  {t('contact:form.name.label')}
                 </label>
                 <input
                   type="text"
@@ -269,14 +268,14 @@ function Contact() {
                   onChange={handleInputChange}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   required
-                  placeholder="Votre nom et prénom"
+                  placeholder={t('contact:form.name.placeholder')}
                 />
               </div>
 
               {/* Email */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Email *
+                  {t('contact:form.email.label')}
                 </label>
                 <input
                   type="email"
@@ -285,14 +284,14 @@ function Contact() {
                   onChange={handleInputChange}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   required
-                  placeholder="votre@email.com"
+                  placeholder={t('contact:form.email.placeholder')}
                 />
               </div>
 
               {/* Sujet */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Sujet *
+                  {t('contact:form.subject.label')}
                 </label>
                 <input
                   type="text"
@@ -301,14 +300,14 @@ function Contact() {
                   onChange={handleInputChange}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   required
-                  placeholder="Résumé de votre demande"
+                  placeholder={t('contact:form.subject.placeholder')}
                 />
               </div>
 
               {/* Message */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Message *
+                  {t('contact:form.message.label')}
                 </label>
                 <textarea
                   name="message"
@@ -317,7 +316,7 @@ function Contact() {
                   rows="6"
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   required
-                  placeholder="Décrivez votre projet ou posez votre question..."
+                  placeholder={t('contact:form.message.placeholder')}
                 />
               </div>
 
@@ -330,12 +329,12 @@ function Contact() {
                 {isSubmitting ? (
                   <>
                     <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
-                    Envoi en cours...
+                    {t('contact:form.submit.sending')}
                   </>
                 ) : (
                   <>
                     <Send className="w-5 h-5 mr-2" />
-                    Envoyer le message
+                    {t('contact:form.submit.send')}
                   </>
                 )}
               </button>
@@ -357,15 +356,15 @@ function Contact() {
                     <p className="text-red-800 font-medium">{submitMessage}</p>
                   </div>
                   <p className="text-red-700 text-sm mt-2">
-                    Si le problème persiste, contactez-nous directement :
+                    {t('contact:form.errors.persist')}
                     <a href="mailto:hello@wendogo.com" className="underline ml-1">hello@wendogo.com</a>
                   </p>
                 </div>
               )}
 
               <p className="text-xs text-gray-500">
-                * Champs obligatoires. Vos données sont protégées selon notre 
-                <a href="/privacy" className="underline ml-1">politique de confidentialité</a>.
+                {t('contact:form.privacy')}
+                <Link href="/privacy" className="underline ml-1">{t('contact:form.privacyLink')}</Link>.
               </p>
             </form>
           </div>
@@ -374,31 +373,31 @@ function Contact() {
         {/* Section FAQ rapide */}
         <div className="bg-white rounded-2xl shadow-lg p-8">
           <h2 className="text-2xl font-semibold text-gray-900 mb-8 text-center">
-            Questions fréquentes
+            {t('contact:faq.title')}
           </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="bg-blue-50 p-6 rounded-lg">
               <h3 className="font-semibold text-blue-900 mb-2">
-                🎓 Quelle formation choisir ?
+                {t('contact:faq.items.formation.title')}
               </h3>
               <p className="text-blue-800 text-sm">
-                Nos conseillers analysent votre profil pour vous proposer les formations les plus adaptées.
+                {t('contact:faq.items.formation.description')}
               </p>
             </div>
             <div className="bg-green-50 p-6 rounded-lg">
               <h3 className="font-semibold text-green-900 mb-2">
-                📋 Comment préparer mon visa ?
+                {t('contact:faq.items.visa.title')}
               </h3>
               <p className="text-green-800 text-sm">
-                Accompagnement complet pour constituer votre dossier et maximiser vos chances.
+                {t('contact:faq.items.visa.description')}
               </p>
             </div>
             <div className="bg-purple-50 p-6 rounded-lg">
               <h3 className="font-semibold text-purple-900 mb-2">
-                ⏰ Quand commencer ?
+                {t('contact:faq.items.timing.title')}
               </h3>
               <p className="text-purple-800 text-sm">
-                Idéalement 8-12 mois avant votre rentrée pour préparer sereinement votre projet.
+                {t('contact:faq.items.timing.description')}
               </p>
             </div>
           </div>
@@ -407,11 +406,11 @@ function Contact() {
 
       <FloatingWhatsApp 
         phoneNumber="33668156073" 
-        accountName="Wendogo" 
+        accountName={t('contact:whatsapp.accountName')} 
         avatar="/social_media_logo.webp"
-        statusMessage="Répond en général dans l'heure"
-        chatMessage="Salut ! 🎓\n\nJe peux t'aider avec :\n• Recherche de formations\n• Accompagnement visa\n• Questions sur Campus France\n\nDis-moi comment je peux t'aider !"
-        placeholder="Votre message..."
+        statusMessage={t('contact:whatsapp.statusMessage')}
+        chatMessage={t('contact:whatsapp.chatMessage')}
+        placeholder={t('contact:whatsapp.placeholder')}
         chatboxHeight={500}
       />
 
@@ -420,4 +419,13 @@ function Contact() {
   );
 }
 
+export async function getStaticProps({ locale }) {
+  const { serverSideTranslations } = await import('next-i18next/serverSideTranslations');
+  
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['authModal', 'common', 'contact'])),
+    },
+  };
+}
 export default Contact;

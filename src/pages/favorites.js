@@ -9,6 +9,8 @@ import { REST_API_PARAMS } from '../utils/Constants';
 import OptimizedImage from '../components/OptimizedImage';
 import FooterSingleRow from '../components/FooterSingleRow';
 import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next';
+import Link from 'next/link';
 
 const ITEMS_PER_PAGE = 12;
 
@@ -21,7 +23,8 @@ const FavoritesPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const router = useRouter();
-
+  const locale = router.locale || 'fr';
+  const { t } = useTranslation(['common', 'favorites']);
   // ✅ AJOUTER ce useEffect :
   useEffect(() => {
     if (status === 'loading') return;
@@ -105,8 +108,8 @@ const FavoritesPage = () => {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4">Connexion requise</h1>
-          <p>Veuillez vous connecter pour voir vos favoris.</p>
+          <h1 className="text-2xl font-bold mb-4">{t('favorites:auth.required')}</h1>
+          <p>{t('favorites:auth.loginMessage')}</p>
         </div>
       </div>
     );
@@ -120,11 +123,16 @@ const FavoritesPage = () => {
         {/* En-tête */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Mes formations favorites
+            {t('favorites:header.title')}
           </h1>
           <p className="text-gray-600">
-            {filteredPrograms.length} formation{filteredPrograms.length !== 1 ? 's' : ''} 
-            {searchQuery && ` trouvée${filteredPrograms.length !== 1 ? 's' : ''} pour "${searchQuery}"`}
+              {t('favorites:header.count', { 
+                count: filteredPrograms.length 
+              })}
+              {searchQuery && ' ' + t('favorites:header.searchResults', { 
+                count: filteredPrograms.length,
+                query: searchQuery 
+              })}
           </p>
         </div>
 
@@ -134,7 +142,7 @@ const FavoritesPage = () => {
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
             <input
               type="text"
-              placeholder="Rechercher dans vos favoris..."
+              placeholder={t('favorites:search.placeholder')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -147,21 +155,18 @@ const FavoritesPage = () => {
           <div className="text-center py-12">
             <Heart className="w-16 h-16 text-gray-300 mx-auto mb-4" />
             <h3 className="text-xl font-semibold text-gray-900 mb-2">
-              {searchQuery ? 'Aucun résultat trouvé' : 'Aucune formation favorite'}
+              {searchQuery ? t('favorites:empty.noResults') : t('favorites:empty.noFavorites') }
             </h3>
             <p className="text-gray-600 mb-6">
-              {searchQuery 
-                ? 'Essayez avec d\'autres mots-clés'
-                : 'Commencez à ajouter des formations à vos favoris pour les retrouver ici'
-              }
+              {searchQuery ? t('favorites:empty.tryOtherKeywords') : t('favorites:empty.startAdding') }
             </p>
             {!searchQuery && (
-              <a 
+              <Link
                 href="/"
                 className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
               >
-                Découvrir les formations
-              </a>
+                {t('favorites:empty.discoverButton')}
+              </Link>
             )}
           </div>
         ) : (
@@ -222,7 +227,7 @@ const FavoritesPage = () => {
                       )}
                       {program.alternance_possible && (
                         <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm">
-                          Alternance
+                          {t('favorites:card.alternance')}
                         </span>
                       )}
                     </div>
@@ -230,15 +235,17 @@ const FavoritesPage = () => {
                     {/* Footer */}
                     <div className="flex items-center justify-between pt-4 border-t border-gray-100">
                       <span className="text-sm text-gray-500">
-                        Ajouté le {new Date(program.favorited_at).toLocaleDateString('fr-FR')}
+                          {t('favorites:card.addedOn', { 
+                            date: new Date(program.favorited_at).toLocaleDateString(locale === 'fr' ? 'fr-FR' : 'en-US')
+                          })}
                       </span>
-                      <a 
+                      <Link 
                         href={`/schools/${program.school?.slug}/programs/${program.slug}`}
                         className="inline-flex items-center gap-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
                       >
-                        <span>Voir</span>
+                        <span>{t('favorites:card.viewButton')}</span>
                         <ExternalLink className="w-3 h-3" />
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -249,7 +256,11 @@ const FavoritesPage = () => {
             {totalPages > 1 && (
               <div className="flex items-center justify-between">
                 <div className="text-sm text-gray-700">
-                  Affichage de {startIndex + 1} à {Math.min(endIndex, filteredPrograms.length)} sur {filteredPrograms.length} résultats
+                  {t('favorites:pagination.showing', {
+                    start: startIndex + 1,
+                    end: Math.min(endIndex, filteredPrograms.length),
+                    total: filteredPrograms.length
+                  })}
                 </div>
                 
                 <div className="flex items-center gap-2">
@@ -259,7 +270,7 @@ const FavoritesPage = () => {
                     className="flex items-center gap-1 px-3 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <ChevronLeft className="w-4 h-4" />
-                    Précédent
+                    {t('favorites:pagination.previous')}
                   </button>
                   
                   <div className="flex items-center gap-1">
@@ -286,7 +297,7 @@ const FavoritesPage = () => {
                     disabled={currentPage === totalPages}
                     className="flex items-center gap-1 px-3 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    Suivant
+                    {t('favorites:pagination.next')}
                     <ChevronRight className="w-4 h-4" />
                   </button>
                 </div>
@@ -299,5 +310,15 @@ const FavoritesPage = () => {
     </div>
   );
 };
+
+export async function getStaticProps({ locale }) {
+  const { serverSideTranslations } = await import('next-i18next/serverSideTranslations');
+  
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['authModal', 'common', 'favorites'])),
+    },
+  };
+}
 
 export default FavoritesPage;

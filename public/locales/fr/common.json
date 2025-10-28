@@ -1,0 +1,438 @@
+{
+  "nav": {
+    "forum": "Forum",
+    "orientation": "Orientation & Ressources",
+    "studyInFrance": "Étudier en France",
+    "studyInFranceDesc": "Guide complet pour vos études",
+    "studentVisa": "Visa Étudiant",
+    "studentVisaDesc": "Procédures et conseils",
+    "housing": "Logement",
+    "housingDesc": "Solutions d'hébergement",
+    "campusFrance": "Campus France",
+    "campusFranceDesc": "Procédure officielle",
+    "about": "À Propos",
+    "whyWendogo": "Pourquoi Wendogo ?",
+    "whyWendogoDesc": "Nos services",
+    "whoWeAre": "Qui sommes-nous ?",
+    "whoWeAreDesc": "Notre équipe et mission",
+    "testimonials": "Témoignages",
+    "testimonialsDesc": "Expériences étudiantes",
+    "login": "Se connecter",
+    "logout": "Se déconnecter",
+    "dashboard": "Dashboard",
+    "myFavorites": "Mes favoris",
+    "myAccount": "Mon compte"
+  },
+  "seo": {
+    "home": {
+      "title": "Wendogo - Moteur de recherche formations en France | Trouve ton école",
+      "description": "Découvre plus de 3800 formations dans 1000+ écoles françaises. Moteur de recherche intelligent pour trouver la formation parfaite selon ton profil académique.",
+      "keywords": "formations France, écoles françaises, moteur recherche formation, études supérieures France, universités France, grandes écoles",
+      "ogTitle": "Wendogo - Trouve ta formation idéale en France",
+      "ogDescription": "Moteur de recherche intelligent pour 3800 formations dans 1000+ écoles françaises. Filtres avancés, recommandations personnalisées.",
+      "twitterTitle": "Wendogo - Moteur de recherche formations France",
+      "twitterDescription": "Trouve ta formation parmi 3800 programmes dans 1000+ écoles françaises. Recherche intelligente et filtres avancés.",
+      "schemaDescription": "Moteur de recherche pour formations et écoles en France"
+    }
+  },
+  "tabs": {
+    "search": "Rechercher une formation",
+    "accompany": "Se faire accompagner",
+    "organizations": "Espace Partenaires"
+  },
+  "hero": {
+    "title": "Votre avenir académique en France vous attend",
+    "description_part1": "Découvrez la plus grande sélection de formations en France — plus de",
+    "programs_count": "3800",
+    "programs_label": "programmes",
+    "description_part2": "incluant 100 % des formations Campus France dans plus de",
+    "schools_count": "1000",
+    "schools_label": "établissements partenaires",
+    "description_cta": "Comparez, choisissez, et lancez votre parcours international en toute confiance.",
+    "searchPlaceholder": "Rechercher une formation, une école...",
+    "clearSearch": "Effacer la recherche",
+    "search": "Rechercher",
+    "searching": "Recherche...",
+    "advancedFilters": "Filtres avancés",
+    "resultsCount_one": "{{count}} formation disponible",
+    "resultsCount_other": "{{count}} formations disponibles",
+    "specializations_in": "Spécialisations dans",
+    "viewPrograms": "Voir les formations"
+  },
+  "accompany_tab": {
+    "title": "Accompagnement personnalisé",
+    "description": "Laissez nos experts vous guider vers la formation parfaite selon votre profil et vos objectifs."
+  },
+  "organizations_tab": {
+    "title": "Partenaires & Organismes",
+    "description": "Vous représentez une école, une université, un organisme de formation ou une entreprise ? Rejoignez notre réseau de partenaires et donnez plus de visibilité à vos formations."
+  },
+  "domainSelection": {
+    "noDomainFound": "Aucun domaine trouvé",
+    "totalDomains": "Total domaines : {{count}}",
+    "searchQuery": "Recherche : \"{{query}}\"",
+    "title": "Découvrez les formations par domaine",
+    "description": "Cliquez sur un domaine pour explorer les spécialisations disponibles",
+    "noResults": "Aucune formation disponible dans ce domaine pour le moment.",
+    "backToDomains": "← Retour aux domaines",
+    "noDomains": "Aucun domaine disponible"
+  },
+  "subdomainSelection": {
+    "selected_one": "{{count}} spécialisation sélectionnée",
+    "selected_other": "{{count}} spécialisations sélectionnées",
+    "selectPrompt": "Sélectionner des domaines et spécialisations",
+    "clearAll": "Tout effacer"
+  },
+  "filters": {
+    "title": "Filtres avancés",
+    "subtitle": "Affinez votre recherche pour trouver la formation idéale",
+    "active_filters_one": "{{count}} actif",
+    "active_filters_other": "{{count}} actifs",
+    "reset_all": "Réinitialiser tout",
+    "close": "Fermer",
+    "general": {
+      "domainsAndSpecializations": "Domaines & Spécialisations",
+      "generalCriteria": "Critères généraux",
+      "entryLevel": "Niveau d'entrée",
+      "entryLevel.all": "Tous niveaux",
+      "degreeType": "Type de diplôme",
+      "degreeType.all": "Tous diplômes",
+      "duration": "Durée de formation",
+      "duration.all": "Toutes durées",
+      "city": "Ville",
+      "city.all": "Toutes les villes",
+      "city.search": "Rechercher une ville...",
+      "city.no_results": "Aucune ville trouvée",
+      "alternance": "Alternance",
+      "year_one": "{{count}} an",
+      "year_other": "{{count}} ans",
+      "filter_any": "Peu importe",
+      "filter_available": "✓ Disponible",
+      "filter_not_available": "✗ Non disponible"
+    },
+    "domains": "Domaines",
+    "specializations": "Spécialisations",
+    "specializations_count": "Spécialisations ({{count}})",
+    "modify": "Modifier les filtres",
+    "viewMore": "Voir tout ({{count}} de plus)",
+    "viewLess": "Voir moins",
+    "removeFilter": "Retirer ce filtre",
+    "more" : "autres",
+    "cost": {
+      "title": "Frais & Coûts",
+      "tuition_label": "Frais de scolarité annuels (€)",
+      "deposit_label": "Acompte requis (€)",
+      "min_placeholder": "Min",
+      "max_placeholder": "Max",
+      "quick_filter_less_5000": "< 5000€",
+      "quick_filter_5000_10000": "5000€ - 10000€",
+      "quick_filter_more_10000": "> 10000€"
+    },
+    "language": {
+      "title": "Langue d'enseignement",
+      "language_label": "Langue",
+      "min_level_label": "Niveau minimum requis",
+      "all_languages": "Toutes les langues",
+      "all_levels": "Tous niveaux",
+      "languages": {
+        "french": "🇫🇷 Français",
+        "english": "🇬🇧 Anglais",
+        "spanish": "🇪🇸 Espagnol"
+      },
+      "levels": {
+        "a1": "A1 - Débutant",
+        "a2": "A2 - Élémentaire",
+        "b1": "B1 - Intermédiaire",
+        "b2": "B2 - Intermédiaire avancé",
+        "c1": "C1 - Avancé",
+        "c2": "C2 - Maîtrise"
+      }
+    },
+    "admission": {
+      "title": "Calendrier & Admission",
+      "application_period_label": "Période de candidature",
+      "rncp_level_label": "Niveau RNCP",
+      "all_year": "Toute l'année",
+      "all_periods": "Toutes périodes",
+      "rncp_all_levels": "Tous niveaux",
+      "rncp_level": "Niveau {{level}}",
+      "periods": {
+        "jan_mar": "🗓️ Janvier-Mars",
+        "apr_jun": "🌸 Avril-Juin",
+        "sep_nov": "🍂 Sept-Nov",
+        "dec_feb": "❄️ Déc-Fév"
+      },
+      "advanced": "⚙️ Avancé"
+    },
+    "campus_france": {
+      "title": "Campus France & Labels",
+      "connected_school": "École connectée à Campus France",
+      "connected_school_help": "Écoles ayant un compte Campus France pour dépôt de dossiers",
+      "parallel_procedure": "Procédure parallèle Campus France",
+      "parallel_procedure_help": "Possibilité de candidature en dehors de la plateforme",
+      "tuition_exemption": "Exonération des frais de scolarité",
+      "exemption_total": "Totale",
+      "exemption_partial": "Partielle",
+      "exemption_none": "Aucune",
+      "welcome_label": "Label \"Bienvenue en France\"",
+      "welcome_label_all": "Tous",
+      "welcome_label_help": "Ce label évalue la qualité de l'accueil des étudiants internationaux"
+    } 
+  },
+  "results": {
+    "found_one": "{{count}} formation trouvée",
+    "found_other": "{{count}} formations trouvées",
+    "noResults": "Aucune formation trouvée",
+    "noResultsSubdomains": "Aucune formation ne correspond à vos critères dans les domaines sélectionnés.",
+    "noResultsFilters": "Aucune formation ne correspond à vos critères. Essayez de modifier vos filtres.",
+    "viewAllPrograms": "Voir toutes les formations",
+    "newSearch": "Nouvelle recherche",
+    "for": "pour",
+    "loading": "Chargement..."
+  },
+  "program": {
+    "alternance": "Alternance",
+    "intake": "Rentrée",
+    "exonerationFull": "Exonération Totale",
+    "exonerationPartial": "Exonération Partielle",
+    "exonerationNone": "Aucune exonération",
+    "duration": "Durée",
+    "viewProgram": "Voir le programme",
+    "deadline": "Deadline",
+    "campusFranceCalendar": "Calendrier Campus France",
+    "deposit": "Acompte"
+  },
+  "accompany": {
+    "orientation": {
+      "name": "🎯 Pack Orientation+",
+      "tagline": "De l'idée au choix parfait",
+      "description": "Trouvez LA formation qui transformera votre avenir",
+      "mostPopular": "Le plus populaire",
+      "features": {
+        "analysis": "Analyse personnalisée de votre profil",
+        "recommendations": "Recommandations d'écoles sur-mesure",
+        "dossier": "Aide à la constitution du dossier",
+        "followup": "Suivi jusqu'à l'admission garantie"
+      },
+      "detailed": {
+        "strategy": {
+          "title": "Conseil Stratégique et Orientation Personnalisée",
+          "items": {
+            "analysis": "Analyse complète de votre parcours académique et professionnel",
+            "strengths": "Identification de vos atouts et domaines d'amélioration",
+            "recommendations": "Recommandations sur-mesure des formations alignées avec vos objectifs",
+            "guide": "Guide complet des démarches administratives",
+            "financing": "Orientation financière et solutions de financement"
+          }
+        },
+        "preparation": {
+          "title": "Préparation Optimale des Dossiers",
+          "items": {
+            "campusFrance": "Assistance complète pour votre dossier Campus France",
+            "selection": "Sélection stratégique des établissements",
+            "structure": "Structuration de votre projet académique et professionnel",
+            "motivation": "Rédaction de lettres de motivation percutantes",
+            "interview": "Préparation intensive à l'entretien Campus France"
+          }
+        }
+      },
+      "specialMessage": "Rassurez-vous, nous vous guidons vers les écoles les plus adaptées pour vous."
+    },
+    "visa": {
+      "name": "🛂 Pack Visa & Préparation",
+      "tagline": "Votre passeport pour la France",
+      "description": "Obtenez votre visa sans stress, nous nous occupons de tout",
+      "mostComplete": "Le plus complet",
+      "features": {
+        "dossier": "Montage complet du dossier visa",
+        "interview": "Préparation à l'entretien consulaire",
+        "guarantee": "Garantie financière & logement",
+        "support": "Assistance en cas de refus"
+      },
+      "detailed": {
+        "assistance": {
+          "title": "Assistance Visa Complète",
+          "items": {
+            "dossier": "Montage professionnel du dossier de visa longue durée",
+            "coaching": "Coaching pour l'interview consulaire",
+            "strategies": "Stratégies en cas de refus de visa",
+            "financial": "Solutions financières (compte bloqué, garant)",
+            "documents": "Préparation de tous les documents de voyage"
+          }
+        },
+        "housing": {
+          "title": "Préparation Logement & Finances",
+          "items": {
+            "search": "Recherche et sécurisation du logement étudiant",
+            "guarantee": "Assistance pour les garanties financières",
+            "insurance": "Conseils sur l'assurance voyage et santé",
+            "budget": "Préparation du budget de vie en France",
+            "banking": "Aide pour les démarches bancaires"
+          }
+        }
+      },
+      "specialMessage": "Votre tranquillité d'esprit : nous sécurisons votre visa."
+    },
+    "installation": {
+      "name": "🏠 Pack Installation France",
+      "tagline": "Votre nouvelle vie commence ici",
+      "description": "Intégrez-vous facilement et rapidement dans votre nouvelle vie française",
+      "successGuaranteed": "Succès garanti",
+      "features": {
+        "banking": "Ouverture compte bancaire",
+        "university": "Inscription universitaire facilitée",
+        "social": "Sécurité sociale & mutuelle",
+        "integration": "Intégration vie étudiante"
+      },
+      "detailed": {
+        "administrative": {
+          "title": "Démarches Administratives Essentielles",
+          "items": {
+            "banking": "Assistance ouverture compte bancaire français",
+            "university": "Accompagnement inscription universitaire",
+            "social": "Inscription sécurité sociale et mutuelle étudiante",
+            "residence": "Régularisation du titre de séjour",
+            "cards": "Obtention des cartes de réduction étudiantes"
+          }
+        },
+        "integration": {
+          "title": "Intégration et Vie Étudiante",
+          "items": {
+            "coaching": "Coaching d'intégration dans la vie française",
+            "jobs": "Aide à la recherche de jobs étudiants",
+            "internships": "Accompagnement pour trouver des stages",
+            "network": "Accès aux réseaux étudiants et associatifs",
+            "support": "Support continu pendant les premiers mois"
+          }
+        }
+      },
+      "specialMessage": "Nous vous accompagnons dans vos premiers pas en France."
+    },
+    "savings": "Économisez {{amount}} !",
+    "chooseOffer": "Choisir cette offre",
+    "learnMore": "En savoir plus",
+    "trust": {
+      "title": "Pourquoi ils nous font confiance ?",
+      "security": {
+        "title": "Sécurité & Transparence",
+        "description": "Suivi en temps réel et communication constante avec nos étudiants"
+      },
+      "expertise": {
+        "title": "Expertise Reconnue",
+        "description": "Équipe d'anciens étudiants en France et de professionnels de l'éducation"
+      },
+      "human": {
+        "title": "Accompagnement Humain",
+        "description": "Un conseiller dédié qui croit en votre potentiel disponible 7j/7"
+      }
+    },
+    "guarantees": {
+      "satisfaction": "Garantie satisfaction 100%",
+      "students": "+500 étudiants accompagnées",
+      "advisors": "Conseillers bilingues"
+    }
+  },
+  "organization": {
+    "title": "Espace Partenaires",
+    "titleLong": "Vous êtes une école ou une université ?",
+    "subtitle": "Rejoignez notre réseau et attirez les meilleurs talents internationaux",
+    "advantages": {
+      "visibility": {
+        "title": "Visibilité Accrue",
+        "description": "Touchez des milliers d'étudiants francophones dans le monde entier"
+      },
+      "reach": {
+        "title": "Portée Internationale",
+        "description": "Attirez des talents du Cameroun, Sénégal, Maroc et bien d'autres pays"
+      },
+      "support": {
+        "title": "Accompagnement Expert",
+        "description": "Bénéficiez de notre expertise en recrutement international"
+      }
+    },
+    "contact": {
+      "title": "Contactez-nous",
+      "subtitle": "Décrivez-nous votre établissement et vos objectifs de recrutement",
+      "form": {
+        "firstName": "Prénom",
+        "lastName": "Nom",
+        "position": "Intitulé du poste",
+        "organization": "Établissement",
+        "email": "Adresse e-mail",
+        "message": "Votre message",
+        "placeholders": {
+          "firstName": "Votre prénom",
+          "lastName": "Votre nom",
+          "position": "Directeur, Responsable admission...",
+          "organization": "Nom de votre école/université",
+          "email": "votre.email@etablissement.fr",
+          "message": "Décrivez votre établissement, vos formations, vos objectifs de recrutement international et comment nous pouvons collaborer..."
+        },
+        "errors": {
+          "firstNameRequired": "Prénom requis",
+          "lastNameRequired": "Nom requis",
+          "positionRequired": "Intitulé du poste requis",
+          "organizationRequired": "Nom de l'établissement requis",
+          "emailRequired": "Email requis",
+          "emailInvalid": "Format email invalide",
+          "messageRequired": "Message requis",
+          "messageTooShort": "Message trop court (minimum 20 caractères)",
+          "submitError": "Erreur lors de l'envoi. Veuillez réessayer."
+        },
+        "required": "*",
+        "charactersCount": "{{count}}/1000 caractères",
+        "submit": "Envoyer notre message",
+        "submitting": "Envoi en cours..."
+      },
+      "success": {
+        "title": "Message envoyé avec succès !",
+        "message": "Merci pour votre message. Notre équipe vous contactera dans les plus brefs délais pour discuter de nos opportunités de partenariat.",
+        "sendAnother": "Envoyer un autre message"
+      },
+      "privacy": "🔒 Vos informations sont traitées de manière confidentielle et ne seront utilisées que dans le cadre de notre collaboration potentielle."
+    },
+    "testimonials": {
+      "title": "Ils nous font déjà confiance",
+      "businessSchools": {
+        "title": "Écoles de Commerce",
+        "quote": "Wendogo nous a permis de recruter des profils internationaux de qualité"
+      },
+      "universities": {
+        "title": "Universités",
+        "quote": "Une plateforme efficace pour attirer des étudiants motivés et bien préparés"
+      },
+      "specializedSchools": {
+        "title": "Écoles Spécialisées",
+        "quote": "Grâce à Wendogo, nous avons diversifié notre recrutement international"
+      }
+    }
+  },
+  "stats": {
+    "programs": "Formations",
+    "schools": "Écoles",
+    "satisfactionRate": "Taux de satisfaction",
+    "supportAvailable": "Support disponible"
+  },
+  "footer": {
+    "about": "À propos de Wendogo",
+    "fundamentals": "Fondamentaux",
+    "resources": "Les ressources Wendogo",
+    "whyWendogo": "Pourquoi passer par Wendogo ?",
+    "whoWeAre": "Qui sommes nous ?",
+    "contact": "Contact",
+    "cookies": "Cookies",
+    "privacy": "Respect de la vie privée",
+    "legal": "Mentions légales",
+    "terms": "CGU / CGV",
+    "termsOfService": "Contrats d'utilisation",
+    "studyInFrance": "Etudier en France",
+    "studentVisa": "Visa étudiant",
+    "housing": "Logement",
+    "campusFrance": "Campus France",
+    "disclaimer": "Wendogo Consulting est une société par actions simplifiée, immatriculée à l'ORIAS en tant que conseil en systemes et logiciels informatiques sous le numéro 497 933 408, dont le siège social est situé 50 avenue des Champs-Elysees 75008 Paris. Un contrat vous engage et doit être respecté. Vérifiez vos capacités financières avant de vous engager."
+  },
+  "favoriteButton": {
+    "add": "Ajouter aux favoris",
+    "remove": "Retirer des favoris"
+  }
+}

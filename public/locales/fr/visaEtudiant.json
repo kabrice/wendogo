@@ -1,0 +1,300 @@
+{
+  "meta": {
+    "title": "Guide Complet Visa Étudiant France 2025 | Wendogo",
+    "description": "Guide complet pour obtenir votre visa étudiant France : types, documents requis, procédure détaillée et conseils d'experts. Tout ce qu'il faut savoir pour réussir sa demande."
+  },
+  "hero": {
+    "badge": "Guide Complet 2025",
+    "title": "Visa Étudiant France",
+    "subtitle": "Tout ce qu'il faut savoir pour obtenir votre visa",
+    "description": "Guide complet et actualisé pour réussir votre demande de visa étudiant pour la France. Procédure, documents, délais et conseils d'experts."
+  },
+  "quickStats": {
+    "visaFees": "Frais de visa",
+    "monthlyResources": "Ressources/mois",
+    "processingTime": "Semaines délai",
+    "initialValidity": "Validité initiale"
+  },
+  "tabs": {
+    "types": "Types de visa",
+    "documents": "Documents requis",
+    "procedure": "Procédure",
+    "conseils": "Conseils"
+  },
+  "types": {
+    "title": "Types de visa étudiant",
+    "subtitle": "Choisissez le visa adapté à votre situation",
+    "vls": {
+      "title": "Visa long séjour étudiant (VLS-TS)",
+      "description": "Pour études de plus de 3 mois",
+      "duration": "1 an renouvelable",
+      "requirements": "Admission + ressources"
+    },
+    "short": {
+      "title": "Visa court séjour étudiant",
+      "description": "Pour études de moins de 3 mois",
+      "duration": "90 jours maximum",
+      "requirements": "Inscription + hébergement"
+    },
+    "concours": {
+      "title": "Visa études - concours",
+      "description": "Pour passer un concours",
+      "duration": "90 jours",
+      "requirements": "Convocation + garanties"
+    },
+    "moreInfo": "Plus d'informations",
+    "infoBox": {
+      "title": "Quelle est la différence ?",
+      "description": "Le visa long séjour étudiant (VLS-TS) est le plus courant et permet de rester en France le temps de vos études. Il doit être validé auprès de l'OFII dans les 3 mois suivant votre arrivée en France."
+    }
+  },
+  "documents": {
+    "title": "Documents requis",
+    "subtitle": "Liste complète des documents nécessaires pour votre dossier",
+    "personal": {
+      "category": "Documents personnels",
+      "passport": {
+        "name": "Passeport",
+        "detail": "Valide + 3 mois après fin séjour"
+      },
+      "photos": {
+        "name": "Photos d'identité",
+        "detail": "2 photos récentes format 35x45mm"
+      },
+      "form": {
+        "name": "Formulaire visa",
+        "detail": "Complété et signé"
+      },
+      "birthCert": {
+        "name": "Acte de naissance",
+        "detail": "Original + traduction"
+      }
+    },
+    "academic": {
+      "category": "Documents académiques",
+      "campusFrance": {
+        "name": "Attestation Campus France",
+        "detail": "Validation obligatoire"
+      },
+      "admission": {
+        "name": "Attestation admission",
+        "detail": "Université ou école"
+      },
+      "diplomas": {
+        "name": "Diplômes antérieurs",
+        "detail": "Originaux + traductions"
+      },
+      "transcripts": {
+        "name": "Relevés de notes",
+        "detail": "3 dernières années"
+      }
+    },
+    "financial": {
+      "category": "Documents financiers",
+      "resources": {
+        "name": "Justificatifs ressources",
+        "detail": "615€/mois minimum"
+      },
+      "bankStatements": {
+        "name": "Relevés bancaires",
+        "detail": "3 derniers mois"
+      },
+      "guarantor": {
+        "name": "Attestation garant",
+        "detail": "Si applicable"
+      },
+      "scholarship": {
+        "name": "Bourse",
+        "detail": "Attestation si bénéficiaire"
+      }
+    },
+    "housing": {
+      "category": "Documents logement",
+      "proof": {
+        "name": "Attestation hébergement",
+        "detail": "Premier mois minimum"
+      },
+      "contract": {
+        "name": "Contrat location",
+        "detail": "Ou réservation logement"
+      },
+      "guarantorRental": {
+        "name": "Attestation garant",
+        "detail": "Pour la location"
+      }
+    },
+    "urgent": "Urgent",
+    "important": "Important",
+    "warningBox": {
+      "title": "⚠️ Points importants",
+      "point1": "Tous les documents doivent être récents (moins de 6 mois)",
+      "point2": "Traductions assermentées obligatoires pour documents non français",
+      "point3": "Photocopies ET originaux requis",
+      "point4": "Vérifier spécificités du consulat de votre pays"
+    }
+  },
+  "procedure": {
+    "title": "Procédure étape par étape",
+    "subtitle": "Suivez ces 6 étapes pour obtenir votre visa étudiant sans stress.",
+    "step1": {
+      "title": "Validation Campus France",
+      "description": "Obligatoire avant toute demande",
+      "detail1": "Compléter dossier Campus France",
+      "detail2": "Passer entretien pédagogique",
+      "detail3": "Obtenir attestation de validation",
+      "detail4": "Télécharger document officiel",
+      "duration": "4-6 semaines"
+    },
+    "step2": {
+      "title": "Rassemblement documents",
+      "description": "Préparer dossier complet",
+      "detail1": "Vérifier liste documents",
+      "detail2": "Faire traductions assermentées",
+      "detail3": "Obtenir attestations nécessaires",
+      "detail4": "Organiser dans ordre requis",
+      "duration": "2-3 semaines"
+    },
+    "step3": {
+      "title": "Prise de rendez-vous",
+      "description": "Réserver créneaux consulaires",
+      "detail1": "Créer compte VFS/TLScontact",
+      "detail2": "Choisir date disponible",
+      "detail3": "Payer frais en ligne",
+      "detail4": "Confirmer rendez-vous",
+      "duration": "1-2 semaines"
+    },
+    "step4": {
+      "title": "Dépôt du dossier",
+      "description": "Présentation au consulat",
+      "detail1": "Arriver à l'heure précise",
+      "detail2": "Présenter documents originaux",
+      "detail3": "Payer frais complémentaires",
+      "detail4": "Récépissé de dépôt",
+      "duration": "1-2 heures"
+    },
+    "step5": {
+      "title": "Instruction et décision",
+      "description": "Traitement par consulat",
+      "detail1": "Vérification documents",
+      "detail2": "Enquête si nécessaire",
+      "detail3": "Décision consulaire",
+      "detail4": "Notification résultat",
+      "duration": "2-8 semaines"
+    },
+    "step6": {
+      "title": "Retrait du visa",
+      "description": "Récupération passeport",
+      "detail1": "Vérifier informations visa",
+      "detail2": "Contrôler dates validité",
+      "detail3": "Préparer voyage",
+      "detail4": "Validation OFII en France",
+      "duration": "1-2 jours"
+    },
+    "timeline": {
+      "title": "Délais à prévoir",
+      "normal": {
+        "duration": "2-4 sem",
+        "label": "Délai normal"
+      },
+      "high": {
+        "duration": "4-8 sem",
+        "label": "Période haute"
+      },
+      "start": {
+        "duration": "3 mois",
+        "label": "Commencer avant"
+      }
+    }
+  },
+  "conseils": {
+    "title": "Conseils d'experts",
+    "subtitle": "Maximisez vos chances d'obtenir votre visa avec ces conseils éprouvés.",
+    "anticipation": {
+      "title": "Anticipation",
+      "description": "Commencer 3 mois avant",
+      "tip1": "Période haute été = délais plus longs",
+      "tip2": "Prévoir délais administratifs",
+      "tip3": "Réserver rendez-vous tôt",
+      "tip4": "Éviter dernière minute"
+    },
+    "quality": {
+      "title": "Qualité du dossier",
+      "description": "Soigner chaque détail",
+      "tip1": "Documents lisibles et complets",
+      "tip2": "Traductions certifiées",
+      "tip3": "Organisation logique",
+      "tip4": "Copies supplémentaires"
+    },
+    "financial": {
+      "title": "Ressources financières",
+      "description": "Prouver solvabilité",
+      "tip1": "615€ par mois minimum",
+      "tip2": "Comptes stables",
+      "tip3": "Garant français si possible",
+      "tip4": "Bourses valorisées"
+    },
+    "interview": {
+      "title": "Entretien consulaire",
+      "description": "Se préparer mentalement",
+      "tip1": "Projet d'études clair",
+      "tip2": "Motivation sincère",
+      "tip3": "Cohérence avec parcours",
+      "tip4": "Connaissance établissement"
+    },
+    "communication": {
+      "title": "Communication",
+      "description": "Rester joignable",
+      "tip1": "Email valide",
+      "tip2": "Téléphone accessible",
+      "tip3": "Vérifier courriers",
+      "tip4": "Répondre rapidement"
+    },
+    "backup": {
+      "title": "Plan B",
+      "description": "Anticiper les imprévus",
+      "tip1": "Copies numériques documents",
+      "tip2": "Documents supplémentaires",
+      "tip3": "Budget urgences",
+      "tip4": "Flexibilité dates départ"
+    },
+    "errors": {
+      "title": "Erreurs fréquentes à éviter",
+      "error1": "Dossier incomplet ou désorganisé",
+      "error2": "Documents périmés ou mal traduits",
+      "error3": "Ressources financières insuffisantes",
+      "error4": "Projet d'études incohérent",
+      "error5": "Absence Campus France",
+      "error6": "Rendez-vous trop tardif"
+    },
+    "checklist": {
+      "title": "Checklist finale avant dépôt",
+      "documents": {
+        "title": "Documents",
+        "item1": "Passeport valide",
+        "item2": "Formulaire complété",
+        "item3": "Photos conformes",
+        "item4": "Attestation Campus France"
+      },
+      "finances": {
+        "title": "Finances",
+        "item1": "Justificatifs 615€/mois",
+        "item2": "Relevés bancaires",
+        "item3": "Frais visa 99€",
+        "item4": "Assurance santé"
+      },
+      "housing": {
+        "title": "Logement",
+        "item1": "Attestation hébergement",
+        "item2": "Contrat ou réservation",
+        "item3": "Coordonnées propriétaire",
+        "item4": "Plan d'accès"
+      }
+    }
+  },
+  "cta": {
+    "title": "Besoin d'aide pour votre visa étudiant ?",
+    "description": "Nos experts vous accompagnent dans toutes les démarches pour obtenir votre visa étudiant France rapidement et sans stress.",
+    "button1": "Accompagnement personnalisé",
+    "button2": "Guide Campus France"
+  }
+}

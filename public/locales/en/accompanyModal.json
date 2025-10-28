@@ -1,0 +1,104 @@
+{
+  "step": {
+    "label": "Step",
+    "of": "of",
+    "progress": "{{current}} of {{total}}"
+  },
+  "step1": {
+    "title": "Let's start your support journey",
+    "notConnected": {
+      "description": "To personalize your support, we need to get to know you.",
+      "button": "Sign in / Create an account"
+    },
+    "connected": {
+      "description": "Perfect! You are logged in as",
+      "button": "Continue"
+    }
+  },
+  "step2": {
+    "title": {
+      "complete": "Profile verified!",
+      "incomplete": "Complete your profile"
+    },
+    "profileComplete": {
+      "description": "Perfect! Your profile is complete. We have all the necessary information to offer you the best personalized support.",
+      "sectionTitle": "✅ Complete information:",
+      "fields": {
+        "name": "First and last name:",
+        "phone": "WhatsApp phone number:",
+        "birthdate": "Date of birth:",
+        "country": "Country of residence:"
+      }
+    },
+    "profileIncomplete": {
+      "description": "To offer you the best support, we need some additional information.",
+      "sectionTitle": "Missing information:",
+      "missingFields": {
+        "phone": "Phone number (WhatsApp)",
+        "birthdate": "Date of birth",
+        "country": "Country of residence"
+      },
+      "button": "Complete my profile",
+      "skipButton": "Skip for now"
+    }
+  },
+  "step3": {
+    "title": "Tell us about your project",
+    "subtitle": "The more we know, the better we can support you",
+    "projectDescription": {
+      "label": "Describe your study project in France *",
+      "charactersCount": "{{count}}/500 characters",
+      "placeholder": {
+        "orientation": "Example: I want to study computer science in a Master's program in Paris. I have a Bachelor's in mathematics and want to specialize in Artificial Intelligence. My goal is to work in a French tech company after my studies. I would like advice on choosing between EPITECH, EPITA and Paris-Saclay University...",
+        "visa": "Example: I've been admitted to ESSEC Business School for a Master's in Management. I now need to prepare my student visa application. I'm from Cameroon and need help with the blocked account, finding accommodation, and preparing for the consular interview. My budget is €15,000 per year...",
+        "installation": "Example: I've obtained my student visa and I'm arriving in Paris in September to join ESILV. I'm looking for help opening a bank account, registering for social security, finding a student job, and understanding the Parisian transport system. I'll be living in the 15th arrondissement..."
+      }
+    },
+    "additionalInfo": {
+      "label": "Additional information (optional)",
+      "placeholder": "Available budget, specific constraints, specific questions..."
+    },
+    "contactPreference": {
+      "label": "How would you prefer to be contacted?",
+      "options": {
+        "whatsapp": "WhatsApp (recommended)",
+        "email": "Email",
+        "phone": "Phone call"
+      }
+    },
+    "urgency": {
+      "label": "What is the urgency of your request?",
+      "options": {
+        "normal": "Normal (response within 24-48h)",
+        "urgent": "Urgent (response within 24h)",
+        "veryUrgent": "Very urgent (immediate response)"
+      }
+    }
+  },
+  "step4": {
+    "title": "Request sent successfully!",
+    "description": "Your request for <strong>{{offerName}}</strong> support has been sent to our advisors.",
+    "nextSteps": {
+      "title": "Next steps",
+      "steps": [
+        "An advisor will contact you within 24h",
+        "Free 30-minute consultation to refine your project",
+        "Personalized support proposal",
+        "Start of your journey to success!"
+      ]
+    },
+    "guarantee": "100% satisfaction guarantee",
+    "button": "Perfect, thank you!"
+  },
+  "navigation": {
+    "back": "Back",
+    "continue": "Continue",
+    "submit": "Send my request",
+    "sending": "Sending..."
+  },
+  "errors": {
+    "projectDescriptionRequired": "Please describe your study project",
+    "projectDescriptionTooShort": "Please provide more details (minimum 50 characters)",
+    "submitError": "Error sending request. Please try again."
+  }
+}

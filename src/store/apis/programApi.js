@@ -48,9 +48,9 @@ class ProgramApi {
    * @param {string} slug - Le slug du programme
    * @returns {Promise<Object>} Données du programme
    */
-  static async getProgramBySlug(slug) {
+  static async getProgramBySlug(slug, locale = 'fr') {
     try {
-      const response = await fetch(`${this.baseUrl}/programs/slug/${slug}`, {
+      const response = await fetch(`${this.baseUrl}/programs/slug/${slug}?locale=${locale}`, {
         method: 'GET',
         headers: this.headers
       });
@@ -66,10 +66,10 @@ class ProgramApi {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       
-      const data = await response.json();
-      
+      const resp = await response.json();
+      //console.log('Raw program data from API:😎😎😎', resp.data);
       // Transformer les données pour compatibilité avec l'ancien format
-      const transformedData = this.transformProgramData(data);
+      const transformedData = this.transformProgramData(resp.data);
       
       return {
         success: true,
@@ -89,9 +89,9 @@ class ProgramApi {
    * Récupère tous les slugs des programmes pour la génération statique
    * @returns {Promise<Array>} Liste des slugs
    */
-  static async getAllProgramSlugs() {
+  static async getAllProgramSlugs(locale = 'fr') {
     try {
-      const response = await fetch(`${this.baseUrl}/programs/slugs`, {
+      const response = await fetch(`${this.baseUrl}/programs/slugs?locale=${locale}`, {
         method: 'GET',
         headers: this.headers
       });
@@ -120,9 +120,10 @@ class ProgramApi {
    * @param {number} schoolId - ID de l'école
    * @returns {Promise<Array>} Programmes de l'école
    */
-  static async getProgramsBySchoolId(schoolId) {
+  static async getProgramsBySchoolId(schoolId, locale = 'fr') {
     try {
-      const response = await fetch(`${this.baseUrl}/programs/by-school/${schoolId}`, {
+      console.log('Fetching programs for school ID:', `${this.baseUrl}/programs/by-school/${schoolId}?locale=${locale}`);
+      const response = await fetch(`${this.baseUrl}/programs/by-school/${schoolId}?locale=${locale}`, {
         method: 'GET',
         headers: this.headers
       });
@@ -156,9 +157,9 @@ class ProgramApi {
    * @param {string} schoolSlug - Slug de l'école
    * @returns {Promise<Array>} Programmes de l'école
    */
-  static async getProgramsBySchoolSlug(schoolSlug) {
+  static async getProgramsBySchoolSlug(schoolSlug, locale = 'fr') {
     try {
-      const response = await fetch(`${this.baseUrl}/programs/by-school-slug/${schoolSlug}`, {
+      const response = await fetch(`${this.baseUrl}/programs/by-school-slug/${schoolSlug}?locale=${locale}`, {
         method: 'GET',
         headers: this.headers
       });
@@ -222,9 +223,22 @@ class ProgramApi {
    * @param {Object} filters - Filtres de recherche
    * @returns {Promise<Array>} Programmes filtrés
    */
-  static async searchPrograms(filters = {}) {
+  static async searchPrograms(filters = {}, locale = 'fr') {
     try {
-      const response = await fetch(`${this.baseUrl}/programs/search`, {
+
+      const params = new URLSearchParams();
+      
+      Object.entries(filters).forEach(([key, value]) => {
+        if (value !== null && value !== undefined && value !== '') {
+          if (Array.isArray(value)) {
+            value.forEach(v => params.append(key, v));
+          } else {
+            params.append(key, value);
+          }
+        }
+      });
+      console.log('searchPrograms filters params:', params.toString(), JSON.stringify(filters));
+      const response = await fetch(`${this.baseUrl}/programs/search?${params.toString()}&locale=${locale}`, {
         method: 'POST',
         headers: this.headers,
         body: JSON.stringify(filters)
@@ -271,6 +285,20 @@ class ProgramApi {
         data: [],
         total: 0
       };
+    }
+  }
+
+  static async getProgramDetail(programId, locale = 'fr') {
+    try {
+      const response = await fetch(`${this.baseUrl}/program/${programId}?locale=${locale}`, {
+        method: 'GET',
+        headers: this.headers
+      });
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error fetching program detail:', error);
+      return { success: false, error: error.message };
     }
   }
 
@@ -373,7 +401,7 @@ class ProgramApi {
       
       // Durée et organisation
       fi_school_duration: program.fi_school_duration,
-      alternance_possible: !!program.ca_school_duration,
+      alternance_possible: program.ca_school_duration,
       ca_school_duration: program.ca_school_duration,
       ca_program_details: program.ca_program_details,
       
@@ -526,12 +554,12 @@ class ProgramApi {
    * @param {string} input - Chaîne de langues et niveaux (ex: "Fr-B2,En-C1")
    * @returns {string} Chaîne formatée (ex: "Français (B2), Anglais (C1)")
    */
-  static formatLanguageLevels(input) {
+  static formatLanguageLevels(input, locale = 'fr') {
     if (!input) return '';
     const map = {
-      Fr: "Français",
-      En: "Anglais",
-      Es: "Espagnol"
+      Fr: locale === 'fr' ? "Français" : "French",
+      En: locale === 'fr' ? "Anglais" : "English",
+      Es: locale === 'fr' ? "Espagnol" : "Spanish"
     };
 
     return input

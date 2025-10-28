@@ -5,11 +5,13 @@
 import React from 'react';
 import { Heart } from 'lucide-react';
 import { useFavorites } from '../contexts/FavoritesContext';
+import { useTranslation } from 'next-i18next';
 // import AuthModal from './AuthModal';
 
 const FavoriteButton = ({ programId, className = "", size = "w-5 h-5" }) => {
   const { favorites, toggleFavorite } = useFavorites();
-  
+  const { t } = useTranslation('common');
+
   const isFavorite = favorites.has(programId);
 
   return (
@@ -21,7 +23,8 @@ const FavoriteButton = ({ programId, className = "", size = "w-5 h-5" }) => {
             ? 'text-yellow-500 bg-yellow-50 hover:bg-yellow-100' 
             : 'text-gray-400 hover:text-yellow-500 hover:bg-yellow-50'
         } ${className}`}
-        title={isFavorite ? 'Retirer des favoris' : 'Ajouter aux favoris'}
+        title={isFavorite ? t('favoriteButton.remove') : t('favoriteButton.add')}
+
       >
         <Heart className={`${size} ${isFavorite ? 'fill-current' : ''}`} />
       </button>

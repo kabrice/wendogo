@@ -1,0 +1,103 @@
+{
+  "meta": {
+    "title": "Contactez-nous - Wendogo",
+    "description": "Contactez l'équipe Wendogo pour toute question sur votre projet d'études en France. Support disponible 24h/24."
+  },
+  "header": {
+    "title": "Contactez l'équipe Wendogo",
+    "description": "Notre équipe d'experts est là pour vous accompagner dans votre projet d'études en France. Nous répondons à toutes vos questions rapidement et avec bienveillance."
+  },
+  "availability": {
+    "title": "Disponibilité",
+    "supportTitle": "📞 Support disponible 24h/24, 7j/7",
+    "supportDescription": "Notre équipe est disponible pour vous accompagner à tout moment, où que vous soyez dans le monde."
+  },
+  "contactMethods": {
+    "email": {
+      "title": "Email",
+      "responseTime": "Réponse sous 2h en moyenne",
+      "address": "hello@wendogo.com"
+    },
+    "whatsapp": {
+      "title": "WhatsApp",
+      "responseTime": "Réponse immédiate",
+      "number": "+33 6 68 15 60 73"
+    },
+    "messenger": {
+      "title": "Messenger",
+      "responseTime": "Chat en temps réel",
+      "linkText": "@wendogo.officiel"
+    },
+    "location": {
+      "title": "Adresse",
+      "info": "Paris, France",
+      "address": "50 Avenue des Champs Elysées, 75008 Paris"
+    }
+  },
+  "form": {
+    "title": "Envoyez-nous un message",
+    "projectType": {
+      "label": "Type de projet *",
+      "placeholder": "Sélectionnez votre projet",
+      "options": {
+        "orientation": "Orientation et recherche de formations",
+        "visa": "Accompagnement visa étudiant",
+        "campusFrance": "Procédure Campus France",
+        "parcoursup": "Questions Parcoursup",
+        "housing": "Aide au logement",
+        "general": "Question générale",
+        "other": "Autre"
+      }
+    },
+    "name": {
+      "label": "Nom complet *",
+      "placeholder": "Votre nom et prénom"
+    },
+    "email": {
+      "label": "Email *",
+      "placeholder": "votre@email.com"
+    },
+    "subject": {
+      "label": "Sujet *",
+      "placeholder": "Résumé de votre demande"
+    },
+    "message": {
+      "label": "Message *",
+      "placeholder": "Décrivez votre projet ou posez votre question..."
+    },
+    "submit": {
+      "sending": "Envoi en cours...",
+      "send": "Envoyer le message"
+    },
+    "errors": {
+      "default": "Erreur lors de l'envoi du message",
+      "connection": "Erreur de connexion. Veuillez vérifier votre connexion internet et réessayer.",
+      "persist": "Si le problème persiste, contactez-nous directement :"
+    },
+    "privacy": "* Champs obligatoires. Vos données sont protégées selon notre ",
+    "privacyLink": "politique de confidentialité"
+  },
+  "faq": {
+    "title": "Questions fréquentes",
+    "items": {
+      "formation": {
+        "title": "🎓 Quelle formation choisir ?",
+        "description": "Nos conseillers analysent votre profil pour vous proposer les formations les plus adaptées."
+      },
+      "visa": {
+        "title": "📋 Comment préparer mon visa ?",
+        "description": "Accompagnement complet pour constituer votre dossier et maximiser vos chances."
+      },
+      "timing": {
+        "title": "⏰ Quand commencer ?",
+        "description": "Idéalement 8-12 mois avant votre rentrée pour préparer sereinement votre projet."
+      }
+    }
+  },
+  "whatsapp": {
+    "accountName": "Wendogo",
+    "statusMessage": "Répond en général dans l'heure",
+    "chatMessage": "Salut ! 🎓\n\nJe peux t'aider avec :\n• Recherche de formations\n• Accompagnement visa\n• Questions sur Campus France\n\nDis-moi comment je peux t'aider !",
+    "placeholder": "Votre message..."
+  }
+}

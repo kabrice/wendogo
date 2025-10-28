@@ -1,0 +1,151 @@
+{
+  "header": {
+    "title": "Politique de Confidentialité",
+    "description": "Wendogo s'engage à protéger votre vie privée et vos données personnelles. Cette politique explique comment nous collectons, utilisons et protégeons vos informations.",
+    "lastUpdate": "Dernière mise à jour : 11 juillet 2025"
+  },
+  "tableOfContents": {
+    "title": "Table des matières",
+    "items": {
+      "collecte": "1. Données collectées",
+      "utilisation": "2. Utilisation des données",
+      "partage": "3. Partage des données",
+      "protection": "4. Protection des données",
+      "droits": "5. Vos droits",
+      "cookies": "6. Cookies",
+      "contact": "7. Nous contacter",
+      "modifications": "8. Modifications"
+    }
+  },
+  "collecte": {
+    "title": "1. Données que nous collectons",
+    "inscription": {
+      "title": "Données d'inscription",
+      "items": [
+        "Nom et prénom",
+        "Adresse email",
+        "Numéro de téléphone",
+        "Date de naissance",
+        "Pays de résidence (détecté automatiquement)"
+      ]
+    },
+    "social": {
+      "title": "Données via les réseaux sociaux",
+      "description": "Lorsque vous vous connectez via Google ou Facebook, nous collectons :",
+      "items": [
+        "Nom et prénom",
+        "Adresse email",
+        "Photo de profil (optionnel)"
+      ]
+    },
+    "usage": {
+      "title": "Données d'utilisation",
+      "items": [
+        "Formations ajoutées aux favoris",
+        "Historique de recherche",
+        "Préférences d'orientation",
+        "Données de navigation (pages visitées, temps passé)"
+      ]
+    }
+  },
+  "utilisation": {
+    "title": "2. Comment nous utilisons vos données",
+    "principal": {
+      "title": "Services principaux",
+      "items": [
+        "Créer et gérer votre compte",
+        "Sauvegarder vos formations favorites",
+        "Personnaliser vos recommandations",
+        "Fournir un support client"
+      ]
+    },
+    "amelioration": {
+      "title": "Amélioration des services",
+      "items": [
+        "Analyser l'utilisation de la plateforme",
+        "Améliorer nos algorithmes de recherche",
+        "Développer de nouvelles fonctionnalités",
+        "Prévenir la fraude et les abus"
+      ]
+    }
+  },
+  "partage": {
+    "title": "3. Partage de vos données",
+    "noSale": "🚫 Nous ne vendons jamais vos données personnelles à des tiers.",
+    "partners": {
+      "title": "Écoles partenaires",
+      "description": "Uniquement si vous demandez expressément à être mis en contact"
+    },
+    "providers": {
+      "title": "Fournisseurs de services",
+      "description": "Services d'hébergement, d'email, d'analytics (avec protection des données)"
+    },
+    "legal": {
+      "title": "Obligations légales",
+      "description": "Seulement si requis par la loi ou pour protéger nos droits"
+    }
+  },
+  "protection": {
+    "title": "4. Protection de vos données",
+    "encryption": {
+      "title": "Chiffrement",
+      "description": "SSL/TLS pour tous les transferts"
+    },
+    "access": {
+      "title": "Accès restreint",
+      "description": "Seuls les employés autorisés"
+    },
+    "backups": {
+      "title": "Sauvegardes",
+      "description": "Régulières et sécurisées"
+    }
+  },
+  "droits": {
+    "title": "5. Vos droits (RGPD)",
+    "intro": "Conformément au RGPD, vous disposez des droits suivants :",
+    "rights": {
+      "access": "Droit d'accès",
+      "rectification": "Droit de rectification",
+      "erasure": "Droit d'effacement",
+      "limitation": "Droit de limitation",
+      "portability": "Droit de portabilité",
+      "opposition": "Droit d'opposition"
+    },
+    "exercise": "💡 Comment exercer vos droits :",
+    "exerciseText": "Contactez-nous à ",
+    "email": "privacy@wendogo.com"
+  },
+  "cookies": {
+    "title": "6. Cookies et technologies similaires",
+    "essential": {
+      "title": "Cookies essentiels",
+      "description": "Nécessaires au fonctionnement du site (connexion, favoris)"
+    },
+    "analytics": {
+      "title": "Cookies d'analyse",
+      "description": "Pour comprendre l'utilisation du site et l'améliorer"
+    }
+  },
+  "contact": {
+    "title": "7. Nous contacter",
+    "dpo": "Délégué à la Protection des Données",
+    "email": "Email :",
+    "emailValue": "hello@wendogo.com",
+    "address": "Adresse :",
+    "addressValue": "Wendogo, 50 Avenue des Champs Elysées 75008 Paris",
+    "phone": "Téléphone :",
+    "phoneValue": "+33 6 68 15 60 73",
+    "responseTime": "⏱️ Délai de réponse :",
+    "responseTimeText": "Nous nous engageons à répondre dans un délai de 30 jours maximum."
+  },
+  "modifications": {
+    "title": "8. Modifications de cette politique",
+    "description": "Nous pouvons modifier cette politique de confidentialité pour refléter les changements de nos pratiques ou pour des raisons légales.",
+    "notification": "Notification :",
+    "notificationText": "Nous vous informerons de tout changement important par email ou via une notification sur notre site."
+  },
+  "footer": {
+    "effective": "Cette politique de confidentialité est effective depuis le 11 juillet 2025.",
+    "copyright": "© 2025 Wendogo. Tous droits réservés."
+  }
+}

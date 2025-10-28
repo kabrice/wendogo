@@ -3,6 +3,8 @@
 import React, { useState, useEffect, startTransition } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next';
+
 import { 
   User, 
   Mail, 
@@ -22,6 +24,7 @@ import { REST_API_PARAMS } from '../utils/Constants';
 const AccountPage = () => {
   const { data: session, status } = useSession();
   const router = useRouter();
+  const { t } = useTranslation(['common', 'account']);  
   const [user, setUser] = useState(null);
   const [formData, setFormData] = useState({
     firstname: '',
@@ -83,11 +86,11 @@ const AccountPage = () => {
       } else {
         const errorData = await response.text();
         console.error('❌ Erreur response:', errorData);
-        setMessage({ type: 'error', text: 'Erreur lors du chargement du profil' });
+        setMessage({ type: 'error', text: t('account:messages.loadError') });
       }
     } catch (error) {
       console.error('❌ Erreur loadUserProfile:', error);
-      setMessage({ type: 'error', text: 'Erreur lors du chargement du profil' });
+      setMessage({ type: 'error', text: t('account:messages.loadError') });
     } finally {
       setIsLoading(false);
     }
@@ -111,15 +114,15 @@ const AccountPage = () => {
     const errors = [];
 
     if (!formData.firstname?.trim()) {
-      errors.push('Le prénom est requis');
+      errors.push(t('account:validation.firstnameRequired'));
     }
 
     if (!formData.lastname?.trim()) {
-      errors.push('Le nom est requis');
+      errors.push(t('account:validation.lastnameRequired'));
     }
 
     if (formData.phone && !/^[\+]?[\d\s\-\(\)]{10,}$/.test(formData.phone)) {
-      errors.push('Le format du téléphone est invalide');
+      errors.push(t('account:validation.phoneInvalid'));
     }
 
     if (formData.birthdate) {
@@ -128,7 +131,7 @@ const AccountPage = () => {
       minDate.setFullYear(minDate.getFullYear() - 13);
       
       if (birthDate > minDate) {
-        errors.push('Vous devez avoir au moins 13 ans');
+        errors.push(t('account:validation.ageMinimum'));
       }
     }
 
@@ -138,7 +141,7 @@ const AccountPage = () => {
   const handleSave = async () => {
     // ✅ Vérifier s'il y a des changements
     if (!hasChanges()) {
-      setMessage({ type: 'info', text: 'Aucune modification détectée' });
+      setMessage({ type: 'info', text: t('account:messages.noChanges') });
       return;
     }
 
@@ -174,7 +177,7 @@ const AccountPage = () => {
         
         setUser(data.user);
         setOriginalData(formData); // ✅ Mettre à jour les données originales
-        setMessage({ type: 'success', text: 'Profil mis à jour avec succès !' });
+        setMessage({ type: 'success', text: t('account:messages.profileUpdated')  });
         
         // Effacer le message après 3 secondes
         setTimeout(() => {
@@ -186,14 +189,14 @@ const AccountPage = () => {
         
         try {
           const errorJson = JSON.parse(errorData);
-          setMessage({ type: 'error', text: errorJson.message || 'Erreur lors de la mise à jour' });
+          setMessage({ type: 'error', text: errorJson.message || t('account:messages.updateError') });
         } catch {
-          setMessage({ type: 'error', text: 'Erreur serveur lors de la mise à jour' });
+          setMessage({ type: 'error', text: t('account:messages.serverError') });
         }
       }
     } catch (error) {
       console.error('❌ Erreur handleSave:', error);
-      setMessage({ type: 'error', text: 'Erreur de connexion au serveur' });
+      setMessage({ type: 'error', text: t('account:messages.connectionError') });
     } finally {
       setIsSaving(false);
     }
@@ -223,8 +226,8 @@ const AccountPage = () => {
         <div className="max-w-3xl mx-auto">
           {/* En-tête */}
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Mon compte</h1>
-            <p className="text-gray-600">Gérez vos informations personnelles</p>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">{t('account:page.title')}</h1>
+            <p className="text-gray-600">{t('account:page.subtitle')}</p>
           </div>
 
           {/* Message de feedback */}
@@ -242,21 +245,21 @@ const AccountPage = () => {
 
           {/* Formulaire principal */}
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
-            <h2 className="text-xl font-semibold text-gray-900 mb-6">Informations personnelles</h2>
+            <h2 className="text-xl font-semibold text-gray-900 mb-6">{t('account:form.sectionTitle')}</h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Prénom */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   <User className="w-4 h-4 inline mr-2" />
-                  Prénom *
+                  {t('account:form.firstname.label')} {t('account:form.requiredField')}
                 </label>
                 <input
                   type="text"
                   value={formData.firstname}
                   onChange={(e) => handleInputChange('firstname', e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="Votre prénom"
+                  placeholder={t('account:form.firstname.placeholder')}
                   required
                 />
               </div>
@@ -265,14 +268,14 @@ const AccountPage = () => {
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   <User className="w-4 h-4 inline mr-2" />
-                  Nom *
+                  {t('account:form.lastname.label')} {t('account:form.requiredField')}
                 </label>
                 <input
                   type="text"
                   value={formData.lastname}
                   onChange={(e) => handleInputChange('lastname', e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="Votre nom"
+                  placeholder={t('account:form.lastname.placeholder')}
                   required
                 />
               </div>
@@ -281,7 +284,7 @@ const AccountPage = () => {
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   <Mail className="w-4 h-4 inline mr-2" />
-                  Adresse email
+                  {t('account:form.email.label')}
                 </label>
                 <input
                   type="email"
@@ -290,7 +293,7 @@ const AccountPage = () => {
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-500 cursor-not-allowed"
                 />
                 <p className="text-xs text-gray-500 mt-1">
-                  L'adresse mail n'est pas modifiable depuis l'espace client, veuillez contacter le support.
+                  {t('account:form.email.helpText')}
                 </p>
               </div>
 
@@ -298,7 +301,7 @@ const AccountPage = () => {
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   <Phone className="w-4 h-4 inline mr-2" />
-                  Téléphone
+                  {t('account:form.phone.label')}
                 </label>
                 <input
                   type="tel"
@@ -313,7 +316,7 @@ const AccountPage = () => {
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   <Calendar className="w-4 h-4 inline mr-2" />
-                  Date de naissance
+                  {t('account:form.birthdate.label')}
                 </label>
                 <input
                   type="date"
@@ -327,12 +330,12 @@ const AccountPage = () => {
               {/* Pays */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  🌍 Pays de résidence
+                  🌍 {t('account:form.country.label')}
                 </label>
                 <CountrySelector
                   value={formData.country}
                   onChange={(countryCode) => handleInputChange('country', countryCode)}
-                  placeholder="Sélectionnez votre pays"
+                  placeholder={t('account:form.country.placeholder')}
                   className="text-left"
                 />
               </div>
@@ -356,12 +359,12 @@ const AccountPage = () => {
                     ) : (
                       <Save className="w-4 h-4" />
                     )}
-                    {isSaving ? 'Enregistrement...' : 'Enregistrer les modifications'}
+                    {isSaving ? t('account:actions.saving') : t('account:actions.save')}
                   </button>
                   
                   {hasChanges() && (
                     <span className="text-sm text-amber-600 font-medium">
-                      ⚠️ Modifications non sauvegardées
+                      {t('account:messages.unsavedChanges')}
                     </span>
                   )}
                 </div>
@@ -374,7 +377,7 @@ const AccountPage = () => {
                     }}
                     className="text-sm text-gray-600 hover:text-gray-800 underline"
                   >
-                    Annuler les modifications
+                    {t('account:actions.cancel')}
                   </button>
                 )}
               </div>
@@ -388,16 +391,16 @@ const AccountPage = () => {
                   <div className="flex items-start gap-3">
                     <AlertTriangle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
                     <div>
-                      <h3 className="font-medium text-red-900 mb-2">Suppression du compte</h3>
+                      <h3 className="font-medium text-red-900 mb-2">{t('account:deleteSection.title')}</h3>
                       <p className="text-sm text-red-700 mb-4">
-                        Cette action est irréversible. Toutes vos données (favoris, historique, etc.) seront définitivement supprimées.
+                        {t('account:deleteSection.warning')}
                       </p>
                       <button
                         onClick={handleDeleteAccount}
                         className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors text-sm font-medium"
                       >
                         <Trash2 className="w-4 h-4" />
-                        Demander la suppression de mon compte
+                        {t('account:actions.deleteAccount')}
                       </button>
                     </div>
                   </div>
@@ -409,5 +412,15 @@ const AccountPage = () => {
     </div>
   );
 };
+
+export async function getStaticProps({ locale }) {
+  const { serverSideTranslations } = await import('next-i18next/serverSideTranslations');
+  
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['authModal', 'common', 'account'])),
+    },
+  };
+}
 
 export default AccountPage;

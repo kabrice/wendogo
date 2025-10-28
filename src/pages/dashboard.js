@@ -3,6 +3,7 @@
 import React, { useState, useEffect, startTransition } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next';
 import { REST_API_PARAMS } from '../utils/Constants';
 import OptimizedImage from '../components/OptimizedImage';
 import FooterSingleRow from '../components/FooterSingleRow';
@@ -30,10 +31,13 @@ import {
 } from 'lucide-react';
 import NavBar from '../components/NavBar';
 import SubdomainApi from '../store/apis/subdomainApi';
+import Link from 'next/link';
 
 const Dashboard = () => {
   const { data: session, status } = useSession();
   const router = useRouter();
+  const locale = router.locale || 'fr';
+  const { t } = useTranslation(['common', 'dashboard']);
   const [dashboard, setDashboard] = useState(null);
   const [domainNames, setDomainNames] = useState({});
   const [showAllDomains, setShowAllDomains] = useState(false);
@@ -50,19 +54,19 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (session?.user) {
-      loadDashboard();
+      loadDashboard(locale);
     }
   }, [session]);
 
   useEffect(() => {
     if (dashboard?.domain_preferences) {
-      fetchDomainNames(dashboard.domain_preferences);
+      fetchDomainNames(dashboard.domain_preferences, locale);
     }
   }, [dashboard]);
 
-  const loadDashboard = async () => {
+  const loadDashboard = async (locale) => {
     try {
-      const response = await fetch(`${REST_API_PARAMS.baseUrl}/api/user/dashboard`, {
+      const response = await fetch(`${REST_API_PARAMS.baseUrl}/api/user/dashboard?locale=${locale}`, {
           headers: { 
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${session.accessToken}`
@@ -81,7 +85,7 @@ const Dashboard = () => {
     }
   };
 
-  const fetchDomainNames = async (domainPreferences) => {
+  const fetchDomainNames = async (domainPreferences, locale) => {
     try {
       const subdomainIds = domainPreferences
         .map(pref => pref.subdomain_id)
@@ -92,7 +96,7 @@ const Dashboard = () => {
         return;
       }
 
-      const response = await SubdomainApi.getSubdomainsFromIds(subdomainIds);
+      const response = await SubdomainApi.getSubdomainsFromIds(subdomainIds, locale);
       
       if (response.success) {
         const nameMapping = {};
@@ -110,37 +114,36 @@ const Dashboard = () => {
   // ✅ NOUVEAU: Composant pour les questions du forum
   const ForumQuestions = ({ userQuestions = [] }) => {
     const CATEGORIES = {
-      'orientation': { label: 'Orientation', icon: '🎯' },
-      'visa': { label: 'Visa', icon: '📝' },
-      'logement': { label: 'Logement', icon: '🏠' },
-      'finance': { label: 'Finance', icon: '💰' },
-      'vie-etudiante': { label: 'Vie étudiante', icon: '🎓' },
-      'emploi': { label: 'Emploi', icon: '💼' },
-      'autres': { label: 'Autres', icon: '💬' }
+      'orientation': { label: t('dashboard:categories.orientation'), icon: '🎯' },
+      'visa': { label: t('dashboard:categories.visa'), icon: '📝' },
+      'logement': { label: t('dashboard:categories.logement'), icon: '🏠' },
+      'finance': { label: t('dashboard:categories.finance'), icon: '💰' },
+      'vie-etudiante': { label: t('dashboard:categories.vieEtudiante'), icon: '🎓' },
+      'emploi': { label: t('dashboard:categories.emploi'), icon: '💼' },
+      'autres': { label: t('dashboard:categories.autres'), icon: '💬' }
     };
-
     if (!userQuestions || userQuestions.length === 0) {
       return (
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
           <div className="flex items-center gap-3 mb-4">
             <MessageSquare className="w-6 h-6 text-blue-600" />
-            <h3 className="text-lg font-semibold text-gray-900">Mes questions</h3>
+            <h3 className="text-lg font-semibold text-gray-900">{t('dashboard:myQuestions.title')}</h3>
           </div>
           <div className="text-center py-8">
             <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <MessageSquare className="w-8 h-8 text-blue-600" />
             </div>
-            <p className="text-gray-500 mb-4">Aucune question posée</p>
+            <p className="text-gray-500 mb-4">{t('dashboard:myQuestions.empty')}</p>
             <p className="text-sm text-gray-400 mb-6">
-              Posez vos questions sur les études en France et obtenez des réponses de la communauté
+              {t('dashboard:myQuestions.description')}
             </p>
-            <a 
+            <Link
               href="/forum"
               className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
             >
               <MessageSquare className="w-4 h-4" />
-              Poser une question
-            </a>
+              {t('dashboard:myQuestions.askQuestion')}
+            </Link>
           </div>
         </div>
       );
@@ -151,14 +154,14 @@ const Dashboard = () => {
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
             <MessageSquare className="w-6 h-6 text-blue-600" />
-            <h3 className="text-lg font-semibold text-gray-900">Mes questions</h3>
+            <h3 className="text-lg font-semibold text-gray-900">{t('dashboard:myQuestions.title')}</h3>
           </div>
-          <a 
+          <Link
             href="/forum"
             className="text-sm text-blue-600 hover:text-blue-700 font-medium"
           >
-            Voir toutes
-          </a>
+            {t('dashboard:myQuestions.askQuestion')}
+          </Link>
         </div>
 
         <div className="space-y-4">
@@ -212,28 +215,28 @@ const Dashboard = () => {
     const getStatusConfig = (status) => {
       const configs = {
         pending: { 
-          color: 'bg-yellow-100 text-yellow-800 border-yellow-200', 
-          label: 'En attente', 
+          color: 'bg-yellow-100 text-yellow-800', 
+          label: t('dashboard:supportStatus.pending'), 
           icon: Clock 
         },
         contacted: { 
-          color: 'bg-blue-100 text-blue-800 border-blue-200', 
-          label: 'Contacté', 
+          color: 'bg-blue-100 text-blue-800', 
+          label: t('dashboard:supportStatus.contacted'), 
           icon: Phone 
         },
         in_progress: { 
-          color: 'bg-purple-100 text-purple-800 border-purple-200', 
-          label: 'En cours', 
+          color: 'bg-purple-100 text-purple-800', 
+          label: t('dashboard:supportStatus.inProgress'), 
           icon: TrendingUp 
         },
         completed: { 
-          color: 'bg-green-100 text-green-800 border-green-200', 
-          label: 'Terminé', 
+          color: 'bg-green-100 text-green-800', 
+          label: t('dashboard:supportStatus.completed'), 
           icon: CheckCircle 
         },
         cancelled: { 
-          color: 'bg-red-100 text-red-800 border-red-200', 
-          label: 'Annulé', 
+          color: 'bg-red-100 text-red-800', 
+          label: t('dashboard:supportStatus.cancelled'), 
           icon: AlertCircle 
         }
       };
@@ -254,23 +257,23 @@ const Dashboard = () => {
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
           <div className="flex items-center gap-3 mb-4">
             <GraduationCap className="w-6 h-6 text-purple-600" />
-            <h3 className="text-lg font-semibold text-gray-900">Mes accompagnements</h3>
+            <h3 className="text-lg font-semibold text-gray-900">{t('dashboard:mySupport.title')}</h3>
           </div>
           <div className="text-center py-8">
             <div className="w-16 h-16 bg-gradient-to-br from-purple-100 to-pink-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <GraduationCap className="w-8 h-8 text-purple-600" />
             </div>
-            <p className="text-gray-500 mb-4">Aucun accompagnement en cours</p>
+            <p className="text-gray-500 mb-4">{t('dashboard:mySupport.empty')}</p>
             <p className="text-sm text-gray-400 mb-6">
-              Bénéficiez d'un accompagnement personnalisé pour réussir vos études en France
+              {t('dashboard:mySupport.description')}
             </p>
-            <a 
+            <Link 
               href="/?tab=accompany#accompany-section"
               className="inline-flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors text-sm"
             >
               <Sparkles className="w-4 h-4" />
-              Découvrir nos offres
-            </a>
+              {t('dashboard:mySupport.discoverOffers')}
+            </Link>
           </div>
         </div>
       );
@@ -281,14 +284,14 @@ const Dashboard = () => {
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
             <GraduationCap className="w-6 h-6 text-purple-600" />
-            <h3 className="text-lg font-semibold text-gray-900">Mes accompagnements</h3>
+            <h3 className="text-lg font-semibold text-gray-900">{t('dashboard:mySupport.title')}</h3>
           </div>
-          <a 
+          <Link
             href="/account/accompagnements"
             className="text-sm text-blue-600 hover:text-blue-700 font-medium"
           >
-            Voir tout
-          </a>
+            {t('dashboard:mySupport.viewAll')}
+          </Link>
         </div>
 
         <div className="space-y-4">
@@ -325,7 +328,7 @@ const Dashboard = () => {
                     {request.assigned_counselor && (
                       <div className="flex items-center gap-2 text-sm text-green-600">
                         <User className="w-4 h-4" />
-                        <span>Conseiller : {request.assigned_counselor}</span>
+                        <span>{t('dashboard:mySupport.counselor', { name: request.assigned_counselor })}</span>
                       </div>
                     )}
                   </div>
@@ -348,7 +351,7 @@ const Dashboard = () => {
       <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg border border-blue-200 p-6">
         <div className="flex items-center gap-3 mb-4">
           <Sparkles className="w-6 h-6 text-blue-600" />
-          <h3 className="text-lg font-semibold text-gray-900">Recommandé pour vous</h3>
+          <h3 className="text-lg font-semibold text-gray-900">{t('dashboard:recommended.title')}</h3>
         </div>
         
         <div className="space-y-4">
@@ -373,23 +376,23 @@ const Dashboard = () => {
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
           <div className="flex items-center gap-3 mb-4">
             <TrendingUp className="w-6 h-6 text-blue-600" />
-            <h3 className="text-lg font-semibold text-gray-900">Domaines d'intérêt</h3>
+            <h3 className="text-lg font-semibold text-gray-900">{t('dashboard:interestDomains.title')}</h3>
           </div>
           <div className="text-center py-8">
             <TrendingUp className="w-12 h-12 text-gray-300 mx-auto mb-3" />
             <p className="text-gray-500 mb-4">
-              Aucun domaine d'intérêt détecté pour le moment
+              {t('dashboard:interestDomains.empty')}
             </p>
             <p className="text-sm text-gray-400">
-              Ajoutez des formations à vos favoris pour voir vos préférences apparaître ici
+              {t('dashboard:interestDomains.emptyDescription')}
             </p>
-            <a 
+            <Link
               href="/"
               className="inline-flex items-center gap-2 mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
             >
               <BookOpen className="w-4 h-4" />
-              Découvrir les formations
-            </a>
+              {t('dashboard:interestDomains.discoverPrograms')}
+            </Link> 
           </div>
         </div>
       );
@@ -400,19 +403,19 @@ const Dashboard = () => {
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
             <TrendingUp className="w-6 h-6 text-blue-600" />
-            <h3 className="text-lg font-semibold text-gray-900">Domaines d'intérêt</h3>
+            <h3 className="text-lg font-semibold text-gray-900">{t('dashboard:interestDomains.title')}</h3>
           </div>
           <div className="text-right">
             <div className="text-2xl font-bold text-gray-900">
               {domainPreferences.length}
             </div>
-            <div className="text-sm text-gray-500">domaine{domainPreferences.length > 1 ? 's' : ''}</div>
+            <div className="text-sm text-gray-500">{t('dashboard:interestDomains.count', { count: domainPreferences.length })}</div>
           </div>
         </div>
 
         <div className="space-y-4">
           {visibleDomains.map((preference, index) => {
-            const domainName = domainNames[preference.subdomain_id] || `Domaine ${preference.subdomain_id}`;
+            const domainName = domainNames[preference.subdomain_id] || t('dashboard:interestDomains.domainLabel', { id: preference.subdomain_id });
             const maxCount = domainPreferences[0]?.count || 1;
             const percentage = Math.round((preference.count / maxCount) * 100);
             
@@ -423,7 +426,7 @@ const Dashboard = () => {
                     {domainName}
                   </span>
                   <div className="flex items-center gap-2 text-sm text-gray-500">
-                    <span>{preference.count} formation{preference.count > 1 ? 's' : ''}</span>
+                    <span>{t('dashboard:interestDomains.programCount', { count: preference.count })}</span>
                     <span className="text-blue-600 font-medium">{percentage}%</span>
                   </div>
                 </div>
@@ -447,12 +450,12 @@ const Dashboard = () => {
               {showAllDomains ? (
                 <>
                   <EyeOff className="w-4 h-4" />
-                  Afficher moins
+                 {t('dashboard:interestDomains.showLess')}
                 </>
               ) : (
                 <>
                   <Eye className="w-4 h-4" />
-                  Voir tous les domaines ({domainPreferences.length - 3} de plus)
+                  {t('dashboard:interestDomains.showMore', { count: domainPreferences.length - 3 })}
                 </>
               )}
             </button>
@@ -462,8 +465,7 @@ const Dashboard = () => {
         {domainPreferences.length > 0 && (
           <div className="mt-6 pt-4 border-t border-gray-100">
             <p className="text-xs text-gray-500">
-              Ces domaines sont déterminés en fonction de vos formations favorites. 
-              Plus vous ajoutez de favoris, plus cette analyse devient précise.
+              {t('dashboard:interestDomains.helpText')}
             </p>
           </div>
         )}
@@ -478,18 +480,18 @@ const Dashboard = () => {
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
           <div className="flex items-center gap-3 mb-4">
             <Heart className="w-6 h-6 text-red-500" />
-            <h3 className="text-lg font-semibold text-gray-900">Favoris récents</h3>
+            <h3 className="text-lg font-semibold text-gray-900">{t('dashboard:recentFavorites.title')}</h3>
           </div>
           <div className="text-center py-8">
             <Heart className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-            <p className="text-gray-500 mb-4">Aucun favori pour le moment</p>
-            <a 
+            <p className="text-gray-500 mb-4">{t('dashboard:recentFavorites.empty')}</p>
+            <Link
               href="/"
               className="inline-flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors text-sm"
             >
               <Heart className="w-4 h-4" />
-              Découvrir les formations
-            </a>
+              {t('dashboard:recentFavorites.discoverPrograms')}
+            </Link>
           </div>
         </div>
       );
@@ -500,14 +502,14 @@ const Dashboard = () => {
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
             <Heart className="w-6 h-6 text-red-500" />
-            <h3 className="text-lg font-semibold text-gray-900">Favoris récents</h3>
+            <h3 className="text-lg font-semibold text-gray-900">{t('dashboard:recentFavorites.title')}</h3>
           </div>
-          <a 
+          <Link
             href="/favorites"
             className="text-sm text-blue-600 hover:text-blue-700 font-medium"
           >
-            Voir tous les favoris
-          </a>
+            {t('dashboard:recentFavorites.viewAll')}
+          </Link>
         </div>
 
         <div className="space-y-4">
@@ -570,10 +572,10 @@ const Dashboard = () => {
         {/* En-tête */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Bonjour {dashboard?.user?.firstname || session.user.name} ! 👋
+            {t('dashboard:welcome.greeting', { name: dashboard?.user?.firstname || session.user.name })}
           </h1>
           <p className="text-gray-600">
-            Voici un aperçu de votre activité sur Wendogo
+            {t('dashboard:welcome.subtitle')}
           </p>
         </div>
 
@@ -586,7 +588,7 @@ const Dashboard = () => {
                 <h3 className="text-2xl font-bold text-gray-900">
                   {dashboard?.statistics?.favorites_count || 0}
                 </h3>
-                <p className="text-gray-600">Formations favorites</p>
+                <p className="text-gray-600">{t('dashboard:statistics.favoritesCount')}</p>
               </div>
             </div>
           </div>
@@ -599,7 +601,7 @@ const Dashboard = () => {
                 <h3 className="text-2xl font-bold text-gray-900">
                   {dashboard?.statistics?.questions_count || 0}
                 </h3>
-                <p className="text-gray-600">Questions posées</p>
+                <p className="text-gray-600">{t('dashboard:statistics.questionsCount')}</p>
               </div>
             </div>
           </div>
@@ -612,7 +614,7 @@ const Dashboard = () => {
                 <h3 className="text-2xl font-bold text-gray-900">
                   {dashboard?.statistics?.accompany_requests_count || 0}
                 </h3>
-                <p className="text-gray-600">Accompagnements</p>
+                <p className="text-gray-600">{t('dashboard:statistics.supportCount')}</p>
               </div>
             </div>
           </div>
@@ -627,7 +629,7 @@ const Dashboard = () => {
                     : 'Aujourd\'hui'
                   }
                 </h3>
-                <p className="text-gray-600">Dernière visite</p>
+                <p className="text-gray-600">{t('dashboard:statistics.lastVisit')}</p>
               </div>
             </div>
           </div>
@@ -664,53 +666,53 @@ const Dashboard = () => {
 
         {/* ✅ ACTIONS RAPIDES AMÉLIORÉES */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Actions rapides</h3>
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('dashboard:quickActions.title')}</h3>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <a 
+            <Link
               href="/"
               className="flex items-center gap-3 p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
             >
               <BookOpen className="w-6 h-6 text-blue-600" />
               <div>
-                <h4 className="font-medium text-gray-900">Rechercher</h4>
-                <p className="text-sm text-gray-600">Parcourir le catalogue</p>
+                <h4 className="font-medium text-gray-900">{t('dashboard:quickActions.search.title')}</h4>
+                <p className="text-sm text-gray-600">{t('dashboard:quickActions.search.description')}</p>
               </div>
-            </a>
-            
-            <a 
+            </Link>
+
+            <Link
               href="/favorites"
               className="flex items-center gap-3 p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
             >
               <Heart className="w-6 h-6 text-red-600" />
               <div>
-                <h4 className="font-medium text-gray-900">Mes favoris</h4>
-                <p className="text-sm text-gray-600">Gérer mes formations</p>
+                <h4 className="font-medium text-gray-900">{t('dashboard:quickActions.favorites.title')}</h4>
+                <p className="text-sm text-gray-600">{t('dashboard:quickActions.favorites.description')}</p>
               </div>
-            </a>
+            </Link>
             
             {/* ✅ NOUVELLE ACTION: Forum */}
-            <a 
+            <Link
               href="/forum"
               className="flex items-center gap-3 p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
             >
               <MessageSquare className="w-6 h-6 text-blue-600" />
               <div>
-                <h4 className="font-medium text-gray-900">Forum</h4>
-                <p className="text-sm text-gray-600">Poser une question</p>
+                <h4 className="font-medium text-gray-900">{t('dashboard:quickActions.forum.title')}</h4>
+                <p className="text-sm text-gray-600">{t('dashboard:quickActions.forum.description')}</p>
               </div>
-            </a>
+            </Link>
             
             {/* ACTION: Accompagnement */}
-            <a 
+            <Link
               href="/#accompany-section"
               className="flex items-center gap-3 p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
             >
               <GraduationCap className="w-6 h-6 text-purple-600" />
               <div>
-                <h4 className="font-medium text-gray-900">Accompagnement</h4>
-                <p className="text-sm text-gray-600">Être accompagné</p>
+                <h4 className="font-medium text-gray-900">{t('dashboard:quickActions.support.title')}</h4>
+                <p className="text-sm text-gray-600">{t('dashboard:quickActions.support.description')}</p>
               </div>
-            </a>
+            </Link>
           </div>
         </div>
       </div>
@@ -718,5 +720,15 @@ const Dashboard = () => {
     </div>
   );
 };
+
+export async function getStaticProps({ locale }) {
+  const { serverSideTranslations } = await import('next-i18next/serverSideTranslations');
+  
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['authModal', 'common', 'dashboard'])),
+    },
+  };
+}
 
 export default Dashboard;

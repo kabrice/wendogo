@@ -7,35 +7,42 @@ import { useFavorites } from '../contexts/FavoritesContext';
 import { parsePhoneNumberWithError } from 'libphonenumber-js';
 import { IPINFO_URL } from '../utils/Constants';
 import { trackUserSignup } from '../lib/gtag';
+import { useTranslation } from 'next-i18next';
+
 const PasswordInput = ({ value, onChange, errors, isSignUp = false }) => {
+  const { t, i18n } = useTranslation('authModal');
   const [showPassword, setShowPassword] = useState(false);
   const [showRequirements, setShowRequirements] = useState(false);
-
+  // useEffect(() => {
+  //   console.log('🌍 Current language:', i18n.language);
+  //   console.log('📦 Loaded namespaces:', i18n.options.ns);
+  //   console.log('🔑 Test translation:', t('form.emailPlaceholder'));
+  // }, [i18n, t]);
   // Critères de validation du mot de passe
   const passwordRequirements = [
     {
       id: 'length',
-      label: 'Au moins 8 caractères',
+      label: t('passwordInput.requirements.length'),
       test: (password) => password.length >= 8
     },
     {
       id: 'uppercase',
-      label: 'Au moins une majuscule (A-Z)',
+      label: t('passwordInput.requirements.uppercase'),
       test: (password) => /[A-Z]/.test(password)
     },
     {
       id: 'lowercase',
-      label: 'Au moins une minuscule (a-z)',
+      label: t('passwordInput.requirements.lowercase'),
       test: (password) => /[a-z]/.test(password)
     },
     {
       id: 'number',
-      label: 'Au moins un chiffre (0-9)',
+      label: t('passwordInput.requirements.number'),
       test: (password) => /\d/.test(password)
     },
     {
       id: 'special',
-      label: 'Au moins un caractère spécial (!@#$%^&*)',
+      label: t('passwordInput.requirements.special'),
       test: (password) => /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)
     }
   ];
@@ -54,10 +61,10 @@ const PasswordInput = ({ value, onChange, errors, isSignUp = false }) => {
   };
 
   const getStrengthLabel = (strength) => {
-    if (strength < 2) return 'Très faible';
-    if (strength < 4) return 'Faible';
-    if (strength < 5) return 'Moyen';
-    return 'Fort';
+    if (strength < 2) return t('passwordInput.strength.veryWeak');
+    if (strength < 4) return t('passwordInput.strength.weak');
+    if (strength < 5) return t('passwordInput.strength.medium');
+    return t('passwordInput.strength.strong');
   };
 
   const strength = getPasswordStrength(value);
@@ -67,14 +74,14 @@ const PasswordInput = ({ value, onChange, errors, isSignUp = false }) => {
     <div>
       <label className="block text-sm font-medium text-gray-700 mb-2">
         <Lock className="w-4 h-4 inline mr-2" />
-        Mot de passe {isSignUp && <span className="text-red-500">*</span>}
+        {t('passwordInput.label')} {isSignUp && <span className="text-red-500">*</span>}
       </label>
       
       <div className="relative">
         <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
         <input
           type={showPassword ? 'text' : 'password'}
-          placeholder="Votre mot de passe"
+          placeholder={t('passwordInput.placeholder')}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           onFocus={() => isSignUp && setShowRequirements(true)}
@@ -117,7 +124,7 @@ const PasswordInput = ({ value, onChange, errors, isSignUp = false }) => {
       {isSignUp && (showRequirements || value) && (
         <div className="mt-2 p-3 bg-gray-50 rounded-lg border">
           <p className="text-xs font-medium text-gray-700 mb-2">
-            Votre mot de passe doit contenir :
+            {t('passwordInput.mustContain')}
           </p>
           <div className="space-y-1">
             {passwordRequirements.map((requirement) => {
@@ -149,27 +156,27 @@ const PasswordInput = ({ value, onChange, errors, isSignUp = false }) => {
 };
 
 // ✅ FONCTION DE VALIDATION DU MOT DE PASSE
-export const validatePassword = (password) => {
+export const validatePassword = (password, t) => {
   const requirements = [
     {
       test: (pwd) => pwd.length >= 8,
-      message: 'Le mot de passe doit contenir au moins 8 caractères'
+      message: t('validation.password.minLength')
     },
     {
       test: (pwd) => /[A-Z]/.test(pwd),
-      message: 'Le mot de passe doit contenir au moins une majuscule'
+      message: t('validation.password.uppercase')
     },
     {
       test: (pwd) => /[a-z]/.test(pwd),
-      message: 'Le mot de passe doit contenir au moins une minuscule'
+      message: t('validation.password.lowercase')
     },
     {
       test: (pwd) => /\d/.test(pwd),
-      message: 'Le mot de passe doit contenir au moins un chiffre'
+      message: t('validation.password.number')
     },
     {
       test: (pwd) => /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(pwd),
-      message: 'Le mot de passe doit contenir au moins un caractère spécial'
+      message: t('validation.password.special')
     }
   ];
 
@@ -184,7 +191,9 @@ export const validatePassword = (password) => {
     message: failedRequirements[0].message
   };
 };
+
 const AuthModal = () => {
+  const { t } = useTranslation('authModal');
   const { showAuthModal, setShowAuthModal } = useFavorites();
   const [isLoading, setIsLoading] = useState('');
   const [isSignUp, setIsSignUp] = useState(false);
@@ -229,7 +238,7 @@ const AuthModal = () => {
   // ✅ NOUVEAU: Fonction mot de passe oublié
   const handleForgotPassword = async () => {
     if (!formData.email) {
-      setErrors({ email: 'Veuillez entrer votre email' });
+      setErrors({ email: t('validation.email.enterEmail') });
       return;
     }
 
@@ -247,14 +256,14 @@ const AuthModal = () => {
 
       if (response.ok) {
         setErrors({
-          success: '📧 Instructions de réinitialisation envoyées par email !'
+          success: t('success.resetSent')
         });
         setShowForgotPassword(false);
       } else {
-        setErrors({ submit: data.error || 'Erreur lors de l\'envoi' });
+        setErrors({ submit: data.error || t('errors.sendError') });
       }
     } catch (error) {
-      setErrors({ submit: 'Erreur de connexion' });
+      setErrors({ submit: t('errors.connectionError') });
     } finally {
       setIsLoading('');
     }
@@ -324,7 +333,7 @@ const AuthModal = () => {
       setShowAuthModal(false);
     } catch (error) {
       console.error('Erreur OAuth:', error);
-      setErrors({ oauth: 'Erreur lors de la connexion. Veuillez réessayer.' });
+      setErrors({ oauth: t('errors.oauthError') });
     } finally {
       setIsLoading('');
     }
@@ -335,15 +344,15 @@ const AuthModal = () => {
     const newErrors = {};
     
     if (!formData.email) {
-      newErrors.email = 'Email requis';
+      newErrors.email = t('validation.email.required');
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Email invalide';
+      newErrors.email = t('validation.email.invalid');
     }
     
     if (!formData.password) {
-      newErrors.password = 'Mot de passe requis';
+      newErrors.password = t('validation.password.minLength');
     } else {
-      const passwordValidation = validatePassword(formData.password);
+      const passwordValidation = validatePassword(formData.password, t);
       if (!passwordValidation.isValid) {
         newErrors.password = passwordValidation.message;
       }
@@ -351,29 +360,29 @@ const AuthModal = () => {
     
     if (isSignUp) {
       if (!formData.firstname) {
-        newErrors.firstname = 'Prénom requis';
+        newErrors.firstname = t('validation.firstname.required');
       }
       if (!formData.lastname) {
-        newErrors.lastname = 'Nom requis';
+        newErrors.lastname = t('validation.lastname.required');
       }
       
       if (!formData.phone) {
-        newErrors.phone = 'Numéro de téléphone requis';
+        newErrors.phone = t('validation.phone.required');
       } else if (!validatePhoneNumber(formData.phone, formData.countryIso2)) {
-        newErrors.phone = 'Numéro de téléphone invalide';
+        newErrors.phone = t('validation.phone.invalid');
       }
       
       if (!formData.birthdate) {
-        newErrors.birthdate = 'Date de naissance requise';
+        newErrors.birthdate = t('validation.birthdate.required');
       } else {
         const birthDate = new Date(formData.birthdate);
         const today = new Date();
         const age = today.getFullYear() - birthDate.getFullYear();
         
         if (age < 13) {
-          newErrors.birthdate = 'Vous devez avoir au moins 13 ans';
+          newErrors.birthdate = t('validation.birthdate.minAge');
         } else if (age > 120) {
-          newErrors.birthdate = 'Date de naissance invalide';
+          newErrors.birthdate = t('validation.birthdate.invalid');
         }
       }
     }
@@ -387,7 +396,7 @@ const AuthModal = () => {
     
     if (isBlocked) {
       setErrors({ 
-        submit: `Trop de tentatives. Réessayez dans ${Math.ceil(blockTimeLeft / 60)} minute(s).` 
+        submit: t('errors.tooManyAttempts', { minutes: Math.ceil(blockTimeLeft / 60) })
       });
       return;
     }
@@ -418,7 +427,7 @@ const AuthModal = () => {
         
         if (response.ok) {
           setErrors({ 
-            success: '✅ Compte créé ! Envoi de l\'email de vérification...' 
+            success: t('success.accountCreated')
           });
           
           const verificationResponse = await fetch('/api/auth/send-verification', {
@@ -433,16 +442,16 @@ const AuthModal = () => {
           if (verificationResponse.ok) {
             setShowVerificationScreen(true);
             setErrors({ 
-              success: `📧 Email de vérification envoyé à ${formData.email}` 
+              success: t('success.verificationSent', { email: formData.email })
             });
           } else {
             setErrors({ 
-              success: '⚠️ Compte créé mais email non envoyé. Vous pouvez vous connecter.' 
+              success: t('success.accountCreatedNoEmail')
             });
             setIsSignUp(false);
           }
         } else {
-          setErrors({ submit: data.error || 'Erreur lors de l\'inscription' });
+          setErrors({ submit: data.error || t('errors.registrationError') });
         }
       } else {
         // ✅ CONNEXION améliorée avec limitation
@@ -464,12 +473,12 @@ const AuthModal = () => {
           
           if (result?.error === 'EmailNotVerified') {
             setErrors({ 
-              submit: 'Votre email n\'est pas encore vérifié. Vérifiez vos emails ou demandez un nouveau lien de vérification.' 
+              submit: t('errors.emailNotVerified')
             });
             setShowResendButton(true);
           } else if (result?.error === 'CredentialsSignin') {
             setErrors({ 
-              submit: `Email ou mot de passe incorrect (${newAttempts}/5 tentatives)` 
+              submit: t('errors.incorrectCredentials', { attempts: newAttempts })
             });
             
             // ✅ Bloquer après 5 tentatives
@@ -477,17 +486,17 @@ const AuthModal = () => {
               setIsBlocked(true);
               setBlockTimeLeft(300); // 5 minutes
               setErrors({ 
-                submit: 'Trop de tentatives échouées. Compte bloqué pendant 5 minutes.' 
+                submit: t('errors.accountBlocked')
               });
             }
           } else {
-            setErrors({ submit: 'Erreur de connexion. Veuillez réessayer.' });
+            setErrors({ submit: t('errors.connectionError') });
           }
         }
       }
     } catch (error) {
       console.error('Erreur auth:', error);
-      setErrors({ submit: 'Erreur de connexion. Veuillez réessayer.' });
+      setErrors({ submit: t('errors.connectionError') });
     } finally {
       setIsLoading('');
     }
@@ -503,20 +512,20 @@ const AuthModal = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           email: formData.email,
-          firstname: formData.firstname || 'Utilisateur'
+          firstname: formData.firstname || t('form.defaultUser')
         })
       });
       
       if (response.ok) {
         setErrors({ 
-          success: '📧 Nouvel email de vérification envoyé !' 
+          success: t('success.verificationResent')
         });
         setShowResendButton(false);
       } else {
-        setErrors({ submit: 'Erreur lors de l\'envoi de l\'email' });
+        setErrors({ submit: t('errors.emailSendError') });
       }
     } catch (error) {
-      setErrors({ submit: 'Erreur lors de l\'envoi de l\'email' });
+      setErrors({ submit: t('errors.emailSendError') });
     } finally {
       setIsLoading('');
     }
@@ -542,9 +551,9 @@ const AuthModal = () => {
   };
 
   const successMessagesHideForm = [
-    '✅ Compte créé ! Envoi de l\'email de vérification...',
-    '📧 Instructions de réinitialisation envoyées par email !',
-    '📧 Nouvel email de vérification envoyé !',
+    t('success.accountCreated'),
+    t('success.resetSent'),
+    t('success.verificationResent'),
     'Email de vérification envoyé'
   ];  
 
@@ -566,8 +575,8 @@ const AuthModal = () => {
             <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <RefreshCw className="w-8 h-8 text-orange-600" />
             </div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">Mot de passe oublié</h3>
-            <p className="text-gray-600">Entrez votre email pour recevoir un lien de réinitialisation</p>
+            <h3 className="text-xl font-bold text-gray-900 mb-2">{t('forgotPassword.title')}</h3>
+            <p className="text-gray-600">{t('forgotPassword.subtitle')}</p>
           </div>
 
           {(errors.submit || errors.success) && (
@@ -586,7 +595,7 @@ const AuthModal = () => {
                 <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                 <input
                   type="email"
-                  placeholder="Votre email"
+                  placeholder={t('forgotPassword.emailPlaceholder')}
                   value={formData.email}
                   onChange={(e) => setFormData({...formData, email: e.target.value})}
                   className={`w-full pl-10 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
@@ -603,14 +612,14 @@ const AuthModal = () => {
               className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-orange-600 text-white rounded-lg font-medium hover:bg-orange-700 transition-colors disabled:opacity-50"
             >
               {isLoading === 'forgot' ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
-              Envoyer le lien de réinitialisation
+              {t('forgotPassword.sendButton')}
             </button>
 
             <button
               onClick={() => setShowForgotPassword(false)}
               className="w-full px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors"
             >
-              Retour à la connexion
+              {t('forgotPassword.backButton')}
             </button>
           </div>
         </div>
@@ -634,14 +643,14 @@ const AuthModal = () => {
             )}
           </div>
           <h3 className="text-xl font-bold text-gray-900 mb-2">
-            {shouldHideForm ? 'Vérification en cours' : (isSignUp ? 'Créer un compte' : 'Connexion')}
+            {shouldHideForm ? t('main.verificationInProgress') : (isSignUp ? t('main.createAccount') : t('main.login'))}
           </h3>
           <p className="text-gray-600">
             {shouldHideForm 
-              ? 'Veuillez consulter votre boîte email pour continuer'
+              ? t('main.checkEmail')
               : (isSignUp 
-                ? 'Rejoignez Wendogo pour sauvegarder vos formations favorites'
-                : 'Connectez-vous pour accéder à vos favoris'
+                ? t('main.signupSubtitle')
+                : t('main.loginSubtitle')
               )
             }
           </p>
@@ -679,7 +688,7 @@ const AuthModal = () => {
                     <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
                   </svg>
               )}
-              <span className="font-medium">Continuer avec Google</span>
+              <span className="font-medium">{t('main.continueWithGoogle')}</span>
             </button>
 
             <button
@@ -694,7 +703,7 @@ const AuthModal = () => {
                   <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                 </svg>
               )}
-              <span className="font-medium">Continuer avec Facebook</span>
+              <span className="font-medium">{t('main.continueWithFacebook')}</span>
             </button>
 
             {/* Séparateur */}
@@ -703,7 +712,7 @@ const AuthModal = () => {
                 <div className="w-full border-t border-gray-300" />
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">ou avec votre email</span>
+                <span className="px-2 bg-white text-gray-500">{t('main.orWithEmail')}</span>
               </div>
             </div>
 
@@ -716,7 +725,7 @@ const AuthModal = () => {
                       <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                       <input
                         type="text"
-                        placeholder="Prénom"
+                        placeholder={t('form.firstnamePlaceholder')}
                         value={formData.firstname}
                         onChange={(e) => setFormData({...formData, firstname: e.target.value})}
                         className={`w-full pl-10 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
@@ -734,7 +743,7 @@ const AuthModal = () => {
                       <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                       <input
                         type="text"
-                        placeholder="Nom"
+                        placeholder={t('form.lastnamePlaceholder')}
                         value={formData.lastname}
                         onChange={(e) => setFormData({...formData, lastname: e.target.value})}
                         className={`w-full pl-10 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
@@ -757,7 +766,7 @@ const AuthModal = () => {
                       <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                       <input
                         type="tel"
-                        placeholder={`Téléphone ${formData.countryIso2 ? `(${formData.countryIso2})` : ''}`}
+                        placeholder={`${t('form.phonePlaceholder')} ${formData.countryIso2 ? `(${formData.countryIso2})` : ''}`}
                         value={formData.phone}
                         onChange={(e) => setFormData({...formData, phone: e.target.value})}
                         className={`w-full pl-10 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
@@ -774,7 +783,7 @@ const AuthModal = () => {
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       <Calendar className="w-4 h-4 inline mr-2" />
-                      Date de naissance
+                      {t('form.birthdateLabel')}
                     </label>
                     <div className="relative">
                       <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
@@ -786,14 +795,14 @@ const AuthModal = () => {
                         className={`w-full pl-10 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
                           errors.birthdate ? 'border-red-300' : 'border-gray-300'
                         }`}
-                        aria-label="Date de naissance"
+                        aria-label={t('form.birthdateAriaLabel')}
                       />
                     </div>
                     {errors.birthdate && (
                       <p className="mt-1 text-xs text-red-600">{errors.birthdate}</p>
                     )}
                     <p className="mt-1 text-xs text-gray-500">
-                      Vous devez avoir au moins 13 ans pour créer un compte
+                      {t('form.birthdateHelper')}
                     </p>
                   </div>
                 </>
@@ -804,7 +813,7 @@ const AuthModal = () => {
                   <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                   <input
                     type="email"
-                    placeholder="Email"
+                    placeholder={t('form.emailPlaceholder')}
                     value={formData.email}
                     onChange={(e) => setFormData({...formData, email: e.target.value})}
                     className={`w-full pl-10 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
@@ -832,7 +841,7 @@ const AuthModal = () => {
                     onClick={() => setShowForgotPassword(true)}
                     className="text-blue-600 hover:text-blue-700 text-sm font-medium"
                   >
-                    Mot de passe oublié ?
+                    {t('forgotPassword.linkText')}
                   </button>
                 </div>
               )}
@@ -845,7 +854,7 @@ const AuthModal = () => {
                 {isLoading === 'email' ? (
                   <Loader2 className="w-4 h-4 animate-spin" />
                 ) : null}
-                {isSignUp ? 'Créer mon compte' : 'Me connecter'}
+                {isSignUp ? t('form.createAccountButton') : t('form.loginButton')}
               </button>
             </form>
 
@@ -859,7 +868,7 @@ const AuthModal = () => {
                 }}
                 className="text-blue-600 hover:text-blue-700 font-medium text-sm"
               >
-                {isSignUp ? 'J\'ai déjà un compte' : 'Créer un compte'}
+                {isSignUp ? t('form.alreadyHaveAccount') : t('form.createNewAccount')}
               </button>
             </div>
 
@@ -876,7 +885,7 @@ const AuthModal = () => {
                   ) : (
                     <Mail className="w-3 h-3" />
                   )}
-                  Renvoyer l'email de vérification
+                  {t('form.resendVerification')}
                 </button>
               </div>
             )}
@@ -891,7 +900,7 @@ const AuthModal = () => {
                 <Mail className="w-16 h-16 text-blue-500 mx-auto mb-4" />
               </div>
               <p className="text-gray-600 mb-6">
-                Un email vient d'être envoyé. Vérifiez votre boîte de réception et vos spams.
+                {t('emailSent.message')}
               </p>
             </div>
             
@@ -900,7 +909,7 @@ const AuthModal = () => {
                 onClick={handleClose}
                 className="flex-1 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
               >
-                Fermer
+                {t('emailSent.closeButton')}
               </button>
               {!isSignUp && (
                 <button
@@ -908,7 +917,7 @@ const AuthModal = () => {
                   disabled={isLoading === 'resend'}
                   className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50"
                 >
-                  {isLoading === 'resend' ? 'Envoi...' : 'Renvoyer'}
+                  {isLoading === 'resend' ? t('emailSent.sendingButton') : t('emailSent.resendButton')}
                 </button>
               )}
             </div>
@@ -918,14 +927,14 @@ const AuthModal = () => {
         {/* CGU et politique */}
         {!shouldHideForm && (
           <p className="text-xs text-gray-500 text-center mt-6">
-            En continuant, vous acceptez nos{' '}
-            <a href="/cgu" className="text-blue-600 hover:underline">
-              conditions d'utilisation
-            </a>{' '}
-            et notre{' '}
-            <a href="/privacy" className="text-blue-600 hover:underline">
-              politique de confidentialité
-            </a>
+            {t('legal.prefix')}{' '}
+            <Link href="/cgu" className="text-blue-600 hover:underline">
+              {t('legal.termsLink')}
+            </Link>{' '}
+            {t('legal.and')}{' '}
+            <Link href="/privacy" className="text-blue-600 hover:underline">
+              {t('legal.privacyLink')}
+            </Link>
             .
           </p>
         )}

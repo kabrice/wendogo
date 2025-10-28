@@ -1,9 +1,10 @@
 import { Html, Head, Main, NextScript } from 'next/document';
 import { GA_MEASUREMENT_ID } from '../lib/gtag';
 
-export default function Document() {
+export default function Document(props) {
+  const locale = props.__NEXT_DATA__.locale || 'fr';
   return (
-    <Html lang="fr">
+    <Html lang={locale}>
       <Head>
         {/* Meta tags existants */}
         <meta charSet="utf-8" />

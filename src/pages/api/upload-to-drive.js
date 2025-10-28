@@ -46,10 +46,10 @@ export default async function handler(req, res) {
 
         // Set Headers
         const headers = {
-            ...formData.getHeaders(),
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
-            'Access-Control-Request-Method': 'GET, POST, DELETE, PUT, OPTIONS',
+            ...formData.getHeaders()
+            // 'Access-Control-Allow-Origin': '*',
+            // 'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
+            // 'Access-Control-Request-Method': 'GET, POST, DELETE, PUT, OPTIONS',
         };
 
         // 📤 Send to Flask API

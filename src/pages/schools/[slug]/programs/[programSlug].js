@@ -1,10 +1,10 @@
-// src/pages/schools/[slug]/programs/[programSlug].js - Page programme avec nouvelle structure d'URL
-import React, { startTransition } from 'react';
+// src/pages/schools/[slug]/programs/[programSlug].js
+import React from 'react';
 import { useRouter } from 'next/router';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import ProgramApi from '../../../../store/apis/programApi';
 import PrivateSchoolApi from '../../../../store/apis/privateSchoolApi';
 import ProgramPage from '../../../programs/[slug]';
-
 
 const SchoolProgramPage = (props) => {
   const router = useRouter();
@@ -18,45 +18,65 @@ const SchoolProgramPage = (props) => {
   return <ProgramPage {...props} />;
 };
 
-// Génération statique des paths
+// ✅ Fonction utilitaire pour nettoyer les données
+const sanitizeData = (obj) => {
+  if (obj === null || obj === undefined) return null;
+  if (Array.isArray(obj)) return obj.map(sanitizeData);
+  if (typeof obj !== 'object') return obj;
+  
+  const cleaned = {};
+  for (const key in obj) {
+    const value = obj[key];
+    if (value === undefined) {
+      cleaned[key] = null; // ✅ Remplacer undefined par null
+    } else if (value && typeof value === 'object') {
+      cleaned[key] = sanitizeData(value);
+    } else {
+      cleaned[key] = value;
+    }
+  }
+  return cleaned;
+};
+
 export async function getStaticPaths() {
   try {
-    // Récupérer tous les programmes
+    // const router = useRouter();
+    // const locale = router.locale;
     const programsResponse = await ProgramApi.getAllPrograms();
     if (!programsResponse.success) {
-      return { paths: [], fallback: 'blocking' }; // ✅ CHANGER en 'blocking'
+      return { paths: [], fallback: 'blocking' };
     }
 
-    // Récupérer toutes les écoles une seule fois
     const schoolsResponse = await PrivateSchoolApi.getAllSchools();
     if (!schoolsResponse.success) {
-      return { paths: [], fallback: true };
+      return { paths: [], fallback: 'blocking' };
     }
 
-    // Créer un map pour une recherche rapide des écoles
     const schoolsMap = new Map();
     schoolsResponse.data.forEach(school => {
       schoolsMap.set(school.id, school.slug);
     });
 
-    // Créer les paths avec la nouvelle structure
-    const paths = programsResponse.data
-      .slice(0, 50) // ✅ AJOUTER cette limite
-      .map((program) => {
+    // ✅ Générer les paths pour toutes les locales
+    const locales = ['fr', 'en'];
+    const paths = [];
+
+    programsResponse.data
+      .slice(0, 50)
+      .forEach((program) => {
         const schoolSlug = schoolsMap.get(program.school_id);
         if (schoolSlug) {
-          return {
-            params: { 
-              slug: schoolSlug, 
-              programSlug: program.slug 
-            }
-          };
+          locales.forEach((locale) => {
+            paths.push({
+              params: { 
+                slug: schoolSlug, 
+                programSlug: program.slug 
+              },
+              locale, // ✅ Ajouter la locale
+            });
+          });
         }
-        return null;
-      })
-      .filter(Boolean);
-
-    console.log('Generated paths:', paths); // Debug
+      });
 
     return {
       paths,
@@ -66,73 +86,62 @@ export async function getStaticPaths() {
     console.error('Erreur lors de la génération des paths:', error);
     return {
       paths: [],
-      fallback: true
+      fallback: 'blocking'
     };
   }
 }
 
-export async function getStaticProps({ params }) {
+export async function getStaticProps({ params, locale = 'fr' }) { // ✅ Ajouter locale
   try {
     const { slug, programSlug } = params;
 
-    console.log('getStaticProps called with:', { slug, programSlug });
+    console.log('getStaticProps called with:', { slug, programSlug, locale });
 
-    // ✅ WRAPPER dans startTransition
-    return new Promise((resolve) => {
-      startTransition(async () => {
-        try {
-          const programResponse = await ProgramApi.getProgramBySlug(programSlug);
-          
-          if (!programResponse.success) {
-            console.log('Program not found:', programSlug);
-            resolve({ notFound: true });
-            return;
-          }
+    const programResponse = await ProgramApi.getProgramBySlug(programSlug, locale);
+    
+    if (!programResponse.success) {
+      console.log('Program not found:', programSlug);
+      return { notFound: true };
+    }
+    console.log('Program data retrieved:', programResponse);
+    const program = programResponse.data;
+    const schoolResponse = await PrivateSchoolApi.getSchoolById(program.school_id, locale);
+    
+    if (!schoolResponse.success || !schoolResponse.data) {
+      console.log('School not found for ID:', program.school_id);
+      return { notFound: true };
+    }
 
-          const program = programResponse.data;
-          const schoolResponse = await PrivateSchoolApi.getSchoolById(program.school_id);
-          
-          if (!schoolResponse.success || !schoolResponse.data) {
-            console.log('School not found for ID:', program.school_id);
-            resolve({ notFound: true });
-            return;
-          }
+    const school = schoolResponse.data;
 
-          const school = schoolResponse.data;
+    if (school.slug !== slug) {
+      console.log('School slug mismatch:', { expected: slug, actual: school.slug });
+      return { notFound: true };
+    }
 
-          if (school.slug !== slug) {
-            console.log('School slug mismatch:', { expected: slug, actual: school.slug });
-            resolve({ notFound: true });
-            return;
-          }
+    const similarProgramsResponse = await ProgramApi.getSimilarPrograms(program.id, 3, locale);
+    const similarPrograms = similarProgramsResponse.success ? similarProgramsResponse.data : [];
 
-          const similarProgramsResponse = await ProgramApi.getSimilarPrograms(program.id, 3);
-          const similarPrograms = similarProgramsResponse.success ? similarProgramsResponse.data : [];
+    // ✅ NETTOYER TOUTES LES DONNÉES avant sérialisation
+    const cleanedProgram = sanitizeData(program);
+    const cleanedSchool = sanitizeData(school);
+    const cleanedSimilarPrograms = sanitizeData(similarPrograms);
 
-          resolve({
-            props: {
-              program,
-              school,
-              similarPrograms
-            },
-            revalidate: 86400 // ✅ AUGMENTER à 24h
-          });
-        } catch (error) {
-          console.error('Erreur dans getStaticProps:', error);
-          resolve({
-            props: {
-              error: 'Erreur lors du chargement des données'
-            },
-            revalidate: 60
-          });
-        }
-      });
-    });
-  } catch (error) {
-    console.error('Erreur critique:', error);
     return {
       props: {
-        error: 'Erreur lors du chargement des données'
+        program: cleanedProgram,
+        school: cleanedSchool,
+        similarPrograms: cleanedSimilarPrograms,
+        ...(await serverSideTranslations(locale, ['authModal', 'common', 'programs'])), // ✅ Ajouter les traductions
+      },
+      revalidate: 86400
+    };
+  } catch (error) {
+    console.error('Erreur dans getStaticProps:', error);
+    return {
+      props: {
+        error: 'Erreur lors du chargement des données',
+        ...(await serverSideTranslations(locale, ['authModal', 'common', 'programs'])),
       },
       revalidate: 60
     };

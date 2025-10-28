@@ -1,0 +1,21 @@
+{
+  "page_title": "Oops! Page not found",
+  "page_description": "It seems the page you're looking for doesn't exist or has been moved. Don't panic, we're here to help you find your way!",
+  "button_back": "Back to previous page",
+  "button_home": "Back to home",
+  "button_refresh": "Reload page",
+  "continue_navigation": "Or continue browsing",
+  "quick_link_search_title": "Search for a program",
+  "quick_link_search_description": "Find the perfect program among 2100+ options",
+  "quick_link_contact_title": "Contact us",
+  "quick_link_contact_description": "Need help? Our team is here for you",
+  "quick_link_mission_title": "Our mission",
+  "quick_link_mission_description": "Discover how we support you",
+  "help_title": "Need help?",
+  "help_description": "If you're experiencing difficulties or looking for something specific, our team is available 24/7 to help you.",
+  "help_contact_us": "Contact us",
+  "help_whatsapp": "WhatsApp",
+  "help_email": "Email",
+  "search_suggestion_title": "Maybe you were looking for...",
+  "search_placeholder": "Search for a program, school, course..."
+}

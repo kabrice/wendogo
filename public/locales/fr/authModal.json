@@ -1,0 +1,113 @@
+{
+  "passwordInput": {
+    "requirements": {
+      "length": "Au moins 8 caractères",
+      "uppercase": "Au moins une majuscule (A-Z)",
+      "lowercase": "Au moins une minuscule (a-z)",
+      "number": "Au moins un chiffre (0-9)",
+      "special": "Au moins un caractère spécial (!@#$%^&*)"
+    },
+    "strength": {
+      "veryWeak": "Très faible",
+      "weak": "Faible",
+      "medium": "Moyen",
+      "strong": "Fort"
+    },
+    "label": "Mot de passe",
+    "placeholder": "Votre mot de passe",
+    "mustContain": "Votre mot de passe doit contenir :"
+  },
+  "validation": {
+    "password": {
+      "minLength": "Le mot de passe doit contenir au moins 8 caractères",
+      "uppercase": "Le mot de passe doit contenir au moins une majuscule",
+      "lowercase": "Le mot de passe doit contenir au moins une minuscule",
+      "number": "Le mot de passe doit contenir au moins un chiffre",
+      "special": "Le mot de passe doit contenir au moins un caractère spécial"
+    },
+    "email": {
+      "required": "Email requis",
+      "invalid": "Email invalide",
+      "enterEmail": "Veuillez entrer votre email"
+    },
+    "firstname": {
+      "required": "Prénom requis"
+    },
+    "lastname": {
+      "required": "Nom requis"
+    },
+    "phone": {
+      "required": "Numéro de téléphone requis",
+      "invalid": "Numéro de téléphone invalide"
+    },
+    "birthdate": {
+      "required": "Date de naissance requise",
+      "minAge": "Vous devez avoir au moins 13 ans",
+      "invalid": "Date de naissance invalide"
+    }
+  },
+  "errors": {
+    "tooManyAttempts": "Trop de tentatives. Réessayez dans {{minutes}} minute(s).",
+    "emailNotVerified": "Votre email n'est pas encore vérifié. Vérifiez vos emails ou demandez un nouveau lien de vérification.",
+    "incorrectCredentials": "Email ou mot de passe incorrect ({{attempts}}/5 tentatives)",
+    "accountBlocked": "Trop de tentatives échouées. Compte bloqué pendant 5 minutes.",
+    "connectionError": "Erreur de connexion. Veuillez réessayer.",
+    "oauthError": "Erreur lors de la connexion. Veuillez réessayer.",
+    "sendError": "Erreur lors de l'envoi",
+    "registrationError": "Erreur lors de l'inscription",
+    "emailSendError": "Erreur lors de l'envoi de l'email"
+  },
+  "success": {
+    "resetSent": "📧 Instructions de réinitialisation envoyées par email !",
+    "accountCreated": "✅ Compte créé ! Envoi de l'email de vérification...",
+    "verificationSent": "📧 Email de vérification envoyé à {{email}}",
+    "accountCreatedNoEmail": "⚠️ Compte créé mais email non envoyé. Vous pouvez vous connecter.",
+    "verificationResent": "📧 Nouvel email de vérification envoyé !"
+  },
+  "forgotPassword": {
+    "title": "Mot de passe oublié",
+    "subtitle": "Entrez votre email pour recevoir un lien de réinitialisation",
+    "emailPlaceholder": "Votre email",
+    "sendButton": "Envoyer le lien de réinitialisation",
+    "backButton": "Retour à la connexion",
+    "linkText": "Mot de passe oublié ?"
+  },
+  "main": {
+    "verificationInProgress": "Vérification en cours",
+    "createAccount": "Créer un compte",
+    "login": "Connexion",
+    "checkEmail": "Veuillez consulter votre boîte email pour continuer",
+    "signupSubtitle": "Rejoignez Wendogo pour sauvegarder vos formations favorites",
+    "loginSubtitle": "Connectez-vous pour accéder à vos favoris",
+    "continueWithGoogle": "Continuer avec Google",
+    "continueWithFacebook": "Continuer avec Facebook",
+    "orWithEmail": "ou avec votre email"
+  },
+  "form": {
+    "firstnamePlaceholder": "Prénom",
+    "lastnamePlaceholder": "Nom",
+    "phonePlaceholder": "Téléphone",
+    "birthdateLabel": "Date de naissance",
+    "birthdateHelper": "Vous devez avoir au moins 13 ans pour créer un compte",
+    "birthdateAriaLabel": "Date de naissance",
+    "emailPlaceholder": "Email",
+    "createAccountButton": "Créer mon compte",
+    "loginButton": "Me connecter",
+    "alreadyHaveAccount": "J'ai déjà un compte",
+    "createNewAccount": "Créer un compte",
+    "resendVerification": "Renvoyer l'email de vérification",
+    "defaultUser": "Utilisateur"
+  },
+  "emailSent": {
+    "message": "Un email vient d'être envoyé. Vérifiez votre boîte de réception et vos spams.",
+    "closeButton": "Fermer",
+    "sendingButton": "Envoi...",
+    "resendButton": "Renvoyer"
+  },
+  "legal": {
+    "prefix": "En continuant, vous acceptez nos",
+    "termsLink": "conditions d'utilisation",
+    "and": "et notre",
+    "privacyLink": "politique de confidentialité"
+  }
+}

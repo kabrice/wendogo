@@ -1,37 +1,50 @@
 // src/store/apis/subdomainApi.js
 
 import { REST_API_PARAMS } from '../../utils/Constants';
-
+import { useRouter } from 'next/router';
 /**
  * API pour la gestion des sous-domaines
  */
 class SubdomainApi {
   
   static baseUrl = REST_API_PARAMS.baseUrl;
-  static headers = REST_API_PARAMS.prepareHeaders ? REST_API_PARAMS.prepareHeaders({}, {}).headers : {
-    'Content-Type': 'application/json'
-  };
+
+  /**
+   * Prépare les headers avec la locale
+   * @param {string} locale - La locale ('fr' ou 'en')
+   * @returns {Object} Headers configurés
+   */
+  static getHeaders(locale = 'fr') {
+    const headers = REST_API_PARAMS.prepareHeaders 
+      ? REST_API_PARAMS.prepareHeaders({}, {}).headers 
+      : { 'Content-Type': 'application/json' };
+    
+    return {
+      ...headers,
+      'Accept-Language': locale,
+    };
+  }
 
   /**
    * Récupère tous les sous-domaines avec leur domaine parent
    * @returns {Promise<Object>} Liste de tous les sous-domaines
    */
-  static async getAllSubdomains() {
+  static async getAllSubdomains(locale = 'fr') {
     try {
-      const response = await fetch(`${this.baseUrl}/subdomains`, {
+      const response = await fetch(`${this.baseUrl}/subdomains?locale=${locale}`, {
         method: 'GET',
-        headers: this.headers
+        headers: this.getHeaders(locale)
       });
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       
-      const data = await response.json();
+      const resp = await response.json();
       return {
         success: true,
-        data: data,
-        total: data.length
+        data: resp.data,
+        total: resp.data.length
       };
     } catch (error) {
       console.error('Erreur lors de la récupération des sous-domaines:', error);
@@ -48,7 +61,7 @@ class SubdomainApi {
    * @param {string} subdomainId - L'ID du sous-domaine
    * @returns {Promise<Object>} Données du sous-domaine
    */
-  static async getSubdomainById(subdomainId) {
+  static async getSubdomainById(subdomainId) { // Todo : A supprimer car non utilisé
     try {
       const response = await fetch(`${this.baseUrl}/subdomains/${subdomainId}`, {
         method: 'GET',
@@ -86,11 +99,11 @@ class SubdomainApi {
    * @param {Array<string>} subdomainIds - Liste des IDs des sous-domaines
    * @returns {Promise<Object>} Données des sous-domaines
    */
-  static async getSubdomainsFromIds(subdomainIds) {
+  static async getSubdomainsFromIds(subdomainIds, locale = 'fr') {
     try {
-      const response = await fetch(`${this.baseUrl}/subdomains/filtering`, {
+      const response = await fetch(`${this.baseUrl}/subdomains/filtering?locale=${locale}`, {
         method: 'POST',
-        headers: this.headers,
+        headers: this.getHeaders(locale),
         body: JSON.stringify({ subdomain_ids: subdomainIds })
       });
       
@@ -119,9 +132,9 @@ class SubdomainApi {
    * @param {string} domainId - L'ID du domaine
    * @returns {Promise<Object>} Sous-domaines du domaine
    */
-  static async getSubdomainsByDomain(domainId) {
+  static async getSubdomainsByDomain(domainId, locale = 'fr') {
     try {
-      const response = await fetch(`${this.baseUrl}/subdomains/by-domain/${domainId}`, {
+      const response = await fetch(`${this.baseUrl}/subdomains/by-domain/${domainId}?locale=${locale}`, {
         method: 'GET',
         headers: this.headers
       });

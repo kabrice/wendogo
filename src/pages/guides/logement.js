@@ -2,6 +2,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'next-i18next';
 import { trackPageView } from '../../lib/gtag';
 import Head from 'next/head';
 import Footer from '../../components/Footer';
@@ -36,6 +37,7 @@ import {
 import Link from 'next/link';
 
 function LogementGuide() {
+  const { t } = useTranslation(['common', 'logement']);
   const [activeTab, setActiveTab] = useState('types');
   const [expandedSection, setExpandedSection] = useState(null);
 
@@ -48,64 +50,124 @@ function LogementGuide() {
   };
 
   const quickStats = [
-    { number: '300-800€', label: 'Budget moyen', icon: Euro },
-    { number: '30-45m²', label: 'Surface studio', icon: Home },
-    { number: '1-3', label: 'Mois de préavis', icon: Calendar },
-    { number: '200€', label: 'APL moyenne', icon: Shield }
+    { number: '300-800€', label: t('logement:quickStats.budget'), icon: Euro },
+    { number: '30-45m²', label: t('logement:quickStats.surface'), icon: Home },
+    { number: '1-3', label: t('logement:quickStats.notice'), icon: Calendar },
+    { number: '200€', label: t('logement:quickStats.apl'), icon: Shield }
   ];
 
   const typesLogement = [
     {
-      title: 'Résidence universitaire CROUS',
-      description: 'Logement public étudiant le plus économique',
-      price: '150-400€/mois',
-      advantages: ['Prix très abordable', 'Proche des campus', 'Communauté étudiante', 'Démarches simplifiées'],
-      disadvantages: ['Difficile à obtenir', 'Confort basique', 'Règles strictes', 'Demande très tôt'],
+      title: t('logement:types.crous.title'),
+      description: t('logement:types.crous.description'),
+      price: t('logement:types.crous.price'),
+      advantages: [
+        t('logement:types.crous.advantages.1'),
+        t('logement:types.crous.advantages.2'),
+        t('logement:types.crous.advantages.3'),
+        t('logement:types.crous.advantages.4')
+      ],
+      disadvantages: [
+        t('logement:types.crous.disadvantages.1'),
+        t('logement:types.crous.disadvantages.2'),
+        t('logement:types.crous.disadvantages.3'),
+        t('logement:types.crous.disadvantages.4')
+      ],
       icon: Building,
       color: 'green'
     },
     {
-      title: 'Résidence étudiante privée',
-      description: 'Logements modernes avec services inclus',
-      price: '400-800€/mois',
-      advantages: ['Confort moderne', 'Services inclus', 'Sécurité', 'Meublé équipé'],
-      disadvantages: ['Plus cher', 'Contrat long', 'Frais de dossier', 'Caution élevée'],
+      title: t('logement:types.privateResidence.title'),
+      description: t('logement:types.privateResidence.description'),
+      price: t('logement:types.privateResidence.price'),
+      advantages: [
+        t('logement:types.privateResidence.advantages.1'),
+        t('logement:types.privateResidence.advantages.2'),
+        t('logement:types.privateResidence.advantages.3'),
+        t('logement:types.privateResidence.advantages.4')
+      ],
+      disadvantages: [
+        t('logement:types.privateResidence.disadvantages.1'),
+        t('logement:types.privateResidence.disadvantages.2'),
+        t('logement:types.privateResidence.disadvantages.3'),
+        t('logement:types.privateResidence.disadvantages.4')
+      ],
       icon: Building,
       color: 'blue'
     },
     {
-      title: 'Appartement privé',
-      description: 'Location classique sur le marché privé',
-      price: '400-1200€/mois',
-      advantages: ['Choix varié', 'Indépendance', 'Négociation possible', 'Pas de règles'],
-      disadvantages: ['Cher', 'Garant obligatoire', 'Meubles à acheter', 'Démarches longues'],
+      title: t('logement:types.privateApartment.title'),
+      description: t('logement:types.privateApartment.description'),
+      price: t('logement:types.privateApartment.price'),
+      advantages: [
+        t('logement:types.privateApartment.advantages.1'),
+        t('logement:types.privateApartment.advantages.2'),
+        t('logement:types.privateApartment.advantages.3'),
+        t('logement:types.privateApartment.advantages.4')
+      ],
+      disadvantages: [
+        t('logement:types.privateApartment.disadvantages.1'),
+        t('logement:types.privateApartment.disadvantages.2'),
+        t('logement:types.privateApartment.disadvantages.3'),
+        t('logement:types.privateApartment.disadvantages.4')
+      ],
       icon: Home,
       color: 'purple'
     },
     {
-      title: 'Colocation',
-      description: 'Partage d\'appartement avec autres étudiants',
-      price: '300-600€/mois',
-      advantages: ['Économique', 'Convivial', 'Charges partagées', 'Moins de garant'],
-      disadvantages: ['Colocataires', 'Responsabilité solidaire', 'Intimité réduite', 'Règles communes'],
+      title: t('logement:types.flatShare.title'),
+      description: t('logement:types.flatShare.description'),
+      price: t('logement:types.flatShare.price'),
+      advantages: [
+        t('logement:types.flatShare.advantages.1'),
+        t('logement:types.flatShare.advantages.2'),
+        t('logement:types.flatShare.advantages.3'),
+        t('logement:types.flatShare.advantages.4')
+      ],
+      disadvantages: [
+        t('logement:types.flatShare.disadvantages.1'),
+        t('logement:types.flatShare.disadvantages.2'),
+        t('logement:types.flatShare.disadvantages.3'),
+        t('logement:types.flatShare.disadvantages.4')
+      ],
       icon: Users,
       color: 'orange'
     },
     {
-      title: 'Chambre chez l\'habitant',
-      description: 'Logement chez une famille française',
-      price: '300-500€/mois',
-      advantages: ['Immersion culturelle', 'Sécurité', 'Aide quotidienne', 'Pratique français'],
-      disadvantages: ['Moins d\'intimité', 'Règles famille', 'Horaires', 'Dépendance'],
+      title: t('logement:types.homestay.title'),
+      description: t('logement:types.homestay.description'),
+      price: t('logement:types.homestay.price'),
+      advantages: [
+        t('logement:types.homestay.advantages.1'),
+        t('logement:types.homestay.advantages.2'),
+        t('logement:types.homestay.advantages.3'),
+        t('logement:types.homestay.advantages.4')
+      ],
+      disadvantages: [
+        t('logement:types.homestay.disadvantages.1'),
+        t('logement:types.homestay.disadvantages.2'),
+        t('logement:types.homestay.disadvantages.3'),
+        t('logement:types.homestay.disadvantages.4')
+      ],
       icon: Heart,
       color: 'pink'
     },
     {
-      title: 'Auberge de jeunesse',
-      description: 'Solution temporaire à l\'arrivée',
-      price: '20-50€/nuit',
-      advantages: ['Flexible', 'Immédiat', 'Pas de garant', 'Rencontres'],
-      disadvantages: ['Temporaire', 'Pas intime', 'Cher à long terme', 'Peu de confort'],
+      title: t('logement:types.hostel.title'),
+      description: t('logement:types.hostel.description'),
+      price: t('logement:types.hostel.price'),
+      advantages: [
+        t('logement:types.hostel.advantages.1'),
+        t('logement:types.hostel.advantages.2'),
+        t('logement:types.hostel.advantages.3'),
+        t('logement:types.hostel.advantages.4')
+      ],
+      disadvantages: [
+        t('logement:types.hostel.disadvantages.1'),
+        t('logement:types.hostel.disadvantages.2'),
+        t('logement:types.hostel.disadvantages.3'),
+        t('logement:types.hostel.disadvantages.4')
+      ],
       icon: MapPin,
       color: 'red'
     }
@@ -114,120 +176,120 @@ function LogementGuide() {
   const villes = [
     {
       name: 'Paris',
-      studios: '600-1200€',
-      coloc: '500-800€',
-      crous: '300-500€',
-      tips: 'Rechercher en banlieue, transport inclus'
+      studios: t('logement:cities.paris.studios'),
+      coloc: t('logement:cities.paris.coloc'),
+      crous: t('logement:cities.paris.crous'),
+      tips: t('logement:cities.paris.tips')
     },
     {
       name: 'Lyon',
-      studios: '400-700€',
-      coloc: '350-550€',
-      crous: '200-350€',
-      tips: 'Quartiers étudiants : Guillotière, Croix-Rousse'
+      studios: t('logement:cities.lyon.studios'),
+      coloc: t('logement:cities.lyon.coloc'),
+      crous: t('logement:cities.lyon.crous'),
+      tips: t('logement:cities.lyon.tips')
     },
     {
       name: 'Marseille',
-      studios: '350-600€',
-      coloc: '300-450€',
-      crous: '200-300€',
-      tips: 'Éviter hypercentre, préférer quartiers étudiants'
+      studios: t('logement:cities.marseille.studios'),
+      coloc: t('logement:cities.marseille.coloc'),
+      crous: t('logement:cities.marseille.crous'),
+      tips: t('logement:cities.marseille.tips')
     },
     {
       name: 'Toulouse',
-      studios: '350-550€',
-      coloc: '280-420€',
-      crous: '200-320€',
-      tips: 'Capitole cher, chercher vers Mirail, Rangueil'
+      studios: t('logement:cities.toulouse.studios'),
+      coloc: t('logement:cities.toulouse.coloc'),
+      crous: t('logement:cities.toulouse.crous'),
+      tips: t('logement:cities.toulouse.tips')
     },
     {
       name: 'Lille',
-      studios: '350-550€',
-      coloc: '280-400€',
-      crous: '200-300€',
-      tips: 'Vieux-Lille cher, Wazemmes plus abordable'
+      studios: t('logement:cities.lille.studios'),
+      coloc: t('logement:cities.lille.coloc'),
+      crous: t('logement:cities.lille.crous'),
+      tips: t('logement:cities.lille.tips')
     },
     {
       name: 'Bordeaux',
-      studios: '400-650€',
-      coloc: '320-480€',
-      crous: '200-350€',
-      tips: 'Éviter centre historique, chercher périphérie'
+      studios: t('logement:cities.bordeaux.studios'),
+      coloc: t('logement:cities.bordeaux.coloc'),
+      crous: t('logement:cities.bordeaux.crous'),
+      tips: t('logement:cities.bordeaux.tips')
     }
   ];
 
   const etapesRecherche = [
     {
       step: 1,
-      title: 'Définir le budget',
-      description: 'Calculer capacité financière réelle',
+      title: t('logement:search.steps.1.title'),
+      description: t('logement:search.steps.1.description'),
       details: [
-        'Loyer max = 30% des revenus',
-        'Inclure charges et assurance',
-        'Prévoir frais installation',
-        'Vérifier éligibilité APL'
+        t('logement:search.steps.1.details.1'),
+        t('logement:search.steps.1.details.2'),
+        t('logement:search.steps.1.details.3'),
+        t('logement:search.steps.1.details.4')
       ],
-      duration: '1 semaine'
+      duration: t('logement:search.steps.1.duration')
     },
     {
       step: 2,
-      title: 'Choisir la zone',
-      description: 'Sélectionner quartiers cibles',
+      title: t('logement:search.steps.2.title'),
+      description: t('logement:search.steps.2.description'),
       details: [
-        'Proximité université/école',
-        'Transport public disponible',
-        'Commerces et services',
-        'Sécurité du quartier'
+        t('logement:search.steps.2.details.1'),
+        t('logement:search.steps.2.details.2'),
+        t('logement:search.steps.2.details.3'),
+        t('logement:search.steps.2.details.4')
       ],
-      duration: '1 semaine'
+      duration: t('logement:search.steps.2.duration')
     },
     {
       step: 3,
-      title: 'Rechercher activement',
-      description: 'Utiliser tous les canaux',
+      title: t('logement:search.steps.3.title'),
+      description: t('logement:search.steps.3.description'),
       details: [
-        'Sites spécialisés étudiants',
-        'Plateformes généralistes',
-        'Réseaux sociaux',
-        'Agences immobilières'
+        t('logement:search.steps.3.details.1'),
+        t('logement:search.steps.3.details.2'),
+        t('logement:search.steps.3.details.3'),
+        t('logement:search.steps.3.details.4')
       ],
-      duration: '2-4 semaines'
+      duration: t('logement:search.steps.3.duration')
     },
     {
       step: 4,
-      title: 'Préparer le dossier',
-      description: 'Rassembler documents requis',
+      title: t('logement:search.steps.4.title'),
+      description: t('logement:search.steps.4.description'),
       details: [
-        'Pièce d\'identité',
-        'Justificatifs revenus',
-        'Garant français',
-        'Assurance logement'
+        t('logement:search.steps.4.details.1'),
+        t('logement:search.steps.4.details.2'),
+        t('logement:search.steps.4.details.3'),
+        t('logement:search.steps.4.details.4')
       ],
-      duration: '1 semaine'
+      duration: t('logement:search.steps.4.duration')
     },
     {
       step: 5,
-      title: 'Visiter et candidater',
-      description: 'Organiser visites et postulations',
+      title: t('logement:search.steps.5.title'),
+      description: t('logement:search.steps.5.description'),
       details: [
-        'Prendre rendez-vous rapidement',
-        'Visiter en journée',
-        'Poser bonnes questions',
-        'Candidater immédiatement'
+        t('logement:search.steps.5.details.1'),
+        t('logement:search.steps.5.details.2'),
+        t('logement:search.steps.5.details.3'),
+        t('logement:search.steps.5.details.4')
       ],
-      duration: '1-2 semaines'
+      duration: t('logement:search.steps.5.duration')
     },
     {
       step: 6,
-      title: 'Signer et s\'installer',
-      description: 'Finaliser contrat et emménager',
+      title: t('logement:search.steps.6.title'),
+      description: t('logement:search.steps.6.description'),
       details: [
-        'Lire contrat attentivement',
-        'Faire état des lieux',
-        'Souscrire assurance',
-        'Demander APL'
+        t('logement:search.steps.6.details.1'),
+        t('logement:search.steps.6.details.2'),
+        t('logement:search.steps.6.details.3'),
+        t('logement:search.steps.6.details.4')
       ],
-      duration: '1 semaine'
+      duration: t('logement:search.steps.6.duration')
     }
   ];
 
@@ -235,113 +297,129 @@ function LogementGuide() {
     {
       name: 'Lokaviz',
       url: 'https://www.lokaviz.fr',
-      description: 'Plateforme officielle CROUS',
-      type: 'Gratuit',
-      specialty: 'Résidences universitaires'
+      description: t('logement:search.sites.lokaviz.description'),
+      type: t('logement:search.sites.lokaviz.type'),
+      specialty: t('logement:search.sites.lokaviz.specialty')
     },
     {
       name: 'Studapart',
       url: 'https://www.studapart.com',
-      description: 'Spécialisé logement étudiant',
-      type: 'Gratuit',
-      specialty: 'Tous types logements'
+      description: t('logement:search.sites.studapart.description'),
+      type: t('logement:search.sites.studapart.type'),
+      specialty: t('logement:search.sites.studapart.specialty')
     },
     {
       name: 'Seloger',
       url: 'https://www.seloger.com',
-      description: 'Leader immobilier français',
-      type: 'Gratuit',
-      specialty: 'Marché privé'
+      description: t('logement:search.sites.seloger.description'),
+      type: t('logement:search.sites.seloger.type'),
+      specialty: t('logement:search.sites.seloger.specialty')
     },
     {
       name: 'Leboncoin',
       url: 'https://www.leboncoin.fr',
-      description: 'Petites annonces entre particuliers',
-      type: 'Gratuit',
-      specialty: 'Particuliers'
+      description: t('logement:search.sites.leboncoin.description'),
+      type: t('logement:search.sites.leboncoin.type'),
+      specialty: t('logement:search.sites.leboncoin.specialty')
     },
     {
       name: 'Appartager',
       url: 'https://www.appartager.com',
-      description: 'Spécialisé colocation',
-      type: 'Gratuit',
-      specialty: 'Colocation'
+      description: t('logement:search.sites.appartager.description'),
+      type: t('logement:search.sites.appartager.type'),
+      specialty: t('logement:search.sites.appartager.specialty')
     },
     {
       name: 'Adele',
       url: 'https://www.adele.org',
-      description: 'Réseau résidences étudiantes',
-      type: 'Gratuit',
-      specialty: 'Résidences privées'
+      description: t('logement:search.sites.adele.description'),
+      type: t('logement:search.sites.adele.type'),
+      specialty: t('logement:search.sites.adele.specialty')
     }
   ];
 
   const aides = [
     {
-      name: 'APL (Aide Personnalisée au Logement)',
-      description: 'Aide de la CAF selon revenus',
-      montant: '50-300€/mois',
-      conditions: ['Revenus modestes', 'Logement décent', 'Étudiant ou salarié'],
-      demarche: 'Demande CAF en ligne'
+      name: t('logement:aids.apl.name'),
+      description: t('logement:aids.apl.description'),
+      montant: t('logement:aids.apl.montant'),
+      conditions: [
+        t('logement:aids.apl.conditions.1'),
+        t('logement:aids.apl.conditions.2'),
+        t('logement:aids.apl.conditions.3')
+      ],
+      demarche: t('logement:aids.apl.demarche')
     },
     {
-      name: 'ALS (Allocation Logement Social)',
-      description: 'Alternative à l\'APL',
-      montant: '50-250€/mois',
-      conditions: ['Pas éligible APL', 'Logement convenable', 'Ressources limitées'],
-      demarche: 'Demande CAF en ligne'
+      name: t('logement:aids.als.name'),
+      description: t('logement:aids.als.description'),
+      montant: t('logement:aids.als.montant'),
+      conditions: [
+        t('logement:aids.als.conditions.1'),
+        t('logement:aids.als.conditions.2'),
+        t('logement:aids.als.conditions.3')
+      ],
+      demarche: t('logement:aids.als.demarche')
     },
     {
-      name: 'Caution Visale',
-      description: 'Garantie locative gratuite',
-      montant: 'Gratuit',
-      conditions: ['Étudiant -30 ans', 'Salaire <1500€', 'Logement -800€'],
-      demarche: 'Demande en ligne Visale'
+      name: t('logement:aids.visale.name'),
+      description: t('logement:aids.visale.description'),
+      montant: t('logement:aids.visale.montant'),
+      conditions: [
+        t('logement:aids.visale.conditions.1'),
+        t('logement:aids.visale.conditions.2'),
+        t('logement:aids.visale.conditions.3')
+      ],
+      demarche: t('logement:aids.visale.demarche')
     },
     {
-      name: 'Mobili-Jeune',
-      description: 'Aide pour jeunes en formation',
-      montant: '10-100€/mois',
-      conditions: ['Formation professionnelle', 'Alternance', 'Moins de 30 ans'],
-      demarche: 'Demande via employeur'
+      name: t('logement:aids.mobilijeune.name'),
+      description: t('logement:aids.mobilijeune.description'),
+      montant: t('logement:aids.mobilijeune.montant'),
+      conditions: [
+        t('logement:aids.mobilijeune.conditions.1'),
+        t('logement:aids.mobilijeune.conditions.2'),
+        t('logement:aids.mobilijeune.conditions.3')
+      ],
+      demarche: t('logement:aids.mobilijeune.demarche')
     }
   ];
 
   const documents = [
     {
-      category: 'Identité',
+      category: t('logement:documents.identity.title'),
       items: [
-        'Carte d\'identité ou passeport',
-        'Carte de séjour (étudiants étrangers)',
-        'Carte étudiante',
-        'Justificatif de scolarité'
+        t('logement:documents.identity.1'),
+        t('logement:documents.identity.2'),
+        t('logement:documents.identity.3'),
+        t('logement:documents.identity.4')
       ]
     },
     {
-      category: 'Revenus',
+      category: t('logement:documents.income.title'),
       items: [
-        'Avis d\'imposition ou non-imposition',
-        'Bulletins de salaire (3 derniers)',
-        'Attestation de bourse',
-        'Relevés bancaires (3 mois)'
+        t('logement:documents.income.1'),
+        t('logement:documents.income.2'),
+        t('logement:documents.income.3'),
+        t('logement:documents.income.4')
       ]
     },
     {
-      category: 'Garant',
+      category: t('logement:documents.guarantor.title'),
       items: [
-        'Pièce d\'identité du garant',
-        'Justificatifs revenus garant',
-        'Attestation employeur garant',
-        'Acte de cautionnement signé'
+        t('logement:documents.guarantor.1'),
+        t('logement:documents.guarantor.2'),
+        t('logement:documents.guarantor.3'),
+        t('logement:documents.guarantor.4')
       ]
     },
     {
-      category: 'Assurance',
+      category: t('logement:documents.insurance.title'),
       items: [
-        'Attestation assurance habitation',
-        'Attestation responsabilité civile',
-        'Justificatif assurance scolaire',
-        'Couverture santé'
+        t('logement:documents.insurance.1'),
+        t('logement:documents.insurance.2'),
+        t('logement:documents.insurance.3'),
+        t('logement:documents.insurance.4')
       ]
     }
   ];
@@ -349,13 +427,13 @@ function LogementGuide() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Head>
-        <title>Guide Logement Étudiant France 2024 - Trouver son logement</title>
-        <meta name="description" content="Guide complet logement étudiant France 2024 : types, prix, démarches, aides. Tout pour trouver votre logement étudiant rapidement." />
-        <meta name="keywords" content="logement étudiant France, CROUS, résidence étudiante, colocation, APL, garant, visa logement" />
+        <title>{t('logement:meta.title')}</title>
+        <meta name="description" content={t('logement:meta.description')} />
+        <meta name="keywords" content={t('logement:meta.keywords')} />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         
-        <meta property="og:title" content="Guide Logement Étudiant France 2024 - Trouver son logement" />
-        <meta property="og:description" content="Types de logements, prix, démarches et aides pour étudiants en France" />
+        <meta property="og:title" content={t('logement:meta.ogTitle')} />
+        <meta property="og:description" content={t('logement:meta.ogDescription')} />
         <meta property="og:type" content="article" />
         <meta property="og:url" content="https://wendogo.com/guides/logement" />
         <meta property="og:image" content="https://wendogo.com/images/guide-logement.jpg" />
@@ -366,8 +444,8 @@ function LogementGuide() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Article",
-            "headline": "Guide Logement Étudiant France 2024",
-            "description": "Guide complet pour trouver son logement étudiant en France",
+            "headline": t('logement:meta.ogTitle'),
+            "description": t('logement:meta.ogDescription'),
             "author": {
               "@type": "Organization",
               "name": "Wendogo"
@@ -382,7 +460,7 @@ function LogementGuide() {
         }} />
       </Head>
 
-      <NavBar variant="simple" />
+      <NavBar variant="simple" languageSelectorVariant="light" />
 
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-orange-600 via-red-600 to-pink-700 text-white">
@@ -394,18 +472,17 @@ function LogementGuide() {
               </div>
             </div>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">
-              Guide Logement Étudiant France
+              {t('logement:hero.title')}
             </h1>
             <p className="text-lg sm:text-xl text-orange-100 max-w-3xl mx-auto mb-8">
-              Trouvez votre logement étudiant en France : types, prix, démarches, aides. 
-              Tout ce qu'il faut savoir pour se loger facilement.
+              {t('logement:hero.subtitle')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/contact" className="bg-white text-orange-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
-                Aide au logement
+                {t('logement:hero.ctaHelp')}
               </Link>
               <Link href="/guides/campus-france" className="border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-orange-600 transition-colors">
-                Guide Campus France
+                {t('logement:hero.ctaCampusFrance')}
               </Link>
             </div>
           </div>
@@ -434,11 +511,11 @@ function LogementGuide() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex space-x-4 lg:space-x-6 border-b border-gray-200 overflow-x-auto">
             {[
-              { id: 'types', label: 'Types logements', icon: Home },
-              { id: 'recherche', label: 'Recherche', icon: Search },
-              { id: 'villes', label: 'Prix par ville', icon: MapPin },
-              { id: 'aides', label: 'Aides', icon: Shield },
-              { id: 'documents', label: 'Documents', icon: FileText }
+              { id: 'types', label: t('logement:tabs.types'), icon: Home },
+              { id: 'recherche', label: t('logement:tabs.search'), icon: Search },
+              { id: 'villes', label: t('logement:tabs.cities'), icon: MapPin },
+              { id: 'aides', label: t('logement:tabs.aids'), icon: Shield },
+              { id: 'documents', label: t('logement:tabs.documents'), icon: FileText }
             ].map(tab => (
               <button
                 key={tab.id}
@@ -466,10 +543,10 @@ function LogementGuide() {
             <div className="space-y-12">
               <div className="text-center">
                 <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
-                  Types de logements étudiants
+                  {t('logement:types.title')}
                 </h2>
                 <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                  Découvrez les différentes options de logement disponibles pour les étudiants en France.
+                  {t('logement:types.subtitle')}
                 </p>
               </div>
 
@@ -492,7 +569,7 @@ function LogementGuide() {
                     
                     <div className="space-y-3">
                       <div>
-                        <h4 className="font-medium text-green-900 mb-1">Avantages :</h4>
+                        <h4 className="font-medium text-green-900 mb-1">{t('logement:types.advantagesLabel')}</h4>
                         <ul className="text-xs text-green-800 space-y-1">
                           {type.advantages.map((advantage, i) => (
                             <li key={i} className="flex items-center">
@@ -504,7 +581,7 @@ function LogementGuide() {
                       </div>
                       
                       <div>
-                        <h4 className="font-medium text-red-900 mb-1">Inconvénients :</h4>
+                        <h4 className="font-medium text-red-900 mb-1">{t('logement:types.disadvantagesLabel')}</h4>
                         <ul className="text-xs text-red-800 space-y-1">
                           {type.disadvantages.map((disadvantage, i) => (
                             <li key={i} className="flex items-center">
@@ -523,24 +600,24 @@ function LogementGuide() {
                 <div className="flex items-center mb-4">
                   <Target className="w-6 h-6 text-blue-600 mr-3" />
                   <h3 className="text-lg font-semibold text-blue-900">
-                    Recommandations par profil
+                    {t('logement:types.recommendations.title')}
                   </h3>
                 </div>
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <h4 className="font-semibold text-blue-900 mb-2">Étudiant avec budget limité :</h4>
+                    <h4 className="font-semibold text-blue-900 mb-2">{t('logement:types.recommendations.limited.title')}</h4>
                     <ul className="text-blue-800 text-sm space-y-1">
-                      <li>• 1ère priorité : Résidence CROUS</li>
-                      <li>• 2ème option : Colocation</li>
-                      <li>• 3ème choix : Chambre chez l'habitant</li>
+                      <li>• {t('logement:types.recommendations.limited.1')}</li>
+                      <li>• {t('logement:types.recommendations.limited.2')}</li>
+                      <li>• {t('logement:types.recommendations.limited.3')}</li>
                     </ul>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-blue-900 mb-2">Étudiant avec budget confortable :</h4>
+                    <h4 className="font-semibold text-blue-900 mb-2">{t('logement:types.recommendations.comfortable.title')}</h4>
                     <ul className="text-blue-800 text-sm space-y-1">
-                      <li>• 1ère priorité : Résidence privée</li>
-                      <li>• 2ème option : Studio privé</li>
-                      <li>• 3ème choix : Colocation haut standing</li>
+                      <li>• {t('logement:types.recommendations.comfortable.1')}</li>
+                      <li>• {t('logement:types.recommendations.comfortable.2')}</li>
+                      <li>• {t('logement:types.recommendations.comfortable.3')}</li>
                     </ul>
                   </div>
                 </div>
@@ -553,10 +630,10 @@ function LogementGuide() {
             <div className="space-y-12">
               <div className="text-center">
                 <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
-                  Méthode de recherche efficace
+                  {t('logement:search.title')}
                 </h2>
                 <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                  Suivez ces étapes pour trouver votre logement étudiant rapidement.
+                  {t('logement:search.subtitle')}
                 </p>
               </div>
 
@@ -593,7 +670,7 @@ function LogementGuide() {
 
               <div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-6">
-                  Sites de recherche recommandés
+                  {t('logement:search.sites.title')}
                 </h3>
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {sites.map((site, index) => (
@@ -613,7 +690,7 @@ function LogementGuide() {
                           rel="noopener noreferrer"
                           className="flex items-center text-orange-600 hover:text-orange-800 text-sm"
                         >
-                          Visiter
+                          {t('logement:search.sites.visit')}
                           <ExternalLink className="w-3 h-3 ml-1" />
                         </a>
                       </div>
@@ -626,26 +703,26 @@ function LogementGuide() {
                 <div className="flex items-center mb-4">
                   <AlertTriangle className="w-6 h-6 text-amber-600 mr-3" />
                   <h3 className="text-lg font-semibold text-amber-900">
-                    Conseils pour recherche efficace
+                    {t('logement:search.tips.title')}
                   </h3>
                 </div>
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <h4 className="font-semibold text-amber-900 mb-2">Timing :</h4>
+                    <h4 className="font-semibold text-amber-900 mb-2">{t('logement:search.tips.timing.title')}</h4>
                     <ul className="text-amber-800 text-sm space-y-1">
-                      <li>• Commencer 3-4 mois avant rentrée</li>
-                      <li>• Pic d'offres : mai-juillet</li>
-                      <li>• Visiter rapidement</li>
-                      <li>• Candidater le jour même</li>
+                      <li>• {t('logement:search.tips.timing.1')}</li>
+                      <li>• {t('logement:search.tips.timing.2')}</li>
+                      <li>• {t('logement:search.tips.timing.3')}</li>
+                      <li>• {t('logement:search.tips.timing.4')}</li>
                     </ul>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-amber-900 mb-2">Stratégie :</h4>
+                    <h4 className="font-semibold text-amber-900 mb-2">{t('logement:search.tips.strategy.title')}</h4>
                     <ul className="text-amber-800 text-sm space-y-1">
-                      <li>• Élargir zone géographique</li>
-                      <li>• Créer alertes automatiques</li>
-                      <li>• Préparer dossier complet</li>
-                      <li>• Être flexible sur critères</li>
+                      <li>• {t('logement:search.tips.strategy.1')}</li>
+                      <li>• {t('logement:search.tips.strategy.2')}</li>
+                      <li>• {t('logement:search.tips.strategy.3')}</li>
+                      <li>• {t('logement:search.tips.strategy.4')}</li>
                     </ul>
                   </div>
                 </div>
@@ -658,10 +735,10 @@ function LogementGuide() {
             <div className="space-y-12">
               <div className="text-center">
                 <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
-                  Prix par ville étudiante
+                  {t('logement:cities.title')}
                 </h2>
                 <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                  Découvrez les fourchettes de prix pour les principales villes étudiantes françaises.
+                  {t('logement:cities.subtitle')}
                 </p>
               </div>
 
@@ -675,15 +752,15 @@ function LogementGuide() {
                     
                     <div className="space-y-3 mb-4">
                       <div className="flex items-center justify-between">
-                        <span className="text-sm text-gray-600">Studios :</span>
+                        <span className="text-sm text-gray-600">{t('logement:cities.studios')}</span>
                         <span className="font-semibold text-gray-900">{ville.studios}</span>
                       </div>
                       <div className="flex items-center justify-between">
-                        <span className="text-sm text-gray-600">Colocation :</span>
+                        <span className="text-sm text-gray-600">{t('logement:cities.coloc')}</span>
                         <span className="font-semibold text-gray-900">{ville.coloc}</span>
                       </div>
                       <div className="flex items-center justify-between">
-                        <span className="text-sm text-gray-600">CROUS :</span>
+                        <span className="text-sm text-gray-600">{t('logement:cities.crous')}</span>
                         <span className="font-semibold text-green-700">{ville.crous}</span>
                       </div>
                     </div>
@@ -691,7 +768,7 @@ function LogementGuide() {
                     <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
                       <div className="flex items-center mb-2">
                         <Star className="w-4 h-4 text-blue-600 mr-2" />
-                        <span className="text-sm font-semibold text-blue-900">Conseil :</span>
+                        <span className="text-sm font-semibold text-blue-900">{t('logement:cities.advice')}</span>
                       </div>
                       <p className="text-xs text-blue-800">{ville.tips}</p>
                     </div>
@@ -701,48 +778,48 @@ function LogementGuide() {
 
               <div className="bg-gradient-to-r from-orange-50 to-red-50 rounded-xl p-8">
                 <h3 className="text-xl font-semibold text-gray-900 mb-6">
-                  Facteurs influençant les prix
+                  {t('logement:cities.priceFactors.title')}
                 </h3>
                 <div className="grid md:grid-cols-2 gap-8">
                   <div>
-                    <h4 className="font-semibold text-orange-900 mb-3">Augmentent les prix :</h4>
+                    <h4 className="font-semibold text-orange-900 mb-3">{t('logement:cities.priceFactors.increase.title')}</h4>
                     <ul className="space-y-2 text-orange-800">
                       <li className="flex items-center">
                         <ChevronRight className="w-4 h-4 mr-2" />
-                        <span className="text-sm">Centre-ville</span>
+                        <span className="text-sm">{t('logement:cities.priceFactors.increase.1')}</span>
                       </li>
                       <li className="flex items-center">
                         <ChevronRight className="w-4 h-4 mr-2" />
-                        <span className="text-sm">Proche transports</span>
+                        <span className="text-sm">{t('logement:cities.priceFactors.increase.2')}</span>
                       </li>
                       <li className="flex items-center">
                         <ChevronRight className="w-4 h-4 mr-2" />
-                        <span className="text-sm">Meublé équipé</span>
+                        <span className="text-sm">{t('logement:cities.priceFactors.increase.3')}</span>
                       </li>
                       <li className="flex items-center">
                         <ChevronRight className="w-4 h-4 mr-2" />
-                        <span className="text-sm">Grandes surfaces</span>
+                        <span className="text-sm">{t('logement:cities.priceFactors.increase.4')}</span>
                       </li>
                     </ul>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-green-900 mb-3">Réduisent les prix :</h4>
+                    <h4 className="font-semibold text-green-900 mb-3">{t('logement:cities.priceFactors.reduce.title')}</h4>
                     <ul className="space-y-2 text-green-800">
                       <li className="flex items-center">
                         <ChevronRight className="w-4 h-4 mr-2" />
-                        <span className="text-sm">Périphérie</span>
+                        <span className="text-sm">{t('logement:cities.priceFactors.reduce.1')}</span>
                       </li>
                       <li className="flex items-center">
                         <ChevronRight className="w-4 h-4 mr-2" />
-                        <span className="text-sm">Logement vide</span>
+                        <span className="text-sm">{t('logement:cities.priceFactors.reduce.2')}</span>
                       </li>
                       <li className="flex items-center">
                         <ChevronRight className="w-4 h-4 mr-2" />
-                        <span className="text-sm">Quartiers populaires</span>
+                        <span className="text-sm">{t('logement:cities.priceFactors.reduce.3')}</span>
                       </li>
                       <li className="flex items-center">
                         <ChevronRight className="w-4 h-4 mr-2" />
-                        <span className="text-sm">Colocation</span>
+                        <span className="text-sm">{t('logement:cities.priceFactors.reduce.4')}</span>
                       </li>
                     </ul>
                   </div>
@@ -756,10 +833,10 @@ function LogementGuide() {
             <div className="space-y-12">
               <div className="text-center">
                 <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
-                  Aides au logement étudiant
+                  {t('logement:aids.title')}
                 </h2>
                 <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                  Découvrez toutes les aides disponibles pour réduire votre budget logement.
+                  {t('logement:aids.subtitle')}
                 </p>
               </div>
 
@@ -778,11 +855,11 @@ function LogementGuide() {
                     
                     <div className="space-y-3 mb-4">
                       <div className="flex items-center justify-between">
-                        <span className="text-sm text-gray-600">Montant :</span>
+                        <span className="text-sm text-gray-600">{t('logement:aids.amount')}</span>
                         <span className="font-semibold text-green-700">{aide.montant}</span>
                       </div>
                       <div>
-                        <h4 className="font-semibold text-gray-900 mb-2">Conditions :</h4>
+                        <h4 className="font-semibold text-gray-900 mb-2">{t('logement:aids.conditions')}</h4>
                         <ul className="space-y-1">
                           {aide.conditions.map((condition, i) => (
                             <li key={i} className="flex items-center text-sm text-gray-700">
@@ -797,7 +874,7 @@ function LogementGuide() {
                     <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
                       <div className="flex items-center">
                         <FileText className="w-4 h-4 text-blue-600 mr-2" />
-                        <span className="text-sm font-semibold text-blue-900">Démarche :</span>
+                        <span className="text-sm font-semibold text-blue-900">{t('logement:aids.procedure')}</span>
                       </div>
                       <p className="text-xs text-blue-800 mt-1">{aide.demarche}</p>
                     </div>
@@ -809,25 +886,25 @@ function LogementGuide() {
                 <div className="flex items-center mb-4">
                   <Award className="w-6 h-6 text-green-600 mr-3" />
                   <h3 className="text-lg font-semibold text-green-900">
-                    Simulation d'économies
+                    {t('logement:aids.simulation.title')}
                   </h3>
                 </div>
                 <div className="grid md:grid-cols-3 gap-6">
                   <div className="text-center">
                     <div className="text-2xl font-bold text-green-900 mb-1">200€</div>
-                    <div className="text-sm text-green-800">APL moyenne</div>
+                    <div className="text-sm text-green-800">{t('logement:aids.simulation.aplAverage')}</div>
                   </div>
                   <div className="text-center">
                     <div className="text-2xl font-bold text-green-900 mb-1">100€</div>
-                    <div className="text-sm text-green-800">Mobili-Jeune max</div>
+                    <div className="text-sm text-green-800">{t('logement:aids.simulation.mobiliMax')}</div>
                   </div>
                   <div className="text-center">
                     <div className="text-2xl font-bold text-green-900 mb-1">300€</div>
-                    <div className="text-sm text-green-800">Économie totale</div>
+                    <div className="text-sm text-green-800">{t('logement:aids.simulation.totalSavings')}</div>
                   </div>
                 </div>
                 <p className="text-green-800 text-sm mt-4 text-center">
-                  Un étudiant peut réduire son budget logement de 200 à 300€/mois grâce aux aides
+                  {t('logement:aids.simulation.description')}
                 </p>
               </div>
             </div>
@@ -838,10 +915,10 @@ function LogementGuide() {
             <div className="space-y-12">
               <div className="text-center">
                 <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
-                  Documents requis
+                  {t('logement:documents.title')}
                 </h2>
                 <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                  Préparez tous les documents nécessaires pour constituer un dossier solide.
+                  {t('logement:documents.subtitle')}
                 </p>
               </div>
 
@@ -878,26 +955,26 @@ function LogementGuide() {
                 <div className="flex items-center mb-4">
                   <AlertTriangle className="w-6 h-6 text-red-600 mr-3" />
                   <h3 className="text-lg font-semibold text-red-900">
-                    Spécificités étudiants étrangers
+                    {t('logement:documents.foreignStudents.title')}
                   </h3>
                 </div>
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <h4 className="font-semibold text-red-900 mb-2">Documents supplémentaires :</h4>
+                    <h4 className="font-semibold text-red-900 mb-2">{t('logement:documents.foreignStudents.additional.title')}</h4>
                     <ul className="text-red-800 text-sm space-y-1">
-                      <li>• Titre de séjour ou visa</li>
-                      <li>• Attestation Campus France</li>
-                      <li>• Justificatifs traduits</li>
-                      <li>• Garant français obligatoire</li>
+                      <li>• {t('logement:documents.foreignStudents.additional.1')}</li>
+                      <li>• {t('logement:documents.foreignStudents.additional.2')}</li>
+                      <li>• {t('logement:documents.foreignStudents.additional.3')}</li>
+                      <li>• {t('logement:documents.foreignStudents.additional.4')}</li>
                     </ul>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-red-900 mb-2">Difficultés courantes :</h4>
+                    <h4 className="font-semibold text-red-900 mb-2">{t('logement:documents.foreignStudents.difficulties.title')}</h4>
                     <ul className="text-red-800 text-sm space-y-1">
-                      <li>• Pas d'historique locatif</li>
-                      <li>• Revenus étrangers</li>
-                      <li>• Méconnaissance des codes</li>
-                      <li>• Barrière linguistique</li>
+                      <li>• {t('logement:documents.foreignStudents.difficulties.1')}</li>
+                      <li>• {t('logement:documents.foreignStudents.difficulties.2')}</li>
+                      <li>• {t('logement:documents.foreignStudents.difficulties.3')}</li>
+                      <li>• {t('logement:documents.foreignStudents.difficulties.4')}</li>
                     </ul>
                   </div>
                 </div>
@@ -905,25 +982,25 @@ function LogementGuide() {
 
               <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-8">
                 <h3 className="text-xl font-semibold text-gray-900 mb-6">
-                  Checklist dossier parfait
+                  {t('logement:documents.checklist.title')}
                 </h3>
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <h4 className="font-semibold text-blue-900 mb-3">Avant la visite :</h4>
+                    <h4 className="font-semibold text-blue-900 mb-3">{t('logement:documents.checklist.beforeVisit.title')}</h4>
                     <ul className="space-y-2 text-blue-800 text-sm">
-                      <li>☑️ Dossier complet numérisé</li>
-                      <li>☑️ Originaux dans classeur</li>
-                      <li>☑️ Garant mobilisé</li>
-                      <li>☑️ Assurance souscrite</li>
+                      <li>☑️ {t('logement:documents.checklist.beforeVisit.1')}</li>
+                      <li>☑️ {t('logement:documents.checklist.beforeVisit.2')}</li>
+                      <li>☑️ {t('logement:documents.checklist.beforeVisit.3')}</li>
+                      <li>☑️ {t('logement:documents.checklist.beforeVisit.4')}</li>
                     </ul>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-blue-900 mb-3">Pendant la visite :</h4>
+                    <h4 className="font-semibold text-blue-900 mb-3">{t('logement:documents.checklist.duringVisit.title')}</h4>
                     <ul className="space-y-2 text-blue-800 text-sm">
-                      <li>☑️ Présentation soignée</li>
-                      <li>☑️ Motivation exprimée</li>
-                      <li>☑️ Questions pertinentes</li>
-                      <li>☑️ Candidature immédiate</li>
+                      <li>☑️ {t('logement:documents.checklist.duringVisit.1')}</li>
+                      <li>☑️ {t('logement:documents.checklist.duringVisit.2')}</li>
+                      <li>☑️ {t('logement:documents.checklist.duringVisit.3')}</li>
+                      <li>☑️ {t('logement:documents.checklist.duringVisit.4')}</li>
                     </ul>
                   </div>
                 </div>
@@ -937,18 +1014,17 @@ function LogementGuide() {
       <section className="py-16 bg-gradient-to-r from-orange-600 to-red-600 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-2xl lg:text-3xl font-bold mb-6">
-            Besoin d'aide pour trouver votre logement ?
+            {t('logement:cta.title')}
           </h2>
           <p className="text-lg lg:text-xl mb-8 text-orange-100">
-            Nos conseillers spécialisés vous accompagnent dans votre recherche de logement 
-            étudiant et vous aident à optimiser votre budget.
+            {t('logement:cta.description')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/contact" className="bg-white text-orange-600 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
-              Aide au logement
+              {t('logement:cta.helpButton')}
             </Link>
             <Link href="/guides/visa-etudiant" className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-orange-600 transition-colors">
-              Guide visa étudiant
+              {t('logement:cta.visaGuideButton')}
             </Link>
           </div>
         </div>
@@ -958,5 +1034,13 @@ function LogementGuide() {
     </div>
   );
 }
-
+export async function getStaticProps({ locale }) {
+  const { serverSideTranslations } = await import('next-i18next/serverSideTranslations');
+  
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['authModal', 'common', 'logement'])),
+    },
+  };
+}
 export default LogementGuide;

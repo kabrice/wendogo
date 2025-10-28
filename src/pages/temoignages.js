@@ -271,7 +271,7 @@ function Temoignages() {
         }} />
       </Head>
 
-      <NavBar variant="simple" />
+      <NavBar variant="simple" languageSelectorVariant="light" />
 
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 text-white">

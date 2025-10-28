@@ -6,6 +6,7 @@ import { trackPageView } from '../../lib/gtag';
 import Head from 'next/head';
 import Footer from '../../components/Footer';
 import NavBar from '../../components/NavBar';
+import { useTranslation } from 'next-i18next';
 import { 
   GraduationCap, 
   Globe, 
@@ -30,7 +31,7 @@ import Link from 'next/link';
 function EtudierEnFranceGuide() {
   const [activeTab, setActiveTab] = useState('overview');
   const [expandedSection, setExpandedSection] = useState(null);
-
+  const { t } = useTranslation(['common', 'etudierEnFrance']);
   useEffect(() => {
     trackPageView('guide_etudier_en_france');
   }, []);
@@ -40,97 +41,110 @@ function EtudierEnFranceGuide() {
   };
 
   const quickStats = [
-    { number: '2,7M', label: 'Étudiants en France', icon: Users },
-    { number: '370K', label: 'Étudiants internationaux', icon: Globe },
-    { number: '3 500', label: 'Établissements', icon: GraduationCap },
-    { number: '70', label: 'Pays représentés', icon: MapPin }
+    { number: '2,7M', label: t('etudierEnFrance:quickStats.students'), icon: Users },
+    { number: '370K', label: t('etudierEnFrance:quickStats.international'), icon: Globe },
+    { number: '3 500', label: t('etudierEnFrance:quickStats.establishments'), icon: GraduationCap },
+    { number: '70', label: t('etudierEnFrance:quickStats.countries'), icon: MapPin }
   ];
 
   const campusFranceCountries = {
-    'Afrique': [
+    [t('etudierEnFrance:campusFrance.regions.africa')]: [
       'Algérie', 'Bénin', 'Burkina Faso', 'Burundi', 'Cameroun', 'Comores', 'Congo', 
       'Côte d\'Ivoire', 'Djibouti', 'Éthiopie', 'Gabon', 'Ghana', 'Guinée', 'Kenya', 
       'Madagascar', 'Mali', 'Maurice', 'Mauritanie', 'Niger', 'Nigeria', 
       'République centrafricaine', 'République démocratique du Congo', 'Rwanda', 
       'Sénégal', 'Tchad', 'Togo', 'Afrique du Sud'
     ],
-    'Maghreb / Moyen-Orient': [
+    [t('etudierEnFrance:campusFrance.regions.maghreb')]: [
       'Arabie Saoudite', 'Bahreïn', 'Égypte', 'Émirats Arabes Unis', 'Iran', 'Israël', 
       'Jordanie', 'Koweït', 'Liban', 'Maroc', 'Qatar', 'Tunisie'
     ],
-    'Amériques': [
+    [t('etudierEnFrance:campusFrance.regions.americas')]: [
       'Argentine', 'Bolivie', 'Brésil', 'Canada', 'Chili', 'Colombie', 'Équateur', 
       'États-Unis', 'Haïti', 'Mexique', 'Pérou', 'République dominicaine'
     ],
-    'Asie': [
+    [t('etudierEnFrance:campusFrance.regions.asia')]: [
       'Birmanie', 'Cambodge', 'Chine', 'Corée du Sud', 'Inde', 'Indonésie', 'Japon', 
       'Malaisie', 'Népal', 'Pakistan', 'Singapour', 'Taïwan', 'Thaïlande', 'Vietnam'
     ],
-    'Europe / Eurasie': [
+    [t('etudierEnFrance:campusFrance.regions.europe')]: [
       'Arménie', 'Azerbaïdjan', 'Géorgie', 'Royaume-Uni', 'Russie', 'Turquie', 'Ukraine'
     ]
   };
 
   const parcoursupFormations = [
     {
-      title: 'BTS (Brevet de Technicien Supérieur)',
-      description: 'Formation professionnelle de 2 ans dans de nombreux domaines',
-      duration: '2 ans',
-      level: 'Bac+2'
+      title: t('etudierEnFrance:parcoursup.formations.bts.title'),
+      description: t('etudierEnFrance:parcoursup.formations.bts.description'),
+      duration: t('etudierEnFrance:parcoursup.formations.bts.duration'),
+      level: t('etudierEnFrance:parcoursup.formations.bts.level')
     },
     {
-      title: 'CPGE (Classes Préparatoires aux Grandes Écoles)',
-      description: 'Préparation intensive aux concours des grandes écoles',
-      duration: '2 ans',
-      level: 'Bac+2'
+      title: t('etudierEnFrance:parcoursup.formations.cpge.title'),
+      description: t('etudierEnFrance:parcoursup.formations.cpge.description'),
+      duration: t('etudierEnFrance:parcoursup.formations.cpge.duration'),
+      level: t('etudierEnFrance:parcoursup.formations.cpge.level')
     },
     {
-      title: 'DCG (Diplôme de Comptabilité et Gestion)',
-      description: 'Formation spécialisée en comptabilité et gestion',
-      duration: '3 ans',
-      level: 'Bac+3'
+      title: t('etudierEnFrance:parcoursup.formations.dcg.title'),
+      description: t('etudierEnFrance:parcoursup.formations.dcg.description'),
+      duration: t('etudierEnFrance:parcoursup.formations.dcg.duration'),
+      level: t('etudierEnFrance:parcoursup.formations.dcg.level')
     }
   ];
 
   const parisAcalaySteps = [
     {
       step: 1,
-      title: 'Candidature (Mars)',
-      description: 'Via INCEPTION pour M1 spécifiques et M2',
-      details: ['CV professionnel', 'Lettres de motivation', 'Relevés de notes', 'Diplômes'],
+      title: t('etudierEnFrance:parisSaclay.steps.1.title'),
+      description: t('etudierEnFrance:parisSaclay.steps.1.description'),
+      details: [
+        t('etudierEnFrance:parisSaclay.steps.1.details.1'),
+        t('etudierEnFrance:parisSaclay.steps.1.details.2'),
+        t('etudierEnFrance:parisSaclay.steps.1.details.3'),
+        t('etudierEnFrance:parisSaclay.steps.1.details.4')
+      ],
       url: 'https://www.universite-paris-saclay.fr/admission/etre-candidat-un-master-paris-saclay'
     },
     {
       step: 2,
-      title: 'Procédure d\'admission (Mars-Mai)',
-      description: 'Étude du dossier par l\'université',
-      details: ['Évaluation du dossier', 'Réponse par email', 'Confirmation rapide si accepté']
+      title: t('etudierEnFrance:parisSaclay.steps.2.title'),
+      description: t('etudierEnFrance:parisSaclay.steps.2.description'),
+      details: [
+        t('etudierEnFrance:parisSaclay.steps.2.details.1'),
+        t('etudierEnFrance:parisSaclay.steps.2.details.2'),
+        t('etudierEnFrance:parisSaclay.steps.2.details.3')
+      ]
     },
     {
       step: 3,
-      title: 'Campus France (Si accepté)',
-      description: 'Procédure visa après acceptation',
-      details: ['Onglet "Je suis accepté"', 'Télécharger attestation', 'Procédure visa']
+      title: t('etudierEnFrance:parisSaclay.steps.3.title'),
+      description: t('etudierEnFrance:parisSaclay.steps.3.description'),
+      details: [
+        t('etudierEnFrance:parisSaclay.steps.3.details.1'),
+        t('etudierEnFrance:parisSaclay.steps.3.details.2'),
+        t('etudierEnFrance:parisSaclay.steps.3.details.3')
+      ]
     }
   ];
 
   return (
     <div className="min-h-screen bg-gray-50">
       <Head>
-        <title>Guide complet pour étudier en France - Wendogo</title>
-        <meta name="description" content="Guide complet pour étudier en France : Parcoursup, Campus France, procédures d'admission, universités. Tout ce qu'il faut savoir pour réussir votre projet d'études." />
-        <meta name="keywords" content="étudier en France, Campus France, Parcoursup, université française, étudiant étranger, admission France, visa étudiant" />
+        <title>{t('etudierEnFrance:meta.title')}</title>
+        <meta name="description" content={t('etudierEnFrance:meta.description')} />
+        <meta name="keywords" content={t('etudierEnFrance:meta.keywords')} />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         
-        <meta property="og:title" content="Guide complet pour étudier en France - Wendogo" />
-        <meta property="og:description" content="Découvrez tout ce qu'il faut savoir pour étudier en France : procédures, démarches, conseils d'experts." />
+        <meta property="og:title" content={t('etudierEnFrance:meta.ogTitle')} />
+        <meta property="og:description" content={t('etudierEnFrance:meta.ogDescription')} />
         <meta property="og:type" content="article" />
         <meta property="og:url" content="https://wendogo.com/guides/etudier-en-france" />
         <meta property="og:image" content="https://wendogo.com/images/guide-etudier-france.jpg" />
         
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Guide complet pour étudier en France" />
-        <meta name="twitter:description" content="Procédures, démarches et conseils pour réussir vos études en France" />
+        <meta name="twitter:title" content={t('etudierEnFrance:meta.twitterTitle')} />
+        <meta name="twitter:description" content={t('etudierEnFrance:meta.twitterDescription')} />
         
         <link rel="canonical" href="https://wendogo.com/guides/etudier-en-france" />
         
@@ -138,8 +152,8 @@ function EtudierEnFranceGuide() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Article",
-            "headline": "Guide complet pour étudier en France",
-            "description": "Guide complet pour étudier en France : Parcoursup, Campus France, procédures d'admission",
+            "headline": t('etudierEnFrance:meta.schemaHeadline'),
+            "description": t('etudierEnFrance:meta.schemaDescription'),
             "author": {
               "@type": "Organization",
               "name": "Wendogo"
@@ -158,7 +172,7 @@ function EtudierEnFranceGuide() {
         }} />
       </Head>
 
-      <NavBar variant="simple" />
+      <NavBar variant="simple" languageSelectorVariant="light" />
 
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-700 text-white">
@@ -170,19 +184,18 @@ function EtudierEnFranceGuide() {
               </div>
             </div>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">
-              Guide complet pour étudier en France
+              {t('etudierEnFrance:hero.title')}
             </h1>
             <p className="text-lg sm:text-xl text-blue-100 max-w-3xl mx-auto mb-8">
-              Découvrez tout ce qu'il faut savoir pour réussir votre projet d'études en France : 
-              procédures, démarches et conseils d'experts.
+              {t('etudierEnFrance:hero.subtitle')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/?tab=accompany#accompany-section" className="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
-                Me faire accompagner
+                {t('etudierEnFrance:hero.ctaPrimary')}
               </Link>
-              {/* <Link href="/contact" className="border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors">
-                Parler à un conseiller
-              </Link> */}
+              <Link href="/programs" className="border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors">
+                {t('etudierEnFrance:hero.ctaSecondary')}
+              </Link>
             </div>
           </div>
         </div>
@@ -210,10 +223,10 @@ function EtudierEnFranceGuide() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex space-x-6 lg:space-x-8 border-b border-gray-200 overflow-x-auto">
             {[
-              { id: 'overview', label: 'Vue d\'ensemble', icon: Globe },
-              { id: 'campus-france', label: 'Campus France', icon: FileText },
-              { id: 'parcoursup', label: 'Parcoursup', icon: GraduationCap },
-              { id: 'paris-saclay', label: 'Paris-Saclay', icon: Award }
+              { id: 'overview', label: t('etudierEnFrance:tabs.overview'), icon: Globe },
+              { id: 'campus-france', label: t('etudierEnFrance:tabs.campusFrance'), icon: FileText },
+              { id: 'parcoursup', label: t('etudierEnFrance:tabs.parcoursup'), icon: GraduationCap },
+              { id: 'paris-saclay', label: t('etudierEnFrance:tabs.parisSaclay'), icon: Award }
             ].map(tab => (
               <button
                 key={tab.id}
@@ -240,51 +253,38 @@ function EtudierEnFranceGuide() {
             <div className="space-y-12">
               <div className="text-center">
                 <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
-                  Pourquoi étudier en France ?
+                  {t('etudierEnFrance:overview.title')}
                 </h2>
                 <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                  La France accueille chaque année plus de 370 000 étudiants internationaux, 
-                  ce qui en fait la 4ème destination mondiale pour les études supérieures.
+                  {t('etudierEnFrance:overview.subtitle')}
                 </p>
               </div>
 
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div className="grid md:grid-cols-2 gap-8">
                 {[
                   {
-                    title: 'Excellence académique',
-                    description: 'Universités reconnues mondialement avec des programmes d\'excellence',
+                    title: t('etudierEnFrance:overview.reasons.excellence.title'),
+                    description: t('etudierEnFrance:overview.reasons.excellence.description'),
                     icon: Award,
                     color: 'yellow'
                   },
                   {
-                    title: 'Diversité des formations',
-                    description: 'Plus de 3 500 établissements proposant tous types de formations',
-                    icon: BookOpen,
-                    color: 'blue'
-                  },
-                  {
-                    title: 'Coût accessible',
-                    description: 'Frais de scolarité abordables par rapport à d\'autres destinations',
+                    title: t('etudierEnFrance:overview.reasons.affordable.title'),
+                    description: t('etudierEnFrance:overview.reasons.affordable.description'),
                     icon: Star,
                     color: 'green'
                   },
                   {
-                    title: 'Qualité de vie',
-                    description: 'Culture riche, patrimoine exceptionnel et art de vivre français',
+                    title: t('etudierEnFrance:overview.reasons.culture.title'),
+                    description: t('etudierEnFrance:overview.reasons.culture.description'),
                     icon: Heart,
                     color: 'red'
                   },
                   {
-                    title: 'Opportunités professionnelles',
-                    description: 'Marché du travail dynamique et possibilités de stage',
+                    title: t('etudierEnFrance:overview.reasons.opportunities.title'),
+                    description: t('etudierEnFrance:overview.reasons.opportunities.description'),
                     icon: Users,
                     color: 'purple'
-                  },
-                  {
-                    title: 'Langue française',
-                    description: 'Maîtrise du français, atout professionnel international',
-                    icon: Globe,
-                    color: 'indigo'
                   }
                 ].map((advantage, index) => (
                   <div key={index} className="bg-gray-50 rounded-xl p-6 hover:shadow-lg transition-shadow">
@@ -300,6 +300,184 @@ function EtudierEnFranceGuide() {
                   </div>
                 ))}
               </div>
+
+              <div>
+                <h3 className="text-xl lg:text-2xl font-semibold text-gray-900 mb-6 text-center">
+                  {t('etudierEnFrance:overview.typesTitle')}
+                </h3>
+                <p className="text-gray-600 text-center mb-8 max-w-3xl mx-auto">
+                  {t('etudierEnFrance:overview.typesSubtitle')}
+                </p>
+                <div className="grid md:grid-cols-3 gap-6">
+                  {[
+                    {
+                      title: t('etudierEnFrance:overview.institutions.universities.title'),
+                      description: t('etudierEnFrance:overview.institutions.universities.description'),
+                      icon: GraduationCap
+                    },
+                    {
+                      title: t('etudierEnFrance:overview.institutions.grandes.title'),
+                      description: t('etudierEnFrance:overview.institutions.grandes.description'),
+                      icon: Award
+                    },
+                    {
+                      title: t('etudierEnFrance:overview.institutions.specialized.title'),
+                      description: t('etudierEnFrance:overview.institutions.specialized.description'),
+                      icon: BookOpen
+                    }
+                  ].map((institution, index) => (
+                    <div key={index} className="bg-blue-50 rounded-xl p-6">
+                      <institution.icon className="w-10 h-10 text-blue-600 mb-4" />
+                      <h4 className="text-lg font-semibold text-gray-900 mb-2">
+                        {institution.title}
+                      </h4>
+                      <p className="text-gray-600 text-sm">
+                        {institution.description}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <h3 className="text-xl lg:text-2xl font-semibold text-gray-900 mb-6 text-center">
+                  {t('etudierEnFrance:overview.levelsTitle')}
+                </h3>
+                <p className="text-gray-600 text-center mb-8 max-w-3xl mx-auto">
+                  {t('etudierEnFrance:overview.levelsSubtitle')}
+                </p>
+                <div className="grid md:grid-cols-3 gap-6">
+                  {[
+                    {
+                      title: t('etudierEnFrance:overview.degrees.licence.title'),
+                      description: t('etudierEnFrance:overview.degrees.licence.description')
+                    },
+                    {
+                      title: t('etudierEnFrance:overview.degrees.master.title'),
+                      description: t('etudierEnFrance:overview.degrees.master.description')
+                    },
+                    {
+                      title: t('etudierEnFrance:overview.degrees.doctorat.title'),
+                      description: t('etudierEnFrance:overview.degrees.doctorat.description')
+                    }
+                  ].map((degree, index) => (
+                    <div key={index} className="bg-white border-2 border-blue-200 rounded-xl p-6">
+                      <h4 className="text-lg font-semibold text-blue-600 mb-2">
+                        {degree.title}
+                      </h4>
+                      <p className="text-gray-600 text-sm">
+                        {degree.description}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <h3 className="text-xl lg:text-2xl font-semibold text-gray-900 mb-6 text-center">
+                  {t('etudierEnFrance:overview.costsTitle')}
+                </h3>
+                <p className="text-gray-600 text-center mb-8 max-w-3xl mx-auto">
+                  {t('etudierEnFrance:overview.costsSubtitle')}
+                </p>
+                <div className="grid md:grid-cols-3 gap-6">
+                  <div className="bg-green-50 border border-green-200 rounded-xl p-6">
+                    <h4 className="text-lg font-semibold text-green-900 mb-2">
+                      {t('etudierEnFrance:overview.publicFees')}
+                    </h4>
+                    <p className="text-2xl font-bold text-green-600 mb-2">170-600€/an</p>
+                    <p className="text-green-700 text-sm">
+                      {t('etudierEnFrance:overview.publicFeesDesc')}
+                    </p>
+                  </div>
+                  <div className="bg-blue-50 border border-blue-200 rounded-xl p-6">
+                    <h4 className="text-lg font-semibold text-blue-900 mb-2">
+                      {t('etudierEnFrance:overview.privateFees')}
+                    </h4>
+                    <p className="text-2xl font-bold text-blue-600 mb-2">3 000-20 000€/an</p>
+                    <p className="text-blue-700 text-sm">
+                      {t('etudierEnFrance:overview.privateFeesDesc')}
+                    </p>
+                  </div>
+                  <div className="bg-purple-50 border border-purple-200 rounded-xl p-6">
+                    <h4 className="text-lg font-semibold text-purple-900 mb-2">
+                      {t('etudierEnFrance:overview.living')}
+                    </h4>
+                    <p className="text-2xl font-bold text-purple-600 mb-2">600-1 200€</p>
+                    <p className="text-purple-700 text-sm">
+                      {t('etudierEnFrance:overview.livingDesc')}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl p-6 lg:p-8">
+                <h3 className="text-xl font-semibold text-gray-900 mb-6">
+                  {t('etudierEnFrance:overview.scholarshipsTitle')}
+                </h3>
+                <div className="grid md:grid-cols-2 gap-4">
+                  {[
+                    t('etudierEnFrance:overview.scholarships.eiffel'),
+                    t('etudierEnFrance:overview.scholarships.government'),
+                    t('etudierEnFrance:overview.scholarships.institutional'),
+                    t('etudierEnFrance:overview.scholarships.regional')
+                  ].map((scholarship, index) => (
+                    <div key={index} className="flex items-center">
+                      <CheckCircle className="w-5 h-5 text-green-600 mr-3 flex-shrink-0" />
+                      <span className="text-gray-700">{scholarship}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <h3 className="text-xl lg:text-2xl font-semibold text-gray-900 mb-6 text-center">
+                  {t('etudierEnFrance:overview.keyDatesTitle')}
+                </h3>
+                <p className="text-gray-600 text-center mb-8 max-w-3xl mx-auto">
+                  {t('etudierEnFrance:overview.keyDatesSubtitle')}
+                </p>
+                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                  {[
+                    {
+                      title: t('etudierEnFrance:overview.timeline.autumn.title'),
+                      description: t('etudierEnFrance:overview.timeline.autumn.description'),
+                      icon: BookOpen,
+                      color: 'orange'
+                    },
+                    {
+                      title: t('etudierEnFrance:overview.timeline.winter.title'),
+                      description: t('etudierEnFrance:overview.timeline.winter.description'),
+                      icon: FileText,
+                      color: 'blue'
+                    },
+                    {
+                      title: t('etudierEnFrance:overview.timeline.spring.title'),
+                      description: t('etudierEnFrance:overview.timeline.spring.description'),
+                      icon: CheckCircle,
+                      color: 'green'
+                    },
+                    {
+                      title: t('etudierEnFrance:overview.timeline.summer.title'),
+                      description: t('etudierEnFrance:overview.timeline.summer.description'),
+                      icon: ArrowRight,
+                      color: 'purple'
+                    }
+                  ].map((period, index) => (
+                    <div key={index} className="bg-white border-2 border-gray-200 rounded-xl p-6">
+                      <div className={`bg-${period.color}-100 w-12 h-12 rounded-full flex items-center justify-center mb-4`}>
+                        <period.icon className={`w-6 h-6 text-${period.color}-600`} />
+                      </div>
+                      <h4 className="font-semibold text-gray-900 mb-2">
+                        {period.title}
+                      </h4>
+                      <p className="text-gray-600 text-sm">
+                        {period.description}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           )}
 
@@ -308,62 +486,21 @@ function EtudierEnFranceGuide() {
             <div className="space-y-12">
               <div className="text-center">
                 <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
-                  Campus France : Votre porte d'entrée vers la France
+                  {t('etudierEnFrance:campusFrance.title')}
                 </h2>
                 <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                  Campus France est l'agence nationale française qui accompagne les étudiants 
-                  internationaux dans leur projet d'études en France.
+                  {t('etudierEnFrance:campusFrance.subtitle')}
                 </p>
               </div>
 
-              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-6 lg:p-8">
-                <h3 className="text-xl lg:text-2xl font-semibold text-blue-900 mb-4">
-                  Qu'est-ce que Campus France ?
-                </h3>
-                <div className="space-y-4 text-blue-800">
-                  <p>
-                    Campus France est l'agence nationale française en charge de la promotion 
-                    de l'enseignement supérieur français à l'étranger et de l'accueil des 
-                    étudiants internationaux.
-                  </p>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <h4 className="font-semibold mb-2">Missions principales :</h4>
-                      <ul className="space-y-1 text-sm">
-                        <li>• Promouvoir les universités françaises</li>
-                        <li>• Informer sur les formations</li>
-                        <li>• Gérer les candidatures</li>
-                        <li>• Faciliter l'obtention du visa</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold mb-2">Services proposés :</h4>
-                      <ul className="space-y-1 text-sm">
-                        <li>• Plateforme "Études en France"</li>
-                        <li>• Conseil personnalisé</li>
-                        <li>• Réseau France Alumni</li>
-                        <li>• Support visa étudiant</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
               <div>
-                <h3 className="text-xl lg:text-2xl font-semibold text-gray-900 mb-6">
-                  Pays concernés par la procédure Campus France
+                <h3 className="text-xl lg:text-2xl font-semibold text-gray-900 mb-4">
+                  {t('etudierEnFrance:campusFrance.concernedTitle')}
                 </h3>
-                <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6">
-                  <div className="flex items-center">
-                    <AlertCircle className="w-5 h-5 text-amber-600 mr-2" />
-                    <p className="text-amber-800 font-medium">
-                      La procédure Campus France est obligatoire pour les ressortissants 
-                      des pays suivants :
-                    </p>
-                  </div>
-                </div>
-                
-                <div className="space-y-6">
+                <p className="text-gray-600 mb-6">
+                  {t('etudierEnFrance:campusFrance.concernedIntro')}
+                </p>
+                <div className="space-y-4">
                   {Object.entries(campusFranceCountries).map(([region, countries]) => (
                     <div key={region} className="border border-gray-200 rounded-lg">
                       <button
@@ -390,48 +527,152 @@ function EtudierEnFranceGuide() {
                     </div>
                   ))}
                 </div>
+              </div>
 
-                <div className="mt-6 bg-green-50 border border-green-200 rounded-lg p-4">
-                  <div className="flex items-center">
-                    <CheckCircle className="w-5 h-5 text-green-600 mr-2" />
-                    <p className="text-green-800">
-                      <strong>Comment savoir si vous êtes concerné ?</strong> Si vous résidez 
-                      dans l'un de ces pays, la procédure Campus France est obligatoire.
-                    </p>
-                  </div>
+              <div>
+                <h3 className="text-xl lg:text-2xl font-semibold text-gray-900 mb-6">
+                  {t('etudierEnFrance:campusFrance.stepsTitle')}
+                </h3>
+                <div className="space-y-6">
+                  {[1, 2, 3, 4, 5].map((stepNum) => (
+                    <div key={stepNum} className="bg-white border border-gray-200 rounded-xl p-6">
+                      <div className="flex items-start">
+                        <div className="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-4 mt-1">
+                          {stepNum}
+                        </div>
+                        <div className="flex-1">
+                          <h4 className="text-lg font-semibold text-gray-900 mb-2">
+                            {t(`etudierEnFrance:campusFrance.steps.${stepNum}.title`)}
+                          </h4>
+                          <p className="text-gray-600 mb-4">
+                            {t(`etudierEnFrance:campusFrance.steps.${stepNum}.description`)}
+                          </p>
+                          <div className="grid md:grid-cols-2 gap-3">
+                            {[1, 2, 3, 4].map((detailNum) => {
+                              const detailKey = `etudierEnFrance:campusFrance.steps.${stepNum}.details.${detailNum}`;
+                              const detail = t(detailKey);
+                              if (detail === detailKey) return null;
+                              return (
+                                <div key={detailNum} className="flex items-center">
+                                  <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
+                                  <span className="text-sm text-gray-700">{detail}</span>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
 
-              <div className="bg-white border border-gray-200 rounded-xl p-6 lg:p-8">
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                  Liens utiles Campus France
+              <div>
+                <h3 className="text-xl lg:text-2xl font-semibold text-gray-900 mb-6">
+                  {t('etudierEnFrance:campusFrance.documentsTitle')}
                 </h3>
-                <div className="grid md:grid-cols-2 gap-4">
-                  <a 
-                    href="https://www.campusfrance.org" 
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-between p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors"
-                  >
-                    <div>
-                      <div className="font-semibold text-blue-900">Site officiel</div>
-                      <div className="text-sm text-blue-700">campusfrance.org</div>
+                <p className="text-gray-600 mb-6">
+                  {t('etudierEnFrance:campusFrance.documentsSubtitle')}
+                </p>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {['academic', 'language', 'motivation', 'identity', 'financial'].map((category) => (
+                    <div key={category} className="bg-blue-50 rounded-lg p-6">
+                      <h4 className="font-semibold text-blue-900 mb-3">
+                        {t(`etudierEnFrance:campusFrance.docCategories.${category}.title`)}
+                      </h4>
+                      <ul className="space-y-2 text-blue-800">
+                        {[1, 2, 3, 4].map((itemNum) => {
+                          const itemKey = `etudierEnFrance:campusFrance.docCategories.${category}.items.${itemNum}`;
+                          const item = t(itemKey);
+                          if (item === itemKey) return null;
+                          return (
+                            <li key={itemNum}>• {item}</li>
+                          );
+                        })}
+                      </ul>
                     </div>
-                    <ExternalLink className="w-5 h-5 text-blue-600" />
-                  </a>
-                  <a 
-                    href="https://pastel.diplomatie.gouv.fr/etudesenfrance" 
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-between p-4 bg-green-50 rounded-lg hover:bg-green-100 transition-colors"
-                  >
-                    <div>
-                      <div className="font-semibold text-green-900">Plateforme candidature</div>
-                      <div className="text-sm text-green-700">Études en France</div>
-                    </div>
-                    <ExternalLink className="w-5 h-5 text-green-600" />
-                  </a>
+                  ))}
                 </div>
+              </div>
+
+              <div className="bg-amber-50 border border-amber-200 rounded-xl p-6">
+                <h3 className="text-lg font-semibold text-amber-900 mb-4">
+                  {t('etudierEnFrance:campusFrance.feesTitle')}
+                </h3>
+                <p className="text-amber-800 mb-2">
+                  {t('etudierEnFrance:campusFrance.feesSubtitle')}
+                </p>
+                <p className="text-2xl font-bold text-amber-600">
+                  {t('etudierEnFrance:campusFrance.feesAmount')} 
+                  <span className="text-sm font-normal text-amber-700 ml-2">
+                    {t('etudierEnFrance:campusFrance.feesNote')}
+                  </span>
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-xl lg:text-2xl font-semibold text-gray-900 mb-4">
+                  {t('etudierEnFrance:campusFrance.interviewTitle')}
+                </h3>
+                <p className="text-gray-600 mb-6">
+                  {t('etudierEnFrance:campusFrance.interviewSubtitle')}
+                </p>
+                <div className="bg-green-50 border border-green-200 rounded-xl p-6">
+                  <ul className="space-y-3">
+                    {[1, 2, 3, 4, 5].map((tipNum) => (
+                      <li key={tipNum} className="flex items-start">
+                        <CheckCircle className="w-5 h-5 text-green-600 mr-3 mt-0.5 flex-shrink-0" />
+                        <span className="text-green-800">
+                          {t(`etudierEnFrance:campusFrance.interviewTips.${tipNum}`)}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+
+              <div>
+                <h3 className="text-xl lg:text-2xl font-semibold text-gray-900 mb-6">
+                  {t('etudierEnFrance:campusFrance.timelineTitle')}
+                </h3>
+                <p className="text-gray-600 mb-6">
+                  {t('etudierEnFrance:campusFrance.timelineSubtitle')}
+                </p>
+                <div className="grid md:grid-cols-2 gap-6">
+                  {['application', 'response'].map((phase) => (
+                    <div key={phase} className="bg-white border border-gray-200 rounded-xl p-6">
+                      <h4 className="font-semibold text-gray-900 mb-4">
+                        {t(`etudierEnFrance:campusFrance.timelinePhases.${phase}.title`)}
+                      </h4>
+                      <ul className="space-y-3">
+                        {[1, 2, 3].map((itemNum) => (
+                          <li key={itemNum} className="flex items-center">
+                            <Clock className="w-4 h-4 text-blue-600 mr-2" />
+                            <span className="text-sm text-gray-700">
+                              {t(`etudierEnFrance:campusFrance.timelinePhases.${phase}.items.${itemNum}`)}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="bg-blue-50 border border-blue-200 rounded-xl p-6">
+                <h3 className="text-lg font-semibold text-blue-900 mb-4">
+                  {t('etudierEnFrance:campusFrance.tipsTitle')}
+                </h3>
+                <ul className="space-y-3">
+                  {[1, 2, 3, 4, 5].map((tipNum) => (
+                    <li key={tipNum} className="flex items-start">
+                      <CheckCircle className="w-5 h-5 text-blue-600 mr-3 mt-0.5 flex-shrink-0" />
+                      <span className="text-blue-800">
+                        {t(`etudierEnFrance:campusFrance.tips.${tipNum}`)}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
           )}
@@ -441,32 +682,51 @@ function EtudierEnFranceGuide() {
             <div className="space-y-12">
               <div className="text-center">
                 <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
-                  Parcoursup pour les étudiants étrangers
+                  {t('etudierEnFrance:parcoursup.title')}
                 </h2>
                 <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                  Parcoursup est la plateforme nationale d'admission en première année 
-                  de l'enseignement supérieur en France.
+                  {t('etudierEnFrance:parcoursup.subtitle')}
                 </p>
+              </div>
+
+              <div>
+                <h3 className="text-xl lg:text-2xl font-semibold text-gray-900 mb-4">
+                  {t('etudierEnFrance:parcoursup.whoTitle')}
+                </h3>
+                <p className="text-gray-600 mb-4">
+                  {t('etudierEnFrance:parcoursup.whoIntro')}
+                </p>
+                <ul className="space-y-2">
+                  {[1, 2, 3].map((itemNum) => (
+                    <li key={itemNum} className="flex items-start">
+                      <CheckCircle className="w-5 h-5 text-green-600 mr-3 mt-0.5" />
+                      <span className="text-gray-700">
+                        {t(`etudierEnFrance:parcoursup.whoItems.${itemNum}`)}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
               </div>
 
               <div className="bg-amber-50 border border-amber-200 rounded-lg p-6">
                 <div className="flex items-center mb-4">
                   <AlertCircle className="w-6 h-6 text-amber-600 mr-3" />
                   <h3 className="text-lg font-semibold text-amber-900">
-                    Important à savoir
+                    {t('etudierEnFrance:parcoursup.note')}
                   </h3>
                 </div>
                 <p className="text-amber-800">
-                  Les étudiants étrangers n'ont pas d'accès direct aux universités françaises 
-                  via Parcoursup. Cette plateforme est principalement destinée aux formations 
-                  post-bac spécialisées.
+                  {t('etudierEnFrance:parcoursup.noteContent')}
                 </p>
               </div>
 
               <div>
                 <h3 className="text-xl lg:text-2xl font-semibold text-gray-900 mb-6">
-                  Formations accessibles via Parcoursup
+                  {t('etudierEnFrance:parcoursup.formationsTitle')}
                 </h3>
+                <p className="text-gray-600 mb-6">
+                  {t('etudierEnFrance:parcoursup.formationsSubtitle')}
+                </p>
                 <div className="grid md:grid-cols-3 gap-6">
                   {parcoursupFormations.map((formation, index) => (
                     <div key={index} className="bg-gray-50 rounded-xl p-6 hover:shadow-lg transition-shadow">
@@ -487,26 +747,54 @@ function EtudierEnFranceGuide() {
                 </div>
               </div>
 
-              <div className="bg-white border border-gray-200 rounded-xl p-6 lg:p-8">
-                <h3 className="text-xl font-semibold text-gray-900 mb-6">
-                  Calendrier Parcoursup
+              <div>
+                <h3 className="text-xl lg:text-2xl font-semibold text-gray-900 mb-6">
+                  {t('etudierEnFrance:parcoursup.calendarTitle')}
+                </h3>
+                <p className="text-gray-600 mb-6">
+                  {t('etudierEnFrance:parcoursup.calendarSubtitle')}
+                </p>
+                <div className="grid md:grid-cols-2 gap-6">
+                  {['registration', 'admission'].map((phase) => (
+                    <div key={phase} className="bg-white border border-gray-200 rounded-xl p-6">
+                      <h4 className="font-semibold text-gray-900 mb-4">
+                        {t(`etudierEnFrance:parcoursup.calendarPhases.${phase}.title`)}
+                      </h4>
+                      <ul className="space-y-3">
+                        {[1, 2, 3, 4].map((itemNum) => {
+                          const itemKey = `etudierEnFrance:parcoursup.calendarPhases.${phase}.items.${itemNum}`;
+                          const item = t(itemKey);
+                          if (item === itemKey) return null;
+                          return (
+                            <li key={itemNum} className="flex items-center">
+                              <Clock className="w-4 h-4 text-blue-600 mr-2" />
+                              <span className="text-sm text-gray-700">{item}</span>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <h3 className="text-xl lg:text-2xl font-semibold text-gray-900 mb-6">
+                  {t('etudierEnFrance:parcoursup.stepByStepTitle')}
                 </h3>
                 <div className="space-y-4">
-                  {[
-                    { date: '15 janvier', action: 'Début de la formulation des vœux' },
-                    { date: '13 mars', action: 'Clôture des vœux (23h59)' },
-                    { date: '2 avril', action: 'Confirmation des vœux (23h59)' },
-                    { date: '2 juin', action: 'Début des réponses aux admissions' },
-                    { date: '11 juin', action: 'Phase complémentaire' },
-                    { date: '11 juillet', action: 'Fin de la phase principale' }
-                  ].map((item, index) => (
-                    <div key={index} className="flex items-center">
+                  {[1, 2, 3, 4, 5].map((stepNum) => (
+                    <div key={stepNum} className="flex items-center bg-blue-50 rounded-lg p-4">
                       <div className="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-4">
-                        {index + 1}
+                        {stepNum}
                       </div>
                       <div>
-                        <div className="font-semibold text-gray-900">{item.date}</div>
-                        <div className="text-gray-600">{item.action}</div>
+                        <div className="font-semibold text-gray-900">
+                          {t(`etudierEnFrance:parcoursup.steps.${stepNum}.title`)}
+                        </div>
+                        <div className="text-gray-600 text-sm">
+                          {t(`etudierEnFrance:parcoursup.steps.${stepNum}.description`)}
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -514,29 +802,146 @@ function EtudierEnFranceGuide() {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-6">
-                  Dossier requis pour candidater
+                <h3 className="text-xl lg:text-2xl font-semibold text-gray-900 mb-6">
+                  {t('etudierEnFrance:parcoursup.dossierTitle')}
                 </h3>
+                <p className="text-gray-600 mb-6">
+                  {t('etudierEnFrance:parcoursup.dossierSubtitle')}
+                </p>
+                <div className="grid md:grid-cols-3 gap-6">
+                  {['academic', 'motivation', 'complementary'].map((category) => (
+                    <div key={category} className="bg-green-50 rounded-lg p-6">
+                      <h4 className="font-semibold text-green-900 mb-3">
+                        {t(`etudierEnFrance:parcoursup.dossierCategories.${category}.title`)}
+                      </h4>
+                      <ul className="space-y-2 text-green-800">
+                        {[1, 2, 3, 4].map((itemNum) => {
+                          const itemKey = `etudierEnFrance:parcoursup.dossierCategories.${category}.items.${itemNum}`;
+                          const item = t(itemKey);
+                          if (item === itemKey) return null;
+                          return (
+                            <li key={itemNum}>• {item}</li>
+                          );
+                        })}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <h3 className="text-xl lg:text-2xl font-semibold text-gray-900 mb-6">
+                  {t('etudierEnFrance:parcoursup.responsesTitle')}
+                </h3>
+                <p className="text-gray-600 mb-6">
+                  {t('etudierEnFrance:parcoursup.responsesSubtitle')}
+                </p>
                 <div className="grid md:grid-cols-2 gap-6">
-                  <div className="bg-blue-50 rounded-lg p-6">
-                    <h4 className="font-semibold text-blue-900 mb-3">Documents académiques</h4>
-                    <ul className="space-y-2 text-blue-800">
-                      <li>• Relevés de notes depuis 2020</li>
-                      <li>• Scolarité de l'année en cours</li>
-                      <li>• Attestation du Bac</li>
-                      <li>• Relevé de notes du Bac</li>
-                    </ul>
+                  {['accepted', 'waiting', 'conditional', 'refused'].map((type) => (
+                    <div key={type} className="bg-white border border-gray-200 rounded-xl p-6">
+                      <h4 className="font-semibold text-gray-900 mb-2">
+                        {t(`etudierEnFrance:parcoursup.responseTypes.${type}.title`)}
+                      </h4>
+                      <p className="text-gray-600 text-sm">
+                        {t(`etudierEnFrance:parcoursup.responseTypes.${type}.description`)}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="bg-blue-50 border border-blue-200 rounded-xl p-6">
+                <h3 className="text-lg font-semibold text-blue-900 mb-4">
+                  {t('etudierEnFrance:parcoursup.tipsTitle')}
+                </h3>
+                <ul className="space-y-3">
+                  {[1, 2, 3, 4, 5].map((tipNum) => (
+                    <li key={tipNum} className="flex items-start">
+                      <CheckCircle className="w-5 h-5 text-blue-600 mr-3 mt-0.5 flex-shrink-0" />
+                      <span className="text-blue-800">
+                        {t(`etudierEnFrance:parcoursup.tips.${tipNum}`)}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="bg-purple-50 border border-purple-200 rounded-xl p-6">
+                <h3 className="text-lg font-semibold text-purple-900 mb-4">
+                  {t('etudierEnFrance:parcoursup.complementaryTitle')}
+                </h3>
+                <p className="text-purple-800">
+                  {t('etudierEnFrance:parcoursup.complementaryContent')}
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-xl lg:text-2xl font-semibold text-gray-900 mb-6">
+                  {t('etudierEnFrance:parcoursup.forInternationalsTitle')}
+                </h3>
+                <p className="text-gray-600 mb-6">
+                  {t('etudierEnFrance:parcoursup.forInternationalsSubtitle')}
+                </p>
+                <div className="grid md:grid-cols-2 gap-6">
+                  {['resident', 'abroad'].map((situation) => (
+                    <div key={situation} className="bg-gray-50 rounded-xl p-6">
+                      <h4 className="font-semibold text-gray-900 mb-3">
+                        {t(`etudierEnFrance:parcoursup.internationalCases.${situation}.title`)}
+                      </h4>
+                      <ul className="space-y-2 text-gray-700">
+                        {[1, 2, 3].map((itemNum) => (
+                          <li key={itemNum} className="flex items-start">
+                            <CheckCircle className="w-4 h-4 text-green-600 mr-2 mt-1 flex-shrink-0" />
+                            <span className="text-sm">
+                              {t(`etudierEnFrance:parcoursup.internationalCases.${situation}.items.${itemNum}`)}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="bg-white border border-gray-200 rounded-xl p-6">
+                <h3 className="text-xl font-semibold text-gray-900 mb-6">
+                  {t('etudierEnFrance:parcoursup.resourcesTitle')}
+                </h3>
+                <div className="grid md:grid-cols-3 gap-4">
+                  <a 
+                    href="https://www.parcoursup.fr" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-between p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors"
+                  >
+                    <div>
+                      <div className="font-semibold text-blue-900">
+                        {t('etudierEnFrance:parcoursup.resources.platform')}
+                      </div>
+                    </div>
+                    <ExternalLink className="w-5 h-5 text-blue-600" />
+                  </a>
+                  <div className="flex items-center justify-between p-4 bg-green-50 rounded-lg">
+                    <div>
+                      <div className="font-semibold text-green-900">
+                        {t('etudierEnFrance:parcoursup.resources.assistance')}
+                      </div>
+                      <div className="text-sm text-green-700">0800 400 070</div>
+                    </div>
                   </div>
-                  <div className="bg-green-50 rounded-lg p-6">
-                    <h4 className="font-semibold text-green-900 mb-3">Informations personnelles</h4>
-                    <ul className="space-y-2 text-green-800">
-                      <li>• Nom et prénom</li>
-                      <li>• Numéro de téléphone</li>
-                      <li>• Adresse email</li>
-                      <li>• Adresse physique</li>
-                      <li>• Coordonnées du représentant</li>
-                    </ul>
-                  </div>
+                  <a 
+                    href="https://www.parcoursup.fr/index.php?desc=questions" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-between p-4 bg-purple-50 rounded-lg hover:bg-purple-100 transition-colors"
+                  >
+                    <div>
+                      <div className="font-semibold text-purple-900">
+                        {t('etudierEnFrance:parcoursup.resources.faq')}
+                      </div>
+                    </div>
+                    <ExternalLink className="w-5 h-5 text-purple-600" />
+                  </a>
                 </div>
               </div>
             </div>
@@ -547,11 +952,10 @@ function EtudierEnFranceGuide() {
             <div className="space-y-12">
               <div className="text-center">
                 <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
-                  Processus d'admission Paris-Saclay
+                  {t('etudierEnFrance:parisSaclay.title')}
                 </h2>
                 <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                  L'Université Paris-Saclay dispose d'une procédure d'admission spécifique 
-                  pour ses programmes de Master.
+                  {t('etudierEnFrance:parisSaclay.subtitle')}
                 </p>
               </div>
 
@@ -559,18 +963,17 @@ function EtudierEnFranceGuide() {
                 <div className="flex items-center mb-4">
                   <CheckCircle className="w-6 h-6 text-green-600 mr-3" />
                   <h3 className="text-lg font-semibold text-green-900">
-                    Procédure totalement gratuite
+                    {t('etudierEnFrance:parisSaclay.freeProcess')}
                   </h3>
                 </div>
                 <p className="text-green-800">
-                  Contrairement à d'autres universités, la candidature à l'Université 
-                  Paris-Saclay est entièrement gratuite.
+                  {t('etudierEnFrance:parisSaclay.freeProcessDesc')}
                 </p>
               </div>
 
               <div>
                 <h3 className="text-xl lg:text-2xl font-semibold text-gray-900 mb-6">
-                  Étapes du processus
+                  {t('etudierEnFrance:parisSaclay.stepsTitle')}
                 </h3>
                 <div className="space-y-6">
                   {parisAcalaySteps.map((step, index) => (
@@ -592,7 +995,7 @@ function EtudierEnFranceGuide() {
                                 rel="noopener noreferrer"
                                 className="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium"
                               >
-                                Accéder à la plateforme
+                                {t('etudierEnFrance:parisSaclay.steps.1.linkText')}
                                 <ExternalLink className="w-4 h-4 ml-1" />
                               </a>
                             </div>
@@ -614,41 +1017,37 @@ function EtudierEnFranceGuide() {
 
               <div className="bg-white border border-gray-200 rounded-xl p-6 lg:p-8">
                 <h3 className="text-xl font-semibold text-gray-900 mb-6">
-                  Calendrier général Paris-Saclay
+                  {t('etudierEnFrance:parisSaclay.calendarTitle')}
                 </h3>
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <h4 className="font-semibold text-gray-900 mb-3">Phase de candidature</h4>
+                    <h4 className="font-semibold text-gray-900 mb-3">
+                      {t('etudierEnFrance:parisSaclay.applicationPhase.title')}
+                    </h4>
                     <div className="space-y-3">
-                      <div className="flex items-center">
-                        <Clock className="w-4 h-4 text-blue-600 mr-2" />
-                        <span className="text-sm text-gray-700">Janvier : Ouverture candidatures</span>
-                      </div>
-                      <div className="flex items-center">
-                        <Clock className="w-4 h-4 text-blue-600 mr-2" />
-                        <span className="text-sm text-gray-700">Mars : Fermeture plateforme</span>
-                      </div>
-                      <div className="flex items-center">
-                        <Clock className="w-4 h-4 text-blue-600 mr-2" />
-                        <span className="text-sm text-gray-700">Avril-Mai : Réponses</span>
-                      </div>
+                      {[1, 2, 3].map((itemNum) => (
+                        <div key={itemNum} className="flex items-center">
+                          <Clock className="w-4 h-4 text-blue-600 mr-2" />
+                          <span className="text-sm text-gray-700">
+                            {t(`etudierEnFrance:parisSaclay.applicationPhase.items.${itemNum}`)}
+                          </span>
+                        </div>
+                      ))}
                     </div>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-gray-900 mb-3">Phase visa</h4>
+                    <h4 className="font-semibold text-gray-900 mb-3">
+                      {t('etudierEnFrance:parisSaclay.visaPhase.title')}
+                    </h4>
                     <div className="space-y-3">
-                      <div className="flex items-center">
-                        <Clock className="w-4 h-4 text-green-600 mr-2" />
-                        <span className="text-sm text-gray-700">Mai-Juillet : Campus France</span>
-                      </div>
-                      <div className="flex items-center">
-                        <Clock className="w-4 h-4 text-green-600 mr-2" />
-                        <span className="text-sm text-gray-700">Août-Septembre : Visa</span>
-                      </div>
-                      <div className="flex items-center">
-                        <Clock className="w-4 h-4 text-green-600 mr-2" />
-                        <span className="text-sm text-gray-700">Septembre : Arrivée</span>
-                      </div>
+                      {[1, 2, 3].map((itemNum) => (
+                        <div key={itemNum} className="flex items-center">
+                          <Clock className="w-4 h-4 text-green-600 mr-2" />
+                          <span className="text-sm text-gray-700">
+                            {t(`etudierEnFrance:parisSaclay.visaPhase.items.${itemNum}`)}
+                          </span>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -658,14 +1057,15 @@ function EtudierEnFranceGuide() {
                 <div className="flex items-center mb-4">
                   <AlertCircle className="w-6 h-6 text-amber-600 mr-3" />
                   <h3 className="text-lg font-semibold text-amber-900">
-                    Points importants
+                    {t('etudierEnFrance:parisSaclay.importantPointsTitle')}
                   </h3>
                 </div>
                 <ul className="space-y-2 text-amber-800">
-                  <li>• Ne pas postuler via Campus France normal</li>
-                  <li>• Attendre l'acceptation avant de faire Campus France</li>
-                  <li>• Commencer tôt (forte sélectivité)</li>
-                  <li>• Vérifier les spécificités de votre Master</li>
+                  {[1, 2, 3, 4].map((pointNum) => (
+                    <li key={pointNum}>
+                      • {t(`etudierEnFrance:parisSaclay.importantPoints.${pointNum}`)}
+                    </li>
+                  ))}
                 </ul>
               </div>
             </div>
@@ -677,19 +1077,15 @@ function EtudierEnFranceGuide() {
       <section className="py-16 bg-gradient-to-r from-blue-600 to-indigo-600 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-2xl lg:text-3xl font-bold mb-6">
-            Prêt à concrétiser votre projet d'études en France ?
+            {t('etudierEnFrance:cta.title')}
           </h2>
           <p className="text-lg lg:text-xl mb-8 text-blue-100">
-            Nos conseillers experts vous accompagnent personnellement dans toutes 
-            vos démarches, de l'orientation à l'obtention de votre visa.
+            {t('etudierEnFrance:cta.subtitle')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/?tab=accompany#accompany-section" className="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
-              Me faire accompagner
+              {t('etudierEnFrance:cta.button')}
             </Link>
-            {/* <Link href="/contact" className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors">
-              Parler à un conseiller
-            </Link> */}
           </div>
         </div>
       </section>
@@ -698,5 +1094,13 @@ function EtudierEnFranceGuide() {
     </div>
   );
 }
-
+export async function getStaticProps({ locale }) {
+  const { serverSideTranslations } = await import('next-i18next/serverSideTranslations');
+  
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['authModal', 'common', 'etudierEnFrance'])),
+    },
+  };
+}
 export default EtudierEnFranceGuide;

@@ -1,0 +1,85 @@
+{
+  "categories": {
+    "orientation": "Guidance",
+    "visa": "Visa",
+    "logement": "Housing",
+    "finance": "Finance",
+    "vieEtudiante": "Student Life",
+    "emploi": "Employment",
+    "autres": "Other"
+  },
+  "myQuestions": {
+    "title": "My questions",
+    "empty": "No questions asked",
+    "description": "Ask your questions about studying in France and get answers from the community",
+    "askQuestion": "Ask a question",
+    "viewAll": "View all"
+  },
+  "supportStatus": {
+    "pending": "Pending",
+    "contacted": "Contacted",
+    "inProgress": "In Progress",
+    "completed": "Completed",
+    "cancelled": "Cancelled"
+  },
+  "mySupport": {
+    "title": "My support services",
+    "empty": "No ongoing support",
+    "description": "Benefit from personalized support to succeed in your studies in France",
+    "discoverOffers": "Discover our offers",
+    "viewAll": "View all",
+    "counselor": "Counselor: {{name}}"
+  },
+  "recommended": {
+    "title": "Recommended for you"
+  },
+  "interestDomains": {
+    "title": "Fields of interest",
+    "empty": "No fields of interest detected yet",
+    "emptyDescription": "Add programs to your favorites to see your preferences appear here",
+    "discoverPrograms": "Discover programs",
+    "count_one": "{{count}} field",
+    "count_other": "{{count}} fields",
+    "programCount_one": "{{count}} program",
+    "programCount_other": "{{count}} programs",
+    "domainLabel": "Field {{id}}",
+    "showLess": "Show less",
+    "showMore": "View all fields ({{count}} more)",
+    "helpText": "These fields are determined based on your favorite programs. The more favorites you add, the more accurate this analysis becomes."
+  },
+  "recentFavorites": {
+    "title": "Recent favorites",
+    "empty": "No favorites yet",
+    "discoverPrograms": "Discover programs",
+    "viewAll": "View all favorites"
+  },
+  "welcome": {
+    "greeting": "Hello {{name}}! 👋",
+    "subtitle": "Here's an overview of your activity on Wendogo"
+  },
+  "statistics": {
+    "favoritesCount": "Favorite programs",
+    "questionsCount": "Questions asked",
+    "supportCount": "Support services",
+    "lastVisit": "Last visit"
+  },
+  "quickActions": {
+    "title": "Quick actions",
+    "search": {
+      "title": "Search",
+      "description": "Browse the catalog"
+    },
+    "favorites": {
+      "title": "My favorites",
+      "description": "Manage my programs"
+    },
+    "forum": {
+      "title": "Forum",
+      "description": "Ask a question"
+    },
+    "support": {
+      "title": "Support",
+      "description": "Get support"
+    }
+  }
+}

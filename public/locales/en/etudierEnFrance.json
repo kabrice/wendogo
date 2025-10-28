@@ -1,0 +1,504 @@
+{
+  "meta": {
+    "title": "Complete Guide to Studying in France - Wendogo",
+    "description": "Complete guide to studying in France: Parcoursup, Campus France, admission procedures, universities. Everything you need to know to succeed in your study project.",
+    "keywords": "study in France, Campus France, Parcoursup, French university, international student, France admission, student visa",
+    "ogTitle": "Complete Guide to Studying in France - Wendogo",
+    "ogDescription": "Discover everything you need to know to study in France: procedures, steps, and expert advice.",
+    "twitterTitle": "Complete Guide to Studying in France",
+    "twitterDescription": "Procedures, steps, and tips to succeed in your studies in France",
+    "schemaHeadline": "Complete Guide to Studying in France",
+    "schemaDescription": "Complete guide to studying in France: Parcoursup, Campus France, admission procedures"
+  },
+  "hero": {
+    "title": "Complete Guide to Studying in France",
+    "subtitle": "Discover everything you need to know to succeed in your study project in France: procedures, steps, and expert advice.",
+    "ctaPrimary": "Get support",
+    "ctaSecondary": "Search for a program"
+  },
+  "quickStats": {
+    "students": "Students in France",
+    "international": "International students",
+    "establishments": "Institutions",
+    "countries": "Countries represented"
+  },
+  "tabs": {
+    "overview": "Overview",
+    "campusFrance": "Campus France",
+    "parcoursup": "Parcoursup",
+    "parisSaclay": "Paris-Saclay"
+  },
+  "overview": {
+    "title": "Why Study in France?",
+    "subtitle": "France is one of the most sought-after destinations for higher education.",
+    "reasons": {
+      "excellence": {
+        "title": "Academic Excellence",
+        "description": "World-renowned universities and internationally recognized degrees."
+      },
+      "affordable": {
+        "title": "Affordable Cost",
+        "description": "Among the lowest tuition fees in Europe at public universities."
+      },
+      "culture": {
+        "title": "Cultural Richness",
+        "description": "Immersion in French culture, art, gastronomy, and history."
+      },
+      "opportunities": {
+        "title": "Professional Opportunities",
+        "description": "Access to the European job market and numerous career opportunities."
+      }
+    },
+    "typesTitle": "Types of Institutions",
+    "typesSubtitle": "The French higher education system offers several types of institutions.",
+    "institutions": {
+      "universities": {
+        "title": "Public Universities",
+        "description": "General education and research, moderate fees, national degrees."
+      },
+      "grandes": {
+        "title": "Grandes Écoles",
+        "description": "Excellence in education, selective admission, strong professional network."
+      },
+      "specialized": {
+        "title": "Specialized Schools",
+        "description": "Targeted professional training, connections with businesses."
+      }
+    },
+    "levelsTitle": "Study Levels",
+    "levelsSubtitle": "The LMD system (Licence, Master, Doctorate) aligns with European standards.",
+    "degrees": {
+      "licence": {
+        "title": "Licence (Bachelor's)",
+        "description": "General education over 3 years after high school diploma"
+      },
+      "master": {
+        "title": "Master's",
+        "description": "Specialization over 2 years after the licence"
+      },
+      "doctorat": {
+        "title": "Doctorate (PhD)",
+        "description": "In-depth research over 3 years after the master's"
+      }
+    },
+    "costsTitle": "Costs and Funding",
+    "costsSubtitle": "Estimated costs for studying in France",
+    "publicFees": "Public Universities",
+    "publicFeesDesc": "Very accessible fees",
+    "privateFees": "Private Schools",
+    "privateFeesDesc": "Depending on institutions",
+    "living": "Student Life",
+    "livingDesc": "Per month (housing, food, transportation)",
+    "scholarshipsTitle": "Available Scholarships",
+    "scholarships": {
+      "eiffel": "Eiffel Scholarships",
+      "government": "Government Scholarships",
+      "institutional": "Institutional Scholarships",
+      "regional": "Regional Aid"
+    },
+    "keyDatesTitle": "Key Calendar",
+    "keyDatesSubtitle": "Important dates for your application",
+    "timeline": {
+      "autumn": {
+        "title": "September-November",
+        "description": "Program research and application preparation"
+      },
+      "winter": {
+        "title": "December-March",
+        "description": "Application submission (Campus France, Parcoursup, etc.)"
+      },
+      "spring": {
+        "title": "April-June",
+        "description": "Institution responses and visa application"
+      },
+      "summer": {
+        "title": "July-August",
+        "description": "Visa approval and departure preparation"
+      }
+    }
+  },
+  "campusFrance": {
+    "title": "Campus France Procedure",
+    "subtitle": "Campus France is the official platform for international students wishing to study in France.",
+    "concernedTitle": "Who Is Concerned?",
+    "concernedIntro": "The Campus France procedure mainly concerns nationals of certain countries. Here is the complete list of concerned countries:",
+    "regions": {
+      "africa": "Africa",
+      "maghreb": "Maghreb / Middle East",
+      "americas": "Americas",
+      "asia": "Asia",
+      "europe": "Europe / Eurasia"
+    },
+    "stepsTitle": "Procedure Steps",
+    "steps": {
+      "1": {
+        "title": "Account Creation",
+        "description": "Registration on Campus France platform",
+        "details": {
+          "1": "Create an account on Études en France",
+          "2": "Fill in personal information",
+          "3": "Upload required documents"
+        }
+      },
+      "2": {
+        "title": "File Preparation",
+        "description": "Preparation of academic documents",
+        "details": {
+          "1": "Translated transcripts",
+          "2": "Certified diplomas",
+          "3": "CV and motivation letter",
+          "4": "French language proficiency certificate"
+        }
+      },
+      "3": {
+        "title": "Program Application",
+        "description": "Apply to chosen programs",
+        "details": {
+          "1": "Select up to 7 programs",
+          "2": "Personalize motivation letters",
+          "3": "Submit applications"
+        }
+      },
+      "4": {
+        "title": "Pedagogical Interview",
+        "description": "Interview with a Campus France advisor",
+        "details": {
+          "1": "Pay application fees",
+          "2": "Schedule interview appointment",
+          "3": "Prepare your study project"
+        }
+      },
+      "5": {
+        "title": "Responses and Visa",
+        "description": "Acceptance and visa application",
+        "details": {
+          "1": "Wait for responses (4-6 weeks)",
+          "2": "Accept a proposal",
+          "3": "Start visa procedure"
+        }
+      }
+    },
+    "documentsTitle": "Required Documents",
+    "documentsSubtitle": "Complete list of documents to prepare for your Campus France file",
+    "docCategories": {
+      "academic": {
+        "title": "Academic Documents",
+        "items": {
+          "1": "Transcripts (last 3 years)",
+          "2": "Diplomas obtained",
+          "3": "Education level certificates",
+          "4": "Course syllabi"
+        }
+      },
+      "language": {
+        "title": "Language Certificates",
+        "items": {
+          "1": "TCF, DELF or DALF (French)",
+          "2": "TOEFL or IELTS (if required)",
+          "3": "Language course certificates"
+        }
+      },
+      "motivation": {
+        "title": "Motivation Documents",
+        "items": {
+          "1": "Updated CV",
+          "2": "Motivation letter",
+          "3": "Detailed study project",
+          "4": "Recommendation letters"
+        }
+      },
+      "identity": {
+        "title": "Identity Documents",
+        "items": {
+          "1": "Valid passport",
+          "2": "Recent ID photo",
+          "3": "Birth certificate",
+          "4": "National ID card"
+        }
+      },
+      "financial": {
+        "title": "Financial Documents",
+        "items": {
+          "1": "Proof of resources",
+          "2": "Bank statements",
+          "3": "Financial support certificate",
+          "4": "Scholarship notification (if applicable)"
+        }
+      }
+    },
+    "feesTitle": "Campus France Fees",
+    "feesSubtitle": "Fees vary according to your country of residence",
+    "feesAmount": "Approximately 100-300€",
+    "feesNote": "depending on country",
+    "interviewTitle": "The Pedagogical Interview",
+    "interviewSubtitle": "Tips to succeed in your interview",
+    "interviewTips": {
+      "1": "Prepare your study project clearly and coherently",
+      "2": "Be able to explain your background and motivations",
+      "3": "Research your chosen programs",
+      "4": "Demonstrate your French level",
+      "5": "Prepare questions about life in France"
+    },
+    "timelineTitle": "Campus France Calendar",
+    "timelineSubtitle": "Deadlines to respect for your procedure",
+    "timelinePhases": {
+      "application": {
+        "title": "Application Phase",
+        "items": {
+          "1": "November-December: Platform opening",
+          "2": "January-March: File submission",
+          "3": "February-April: Interviews"
+        }
+      },
+      "response": {
+        "title": "Response Phase",
+        "items": {
+          "1": "April-June: Institution responses",
+          "2": "May-July: Final acceptance",
+          "3": "June-August: Visa procedure"
+        }
+      }
+    },
+    "tipsTitle": "Practical Tips",
+    "tips": {
+      "1": "Start early: the procedure can take 3-6 months",
+      "2": "Choose programs consistent with your background",
+      "3": "Take care of your motivation letters (personalized)",
+      "4": "Prepare well for your pedagogical interview",
+      "5": "Keep copies of all your documents"
+    }
+  },
+  "parcoursup": {
+    "title": "Application via Parcoursup",
+    "subtitle": "Parcoursup is the national platform for first-year admissions to higher education in France.",
+    "whoTitle": "Who Can Use Parcoursup?",
+    "whoIntro": "The platform is accessible to:",
+    "whoItems": {
+      "1": "French and foreign high school students studying in France",
+      "2": "Students seeking reorientation (already in higher education)",
+      "3": "Students returning to studies"
+    },
+    "note": "Important Note",
+    "noteContent": "International students residing abroad must generally go through Campus France, not Parcoursup.",
+    "formationsTitle": "Available Programs",
+    "formationsSubtitle": "Main programs available on Parcoursup:",
+    "formations": {
+      "bts": {
+        "title": "BTS (Higher Technician Certificate)",
+        "description": "2-year vocational training in numerous fields",
+        "duration": "2 years",
+        "level": "Bac+2"
+      },
+      "cpge": {
+        "title": "CPGE (Preparatory Classes for Grandes Écoles)",
+        "description": "Intensive preparation for grandes écoles entrance exams",
+        "duration": "2 years",
+        "level": "Bac+2"
+      },
+      "dcg": {
+        "title": "DCG (Accounting and Management Diploma)",
+        "description": "Specialized training in accounting and management",
+        "duration": "3 years",
+        "level": "Bac+3"
+      }
+    },
+    "calendarTitle": "Parcoursup Calendar",
+    "calendarSubtitle": "Key dates of the procedure (indicative dates)",
+    "calendarPhases": {
+      "registration": {
+        "title": "Registration and Wishes",
+        "items": {
+          "1": "January: Platform opening",
+          "2": "January-March: Wish formulation",
+          "3": "March: Wish deadline",
+          "4": "April: File finalization"
+        }
+      },
+      "admission": {
+        "title": "Admission Phase",
+        "items": {
+          "1": "June: Start of responses",
+          "2": "June-July: Main phase",
+          "3": "July-September: Complementary phase"
+        }
+      }
+    },
+    "stepByStepTitle": "Step-by-Step Procedure",
+    "steps": {
+      "1": {
+        "title": "Registration",
+        "description": "Create an account on Parcoursup"
+      },
+      "2": {
+        "title": "Search",
+        "description": "Explore available programs"
+      },
+      "3": {
+        "title": "Wishes",
+        "description": "Submit up to 10 wishes (no ranking)"
+      },
+      "4": {
+        "title": "Confirmation",
+        "description": "Finalize and confirm wishes"
+      },
+      "5": {
+        "title": "Responses",
+        "description": "Receive and respond to proposals"
+      }
+    },
+    "dossierTitle": "File Preparation",
+    "dossierSubtitle": "Documents and information to prepare",
+    "dossierCategories": {
+      "academic": {
+        "title": "Academic Information",
+        "items": {
+          "1": "School reports",
+          "2": "Exam results",
+          "3": "Fiche Avenir (high school students)",
+          "4": "Baccalaureate grades"
+        }
+      },
+      "motivation": {
+        "title": "Motivated Training Project",
+        "items": {
+          "1": "Letter for each program",
+          "2": "Maximum 1,500 characters",
+          "3": "Explain motivations and project",
+          "4": "Personalize for each wish"
+        }
+      },
+      "complementary": {
+        "title": "Additional Elements",
+        "items": {
+          "1": "CV (optional)",
+          "2": "Activity certificates",
+          "3": "Skill certificates",
+          "4": "Specific documents depending on program"
+        }
+      }
+    },
+    "responsesTitle": "Response Management",
+    "responsesSubtitle": "Types of responses you may receive",
+    "responseTypes": {
+      "accepted": {
+        "title": "Yes (accepted)",
+        "description": "You can accept or refuse the proposal"
+      },
+      "waiting": {
+        "title": "Waiting",
+        "description": "You remain on the waiting list"
+      },
+      "conditional": {
+        "title": "Yes-if",
+        "description": "Accepted with accompanied pathway"
+      },
+      "refused": {
+        "title": "No",
+        "description": "You are not accepted in this program"
+      }
+    },
+    "tipsTitle": "Tips for Success",
+    "tips": {
+      "1": "Diversify your wishes (ambitions + safe choices)",
+      "2": "Take care of your motivated training projects",
+      "3": "Strictly respect deadlines",
+      "4": "Respond quickly to proposals",
+      "5": "Attend open house days"
+    },
+    "complementaryTitle": "Complementary Phase",
+    "complementaryContent": "If you have not received any proposal or if you have refused all proposals, you can participate in the complementary phase starting at the end of June. New programs with available places are then offered.",
+    "forInternationalsTitle": "For International Students",
+    "forInternationalsSubtitle": "Special cases according to your situation",
+    "internationalCases": {
+      "resident": {
+        "title": "Residing in France",
+        "items": {
+          "1": "Follow the normal Parcoursup procedure",
+          "2": "Baccalaureate equivalence required",
+          "3": "French language certificates required"
+        }
+      },
+      "abroad": {
+        "title": "Residing Abroad",
+        "items": {
+          "1": "Generally via Campus France",
+          "2": "Some exceptions for certain programs",
+          "3": "Check with the target institution"
+        }
+      }
+    },
+    "resourcesTitle": "Useful Resources",
+    "resources": {
+      "platform": "Parcoursup Platform",
+      "assistance": "Assistance Number",
+      "faq": "Official FAQ"
+    }
+  },
+  "parisSaclay": {
+    "title": "Paris-Saclay Admission Process",
+    "subtitle": "Paris-Saclay University has a specific admission procedure for its Master's programs.",
+    "freeProcess": "Completely Free Procedure",
+    "freeProcessDesc": "Unlike other universities, the application to Paris-Saclay University is entirely free.",
+    "stepsTitle": "Process Steps",
+    "steps": {
+      "1": {
+        "title": "Application (March)",
+        "description": "Via INCEPTION for specific M1 and M2",
+        "details": {
+          "1": "Professional CV",
+          "2": "Motivation letters",
+          "3": "Transcripts",
+          "4": "Diplomas"
+        },
+        "linkText": "Access the platform"
+      },
+      "2": {
+        "title": "Admission Procedure (March-May)",
+        "description": "File review by the university",
+        "details": {
+          "1": "File evaluation",
+          "2": "Response by email",
+          "3": "Quick confirmation if accepted"
+        }
+      },
+      "3": {
+        "title": "Campus France (If Accepted)",
+        "description": "Visa procedure after acceptance",
+        "details": {
+          "1": "\"I am accepted\" tab",
+          "2": "Download certificate",
+          "3": "Visa procedure"
+        }
+      }
+    },
+    "calendarTitle": "General Paris-Saclay Calendar",
+    "applicationPhase": {
+      "title": "Application Phase",
+      "items": {
+        "1": "January: Applications opening",
+        "2": "March: Platform closing",
+        "3": "April-May: Responses"
+      }
+    },
+    "visaPhase": {
+      "title": "Visa Phase",
+      "items": {
+        "1": "May-July: Campus France",
+        "2": "August-September: Visa",
+        "3": "September: Arrival"
+      }
+    },
+    "importantPointsTitle": "Important Points",
+    "importantPoints": {
+      "1": "Do not apply via normal Campus France",
+      "2": "Wait for acceptance before doing Campus France",
+      "3": "Start early (high selectivity)",
+      "4": "Check your Master's specificities"
+    }
+  },
+  "cta": {
+    "title": "Ready to Make Your Study Project in France a Reality?",
+    "subtitle": "Our expert advisors support you personally in all your steps, from orientation to obtaining your visa.",
+    "button": "Get support"
+  }
+}

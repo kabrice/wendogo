@@ -1,0 +1,33 @@
+{
+  "auth": {
+    "required": "Connexion requise",
+    "loginMessage": "Veuillez vous connecter pour voir vos favoris."
+  },
+  "header": {
+    "title": "Mes formations favorites",
+    "count_one": "{{count}} formation",
+    "count_other": "{{count}} formations",
+    "searchResults_one": "trouvée pour \"{{query}}\"",
+    "searchResults_other": "trouvées pour \"{{query}}\""
+  },
+  "search": {
+    "placeholder": "Rechercher dans vos favoris..."
+  },
+  "empty": {
+    "noResults": "Aucun résultat trouvé",
+    "noFavorites": "Aucune formation favorite",
+    "tryOtherKeywords": "Essayez avec d'autres mots-clés",
+    "startAdding": "Commencez à ajouter des formations à vos favoris pour les retrouver ici",
+    "discoverButton": "Découvrir les formations"
+  },
+  "card": {
+    "alternance": "Alternance",
+    "addedOn": "Ajouté le {{date}}",
+    "viewButton": "Voir"
+  },
+  "pagination": {
+    "showing": "Affichage de {{start}} à {{end}} sur {{total}} résultats",
+    "previous": "Précédent",
+    "next": "Suivant"
+  }
+}

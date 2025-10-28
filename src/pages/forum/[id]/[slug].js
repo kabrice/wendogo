@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next';
 import Head from 'next/head';
 import NavBar from '../../../components/NavBar';
 import FooterSingleRow from '../../../components/FooterSingleRow';
@@ -21,20 +22,21 @@ import {
   Award
 } from 'lucide-react';
 
-const CATEGORIES = {
-  'orientation': { label: 'Orientation', icon: '🎯' },
-  'visa': { label: 'Visa & Démarches', icon: '📝' },
-  'logement': { label: 'Logement', icon: '🏠' },
-  'finance': { label: 'Financement', icon: '💰' },
-  'vie-etudiante': { label: 'Vie étudiante', icon: '🎓' },
-  'emploi': { label: 'Emploi & Stage', icon: '💼' },
-  'autres': { label: 'Autres', icon: '💬' }
-};
-
 const QuestionDetailPage = () => {
+  const { t } = useTranslation(['common', 'forum']);
   const { data: session } = useSession();
   const router = useRouter();
   const { id, slug } = router.query;
+
+  const CATEGORIES = {
+    'orientation': { label: t('forum:category_orientation'), icon: '🎯' },
+    'visa': { label: t('forum:category_visa'), icon: '📝' },
+    'logement': { label: t('forum:category_logement'), icon: '🏠' },
+    'finance': { label: t('forum:category_finance'), icon: '💰' },
+    'vie-etudiante': { label: t('forum:category_vie_etudiante'), icon: '🎓' },
+    'emploi': { label: t('forum:category_emploi'), icon: '💼' },
+    'autres': { label: t('forum:category_autres'), icon: '💬' }
+  };
 
   const [question, setQuestion] = useState(null);
   const [answers, setAnswers] = useState([]);
@@ -73,7 +75,7 @@ const QuestionDetailPage = () => {
 
   const handleLikeQuestion = async () => {
     if (!session) {
-      alert('⚠️ Vous devez être connecté pour liker');
+      alert(t('forum:alert_login_required_like'));
       return;
     }
 
@@ -96,7 +98,7 @@ const QuestionDetailPage = () => {
 
   const handleLikeAnswer = async (answerId) => {
     if (!session) {
-      alert('⚠️ Vous devez être connecté pour liker');
+      alert(t('forum:alert_login_required_like'));
       return;
     }
 
@@ -121,12 +123,12 @@ const QuestionDetailPage = () => {
     e.preventDefault();
     
     if (!session) {
-      alert('⚠️ Vous devez être connecté pour répondre');
+      alert(t('forum:detail_alert_login_required_answer'));
       return;
     }
 
     if (!answerContent.trim() || answerContent.length < 10) {
-      alert('⚠️ La réponse doit contenir au moins 10 caractères');
+      alert(t('forum:detail_alert_answer_min_length'));
       return;
     }
 
@@ -144,13 +146,13 @@ const QuestionDetailPage = () => {
       );
 
       if (response.ok) {
-        alert('✅ Réponse publiée avec succès (anonymement) !');
+        alert(t('forum:detail_alert_answer_published'));
         setAnswerContent('');
         loadQuestion();
       }
     } catch (error) {
       console.error('Erreur:', error);
-      alert('❌ Erreur lors de la publication');
+      alert(t('forum:detail_alert_answer_error'));
     }
   };
 
@@ -167,7 +169,7 @@ const QuestionDetailPage = () => {
       );
 
       if (response.ok) {
-        alert('✅ Réponse marquée comme acceptée !');
+        alert(t('forum:detail_alert_answer_accepted'));
         loadQuestion();
       }
     } catch (error) {
@@ -188,7 +190,7 @@ const QuestionDetailPage = () => {
       <div className="min-h-screen bg-gray-50">
         <NavBar />
         <div className="container mx-auto px-4 py-12 text-center">
-          <p className="text-gray-500">Question non trouvée</p>
+          <p className="text-gray-500">{t('forum:detail_question_not_found')}</p>
         </div>
       </div>
     );
@@ -199,7 +201,7 @@ const QuestionDetailPage = () => {
   return (
     <>
       <Head>
-        <title>{question.title} - Forum Wendogo</title>
+        <title>{t('forum:detail_page_title', { title: question.title })}</title>
         <meta name="description" content={question.content.substring(0, 160)} />
       </Head>
 
@@ -213,7 +215,7 @@ const QuestionDetailPage = () => {
             className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6"
           >
             <ArrowLeft className="w-4 h-4" />
-            Retour au forum
+            {t('forum:detail_back_to_forum')}
           </button>
 
           {/* Question principale */}
@@ -229,19 +231,19 @@ const QuestionDetailPage = () => {
                 >
                   <ThumbsUp className={`w-8 h-8 ${question.is_liked ? 'fill-current' : ''}`} />
                   <span className="text-lg font-medium">{question.likes_count}</span>
-                  <span className="text-xs">J'aime</span>
+                  <span className="text-xs">{t('forum:likes')}</span>
                 </button>
 
                 <div className="flex flex-col items-center text-gray-500">
                   <MessageSquare className="w-8 h-8" />
                   <span className="text-lg font-medium">{question.answers_count}</span>
-                  <span className="text-xs">Réponses</span>
+                  <span className="text-xs">{t('forum:answers')}</span>
                 </div>
 
                 <div className="flex flex-col items-center text-gray-400">
                   <Eye className="w-7 h-7" />
                   <span className="text-sm">{question.views_count}</span>
-                  <span className="text-xs">Vues</span>
+                  <span className="text-xs">{t('forum:views')}</span>
                 </div>
               </div>
 
@@ -259,12 +261,12 @@ const QuestionDetailPage = () => {
                   {question.is_moderator ? (
                     <span className="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">
                       <UserCheck className="w-4 h-4" />
-                      Modérateur Wendogo
+                      {t('forum:moderator_wendogo')}
                     </span>
                   ) : (
                     <span className="inline-flex items-center gap-1 px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-sm">
                       <Users className="w-4 h-4" />
-                      Utilisateur anonyme
+                      {t('forum:anonymous_user')}
                     </span>
                   )}
 
@@ -288,7 +290,10 @@ const QuestionDetailPage = () => {
           {/* Réponses */}
           <div className="bg-white rounded-lg shadow-sm border p-6 mb-6">
             <h2 className="text-xl font-bold text-gray-900 mb-6">
-              {answers.length} réponse{answers.length > 1 ? 's' : ''}
+              {answers.length === 1 
+                ? t('forum:detail_answer_count', { count: answers.length }) 
+                : t('forum:detail_answer_count_plural', { count: answers.length })
+              }
             </h2>
 
             <div className="space-y-6">
@@ -320,7 +325,7 @@ const QuestionDetailPage = () => {
                       {answer.is_accepted && (
                         <div className="flex items-center gap-2 text-green-600 mb-2">
                           <CheckCircle className="w-5 h-5" />
-                          <span className="font-medium text-sm">Réponse acceptée</span>
+                          <span className="font-medium text-sm">{t('forum:detail_accepted_answer')}</span>
                         </div>
                       )}
 
@@ -331,12 +336,12 @@ const QuestionDetailPage = () => {
                           {answer.is_moderator ? (
                             <span className="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs">
                               <UserCheck className="w-3 h-3" />
-                              Modérateur Wendogo
+                              {t('forum:moderator_wendogo')}
                             </span>
                           ) : (
                             <span className="inline-flex items-center gap-1 px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-xs">
                               <Users className="w-3 h-3" />
-                              Utilisateur anonyme
+                              {t('forum:anonymous_user')}
                             </span>
                           )}
 
@@ -351,7 +356,7 @@ const QuestionDetailPage = () => {
                             className="text-xs text-green-600 hover:text-green-700 font-medium flex items-center gap-1"
                           >
                             <Award className="w-4 h-4" />
-                            Marquer comme acceptée
+                            {t('forum:detail_mark_as_accepted')}
                           </button>
                         )}
                       </div>
@@ -362,7 +367,7 @@ const QuestionDetailPage = () => {
 
               {answers.length === 0 && (
                 <p className="text-center text-gray-500 py-8">
-                  Aucune réponse pour le moment. Soyez le premier à répondre !
+                  {t('forum:detail_no_answers')}
                 </p>
               )}
             </div>
@@ -370,14 +375,14 @@ const QuestionDetailPage = () => {
 
           {/* Formulaire de réponse */}
           <div className="bg-white rounded-lg shadow-sm border p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Votre réponse (anonyme)</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('forum:detail_your_answer')}</h3>
 
             {/* Info anonymat */}
             <div className="bg-purple-50 border border-purple-200 rounded-lg p-3 mb-4">
               <div className="flex gap-2 text-sm">
                 <Lock className="w-4 h-4 text-purple-600 flex-shrink-0 mt-0.5" />
                 <p className="text-purple-700">
-                  Votre réponse sera publiée de manière anonyme pour protéger votre vie privée.
+                  {t('forum:detail_answer_anonymity')}
                 </p>
               </div>
             </div>
@@ -387,29 +392,29 @@ const QuestionDetailPage = () => {
                 <textarea
                   value={answerContent}
                   onChange={(e) => setAnswerContent(e.target.value)}
-                  placeholder="Partagez votre expérience ou vos conseils..."
+                  placeholder={t('forum:detail_answer_placeholder')}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg h-32 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   required
                   minLength={10}
                 />
-                <p className="text-xs text-gray-500 mb-4">Minimum 10 caractères</p>
+                <p className="text-xs text-gray-500 mb-4">{t('forum:detail_answer_min')}</p>
 
                 <button
                   type="submit"
                   className="bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 font-medium inline-flex items-center gap-2"
                 >
                   <Send className="w-5 h-5" />
-                  Publier la réponse
+                  {t('forum:detail_submit_answer')}
                 </button>
               </form>
             ) : (
               <div className="text-center py-8">
-                <p className="text-gray-500 mb-4">Connectez-vous pour répondre à cette question</p>
+                <p className="text-gray-500 mb-4">{t('forum:detail_login_to_answer')}</p>
                 <button
                   onClick={() => router.push('/auth/signin')}
                   className="bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 font-medium"
                 >
-                  Se connecter
+                  {t('forum:detail_login_button')}
                 </button>
               </div>
             )}
@@ -421,5 +426,16 @@ const QuestionDetailPage = () => {
     </>
   );
 };
+
+export async function getServerSideProps({ locale }) {
+  const { serverSideTranslations } = await import('next-i18next/serverSideTranslations');
+  
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['authModal', 'common', 'forum'])),
+    },
+  };
+}
+
 
 export default QuestionDetailPage;

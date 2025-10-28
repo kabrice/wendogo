@@ -1,0 +1,129 @@
+{
+  "meta": {
+    "title": "À propos de Wendogo - Votre partenaire pour étudier en France",
+    "description": "Découvrez l'équipe Wendogo et notre mission : vous accompagner avec expertise et bienveillance dans votre projet d'études en France."
+  },
+  "hero": {
+    "title": "Qui sommes-nous ?",
+    "description": "Wendogo, c'est une équipe passionnée d'experts en éducation internationale qui comprend parfaitement les défis que vous rencontrez. Nous sommes vos partenaires de confiance pour réaliser votre rêve d'études en France.",
+    "expertTeam": "Équipe d'experts",
+    "supportiveCare": "Accompagnement bienveillant",
+    "teamImageAlt": "Équipe Wendogo"
+  },
+  "navigation": {
+    "team": "Notre équipe",
+    "expertise": "Notre expertise",
+    "story": "Notre histoire"
+  },
+  "team": {
+    "title": "Notre équipe",
+    "description": "Des experts passionnés qui mettent leur expérience et leur bienveillance au service de votre réussite.",
+    "members": {
+      "edgar": {
+        "name": "Edgar Kamdem",
+        "role": "Co-fondateur & CEO",
+        "description": "Ingénieur et entrepreneur passionné par l'éducation internationale. Edgar a créé Wendogo après avoir vécu les difficultés des démarches d'études à l'étranger."
+      },
+      "advisors": {
+        "name": "Équipe Conseillers",
+        "role": "Experts en orientation",
+        "description": "Une équipe de conseillers expérimentés, anciens étudiants internationaux, qui comprennent parfaitement les défis que vous rencontrez."
+      }
+    },
+    "whyChooseAdvisors": "Pourquoi choisir nos conseillers ?",
+    "advisorQualities": {
+      "livedExperience": {
+        "title": "Expérience vécue",
+        "description": "Nos conseillers ont eux-mêmes vécu l'expérience des études à l'étranger"
+      },
+      "recognizedExpertise": {
+        "title": "Expertise reconnue",
+        "description": "Formation continue et certification sur les procédures françaises"
+      },
+      "humanSupport": {
+        "title": "Accompagnement humain",
+        "description": "Écoute, empathie et soutien tout au long de votre parcours"
+      }
+    }
+  },
+  "expertise": {
+    "title": "Notre expertise",
+    "description": "Ce qui nous différencie et fait de nous vos meilleurs alliés pour réussir votre projet d'études en France.",
+    "sections": {
+      "personalizedSupport": {
+        "title": "Accompagnement personnalisé",
+        "description": "Chaque étudiant est unique. Nos conseillers prennent le temps de comprendre votre profil, vos objectifs et vos contraintes pour vous proposer un accompagnement sur mesure."
+      },
+      "recognizedExpertise": {
+        "title": "Expertise reconnue",
+        "description": "Notre équipe maîtrise parfaitement le système éducatif français, les procédures administratives et les attentes des établissements."
+      },
+      "supportiveCare": {
+        "title": "Suivi bienveillant",
+        "description": "Nous vous accompagnons avec empathie et bienveillance, en comprenant les enjeux émotionnels de votre projet d'études."
+      },
+      "extensiveNetwork": {
+        "title": "Réseau étendu",
+        "description": "Grâce à notre réseau de partenaires et d'anciens étudiants, nous vous ouvrons des portes et facilitons votre intégration."
+      }
+    },
+    "domains": {
+      "title": "Nos domaines d'expertise",
+      "orientation": {
+        "title": "🎓 Orientation",
+        "description": "Plus de 2100 formations analysées et répertoriées"
+      },
+      "visa": {
+        "title": "📋 Visa étudiant",
+        "description": "Expertise complète des procédures consulaires"
+      },
+      "campusFrance": {
+        "title": "🏫 Campus France",
+        "description": "Accompagnement personnalisé de A à Z"
+      },
+      "installation": {
+        "title": "🏠 Installation",
+        "description": "Support pour votre arrivée et intégration"
+      }
+    }
+  },
+  "story": {
+    "title": "Notre histoire",
+    "description": "Wendogo est née d'une frustration personnelle qui s'est transformée en mission : faciliter l'accès aux études supérieures en France.",
+    "origin": {
+      "title": "L'origine de Wendogo",
+      "paragraph1": "Tout a commencé avec Edgar Kamdem, ingénieur passionné par l'éducation, qui a vécu les difficultés des démarches administratives pour faire voyager ses proches et les accompagner dans leurs études à l'étranger.",
+      "paragraph2": "Constatant que de nombreux étudiants talentueux abandonnaient leurs rêves face à la complexité des procédures, Edgar a décidé de créer une solution pour démocratiser l'accès aux études en France.",
+      "paragraph3": "Wendogo est ainsi né de cette volonté de simplifier, d'accompagner et de réussir ensemble.",
+      "imageAlt": "Conseiller Wendogo"
+    },
+    "milestones": {
+      "title": "Les étapes clés de notre développement",
+      "2020": {
+        "title": "Création de Wendogo",
+        "description": "Naissance de l'idée suite aux difficultés rencontrées par les fondateurs"
+      },
+      "2021": {
+        "title": "Premiers étudiants accompagnés",
+        "description": "Lancement officiel avec les premiers services d'orientation"
+      },
+      "2022": {
+        "title": "Expansion des services",
+        "description": "Ajout de l'accompagnement visa et partenariats avec les écoles"
+      },
+      "2023": {
+        "title": "Reconnaissance nationale",
+        "description": "Wendogo devient une référence pour les études en France"
+      },
+      "2024": {
+        "title": "Innovation continue",
+        "description": "Nouveaux outils et services pour optimiser votre expérience"
+      }
+    }
+  },
+  "cta": {
+    "title": "Prêt à faire équipe avec nous ?",
+    "description": "Rejoignez la communauté Wendogo et bénéficiez de l'accompagnement d'experts qui comprennent vraiment votre projet.",
+    "button": "Me faire accompagner"
+  }
+}

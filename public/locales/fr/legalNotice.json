@@ -1,0 +1,244 @@
+{
+  "meta": {
+    "title": "Mentions légales - Wendogo",
+    "description": "Mentions légales de Wendogo, plateforme d'accompagnement pour vos études en France. Informations légales, protection des données, cookies.",
+    "keywords": "mentions légales, RGPD, protection données, cookies, Wendogo, études France"
+  },
+  "header": {
+    "title": "Mentions légales",
+    "description": "Informations légales relatives à l'utilisation de la plateforme Wendogo, conformément aux obligations légales en vigueur.",
+    "lastUpdate": "Dernière mise à jour : 17 Juillet 2025"
+  },
+  "essentialInfo": {
+    "title": "Informations essentielles",
+    "company": {
+      "label": "🏢 Société",
+      "name": "WENDOGO SAS",
+      "capital": "Capital : 10 000€"
+    },
+    "contact": {
+      "label": "📧 Contact",
+      "email": "hello@wendogo.com",
+      "phone": "+33 6 68 15 60 73"
+    },
+    "hosting": {
+      "label": "🏛️ Hébergeur",
+      "name": "OVH SAS",
+      "location": "Roubaix, France"
+    }
+  },
+  "sections": {
+    "definitions": {
+      "title": "Définitions",
+      "user": {
+        "title": "🎓 Utilisateur",
+        "description": "Toute personne physique ou morale qui accède et utilise la plateforme Wendogo.com pour ses services d'accompagnement pour études en France."
+      },
+      "services": {
+        "title": "📋 Services",
+        "description": "Ensemble des prestations d'accompagnement proposées par Wendogo : orientation, recherche de formations, accompagnement visa étudiant, procédure Campus France."
+      },
+      "personalData": {
+        "title": "🔒 Données personnelles",
+        "description": "Toute information permettant d'identifier directement ou indirectement une personne physique, au sens du Règlement Général sur la Protection des Données (RGPD)."
+      }
+    },
+    "companyInfo": {
+      "title": "Informations sur la société",
+      "publisher": {
+        "title": "Éditeur du site",
+        "legalName": "Raison sociale :",
+        "legalNameValue": "WENDOGO SAS",
+        "capital": "Capital social :",
+        "capitalValue": "10 000€",
+        "rcs": "RCS :",
+        "rcsValue": "Paris B 123 456 789",
+        "siret": "SIRET :",
+        "siretValue": "123 456 789 00012",
+        "vat": "TVA intracommunautaire :",
+        "vatValue": "FR12123456789"
+      },
+      "address": {
+        "title": "Adresse du siège social",
+        "line1": "WENDOGO SAS",
+        "line2": "50 Avenue des Champs Elysées",
+        "line3": "75008 Paris",
+        "line4": "France"
+      },
+      "management": {
+        "title": "Direction",
+        "publicationDirector": "Directeur de la publication :",
+        "publicationDirectorValue": "Edgar Kamdem",
+        "editorialManager": "Responsable éditorial :",
+        "editorialManagerValue": "Edgar Kamdem"
+      },
+      "contact": {
+        "title": "Contact",
+        "email": "Email :",
+        "emailValue": "hello@wendogo.com",
+        "whatsapp": "WhatsApp :",
+        "whatsappValue": "+33 6 68 15 60 73"
+      }
+    },
+    "hosting": {
+      "title": "Hébergement",
+      "subtitle": "🌐 Hébergeur du site",
+      "company": "Société :",
+      "companyValue": "OVH SAS",
+      "address": "Adresse :",
+      "addressValue": "2 rue Kellermann, 59100 Roubaix, France",
+      "phone": "Téléphone :",
+      "phoneValue": "09 72 10 10 07",
+      "website": "Site web :",
+      "websiteValue": "www.ovh.com",
+      "gdpr": "✅ Conformité RGPD :",
+      "gdprText": "Hébergement dans l'Union Européenne conformément au RGPD."
+    },
+    "servicesDescription": {
+      "title": "Description des services",
+      "mission": {
+        "title": "🎯 Notre mission",
+        "description": "Wendogo est la plateforme de référence pour accompagner les étudiants internationaux dans leur projet d'études en France. Nous proposons des services complets et personnalisés."
+      },
+      "orientation": {
+        "title": "🎓 Orientation",
+        "items": [
+          "• Analyse de profil personnalisée",
+          "• Recherche de formations adaptées",
+          "• Conseils d'orientation"
+        ]
+      },
+      "visa": {
+        "title": "📋 Accompagnement visa",
+        "items": [
+          "• Préparation dossier visa étudiant",
+          "• Suivi procédure Campus France",
+          "• Accompagnement administratif"
+        ]
+      },
+      "liability": {
+        "title": "Limitation de responsabilité",
+        "description": "Les informations fournies sont données à titre indicatif. Wendogo s'efforce de fournir des informations précises mais ne peut garantir l'exhaustivité des données."
+      }
+    },
+    "intellectualProperty": {
+      "title": "Propriété intellectuelle",
+      "copyright": {
+        "title": "🔐 Droits d'auteur",
+        "description": "L'ensemble du contenu du site Wendogo.com (textes, images, logos, vidéos, design) est protégé par le droit d'auteur et appartient à WENDOGO SAS."
+      },
+      "prohibited": {
+        "title": "⚠️ Utilisation interdite",
+        "description": "Toute reproduction, distribution, modification ou utilisation commerciale du contenu sans autorisation écrite préalable est strictement interdite."
+      },
+      "authorized": {
+        "title": "✅ Utilisation autorisée",
+        "description": "Consultation personnelle et privée dans le cadre d'un usage normal du site. Partage de liens vers nos pages autorisé."
+      }
+    },
+    "personalData": {
+      "title": "Protection des données personnelles",
+      "controller": {
+        "title": "Responsable du traitement",
+        "company": "Société :",
+        "companyValue": "WENDOGO SAS",
+        "responsible": "Responsable :",
+        "responsibleValue": "Edgar Kamdem",
+        "dpo": "Contact DPO :",
+        "dpoValue": "hello@wendogo.com",
+        "address": "Adresse :",
+        "addressValue": "11 rue Pierre Brossolette, 93290 Tremblay-en-France"
+      },
+      "purposes": {
+        "title": "🎯 Finalités du traitement",
+        "items": [
+          "• Fourniture des services d'accompagnement",
+          "• Gestion de la relation client",
+          "• Amélioration de nos services",
+          "• Communication sur nos offres"
+        ]
+      },
+      "rights": {
+        "title": "⚖️ Vos droits RGPD",
+        "items": [
+          "• Droit d'accès à vos données",
+          "• Droit de rectification",
+          "• Droit à l'effacement",
+          "• Droit à la portabilité",
+          "• Droit d'opposition"
+        ]
+      },
+      "exercise": {
+        "title": "📧 Exercer vos droits",
+        "description": "Pour exercer vos droits ou pour toute question relative au traitement de vos données :",
+        "email": "📧 Email : hello@wendogo.com",
+        "mail": "📮 Courrier : WENDOGO SAS - DPO, 11 rue Pierre Brossolette, 93290 Tremblay-en-France"
+      },
+      "security": {
+        "title": "🛡️ Sécurité des données",
+        "description": "Nous mettons en œuvre des mesures techniques et organisationnelles appropriées pour protéger vos données contre tout accès non autorisé, perte ou destruction."
+      }
+    },
+    "cookies": {
+      "title": "Cookies et traceurs",
+      "definition": {
+        "title": "🍪 Qu'est-ce qu'un cookie ?",
+        "description": "Un cookie est un petit fichier texte déposé sur votre terminal lors de la visite du site, permettant d'améliorer votre expérience de navigation."
+      },
+      "types": {
+        "technical": {
+          "title": "🔧 Cookies techniques",
+          "description": "Nécessaires au fonctionnement du site (session, préférences utilisateur)."
+        },
+        "analytics": {
+          "title": "📊 Cookies analytiques",
+          "description": "Mesure d'audience et statistiques de visite (Google Analytics)."
+        },
+        "marketing": {
+          "title": "🎯 Cookies marketing",
+          "description": "Personnalisation des contenus et publicités ciblées."
+        }
+      },
+      "manage": {
+        "title": "⚙️ Gérer vos préférences",
+        "description": "Vous pouvez configurer vos préférences cookies :",
+        "items": [
+          "• Dans les paramètres de votre navigateur",
+          "• Via notre bandeau de consentement",
+          "• En nous contactant : hello@wendogo.com"
+        ]
+      }
+    },
+    "applicableLaw": {
+      "title": "Droit applicable et juridiction",
+      "law": {
+        "title": "Droit applicable",
+        "description": "Les présentes mentions légales et l'utilisation du site Wendogo.com sont régies par le droit français."
+      },
+      "jurisdiction": {
+        "title": "Juridiction compétente",
+        "description": "En cas de litige, les tribunaux compétents de Bobigny seront seuls compétents."
+      },
+      "amicable": {
+        "title": "📋 Règlement amiable",
+        "description": "En cas de différend, nous privilégions la résolution amiable. Contactez-nous à hello@wendogo.com pour tout problème."
+      },
+      "modifications": {
+        "title": "🔄 Modifications",
+        "description": "Ces mentions légales peuvent être modifiées à tout moment. La version applicable est celle en vigueur lors de votre visite."
+      }
+    }
+  },
+  "contactSection": {
+    "title": "Des questions sur nos mentions légales ?",
+    "description": "Notre équipe est disponible pour répondre à toutes vos questions concernant l'utilisation de nos services et la protection de vos données.",
+    "writeUs": "Nous écrire",
+    "whatsapp": "WhatsApp"
+  },
+  "relatedDocuments": {
+    "title": "Documents connexes :",
+    "terms": "Conditions générales",
+    "privacy": "Politique de confidentialité",
+    "contact": "Nous contacter"
+  }
+}

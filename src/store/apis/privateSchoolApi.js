@@ -52,9 +52,9 @@ class PrivateSchoolApi {
    * @param {string} schoolId - L'ID de l'école
    * @returns {Promise<Object>} Données de l'école
    */
-  static async getSchoolById(schoolId) {
+  static async getSchoolById(schoolId, locale = 'fr') {
     try {
-      const response = await fetch(`${this.baseUrl}/schools/${schoolId}`, {
+      const response = await fetch(`${this.baseUrl}/schools/${schoolId}?locale=${locale}`, {
         method: 'GET',
         headers: this.headers
       });
@@ -90,9 +90,9 @@ class PrivateSchoolApi {
    * @param {string} slug - Le slug de l'école
    * @returns {Promise<Object>} Données de l'école
    */
-  static async getSchoolBySlug(slug) {
+  static async getSchoolBySlug(slug, locale = 'fr') {
     try {
-      const response = await fetch(`${this.baseUrl}/schools/slug/${slug}`, {
+      const response = await fetch(`${this.baseUrl}/schools/slug/${slug}?locale=${locale}`, {
         method: 'GET',
         headers: this.headers
       });
@@ -158,7 +158,7 @@ class PrivateSchoolApi {
    * @param {Object} filters - Filtres de recherche
    * @returns {Promise<Array>} Écoles filtrées
    */
-  static async searchSchools(filters = {}) {
+  static async searchSchools(filters = {}) { //Todo : Delete this function if not used
     try {
       const response = await fetch(`${this.baseUrl}/schools/search`, {
         method: 'POST',
@@ -197,9 +197,9 @@ class PrivateSchoolApi {
    * @param {number} limit - Nombre d'écoles à retourner
    * @returns {Promise<Array>} Écoles similaires
    */
-  static async getSimilarSchools(schoolId, limit = 3) {
+  static async getSimilarSchools(schoolId, limit = 3, locale = 'fr') {
     try {
-      const response = await fetch(`${this.baseUrl}/schools/${schoolId}/similar?limit=${limit}`, {
+      const response = await fetch(`${this.baseUrl}/schools/${schoolId}/similar?limit=${limit}&locale=${locale}`, {
         method: 'GET',
         headers: this.headers
       });
@@ -238,7 +238,7 @@ class PrivateSchoolApi {
    * Récupère un aperçu des écoles (données limitées)
    * @returns {Promise<Array>} Liste simplifiée des écoles
    */
-  static async getSchoolsPreview() {
+  static async getSchoolsPreview() { //Todo : Delete this function if not used
     try {
       const response = await fetch(`${this.baseUrl}/schools/preview`, {
         method: 'GET',
@@ -343,6 +343,19 @@ class PrivateSchoolApi {
   static formatFee(fee) {
     if (!fee) return 'Non communiqué';
     return fee.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1 ');
+  }
+  static async getSchools(locale = 'fr') {
+      try {
+      const response = await fetch(`${this.baseUrl}/schools?locale=${locale}`, {
+        method: 'GET',
+        headers: this.headers
+      });
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error fetching schools:', error);
+      return { success: false, error: error.message };
+    }
   }
 
   /**

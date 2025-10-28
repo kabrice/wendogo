@@ -8,9 +8,12 @@ import { useFavorites } from '../contexts/FavoritesContext';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next';
+import LanguageSelector from './LanguageSelector';
 
 const NavBar = ({ 
   variant = 'default', // 'default' | 'transparent' | 'simple'
+  languageSelectorVariant = 'default', // 'default' | 'light' | 'dark' | 'transparent'
   showDropdowns = true,
   showAllMenuItems = true,
   backgroundColor = null,
@@ -24,10 +27,15 @@ const NavBar = ({
   const dropdownRefs = useRef({});
   const userDropdownRef = useRef(null);
   const router = useRouter();
+  const { t } = useTranslation('common');
+  const locale = router.locale || 'fr';
   // Hooks d'authentification
   const { data: session, status } = useSession();
   const { showAuthModal, setShowAuthModal } = useFavorites();
 
+  const ogLocale = locale === 'fr' ? 'fr_FR' : 'en_US';
+  const baseUrl = 'https://wendogo.com';
+  const canonicalUrl = `${baseUrl}${router.asPath}`;
   
   // Fonction de déconnexion améliorée
   const handleLogout = useCallback(async () => {
@@ -175,62 +183,62 @@ const NavBar = ({
 
     return [
       {
-        title: 'Forum',
+        title: t('nav.forum'),
         hasDropdown: false,
         href: '/forum',
         icon: <MessageSquare className="w-4 h-4" />
       },
       {
-        title: 'Orientation & Ressources',
+        title: t('nav.orientation'),
         hasDropdown: true,
         icon: <GraduationCap className="w-4 h-4" />,
         submenu: [
           {
-            title: 'Étudier en France',
-            description: 'Guide complet pour vos études',
+            title: t('nav.studyInFrance'),
+            description: t('nav.studyInFranceDesc'),
             href: '/guides/etudier-en-france',
             icon: <Globe className="w-5 h-5 text-blue-600" />
           },
           {
-            title: 'Visa Étudiant',
-            description: 'Procédures et conseils',
+            title: t('nav.studentVisa'),
+            description: t('nav.studentVisaDesc'),
             href: '/guides/visa-etudiant',
             icon: <FileText className="w-5 h-5 text-green-600" />
           },
           {
-            title: 'Trouver un Logement',
-            description: 'Solutions d\'hébergement',
+            title: t('nav.housing'),
+            description: t('nav.housingDesc'),
             href: '/guides/logement',
             icon: <MapPin className="w-5 h-5 text-orange-600" />
           },
           {
-            title: 'Campus France',
-            description: 'Procédure officielle',
+            title: t('nav.campusFrance'),
+            description: t('nav.campusFranceDesc'),
             href: '/guides/campus-france',
             icon: <GraduationCap className="w-5 h-5 text-purple-600" />
           }
         ]
       },
       {
-        title: 'À Propos',
+        title: t('nav.about'),
         hasDropdown: true,
         icon: <Users className="w-4 h-4" />,
         submenu: [
           {
-            title: 'Pourquoi Wendogo ?',
-            description: 'No et services',
+            title: t('nav.whyWendogo'),
+            description: t('nav.whyWendogoDesc'),
             href: '/mission',
             icon: <Heart className="w-5 h-5 text-red-600" />
           },
           {
-            title: 'Qui sommes-nous ?',
-            description: 'Notre équipe et mission',
+            title: t('nav.whoWeAre'),
+            description: t('nav.whoWeAreDesc'),
             href: '/about-us',
             icon: <Users className="w-5 h-5 text-indigo-600" />
           },
           {
-            title: 'Témoignages',
-            description: 'Expériences étudiantes',
+            title: t('nav.testimonials'),
+            description: t('nav.testimonialsDesc'),
             href: '/temoignages',
             icon: <Heart className="w-5 h-5 text-pink-600" />
           }
@@ -272,7 +280,7 @@ const NavBar = ({
       <div className="p-4">
         <div className="grid gap-1">
           {item.submenu.map((subItem, index) => (
-            <a
+            <Link
               key={index}
               href={subItem.href}
               className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors group"
@@ -289,7 +297,7 @@ const NavBar = ({
                 </div>
               </div>
               <ArrowRight className="w-4 h-4 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity" />
-            </a>
+            </Link>
           ))}
         </div>
       </div>
@@ -331,16 +339,16 @@ const NavBar = ({
       <div className="p-2">
         <Link href="/dashboard" className="flex items-center gap-3 px-3 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors">
             <BarChart3 className="w-4 h-4" />
-            <span>Dashboard</span>
+            <span>{t('nav.dashboard')}</span>
         </Link>
         
         <Link href="/favorites" className="flex items-center gap-3 px-3 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors">
             <Heart className="w-4 h-4" />
-            <span>Mes favoris</span>
+            <span>{t('nav.myFavorites')}</span>
         </Link>
         <Link href="/account" className="flex items-center gap-3 px-3 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors">
           <User className="w-4 h-4" />
-          <span>Mon Compte</span>
+          <span>{t('nav.myAccount')}</span>
         </Link>
         
         <hr className="my-2 border-gray-200" />
@@ -350,7 +358,7 @@ const NavBar = ({
           className="w-full flex items-center gap-3 px-3 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
         >
           <LogOut className="w-4 h-4" />
-          <span>Se déconnecter</span>
+          <span>{t('nav.logout')}</span>
         </button>
       </div>
     </div>
@@ -402,7 +410,7 @@ const NavBar = ({
           className={`flex items-center gap-1 px-4 py-2 ${styles.buttonStyle} rounded-lg font-medium transition-colors duration-200 text-sm whitespace-nowrap`}
         >
           <User className="w-3 h-3" />
-          <span>Se connecter</span>
+          <span>{t('nav.login')}</span>
         </button>
       </div>
     );
@@ -413,46 +421,57 @@ const NavBar = ({
       {/* HEAD seulement pour la page d'accueil */}
       {variant === 'default' && (
         <Head>
-          <title>Wendogo - Moteur de recherche formations en France | Trouve ton école</title>
-          <meta name="description" content="Découvre plus de 2100+ formations dans 500+ écoles françaises. Moteur de recherche intelligent pour trouver la formation parfaite selon ton profil académique." />
-          <meta name="keywords" content="formations France, écoles françaises, moteur recherche formation, études supérieures France, universités France, grandes écoles" />
+          <title>{t('seo.home.title')}</title>
+          <meta name="description" content={t('seo.home.description')} />
+          <meta name="keywords" content={t('seo.home.keywords')} />
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
           
+          {/* Open Graph */}
           <meta property="og:type" content="website" />
-          <meta property="og:url" content="https://wendogo.com/search" />
-          <meta property="og:title" content="Wendogo - Trouve ta formation idéale en France" />
-          <meta property="og:description" content="Moteur de recherche intelligent pour 2100+ formations dans 500+ écoles françaises. Filtres avancés, recommandations personnalisées." />
-          <meta property="og:image" content="https://wendogo.com/og-search-image.jpg" />
+          <meta property="og:url" content={canonicalUrl} />
+          <meta property="og:title" content={t('seo.home.ogTitle')} />
+          <meta property="og:description" content={t('seo.home.ogDescription')} />
+          <meta property="og:image" content={`${baseUrl}/og-search-image.jpg`} />
           <meta property="og:image:width" content="1200" />
           <meta property="og:image:height" content="630" />
-          <meta property="og:locale" content="fr_FR" />
+          <meta property="og:locale" content={ogLocale} />
           <meta property="og:site_name" content="Wendogo" />
           
+          {/* Twitter Card */}
           <meta name="twitter:card" content="summary_large_image" />
-          <meta name="twitter:url" content="https://wendogo.com/search" />
-          <meta name="twitter:title" content="Wendogo - Moteur de recherche formations France" />
-          <meta name="twitter:description" content="Trouve ta formation parmi 2100+ programmes dans 500+ écoles françaises. Recherche intelligente et filtres avancés." />
-          <meta name="twitter:image" content="https://wendogo.com/twitter-search-image.jpg" />
+          <meta name="twitter:url" content={canonicalUrl} />
+          <meta name="twitter:title" content={t('seo.home.twitterTitle')} />
+          <meta name="twitter:description" content={t('seo.home.twitterDescription')} />
+          <meta name="twitter:image" content={`${baseUrl}/twitter-search-image.jpg`} />
           
+          {/* Other meta tags */}
           <meta name="robots" content="index, follow" />
           <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
-          <meta name="language" content="French" />
+          <meta name="language" content={locale === 'fr' ? 'French' : 'English'} />
           <meta name="author" content="Wendogo" />
           
+          {/* Links */}
           <link rel="icon" href="/favicon.ico" />
           <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-          <link rel="canonical" href="https://wendogo.com/search" />
+          <link rel="canonical" href={canonicalUrl} />
           
+          {/* Alternate language versions */}
+          <link rel="alternate" hrefLang="fr" href={`${baseUrl}/fr${router.asPath}`} />
+          <link rel="alternate" hrefLang="en" href={`${baseUrl}/en${router.asPath}`} />
+          <link rel="alternate" hrefLang="x-default" href={`${baseUrl}/fr${router.asPath}`} />
+          
+          {/* JSON-LD Schema */}
           <script type="application/ld+json" dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "WebSite",
               "name": "Wendogo",
-              "description": "Moteur de recherche pour formations et écoles en France",
-              "url": "https://wendogo.com",
+              "description": t('seo.home.schemaDescription'),
+              "url": baseUrl,
+              "inLanguage": locale,
               "potentialAction": {
                 "@type": "SearchAction",
-                "target": "https://wendogo.com/search?q={search_term_string}",
+                "target": `${baseUrl}/search?q={search_term_string}`,
                 "query-input": "required name=search_term_string"
               }
             })
@@ -478,16 +497,16 @@ const NavBar = ({
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
             <div className="flex-shrink-0">
-              <a href="/" className={`flex items-center ${styles.logoStyle} ${styles.hoverStyle} transition-colors`}>
+              <Link href="/" className={`flex items-center ${styles.logoStyle} ${styles.hoverStyle} transition-colors`}>
                 <WendogoLogo />
-              </a>
+              </Link>
             </div>
-
             {/* Conteneur pour les éléments de droite */}
             <div className="flex items-center gap-2">
               {/* Navigation Desktop */}
               {!isMobile && (
                 <div className="flex items-center space-x-2">
+                  <LanguageSelector variant={languageSelectorVariant} />
                   {navigationItems.map((item, index) => (
                     <div key={index} className="relative group">
                       {item.hasDropdown && showDropdowns ? (
@@ -502,12 +521,12 @@ const NavBar = ({
                           <DropdownMenu item={item} isActive={activeDropdown === item.title} />
                         </>
                       ) : (
-                        <a
+                        <Link
                           href={item.href}
                           className={`flex items-center gap-1 px-2 py-2 ${styles.textStyle} ${styles.hoverStyle} font-medium transition-colors duration-200 text-sm whitespace-nowrap`}
                         >
                           <span>{item.title}</span>
-                        </a>
+                        </Link>
                       )}
                     </div>
                   ))}
@@ -537,6 +556,7 @@ const NavBar = ({
           }`}>
             <div className="bg-white border-t border-gray-200 shadow-lg">
               <div className="px-4 py-6 space-y-4">
+                <LanguageSelector isMobile={true} variant={languageSelectorVariant} />
                 {navigationItems.map((item, index) => (
                   <div key={index}>
                     {item.hasDropdown && showDropdowns ? (
@@ -556,26 +576,26 @@ const NavBar = ({
                         {activeDropdown === item.title && (
                           <div className="mt-2 ml-6 space-y-2">
                             {item.submenu.map((subItem, subIndex) => (
-                              <a
+                              <Link
                                 key={subIndex}
                                 href={subItem.href}
                                 className="flex items-center gap-3 px-3 py-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                               >
                                 {subItem.icon}
                                 <span>{subItem.title}</span>
-                              </a>
+                              </Link>
                             ))}
                           </div>
                         )}
                       </div>
                     ) : (
-                      <a
+                      <Link
                         href={item.href}
                         className="flex items-center gap-2 px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors font-medium"
                       >
                         {item.icon}
                         <span>{item.title}</span>
-                      </a>
+                      </Link>
                     )}
                   </div>
                 ))}
@@ -633,15 +653,7 @@ const NavBar = ({
                       </button>
                     </>
                   ) : (
-                    <>
-                      {/* <button
-                        onClick={() => setShowAuthModal(true)}
-                        className="flex items-center gap-2 px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors font-medium"
-                      >
-                        <User className="w-4 h-4" />
-                        <span>Se connecter</span>
-                      </button> */}
-                      
+                    <> 
                       <button
                         onClick={() => setShowAuthModal(true)}
                         className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg font-medium hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 shadow-lg"

@@ -1,0 +1,123 @@
+{
+  "meta": {
+    "title": "Notre mission - Réaliser votre rêve d'études en France - Wendogo",
+    "description": "Découvrez la mission de Wendogo : vous accompagner de A à Z dans votre projet d'études en France avec bienveillance et expertise."
+  },
+  "hero": {
+    "title": "Réaliser votre rêve d'études en France",
+    "description": "Wendogo est la plateforme de référence pour accompagner les étudiants internationaux dans leur projet d'études en France. De l'orientation à l'installation, nous sommes votre partenaire de confiance.",
+    "cta": "Accompagnez-moi",
+    "imageAlt": "Étudiante heureuse"
+  },
+  "stats": {
+    "formations": {
+      "number": "2100+",
+      "label": "Formations référencées"
+    },
+    "schools": {
+      "number": "500+",
+      "label": "Écoles partenaires"
+    },
+    "satisfaction": {
+      "number": "95%",
+      "label": "Taux de satisfaction"
+    },
+    "support": {
+      "number": "24/7",
+      "label": "Support disponible"
+    }
+  },
+  "tabs": {
+    "mission": "Notre mission",
+    "values": "Nos valeurs",
+    "services": "Nos services"
+  },
+  "mission": {
+    "title": "Notre mission",
+    "subtitle": "Démocratiser l'accès à l'enseignement supérieur français et accompagner chaque étudiant dans la réalisation de son projet académique.",
+    "whyTitle": "Pourquoi Wendogo existe ?",
+    "reasons": {
+      "simplify": {
+        "bold": "Simplifier",
+        "text": "les démarches complexes et bureaucratiques"
+      },
+      "democratize": {
+        "bold": "Démocratiser",
+        "text": "l'accès à l'information sur les formations françaises"
+      },
+      "accompany": {
+        "bold": "Accompagner",
+        "text": "humainement chaque étudiant dans son parcours"
+      },
+      "maximize": {
+        "bold": "Maximiser",
+        "text": "les chances de réussite grâce à notre expertise"
+      }
+    },
+    "imageAlt": "Accompagnement étudiant",
+    "commitment": {
+      "title": "Notre engagement",
+      "description": "Nous nous engageons à offrir un accompagnement personnalisé, transparent et bienveillant à chaque étudiant, en mettant notre expertise au service de la réussite de leur projet d'études en France."
+    }
+  },
+  "values": {
+    "title": "Nos valeurs",
+    "subtitle": "Les principes qui guident notre action au quotidien et définissent notre façon d'accompagner les étudiants.",
+    "items": {
+      "benevolence": {
+        "title": "Bienveillance",
+        "description": "Nous comprenons que votre projet d'études est unique et précieux. Chaque étudiant est accompagné avec empathie et respect."
+      },
+      "excellence": {
+        "title": "Excellence",
+        "description": "Notre équipe d'experts vous guide vers les meilleures formations et optimise chaque étape de votre parcours."
+      },
+      "transparency": {
+        "title": "Transparence",
+        "description": "Tarifs clairs, processus transparent, conseils honnêtes. Nous défendons vos intérêts en toute transparence."
+      },
+      "accessibility": {
+        "title": "Accessibilité",
+        "description": "Où que vous soyez dans le monde, notre support 24/7 vous accompagne dans votre langue et selon votre fuseau horaire."
+      }
+    }
+  },
+  "services": {
+    "title": "Nos services",
+    "subtitle": "Un accompagnement complet pour toutes les étapes de votre projet d'études en France.",
+    "items": {
+      "orientation": {
+        "title": "Orientation personnalisée",
+        "description": "Analyse de votre profil et recommandations de formations adaptées à vos objectifs.",
+        "features": [
+          "Analyse de profil",
+          "Recommandations personnalisées",
+          "Coaching orientation"
+        ]
+      },
+      "visa": {
+        "title": "Accompagnement visa",
+        "description": "Support complet pour votre dossier visa étudiant et procédure Campus France.",
+        "features": [
+          "Préparation dossier",
+          "Suivi Campus France",
+          "Accompagnement entretien"
+        ]
+      },
+      "support": {
+        "title": "Support continu",
+        "description": "Accompagnement avant, pendant et après votre arrivée en France.",
+        "features": [
+          "Support 24/7",
+          "Aide au logement",
+          "Intégration en France"
+        ]
+      }
+    }
+  },
+  "cta": {
+    "title": "Prêt à commencer votre aventure académique en France ?",
+    "description": "Rejoignez des milliers d'étudiants qui ont réalisé leur rêve d'études en France avec Wendogo.",
+    "button": "Accompagnez-moi"
+  }
+}

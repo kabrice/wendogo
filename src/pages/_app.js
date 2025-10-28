@@ -1,3 +1,4 @@
+// pages/_app.js - VERSION FINALE
 import React, { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { SessionProvider } from 'next-auth/react';
@@ -6,15 +7,16 @@ import { getStore } from '../redux/store';
 import { FavoritesProvider } from '../contexts/FavoritesContext';
 import Spinner from '../components/Spinner';
 import '../index.css';
+import { appWithTranslation } from 'next-i18next';
 import { Analytics } from '@vercel/analytics/next';
 import AuthModal from '../components/AuthModal';
-import * as gtag from '../lib/gtag'; // ✅ NOUVEAU
+import * as gtag from '../lib/gtag';
+
 
 const MyApp = ({ Component, pageProps: { session, ...pageProps } }) => {
   const store = getStore();
   const router = useRouter();
-
-  // ✅ NOUVEAU : Tracking des changements de page
+  
   useEffect(() => {
     const handleRouteChange = (url) => {
       gtag.pageview(url);
@@ -32,6 +34,7 @@ const MyApp = ({ Component, pageProps: { session, ...pageProps } }) => {
   return (
     <Provider store={store}>
       <SessionProvider session={session}>
+        {/* ❌ SUPPRIMER LocaleProvider */}
         <FavoritesProvider>
           <Spinner />
           <Component {...pageProps} />
@@ -43,4 +46,4 @@ const MyApp = ({ Component, pageProps: { session, ...pageProps } }) => {
   );
 };
 
-export default MyApp;
+export default appWithTranslation(MyApp);

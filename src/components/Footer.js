@@ -5,19 +5,22 @@ import WendogoLogo from '../assets/wendogo_logo.svg'
 import ParisCity from '../assets/optimized/AdobeStock_Paris.webp' 
 import Image from 'next/image';
 import Link from 'next/link';
+import { useTranslation } from 'next-i18next';
  
 
 const Footer = () => {
+    const { t } = useTranslation('common');
+    
     return (
 <div className="Footer__Container-sc-1adny8q-0 fThLJG styles__Footer-sc-kz84w6-4 icxpqI" style={{ zIndex: 1 }}>
                   <Image src={ParisCity} alt="ParisCity" className="kldsmk" priority /> 
                   <hr className="Divider-sc-1qii385-0 Footer__Divider-sc-1adny8q-2 iyJAir jUFmLt" />
                   <div className="Footer__Legal-sc-1adny8q-3 AgRYh">
-                    {/* <Image src={WendogoLogo} alt="WendogoLogo" className="dssdsd" /> */}
                     <WendogoLogo className="dssdsd"/>
                     <div data-nosnippet="true">
-                      <p className="LegalSocial__Disclaimer-sc-v4d14j-4 kiQXRg"> Wendogo Consulting  est une société par actions simplifiée, immatriculée à l'ORIAS en tant 
-                                  que conseil en systemes et logiciels informatiques sous le numéro 497 933 408, dont le siège social est situé 50 avenue des Champs-Elysees 75008 Paris. Un contrat vous engage et doit être respecté. Vérifiez vos capacités financières avant de vous engager. </p>
+                      <p className="LegalSocial__Disclaimer-sc-v4d14j-4 kiQXRg"> 
+                        {t('footer.disclaimer')}
+                      </p>
                     </div>
                     <ul className="LegalSocial__SocialLinks-sc-v4d14j-2 bwSQCq">
                       <li>
@@ -54,50 +57,72 @@ const Footer = () => {
                   </div>
                   <ul className="Menus__Container-sc-1cdqyiq-0 kLPxq Footer__FooterMenus-sc-1adny8q-4 mlIQG">
                     <div className="Menus__MenuContainer-sc-1cdqyiq-1 dawptZ">
-                      <div className="Menus__MenuTitle-sc-1cdqyiq-2 ekhzHX"> À propos de Wendogo </div>
+                      <div className="Menus__MenuTitle-sc-1cdqyiq-2 ekhzHX">{t('footer.about')}</div>
                       <ul className="Menus__MenuItems-sc-1cdqyiq-3 jdtBKN">
                         <li className="Menus__MenuItem-sc-1cdqyiq-4 iXcfDl">
-                          <span tabIndex={0} className="Bridge__Component-sc-18zyewx-0 fvmjWl Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> <Link href="/mission"> Pourquoi passer par Wendogo ?</Link> </span>
+                          <span tabIndex={0} className="Bridge__Component-sc-18zyewx-0 fvmjWl Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> 
+                            <Link href="/mission">{t('footer.whyWendogo')}</Link> 
+                          </span>
                         </li>
                         <li className="Menus__MenuItem-sc-1cdqyiq-4 iXcfDl">
-                          <span tabIndex={0} className="Bridge__Component-sc-18zyewx-0 fvmjWl Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> <Link href="/about-us"> Qui sommes nous ?</Link> </span>
+                          <span tabIndex={0} className="Bridge__Component-sc-18zyewx-0 fvmjWl Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> 
+                            <Link href="/about-us">{t('footer.whoWeAre')}</Link> 
+                          </span>
                         </li>
                         <li className="Menus__MenuItem-sc-1cdqyiq-4 iXcfDl">
-                          <span tabIndex={0} className="Bridge__Component-sc-18zyewx-0 fvmjWl Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> <Link href="/contact"> Contact</Link> </span>
+                          <span tabIndex={0} className="Bridge__Component-sc-18zyewx-0 fvmjWl Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> 
+                            <Link href="/contact">{t('footer.contact')}</Link> 
+                          </span>
                         </li>
                         <li className="Menus__MenuItem-sc-1cdqyiq-4 iXcfDl">
-                          <span tabIndex={0} className="Bridge__Component-sc-18zyewx-0 fvmjWl Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> Cookies </span>
+                          <span tabIndex={0} className="Bridge__Component-sc-18zyewx-0 fvmjWl Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> 
+                            {t('footer.cookies')} 
+                          </span>
                         </li>
                       </ul>
                     </div>
                     <div className="Menus__MenuContainer-sc-1cdqyiq-1 dawptZ">
-                      <div className="Menus__MenuTitle-sc-1cdqyiq-2 ekhzHX">Fondamentaux</div>
+                      <div className="Menus__MenuTitle-sc-1cdqyiq-2 ekhzHX">{t('footer.fundamentals')}</div>
                       <ul className="Menus__MenuItems-sc-1cdqyiq-3 jdtBKN">
                         <li className="Menus__MenuItem-sc-1cdqyiq-4 iXcfDl">
-                          <Link href="/privacy" className="Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> Respect de la vie privée </Link>
+                          <Link href="/privacy" className="Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> 
+                            {t('footer.privacy')} 
+                          </Link>
                         </li>
                         <li className="Menus__MenuItem-sc-1cdqyiq-4 iXcfDl">
-                          <Link href="/legal-notice" className="Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT">Mentions légales </Link>
+                          <Link href="/legal-notice" className="Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT">
+                            {t('footer.legal')} 
+                          </Link>
                         </li>
                         <li className="Menus__MenuItem-sc-1cdqyiq-4 iXcfDl">
-                          <Link href="/cgu" className="Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> CGU / CGV </Link>
+                          <Link href="/cgu" className="Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> 
+                            {t('footer.terms')} 
+                          </Link>
                         </li>
                       </ul>
                     </div>
                     <div className="Menus__MenuContainer-sc-1cdqyiq-1 dawptZ">
-                      <div className="Menus__MenuTitle-sc-1cdqyiq-2 ekhzHX"> Les ressources Wendogo </div>
+                      <div className="Menus__MenuTitle-sc-1cdqyiq-2 ekhzHX">{t('footer.resources')}</div>
                       <ul className="Menus__MenuItems-sc-1cdqyiq-3 jdtBKN">
                         <li className="Menus__MenuItem-sc-1cdqyiq-4 iXcfDl">
-                          <Link href="/guides/etudier-en-france" className="Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> Etudier en France </Link>
+                          <Link href="/guides/etudier-en-france" className="Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> 
+                            {t('footer.studyInFrance')} 
+                          </Link>
                         </li>
                         <li className="Menus__MenuItem-sc-1cdqyiq-4 iXcfDl">
-                        <Link href="/guides/visa-etudiant" className="Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> Visa étudiant </Link>
+                          <Link href="/guides/visa-etudiant" className="Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> 
+                            {t('footer.studentVisa')} 
+                          </Link>
                         </li>
                         <li className="Menus__MenuItem-sc-1cdqyiq-4 iXcfDl">
-                          <Link href="/guides/logement" className="Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> Logement </Link>
+                          <Link href="/guides/logement" className="Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> 
+                            {t('footer.housing')} 
+                          </Link>
                         </li>
                         <li className="Menus__MenuItem-sc-1cdqyiq-4 iXcfDl">
-                          <Link href="/guides/campus-france" className="Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> Campus France </Link>
+                          <Link href="/guides/campus-france" className="Menus__MenuItemLink-sc-1cdqyiq-5 dDJQzT"> 
+                            {t('footer.campusFrance')} 
+                          </Link>
                         </li>
                       </ul>
                     </div>

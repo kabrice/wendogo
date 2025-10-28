@@ -12,65 +12,65 @@ import Link from 'next/link';
 import HappyGirl from '../assets/optimized/happyGirl.webp';
 import Mentorship from '../assets/optimized/mentorship.webp';
 import SocialMediaLogo from '../assets/optimized/wendogo_jeu_concours.webp';
-
+import { useTranslation } from 'next-i18next';
 function WendogoMission() {
   const [activeTab, setActiveTab] = useState('mission');
-
+  const { t } = useTranslation(['common', 'mission']);
   useEffect(() => {
     trackPageView('mission_page');
   }, []);
 
   const stats = [
-    { number: '2100+', label: 'Formations référencées', icon: GraduationCap },
-    { number: '500+', label: 'Écoles partenaires', icon: Users },
-    { number: '95%', label: 'Taux de satisfaction', icon: Heart },
-    { number: '24/7', label: 'Support disponible', icon: Shield }
+    { number: t('mission:stats.formations.number'), label: t('mission:stats.formations.label'), icon: GraduationCap },
+    { number: t('mission:stats.schools.number'), label: t('mission:stats.schools.label'), icon: Users },
+    { number: t('mission:stats.satisfaction.number'), label: t('mission:stats.satisfaction.label'), icon: Heart },
+    { number: t('mission:stats.support.number'), label: t('mission:stats.support.label'), icon: Shield }
   ];
 
   const values = [
     {
       icon: Heart,
-      title: 'Bienveillance',
-      description: 'Nous comprenons que votre projet d\'études est unique et précieux. Chaque étudiant est accompagné avec empathie et respect.',
+      title: t('mission:values.items.benevolence.title'),
+      description: t('mission:values.items.benevolence.description'),
       color: 'red'
     },
     {
       icon: Target,
-      title: 'Excellence',
-      description: 'Notre équipe d\'experts vous guide vers les meilleures formations et optimise chaque étape de votre parcours.',
+      title: t('mission:values.items.excellence.title'),
+      description: t('mission:values.items.excellence.description'),
       color: 'blue'
     },
     {
       icon: Shield,
-      title: 'Transparence',
-      description: 'Tarifs clairs, processus transparent, conseils honnêtes. Nous défendons vos intérêts en toute transparence.',
+      title: t('mission:values.items.transparency.title'),
+      description: t('mission:values.items.transparency.description'),
       color: 'green'
     },
     {
       icon: Globe,
-      title: 'Accessibilité',
-      description: 'Où que vous soyez dans le monde, notre support 24/7 vous accompagne dans votre langue et selon votre fuseau horaire.',
+      title: t('mission:values.items.accessibility.title'),
+      description: t('mission:values.items.accessibility.description'),
       color: 'purple'
     }
   ];
 
   const services = [
     {
-      title: 'Orientation personnalisée',
-      description: 'Analyse de votre profil et recommandations de formations adaptées à vos objectifs.',
-      features: ['Analyse de profil', 'Recommandations personnalisées', 'Coaching orientation'],
+      title: t('mission:services.items.orientation.title'),
+      description: t('mission:services.items.orientation.description'),
+      features: t('mission:services.items.orientation.features', { returnObjects: true }),
       icon: Target
     },
     {
-      title: 'Accompagnement visa',
-      description: 'Support complet pour votre dossier visa étudiant et procédure Campus France.',
-      features: ['Préparation dossier', 'Suivi Campus France', 'Accompagnement entretien'],
+      title: t('mission:services.items.visa.title'),
+      description: t('mission:services.items.visa.description'),
+      features: t('mission:services.items.visa.features', { returnObjects: true }),
       icon: Shield
     },
     {
-      title: 'Support continu',
-      description: 'Accompagnement avant, pendant et après votre arrivée en France.',
-      features: ['Support 24/7', 'Aide au logement', 'Intégration en France'],
+      title: t('mission:services.items.support.title'),
+      description: t('mission:services.items.support.description'),
+      features: t('mission:services.items.support.features', { returnObjects: true }),
       icon: Heart
     }
   ];
@@ -80,14 +80,14 @@ function WendogoMission() {
       <Head>
         <meta property="og:url" content="https://wendogo.com/mission" />
         <meta property="og:type" content="article" />
-        <meta property="og:title" content="Notre mission - Réaliser votre rêve d'études en France - Wendogo" />
-        <meta property="og:description" content="Découvrez la mission de Wendogo : vous accompagner de A à Z dans votre projet d'études en France avec bienveillance et expertise." />
+        <meta property="og:title" content={t('mission:meta.title')} />
+        <meta property="og:description" content={t('mission:meta.description')} />
         <meta property="og:image" content={'https://wendogo.com' + SocialMediaLogo} />
-        <title>Notre mission - Réaliser votre rêve d'études en France - Wendogo</title>
-        <meta name="description" content="Découvrez la mission de Wendogo : vous accompagner de A à Z dans votre projet d'études en France avec bienveillance et expertise." />
+        <title>{t('mission:meta.title')}</title>
+        <meta name="description" content={t('mission:meta.description')} />
       </Head>
 
-      <NavBar variant="simple" />
+      <NavBar variant="simple" languageSelectorVariant="light" />
 
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-700 text-white">
@@ -95,16 +95,14 @@ function WendogoMission() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <h1 className="text-5xl font-bold mb-6">
-                Réaliser votre rêve d'études en France
+                {t('mission:hero.title')}
               </h1>
               <p className="text-xl mb-8 text-blue-100">
-                Wendogo est la plateforme de référence pour accompagner les étudiants internationaux 
-                dans leur projet d'études en France. De l'orientation à l'installation, nous sommes 
-                votre partenaire de confiance.
+                {t('mission:hero.description')}
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link href="/?tab=accompany#accompany-section" className="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors text-center">
-                  Accompagnez-moi
+                  {t('mission:hero.cta')}
                 </Link>
                 {/* <Link href="/contact" className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors text-center">
                   Nous contacter
@@ -115,7 +113,7 @@ function WendogoMission() {
               <div className="relative z-10">
                 <Image
                   src={HappyGirl}
-                  alt="Étudiante heureuse"
+                  alt={t('mission:hero.imageAlt')}
                   className="rounded-2xl shadow-2xl"
                   width={500}
                   height={400}
@@ -149,9 +147,9 @@ function WendogoMission() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex space-x-8 border-b border-gray-200">
             {[
-              { id: 'mission', label: 'Notre mission' },
-              { id: 'values', label: 'Nos valeurs' },
-              { id: 'services', label: 'Nos services' }
+              { id: 'mission', label: t('mission:tabs.mission') },
+              { id: 'values', label: t('mission:tabs.values') },
+              { id: 'services', label: t('mission:tabs.services') }
             ].map(tab => (
               <button
                 key={tab.id}
@@ -177,42 +175,41 @@ function WendogoMission() {
             <div>
               <div className="text-center mb-12">
                 <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                  Notre mission
+                  {t('mission:mission.title')}
                 </h2>
                 <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                  Démocratiser l'accès à l'enseignement supérieur français et accompagner 
-                  chaque étudiant dans la réalisation de son projet académique.
+                  {t('mission:mission.subtitle')}
                 </p>
               </div>
 
               <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
                 <div>
                   <h3 className="text-2xl font-semibold text-gray-900 mb-6">
-                    Pourquoi Wendogo existe ?
+                    {t('mission:mission.whyTitle')}
                   </h3>
                   <div className="space-y-4">
                     <div className="flex items-start">
                       <CheckCircle className="w-6 h-6 text-green-500 mr-3 mt-1 flex-shrink-0" />
                       <p className="text-gray-700">
-                        <strong>Simplifier</strong> les démarches complexes et bureaucratiques
+                        <strong>{t('mission:mission.reasons.simplify.bold')}</strong> {t('mission:mission.reasons.simplify.text')}
                       </p>
                     </div>
                     <div className="flex items-start">
                       <CheckCircle className="w-6 h-6 text-green-500 mr-3 mt-1 flex-shrink-0" />
                       <p className="text-gray-700">
-                        <strong>Démocratiser</strong> l'accès à l'information sur les formations françaises
+                        <strong>{t('mission:mission.reasons.democratize.bold')}</strong> {t('mission:mission.reasons.democratize.text')}
                       </p>
                     </div>
                     <div className="flex items-start">
                       <CheckCircle className="w-6 h-6 text-green-500 mr-3 mt-1 flex-shrink-0" />
                       <p className="text-gray-700">
-                        <strong>Accompagner</strong> humainement chaque étudiant dans son parcours
+                        <strong>{t('mission:mission.reasons.accompany.bold')}</strong> {t('mission:mission.reasons.accompany.text')}
                       </p>
                     </div>
                     <div className="flex items-start">
                       <CheckCircle className="w-6 h-6 text-green-500 mr-3 mt-1 flex-shrink-0" />
                       <p className="text-gray-700">
-                        <strong>Maximiser</strong> les chances de réussite grâce à notre expertise
+                        <strong>{t('mission:mission.reasons.maximize.bold')}</strong> {t('mission:mission.reasons.maximize.text')}
                       </p>
                     </div>
                   </div>
@@ -220,7 +217,7 @@ function WendogoMission() {
                 <div className="relative">
                   <Image
                     src={Mentorship}
-                    alt="Accompagnement étudiant"
+                    alt={t('mission:mission.imageAlt')}
                     className="rounded-2xl shadow-lg"
                     width={500}
                     height={400}
@@ -230,12 +227,10 @@ function WendogoMission() {
 
               <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-8">
                 <h3 className="text-2xl font-semibold text-gray-900 mb-4 text-center">
-                  Notre engagement
+                  {t('mission:mission.commitment.title')}
                 </h3>
                 <p className="text-lg text-gray-700 text-center max-w-4xl mx-auto">
-                  Nous nous engageons à offrir un accompagnement personnalisé, transparent et bienveillant 
-                  à chaque étudiant, en mettant notre expertise au service de la réussite de leur projet 
-                  d'études en France.
+                  {t('mission:mission.commitment.description')}
                 </p>
               </div>
             </div>
@@ -246,11 +241,10 @@ function WendogoMission() {
             <div>
               <div className="text-center mb-12">
                 <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                  Nos valeurs
+                  {t('mission:values.title')}
                 </h2>
                 <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                  Les principes qui guident notre action au quotidien et définissent notre façon 
-                  d'accompagner les étudiants.
+                  {t('mission:values.subtitle')}
                 </p>
               </div>
 
@@ -277,10 +271,10 @@ function WendogoMission() {
             <div>
               <div className="text-center mb-12">
                 <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                  Nos services
+                  {t('mission:services.title')}
                 </h2>
                 <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                  Un accompagnement complet pour toutes les étapes de votre projet d'études en France.
+                  {t('mission:services.subtitle')}
                 </p>
               </div>
 
@@ -316,14 +310,14 @@ function WendogoMission() {
       <section className="py-16 bg-gradient-to-r from-blue-600 to-indigo-600 text-white">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <h2 className="text-3xl font-bold mb-6">
-            Prêt à commencer votre aventure académique en France ?
+            {t('mission:cta.title')}
           </h2>
           <p className="text-xl mb-8 text-blue-100">
-            Rejoignez des milliers d'étudiants qui ont réalisé leur rêve d'études en France avec Wendogo.
+            {t('mission:cta.description')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/?tab=accompany#accompany-section" className="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
-              Accompagnez-moi
+              {t('mission:cta.button')}
             </Link>
             {/* <Link href="/contact" className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors">
               Parler à un conseiller
@@ -337,4 +331,13 @@ function WendogoMission() {
   );
 }
 
+export async function getStaticProps({ locale }) {
+  const { serverSideTranslations } = await import('next-i18next/serverSideTranslations');
+  
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['authModal', 'common', 'mission'])),
+    },
+  };
+}
 export default WendogoMission;

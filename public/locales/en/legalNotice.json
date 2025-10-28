@@ -1,0 +1,244 @@
+{
+  "meta": {
+    "title": "Legal Notice - Wendogo",
+    "description": "Legal notice of Wendogo, support platform for your studies in France. Legal information, data protection, cookies.",
+    "keywords": "legal notice, GDPR, data protection, cookies, Wendogo, studies France"
+  },
+  "header": {
+    "title": "Legal Notice",
+    "description": "Legal information relating to the use of the Wendogo platform, in accordance with legal obligations in force.",
+    "lastUpdate": "Last updated: July 17, 2025"
+  },
+  "essentialInfo": {
+    "title": "Essential Information",
+    "company": {
+      "label": "🏢 Company",
+      "name": "WENDOGO SAS",
+      "capital": "Capital: €10,000"
+    },
+    "contact": {
+      "label": "📧 Contact",
+      "email": "hello@wendogo.com",
+      "phone": "+33 6 68 15 60 73"
+    },
+    "hosting": {
+      "label": "🏛️ Host",
+      "name": "OVH SAS",
+      "location": "Roubaix, France"
+    }
+  },
+  "sections": {
+    "definitions": {
+      "title": "Definitions",
+      "user": {
+        "title": "🎓 User",
+        "description": "Any natural or legal person who accesses and uses the Wendogo.com platform for its support services for studies in France."
+      },
+      "services": {
+        "title": "📋 Services",
+        "description": "Set of support services offered by Wendogo: guidance, program search, student visa support, Campus France procedure."
+      },
+      "personalData": {
+        "title": "🔒 Personal Data",
+        "description": "Any information allowing direct or indirect identification of a natural person, within the meaning of the General Data Protection Regulation (GDPR)."
+      }
+    },
+    "companyInfo": {
+      "title": "Company Information",
+      "publisher": {
+        "title": "Website Publisher",
+        "legalName": "Legal name:",
+        "legalNameValue": "WENDOGO SAS",
+        "capital": "Share capital:",
+        "capitalValue": "€10,000",
+        "rcs": "RCS:",
+        "rcsValue": "Paris B 123 456 789",
+        "siret": "SIRET:",
+        "siretValue": "123 456 789 00012",
+        "vat": "Intra-community VAT:",
+        "vatValue": "FR12123456789"
+      },
+      "address": {
+        "title": "Registered Office Address",
+        "line1": "WENDOGO SAS",
+        "line2": "50 Avenue des Champs Elysées",
+        "line3": "75008 Paris",
+        "line4": "France"
+      },
+      "management": {
+        "title": "Management",
+        "publicationDirector": "Publication Director:",
+        "publicationDirectorValue": "Edgar Kamdem",
+        "editorialManager": "Editorial Manager:",
+        "editorialManagerValue": "Edgar Kamdem"
+      },
+      "contact": {
+        "title": "Contact",
+        "email": "Email:",
+        "emailValue": "hello@wendogo.com",
+        "whatsapp": "WhatsApp:",
+        "whatsappValue": "+33 6 68 15 60 73"
+      }
+    },
+    "hosting": {
+      "title": "Hosting",
+      "subtitle": "🌐 Website Host",
+      "company": "Company:",
+      "companyValue": "OVH SAS",
+      "address": "Address:",
+      "addressValue": "2 rue Kellermann, 59100 Roubaix, France",
+      "phone": "Phone:",
+      "phoneValue": "09 72 10 10 07",
+      "website": "Website:",
+      "websiteValue": "www.ovh.com",
+      "gdpr": "✅ GDPR Compliance:",
+      "gdprText": "Hosting in the European Union in accordance with GDPR."
+    },
+    "servicesDescription": {
+      "title": "Services Description",
+      "mission": {
+        "title": "🎯 Our Mission",
+        "description": "Wendogo is the reference platform for supporting international students in their study project in France. We offer complete and personalized services."
+      },
+      "orientation": {
+        "title": "🎓 Academic Guidance",
+        "items": [
+          "• Personalized profile analysis",
+          "• Search for suitable programs",
+          "• Guidance advice"
+        ]
+      },
+      "visa": {
+        "title": "📋 Visa Support",
+        "items": [
+          "• Student visa file preparation",
+          "• Campus France procedure follow-up",
+          "• Administrative support"
+        ]
+      },
+      "liability": {
+        "title": "Limitation of Liability",
+        "description": "The information provided is given for informational purposes only. Wendogo strives to provide accurate information but cannot guarantee the completeness of the data."
+      }
+    },
+    "intellectualProperty": {
+      "title": "Intellectual Property",
+      "copyright": {
+        "title": "🔐 Copyright",
+        "description": "All content of the Wendogo.com website (texts, images, logos, videos, design) is protected by copyright and belongs to WENDOGO SAS."
+      },
+      "prohibited": {
+        "title": "⚠️ Prohibited Use",
+        "description": "Any reproduction, distribution, modification or commercial use of content without prior written authorization is strictly prohibited."
+      },
+      "authorized": {
+        "title": "✅ Authorized Use",
+        "description": "Personal and private consultation as part of normal use of the site. Sharing links to our pages is authorized."
+      }
+    },
+    "personalData": {
+      "title": "Personal Data Protection",
+      "controller": {
+        "title": "Data Controller",
+        "company": "Company:",
+        "companyValue": "WENDOGO SAS",
+        "responsible": "Responsible:",
+        "responsibleValue": "Edgar Kamdem",
+        "dpo": "DPO Contact:",
+        "dpoValue": "hello@wendogo.com",
+        "address": "Address:",
+        "addressValue": "11 rue Pierre Brossolette, 93290 Tremblay-en-France"
+      },
+      "purposes": {
+        "title": "🎯 Processing Purposes",
+        "items": [
+          "• Provision of support services",
+          "• Customer relationship management",
+          "• Improvement of our services",
+          "• Communication about our offers"
+        ]
+      },
+      "rights": {
+        "title": "⚖️ Your GDPR Rights",
+        "items": [
+          "• Right to access your data",
+          "• Right to rectification",
+          "• Right to erasure",
+          "• Right to portability",
+          "• Right to object"
+        ]
+      },
+      "exercise": {
+        "title": "📧 Exercise Your Rights",
+        "description": "To exercise your rights or for any question regarding the processing of your data:",
+        "email": "📧 Email: hello@wendogo.com",
+        "mail": "📮 Mail: WENDOGO SAS - DPO, 11 rue Pierre Brossolette, 93290 Tremblay-en-France"
+      },
+      "security": {
+        "title": "🛡️ Data Security",
+        "description": "We implement appropriate technical and organizational measures to protect your data against unauthorized access, loss or destruction."
+      }
+    },
+    "cookies": {
+      "title": "Cookies and Trackers",
+      "definition": {
+        "title": "🍪 What is a cookie?",
+        "description": "A cookie is a small text file placed on your device when visiting the site, allowing to improve your browsing experience."
+      },
+      "types": {
+        "technical": {
+          "title": "🔧 Technical Cookies",
+          "description": "Necessary for the site to function (session, user preferences)."
+        },
+        "analytics": {
+          "title": "📊 Analytics Cookies",
+          "description": "Audience measurement and visit statistics (Google Analytics)."
+        },
+        "marketing": {
+          "title": "🎯 Marketing Cookies",
+          "description": "Content personalization and targeted advertising."
+        }
+      },
+      "manage": {
+        "title": "⚙️ Manage Your Preferences",
+        "description": "You can configure your cookie preferences:",
+        "items": [
+          "• In your browser settings",
+          "• Via our consent banner",
+          "• By contacting us: hello@wendogo.com"
+        ]
+      }
+    },
+    "applicableLaw": {
+      "title": "Applicable Law and Jurisdiction",
+      "law": {
+        "title": "Applicable Law",
+        "description": "These legal notices and the use of the Wendogo.com website are governed by French law."
+      },
+      "jurisdiction": {
+        "title": "Competent Jurisdiction",
+        "description": "In case of dispute, the competent courts of Bobigny will have sole jurisdiction."
+      },
+      "amicable": {
+        "title": "📋 Amicable Settlement",
+        "description": "In case of dispute, we favor amicable resolution. Contact us at hello@wendogo.com for any problem."
+      },
+      "modifications": {
+        "title": "🔄 Modifications",
+        "description": "These legal notices may be modified at any time. The applicable version is the one in force at the time of your visit."
+      }
+    }
+  },
+  "contactSection": {
+    "title": "Questions About Our Legal Notice?",
+    "description": "Our team is available to answer all your questions regarding the use of our services and the protection of your data.",
+    "writeUs": "Write to Us",
+    "whatsapp": "WhatsApp"
+  },
+  "relatedDocuments": {
+    "title": "Related documents:",
+    "terms": "Terms and Conditions",
+    "privacy": "Privacy Policy",
+    "contact": "Contact Us"
+  }
+}

@@ -1,0 +1,182 @@
+{
+  "error": {
+    "notFound": "Program not found",
+    "backToPrograms": "Back to programs"
+  },
+  "financial": {
+    "campusFrance": {
+      "title": "Campus France",
+      "value": "✓ Connected",
+      "subtitle": "Admission process via Campus France"
+    },
+    "parallelProcedure": {
+      "title": "Procedure",
+      "value": "Parallel",
+      "subtitle": "Subject to a parallel admission procedure"
+    },
+    "exemption": {
+      "title": "Exemption",
+      "total": {
+        "value": "Full",
+        "subtitle": "Tuition fees fully exempted"
+      },
+      "partial": {
+        "value": "Partial",
+        "subtitle": "Tuition fee reduction"
+      },
+      "none": {
+        "value": "None",
+        "subtitle": "Standard tuition fees"
+      }
+    },
+    "tuition": {
+      "title": "Annual tuition"
+    },
+    "deposit": {
+      "title": "Deposit"
+    },
+    "alternance": {
+      "title": "Work-study",
+      "value": "✓",
+      "subtitle": "Available"
+    }
+  },
+  "dates": {
+    "applications": {
+      "title": "Applications",
+      "campusFranceCalendar": "Check your Campus France calendar"
+    },
+    "intake": {
+      "title": "Start date"
+    }
+  },
+  "partners": {
+    "title": "Partner companies",
+    "showLess": "Show less",
+    "showMore": "Show {{count}} more companies",
+    "total": "{{count}} partner companies",
+    "description": "for internships, work-study and recruitment"
+  },
+  "tabs": {
+    "overview": "Overview",
+    "finances": "Tuition",
+    "admission": "Admission",
+    "career": "Career opportunities"
+  },
+  "header": {
+    "program": "Program",
+    "alternanceAvailable": "Work-study available",
+    "rncpLevel": "RNCP Level {{level}}",
+    "eefReferenced": "✅ Listed on Études en France",
+    "searchName": "Search name:"
+  },
+  "about": {
+    "title": "About the program",
+    "profilesWanted": "Desired profiles",
+    "eefData": "Data from EEF for academic year 2024-2025"
+  },
+  "skills": {
+    "title": "Skills acquired"
+  },
+  "certifications": {
+    "title": "Certifications and recognitions",
+    "rncpLevel": "RNCP Level {{level}}",
+    "certifiedBy": "Certified by {{certifier}}"
+  },
+  "strengths": {
+    "title": "Program highlights"
+  },
+  "partnerships": {
+    "title": "Academic partnerships"
+  },
+  "costs": {
+    "title": "Cost breakdown",
+    "exemptionTotal": "Full Fee Exemption",
+    "exemptionPartial": "Partial Fee Exemption",
+    "exemptionNone": "No Exemption",
+    "tuitionPerYear": "Tuition fees per year",
+    "year": "Year {{year}}",
+    "programDuration": "Program duration",
+    "registrationFees": "Registration fees",
+    "trainingFees": "Training fees",
+    "annualFees": "Annual fees",
+    "duration": "Duration",
+    "paymentTerms": "Payment terms",
+    "firstDeposit": "First deposit"
+  },
+  "alternanceFinancing": {
+    "title": "Work-study financing",
+    "available": "Work-study available",
+    "benefitsCoveredByCompany": "Training fees covered by company",
+    "benefitsSalary": "Salary during studies",
+    "benefitsExperience": "Integrated professional experience",
+    "advantageTitle": "💡 Financial advantage",
+    "advantageDescription": "Work-study can save you the full cost of tuition!",
+    "duration": "⏱️ Work-study duration",
+    "potentialSavings": "💰 Potential savings"
+  },
+  "performance": {
+    "title": "Program performance",
+    "successRate": "Success rate",
+    "successRateDescription": "The success rate reflects the quality of educational support and the program's suitability for student profiles."
+  },
+  "admissionConditions": {
+    "title": "Admission requirements by year",
+    "admissionInYear": "Admission in {{year}}",
+    "year_1": "1st year",
+    "year_2": "2nd year",
+    "year_3": "3rd year",
+    "year_4": "4th year",
+    "year_5": "5th year",
+    "requiredLevel": "Required level:",
+    "requiredDegrees": "Required degrees:",
+    "admissionMethods": "Admission methods:",
+    "languages": "Languages:"
+  },
+  "admissionCalendar": {
+    "title": "Admission calendar"
+  },
+  "practicalInfo": {
+    "title": "Practical information",
+    "duration": "Duration",
+    "intake": "Start date",
+    "language": "Language",
+    "capacity": "Capacity",
+    "availablePlaces": "Available places"
+  },
+  "career": {
+    "title": "Career opportunities",
+    "employmentRate": "Employment rate",
+    "averageSalary": "Average salary/year"
+  },
+  "summary": {
+    "title": "Summary",
+    "annualFees": "Annual fees",
+    "firstDeposit": "First deposit",
+    "applicationDate": "Application date",
+    "learnMore": "Learn more"
+  },
+  "school": {
+    "title": "School",
+    "campusFrance": "Campus France"
+  },
+  "similar": {
+    "title": "Similar programs",
+    "exemptionTotal": "Full Exemption",
+    "exemptionPartial": "Partial Exemption",
+    "exemptionNone": "No exemption",
+    "notCommunicated": "Not disclosed"
+  },
+  "support": {
+    "title": "Your success, our mission",
+    "subtitle": "Dedicated support for international students",
+    "visaHelp": "Visa & housing assistance",
+    "campusIntegration": "Campus integration",
+    "adminSupport": "Administrative support",
+    "discoverServices": "Discover our services"
+  },
+  "alternanceCta": {
+    "title": "Work-study",
+    "subtitle": "Finance your studies through work-study"
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "page": {
+    "title": "My Account",
+    "subtitle": "Manage your personal information"
+  },
+  "messages": {
+    "noChanges": "No changes detected",
+    "profileLoaded": "Profile loaded successfully",
+    "profileUpdated": "Profile updated successfully!",
+    "loadError": "Error loading profile",
+    "updateError": "Error updating profile",
+    "serverError": "Server error during update",
+    "connectionError": "Server connection error",
+    "unsavedChanges": "⚠️ Unsaved changes"
+  },
+  "validation": {
+    "firstnameRequired": "First name is required",
+    "lastnameRequired": "Last name is required",
+    "phoneInvalid": "Invalid phone number format",
+    "ageMinimum": "You must be at least 13 years old"
+  },
+  "form": {
+    "sectionTitle": "Personal Information",
+    "requiredField": "*",
+    "firstname": {
+      "label": "First Name",
+      "placeholder": "Your first name"
+    },
+    "lastname": {
+      "label": "Last Name",
+      "placeholder": "Your last name"
+    },
+    "email": {
+      "label": "Email Address",
+      "helpText": "Email address cannot be changed from the client area, please contact support."
+    },
+    "phone": {
+      "label": "Phone",
+      "placeholder": "+1 555-123-4567"
+    },
+    "birthdate": {
+      "label": "Date of Birth"
+    },
+    "country": {
+      "label": "Country of Residence",
+      "placeholder": "Select your country"
+    }
+  },
+  "actions": {
+    "save": "Save Changes",
+    "saving": "Saving...",
+    "cancel": "Cancel Changes",
+    "deleteAccount": "Request Account Deletion"
+  },
+  "deleteSection": {
+    "title": "Account Deletion",
+    "warning": "This action is irreversible. All your data (favorites, history, etc.) will be permanently deleted.",
+    "confirmButton": "Request Account Deletion"
+  },
+  "loading": {
+    "profile": "Loading profile...",
+    "page": "Loading..."
+  }
+}

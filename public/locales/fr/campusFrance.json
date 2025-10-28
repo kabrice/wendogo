@@ -1,0 +1,408 @@
+{
+  "meta_title": "Guide Campus France - Procédure complète étape par étape",
+  "meta_description": "Guide complet Campus France : 6 étapes détaillées pour étudier en France. Procédure, documents, conseils d'experts et erreurs à éviter.",
+  "meta_keywords": "Campus France, étudier en France, procédure Campus France, dossier étudiant, visa étudiant, TCF, DELF, DALF",
+  "meta_og_title": "Guide Campus France - Procédure complète",
+  "meta_og_description": "Découvrez les 6 étapes clés pour réussir votre dossier Campus France et étudier en France",
+  "meta_twitter_title": "Guide Campus France - Procédure complète",
+  "meta_twitter_description": "6 étapes clés pour réussir votre dossier Campus France",
+  
+  "step_preparation": "Phase préparatoire",
+  "step_preparation_subtitle": "6-8 mois avant",
+  "step_preparation_duration": "6-8 mois",
+  
+  "step_inscription": "Inscription Campus France",
+  "step_inscription_subtitle": "Octobre-Février",
+  "step_inscription_duration": "2-3 mois",
+  
+  "step_candidatures": "Candidatures",
+  "step_candidatures_subtitle": "Janvier-Mars",
+  "step_candidatures_duration": "1-2 mois",
+  
+  "step_financier": "Aspects financiers",
+  "step_financier_subtitle": "Prévoir budget",
+  "step_financier_duration": "Continue",
+  
+  "step_erreurs": "Erreurs à éviter",
+  "step_erreurs_subtitle": "Points d'attention",
+  "step_erreurs_duration": "Toujours",
+  
+  "step_conseils": "Conseils pratiques",
+  "step_conseils_subtitle": "Astuces d'expert",
+  "step_conseils_duration": "Toujours",
+  
+  "hero_title": "Guide Campus France",
+  "hero_subtitle": "6 étapes clés pour réussir votre dossier",
+  "hero_description": "Découvrez la procédure complète Campus France avec tous les conseils d'experts pour maximiser vos chances d'admission dans les universités françaises.",
+  "hero_cta_accompany": "Accompagnez-moi",
+  
+  "video_title": "Vidéo explicative",
+  "video_caption": "Guide vidéo Campus France par nos experts",
+  
+  "stat_countries": "Pays concernés",
+  "stat_voeux": "Vœux maximum",
+  "stat_resources": "Ressources/mois",
+  "stat_preparation": "Mois de préparation",
+  
+  "test_tcf_name": "TCF",
+  "test_tcf_description": "Test de Connaissance du Français",
+  "test_tcf_level": "Tous niveaux",
+  
+  "test_delf_name": "DELF",
+  "test_delf_description": "Diplôme d'Études en Langue Française",
+  "test_delf_level": "A1 à B2",
+  
+  "test_dalf_name": "DALF",
+  "test_dalf_description": "Diplôme Approfondi de Langue Française",
+  "test_dalf_level": "C1 à C2",
+  
+  "doc_diplomes": "Diplômes traduits",
+  "doc_diplomes_desc": "Traduction officielle de tous les diplômes",
+  
+  "doc_releves": "Relevés de notes",
+  "doc_releves_desc": "3 dernières années + baccalauréat tamponnés",
+  
+  "doc_cv": "CV français",
+  "doc_cv_desc": "Format chronologique, maximum 2 pages",
+  
+  "doc_lettres": "Lettres de motivation",
+  "doc_lettres_desc": "Spécifiques pour chaque école",
+  
+  "doc_photos": "Photos d'identité",
+  "doc_photos_desc": "Format officiel 3,5 x 4,5 cm, fond blanc",
+  
+  "doc_attestations": "Attestations travail",
+  "doc_attestations_desc": "Si applicable, stages et expériences",
+  
+  "doc_portfolio": "Portfolio",
+  "doc_portfolio_desc": "Si pertinent pour la formation",
+  
+  "doc_urgent_label": "Urgent",
+  
+  "error_derniere_minute": "Attendre la dernière minute",
+  "error_derniere_minute_impact": "Stress et erreurs",
+  
+  "error_formulaire": "Négliger le formulaire",
+  "error_formulaire_impact": "Dossier incomplet",
+  
+  "error_lettres_generiques": "Lettres génériques",
+  "error_lettres_generiques_impact": "Manque de personnalisation",
+  
+  "error_choix_selectifs": "Choix trop sélectifs",
+  "error_choix_selectifs_impact": "Risque de refus",
+  
+  "error_sous_estimer_temps": "Sous-estimer le temps",
+  "error_sous_estimer_temps_impact": "Précipitation",
+  
+  "error_scans_qualite": "Scans de mauvaise qualité",
+  "error_scans_qualite_impact": "Documents illisibles",
+  
+  "conseil_diversifier": "Diversifier géographiquement",
+  "conseil_diversifier_desc": "Ne pas se limiter aux grandes villes",
+  
+  "conseil_melanger_niveaux": "Mélanger les niveaux",
+  "conseil_melanger_niveaux_desc": "Universités sélectives + accessibles",
+  
+  "conseil_plan_b": "Préparer un plan B",
+  "conseil_plan_b_desc": "Écoles privées ou non connectées",
+  
+  "conseil_anticiper": "Anticiper les obstacles",
+  "conseil_anticiper_desc": "Prévoir solutions alternatives",
+  
+  "phase_prep_title": "Phase préparatoire (6-8 mois avant)",
+  "phase_prep_description": "La préparation est cruciale pour le succès de votre dossier Campus France. Commencez tôt pour éviter le stress et maximiser vos chances.",
+  
+  "tests_langue_title": "Tests de langue française",
+  "tests_langue_info": "Non obligatoire si vous avez déjà un cursus francophone et résidez dans un pays officiellement francophone",
+  
+  "choix_formations_title": "Choix des formations",
+  "choix_formations_info": "Maximum 7 vœux autorisés - Choisissez stratégiquement !",
+  "choix_formations_points_title": "Points à vérifier :",
+  
+  "choix_point_catalogue": "Catalogue Campus France",
+  "choix_point_couts": "Coûts de formation",
+  "choix_point_taux": "Taux de réussite/insertion",
+  "choix_point_poursuite": "Possibilités de poursuite",
+  "choix_point_prerequis": "Prérequis spécifiques",
+  "choix_point_dates": "Dates limites",
+  
+  "conseils_strategiques_title": "Conseils stratégiques",
+  "conseil_strat_1": "• Diversifiez vos choix géographiques",
+  "conseil_strat_2": "• Mélangez formations sélectives et accessibles",
+  "conseil_strat_3": "• Vérifiez les débouchés professionnels",
+  "conseil_strat_4": "• Consultez les avis d'anciens étudiants",
+  
+  "documents_preparer_title": "Documents à préparer",
+  
+  "inscription_title": "Inscription Campus France (Octobre-Février)",
+  "inscription_description": "Créez votre compte et saisissez méticuleusement votre dossier sur la plateforme \"Études en France\".",
+  
+  "creation_compte_title": "Création du compte",
+  "creation_step_1": "Remplir informations personnelles",
+  "creation_step_2": "Vérifier emails régulièrement",
+  "creation_step_3": "Garder accès sécurisés",
+  "creation_step_4": "Noter identifiants dans lieu sûr",
+  
+  "saisie_dossier_title": "Saisie du dossier",
+  "saisie_item_1": "Parcours académique détaillé",
+  "saisie_item_2": "Expériences professionnelles",
+  "saisie_item_3": "Stages et formations",
+  "saisie_item_4": "Compétences linguistiques",
+  "saisie_item_5": "Projet de Formation Motivé",
+  "saisie_item_6": "Détailler toutes les compétences",
+  
+  "erreurs_eviter_title": "Erreurs à éviter absolument",
+  "erreurs_eviter_description": "Apprenez des erreurs les plus fréquentes pour ne pas compromettre votre candidature Campus France.",
+  
+  "conseils_eviter_erreurs_title": "Conseils pour éviter ces erreurs",
+  
+  "organisation_title": "Organisation",
+  "organisation_item_1": "• Créer un calendrier détaillé",
+  "organisation_item_2": "• Commencer 6-8 mois avant",
+  "organisation_item_3": "• Faire des listes de contrôle",
+  "organisation_item_4": "• Demander aide si nécessaire",
+  
+  "qualite_title": "Qualité",
+  "qualite_item_1": "• Relire plusieurs fois",
+  "qualite_item_2": "• Faire relire par quelqu'un",
+  "qualite_item_3": "• Personnaliser chaque candidature",
+  "qualite_item_4": "• Vérifier tous les documents",
+  
+  "conseils_pratiques_title": "Conseils pratiques d'experts",
+  "conseils_pratiques_description": "Stratégies éprouvées et astuces pour optimiser vos chances de succès dans votre démarche Campus France.",
+  
+  "organisation_optimale_title": "Organisation optimale",
+  "org_opt_item_1": "Ne rien faire dans le stress",
+  "org_opt_item_2": "Prendre le temps de bien préparer",
+  "org_opt_item_3": "Faire les choses sereinement",
+  "org_opt_item_4": "Créer un calendrier personnalisé",
+  "org_opt_item_5": "Faire des copies de tous documents",
+  "org_opt_item_6": "Avoir un dossier numérique backup",
+  
+  "strategies_gagnantes_title": "Stratégies gagnantes",
+  
+  "checklist_finale_title": "Checklist finale avant soumission",
+  
+  "checklist_documents_title": "Documents",
+  "checklist_doc_1": "☑️ Tous les documents traduits",
+  "checklist_doc_2": "☑️ Scans de qualité (300 dpi)",
+  "checklist_doc_3": "☑️ Fichiers bien nommés",
+  "checklist_doc_4": "☑️ Backup sécurisé",
+  
+  "checklist_candidature_title": "Candidature",
+  "checklist_cand_1": "☑️ Lettres personnalisées",
+  "checklist_cand_2": "☑️ Orthographe vérifiée",
+  "checklist_cand_3": "☑️ Cohérence du projet",
+  "checklist_cand_4": "☑️ Preuves de paiement",
+  
+  "garantie_garant_francais": "Garant français ou étranger",
+  "garantie_bourse": "Bourse gouvernementale",
+  "garantie_compte_bloque": "Compte bloqué en France",
+  "garantie_releves_bancaires": "Relevés bancaires personnels",
+  "garantie_attestation": "Attestation de ressources parentales",
+  
+  "numerisation_title": "Numérisation des documents",
+  
+  "numerisation_qualite_title": "Qualité technique",
+  "numerisation_qualite_item_1": "• Scanner en haute qualité (300 dpi min)",
+  "numerisation_qualite_item_2": "• Vérifier la lisibilité",
+  "numerisation_qualite_item_3": "• Respecter formats demandés",
+  "numerisation_qualite_item_4": "• Éviter les photos de documents",
+  
+  "numerisation_organisation_title": "Organisation",
+  "numerisation_organisation_item_1": "• Nommer clairement les fichiers",
+  "numerisation_organisation_item_2": "• Créer dossier backup",
+  "numerisation_organisation_item_3": "• Tester l'ouverture des fichiers",
+  "numerisation_organisation_item_4": "• Garder versions originales",
+  
+  "cta_title": "Besoin d'aide pour votre dossier Campus France ?",
+  "cta_description": "Nos experts vous accompagnent personnellement dans chaque étape de votre procédure Campus France pour maximiser vos chances d'admission.",
+  "cta_button": "Accompagnement personnalisé",
+  
+  "candidatures_title": "Candidatures (Janvier-Mars)",
+  "candidatures_description": "Soumettez vos candidatures et préparez votre entretien Campus France avec soin.",
+  
+  "soumission_candidatures_title": "Soumission des candidatures",
+  "soumission_voeux_title": "Vos 7 vœux maximum",
+  "soumission_attention": "Attention : Chaque vœu compte ! Privilégiez la qualité à la quantité",
+  "soumission_repartition": "Répartition stratégique recommandée :",
+  "soumission_repartition_1": "3 formations sélectives (objectif ambitieux)",
+  "soumission_repartition_2": "3 formations accessibles (bon profil)",
+  "soumission_repartition_3": "1 formation très accessible (sécurité)",
+  
+  "entretien_campus_title": "Préparation entretien Campus France",
+  "entretien_themes_title": "Thèmes principaux abordés :",
+  "entretien_theme_1": "Votre parcours académique et professionnel",
+  "entretien_theme_2": "Votre projet d'études en France",
+  "entretien_theme_3": "Vos motivations et objectifs",
+  "entretien_theme_4": "Votre financement et logement",
+  "entretien_theme_5": "Votre retour dans votre pays (si applicable)",
+  "entretien_theme_6": "Vos connaissances sur la France",
+  
+  "entretien_conseils_title": "Conseils pour réussir l'entretien",
+  "entretien_conseil_1": "Soyez authentique et sincère",
+  "entretien_conseil_2": "Montrez votre cohérence",
+  "entretien_conseil_3": "Préparez des exemples concrets",
+  "entretien_conseil_4": "Restez positif et motivé",
+  
+  "lettres_motivation_title": "Lettres de motivation",
+  "lettres_structure_title": "Structure recommandée",
+  "lettres_introduction": "Introduction : Accroche personnelle",
+  "lettres_parcours": "Parcours : Expériences pertinentes",
+  "lettres_projet": "Projet : Pourquoi cette formation ?",
+  "lettres_conclusion": "Conclusion : Apports mutuels",
+  
+  "lettres_points_cles_title": "Points clés à développer",
+  "lettres_point_1": "Pourquoi cette école/université spécifique ?",
+  "lettres_point_2": "En quoi votre profil correspond ?",
+  "lettres_point_3": "Quels sont vos objectifs professionnels ?",
+  "lettres_point_4": "Comment cette formation s'inscrit dans votre projet ?",
+  
+  "aspects_financiers_title": "Aspects financiers",
+  "aspects_financiers_description": "Planifiez votre budget et préparez vos garanties financières pour votre séjour en France.",
+  
+  "budget_mensuel_title": "Budget mensuel étudiant",
+  "budget_logement": "Logement",
+  "budget_logement_montant": "400-800€/mois",
+  "budget_alimentation": "Alimentation",
+  "budget_alimentation_montant": "200-300€/mois",
+  "budget_transport": "Transport",
+  "budget_transport_montant": "50-75€/mois",
+  "budget_assurance": "Assurance santé",
+  "budget_assurance_montant": "20-50€/mois",
+  "budget_loisirs": "Loisirs & divers",
+  "budget_loisirs_montant": "100-200€/mois",
+  
+  "garanties_financieres_title": "Garanties financières acceptées",
+  
+  "frais_scolarite_title": "Frais de scolarité (variables)",
+  "frais_scolarite_publique": "Université publique :",
+  "frais_scolarite_publique_licence": "Licence : 170-243€/an",
+  "frais_scolarite_publique_master": "Master : 243-601€/an",
+  "frais_scolarite_privee": "École privée :",
+  "frais_scolarite_privee_montant": "3 000-15 000€/an",
+  
+  "aides_financieres_title": "Aides financières possibles",
+  "aide_crous": "Bourses CROUS",
+  "aide_crous_desc": "Pour étudiants européens",
+  "aide_ambassade": "Bourses d'ambassade",
+  "aide_ambassade_desc": "Selon pays d'origine",
+  "aide_ecole": "Aides des établissements",
+  "aide_ecole_desc": "Bourses au mérite",
+  "aide_logement": "Aide au logement (APL)",
+  "aide_logement_desc": "Pour tous les étudiants",
+  
+  "schema_howto_name": "Guide Campus France",
+  "schema_howto_description": "Guide complet pour réussir sa procédure Campus France",
+  "schema_supply_documents": "Documents académiques",
+  "schema_supply_test": "Test de langue",
+  "schema_step_preparation_name": "Phase préparatoire",
+  "schema_step_preparation_text": "Préparer tous les documents nécessaires 6-8 mois avant",
+  "schema_step_inscription_name": "Inscription Campus France",
+  "schema_step_inscription_text": "Créer son compte et remplir le dossier en ligne",
+  "schema_step_candidatures_name": "Soumission candidatures",
+  "schema_step_candidatures_text": "Soumettre jusqu'à 7 vœux de formations",
+  "schema_step_entretien_name": "Entretien Campus France",
+  "schema_step_entretien_text": "Préparer et passer l'entretien pédagogique",
+  "schema_step_visa_name": "Demande de visa",
+  "schema_step_visa_text": "Déposer sa demande de visa étudiant",
+  "schema_step_voyage_name": "Préparation voyage",
+  "schema_step_voyage_text": "Organiser son arrivée et installation en France",
+  
+  "candidatures_main_title": "Comment candidater selon votre niveau d'études",
+  "candidatures_main_description": "Les modalités de candidature varient selon votre niveau d'études visé et votre situation personnelle. Découvrez la procédure qui vous concerne.",
+  
+  "level_l1_title": "1ère année Licence",
+  "level_l1_description": "Parcoursup ou DAP selon votre profil",
+  "level_l2_title": "Licence 2/3 & Master",
+  "level_l2_description": "Procédure \"Études en France\"",
+  "level_phd_title": "Doctorat",
+  "level_phd_description": "Contact direct avec les laboratoires",
+  
+  "section_l1_title": "Candidater en 1ère année de Licence",
+  "section_l1_alert_title": "⚠️ Important : La procédure dépend de votre nationalité",
+  "section_l1_alert_description": "Selon que vous avez une nationalité européenne ou non, la procédure est différente.",
+  "section_l1_alert_same_country": "🏠 Vous résidez ET avez la nationalité du même pays Campus France",
+  "case_non_eu_title": "🌍 Vous n'avez pas de nationalité européenne",
+  "case_non_eu_example": "Exemple : Vous habitez au Maroc et avez la nationalité marocaine",
+  "case_non_eu_note": "Exemple : Vous habitez au Maroc et avez la nationalité marocaine",
+
+  "case_bac_fr_title": "📚 Baccalauréat français ou européen",
+  "case_bac_fr_procedure": "Parcoursup + Campus France",
+  "case_bac_fr_note": "Procédure parallèle obligatoire",
+  "case_bac_other_title": "🎓 Autre diplôme national",
+  "case_bac_other_procedure": "DAP via \"Études en France\"",
+  "case_bac_other_note": "Demande d'Admission Préalable en ligne",
+  
+  "case_eu_title": "🇪🇺 Vous avez une nationalité européenne",
+  "case_eu_example": "Exemple : Vous habitez au Sénégal mais avez la nationalité allemande",
+  "case_eu_simplified_title": "✅ Procédure simplifiée",
+  "case_eu_parcoursup_only": "Uniquement Parcoursup",
+  "case_eu_countries": "Pays concernés : UE + Norvège, Islande, Liechtenstein, Suisse, Andorre, Monaco",
+  
+  "calendar_general_title": "Calendrier général des candidatures",
+  "calendar_parcoursup_title": "Calendrier Parcoursup",
+  "calendar_parcoursup_discovery": "Découverte formations",
+  "calendar_parcoursup_discovery_period": "Mi-décembre",
+  "calendar_parcoursup_registration": "Inscriptions et vœux",
+  "calendar_parcoursup_registration_period": "Jan-mars",
+  "calendar_parcoursup_confirmation": "Confirmation vœux",
+  "calendar_parcoursup_confirmation_period": "Début avril",
+  "calendar_parcoursup_responses": "Réponses admissions",
+  "calendar_parcoursup_responses_period": "Juin-juillet",
+  
+  "calendar_dap_title": "Calendrier DAP",
+  "calendar_dap_opening": "Ouverture inscriptions",
+  "calendar_dap_opening_date": "1er octobre",
+  "calendar_dap_closing": "Clôture inscriptions",
+  "calendar_dap_closing_date": "15 décembre",
+  "calendar_dap_university_response": "Réponses universités",
+  "calendar_dap_university_response_date": "Avant 30 avril",
+  "calendar_dap_student_response": "Réponse étudiant",
+  "calendar_dap_student_response_date": "Avant 31 mai",
+  
+  "section_l2_master_title": "Candidater en Licence 2/3 ou Master",
+  "section_l2_procedure_title": "📋 Procédure \"Études en France\" uniquement",
+  "section_l2_steps_title": "✅ Étapes à suivre :",
+  "section_l2_step_1": "Créer votre dossier électronique",
+  "section_l2_step_2": "Suivre la procédure guidée",
+  "section_l2_step_3": "Obtenir l'attestation Campus France",
+  "section_l2_step_4": "Demander votre visa étudiant",
+  "section_l2_calendar_title": "📅 Calendrier variable :",
+  "section_l2_calendar_note": "Consultez le site Campus France de votre pays pour connaître le calendrier spécifique aux formations hors DAP.",
+  "section_l2_find_office": "Trouver votre espace Campus France",
+  
+  "section_phd_title": "Candidater en Doctorat",
+  "section_phd_procedure_title": "🔬 Procédure directe avec les laboratoires",
+  "section_phd_steps_title": "📚 Démarches :",
+  "section_phd_step_1": "Contactez directement les écoles doctorales",
+  "section_phd_step_2": "Recherchez les sujets qui vous intéressent",
+  "section_phd_step_3": "Consultez les catalogues Campus France",
+  "section_phd_step_4": "Obtenez une réponse positive d'admission",
+  "section_phd_visa_title": "🛂 Visa spécifique :",
+  "section_phd_visa_name": "Visa \"Passeport Talent - Chercheur\"",
+  "section_phd_visa_note": "À demander auprès du consulat après obtention de votre acceptation en doctorat",
+  
+  "accompaniment_title": "🤝 Accompagnement Campus France",
+  "accompaniment_description": "Quelle que soit votre situation, l'Espace Campus France de votre pays est à votre disposition pour vous accompagner dans vos démarches.",
+  "accompaniment_find_office": "Trouver mon espace Campus France",
+  
+  "budget_title": "Budget à prévoir",
+  "budget_item_campus_fees": "Frais de dossier Campus France",
+  "budget_amount_campus_fees": "130-200€",
+  "budget_item_language_test": "Coût du test de langue",
+  "budget_amount_language_test": "100-200€",
+  "budget_item_translations": "Traductions officielles",
+  "budget_amount_translations": "50-150€",
+  "budget_item_visa": "Frais de visa",
+  "budget_amount_visa": "99€",
+  "budget_item_insurance": "Assurance santé",
+  "budget_amount_insurance": "200-400€",
+  "budget_item_housing": "Logement et caution",
+  "budget_amount_housing": "500-1500€",
+  
+  "resources_title": "Ressources financières",
+  "resources_minimum_title": "Justifier 615€/mois minimum",
+  "resources_minimum_note": "Montant minimum requis pour couvrir les frais de subsistance en France",
+  "resources_guarantees_title": "Garanties financières acceptées :"
+}

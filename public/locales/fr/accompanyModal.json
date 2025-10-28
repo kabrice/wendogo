@@ -1,0 +1,104 @@
+{
+  "step": {
+    "label": "Étape",
+    "of": "sur",
+    "progress": "{{current}} sur {{total}}"
+  },
+  "step1": {
+    "title": "Commençons votre accompagnement",
+    "notConnected": {
+      "description": "Pour personnaliser votre accompagnement, nous avons besoin de vous connaître.",
+      "button": "Se connecter / Créer un compte"
+    },
+    "connected": {
+      "description": "Parfait ! Vous êtes connecté en tant que",
+      "button": "Continuer"
+    }
+  },
+  "step2": {
+    "title": {
+      "complete": "Profil vérifié !",
+      "incomplete": "Complétez votre profil"
+    },
+    "profileComplete": {
+      "description": "Parfait ! Votre profil est complet. Nous avons toutes les informations nécessaires pour vous offrir le meilleur accompagnement personnalisé.",
+      "sectionTitle": "✅ Informations complètes :",
+      "fields": {
+        "name": "Nom et prénom :",
+        "phone": "Téléphone WhatsApp :",
+        "birthdate": "Date de naissance :",
+        "country": "Pays de résidence :"
+      }
+    },
+    "profileIncomplete": {
+      "description": "Pour vous offrir le meilleur accompagnement, nous avons besoin de quelques informations supplémentaires.",
+      "sectionTitle": "Informations manquantes :",
+      "missingFields": {
+        "phone": "Numéro de téléphone (WhatsApp)",
+        "birthdate": "Date de naissance",
+        "country": "Pays de résidence"
+      },
+      "button": "Compléter mon profil",
+      "skipButton": "Ignorer pour le moment"
+    }
+  },
+  "step3": {
+    "title": "Parlez-nous de votre projet",
+    "subtitle": "Plus nous en savons, mieux nous pourrons vous accompagner",
+    "projectDescription": {
+      "label": "Décrivez votre projet d'études en France *",
+      "charactersCount": "{{count}}/500 caractères",
+      "placeholder": {
+        "orientation": "Exemple: Je souhaite étudier l'informatique en Master à Paris. J'ai un Bachelor en mathématiques et je veux me spécialiser en Intelligence Artificielle. Mon objectif est de travailler dans une entreprise tech française après mes études. J'aimerais des conseils pour choisir entre EPITECH, EPITA et l'Université Paris-Saclay...",
+        "visa": "Exemple: J'ai été admis à l'ESSEC Business School pour un Master en Management. Je dois maintenant préparer mon dossier de visa étudiant. Je viens du Cameroun et j'ai besoin d'aide pour le compte bloqué, la recherche de logement et la préparation de l'entretien consulaire. Mon budget est de 15 000€ par an...",
+        "installation": "Exemple: J'ai obtenu mon visa étudiant et j'arrive à Paris en septembre pour intégrer l'ESILV. Je cherche de l'aide pour ouvrir un compte bancaire, m'inscrire à la sécurité sociale, trouver un job étudiant et comprendre le système de transport parisien. Je logerai dans le 15ème arrondissement..."
+      }
+    },
+    "additionalInfo": {
+      "label": "Informations supplémentaires (optionnel)",
+      "placeholder": "Budget disponible, contraintes particulières, questions spécifiques..."
+    },
+    "contactPreference": {
+      "label": "Comment préférez-vous être contacté ?",
+      "options": {
+        "whatsapp": "WhatsApp (recommandé)",
+        "email": "Email",
+        "phone": "Appel téléphonique"
+      }
+    },
+    "urgency": {
+      "label": "Quelle est l'urgence de votre demande ?",
+      "options": {
+        "normal": "Normal (réponse sous 24-48h)",
+        "urgent": "Urgent (réponse sous 24h)",
+        "veryUrgent": "Très urgent (réponse immédiate)"
+      }
+    }
+  },
+  "step4": {
+    "title": "Demande envoyée avec succès !",
+    "description": "Votre demande d'accompagnement <strong>{{offerName}}</strong> a été transmise à nos conseillers.",
+    "nextSteps": {
+      "title": "Prochaines étapes",
+      "steps": [
+        "Un conseiller vous contactera sous 24h",
+        "Entretien gratuit de 30 minutes pour affiner votre projet",
+        "Proposition d'accompagnement personnalisé",
+        "Début de votre parcours vers la réussite !"
+      ]
+    },
+    "guarantee": "Garantie satisfaction 100%",
+    "button": "Parfait, merci !"
+  },
+  "navigation": {
+    "back": "Retour",
+    "continue": "Continuer",
+    "submit": "Envoyer ma demande",
+    "sending": "Envoi..."
+  },
+  "errors": {
+    "projectDescriptionRequired": "Veuillez décrire votre projet d'études",
+    "projectDescriptionTooShort": "Veuillez donner plus de détails (minimum 50 caractères)",
+    "submitError": "Erreur lors de l'envoi. Veuillez réessayer."
+  }
+}

@@ -1,0 +1,407 @@
+{
+  "meta_title": "Campus France Guide - Complete Step-by-Step Procedure",
+  "meta_description": "Complete Campus France guide: 6 detailed steps to study in France. Procedure, documents, expert advice and mistakes to avoid.",
+  "meta_keywords": "Campus France, study in France, Campus France procedure, student file, student visa, TCF, DELF, DALF",
+  "meta_og_title": "Campus France Guide - Complete Procedure",
+  "meta_og_description": "Discover the 6 key steps to succeed in your Campus France application and study in France",
+  "meta_twitter_title": "Campus France Guide - Complete Procedure",
+  "meta_twitter_description": "6 key steps to succeed in your Campus France application",
+  
+  "step_preparation": "Preparation phase",
+  "step_preparation_subtitle": "6-8 months before",
+  "step_preparation_duration": "6-8 months",
+  
+  "step_inscription": "Campus France Registration",
+  "step_inscription_subtitle": "October-February",
+  "step_inscription_duration": "2-3 months",
+  
+  "step_candidatures": "Applications",
+  "step_candidatures_subtitle": "January-March",
+  "step_candidatures_duration": "1-2 months",
+  
+  "step_financier": "Financial aspects",
+  "step_financier_subtitle": "Budget planning",
+  "step_financier_duration": "Ongoing",
+  
+  "step_erreurs": "Mistakes to avoid",
+  "step_erreurs_subtitle": "Key points",
+  "step_erreurs_duration": "Always",
+  
+  "step_conseils": "Practical advice",
+  "step_conseils_subtitle": "Expert tips",
+  "step_conseils_duration": "Always",
+  
+  "hero_title": "Campus France Guide",
+  "hero_subtitle": "6 key steps to succeed in your application",
+  "hero_description": "Discover the complete Campus France procedure with all expert advice to maximize your chances of admission to French universities.",
+  "hero_cta_accompany": "Get Support",
+  
+  "video_title": "Explanatory video",
+  "video_caption": "Campus France video guide by our experts",
+  
+  "stat_countries": "Countries involved",
+  "stat_voeux": "Maximum wishes",
+  "stat_resources": "Resources/month",
+  "stat_preparation": "Months of preparation",
+  
+  "test_tcf_name": "TCF",
+  "test_tcf_description": "Test de Connaissance du Français",
+  "test_tcf_level": "All levels",
+  
+  "test_delf_name": "DELF",
+  "test_delf_description": "Diplôme d'Études en Langue Française",
+  "test_delf_level": "A1 to B2",
+  
+  "test_dalf_name": "DALF",
+  "test_dalf_description": "Diplôme Approfondi de Langue Française",
+  "test_dalf_level": "C1 to C2",
+  
+  "doc_diplomes": "Translated diplomas",
+  "doc_diplomes_desc": "Official translation of all diplomas",
+  
+  "doc_releves": "Transcripts",
+  "doc_releves_desc": "Last 3 years + stamped baccalaureate",
+  
+  "doc_cv": "French CV",
+  "doc_cv_desc": "Chronological format, maximum 2 pages",
+  
+  "doc_lettres": "Motivation letters",
+  "doc_lettres_desc": "Specific for each school",
+  
+  "doc_photos": "Identity photos",
+  "doc_photos_desc": "Official format 3.5 x 4.5 cm, white background",
+  
+  "doc_attestations": "Work certificates",
+  "doc_attestations_desc": "If applicable, internships and experiences",
+  
+  "doc_portfolio": "Portfolio",
+  "doc_portfolio_desc": "If relevant to the program",
+  
+  "doc_urgent_label": "Urgent",
+  
+  "error_derniere_minute": "Waiting until the last minute",
+  "error_derniere_minute_impact": "Stress and errors",
+  
+  "error_formulaire": "Neglecting the form",
+  "error_formulaire_impact": "Incomplete file",
+  
+  "error_lettres_generiques": "Generic letters",
+  "error_lettres_generiques_impact": "Lack of personalization",
+  
+  "error_choix_selectifs": "Too selective choices",
+  "error_choix_selectifs_impact": "Risk of rejection",
+  
+  "error_sous_estimer_temps": "Underestimating time",
+  "error_sous_estimer_temps_impact": "Rushing",
+  
+  "error_scans_qualite": "Poor quality scans",
+  "error_scans_qualite_impact": "Illegible documents",
+  
+  "conseil_diversifier": "Diversify geographically",
+  "conseil_diversifier_desc": "Don't limit yourself to big cities",
+  
+  "conseil_melanger_niveaux": "Mix levels",
+  "conseil_melanger_niveaux_desc": "Selective + accessible universities",
+  
+  "conseil_plan_b": "Prepare a plan B",
+  "conseil_plan_b_desc": "Private or non-connected schools",
+  
+  "conseil_anticiper": "Anticipate obstacles",
+  "conseil_anticiper_desc": "Plan alternative solutions",
+  
+  "phase_prep_title": "Preparation phase (6-8 months before)",
+  "phase_prep_description": "Preparation is crucial for the success of your Campus France application. Start early to avoid stress and maximize your chances.",
+  
+  "tests_langue_title": "French language tests",
+  "tests_langue_info": "Not mandatory if you already have a French-speaking curriculum and live in an officially French-speaking country",
+  
+  "choix_formations_title": "Program selection",
+  "choix_formations_info": "Maximum 7 wishes allowed - Choose strategically!",
+  "choix_formations_points_title": "Points to check:",
+  
+  "choix_point_catalogue": "Campus France catalog",
+  "choix_point_couts": "Training costs",
+  "choix_point_taux": "Success/employment rate",
+  "choix_point_poursuite": "Further study possibilities",
+  "choix_point_prerequis": "Specific prerequisites",
+  "choix_point_dates": "Deadlines",
+  
+  "conseils_strategiques_title": "Strategic advice",
+  "conseil_strat_1": "• Diversify your geographical choices",
+  "conseil_strat_2": "• Mix selective and accessible programs",
+  "conseil_strat_3": "• Check career prospects",
+  "conseil_strat_4": "• Consult reviews from former students",
+  
+  "documents_preparer_title": "Documents to prepare",
+  
+  "inscription_title": "Campus France Registration (October-February)",
+  "inscription_description": "Create your account and carefully enter your application on the \"Études en France\" platform.",
+  
+  "creation_compte_title": "Account creation",
+  "creation_step_1": "Fill in personal information",
+  "creation_step_2": "Check emails regularly",
+  "creation_step_3": "Keep secure access",
+  "creation_step_4": "Note credentials in safe place",
+  
+  "saisie_dossier_title": "File entry",
+  "saisie_item_1": "Detailed academic background",
+  "saisie_item_2": "Professional experiences",
+  "saisie_item_3": "Internships and training",
+  "saisie_item_4": "Language skills",
+  "saisie_item_5": "Motivated Training Project",
+  "saisie_item_6": "Detail all skills",
+  
+  "erreurs_eviter_title": "Mistakes to absolutely avoid",
+  "erreurs_eviter_description": "Learn from the most common mistakes to not compromise your Campus France application.",
+  
+  "conseils_eviter_erreurs_title": "Tips to avoid these mistakes",
+  
+  "organisation_title": "Organization",
+  "organisation_item_1": "• Create a detailed calendar",
+  "organisation_item_2": "• Start 6-8 months before",
+  "organisation_item_3": "• Make checklists",
+  "organisation_item_4": "• Ask for help if needed",
+  
+  "qualite_title": "Quality",
+  "qualite_item_1": "• Proofread several times",
+  "qualite_item_2": "• Have someone else proofread",
+  "qualite_item_3": "• Personalize each application",
+  "qualite_item_4": "• Verify all documents",
+  
+  "conseils_pratiques_title": "Expert practical advice",
+  "conseils_pratiques_description": "Proven strategies and tips to optimize your chances of success in your Campus France process.",
+  
+  "organisation_optimale_title": "Optimal organization",
+  "org_opt_item_1": "Don't do anything in stress",
+  "org_opt_item_2": "Take time to prepare well",
+  "org_opt_item_3": "Do things calmly",
+  "org_opt_item_4": "Create a personalized calendar",
+  "org_opt_item_5": "Make copies of all documents",
+  "org_opt_item_6": "Have a digital backup folder",
+  
+  "strategies_gagnantes_title": "Winning strategies",
+  
+  "checklist_finale_title": "Final checklist before submission",
+  
+  "checklist_documents_title": "Documents",
+  "checklist_doc_1": "☑️ All documents translated",
+  "checklist_doc_2": "☑️ Quality scans (300 dpi)",
+  "checklist_doc_3": "☑️ Files well named",
+  "checklist_doc_4": "☑️ Secure backup",
+  
+  "checklist_candidature_title": "Application",
+  "checklist_cand_1": "☑️ Personalized letters",
+  "checklist_cand_2": "☑️ Spelling checked",
+  "checklist_cand_3": "☑️ Project coherence",
+  "checklist_cand_4": "☑️ Payment proofs",
+  
+  "garantie_garant_francais": "French or foreign guarantor",
+  "garantie_bourse": "Government scholarship",
+  "garantie_compte_bloque": "Blocked account in France",
+  "garantie_releves_bancaires": "Personal bank statements",
+  "garantie_attestation": "Parental resources certificate",
+  
+  "numerisation_title": "Document Scanning",
+  
+  "numerisation_qualite_title": "Technical Quality",
+  "numerisation_qualite_item_1": "• Scan in high quality (300 dpi min)",
+  "numerisation_qualite_item_2": "• Check readability",
+  "numerisation_qualite_item_3": "• Follow requested formats",
+  "numerisation_qualite_item_4": "• Avoid document photos",
+  
+  "numerisation_organisation_title": "Organization",
+  "numerisation_organisation_item_1": "• Name files clearly",
+  "numerisation_organisation_item_2": "• Create backup folder",
+  "numerisation_organisation_item_3": "• Test file opening",
+  "numerisation_organisation_item_4": "• Keep original versions",
+  
+  "cta_title": "Need help with your Campus France application?",
+  "cta_description": "Our experts personally accompany you in every step of your Campus France procedure to maximize your chances of admission.",
+  "cta_button": "Personalized support",
+  
+  "candidatures_title": "Applications (January-March)",
+  "candidatures_description": "Submit your applications and carefully prepare your Campus France interview.",
+  
+  "soumission_candidatures_title": "Application submission",
+  "soumission_voeux_title": "Your 7 maximum wishes",
+  "soumission_attention": "Attention: Each wish counts! Prioritize quality over quantity",
+  "soumission_repartition": "Recommended strategic distribution:",
+  "soumission_repartition_1": "3 selective programs (ambitious goal)",
+  "soumission_repartition_2": "3 accessible programs (good profile)",
+  "soumission_repartition_3": "1 very accessible program (safety)",
+  
+  "entretien_campus_title": "Campus France interview preparation",
+  "entretien_themes_title": "Main topics covered:",
+  "entretien_theme_1": "Your academic and professional background",
+  "entretien_theme_2": "Your study project in France",
+  "entretien_theme_3": "Your motivations and goals",
+  "entretien_theme_4": "Your funding and accommodation",
+  "entretien_theme_5": "Your return to your country (if applicable)",
+  "entretien_theme_6": "Your knowledge about France",
+  
+  "entretien_conseils_title": "Tips to succeed in the interview",
+  "entretien_conseil_1": "Be authentic and sincere",
+  "entretien_conseil_2": "Show your consistency",
+  "entretien_conseil_3": "Prepare concrete examples",
+  "entretien_conseil_4": "Stay positive and motivated",
+  
+  "lettres_motivation_title": "Motivation letters",
+  "lettres_structure_title": "Recommended structure",
+  "lettres_introduction": "Introduction: Personal hook",
+  "lettres_parcours": "Background: Relevant experiences",
+  "lettres_projet": "Project: Why this program?",
+  "lettres_conclusion": "Conclusion: Mutual contributions",
+  
+  "lettres_points_cles_title": "Key points to develop",
+  "lettres_point_1": "Why this specific school/university?",
+  "lettres_point_2": "How does your profile match?",
+  "lettres_point_3": "What are your professional goals?",
+  "lettres_point_4": "How does this program fit your project?",
+  
+  "aspects_financiers_title": "Financial aspects",
+  "aspects_financiers_description": "Plan your budget and prepare your financial guarantees for your stay in France.",
+  
+  "budget_mensuel_title": "Monthly student budget",
+  "budget_logement": "Accommodation",
+  "budget_logement_montant": "€400-800/month",
+  "budget_alimentation": "Food",
+  "budget_alimentation_montant": "€200-300/month",
+  "budget_transport": "Transport",
+  "budget_transport_montant": "€50-75/month",
+  "budget_assurance": "Health insurance",
+  "budget_assurance_montant": "€20-50/month",
+  "budget_loisirs": "Leisure & miscellaneous",
+  "budget_loisirs_montant": "€100-200/month",
+  
+  "garanties_financieres_title": "Accepted financial guarantees",
+  
+  "frais_scolarite_title": "Tuition fees (variable)",
+  "frais_scolarite_publique": "Public university:",
+  "frais_scolarite_publique_licence": "Bachelor's: €170-243/year",
+  "frais_scolarite_publique_master": "Master's: €243-601/year",
+  "frais_scolarite_privee": "Private school:",
+  "frais_scolarite_privee_montant": "€3,000-15,000/year",
+  
+  "aides_financieres_title": "Available financial aids",
+  "aide_crous": "CROUS scholarships",
+  "aide_crous_desc": "For European students",
+  "aide_ambassade": "Embassy scholarships",
+  "aide_ambassade_desc": "Depending on country of origin",
+  "aide_ecole": "Institution aids",
+  "aide_ecole_desc": "Merit scholarships",
+  "aide_logement": "Housing assistance (APL)",
+  "aide_logement_desc": "For all students",
+  
+  "schema_howto_name": "Campus France Guide",
+  "schema_howto_description": "Complete guide to succeed in your Campus France procedure",
+  "schema_supply_documents": "Academic documents",
+  "schema_supply_test": "Language test",
+  "schema_step_preparation_name": "Preparation phase",
+  "schema_step_preparation_text": "Prepare all necessary documents 6-8 months before",
+  "schema_step_inscription_name": "Campus France Registration",
+  "schema_step_inscription_text": "Create account and fill in online application",
+  "schema_step_candidatures_name": "Application submission",
+  "schema_step_candidatures_text": "Submit up to 7 program choices",
+  "schema_step_entretien_name": "Campus France interview",
+  "schema_step_entretien_text": "Prepare and attend educational interview",
+  "schema_step_visa_name": "Visa application",
+  "schema_step_visa_text": "Submit student visa application",
+  "schema_step_voyage_name": "Travel preparation",
+  "schema_step_voyage_text": "Organize arrival and settlement in France",
+  
+  "candidatures_main_title": "How to apply according to your study level",
+  "candidatures_main_description": "Application procedures vary depending on your intended study level and personal situation. Discover the procedure that concerns you.",
+  
+  "level_l1_title": "1st year Bachelor's",
+  "level_l1_description": "Parcoursup or DAP depending on your profile",
+  "level_l2_title": "Bachelor's 2/3 & Master's",
+  "level_l2_description": "\"Études en France\" procedure",
+  "level_phd_title": "PhD",
+  "level_phd_description": "Direct contact with laboratories",
+  
+  "section_l1_title": "Apply for 1st year Bachelor's",
+  "section_l1_alert_title": "⚠️ Important: The procedure depends on your nationality",
+  "section_l1_alert_description": "Depending on whether you have European nationality or not, the procedure is different.",
+  "section_l1_alert_same_country": "🏠 You reside AND have the nationality of the same Campus France country.",
+  "case_non_eu_title": "🌍 You do not have European nationality",
+  "case_non_eu_example": "Example: You live in Morocco and have Moroccan nationality",
+  "case_non_eu_note": "Example: You live in Morocco and have Moroccan nationality",
+  "case_bac_fr_title": "📚 French or European baccalaureate",
+  "case_bac_fr_procedure": "Parcoursup + Campus France",
+  "case_bac_fr_note": "Mandatory parallel procedure",
+  "case_bac_other_title": "🎓 Other national diploma",
+  "case_bac_other_procedure": "DAP via \"Études en France\"",
+  "case_bac_other_note": "Prior Admission Application online",
+  
+  "case_eu_title": "🇪🇺 You have European nationality",
+  "case_eu_example": "Example: You live in Senegal but have German nationality",
+  "case_eu_simplified_title": "✅ Simplified procedure",
+  "case_eu_parcoursup_only": "Parcoursup only",
+  "case_eu_countries": "Concerned countries: EU + Norway, Iceland, Liechtenstein, Switzerland, Andorra, Monaco",
+  
+  "calendar_general_title": "General application calendar",
+  "calendar_parcoursup_title": "Parcoursup Calendar",
+  "calendar_parcoursup_discovery": "Program discovery",
+  "calendar_parcoursup_discovery_period": "Mid-December",
+  "calendar_parcoursup_registration": "Registration and wishes",
+  "calendar_parcoursup_registration_period": "Jan-Mar",
+  "calendar_parcoursup_confirmation": "Wish confirmation",
+  "calendar_parcoursup_confirmation_period": "Early April",
+  "calendar_parcoursup_responses": "Admission responses",
+  "calendar_parcoursup_responses_period": "June-July",
+  
+  "calendar_dap_title": "DAP Calendar",
+  "calendar_dap_opening": "Registration opening",
+  "calendar_dap_opening_date": "October 1st",
+  "calendar_dap_closing": "Registration closing",
+  "calendar_dap_closing_date": "December 15th",
+  "calendar_dap_university_response": "University responses",
+  "calendar_dap_university_response_date": "Before April 30th",
+  "calendar_dap_student_response": "Student response",
+  "calendar_dap_student_response_date": "Before May 31st",
+  
+  "section_l2_master_title": "Apply for Bachelor's 2/3 or Master's",
+  "section_l2_procedure_title": "📋 \"Études en France\" procedure only",
+  "section_l2_steps_title": "✅ Steps to follow:",
+  "section_l2_step_1": "Create your electronic file",
+  "section_l2_step_2": "Follow the guided procedure",
+  "section_l2_step_3": "Obtain Campus France certificate",
+  "section_l2_step_4": "Apply for your student visa",
+  "section_l2_calendar_title": "📅 Variable calendar:",
+  "section_l2_calendar_note": "Consult the Campus France website in your country to know the specific calendar for non-DAP programs.",
+  "section_l2_find_office": "Find your Campus France office",
+  
+  "section_phd_title": "Apply for PhD",
+  "section_phd_procedure_title": "🔬 Direct procedure with laboratories",
+  "section_phd_steps_title": "📚 Procedures:",
+  "section_phd_step_1": "Contact doctoral schools directly",
+  "section_phd_step_2": "Research topics that interest you",
+  "section_phd_step_3": "Consult Campus France catalogs",
+  "section_phd_step_4": "Obtain positive admission response",
+  "section_phd_visa_title": "🛂 Specific visa:",
+  "section_phd_visa_name": "\"Passeport Talent - Researcher\" Visa",
+  "section_phd_visa_note": "To be requested from the consulate after obtaining your PhD acceptance",
+  
+  "accompaniment_title": "🤝 Campus France Support",
+  "accompaniment_description": "Whatever your situation, the Campus France Office in your country is at your disposal to support you in your procedures.",
+  "accompaniment_find_office": "Find my Campus France office",
+  
+  "budget_title": "Budget to plan",
+  "budget_item_campus_fees": "Campus France file fees",
+  "budget_amount_campus_fees": "€130-200",
+  "budget_item_language_test": "Language test cost",
+  "budget_amount_language_test": "€100-200",
+  "budget_item_translations": "Official translations",
+  "budget_amount_translations": "€50-150",
+  "budget_item_visa": "Visa fees",
+  "budget_amount_visa": "€99",
+  "budget_item_insurance": "Health insurance",
+  "budget_amount_insurance": "€200-400",
+  "budget_item_housing": "Housing and deposit",
+  "budget_amount_housing": "€500-1,500",
+  
+  "resources_title": "Financial resources",
+  "resources_minimum_title": "Prove €615/month minimum",
+  "resources_minimum_note": "Minimum amount required to cover living expenses in France",
+  "resources_guarantees_title": "Accepted financial guarantees:"
+}

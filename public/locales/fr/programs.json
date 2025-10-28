@@ -1,0 +1,182 @@
+{
+  "error": {
+    "notFound": "Programme non trouvé",
+    "backToPrograms": "Retour aux programmes"
+  },
+  "financial": {
+    "campusFrance": {
+      "title": "Campus France",
+      "value": "✓ Connecté",
+      "subtitle": "Procédure d'admission via Campus France"
+    },
+    "parallelProcedure": {
+      "title": "Procédure",
+      "value": "Parallèle",
+      "subtitle": "Soumis à une procédure d'admission parallèle"
+    },
+    "exemption": {
+      "title": "Exonération",
+      "total": {
+        "value": "Totale",
+        "subtitle": "Frais de scolarité totalement exonérés"
+      },
+      "partial": {
+        "value": "Partielle",
+        "subtitle": "Réduction sur les frais de scolarité"
+      },
+      "none": {
+        "value": "Aucune",
+        "subtitle": "Frais de scolarité standards"
+      }
+    },
+    "tuition": {
+      "title": "Frais annuel"
+    },
+    "deposit": {
+      "title": "Acompte"
+    },
+    "alternance": {
+      "title": "Alternance",
+      "value": "✓",
+      "subtitle": "Possible"
+    }
+  },
+  "dates": {
+    "applications": {
+      "title": "Candidatures",
+      "campusFranceCalendar": "Consulter votre calendrier Campus France"
+    },
+    "intake": {
+      "title": "Rentrée"
+    }
+  },
+  "partners": {
+    "title": "Entreprises partenaires",
+    "showLess": "Voir moins",
+    "showMore": "Voir les {{count}} autres entreprises",
+    "total": "{{count}} entreprises partenaires",
+    "description": "pour stages, alternance et recrutement"
+  },
+  "tabs": {
+    "overview": "Aperçu",
+    "finances": "Prix",
+    "admission": "Admission",
+    "career": "Débouchés"
+  },
+  "header": {
+    "program": "Formation",
+    "alternanceAvailable": "Alternance possible",
+    "rncpLevel": "RNCP Niveau {{level}}",
+    "eefReferenced": "✅ Référencé sur Études en France",
+    "searchName": "Nom de recherche :"
+  },
+  "about": {
+    "title": "A propos du programme",
+    "profilesWanted": "Profils recherchés",
+    "eefData": "Données issues d'EEF pour l'année 2024-2025"
+  },
+  "skills": {
+    "title": "Compétences acquises"
+  },
+  "certifications": {
+    "title": "Certifications et reconnaissances",
+    "rncpLevel": "RNCP Niveau {{level}}",
+    "certifiedBy": "Certifié par {{certifier}}"
+  },
+  "strengths": {
+    "title": "Points forts du programme"
+  },
+  "partnerships": {
+    "title": "Partenariats académiques"
+  },
+  "costs": {
+    "title": "Structure des coûts",
+    "exemptionTotal": "Exonération Totale des Frais",
+    "exemptionPartial": "Exonération Partielle des Frais",
+    "exemptionNone": "Aucune Exonération",
+    "tuitionPerYear": "Frais de scolarité par année",
+    "year": "Année {{year}}",
+    "programDuration": "Durée du programme",
+    "registrationFees": "Frais d'inscription",
+    "trainingFees": "Frais de formation",
+    "annualFees": "Frais annuels",
+    "duration": "Durée",
+    "paymentTerms": "Modalités de paiement",
+    "firstDeposit": "Premier acompte"
+  },
+  "alternanceFinancing": {
+    "title": "Financement par alternance",
+    "available": "Alternance disponible",
+    "benefitsCoveredByCompany": "Frais de formation pris en charge par l'entreprise",
+    "benefitsSalary": "Rémunération pendant les études",
+    "benefitsExperience": "Expérience professionnelle intégrée",
+    "advantageTitle": "💡 Avantage financier",
+    "advantageDescription": "L'alternance peut vous faire économiser la totalité des frais de formation !",
+    "duration": "⏱️ Durée alternance",
+    "potentialSavings": "💰 Économie potentielle"
+  },
+  "performance": {
+    "title": "Performance du programme",
+    "successRate": "Taux de réussite",
+    "successRateDescription": "Le taux de réussite reflète la qualité de l'accompagnement pédagogique et l'adéquation du programme aux profils étudiants."
+  },
+  "admissionConditions": {
+    "title": "Conditions d'admission par année",
+    "admissionInYear": "Admission en {{year}}",
+    "year_1": "1ère année",
+    "year_2": "2ème année",
+    "year_3": "3ème année",
+    "year_4": "4ème année",
+    "year_5": "5ème année",
+    "requiredLevel": "Niveau requis:",
+    "requiredDegrees": "Diplômes requis:",
+    "admissionMethods": "Modalités d'admission:",
+    "languages": "Langues:"
+  },
+  "admissionCalendar": {
+    "title": "Calendrier des admissions"
+  },
+  "practicalInfo": {
+    "title": "Informations pratiques",
+    "duration": "Durée",
+    "intake": "Rentrée",
+    "language": "Langue",
+    "capacity": "Capacité",
+    "availablePlaces": "Places disponibles"
+  },
+  "career": {
+    "title": "Débouchés professionnels",
+    "employmentRate": "Taux d'emploi",
+    "averageSalary": "Salaire moyen/an"
+  },
+  "summary": {
+    "title": "Récapitulatif",
+    "annualFees": "Frais annuels",
+    "firstDeposit": "Premier acompte",
+    "applicationDate": "Date de candidature",
+    "learnMore": "En savoir plus"
+  },
+  "school": {
+    "title": "École",
+    "campusFrance": "Campus France"
+  },
+  "similar": {
+    "title": "Programmes similaires",
+    "exemptionTotal": "Exonération Totale",
+    "exemptionPartial": "Exonération Partielle",
+    "exemptionNone": "Aucune exonération",
+    "notCommunicated": "Non communiqué"
+  },
+  "support": {
+    "title": "Votre réussite, notre mission",
+    "subtitle": "Accompagnement dédié aux étudiants étrangers",
+    "visaHelp": "Aide visa & logement",
+    "campusIntegration": "Intégration campus",
+    "adminSupport": "Support administratif",
+    "discoverServices": "Découvrez nos services"
+  },
+  "alternanceCta": {
+    "title": "Alternance",
+    "subtitle": "Financez vos études grâce à l'alternance"
+  }
+}

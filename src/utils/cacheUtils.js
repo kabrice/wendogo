@@ -5,6 +5,7 @@ import { REST_API_PARAMS } from './Constants';
 const CACHE_DURATION = {
   DOMAINS: 30 * 60 * 1000,        // 30 minutes (données quasi-statiques)
   SCHOOLS: 20 * 60 * 1000,        // 20 minutes (changent peu)
+  MEDIUM: 10 * 60 * 1000,         // 10 minutes (valeur par défaut)
   FILTER_OPTIONS: 15 * 60 * 1000, // 15 minutes (peuvent changer)
   PROGRAMS: 5 * 60 * 1000,        // 5 minutes (plus dynamiques)
   SEARCH_RESULTS: 2 * 60 * 1000   // 2 minutes (très dynamiques)
@@ -157,6 +158,28 @@ export const cacheUtils = {
     });
     
     return stats;
+  },
+
+  clearPattern: (pattern) => {
+  if (typeof window === 'undefined') return;
+  
+  let cleared = 0;
+  
+  Object.keys(localStorage).forEach(key => {
+    if (key.startsWith('wendogo_') && key.includes(pattern)) {
+      localStorage.removeItem(key);
+      cleared++;
+    }
+  });
+  
+  Object.keys(sessionStorage).forEach(key => {
+    if (key.startsWith('wendogo_') && key.includes(pattern)) {
+      sessionStorage.removeItem(key);
+      cleared++;
+    }
+  });
+  
+  console.log(`🗑️ Cleared ${cleared} cache entries matching: ${pattern}`);
   }
 };
 
@@ -195,85 +218,98 @@ export const useCachedData = (key, fetchFunction, options = {}) => {
 // ✅ NOUVEAU: API optimisée pour les données initiales
 export const optimizedApi = {
   // NOUVEAU : Cache pour programme individuel
-  getProgram: (slug) => cacheUtils.getStaleWhileRevalidate(
-    `program_${slug}`,
-    () => fetch(`${REST_API_PARAMS.baseUrl}/programs/slug/${slug}`).then(r => r.json()),
+  getProgram: (slug, locale) => cacheUtils.getStaleWhileRevalidate(
+    `program_${slug}_${locale}`,
+    () => fetch(`${REST_API_PARAMS.baseUrl}/programs/slug/${slug}?locale=${locale}`).then(r => r.json()),
     CACHE_DURATION.PROGRAMS
   ),
-  
-  // NOUVEAU : Cache pour école individuelle  
-  getSchool: (slug) => cacheUtils.getStaleWhileRevalidate(
-    `school_${slug}`,
-    () => fetch(`${REST_API_PARAMS.baseUrl}/schools/slug/${slug}`).then(r => r.json()),
+
+  // NOUVEAU : Cache pour école individuelle
+  getSchool: (slug, locale) => cacheUtils.getStaleWhileRevalidate(
+    `school_${slug}_${locale}`,
+    () => fetch(`${REST_API_PARAMS.baseUrl}/schools/slug/${slug}?locale=${locale}`).then(r => r.json()),
     CACHE_DURATION.SCHOOLS
   ),
   
   // NOUVEAU : Cache pour programmes d'une école
-  getSchoolPrograms: (schoolSlug) => cacheUtils.getStaleWhileRevalidate(
-    `school_programs_${schoolSlug}`,
+  getSchoolPrograms: (schoolSlug, locale) => cacheUtils.getStaleWhileRevalidate(
+    `school_programs_${schoolSlug}_${locale}`,
     () => fetch(`${REST_API_PARAMS.baseUrl}/programs/by-school-slug/${schoolSlug}`).then(r => r.json()),
     CACHE_DURATION.PROGRAMS
   ),
   // Domaines avec cache long (changent rarement)
-  getDomains: () => cacheUtils.getStaleWhileRevalidate(
-    'domains', 
-    () => fetch(`${REST_API_PARAMS.baseUrl}/domains`).then(r => r.json()),
+  getDomains: (locale = 'fr') => cacheUtils.getStaleWhileRevalidate(
+    `domains_${locale}`, 
+    () => fetch(`${REST_API_PARAMS.baseUrl}/domains?locale=${locale}`).then(r => r.json()),
     CACHE_DURATION.DOMAINS
   ),
 
   // ✅ AJOUT: Tous les sous-domaines pour les filtres
-  getAllSubdomains: () => cacheUtils.getStaleWhileRevalidate(
-    'all_subdomains',
-    () => fetch(`${REST_API_PARAMS.baseUrl}/subdomains`).then(r => r.json()),
+  getAllSubdomains: (locale = 'fr') => cacheUtils.getStaleWhileRevalidate(
+    `all_subdomains_${locale}`,
+    () => fetch(`${REST_API_PARAMS.baseUrl}/subdomains?locale=${locale}`).then(r => r.json()),
     CACHE_DURATION.DOMAINS
   ),
 
   // Écoles avec cache moyen
-  getSchools: () => cacheUtils.getStaleWhileRevalidate(
-    'schools', 
-    () => fetch(`${REST_API_PARAMS.baseUrl}/schools/preview`).then(r => r.json()),
+  getSchools: (locale = 'fr') => cacheUtils.getStaleWhileRevalidate(
+    `schools_${locale}`, 
+    () => fetch(`${REST_API_PARAMS.baseUrl}/schools/preview?locale=${locale}`).then(r => r.json()),
     CACHE_DURATION.SCHOOLS
   ),
 
   // Options de filtres avec cache court
-  getFilterOptions: () => cacheUtils.getStaleWhileRevalidate(
-    'filter_options', 
-    () => fetch(`${REST_API_PARAMS.baseUrl}/programs/filter-options`).then(r => r.json()),
+  getFilterOptions: (locale = 'fr') => cacheUtils.getStaleWhileRevalidate(
+    `filter_options_${locale}`, 
+    () => fetch(`${REST_API_PARAMS.baseUrl}/programs/filter-options?locale=${locale}`).then(r => r.json()),
     CACHE_DURATION.FILTER_OPTIONS
   ),
 
   // Stats globales avec cache court
-  getGlobalStats: () => cacheUtils.getStaleWhileRevalidate(
-    'global_stats', 
-    () => fetch(`${REST_API_PARAMS.baseUrl}/stats`).then(r => r.json()),
+  getGlobalStats: (locale = 'fr') => cacheUtils.getStaleWhileRevalidate(
+    `global_stats_${locale}`, 
+    () => fetch(`${REST_API_PARAMS.baseUrl}/stats?locale=${locale}`).then(r => r.json()),
     CACHE_DURATION.FILTER_OPTIONS
   ),
 
   // ✅ NOUVEAU: Chargement parallèle de toutes les données initiales
-  loadAllInitialData: async () => {
+  loadAllInitialData: async (locale = 'fr') => {
     console.log('🚀 Loading initial data with optimized cache...');
     const startTime = performance.now();
+    const cacheKey = `initial_data_${locale}`;
+    const cached = cacheUtils.get(cacheKey);
+    console.log('localelocale ', locale)
+    if (cached) {
+      console.log(`✅ Using cached initial data for locale: ${locale}`);
+      return cached;
+    }
 
+    console.log(`🔄 Fetching fresh initial data for locale: ${locale}`);
     try {
       // ✅ CORRECTION: Charger aussi tous les sous-domaines
       const [domains, allSubdomains, schools, filterOptions, globalStats] = await Promise.all([
-        optimizedApi.getDomains(),
-        optimizedApi.getAllSubdomains(),
-        optimizedApi.getSchools(), 
-        optimizedApi.getFilterOptions(),
-        optimizedApi.getGlobalStats()
+        optimizedApi.getDomains(locale),
+        optimizedApi.getAllSubdomains(locale),
+        optimizedApi.getSchools(locale), 
+        optimizedApi.getFilterOptions(locale),
+        optimizedApi.getGlobalStats(locale)
       ]);
 
       const endTime = performance.now();
-      console.log(`✅ Initial data loaded in ${Math.round(endTime - startTime)}ms`);
+      // console.log(`✅ Initial data loaded in ${Math.round(endTime - startTime)}ms`);
+      console.log('📦 ✅✅✅', domains);
+      // console.log('allSubdomains ✅✅✅', allSubdomains);
 
-      return {
-        domains: domains || [],
-        allSubdomains: allSubdomains || [], // ✅ AJOUT
+      const initialData = {
+        domains: (domains && domains.data) || [],
+        allSubdomains: (allSubdomains && allSubdomains.data) || [], // ✅ AJOUT
         schools: schools || [],
         filterOptions: filterOptions || {},
-        globalStats: globalStats || {}
+        globalStats: (globalStats && globalStats.data) || {}
       };
+
+      cacheUtils.set(cacheKey, initialData, CACHE_DURATION.MEDIUM);
+      return initialData;
     } catch (error) {
       console.error('❌ Error loading initial data:', error);
       throw error;

@@ -1,0 +1,504 @@
+{
+  "meta": {
+    "title": "Guide complet pour étudier en France - Wendogo",
+    "description": "Guide complet pour étudier en France : Parcoursup, Campus France, procédures d'admission, universités. Tout ce qu'il faut savoir pour réussir votre projet d'études.",
+    "keywords": "étudier en France, Campus France, Parcoursup, université française, étudiant étranger, admission France, visa étudiant",
+    "ogTitle": "Guide complet pour étudier en France - Wendogo",
+    "ogDescription": "Découvrez tout ce qu'il faut savoir pour étudier en France : procédures, démarches, conseils d'experts.",
+    "twitterTitle": "Guide complet pour étudier en France",
+    "twitterDescription": "Procédures, démarches et conseils pour réussir vos études en France",
+    "schemaHeadline": "Guide complet pour étudier en France",
+    "schemaDescription": "Guide complet pour étudier en France : Parcoursup, Campus France, procédures d'admission"
+  },
+  "hero": {
+    "title": "Guide complet pour étudier en France",
+    "subtitle": "Découvrez tout ce qu'il faut savoir pour réussir votre projet d'études en France : procédures, démarches et conseils d'experts.",
+    "ctaPrimary": "Me faire accompagner",
+    "ctaSecondary": "Rechercher une formation"
+  },
+  "quickStats": {
+    "students": "Étudiants en France",
+    "international": "Étudiants internationaux",
+    "establishments": "Établissements",
+    "countries": "Pays représentés"
+  },
+  "tabs": {
+    "overview": "Vue d'ensemble",
+    "campusFrance": "Campus France",
+    "parcoursup": "Parcoursup",
+    "parisSaclay": "Paris-Saclay"
+  },
+  "overview": {
+    "title": "Pourquoi étudier en France ?",
+    "subtitle": "La France est l'une des destinations les plus prisées pour les études supérieures.",
+    "reasons": {
+      "excellence": {
+        "title": "Excellence académique",
+        "description": "Des universités de renommée mondiale et des diplômes reconnus internationalement."
+      },
+      "affordable": {
+        "title": "Coût abordable",
+        "description": "Frais de scolarité parmi les plus bas d'Europe dans les universités publiques."
+      },
+      "culture": {
+        "title": "Richesse culturelle",
+        "description": "Immersion dans la culture française, l'art, la gastronomie et l'histoire."
+      },
+      "opportunities": {
+        "title": "Opportunités professionnelles",
+        "description": "Accès au marché du travail européen et nombreuses opportunités de carrière."
+      }
+    },
+    "typesTitle": "Types d'établissements",
+    "typesSubtitle": "Le système d'enseignement supérieur français offre plusieurs types d'établissements.",
+    "institutions": {
+      "universities": {
+        "title": "Universités publiques",
+        "description": "Formations générales et recherche, frais modérés, diplômes nationaux."
+      },
+      "grandes": {
+        "title": "Grandes écoles",
+        "description": "Formation d'excellence, admission sélective, réseau professionnel fort."
+      },
+      "specialized": {
+        "title": "Écoles spécialisées",
+        "description": "Formation professionnelle ciblée, lien avec les entreprises."
+      }
+    },
+    "levelsTitle": "Niveaux d'études",
+    "levelsSubtitle": "Le système LMD (Licence, Master, Doctorat) s'aligne sur les standards européens.",
+    "degrees": {
+      "licence": {
+        "title": "Licence (Bac+3)",
+        "description": "Formation générale en 3 ans après le baccalauréat"
+      },
+      "master": {
+        "title": "Master (Bac+5)",
+        "description": "Spécialisation en 2 ans après la licence"
+      },
+      "doctorat": {
+        "title": "Doctorat (Bac+8)",
+        "description": "Recherche approfondie en 3 ans après le master"
+      }
+    },
+    "costsTitle": "Coûts et financement",
+    "costsSubtitle": "Estimation des frais pour étudier en France",
+    "publicFees": "Universités publiques",
+    "publicFeesDesc": "Frais très accessibles",
+    "privateFees": "Écoles privées",
+    "privateFeesDesc": "Selon les établissements",
+    "living": "Vie étudiante",
+    "livingDesc": "Par mois (logement, nourriture, transport)",
+    "scholarshipsTitle": "Bourses disponibles",
+    "scholarships": {
+      "eiffel": "Bourses Eiffel",
+      "government": "Bourses gouvernementales",
+      "institutional": "Bourses d'établissements",
+      "regional": "Aides régionales"
+    },
+    "keyDatesTitle": "Calendrier clé",
+    "keyDatesSubtitle": "Les dates importantes pour votre candidature",
+    "timeline": {
+      "autumn": {
+        "title": "Septembre-Novembre",
+        "description": "Recherche de formations et préparation des dossiers"
+      },
+      "winter": {
+        "title": "Décembre-Mars",
+        "description": "Dépôt des candidatures (Campus France, Parcoursup, etc.)"
+      },
+      "spring": {
+        "title": "Avril-Juin",
+        "description": "Réponses des établissements et demande de visa"
+      },
+      "summer": {
+        "title": "Juillet-Août",
+        "description": "Obtention du visa et préparation au départ"
+      }
+    }
+  },
+  "campusFrance": {
+    "title": "Procédure Campus France",
+    "subtitle": "Campus France est la plateforme officielle pour les étudiants internationaux souhaitant étudier en France.",
+    "concernedTitle": "Qui est concerné ?",
+    "concernedIntro": "La procédure Campus France concerne principalement les ressortissants de certains pays. Voici la liste complète des pays concernés :",
+    "regions": {
+      "africa": "Afrique",
+      "maghreb": "Maghreb / Moyen-Orient",
+      "americas": "Amériques",
+      "asia": "Asie",
+      "europe": "Europe / Eurasie"
+    },
+    "stepsTitle": "Étapes de la procédure",
+    "steps": {
+      "1": {
+        "title": "Création du compte",
+        "description": "Inscription sur la plateforme Campus France",
+        "details": {
+          "1": "Créer un compte sur Études en France",
+          "2": "Remplir les informations personnelles",
+          "3": "Télécharger les documents requis"
+        }
+      },
+      "2": {
+        "title": "Constitution du dossier",
+        "description": "Préparation des documents académiques",
+        "details": {
+          "1": "Relevés de notes traduits",
+          "2": "Diplômes certifiés",
+          "3": "CV et lettre de motivation",
+          "4": "Certificat de niveau de français"
+        }
+      },
+      "3": {
+        "title": "Candidature aux formations",
+        "description": "Postuler aux programmes choisis",
+        "details": {
+          "1": "Sélectionner jusqu'à 7 formations",
+          "2": "Personnaliser lettres de motivation",
+          "3": "Soumettre les candidatures"
+        }
+      },
+      "4": {
+        "title": "Entretien pédagogique",
+        "description": "Entretien avec un conseiller Campus France",
+        "details": {
+          "1": "Payer les frais de dossier",
+          "2": "Prendre rendez-vous pour l'entretien",
+          "3": "Préparer votre projet d'études"
+        }
+      },
+      "5": {
+        "title": "Réponses et visa",
+        "description": "Acceptation et demande de visa",
+        "details": {
+          "1": "Attendre les réponses (4-6 semaines)",
+          "2": "Accepter une proposition",
+          "3": "Lancer la procédure de visa"
+        }
+      }
+    },
+    "documentsTitle": "Documents nécessaires",
+    "documentsSubtitle": "Liste complète des documents à préparer pour votre dossier Campus France",
+    "docCategories": {
+      "academic": {
+        "title": "Documents académiques",
+        "items": {
+          "1": "Relevés de notes (3 dernières années)",
+          "2": "Diplômes obtenus",
+          "3": "Attestations de niveau d'études",
+          "4": "Programmes des cours suivis"
+        }
+      },
+      "language": {
+        "title": "Justificatifs linguistiques",
+        "items": {
+          "1": "TCF, DELF ou DALF (français)",
+          "2": "TOEFL ou IELTS (si requis)",
+          "3": "Certificats de cours de langue"
+        }
+      },
+      "motivation": {
+        "title": "Documents de motivation",
+        "items": {
+          "1": "CV actualisé",
+          "2": "Lettre de motivation",
+          "3": "Projet d'études détaillé",
+          "4": "Lettres de recommandation"
+        }
+      },
+      "identity": {
+        "title": "Pièces d'identité",
+        "items": {
+          "1": "Passeport valide",
+          "2": "Photo d'identité récente",
+          "3": "Acte de naissance",
+          "4": "Carte d'identité nationale"
+        }
+      },
+      "financial": {
+        "title": "Justificatifs financiers",
+        "items": {
+          "1": "Attestation de ressources",
+          "2": "Relevés bancaires",
+          "3": "Attestation de prise en charge",
+          "4": "Notification de bourse (si applicable)"
+        }
+      }
+    },
+    "feesTitle": "Frais Campus France",
+    "feesSubtitle": "Les frais varient selon votre pays de résidence",
+    "feesAmount": "Environ 100-300€",
+    "feesNote": "selon le pays",
+    "interviewTitle": "L'entretien pédagogique",
+    "interviewSubtitle": "Conseils pour réussir votre entretien",
+    "interviewTips": {
+      "1": "Préparez votre projet d'études de manière claire et cohérente",
+      "2": "Soyez capable d'expliquer votre parcours et vos motivations",
+      "3": "Renseignez-vous sur les formations choisies",
+      "4": "Montrez votre niveau de français",
+      "5": "Préparez des questions sur la vie en France"
+    },
+    "timelineTitle": "Calendrier Campus France",
+    "timelineSubtitle": "Délais à respecter pour votre procédure",
+    "timelinePhases": {
+      "application": {
+        "title": "Phase de candidature",
+        "items": {
+          "1": "Novembre-Décembre : Ouverture plateforme",
+          "2": "Janvier-Mars : Soumission dossiers",
+          "3": "Février-Avril : Entretiens"
+        }
+      },
+      "response": {
+        "title": "Phase de réponse",
+        "items": {
+          "1": "Avril-Juin : Réponses établissements",
+          "2": "Mai-Juillet : Acceptation finale",
+          "3": "Juin-Août : Procédure visa"
+        }
+      }
+    },
+    "tipsTitle": "Conseils pratiques",
+    "tips": {
+      "1": "Commencez tôt : la procédure peut prendre 3-6 mois",
+      "2": "Choisissez des formations cohérentes avec votre parcours",
+      "3": "Soignez vos lettres de motivation (personnalisées)",
+      "4": "Préparez bien votre entretien pédagogique",
+      "5": "Gardez des copies de tous vos documents"
+    }
+  },
+  "parcoursup": {
+    "title": "Candidature via Parcoursup",
+    "subtitle": "Parcoursup est la plateforme nationale pour les admissions en première année d'études supérieures en France.",
+    "whoTitle": "Qui peut utiliser Parcoursup ?",
+    "whoIntro": "La plateforme est accessible à :",
+    "whoItems": {
+      "1": "Lycéens français et étrangers scolarisés en France",
+      "2": "Candidats en réorientation (déjà dans le supérieur)",
+      "3": "Candidats en reprise d'études"
+    },
+    "note": "Note importante",
+    "noteContent": "Les étudiants internationaux résidant à l'étranger doivent généralement passer par Campus France, pas Parcoursup.",
+    "formationsTitle": "Formations accessibles",
+    "formationsSubtitle": "Principales formations disponibles sur Parcoursup :",
+    "formations": {
+      "bts": {
+        "title": "BTS (Brevet de Technicien Supérieur)",
+        "description": "Formation professionnelle de 2 ans dans de nombreux domaines",
+        "duration": "2 ans",
+        "level": "Bac+2"
+      },
+      "cpge": {
+        "title": "CPGE (Classes Préparatoires aux Grandes Écoles)",
+        "description": "Préparation intensive aux concours des grandes écoles",
+        "duration": "2 ans",
+        "level": "Bac+2"
+      },
+      "dcg": {
+        "title": "DCG (Diplôme de Comptabilité et Gestion)",
+        "description": "Formation spécialisée en comptabilité et gestion",
+        "duration": "3 ans",
+        "level": "Bac+3"
+      }
+    },
+    "calendarTitle": "Calendrier Parcoursup",
+    "calendarSubtitle": "Les dates clés de la procédure (dates indicatives)",
+    "calendarPhases": {
+      "registration": {
+        "title": "Inscription et vœux",
+        "items": {
+          "1": "Janvier : Ouverture plateforme",
+          "2": "Janvier-Mars : Formulation vœux",
+          "3": "Mars : Date limite vœux",
+          "4": "Avril : Finalisation dossiers"
+        }
+      },
+      "admission": {
+        "title": "Phase d'admission",
+        "items": {
+          "1": "Juin : Début réponses",
+          "2": "Juin-Juillet : Phase principale",
+          "3": "Juillet-Septembre : Phase complémentaire"
+        }
+      }
+    },
+    "stepByStepTitle": "Procédure étape par étape",
+    "steps": {
+      "1": {
+        "title": "Inscription",
+        "description": "Créer un compte sur Parcoursup"
+      },
+      "2": {
+        "title": "Recherche",
+        "description": "Explorer les formations disponibles"
+      },
+      "3": {
+        "title": "Vœux",
+        "description": "Formuler jusqu'à 10 vœux (sans ordre)"
+      },
+      "4": {
+        "title": "Confirmation",
+        "description": "Finaliser et confirmer les vœux"
+      },
+      "5": {
+        "title": "Réponses",
+        "description": "Recevoir et répondre aux propositions"
+      }
+    },
+    "dossierTitle": "Constitution du dossier",
+    "dossierSubtitle": "Documents et informations à préparer",
+    "dossierCategories": {
+      "academic": {
+        "title": "Informations académiques",
+        "items": {
+          "1": "Bulletins scolaires",
+          "2": "Résultats d'examens",
+          "3": "Fiche Avenir (lycéens)",
+          "4": "Notes au baccalauréat"
+        }
+      },
+      "motivation": {
+        "title": "Projet de formation motivé",
+        "items": {
+          "1": "Lettre pour chaque formation",
+          "2": "Maximum 1 500 caractères",
+          "3": "Expliquer motivations et projet",
+          "4": "Personnaliser pour chaque vœu"
+        }
+      },
+      "complementary": {
+        "title": "Éléments complémentaires",
+        "items": {
+          "1": "CV (optionnel)",
+          "2": "Attestations d'activités",
+          "3": "Certificats de compétences",
+          "4": "Pièces spécifiques selon formation"
+        }
+      }
+    },
+    "responsesTitle": "Gestion des réponses",
+    "responsesSubtitle": "Types de réponses que vous pouvez recevoir",
+    "responseTypes": {
+      "accepted": {
+        "title": "Oui (accepté)",
+        "description": "Vous pouvez accepter ou refuser la proposition"
+      },
+      "waiting": {
+        "title": "En attente",
+        "description": "Vous restez sur liste d'attente"
+      },
+      "conditional": {
+        "title": "Oui-si",
+        "description": "Accepté avec parcours accompagné"
+      },
+      "refused": {
+        "title": "Non",
+        "description": "Vous n'êtes pas accepté dans cette formation"
+      }
+    },
+    "tipsTitle": "Conseils pour réussir",
+    "tips": {
+      "1": "Diversifiez vos vœux (ambitions + choix sécurisés)",
+      "2": "Soignez vos projets de formation motivés",
+      "3": "Respectez scrupuleusement les délais",
+      "4": "Répondez rapidement aux propositions",
+      "5": "Participez aux journées portes ouvertes"
+    },
+    "complementaryTitle": "Phase complémentaire",
+    "complementaryContent": "Si vous n'avez reçu aucune proposition ou si vous avez refusé toutes les propositions, vous pouvez participer à la phase complémentaire à partir de fin juin. De nouvelles formations avec des places disponibles sont alors proposées.",
+    "forInternationalsTitle": "Pour les étudiants internationaux",
+    "forInternationalsSubtitle": "Cas particuliers selon votre situation",
+    "internationalCases": {
+      "resident": {
+        "title": "Résidant en France",
+        "items": {
+          "1": "Suivre la procédure Parcoursup normale",
+          "2": "Équivalence du baccalauréat nécessaire",
+          "3": "Justificatifs de français requis"
+        }
+      },
+      "abroad": {
+        "title": "Résidant à l'étranger",
+        "items": {
+          "1": "Généralement via Campus France",
+          "2": "Quelques exceptions pour certaines formations",
+          "3": "Vérifier avec l'établissement visé"
+        }
+      }
+    },
+    "resourcesTitle": "Ressources utiles",
+    "resources": {
+      "platform": "Plateforme Parcoursup",
+      "assistance": "Numéro d'assistance",
+      "faq": "FAQ officielle"
+    }
+  },
+  "parisSaclay": {
+    "title": "Processus d'admission Paris-Saclay",
+    "subtitle": "L'Université Paris-Saclay dispose d'une procédure d'admission spécifique pour ses programmes de Master.",
+    "freeProcess": "Procédure totalement gratuite",
+    "freeProcessDesc": "Contrairement à d'autres universités, la candidature à l'Université Paris-Saclay est entièrement gratuite.",
+    "stepsTitle": "Étapes du processus",
+    "steps": {
+      "1": {
+        "title": "Candidature (Mars)",
+        "description": "Via INCEPTION pour M1 spécifiques et M2",
+        "details": {
+          "1": "CV professionnel",
+          "2": "Lettres de motivation",
+          "3": "Relevés de notes",
+          "4": "Diplômes"
+        },
+        "linkText": "Accéder à la plateforme"
+      },
+      "2": {
+        "title": "Procédure d'admission (Mars-Mai)",
+        "description": "Étude du dossier par l'université",
+        "details": {
+          "1": "Évaluation du dossier",
+          "2": "Réponse par email",
+          "3": "Confirmation rapide si accepté"
+        }
+      },
+      "3": {
+        "title": "Campus France (Si accepté)",
+        "description": "Procédure visa après acceptation",
+        "details": {
+          "1": "Onglet \"Je suis accepté\"",
+          "2": "Télécharger attestation",
+          "3": "Procédure visa"
+        }
+      }
+    },
+    "calendarTitle": "Calendrier général Paris-Saclay",
+    "applicationPhase": {
+      "title": "Phase de candidature",
+      "items": {
+        "1": "Janvier : Ouverture candidatures",
+        "2": "Mars : Fermeture plateforme",
+        "3": "Avril-Mai : Réponses"
+      }
+    },
+    "visaPhase": {
+      "title": "Phase visa",
+      "items": {
+        "1": "Mai-Juillet : Campus France",
+        "2": "Août-Septembre : Visa",
+        "3": "Septembre : Arrivée"
+      }
+    },
+    "importantPointsTitle": "Points importants",
+    "importantPoints": {
+      "1": "Ne pas postuler via Campus France normal",
+      "2": "Attendre l'acceptation avant de faire Campus France",
+      "3": "Commencer tôt (forte sélectivité)",
+      "4": "Vérifier les spécificités de votre Master"
+    }
+  },
+  "cta": {
+    "title": "Prêt à concrétiser votre projet d'études en France ?",
+    "subtitle": "Nos conseillers experts vous accompagnent personnellement dans toutes vos démarches, de l'orientation à l'obtention de votre visa.",
+    "button": "Me faire accompagner"
+  }
+}

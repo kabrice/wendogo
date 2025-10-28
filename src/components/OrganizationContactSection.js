@@ -15,8 +15,11 @@ import {
   Globe,
   Award
 } from 'lucide-react';
+import { useTranslation } from 'next-i18next';
 
 const OrganizationContactSection = () => {
+  const { t } = useTranslation('common');
+  
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -33,31 +36,31 @@ const OrganizationContactSection = () => {
     const newErrors = {};
 
     if (!formData.firstName.trim()) {
-      newErrors.firstName = 'Prénom requis';
+      newErrors.firstName = t('organization.contact.form.errors.firstNameRequired');
     }
 
     if (!formData.lastName.trim()) {
-      newErrors.lastName = 'Nom requis';
+      newErrors.lastName = t('organization.contact.form.errors.lastNameRequired');
     }
 
     if (!formData.position.trim()) {
-      newErrors.position = 'Intitulé du poste requis';
+      newErrors.position = t('organization.contact.form.errors.positionRequired');
     }
 
     if (!formData.organization.trim()) {
-      newErrors.organization = 'Nom de l\'établissement requis';
+      newErrors.organization = t('organization.contact.form.errors.organizationRequired');
     }
 
     if (!formData.email.trim()) {
-      newErrors.email = 'Email requis';
+      newErrors.email = t('organization.contact.form.errors.emailRequired');
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Format email invalide';
+      newErrors.email = t('organization.contact.form.errors.emailInvalid');
     }
 
     if (!formData.message.trim()) {
-      newErrors.message = 'Message requis';
+      newErrors.message = t('organization.contact.form.errors.messageRequired');
     } else if (formData.message.trim().length < 20) {
-      newErrors.message = 'Message trop court (minimum 20 caractères)';
+      newErrors.message = t('organization.contact.form.errors.messageTooShort');
     }
 
     setErrors(newErrors);
@@ -95,7 +98,7 @@ const OrganizationContactSection = () => {
       }
     } catch (error) {
       console.error('Erreur:', error);
-      setErrors({ submit: 'Erreur lors de l\'envoi. Veuillez réessayer.' });
+      setErrors({ submit: t('organization.contact.form.errors.submitError') });
     } finally {
       setIsLoading(false);
     }
@@ -119,19 +122,18 @@ const OrganizationContactSection = () => {
             </div>
             
             <h3 className="text-3xl font-bold text-gray-900 mb-4">
-              Message envoyé avec succès !
+              {t('organization.contact.success.title')}
             </h3>
             
             <p className="text-lg text-gray-600 mb-8">
-              Merci pour votre message. Notre équipe vous contactera dans les plus brefs délais 
-              pour discuter de nos opportunités de partenariat.
+              {t('organization.contact.success.message')}
             </p>
             
             <button
               onClick={() => setIsSubmitted(false)}
               className="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition-colors"
             >
-              Envoyer un autre message
+              {t('organization.contact.success.sendAnother')}
             </button>
           </div>
         </div>
@@ -146,32 +148,33 @@ const OrganizationContactSection = () => {
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 bg-indigo-100 text-indigo-700 px-4 py-2 rounded-full text-sm font-medium mb-6">
             <Building2 className="w-4 h-4" />
-            Espace Partenaires
+            {t('organization.title')}
           </div>
+          
           {/* Avantages partenariat */}
           <div className="grid md:grid-cols-3 gap-6 mb-12">
             <div className="bg-white p-6 rounded-xl shadow-md">
               <div className="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Users className="w-6 h-6 text-indigo-600" />
               </div>
-              <h3 className="font-bold text-gray-900 mb-2">Visibilité Accrue</h3>
-              <p className="text-gray-600 text-sm">Touchez des milliers d'étudiants francophones dans le monde entier</p>
+              <h3 className="font-bold text-gray-900 mb-2">{t('organization.advantages.visibility.title')}</h3>
+              <p className="text-gray-600 text-sm">{t('organization.advantages.visibility.description')}</p>
             </div>
             
             <div className="bg-white p-6 rounded-xl shadow-md">
               <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Globe className="w-6 h-6 text-purple-600" />
               </div>
-              <h3 className="font-bold text-gray-900 mb-2">Portée Internationale</h3>
-              <p className="text-gray-600 text-sm">Attirez des talents du Cameroun, Sénégal, Maroc et bien d'autres pays</p>
+              <h3 className="font-bold text-gray-900 mb-2">{t('organization.advantages.reach.title')}</h3>
+              <p className="text-gray-600 text-sm">{t('organization.advantages.reach.description')}</p>
             </div>
             
             <div className="bg-white p-6 rounded-xl shadow-md">
               <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Award className="w-6 h-6 text-green-600" />
               </div>
-              <h3 className="font-bold text-gray-900 mb-2">Accompagnement Expert</h3>
-              <p className="text-gray-600 text-sm">Bénéficiez de notre expertise en recrutement international</p>
+              <h3 className="font-bold text-gray-900 mb-2">{t('organization.advantages.support.title')}</h3>
+              <p className="text-gray-600 text-sm">{t('organization.advantages.support.description')}</p>
             </div>
           </div>
         </div>
@@ -185,10 +188,10 @@ const OrganizationContactSection = () => {
               </div>
               
               <h3 className="text-2xl font-bold text-gray-900 mb-2">
-                Contactez-nous
+                {t('organization.contact.title')}
               </h3>
               <p className="text-gray-600">
-                Décrivez-nous votre établissement et vos objectifs de recrutement
+                {t('organization.contact.subtitle')}
               </p>
             </div>
 
@@ -198,7 +201,7 @@ const OrganizationContactSection = () => {
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     <User className="w-4 h-4 inline mr-2" />
-                    Prénom *
+                    {t('organization.contact.form.firstName')} *
                   </label>
                   <input
                     type="text"
@@ -207,7 +210,7 @@ const OrganizationContactSection = () => {
                     className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent ${
                       errors.firstName ? 'border-red-300' : 'border-gray-300'
                     }`}
-                    placeholder="Votre prénom"
+                    placeholder={t('organization.contact.form.placeholders.firstName')}
                   />
                   {errors.firstName && (
                     <p className="mt-1 text-sm text-red-600">{errors.firstName}</p>
@@ -217,7 +220,7 @@ const OrganizationContactSection = () => {
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     <User className="w-4 h-4 inline mr-2" />
-                    Nom *
+                    {t('organization.contact.form.lastName')} *
                   </label>
                   <input
                     type="text"
@@ -226,7 +229,7 @@ const OrganizationContactSection = () => {
                     className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent ${
                       errors.lastName ? 'border-red-300' : 'border-gray-300'
                     }`}
-                    placeholder="Votre nom"
+                    placeholder={t('organization.contact.form.placeholders.lastName')}
                   />
                   {errors.lastName && (
                     <p className="mt-1 text-sm text-red-600">{errors.lastName}</p>
@@ -239,7 +242,7 @@ const OrganizationContactSection = () => {
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     <Building2 className="w-4 h-4 inline mr-2" />
-                    Intitulé du poste *
+                    {t('organization.contact.form.position')} *
                   </label>
                   <input
                     type="text"
@@ -248,7 +251,7 @@ const OrganizationContactSection = () => {
                     className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent ${
                       errors.position ? 'border-red-300' : 'border-gray-300'
                     }`}
-                    placeholder="Directeur, Responsable admission..."
+                    placeholder={t('organization.contact.form.placeholders.position')}
                   />
                   {errors.position && (
                     <p className="mt-1 text-sm text-red-600">{errors.position}</p>
@@ -258,7 +261,7 @@ const OrganizationContactSection = () => {
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     <GraduationCap className="w-4 h-4 inline mr-2" />
-                    Établissement *
+                    {t('organization.contact.form.organization')} *
                   </label>
                   <input
                     type="text"
@@ -267,7 +270,7 @@ const OrganizationContactSection = () => {
                     className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent ${
                       errors.organization ? 'border-red-300' : 'border-gray-300'
                     }`}
-                    placeholder="Nom de votre école/université"
+                    placeholder={t('organization.contact.form.placeholders.organization')}
                   />
                   {errors.organization && (
                     <p className="mt-1 text-sm text-red-600">{errors.organization}</p>
@@ -279,7 +282,7 @@ const OrganizationContactSection = () => {
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   <Mail className="w-4 h-4 inline mr-2" />
-                  Adresse e-mail *
+                  {t('organization.contact.form.email')} *
                 </label>
                 <input
                   type="email"
@@ -288,7 +291,7 @@ const OrganizationContactSection = () => {
                   className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent ${
                     errors.email ? 'border-red-300' : 'border-gray-300'
                   }`}
-                  placeholder="votre.email@etablissement.fr"
+                  placeholder={t('organization.contact.form.placeholders.email')}
                 />
                 {errors.email && (
                   <p className="mt-1 text-sm text-red-600">{errors.email}</p>
@@ -299,7 +302,7 @@ const OrganizationContactSection = () => {
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   <MessageSquare className="w-4 h-4 inline mr-2" />
-                  Votre message *
+                  {t('organization.contact.form.message')} *
                 </label>
                 <textarea
                   value={formData.message}
@@ -308,13 +311,13 @@ const OrganizationContactSection = () => {
                   className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent ${
                     errors.message ? 'border-red-300' : 'border-gray-300'
                   }`}
-                  placeholder="Décrivez votre établissement, vos formations, vos objectifs de recrutement international et comment nous pouvons collaborer..."
+                  placeholder={t('organization.contact.form.placeholders.message')}
                 />
                 {errors.message && (
                   <p className="mt-1 text-sm text-red-600">{errors.message}</p>
                 )}
                 <p className="mt-1 text-sm text-gray-500">
-                  {formData.message.length}/1000 caractères
+                  {t('organization.contact.form.charactersCount', { count: formData.message.length })}
                 </p>
               </div>
 
@@ -335,12 +338,12 @@ const OrganizationContactSection = () => {
                   {isLoading ? (
                     <>
                       <Loader2 className="w-5 h-5 animate-spin" />
-                      <span>Envoi en cours...</span>
+                      <span>{t('organization.contact.form.submitting')}</span>
                     </>
                   ) : (
                     <>
                       <Send className="w-5 h-5" />
-                      <span>Envoyer notre message</span>
+                      <span>{t('organization.contact.form.submit')}</span>
                     </>
                   )}
                 </button>
@@ -350,8 +353,7 @@ const OrganizationContactSection = () => {
             {/* Note de confidentialité */}
             <div className="mt-8 pt-6 border-t border-gray-200 text-center">
               <p className="text-sm text-gray-500">
-                🔒 Vos informations sont traitées de manière confidentielle et ne seront utilisées 
-                que dans le cadre de notre collaboration potentielle.
+                {t('organization.contact.privacy')}
               </p>
             </div>
           </div>
@@ -360,7 +362,7 @@ const OrganizationContactSection = () => {
         {/* Section de témoignages partenaires */}
         <div className="mt-16">
           <h3 className="text-2xl font-bold text-center text-gray-900 mb-8">
-            Ils nous font déjà confiance
+            {t('organization.testimonials.title')}
           </h3>
           
           <div className="grid md:grid-cols-3 gap-6">
@@ -368,9 +370,9 @@ const OrganizationContactSection = () => {
               <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Building2 className="w-8 h-8 text-blue-600" />
               </div>
-              <h4 className="font-bold text-gray-900 mb-2">Écoles de Commerce</h4>
+              <h4 className="font-bold text-gray-900 mb-2">{t('organization.testimonials.businessSchools.title')}</h4>
               <p className="text-gray-600 text-sm">
-                "Wendogo nous a permis de recruter des profils internationaux de qualité"
+                {t('organization.testimonials.businessSchools.quote')}
               </p>
             </div>
             
@@ -378,9 +380,9 @@ const OrganizationContactSection = () => {
               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <GraduationCap className="w-8 h-8 text-green-600" />
               </div>
-              <h4 className="font-bold text-gray-900 mb-2">Universités</h4>
+              <h4 className="font-bold text-gray-900 mb-2">{t('organization.testimonials.universities.title')}</h4>
               <p className="text-gray-600 text-sm">
-                "Une plateforme efficace pour attirer des étudiants motivés et bien préparés"
+                {t('organization.testimonials.universities.quote')}
               </p>
             </div>
             
@@ -388,9 +390,9 @@ const OrganizationContactSection = () => {
               <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Award className="w-8 h-8 text-purple-600" />
               </div>
-              <h4 className="font-bold text-gray-900 mb-2">Écoles Spécialisées</h4>
+              <h4 className="font-bold text-gray-900 mb-2">{t('organization.testimonials.specializedSchools.title')}</h4>
               <p className="text-gray-600 text-sm">
-                "Grâce à Wendogo, nous avons diversifié notre recrutement international"
+                {t('organization.testimonials.specializedSchools.quote')}
               </p>
             </div>
           </div>

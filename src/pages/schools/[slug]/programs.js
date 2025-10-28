@@ -16,6 +16,7 @@ import RocketLoader from '../../../components/ui/RocketLoader';
 
 const SchoolProgramsPage = ({ school, programs, error }) => {
   const router = useRouter();
+  const locale = router.locale || 'fr';
   const [searchTerm, setSearchTerm] = useState('');
   const [filterGrade, setFilterGrade] = useState('');
   const [filterDuration, setFilterDuration] = useState('');
@@ -39,7 +40,7 @@ const SchoolProgramsPage = ({ school, programs, error }) => {
   useEffect(() => {
     const loadSubdomains = async () => {
       try {
-        const response = await SubdomainApi.getAllSubdomains();
+        const response = await SubdomainApi.getAllSubdomains(locale);
         if (response.success) {
           setSubdomains(response.data);
         }
@@ -552,6 +553,8 @@ const SchoolProgramsPage = ({ school, programs, error }) => {
 };
 
 // Génération statique des pages - MISE À JOUR POUR API
+
+// Génération statique des pages - MISE À JOUR POUR API
 export async function getStaticPaths() {
   try {
     const response = await PrivateSchoolApi.getAllSchoolSlugs();
@@ -559,62 +562,103 @@ export async function getStaticPaths() {
     if (!response.success) {
       return {
         paths: [],
-        fallback: true
+        fallback: 'blocking'
       };
     }
 
-    const paths = response.data.map((slug) => ({
-      params: { slug }
-    }));
+    // ✅ Générer les paths pour toutes les locales
+    const locales = ['fr', 'en'];
+    const paths = [];
+    
+    response.data.forEach((slug) => {
+      locales.forEach((locale) => {
+        paths.push({
+          params: { slug },
+          locale, // ✅ Ajouter la locale
+        });
+      });
+    });
 
     return {
       paths,
-      fallback: true
+      fallback: 'blocking'
     };
   } catch (error) {
     console.error('Erreur lors de la génération des paths:', error);
     return {
       paths: [],
-      fallback: true
+      fallback: 'blocking'
     };
   }
 }
 
-export async function getStaticProps({ params }) {
+const sanitizeData = (obj) => {
+  if (obj === null || obj === undefined) return null;
+  if (Array.isArray(obj)) return obj.map(sanitizeData);
+  if (typeof obj !== 'object') return obj;
+  
+  const cleaned = {};
+  for (const key in obj) {
+    const value = obj[key];
+    if (value === undefined) {
+      cleaned[key] = null;
+    } else if (value && typeof value === 'object') {
+      cleaned[key] = sanitizeData(value);
+    } else {
+      cleaned[key] = value;
+    }
+  }
+  return cleaned;
+};
+// }
+
+export async function getStaticProps({ params, locale = 'fr' }) {
+  // ✅ DÉPLACER L'IMPORT ICI, AU DÉBUT DE LA FONCTION
+  const { serverSideTranslations } = await import('next-i18next/serverSideTranslations');
+  
   try {
     const { slug } = params;
-    
+
+    console.log('getStaticProps called with:', { slug, locale });
+
     // Récupérer l'école
-    const schoolResponse = await PrivateSchoolApi.getSchoolBySlug(slug);
+    const schoolResponse = await PrivateSchoolApi.getSchoolBySlug(slug, locale);
     
-    if (!schoolResponse.success) {
-      return {
-        notFound: true
-      };
+    if (!schoolResponse.success || !schoolResponse.data) {
+      console.log('School not found:', slug);
+      return { notFound: true };
     }
 
     const school = schoolResponse.data;
 
-    // Récupérer les programmes de cette école
-    const programsResponse = await ProgramApi.getProgramsBySchoolSlug(slug);
+    // Récupérer les programmes de l'école avec la locale
+    const programsResponse = await ProgramApi.getProgramsBySchoolId(school.id, locale);
     const programs = programsResponse.success ? programsResponse.data : [];
+
+    // ✅ Nettoyer toutes les données
+    const cleanedSchool = sanitizeData(school);
+    const cleanedPrograms = sanitizeData(programs);
 
     return {
       props: {
-        school,
-        programs
+        school: cleanedSchool,
+        programs: cleanedPrograms,
+        ...(await serverSideTranslations(locale, ['authModal', 'common', 'programs'])),
       },
-      revalidate: 3600 // Révalidation toutes les heures
+      revalidate: 86400 // 24 heures
     };
   } catch (error) {
-    console.error('Erreur lors de la récupération des données:', error);
+    console.error('Error in getStaticProps:', error);
+    // ✅ MAINTENANT serverSideTranslations EST ACCESSIBLE ICI
     return {
       props: {
-        error: 'Erreur lors du chargement des données'
+        error: 'Erreur lors du chargement des données',
+        school: null,
+        programs: [],
+        ...(await serverSideTranslations(locale, ['authModal', 'common', 'programs'])),
       },
-      revalidate: 60 // Retry plus fréquemment en cas d'erreur
+      revalidate: 60
     };
   }
 }
-
 export default SchoolProgramsPage;

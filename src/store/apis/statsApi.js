@@ -47,74 +47,25 @@ class StatsApi {
     }
   }
 
-  /**
-   * Récupère les statistiques des programmes
-   * @returns {Promise<Object>} Statistiques des programmes
-   
-  static async getProgramStats() {
+  static async getStats(locale = 'fr') {
     try {
-      const response = await fetch(`${this.baseUrl}/programs/stats`, {
-        method: 'GET',
-        headers: this.headers
-      });
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      
+      const response = await fetch(`${this.baseUrl}/stats?locale=${locale}`);
       const data = await response.json();
-      return {
-        success: true,
-        data: data
-      };
+      return data;
     } catch (error) {
-      console.error('Erreur lors de la récupération des stats programmes:', error);
-      return {
-        success: false,
-        error: error.message,
-        data: { total_programs: 0 }
-      };
+      console.error('Error fetching stats:', error);
+      return { success: false, error: error.message };
     }
-  }*/
-
-  /**
-   * Récupère les statistiques des écoles
-   * @returns {Promise<Object>} Statistiques des écoles
-   
-  static async getSchoolStats() {
-    try {
-      const response = await fetch(`${this.baseUrl}/schools/stats`, {
-        method: 'GET',
-        headers: this.headers
-      });
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      
-      const data = await response.json();
-      return {
-        success: true,
-        data: data
-      };
-    } catch (error) {
-      console.error('Erreur lors de la récupération des stats écoles:', error);
-      return {
-        success: false,
-        error: error.message,
-        data: { total_schools: 0 }
-      };
-    }
-  }*/
+  }
 
   /**
    * Récupère les statistiques d'un domaine spécifique
    * @param {string} domainId - L'ID du domaine
    * @returns {Promise<Object>} Statistiques du domaine
    */
-  static async getDomainStats(domainId) {
+  static async getDomainStats(domainId, locale = 'fr') {
     try {
-      const response = await fetch(`${this.baseUrl}/domains/${domainId}/stats`, {
+      const response = await fetch(`${this.baseUrl}/domains/${domainId}/stats?locale=${locale}`, {
         method: 'GET',
         headers: this.headers
       });

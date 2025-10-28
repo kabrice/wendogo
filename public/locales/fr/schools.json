@@ -1,0 +1,100 @@
+{
+  "error": {
+    "notFound": "École non trouvée",
+    "backToSchools": "Retour aux écoles"
+  },
+  "programs": {
+    "title": "Programmes disponibles",
+    "none": "Aucun programme disponible pour le moment",
+    "viewAll": "Voir tous les {{count}} programmes",
+    "viewLess": "Voir moins",
+    "seeAll": "Voir tous ({{count}})",
+    "alternance": "Alternance",
+    "moreSkills": "+{{count}} autres"
+  },
+  "tuitionExoneration": {
+    "total": "Exonération Totale",
+    "partial": "Exonération Partielle",
+    "none": "Aucune exonération",
+    "notCommunicated": "Non communiqué"
+  },
+  "stats": {
+    "recognitions": "Reconnaissances",
+    "accreditations": "{{count}}+ accréditations",
+    "international": "International",
+    "foreignStudents": "Étudiants étrangers",
+    "foreignStudentsIn": "Étudiants étrangers en {{year}}"
+  },
+  "about": {
+    "title": "À propos de l'école",
+    "recognitionsTitle": "Reconnaissances et accréditations",
+    "nationalReach": "🏆 Rayonnement national",
+    "internationalReach": "🌍 Rayonnement international"
+  },
+  "degrees": {
+    "title": "Quels diplômes peut-on obtenir ?",
+    "description": "{{schoolName}} propose des programmes de formation reconnus dans les domaines suivants :"
+  },
+  "campusFrance": {
+    "title": "Procédure Campus France",
+    "description": "{{schoolName}} est partenaire officiel de Campus France, facilitant vos démarches visa et d'inscription.",
+    "generalConditions": "Conditions générales",
+    "internationalSupport": "Support international",
+    "badge": "Campus France",
+    "admissionTitle": "Modalités d'admission pour étudiants internationaux",
+    "procedures": [
+        "Candidature via plateforme \"Études en France\"",
+        "Support personnalisé pour les démarches visa",
+        "Procédures simplifiées et accélérées"
+    ]
+  },
+  "alternancePrograms": {
+    "title": "Formations en alternance",
+    "advantagesTitle": "Avantages de l'alternance",
+    "advantages": {
+      "tuitionCovered": "Frais de scolarité pris en charge par l'entreprise",
+      "salary": "Rémunération pendant les études (55-80% du SMIC)",
+      "experience": "Expérience professionnelle valorisante",
+      "employment": "Facilite l'insertion professionnelle"
+    }
+  },
+  "campusLife": {
+    "title": "La vie de campus",
+    "description": "Le campus de {{schoolName}} offre un environnement d'études exceptionnel avec des infrastructures modernes et un accompagnement personnalisé.",
+    "infrastructure": "Infrastructures",
+    "partnerships": "Partenariats",
+    "morePartnerships": "+{{count}} autres",
+    "arrivalSupport": "Accompagnement après arrivée"
+  },
+  "seo": {
+    "defaultTitle": "{{schoolName}} - École Internationale | Wendogo",
+    "defaultKeywords": "{{schoolName}}, école internationale, étudiants étrangers"
+  },
+  "header": {
+    "group": "Groupe {{groupName}}",
+    "privateContract": "Hors contrat"
+  },
+  "contact": {
+    "form": "Formulaire de contact",
+    "follow": "Suivre {{schoolName}}"
+  },
+  "similar": {
+    "title": "Écoles similaires",
+    "similarity": "{{percent}}% similaire"
+  },
+  "cta": {
+    "discoverPrograms": {
+      "title": "Découvrez les formations",
+      "description": "Explorez toutes les formations disponibles avec reconnaissance internationale.",
+      "button": "Voir les {{count}} formations"
+    },
+    "ourMission": {
+      "title": "Votre réussite, notre mission",
+      "description": "Accompagnement dédié aux étudiants étrangers",
+      "visaHelp": "Aide visa & logement",
+      "integration": "Intégration campus",
+      "adminSupport": "Support administratif",
+      "button": "Découvrez nos services"
+    }
+  }
+}

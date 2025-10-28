@@ -21,7 +21,7 @@ const DataDeletionStatus = () => {
   if (!code) {
     return (
       <>
-        <NavBar variant="simple" />
+        <NavBar variant="simple" languageSelectorVariant="light" />
         <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 flex items-center justify-center">
           <div className="text-center">
             <AlertTriangle className="w-16 h-16 text-orange-500 mx-auto mb-4" />
@@ -36,7 +36,7 @@ const DataDeletionStatus = () => {
 
   return (
     <>
-      <NavBar variant="simple" />
+      <NavBar variant="simple" languageSelectorVariant="light" />
       
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-16">

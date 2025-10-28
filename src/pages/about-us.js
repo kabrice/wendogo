@@ -1,4 +1,4 @@
-// src/pages/about-us.js - Version redesignée
+// src/pages/about-us.js - Version internationalisée
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -13,9 +13,13 @@ import ExpertMan from '../assets/optimized/superhero.webp';
 import WendogoTeam from '../assets/optimized/wendogo_team.webp';
 import EdgarHead from '../assets/optimized/edgar_head.webp';
 import SocialMediaLogo from '../assets/optimized/wendogo_jeu_concours.webp';
+import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next';
 
 function AboutUs() {
   const [activeSection, setActiveSection] = useState('team');
+  const router = useRouter();
+  const { t } = useTranslation(['common', 'aboutUs']);
 
   useEffect(() => {
     trackPageView('about_us_page');
@@ -23,17 +27,17 @@ function AboutUs() {
 
   const teamMembers = [
     {
-      name: 'Edgar Kamdem',
-      role: 'Co-fondateur & CEO',
-      description: 'Ingénieur et entrepreneur passionné par l\'éducation internationale. Edgar a créé Wendogo après avoir vécu les difficultés des démarches d\'études à l\'étranger.',
+      name: t('aboutUs:team.members.edgar.name'),
+      role: t('aboutUs:team.members.edgar.role'),
+      description: t('aboutUs:team.members.edgar.description'),
       image: EdgarHead,
       linkedin: '#',
       email: 'edgar@wendogo.com'
     },
     {
-      name: 'Équipe Conseillers',
-      role: 'Experts en orientation',
-      description: 'Une équipe de conseillers expérimentés, anciens étudiants internationaux, qui comprennent parfaitement les défis que vous rencontrez.',
+      name: t('aboutUs:team.members.advisors.name'),
+      role: t('aboutUs:team.members.advisors.role'),
+      description: t('aboutUs:team.members.advisors.description'),
       image: ExpertMan,
       linkedin: '#',
       email: 'hello@wendogo.com'
@@ -42,26 +46,26 @@ function AboutUs() {
 
   const expertise = [
     {
-      title: 'Accompagnement personnalisé',
-      description: 'Chaque étudiant est unique. Nos conseillers prennent le temps de comprendre votre profil, vos objectifs et vos contraintes pour vous proposer un accompagnement sur mesure.',
+      title: t('aboutUs:expertise.sections.personalizedSupport.title'),
+      description: t('aboutUs:expertise.sections.personalizedSupport.description'),
       icon: Target,
       color: 'blue'
     },
     {
-      title: 'Expertise reconnue',
-      description: 'Notre équipe maîtrise parfaitement le système éducatif français, les procédures administratives et les attentes des établissements.',
+      title: t('aboutUs:expertise.sections.recognizedExpertise.title'),
+      description: t('aboutUs:expertise.sections.recognizedExpertise.description'),
       icon: Award,
       color: 'green'
     },
     {
-      title: 'Suivi bienveillant',
-      description: 'Nous vous accompagnons avec empathie et bienveillance, en comprenant les enjeux émotionnels de votre projet d\'études.',
+      title: t('aboutUs:expertise.sections.supportiveCare.title'),
+      description: t('aboutUs:expertise.sections.supportiveCare.description'),
       icon: Heart,
       color: 'red'
     },
     {
-      title: 'Réseau étendu',
-      description: 'Grâce à notre réseau de partenaires et d\'anciens étudiants, nous vous ouvrons des portes et facilitons votre intégration.',
+      title: t('aboutUs:expertise.sections.extensiveNetwork.title'),
+      description: t('aboutUs:expertise.sections.extensiveNetwork.description'),
       icon: Globe,
       color: 'purple'
     }
@@ -70,28 +74,28 @@ function AboutUs() {
   const milestones = [
     {
       year: '2020',
-      title: 'Création de Wendogo',
-      description: 'Naissance de l\'idée suite aux difficultés rencontrées par les fondateurs'
+      title: t('aboutUs:story.milestones.2020.title'),
+      description: t('aboutUs:story.milestones.2020.description')
     },
     {
       year: '2021',
-      title: 'Premiers étudiants accompagnés',
-      description: 'Lancement officiel avec les premiers services d\'orientation'
+      title: t('aboutUs:story.milestones.2021.title'),
+      description: t('aboutUs:story.milestones.2021.description')
     },
     {
       year: '2022',
-      title: 'Expansion des services',
-      description: 'Ajout de l\'accompagnement visa et partenariats avec les écoles'
+      title: t('aboutUs:story.milestones.2022.title'),
+      description: t('aboutUs:story.milestones.2022.description')
     },
     {
       year: '2023',
-      title: 'Reconnaissance nationale',
-      description: 'Wendogo devient une référence pour les études en France'
+      title: t('aboutUs:story.milestones.2023.title'),
+      description: t('aboutUs:story.milestones.2023.description')
     },
     {
       year: '2024',
-      title: 'Innovation continue',
-      description: 'Nouveaux outils et services pour optimiser votre expérience'
+      title: t('aboutUs:story.milestones.2024.title'),
+      description: t('aboutUs:story.milestones.2024.description')
     }
   ];
 
@@ -100,14 +104,14 @@ function AboutUs() {
       <Head>
         <meta property="og:url" content="https://wendogo.com/about-us" />
         <meta property="og:type" content="article" />
-        <meta property="og:title" content="À propos de Wendogo - Votre partenaire pour étudier en France" />
-        <meta property="og:description" content="Découvrez l'équipe Wendogo et notre mission : vous accompagner avec expertise et bienveillance dans votre projet d'études en France." />
+        <meta property="og:title" content={t('aboutUs:meta.title')} />
+        <meta property="og:description" content={t('aboutUs:meta.description')} />
         <meta property="og:image" content={'https://wendogo.com' + SocialMediaLogo} />
-        <title>À propos de Wendogo - Votre partenaire pour étudier en France</title>
-        <meta name="description" content="Découvrez l'équipe Wendogo et notre mission : vous accompagner avec expertise et bienveillance dans votre projet d'études en France." />
+        <title>{t('aboutUs:meta.title')}</title>
+        <meta name="description" content={t('aboutUs:meta.description')} />
       </Head>
 
-      <NavBar variant="simple" />
+      <NavBar variant="simple" languageSelectorVariant="light" />
 
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-indigo-600 via-purple-600 to-blue-700 text-white">
@@ -115,21 +119,19 @@ function AboutUs() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <h1 className="text-5xl font-bold mb-6">
-                Qui sommes-nous ?
+                {t('aboutUs:hero.title')}
               </h1>
               <p className="text-xl mb-8 text-indigo-100">
-                Wendogo, c'est une équipe passionnée d'experts en éducation internationale 
-                qui comprend parfaitement les défis que vous rencontrez. Nous sommes vos 
-                partenaires de confiance pour réaliser votre rêve d'études en France.
+                {t('aboutUs:hero.description')}
               </p>
               <div className="flex items-center space-x-6 text-indigo-200">
                 <div className="flex items-center">
                   <Users className="w-5 h-5 mr-2" />
-                  <span>Équipe d'experts</span>
+                  <span>{t('aboutUs:hero.expertTeam')}</span>
                 </div>
                 <div className="flex items-center">
                   <Heart className="w-5 h-5 mr-2" />
-                  <span>Accompagnement bienveillant</span>
+                  <span>{t('aboutUs:hero.supportiveCare')}</span>
                 </div>
               </div>
             </div>
@@ -137,7 +139,7 @@ function AboutUs() {
               <div className="relative z-10">
                 <Image
                   src={WendogoTeam}
-                  alt="Équipe Wendogo"
+                  alt={t('aboutUs:hero.teamImageAlt')}
                   className="rounded-2xl shadow-2xl"
                   width={600}
                   height={400}
@@ -154,9 +156,9 @@ function AboutUs() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex space-x-8">
             {[
-              { id: 'team', label: 'Notre équipe' },
-              { id: 'expertise', label: 'Notre expertise' },
-              { id: 'story', label: 'Notre histoire' }
+              { id: 'team', label: t('aboutUs:navigation.team') },
+              { id: 'expertise', label: t('aboutUs:navigation.expertise') },
+              { id: 'story', label: t('aboutUs:navigation.story') }
             ].map(tab => (
               <button
                 key={tab.id}
@@ -182,11 +184,10 @@ function AboutUs() {
             <div>
               <div className="text-center mb-12">
                 <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                  Notre équipe
+                  {t('aboutUs:team.title')}
                 </h2>
                 <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                  Des experts passionnés qui mettent leur expérience et leur bienveillance 
-                  au service de votre réussite.
+                  {t('aboutUs:team.description')}
                 </p>
               </div>
 
@@ -210,20 +211,20 @@ function AboutUs() {
                     </div>
                     <p className="text-gray-700 mb-6">{member.description}</p>
                     <div className="flex space-x-4">
-                      <a
+                      <Link
                         href={`mailto:${member.email}`}
                         className="flex items-center text-gray-600 hover:text-blue-600 transition-colors"
                       >
                         <Mail className="w-4 h-4 mr-2" />
                         Contact
-                      </a>
-                      <a
+                      </Link>
+                      <Link   
                         href={member.linkedin}
                         className="flex items-center text-gray-600 hover:text-blue-600 transition-colors"
                       >
                         <LinkedinIcon className="w-4 h-4 mr-2" />
                         LinkedIn
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 ))}
@@ -231,34 +232,40 @@ function AboutUs() {
 
               <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-8">
                 <h3 className="text-2xl font-semibold text-gray-900 mb-6 text-center">
-                  Pourquoi choisir nos conseillers ?
+                  {t('aboutUs:team.whyChooseAdvisors')}
                 </h3>
                 <div className="grid md:grid-cols-3 gap-6">
                   <div className="text-center">
                     <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                       <Users className="w-8 h-8 text-blue-600" />
                     </div>
-                    <h4 className="font-semibold text-gray-900 mb-2">Expérience vécue</h4>
+                    <h4 className="font-semibold text-gray-900 mb-2">
+                      {t('aboutUs:team.advisorQualities.livedExperience.title')}
+                    </h4>
                     <p className="text-gray-700 text-sm">
-                      Nos conseillers ont eux-mêmes vécu l'expérience des études à l'étranger
+                      {t('aboutUs:team.advisorQualities.livedExperience.description')}
                     </p>
                   </div>
                   <div className="text-center">
                     <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                       <Award className="w-8 h-8 text-green-600" />
                     </div>
-                    <h4 className="font-semibold text-gray-900 mb-2">Expertise reconnue</h4>
+                    <h4 className="font-semibold text-gray-900 mb-2">
+                      {t('aboutUs:team.advisorQualities.recognizedExpertise.title')}
+                    </h4>
                     <p className="text-gray-700 text-sm">
-                      Formation continue et certification sur les procédures françaises
+                      {t('aboutUs:team.advisorQualities.recognizedExpertise.description')}
                     </p>
                   </div>
                   <div className="text-center">
                     <div className="bg-red-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                       <Heart className="w-8 h-8 text-red-600" />
                     </div>
-                    <h4 className="font-semibold text-gray-900 mb-2">Accompagnement humain</h4>
+                    <h4 className="font-semibold text-gray-900 mb-2">
+                      {t('aboutUs:team.advisorQualities.humanSupport.title')}
+                    </h4>
                     <p className="text-gray-700 text-sm">
-                      Écoute, empathie et soutien tout au long de votre parcours
+                      {t('aboutUs:team.advisorQualities.humanSupport.description')}
                     </p>
                   </div>
                 </div>
@@ -271,11 +278,10 @@ function AboutUs() {
             <div>
               <div className="text-center mb-12">
                 <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                  Notre expertise
+                  {t('aboutUs:expertise.title')}
                 </h2>
                 <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                  Ce qui nous différencie et fait de nous vos meilleurs alliés pour réussir 
-                  votre projet d'études en France.
+                  {t('aboutUs:expertise.description')}
                 </p>
               </div>
 
@@ -297,38 +303,46 @@ function AboutUs() {
 
               <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-8">
                 <h3 className="text-2xl font-semibold text-gray-900 mb-6 text-center">
-                  Nos domaines d'expertise
+                  {t('aboutUs:expertise.domains.title')}
                 </h3>
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                   <div className="text-center">
                     <div className="bg-white p-4 rounded-lg shadow-sm">
-                      <h4 className="font-semibold text-gray-900 mb-2">🎓 Orientation</h4>
+                      <h4 className="font-semibold text-gray-900 mb-2">
+                        {t('aboutUs:expertise.domains.orientation.title')}
+                      </h4>
                       <p className="text-sm text-gray-600">
-                        Plus de 2100 formations analysées et répertoriées
+                        {t('aboutUs:expertise.domains.orientation.description')}
                       </p>
                     </div>
                   </div>
                   <div className="text-center">
                     <div className="bg-white p-4 rounded-lg shadow-sm">
-                      <h4 className="font-semibold text-gray-900 mb-2">📋 Visa étudiant</h4>
+                      <h4 className="font-semibold text-gray-900 mb-2">
+                        {t('aboutUs:expertise.domains.visa.title')}
+                      </h4>
                       <p className="text-sm text-gray-600">
-                        Expertise complète des procédures consulaires
+                        {t('aboutUs:expertise.domains.visa.description')}
                       </p>
                     </div>
                   </div>
                   <div className="text-center">
                     <div className="bg-white p-4 rounded-lg shadow-sm">
-                      <h4 className="font-semibold text-gray-900 mb-2">🏫 Campus France</h4>
+                      <h4 className="font-semibold text-gray-900 mb-2">
+                        {t('aboutUs:expertise.domains.campusFrance.title')}
+                      </h4>
                       <p className="text-sm text-gray-600">
-                        Accompagnement personnalisé de A à Z
+                        {t('aboutUs:expertise.domains.campusFrance.description')}
                       </p>
                     </div>
                   </div>
                   <div className="text-center">
                     <div className="bg-white p-4 rounded-lg shadow-sm">
-                      <h4 className="font-semibold text-gray-900 mb-2">🏠 Installation</h4>
+                      <h4 className="font-semibold text-gray-900 mb-2">
+                        {t('aboutUs:expertise.domains.installation.title')}
+                      </h4>
                       <p className="text-sm text-gray-600">
-                        Support pour votre arrivée et intégration
+                        {t('aboutUs:expertise.domains.installation.description')}
                       </p>
                     </div>
                   </div>
@@ -342,33 +356,27 @@ function AboutUs() {
             <div>
               <div className="text-center mb-12">
                 <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                  Notre histoire
+                  {t('aboutUs:story.title')}
                 </h2>
                 <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                  Wendogo est née d'une frustration personnelle qui s'est transformée 
-                  en mission : faciliter l'accès aux études supérieures en France.
+                  {t('aboutUs:story.description')}
                 </p>
               </div>
 
               <div className="grid lg:grid-cols-2 gap-12 mb-16">
                 <div>
                   <h3 className="text-2xl font-semibold text-gray-900 mb-6">
-                    L'origine de Wendogo
+                    {t('aboutUs:story.origin.title')}
                   </h3>
                   <div className="space-y-4 text-gray-700">
                     <p>
-                      Tout a commencé avec Edgar Kamdem, ingénieur passionné par l'éducation, 
-                      qui a vécu les difficultés des démarches administratives pour faire 
-                      voyager ses proches et les accompagner dans leurs études à l'étranger.
+                      {t('aboutUs:story.origin.paragraph1')}
                     </p>
                     <p>
-                      Constatant que de nombreux étudiants talentueux abandonnaient leurs 
-                      rêves face à la complexité des procédures, Edgar a décidé de créer 
-                      une solution pour démocratiser l'accès aux études en France.
+                      {t('aboutUs:story.origin.paragraph2')}
                     </p>
                     <p>
-                      Wendogo est ainsi né de cette volonté de simplifier, d'accompagner 
-                      et de réussir ensemble.
+                      {t('aboutUs:story.origin.paragraph3')}
                     </p>
                   </div>
                 </div>
@@ -376,7 +384,7 @@ function AboutUs() {
                   <div className="relative z-10">
                     <Image
                       src={ExpertMan}
-                      alt="Conseiller Wendogo"
+                      alt={t('aboutUs:story.origin.imageAlt')}
                       className="rounded-2xl shadow-lg"
                       width={400}
                       height={300}
@@ -388,7 +396,7 @@ function AboutUs() {
 
               <div className="bg-white rounded-2xl border border-gray-200 p-8">
                 <h3 className="text-2xl font-semibold text-gray-900 mb-8 text-center">
-                  Les étapes clés de notre développement
+                  {t('aboutUs:story.milestones.title')}
                 </h3>
                 <div className="space-y-8">
                   {milestones.map((milestone, index) => (
@@ -417,15 +425,14 @@ function AboutUs() {
       <section className="py-16 bg-gradient-to-r from-indigo-600 to-purple-600 text-white">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <h2 className="text-3xl font-bold mb-6">
-            Prêt à faire équipe avec nous ?
+            {t('aboutUs:cta.title')}
           </h2>
           <p className="text-xl mb-8 text-indigo-100">
-            Rejoignez la communauté Wendogo et bénéficiez de l'accompagnement 
-            d'experts qui comprennent vraiment votre projet.
+            {t('aboutUs:cta.description')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/contact" className="bg-white text-indigo-600 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
-              Me faire accompagner
+              {t('aboutUs:cta.button')}
             </Link>
           </div>
         </div>
@@ -434,6 +441,16 @@ function AboutUs() {
       <Footer />
     </div>
   );
+}
+
+export async function getStaticProps({ locale }) {
+  const { serverSideTranslations } = await import('next-i18next/serverSideTranslations');
+  
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['authModal', 'common', 'aboutUs'])),
+    },
+  };
 }
 
 export default AboutUs;

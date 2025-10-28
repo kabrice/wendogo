@@ -72,7 +72,8 @@
     "start": "next start",
     "lint": "next lint",
     "structure": "node ./file-structure-script.js",
-    "analyze": "cross-env ANALYZE=true next build"
+    "analyze": "cross-env ANALYZE=true next build",
+    "dev:hot": "concurrently --kill-others \"next dev\" \"node scripts/watch-i18n-hot.js\""
   },
   "eslintConfig": {
     "extends": [
@@ -102,11 +103,14 @@
   "devDependencies": {
     "@svgr/webpack": "^8.1.0",
     "autoprefixer": "^10.4.14",
+    "chokidar": "^4.0.3",
+    "concurrently": "^9.2.1",
     "critters": "^0.0.23",
     "file-loader": "^6.2.0",
     "postcss": "^8.4.23",
     "tailwindcss": "^3.3.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "ws": "^8.18.3"
   },
   "resolutions": {
     "@emotion/react": "latest"

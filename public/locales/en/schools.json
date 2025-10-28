@@ -1,0 +1,100 @@
+{
+  "error": {
+    "notFound": "School not found",
+    "backToSchools": "Back to schools"
+  },
+  "programs": {
+    "title": "Available programs",
+    "none": "No programs available at the moment",
+    "viewAll": "View all {{count}} programs",
+    "viewLess": "View less",
+    "seeAll": "See all ({{count}})",
+    "alternance": "Work-study",
+    "moreSkills": "+{{count}} more"
+  },
+  "tuitionExoneration": {
+    "total": "Full Exemption",
+    "partial": "Partial Exemption",
+    "none": "No exemption",
+    "notCommunicated": "Not disclosed"
+  },
+  "stats": {
+    "recognitions": "Recognitions",
+    "accreditations": "{{count}}+ accreditations",
+    "international": "International",
+    "foreignStudents": "International students",
+    "foreignStudentsIn": "International students in {{year}}"
+  },
+  "about": {
+    "title": "About the school",
+    "recognitionsTitle": "Recognitions and accreditations",
+    "nationalReach": "🏆 National reach",
+    "internationalReach": "🌍 International reach"
+  },
+  "degrees": {
+    "title": "What degrees can you obtain?",
+    "description": "{{schoolName}} offers recognized training programs in the following fields:"
+  },
+  "campusFrance": {
+    "title": "Campus France Procedure",
+    "description": "{{schoolName}} is an official partner of Campus France, facilitating your visa and registration procedures.",
+    "generalConditions": "General conditions",
+    "internationalSupport": "International support",
+    "badge": "Campus France",
+    "admissionTitle": "Admission requirements for international students",
+    "procedures": [
+        "Application via \"Studying in France\" platform",
+        "Personalized support for visa procedures",
+        "Simplified and accelerated procedures"
+    ]
+  },
+  "alternancePrograms": {
+    "title": "Work-study programs",
+    "advantagesTitle": "Work-study benefits",
+    "advantages": {
+      "tuitionCovered": "Tuition fees covered by the company",
+      "salary": "Salary during studies (55-80% of minimum wage)",
+      "experience": "Valuable professional experience",
+      "employment": "Facilitates professional integration"
+    }
+  },
+  "campusLife": {
+    "title": "Campus life",
+    "description": "The campus of {{schoolName}} offers an exceptional study environment with modern facilities and personalized support.",
+    "infrastructure": "Infrastructure",
+    "partnerships": "Partnerships",
+    "morePartnerships": "+{{count}} more",
+    "arrivalSupport": "Support after arrival"
+  },
+  "seo": {
+    "defaultTitle": "{{schoolName}} - International School | Wendogo",
+    "defaultKeywords": "{{schoolName}}, international school, international students"
+  },
+  "header": {
+    "group": "{{groupName}} Group",
+    "privateContract": "Private contract"
+  },
+  "contact": {
+    "form": "Contact form",
+    "follow": "Follow {{schoolName}}"
+  },
+  "similar": {
+    "title": "Similar schools",
+    "similarity": "{{percent}}% similar"
+  },
+  "cta": {
+    "discoverPrograms": {
+      "title": "Discover programs",
+      "description": "Explore all available programs with international recognition.",
+      "button": "View {{count}} programs"
+    },
+    "ourMission": {
+      "title": "Your success, our mission",
+      "description": "Dedicated support for international students",
+      "visaHelp": "Visa & housing help",
+      "integration": "Campus integration",
+      "adminSupport": "Administrative support",
+      "button": "Discover our services"
+    }
+  }
+}

@@ -6,6 +6,7 @@ import { trackPageView } from '../../lib/gtag';
 import Head from 'next/head';
 import Footer from '../../components/Footer';
 import NavBar from '../../components/NavBar';
+import { useTranslation } from 'next-i18next';
 import { 
   FileText, 
   Shield, 
@@ -33,6 +34,7 @@ import {
 import Link from 'next/link';
 
 function VisaEtudiantGuide() {
+  const { t } = useTranslation(['common', 'visaEtudiant']);
   const [activeTab, setActiveTab] = useState('types');
   const [expandedSection, setExpandedSection] = useState(null);
 
@@ -45,70 +47,70 @@ function VisaEtudiantGuide() {
   };
 
   const quickStats = [
-    { number: '99€', label: 'Frais de visa', icon: Euro },
-    { number: '615€', label: 'Ressources/mois', icon: CreditCard },
-    { number: '2-8', label: 'Semaines délai', icon: Clock },
-    { number: '1 an', label: 'Validité initiale', icon: Calendar }
+    { number: '99€', label: t('visaEtudiant:quickStats.visaFees'), icon: Euro },
+    { number: '615€', label: t('visaEtudiant:quickStats.monthlyResources'), icon: CreditCard },
+    { number: '2-8', label: t('visaEtudiant:quickStats.processingTime'), icon: Clock },
+    { number: '1 an', label: t('visaEtudiant:quickStats.initialValidity'), icon: Calendar }
   ];
 
   const visaTypes = [
     {
-      title: 'Visa long séjour étudiant (VLS-TS)',
-      description: 'Pour études de plus de 3 mois',
-      duration: '1 an renouvelable',
-      requirements: 'Admission + ressources',
+      title: t('visaEtudiant:types.vls.title'),
+      description: t('visaEtudiant:types.vls.description'),
+      duration: t('visaEtudiant:types.vls.duration'),
+      requirements: t('visaEtudiant:types.vls.requirements'),
       color: 'blue'
     },
     {
-      title: 'Visa court séjour étudiant',
-      description: 'Pour études de moins de 3 mois',
-      duration: '90 jours maximum',
-      requirements: 'Inscription + hébergement',
+      title: t('visaEtudiant:types.short.title'),
+      description: t('visaEtudiant:types.short.description'),
+      duration: t('visaEtudiant:types.short.duration'),
+      requirements: t('visaEtudiant:types.short.requirements'),
       color: 'green'
     },
     {
-      title: 'Visa études - concours',
-      description: 'Pour passer un concours',
-      duration: '90 jours',
-      requirements: 'Convocation + garanties',
+      title: t('visaEtudiant:types.concours.title'),
+      description: t('visaEtudiant:types.concours.description'),
+      duration: t('visaEtudiant:types.concours.duration'),
+      requirements: t('visaEtudiant:types.concours.requirements'),
       color: 'purple'
     }
   ];
 
   const documentsRequis = [
     {
-      category: 'Documents personnels',
+      category: t('visaEtudiant:documents.personal.category'),
       items: [
-        { name: 'Passeport', detail: 'Valide + 3 mois après fin séjour', urgent: true },
-        { name: 'Photos d\'identité', detail: '2 photos récentes format 35x45mm', urgent: true },
-        { name: 'Formulaire visa', detail: 'Complété et signé', urgent: true },
-        { name: 'Acte de naissance', detail: 'Original + traduction', urgent: false }
+        { name: t('visaEtudiant:documents.personal.passport.name'), detail: t('visaEtudiant:documents.personal.passport.detail'), urgent: true },
+        { name: t('visaEtudiant:documents.personal.photos.name'), detail: t('visaEtudiant:documents.personal.photos.detail'), urgent: true },
+        { name: t('visaEtudiant:documents.personal.form.name'), detail: t('visaEtudiant:documents.personal.form.detail'), urgent: true },
+        { name: t('visaEtudiant:documents.personal.birthCert.name'), detail: t('visaEtudiant:documents.personal.birthCert.detail'), urgent: false }
       ]
     },
     {
-      category: 'Documents académiques',
+      category: t('visaEtudiant:documents.academic.category'),
       items: [
-        { name: 'Attestation Campus France', detail: 'Validation obligatoire', urgent: true },
-        { name: 'Attestation admission', detail: 'Université ou école', urgent: true },
-        { name: 'Diplômes antérieurs', detail: 'Originaux + traductions', urgent: false },
-        { name: 'Relevés de notes', detail: '3 dernières années', urgent: false }
+        { name: t('visaEtudiant:documents.academic.campusFrance.name'), detail: t('visaEtudiant:documents.academic.campusFrance.detail'), urgent: true },
+        { name: t('visaEtudiant:documents.academic.admission.name'), detail: t('visaEtudiant:documents.academic.admission.detail'), urgent: true },
+        { name: t('visaEtudiant:documents.academic.diplomas.name'), detail: t('visaEtudiant:documents.academic.diplomas.detail'), urgent: false },
+        { name: t('visaEtudiant:documents.academic.transcripts.name'), detail: t('visaEtudiant:documents.academic.transcripts.detail'), urgent: false }
       ]
     },
     {
-      category: 'Documents financiers',
+      category: t('visaEtudiant:documents.financial.category'),
       items: [
-        { name: 'Justificatifs ressources', detail: '615€/mois minimum', urgent: true },
-        { name: 'Relevés bancaires', detail: '3 derniers mois', urgent: true },
-        { name: 'Attestation garant', detail: 'Si applicable', urgent: false },
-        { name: 'Bourse', detail: 'Attestation si bénéficiaire', urgent: false }
+        { name: t('visaEtudiant:documents.financial.resources.name'), detail: t('visaEtudiant:documents.financial.resources.detail'), urgent: true },
+        { name: t('visaEtudiant:documents.financial.bankStatements.name'), detail: t('visaEtudiant:documents.financial.bankStatements.detail'), urgent: true },
+        { name: t('visaEtudiant:documents.financial.guarantor.name'), detail: t('visaEtudiant:documents.financial.guarantor.detail'), urgent: false },
+        { name: t('visaEtudiant:documents.financial.scholarship.name'), detail: t('visaEtudiant:documents.financial.scholarship.detail'), urgent: false }
       ]
     },
     {
-      category: 'Documents logement',
+      category: t('visaEtudiant:documents.housing.category'),
       items: [
-        { name: 'Attestation hébergement', detail: 'Premier mois minimum', urgent: true },
-        { name: 'Contrat location', detail: 'Ou réservation logement', urgent: false },
-        { name: 'Attestation garant', detail: 'Pour la location', urgent: false }
+        { name: t('visaEtudiant:documents.housing.proof.name'), detail: t('visaEtudiant:documents.housing.proof.detail'), urgent: true },
+        { name: t('visaEtudiant:documents.housing.contract.name'), detail: t('visaEtudiant:documents.housing.contract.detail'), urgent: false },
+        { name: t('visaEtudiant:documents.housing.guarantorRental.name'), detail: t('visaEtudiant:documents.housing.guarantorRental.detail'), urgent: false }
       ]
     }
   ];
@@ -116,379 +118,338 @@ function VisaEtudiantGuide() {
   const etapesProcedure = [
     {
       step: 1,
-      title: 'Validation Campus France',
-      description: 'Obligatoire avant toute demande',
+      title: t('visaEtudiant:procedure.step1.title'),
+      description: t('visaEtudiant:procedure.step1.description'),
       details: [
-        'Compléter dossier Campus France',
-        'Passer entretien pédagogique',
-        'Obtenir attestation de validation',
-        'Télécharger document officiel'
+        t('visaEtudiant:procedure.step1.detail1'),
+        t('visaEtudiant:procedure.step1.detail2'),
+        t('visaEtudiant:procedure.step1.detail3'),
+        t('visaEtudiant:procedure.step1.detail4')
       ],
-      duration: '4-6 semaines'
+      duration: t('visaEtudiant:procedure.step1.duration')
     },
     {
       step: 2,
-      title: 'Rassemblement documents',
-      description: 'Préparer dossier complet',
+      title: t('visaEtudiant:procedure.step2.title'),
+      description: t('visaEtudiant:procedure.step2.description'),
       details: [
-        'Vérifier liste documents',
-        'Faire traductions assermentées',
-        'Obtenir attestations nécessaires',
-        'Organiser dans ordre requis'
+        t('visaEtudiant:procedure.step2.detail1'),
+        t('visaEtudiant:procedure.step2.detail2'),
+        t('visaEtudiant:procedure.step2.detail3'),
+        t('visaEtudiant:procedure.step2.detail4')
       ],
-      duration: '2-3 semaines'
+      duration: t('visaEtudiant:procedure.step2.duration')
     },
     {
       step: 3,
-      title: 'Prise de rendez-vous',
-      description: 'Réserver créneaux consulaires',
+      title: t('visaEtudiant:procedure.step3.title'),
+      description: t('visaEtudiant:procedure.step3.description'),
       details: [
-        'Créer compte VFS/TLScontact',
-        'Choisir date disponible',
-        'Payer frais en ligne',
-        'Confirmer rendez-vous'
+        t('visaEtudiant:procedure.step3.detail1'),
+        t('visaEtudiant:procedure.step3.detail2'),
+        t('visaEtudiant:procedure.step3.detail3'),
+        t('visaEtudiant:procedure.step3.detail4')
       ],
-      duration: '1-2 semaines'
+      duration: t('visaEtudiant:procedure.step3.duration')
     },
     {
       step: 4,
-      title: 'Dépôt du dossier',
-      description: 'Présentation au consulat',
+      title: t('visaEtudiant:procedure.step4.title'),
+      description: t('visaEtudiant:procedure.step4.description'),
       details: [
-        'Arriver à l\'heure précise',
-        'Présenter documents originaux',
-        'Payer frais complémentaires',
-        'Récépissé de dépôt'
+        t('visaEtudiant:procedure.step4.detail1'),
+        t('visaEtudiant:procedure.step4.detail2'),
+        t('visaEtudiant:procedure.step4.detail3'),
+        t('visaEtudiant:procedure.step4.detail4')
       ],
-      duration: '1-2 heures'
+      duration: t('visaEtudiant:procedure.step4.duration')
     },
     {
       step: 5,
-      title: 'Instruction et décision',
-      description: 'Traitement par consulat',
+      title: t('visaEtudiant:procedure.step5.title'),
+      description: t('visaEtudiant:procedure.step5.description'),
       details: [
-        'Vérification documents',
-        'Enquête si nécessaire',
-        'Décision consulaire',
-        'Notification résultat'
+        t('visaEtudiant:procedure.step5.detail1'),
+        t('visaEtudiant:procedure.step5.detail2'),
+        t('visaEtudiant:procedure.step5.detail3'),
+        t('visaEtudiant:procedure.step5.detail4')
       ],
-      duration: '2-8 semaines'
+      duration: t('visaEtudiant:procedure.step5.duration')
     },
     {
       step: 6,
-      title: 'Retrait du visa',
-      description: 'Récupération passeport',
+      title: t('visaEtudiant:procedure.step6.title'),
+      description: t('visaEtudiant:procedure.step6.description'),
       details: [
-        'Vérifier informations visa',
-        'Contrôler dates validité',
-        'Préparer voyage',
-        'Validation OFII en France'
+        t('visaEtudiant:procedure.step6.detail1'),
+        t('visaEtudiant:procedure.step6.detail2'),
+        t('visaEtudiant:procedure.step6.detail3'),
+        t('visaEtudiant:procedure.step6.detail4')
       ],
-      duration: '1-2 jours'
+      duration: t('visaEtudiant:procedure.step6.duration')
     }
   ];
 
   const conseils = [
     {
-      title: 'Anticipation',
-      description: 'Commencer 3 mois avant',
+      title: t('visaEtudiant:conseils.anticipation.title'),
+      description: t('visaEtudiant:conseils.anticipation.description'),
       tips: [
-        'Période haute été = délais plus longs',
-        'Prévoir délais administratifs',
-        'Réserver rendez-vous tôt',
-        'Éviter dernière minute'
+        t('visaEtudiant:conseils.anticipation.tip1'),
+        t('visaEtudiant:conseils.anticipation.tip2'),
+        t('visaEtudiant:conseils.anticipation.tip3'),
+        t('visaEtudiant:conseils.anticipation.tip4')
       ]
     },
     {
-      title: 'Qualité du dossier',
-      description: 'Soigner chaque détail',
+      title: t('visaEtudiant:conseils.quality.title'),
+      description: t('visaEtudiant:conseils.quality.description'),
       tips: [
-        'Documents lisibles et complets',
-        'Traductions certifiées',
-        'Cohérence dans les informations',
-        'Copies de sauvegarde'
+        t('visaEtudiant:conseils.quality.tip1'),
+        t('visaEtudiant:conseils.quality.tip2'),
+        t('visaEtudiant:conseils.quality.tip3'),
+        t('visaEtudiant:conseils.quality.tip4')
       ]
     },
     {
-      title: 'Aspects financiers',
-      description: 'Bien justifier ressources',
+      title: t('visaEtudiant:conseils.financial.title'),
+      description: t('visaEtudiant:conseils.financial.description'),
       tips: [
-        'Montant 615€/mois minimum',
-        'Preuves variées acceptées',
-        'Cohérence avec coût études',
-        'Garant français = avantage'
+        t('visaEtudiant:conseils.financial.tip1'),
+        t('visaEtudiant:conseils.financial.tip2'),
+        t('visaEtudiant:conseils.financial.tip3'),
+        t('visaEtudiant:conseils.financial.tip4')
       ]
     },
     {
-      title: 'Entretien consulaire',
-      description: 'Se préparer aux questions',
+      title: t('visaEtudiant:conseils.interview.title'),
+      description: t('visaEtudiant:conseils.interview.description'),
       tips: [
-        'Projet d\'études clair',
-        'Motivation sincère',
-        'Liens avec pays d\'origine',
-        'Plans après études'
+        t('visaEtudiant:conseils.interview.tip1'),
+        t('visaEtudiant:conseils.interview.tip2'),
+        t('visaEtudiant:conseils.interview.tip3'),
+        t('visaEtudiant:conseils.interview.tip4')
+      ]
+    },
+    {
+      title: t('visaEtudiant:conseils.communication.title'),
+      description: t('visaEtudiant:conseils.communication.description'),
+      tips: [
+        t('visaEtudiant:conseils.communication.tip1'),
+        t('visaEtudiant:conseils.communication.tip2'),
+        t('visaEtudiant:conseils.communication.tip3'),
+        t('visaEtudiant:conseils.communication.tip4')
+      ]
+    },
+    {
+      title: t('visaEtudiant:conseils.backup.title'),
+      description: t('visaEtudiant:conseils.backup.description'),
+      tips: [
+        t('visaEtudiant:conseils.backup.tip1'),
+        t('visaEtudiant:conseils.backup.tip2'),
+        t('visaEtudiant:conseils.backup.tip3'),
+        t('visaEtudiant:conseils.backup.tip4')
       ]
     }
   ];
 
   const erreurs = [
-    'Dossier incomplet ou documents manquants',
-    'Justificatifs financiers insuffisants',
-    'Incohérence dans le projet d\'études',
-    'Délais trop courts pour préparation',
-    'Mauvaise qualité des documents',
-    'Pas de validation Campus France'
+    t('visaEtudiant:conseils.errors.error1'),
+    t('visaEtudiant:conseils.errors.error2'),
+    t('visaEtudiant:conseils.errors.error3'),
+    t('visaEtudiant:conseils.errors.error4'),
+    t('visaEtudiant:conseils.errors.error5'),
+    t('visaEtudiant:conseils.errors.error6')
   ];
 
   return (
     <div className="min-h-screen bg-gray-50">
       <Head>
-        <title>Guide Visa Étudiant France - Procédure complète et conseils</title>
-        <meta name="description" content="Guide complet visa étudiant France : types, documents, procédure, délais, conseils. Tout pour réussir votre demande de visa d'études." />
-        <meta name="keywords" content="visa étudiant France, VLS-TS, Campus France, documents visa, procédure visa, délais visa, justificatifs financiers" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        
-        <meta property="og:title" content="Guide Visa Étudiant France - Procédure complète" />
-        <meta property="og:description" content="Tout savoir sur le visa étudiant France : types, documents, procédure et conseils d'experts" />
-        <meta property="og:type" content="article" />
-        <meta property="og:url" content="https://wendogo.com/guides/visa-etudiant" />
-        <meta property="og:image" content="https://wendogo.com/images/guide-visa-etudiant.jpg" />
-        
-        <link rel="canonical" href="https://wendogo.com/guides/visa-etudiant" />
-        
-        <script type="application/ld+json" dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Article",
-            "headline": "Guide Visa Étudiant France",
-            "description": "Guide complet pour obtenir son visa étudiant pour la France",
-            "author": {
-              "@type": "Organization",
-              "name": "Wendogo"
-            },
-            "publisher": {
-              "@type": "Organization",
-              "name": "Wendogo"
-            },
-            "datePublished": "2024-01-15",
-            "dateModified": "2024-12-15"
-          })
-        }} />
+        <title>{t('visaEtudiant:meta.title')}</title>
+        <meta name="description" content={t('visaEtudiant:meta.description')} />
       </Head>
 
-      <NavBar variant="simple" />
+      <NavBar />
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-700 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
-          <div className="text-center">
-            <div className="flex justify-center mb-6">
-              <div className="bg-white/10 backdrop-blur-sm rounded-full p-4">
-                <Shield className="w-12 h-12 text-white" />
-              </div>
-            </div>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">
-              Guide Visa Étudiant France
-            </h1>
-            <p className="text-lg sm:text-xl text-blue-100 max-w-3xl mx-auto mb-8">
-              Obtenez votre visa étudiant pour la France : types, documents requis, 
-              procédure complète et conseils d'experts pour maximiser vos chances.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/?tab=accompany#accompany-section" className="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
-                Accompagnement visa
-              </Link>
-              <Link href="/guides/campus-france" className="border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors">
-                Guide Campus France
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Quick Stats */}
-      <section className="py-12 bg-white">
+      <section className="bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-600 text-white pt-24 pb-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-            {quickStats.map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="bg-blue-100 w-12 h-12 lg:w-16 lg:h-16 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <stat.icon className="w-6 h-6 lg:w-8 lg:h-8 text-blue-600" />
+          <div className="text-center">
+            <div className="inline-flex items-center bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 mb-6">
+              <Shield className="w-4 h-4 mr-2" />
+              <span className="text-sm font-medium">{t('visaEtudiant:hero.badge')}</span>
+            </div>
+            <h1 className="text-3xl lg:text-5xl font-bold mb-6">
+              {t('visaEtudiant:hero.title')}
+            </h1>
+            <p className="text-xl lg:text-2xl mb-4 text-blue-100">
+              {t('visaEtudiant:hero.subtitle')}
+            </p>
+            <p className="text-lg text-blue-100 max-w-3xl mx-auto">
+              {t('visaEtudiant:hero.description')}
+            </p>
+          </div>
+
+          {/* Quick Stats */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-12">
+            {quickStats.map((stat, index) => {
+              const Icon = stat.icon;
+              return (
+                <div key={index} className="bg-white/10 backdrop-blur-sm rounded-xl p-6 text-center">
+                  <div className="bg-white/20 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <Icon className="w-6 h-6" />
+                  </div>
+                  <div className="text-2xl font-bold mb-1">{stat.number}</div>
+                  <div className="text-sm text-blue-100">{stat.label}</div>
                 </div>
-                <div className="text-2xl lg:text-3xl font-bold text-gray-900 mb-1">{stat.number}</div>
-                <div className="text-sm lg:text-base text-gray-600">{stat.label}</div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
 
       {/* Navigation Tabs */}
-      <section className="bg-gray-100">
+      <section className="bg-white border-b border-gray-200 sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex space-x-6 lg:space-x-8 border-b border-gray-200 overflow-x-auto">
+          <nav className="flex overflow-x-auto">
             {[
-              { id: 'types', label: 'Types de visa', icon: Award },
-              { id: 'documents', label: 'Documents', icon: FileText },
-              { id: 'procedure', label: 'Procédure', icon: Target },
-              { id: 'conseils', label: 'Conseils', icon: CheckCircle }
-            ].map(tab => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center py-4 px-2 font-medium border-b-2 transition-colors whitespace-nowrap ${
-                  activeTab === tab.id
-                    ? 'border-blue-600 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700'
-                }`}
-              >
-                <tab.icon className="w-4 h-4 mr-2" />
-                <span className="text-sm lg:text-base">{tab.label}</span>
-              </button>
-            ))}
-          </div>
+              { id: 'types', label: t('visaEtudiant:tabs.types'), icon: FileText },
+              { id: 'documents', label: t('visaEtudiant:tabs.documents'), icon: Shield },
+              { id: 'procedure', label: t('visaEtudiant:tabs.procedure'), icon: Calendar },
+              { id: 'conseils', label: t('visaEtudiant:tabs.conseils'), icon: Award }
+            ].map((tab) => {
+              const Icon = tab.icon;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`flex items-center px-6 py-4 font-medium border-b-2 transition-colors whitespace-nowrap ${
+                    activeTab === tab.id
+                      ? 'border-blue-600 text-blue-600'
+                      : 'border-transparent text-gray-600 hover:text-gray-900'
+                  }`}
+                >
+                  <Icon className="w-5 h-5 mr-2" />
+                  {tab.label}
+                </button>
+              );
+            })}
+          </nav>
         </div>
       </section>
 
-      {/* Content */}
-      <section className="py-12 lg:py-16 bg-white">
+      {/* Main Content */}
+      <section className="py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
           {/* Types de visa */}
           {activeTab === 'types' && (
             <div className="space-y-12">
               <div className="text-center">
                 <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
-                  Types de visa étudiant
+                  {t('visaEtudiant:types.title')}
                 </h2>
                 <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                  Choisissez le type de visa adapté à votre durée d'études et votre situation.
+                  {t('visaEtudiant:types.subtitle')}
                 </p>
               </div>
 
               <div className="grid md:grid-cols-3 gap-8">
                 {visaTypes.map((visa, index) => (
-                  <div key={index} className={`bg-${visa.color}-50 border border-${visa.color}-200 rounded-xl p-6 hover:shadow-lg transition-shadow`}>
+                  <div key={index} className={`bg-white border-2 border-${visa.color}-200 rounded-xl p-6 hover:shadow-lg transition-shadow`}>
                     <div className={`bg-${visa.color}-100 w-12 h-12 rounded-full flex items-center justify-center mb-4`}>
-                      <Shield className={`w-6 h-6 text-${visa.color}-600`} />
+                      <FileText className={`w-6 h-6 text-${visa.color}-600`} />
                     </div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">
                       {visa.title}
                     </h3>
-                    <p className="text-gray-600 text-sm mb-4">
-                      {visa.description}
-                    </p>
-                    <div className="space-y-2">
+                    <p className="text-gray-600 mb-4">{visa.description}</p>
+                    <div className="space-y-2 mb-4">
                       <div className="flex items-center text-sm">
-                        <Clock className="w-4 h-4 text-gray-500 mr-2" />
+                        <Clock className="w-4 h-4 text-gray-400 mr-2" />
                         <span className="text-gray-700">{visa.duration}</span>
                       </div>
                       <div className="flex items-center text-sm">
-                        <FileText className="w-4 h-4 text-gray-500 mr-2" />
+                        <CheckCircle className="w-4 h-4 text-gray-400 mr-2" />
                         <span className="text-gray-700">{visa.requirements}</span>
                       </div>
                     </div>
+                    <button className={`text-${visa.color}-600 font-semibold hover:underline flex items-center`}>
+                      {t('visaEtudiant:types.moreInfo')}
+                      <ExternalLink className="w-4 h-4 ml-1" />
+                    </button>
                   </div>
                 ))}
               </div>
 
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
-                <div className="flex items-center mb-4">
-                  <CheckCircle className="w-6 h-6 text-blue-600 mr-3" />
-                  <h3 className="text-lg font-semibold text-blue-900">
-                    Visa long séjour étudiant (VLS-TS) - Le plus courant
-                  </h3>
-                </div>
-                <p className="text-blue-800 mb-4">
-                  C'est le visa le plus demandé pour des études supérieures en France. 
-                  Il permet un séjour d'un an renouvelable et donne droit au travail étudiant.
-                </p>
-                <div className="grid md:grid-cols-2 gap-4">
+                <div className="flex items-start">
+                  <AlertTriangle className="w-6 h-6 text-blue-600 mr-3 mt-1" />
                   <div>
-                    <h4 className="font-semibold text-blue-900 mb-2">Avantages :</h4>
-                    <ul className="text-blue-800 text-sm space-y-1">
-                      <li>• Durée d'un an renouvelable</li>
-                      <li>• Droit au travail étudiant (964h/an)</li>
-                      <li>• Validation OFII en France</li>
-                      <li>• Accès aux services publics</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-blue-900 mb-2">Conditions :</h4>
-                    <ul className="text-blue-800 text-sm space-y-1">
-                      <li>• Admission dans établissement</li>
-                      <li>• Ressources 615€/mois minimum</li>
-                      <li>• Validation Campus France</li>
-                      <li>• Assurance maladie</li>
-                    </ul>
+                    <h3 className="text-lg font-semibold text-blue-900 mb-2">
+                      {t('visaEtudiant:types.infoBox.title')}
+                    </h3>
+                    <p className="text-blue-800">
+                      {t('visaEtudiant:types.infoBox.description')}
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
           )}
 
-          {/* Documents */}
+          {/* Documents requis */}
           {activeTab === 'documents' && (
             <div className="space-y-12">
               <div className="text-center">
                 <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
-                  Documents requis
+                  {t('visaEtudiant:documents.title')}
                 </h2>
                 <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                  Liste complète des documents nécessaires pour votre demande de visa étudiant.
+                  {t('visaEtudiant:documents.subtitle')}
                 </p>
               </div>
 
               <div className="space-y-8">
-                {documentsRequis.map((category, categoryIndex) => (
-                  <div key={categoryIndex} className="border border-gray-200 rounded-lg">
-                    <button
-                      onClick={() => toggleSection(category.category)}
-                      className="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-gray-50 transition-colors"
-                    >
-                      <h3 className="text-lg font-semibold text-gray-900">{category.category}</h3>
-                      {expandedSection === category.category ? 
-                        <ChevronUp className="w-5 h-5 text-gray-500" /> : 
-                        <ChevronDown className="w-5 h-5 text-gray-500" />
-                      }
-                    </button>
-                    {expandedSection === category.category && (
-                      <div className="px-6 pb-4 border-t border-gray-200">
-                        <div className="grid md:grid-cols-2 gap-4 pt-4">
-                          {category.items.map((item, itemIndex) => (
-                            <div key={itemIndex} className={`border rounded-lg p-4 ${
-                              item.urgent ? 'border-red-200 bg-red-50' : 'border-gray-200 bg-white'
-                            }`}>
-                              <div className="flex items-center justify-between mb-2">
-                                <h4 className="font-semibold text-gray-900">{item.name}</h4>
+                {documentsRequis.map((category, index) => (
+                  <div key={index} className="bg-white border border-gray-200 rounded-xl overflow-hidden">
+                    <div className="bg-gray-50 px-6 py-4 border-b border-gray-200">
+                      <h3 className="text-lg font-semibold text-gray-900">
+                        {category.category}
+                      </h3>
+                    </div>
+                    <div className="divide-y divide-gray-200">
+                      {category.items.map((item, itemIndex) => (
+                        <div key={itemIndex} className="px-6 py-4 hover:bg-gray-50 transition-colors">
+                          <div className="flex items-center justify-between">
+                            <div className="flex-1">
+                              <div className="flex items-center">
+                                <h4 className="font-medium text-gray-900">{item.name}</h4>
                                 {item.urgent && (
-                                  <span className="bg-red-100 text-red-800 px-2 py-1 rounded text-xs font-medium">
-                                    Obligatoire
+                                  <span className="ml-2 bg-red-100 text-red-800 text-xs px-2 py-1 rounded">
+                                    {t('visaEtudiant:documents.urgent')}
                                   </span>
                                 )}
                               </div>
-                              <p className="text-sm text-gray-600">{item.detail}</p>
+                              <p className="text-sm text-gray-600 mt-1">{item.detail}</p>
                             </div>
-                          ))}
+                            <CheckCircle className={`w-5 h-5 ml-4 ${item.urgent ? 'text-red-500' : 'text-gray-400'}`} />
+                          </div>
                         </div>
-                      </div>
-                    )}
+                      ))}
+                    </div>
                   </div>
                 ))}
               </div>
 
               <div className="bg-amber-50 border border-amber-200 rounded-lg p-6">
-                <div className="flex items-center mb-4">
-                  <AlertTriangle className="w-6 h-6 text-amber-600 mr-3" />
-                  <h3 className="text-lg font-semibold text-amber-900">
-                    Points importants sur les documents
-                  </h3>
-                </div>
+                <h3 className="text-lg font-semibold text-amber-900 mb-3">
+                  {t('visaEtudiant:documents.warningBox.title')}
+                </h3>
                 <ul className="space-y-2 text-amber-800">
-                  <li>• Tous les documents doivent être récents (moins de 6 mois)</li>
-                  <li>• Traductions assermentées obligatoires pour documents non français</li>
-                  <li>• Photocopies ET originaux requis</li>
-                  <li>• Vérifier spécificités du consulat de votre pays</li>
+                  <li>• {t('visaEtudiant:documents.warningBox.point1')}</li>
+                  <li>• {t('visaEtudiant:documents.warningBox.point2')}</li>
+                  <li>• {t('visaEtudiant:documents.warningBox.point3')}</li>
+                  <li>• {t('visaEtudiant:documents.warningBox.point4')}</li>
                 </ul>
               </div>
             </div>
@@ -499,10 +460,10 @@ function VisaEtudiantGuide() {
             <div className="space-y-12">
               <div className="text-center">
                 <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
-                  Procédure étape par étape
+                  {t('visaEtudiant:procedure.title')}
                 </h2>
                 <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                  Suivez ces 6 étapes pour obtenir votre visa étudiant sans stress.
+                  {t('visaEtudiant:procedure.subtitle')}
                 </p>
               </div>
 
@@ -539,29 +500,29 @@ function VisaEtudiantGuide() {
 
               <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-xl p-8">
                 <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                  Délais à prévoir
+                  {t('visaEtudiant:procedure.timeline.title')}
                 </h3>
                 <div className="grid md:grid-cols-3 gap-6">
                   <div className="text-center">
                     <div className="bg-green-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
                       <Clock className="w-6 h-6 text-green-600" />
                     </div>
-                    <div className="text-2xl font-bold text-green-900">2-4 sem</div>
-                    <div className="text-sm text-green-800">Délai normal</div>
+                    <div className="text-2xl font-bold text-green-900">{t('visaEtudiant:procedure.timeline.normal.duration')}</div>
+                    <div className="text-sm text-green-800">{t('visaEtudiant:procedure.timeline.normal.label')}</div>
                   </div>
                   <div className="text-center">
                     <div className="bg-amber-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
                       <AlertTriangle className="w-6 h-6 text-amber-600" />
                     </div>
-                    <div className="text-2xl font-bold text-amber-900">4-8 sem</div>
-                    <div className="text-sm text-amber-800">Période haute</div>
+                    <div className="text-2xl font-bold text-amber-900">{t('visaEtudiant:procedure.timeline.high.duration')}</div>
+                    <div className="text-sm text-amber-800">{t('visaEtudiant:procedure.timeline.high.label')}</div>
                   </div>
                   <div className="text-center">
                     <div className="bg-red-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
                       <Target className="w-6 h-6 text-red-600" />
                     </div>
-                    <div className="text-2xl font-bold text-red-900">3 mois</div>
-                    <div className="text-sm text-red-800">Commencer avant</div>
+                    <div className="text-2xl font-bold text-red-900">{t('visaEtudiant:procedure.timeline.start.duration')}</div>
+                    <div className="text-sm text-red-800">{t('visaEtudiant:procedure.timeline.start.label')}</div>
                   </div>
                 </div>
               </div>
@@ -573,10 +534,10 @@ function VisaEtudiantGuide() {
             <div className="space-y-12">
               <div className="text-center">
                 <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
-                  Conseils d'experts
+                  {t('visaEtudiant:conseils.title')}
                 </h2>
                 <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                  Maximisez vos chances d'obtenir votre visa avec ces conseils éprouvés.
+                  {t('visaEtudiant:conseils.subtitle')}
                 </p>
               </div>
 
@@ -603,7 +564,7 @@ function VisaEtudiantGuide() {
                 <div className="flex items-center mb-4">
                   <AlertTriangle className="w-6 h-6 text-red-600 mr-3" />
                   <h3 className="text-lg font-semibold text-red-900">
-                    Erreurs fréquentes à éviter
+                    {t('visaEtudiant:conseils.errors.title')}
                   </h3>
                 </div>
                 <div className="grid md:grid-cols-2 gap-4">
@@ -620,34 +581,34 @@ function VisaEtudiantGuide() {
 
               <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-8">
                 <h3 className="text-xl font-semibold text-gray-900 mb-6">
-                  Checklist finale avant dépôt
+                  {t('visaEtudiant:conseils.checklist.title')}
                 </h3>
                 <div className="grid md:grid-cols-3 gap-6">
                   <div>
-                    <h4 className="font-semibold text-blue-900 mb-3">Documents</h4>
+                    <h4 className="font-semibold text-blue-900 mb-3">{t('visaEtudiant:conseils.checklist.documents.title')}</h4>
                     <ul className="space-y-2 text-blue-800 text-sm">
-                      <li>☑️ Passeport valide</li>
-                      <li>☑️ Formulaire complété</li>
-                      <li>☑️ Photos conformes</li>
-                      <li>☑️ Attestation Campus France</li>
+                      <li>☑️ {t('visaEtudiant:conseils.checklist.documents.item1')}</li>
+                      <li>☑️ {t('visaEtudiant:conseils.checklist.documents.item2')}</li>
+                      <li>☑️ {t('visaEtudiant:conseils.checklist.documents.item3')}</li>
+                      <li>☑️ {t('visaEtudiant:conseils.checklist.documents.item4')}</li>
                     </ul>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-blue-900 mb-3">Finances</h4>
+                    <h4 className="font-semibold text-blue-900 mb-3">{t('visaEtudiant:conseils.checklist.finances.title')}</h4>
                     <ul className="space-y-2 text-blue-800 text-sm">
-                      <li>☑️ Justificatifs 615€/mois</li>
-                      <li>☑️ Relevés bancaires</li>
-                      <li>☑️ Frais visa 99€</li>
-                      <li>☑️ Assurance santé</li>
+                      <li>☑️ {t('visaEtudiant:conseils.checklist.finances.item1')}</li>
+                      <li>☑️ {t('visaEtudiant:conseils.checklist.finances.item2')}</li>
+                      <li>☑️ {t('visaEtudiant:conseils.checklist.finances.item3')}</li>
+                      <li>☑️ {t('visaEtudiant:conseils.checklist.finances.item4')}</li>
                     </ul>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-blue-900 mb-3">Logement</h4>
+                    <h4 className="font-semibold text-blue-900 mb-3">{t('visaEtudiant:conseils.checklist.housing.title')}</h4>
                     <ul className="space-y-2 text-blue-800 text-sm">
-                      <li>☑️ Attestation hébergement</li>
-                      <li>☑️ Contrat ou réservation</li>
-                      <li>☑️ Coordonnées propriétaire</li>
-                      <li>☑️ Plan d'accès</li>
+                      <li>☑️ {t('visaEtudiant:conseils.checklist.housing.item1')}</li>
+                      <li>☑️ {t('visaEtudiant:conseils.checklist.housing.item2')}</li>
+                      <li>☑️ {t('visaEtudiant:conseils.checklist.housing.item3')}</li>
+                      <li>☑️ {t('visaEtudiant:conseils.checklist.housing.item4')}</li>
                     </ul>
                   </div>
                 </div>
@@ -661,18 +622,17 @@ function VisaEtudiantGuide() {
       <section className="py-16 bg-gradient-to-r from-blue-600 to-indigo-600 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-2xl lg:text-3xl font-bold mb-6">
-            Besoin d'aide pour votre visa étudiant ?
+            {t('visaEtudiant:cta.title')}
           </h2>
           <p className="text-lg lg:text-xl mb-8 text-blue-100">
-            Nos experts vous accompagnent dans toutes les démarches pour obtenir 
-            votre visa étudiant France rapidement et sans stress.
+            {t('visaEtudiant:cta.description')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/?tab=accompany#accompany-section" className="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
-              Accompagnement personnalisé
+              {t('visaEtudiant:cta.button1')}
             </Link>
             <Link href="/guides/campus-france" className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors">
-              Guide Campus France
+              {t('visaEtudiant:cta.button2')}
             </Link>
           </div>
         </div>
@@ -683,4 +643,13 @@ function VisaEtudiantGuide() {
   );
 }
 
+export async function getStaticProps({ locale }) {
+  const { serverSideTranslations } = await import('next-i18next/serverSideTranslations');
+  
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['authModal', 'common', 'visaEtudiant'])),
+    },
+  };
+}
 export default VisaEtudiantGuide;

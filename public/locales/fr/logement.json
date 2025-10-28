@@ -1,0 +1,465 @@
+{
+  "hero": {
+    "title": "Guide Logement Étudiant France",
+    "subtitle": "Trouvez votre logement étudiant en France : types, prix, démarches, aides. Tout ce qu'il faut savoir pour se loger facilement.",
+    "ctaHelp": "Aide au logement",
+    "ctaCampusFrance": "Guide Campus France"
+  },
+  "quickStats": {
+    "budget": "Budget moyen",
+    "surface": "Surface studio",
+    "notice": "Mois de préavis",
+    "apl": "APL moyenne"
+  },
+  "tabs": {
+    "types": "Types logements",
+    "search": "Recherche",
+    "cities": "Prix par ville",
+    "aids": "Aides",
+    "documents": "Documents"
+  },
+  "types": {
+    "title": "Types de logements étudiants",
+    "subtitle": "Découvrez les différentes options de logement disponibles pour les étudiants en France.",
+    "crous": {
+      "title": "Résidence universitaire CROUS",
+      "description": "Logement public étudiant le plus économique",
+      "price": "150-400€/mois",
+      "advantages": {
+        "1": "Prix très abordable",
+        "2": "Proche des campus",
+        "3": "Communauté étudiante",
+        "4": "Démarches simplifiées"
+      },
+      "disadvantages": {
+        "1": "Difficile à obtenir",
+        "2": "Confort basique",
+        "3": "Règles strictes",
+        "4": "Demande très tôt"
+      }
+    },
+    "privateResidence": {
+      "title": "Résidence étudiante privée",
+      "description": "Logements modernes avec services inclus",
+      "price": "400-800€/mois",
+      "advantages": {
+        "1": "Confort moderne",
+        "2": "Services inclus",
+        "3": "Sécurité",
+        "4": "Meublé équipé"
+      },
+      "disadvantages": {
+        "1": "Plus cher",
+        "2": "Contrat long",
+        "3": "Frais de dossier",
+        "4": "Caution élevée"
+      }
+    },
+    "privateApartment": {
+      "title": "Appartement privé",
+      "description": "Location classique sur le marché privé",
+      "price": "400-1200€/mois",
+      "advantages": {
+        "1": "Choix varié",
+        "2": "Indépendance",
+        "3": "Négociation possible",
+        "4": "Pas de règles"
+      },
+      "disadvantages": {
+        "1": "Cher",
+        "2": "Garant obligatoire",
+        "3": "Meubles à acheter",
+        "4": "Démarches longues"
+      }
+    },
+    "flatShare": {
+      "title": "Colocation",
+      "description": "Partage d'appartement avec autres étudiants",
+      "price": "300-600€/mois",
+      "advantages": {
+        "1": "Économique",
+        "2": "Convivial",
+        "3": "Charges partagées",
+        "4": "Moins de garant"
+      },
+      "disadvantages": {
+        "1": "Colocataires",
+        "2": "Responsabilité solidaire",
+        "3": "Intimité réduite",
+        "4": "Règles communes"
+      }
+    },
+    "homestay": {
+      "title": "Chambre chez l'habitant",
+      "description": "Logement chez une famille française",
+      "price": "300-500€/mois",
+      "advantages": {
+        "1": "Immersion culturelle",
+        "2": "Sécurité",
+        "3": "Aide quotidienne",
+        "4": "Pratique français"
+      },
+      "disadvantages": {
+        "1": "Moins d'intimité",
+        "2": "Règles famille",
+        "3": "Horaires",
+        "4": "Dépendance"
+      }
+    },
+    "hostel": {
+      "title": "Auberge de jeunesse",
+      "description": "Solution temporaire à l'arrivée",
+      "price": "20-50€/nuit",
+      "advantages": {
+        "1": "Flexible",
+        "2": "Immédiat",
+        "3": "Pas de garant",
+        "4": "Rencontres"
+      },
+      "disadvantages": {
+        "1": "Temporaire",
+        "2": "Pas intime",
+        "3": "Cher à long terme",
+        "4": "Peu de confort"
+      }
+    },
+    "advantagesLabel": "Avantages :",
+    "disadvantagesLabel": "Inconvénients :",
+    "recommendations": {
+      "title": "Recommandations par profil",
+      "limited": {
+        "title": "Étudiant avec budget limité :",
+        "1": "1ère priorité : Résidence CROUS",
+        "2": "2ème option : Colocation",
+        "3": "3ème choix : Chambre chez l'habitant"
+      },
+      "comfortable": {
+        "title": "Étudiant avec budget confortable :",
+        "1": "1ère priorité : Résidence privée",
+        "2": "2ème option : Studio privé",
+        "3": "3ème choix : Colocation haut standing"
+      }
+    }
+  },
+  "search": {
+    "title": "Méthode de recherche efficace",
+    "subtitle": "Suivez ces étapes pour trouver votre logement étudiant rapidement.",
+    "steps": {
+      "1": {
+        "title": "Définir le budget",
+        "description": "Calculer capacité financière réelle",
+        "duration": "1 semaine",
+        "details": {
+          "1": "Loyer max = 30% des revenus",
+          "2": "Inclure charges et assurance",
+          "3": "Prévoir frais installation",
+          "4": "Vérifier éligibilité APL"
+        }
+      },
+      "2": {
+        "title": "Choisir la zone",
+        "description": "Sélectionner quartiers cibles",
+        "duration": "1 semaine",
+        "details": {
+          "1": "Proximité université/école",
+          "2": "Transport public disponible",
+          "3": "Commerces et services",
+          "4": "Sécurité du quartier"
+        }
+      },
+      "3": {
+        "title": "Rechercher activement",
+        "description": "Utiliser tous les canaux",
+        "duration": "2-4 semaines",
+        "details": {
+          "1": "Sites spécialisés étudiants",
+          "2": "Plateformes généralistes",
+          "3": "Réseaux sociaux",
+          "4": "Agences immobilières"
+        }
+      },
+      "4": {
+        "title": "Préparer le dossier",
+        "description": "Rassembler documents requis",
+        "duration": "1 semaine",
+        "details": {
+          "1": "Pièce d'identité",
+          "2": "Justificatifs revenus",
+          "3": "Garant français",
+          "4": "Assurance logement"
+        }
+      },
+      "5": {
+        "title": "Visiter et candidater",
+        "description": "Organiser visites et postulations",
+        "duration": "1-2 semaines",
+        "details": {
+          "1": "Prendre rendez-vous rapidement",
+          "2": "Visiter en journée",
+          "3": "Poser bonnes questions",
+          "4": "Candidater immédiatement"
+        }
+      },
+      "6": {
+        "title": "Signer et s'installer",
+        "description": "Finaliser contrat et emménager",
+        "duration": "1 semaine",
+        "details": {
+          "1": "Lire contrat attentivement",
+          "2": "Faire état des lieux",
+          "3": "Souscrire assurance",
+          "4": "Demander APL"
+        }
+      }
+    },
+    "sites": {
+      "title": "Sites de recherche recommandés",
+      "lokaviz": {
+        "description": "Plateforme officielle CROUS",
+        "type": "Gratuit",
+        "specialty": "Résidences universitaires"
+      },
+      "studapart": {
+        "description": "Spécialisé logement étudiant",
+        "type": "Gratuit",
+        "specialty": "Tous types logements"
+      },
+      "seloger": {
+        "description": "Leader immobilier français",
+        "type": "Gratuit",
+        "specialty": "Marché privé"
+      },
+      "leboncoin": {
+        "description": "Petites annonces entre particuliers",
+        "type": "Gratuit",
+        "specialty": "Particuliers"
+      },
+      "appartager": {
+        "description": "Spécialisé colocation",
+        "type": "Gratuit",
+        "specialty": "Colocation"
+      },
+      "adele": {
+        "description": "Réseau résidences étudiantes",
+        "type": "Gratuit",
+        "specialty": "Résidences privées"
+      },
+      "visit": "Visiter"
+    },
+    "tips": {
+      "title": "Conseils pour recherche efficace",
+      "timing": {
+        "title": "Timing :",
+        "1": "Commencer 3-4 mois avant rentrée",
+        "2": "Pic d'offres : mai-juillet",
+        "3": "Visiter rapidement",
+        "4": "Candidater le jour même"
+      },
+      "strategy": {
+        "title": "Stratégie :",
+        "1": "Élargir zone géographique",
+        "2": "Créer alertes automatiques",
+        "3": "Préparer dossier complet",
+        "4": "Être flexible sur critères"
+      }
+    }
+  },
+  "cities": {
+    "title": "Prix par ville étudiante",
+    "subtitle": "Découvrez les fourchettes de prix pour les principales villes étudiantes françaises.",
+    "studios": "Studios :",
+    "coloc": "Colocation :",
+    "crous": "CROUS :",
+    "advice": "Conseil :",
+    "paris": {
+      "studios": "600-1200€",
+      "coloc": "500-800€",
+      "crous": "300-500€",
+      "tips": "Rechercher en banlieue, transport inclus"
+    },
+    "lyon": {
+      "studios": "400-700€",
+      "coloc": "350-550€",
+      "crous": "200-350€",
+      "tips": "Quartiers étudiants : Guillotière, Croix-Rousse"
+    },
+    "marseille": {
+      "studios": "350-600€",
+      "coloc": "300-450€",
+      "crous": "200-300€",
+      "tips": "Éviter hypercentre, préférer quartiers étudiants"
+    },
+    "toulouse": {
+      "studios": "350-550€",
+      "coloc": "280-420€",
+      "crous": "200-320€",
+      "tips": "Capitole cher, chercher vers Mirail, Rangueil"
+    },
+    "lille": {
+      "studios": "350-550€",
+      "coloc": "280-400€",
+      "crous": "200-300€",
+      "tips": "Vieux-Lille cher, Wazemmes plus abordable"
+    },
+    "bordeaux": {
+      "studios": "400-650€",
+      "coloc": "320-480€",
+      "crous": "200-350€",
+      "tips": "Éviter centre historique, chercher périphérie"
+    },
+    "priceFactors": {
+      "title": "Facteurs influençant les prix",
+      "increase": {
+        "title": "Augmentent les prix :",
+        "1": "Centre-ville",
+        "2": "Proche transports",
+        "3": "Meublé équipé",
+        "4": "Grandes surfaces"
+      },
+      "reduce": {
+        "title": "Réduisent les prix :",
+        "1": "Périphérie",
+        "2": "Logement vide",
+        "3": "Quartiers populaires",
+        "4": "Colocation"
+      }
+    }
+  },
+  "aids": {
+    "title": "Aides au logement étudiant",
+    "subtitle": "Découvrez toutes les aides disponibles pour réduire votre budget logement.",
+    "amount": "Montant :",
+    "conditions": "Conditions :",
+    "procedure": "Démarche :",
+    "apl": {
+      "name": "APL (Aide Personnalisée au Logement)",
+      "description": "Aide de la CAF selon revenus",
+      "montant": "50-300€/mois",
+      "conditions": {
+        "1": "Revenus modestes",
+        "2": "Logement décent",
+        "3": "Étudiant ou salarié"
+      },
+      "demarche": "Demande CAF en ligne"
+    },
+    "als": {
+      "name": "ALS (Allocation Logement Social)",
+      "description": "Alternative à l'APL",
+      "montant": "50-250€/mois",
+      "conditions": {
+        "1": "Pas éligible APL",
+        "2": "Logement convenable",
+        "3": "Ressources limitées"
+      },
+      "demarche": "Demande CAF en ligne"
+    },
+    "visale": {
+      "name": "Caution Visale",
+      "description": "Garantie locative gratuite",
+      "montant": "Gratuit",
+      "conditions": {
+        "1": "Étudiant -30 ans",
+        "2": "Salaire <1500€",
+        "3": "Logement -800€"
+      },
+      "demarche": "Demande en ligne Visale"
+    },
+    "mobilijeune": {
+      "name": "Mobili-Jeune",
+      "description": "Aide pour jeunes en formation",
+      "montant": "10-100€/mois",
+      "conditions": {
+        "1": "Formation professionnelle",
+        "2": "Alternance",
+        "3": "Moins de 30 ans"
+      },
+      "demarche": "Demande via employeur"
+    },
+    "simulation": {
+      "title": "Simulation d'économies",
+      "aplAverage": "APL moyenne",
+      "mobiliMax": "Mobili-Jeune max",
+      "totalSavings": "Économie totale",
+      "description": "Un étudiant peut réduire son budget logement de 200 à 300€/mois grâce aux aides"
+    }
+  },
+  "documents": {
+    "title": "Documents requis",
+    "subtitle": "Préparez tous les documents nécessaires pour constituer un dossier solide.",
+    "identity": {
+      "title": "Identité",
+      "1": "Carte d'identité ou passeport",
+      "2": "Carte de séjour (étudiants étrangers)",
+      "3": "Carte étudiante",
+      "4": "Justificatif de scolarité"
+    },
+    "income": {
+      "title": "Revenus",
+      "1": "Avis d'imposition ou non-imposition",
+      "2": "Bulletins de salaire (3 derniers)",
+      "3": "Attestation de bourse",
+      "4": "Relevés bancaires (3 mois)"
+    },
+    "guarantor": {
+      "title": "Garant",
+      "1": "Pièce d'identité du garant",
+      "2": "Justificatifs revenus garant",
+      "3": "Attestation employeur garant",
+      "4": "Acte de cautionnement signé"
+    },
+    "insurance": {
+      "title": "Assurance",
+      "1": "Attestation assurance habitation",
+      "2": "Attestation responsabilité civile",
+      "3": "Justificatif assurance scolaire",
+      "4": "Couverture santé"
+    },
+    "foreignStudents": {
+      "title": "Spécificités étudiants étrangers",
+      "additional": {
+        "title": "Documents supplémentaires :",
+        "1": "Titre de séjour ou visa",
+        "2": "Attestation Campus France",
+        "3": "Justificatifs traduits",
+        "4": "Garant français obligatoire"
+      },
+      "difficulties": {
+        "title": "Difficultés courantes :",
+        "1": "Pas d'historique locatif",
+        "2": "Revenus étrangers",
+        "3": "Méconnaissance des codes",
+        "4": "Barrière linguistique"
+      }
+    },
+    "checklist": {
+      "title": "Checklist dossier parfait",
+      "beforeVisit": {
+        "title": "Avant la visite :",
+        "1": "Dossier complet numérisé",
+        "2": "Originaux dans classeur",
+        "3": "Garant mobilisé",
+        "4": "Assurance souscrite"
+      },
+      "duringVisit": {
+        "title": "Pendant la visite :",
+        "1": "Présentation soignée",
+        "2": "Motivation exprimée",
+        "3": "Questions pertinentes",
+        "4": "Candidature immédiate"
+      }
+    }
+  },
+  "cta": {
+    "title": "Besoin d'aide pour trouver votre logement ?",
+    "description": "Nos conseillers spécialisés vous accompagnent dans votre recherche de logement étudiant et vous aident à optimiser votre budget.",
+    "helpButton": "Aide au logement",
+    "visaGuideButton": "Guide visa étudiant"
+  },
+  "meta": {
+    "title": "Guide Logement Étudiant France 2024 - Trouver son logement",
+    "description": "Guide complet logement étudiant France 2024 : types, prix, démarches, aides. Tout pour trouver votre logement étudiant rapidement.",
+    "keywords": "logement étudiant France, CROUS, résidence étudiante, colocation, APL, garant, visa logement",
+    "ogTitle": "Guide Logement Étudiant France 2024 - Trouver son logement",
+    "ogDescription": "Types de logements, prix, démarches et aides pour étudiants en France"
+  }
+}

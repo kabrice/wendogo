@@ -48,9 +48,9 @@ class DomainApi {
    * @param {string} domainId - L'ID du domaine
    * @returns {Promise<Object>} Données du domaine
    */
-  static async getDomainById(domainId) {
+  static async getDomainById(domainId, locale = 'fr') {
     try {
-      const response = await fetch(`${this.baseUrl}/domains/${domainId}`, {
+      const response = await fetch(`${this.baseUrl}/domains/${domainId}?locale=${locale}`, {
         method: 'GET',
         headers: this.headers
       });
@@ -86,9 +86,9 @@ class DomainApi {
    * @param {Array<string>} domainIds - Liste des IDs des domaines
    * @returns {Promise<Object>} Données des domaines
    */
-  static async getDomainsFromIds(domainIds) {
+  static async getDomainsFromIds(domainIds, locale = 'fr') {
     try {
-      const response = await fetch(`${this.baseUrl}/domains/filtering`, {
+      const response = await fetch(`${this.baseUrl}/domains/filtering?locale=${locale}`, {
         method: 'POST',
         headers: this.headers,
         body: JSON.stringify({ domain_ids: domainIds })
@@ -132,45 +132,42 @@ class DomainApi {
     return { mockDomains, domainIcons };
   }
 
-  /**
-   * Récupère une icône basée sur le nom du domaine
-   * @param {string} domainName - Nom du domaine
-   * @returns {string} Emoji représentant le domaine
-   */
-  static getIconForDomain(domainName) {
-    const iconMap = {
-      'agriculture': '🌱',
-      'architecture': '🏗️',
-      'arts': '🎨',
-      'biologie': '🧬',
-      'chimie': '⚗️',
-      'journalisme': '📰',
-      'droit': '⚖️',
-      'informatique': '💻',
-      'langues': '📚',
-      'mathématiques': '📊',
-      'médecine': '🏥',
-      'philosophie': '🤔',
-      'physique': '⚛️',
-      'ingénieur': '⚙️',
-      'politiques': '🏛️',
-      'terre': '🌍',
-      'gestion': '💼',
-      'technologies': '📡',
-      'humaines': '👥',
-      'transport': '🚛',
-      'éducation': '🎓',
-      'tourisme': '✈️',
-    };
-    
-    const lowerName = domainName.toLowerCase();
-    for (const [key, icon] of Object.entries(iconMap)) {
-      if (lowerName.includes(key)) {
-        return icon;
-      }
+static getIconForDomain(domainName) {
+  const iconMap = {
+    '🌱': ['agriculture'],
+    '🏗️': ['architecture'],
+    '🎨': ['arts'],
+    '🧬': ['biology', 'biologie'],
+    '⚗️': ['chemistry', 'chimie'],
+    '📰': ['journalism', 'journalisme'],
+    '⚖️': ['law', 'droit'],
+    '💻': ['computer science', 'informatique'],
+    '📚': ['languages', 'langues'],
+    '📊': ['mathematics', 'mathématiques'],
+    '🏥': ['medicine', 'médecine'],
+    '🤔': ['philosophy', 'philosophie'],
+    '⚛️': ['physics', 'physique'],
+    '⚙️': ['engineering', 'ingénieur'],
+    '🏛️': ['political', 'politiques'],
+    '🌍': ['earth', 'terre'],
+    '💼': ['management', 'gestion'],
+    '📡': ['technology', 'technologies'],
+    '👥': ['human', 'humaines'],
+    '🚛': ['transport'],
+    '🎓': ['education', 'éducation'],
+    '✈️': ['tourism', 'tourisme']
+  };
+
+  const lowerName = domainName.toLowerCase();
+  
+  for (const [icon, keywords] of Object.entries(iconMap)) {
+    if (keywords.some(keyword => lowerName.includes(keyword))) {
+      return icon;
     }
-    return '📚'; // Icône par défaut
   }
+  
+  return '📚';
+}
 
   /**
    * Récupère tous les domaines avec leurs icônes (compatible avec l'ancien format)
@@ -233,9 +230,9 @@ class DomainApi {
      * @param {string} domainId - L'ID du domaine
      * @returns {Promise<Object>} Statistiques du domaine
      */
-    static async getDomainStats(domainId) {
+    static async getDomainStats(domainId, locale = 'fr') {
     try {
-        const response = await fetch(`${this.baseUrl}/domains/${domainId}/stats`, {
+        const response = await fetch(`${this.baseUrl}/domains/${domainId}/stats?locale=${locale}`, {
         method: 'GET',
         headers: this.headers
         });

@@ -1,0 +1,438 @@
+{
+  "nav": {
+    "forum": "Forum",
+    "orientation": "Guidance & Resources",
+    "studyInFrance": "Study in France",
+    "studyInFranceDesc": "Complete guide for your studies",
+    "studentVisa": "Student Visa",
+    "studentVisaDesc": "Procedures and advice",
+    "housing": "Housing",
+    "housingDesc": "Accommodation solutions",
+    "campusFrance": "Campus France",
+    "campusFranceDesc": "Official procedure",
+    "about": "About Us",
+    "whyWendogo": "Why Wendogo?",
+    "whyWendogoDesc": "Our services",
+    "whoWeAre": "Who We Are",
+    "whoWeAreDesc": "Our team and mission",
+    "testimonials": "Testimonials",
+    "testimonialsDesc": "Student experiences",
+    "login": "Log in",
+    "logout": "Log out",
+    "dashboard": "Dashboard",
+    "myFavorites": "My Favorites",
+    "myAccount": "My Account"
+  },
+  "seo": {
+    "home": {
+      "title": "Wendogo - Find Your Program in France | Study Abroad Search Engine",
+      "description": "Discover 850+ English-taught programs in 300+ French institutions. Smart search engine to find the perfect program based on your academic profile.",
+      "keywords": "study in France, French universities, program search, higher education France, French schools, study abroad France",
+      "ogTitle": "Wendogo - Find Your Ideal Program in France",
+      "ogDescription": "Smart search engine for 850+ English-taught programs in 300+ French institutions. Advanced filters, personalized recommendations.",
+      "twitterTitle": "Wendogo - Study in France Program Search",
+      "twitterDescription": "Find your program among 850+ English-taught courses in 300+ French institutions. Smart search and advanced filters.",
+      "schemaDescription": "Search engine for programs and schools in France"
+    }
+  },  
+  "tabs": {
+    "search": "Search for a program",
+    "accompany": "Get support",
+    "organizations": "Partners Area"
+  },
+  "hero": {
+    "title": "Your Academic Future in France Awaits",
+    "description_part1": "Discover the largest selection of programs in France — over",
+    "programs_count": "850",
+    "programs_label": "English-taught programs",
+    "description_part2": "carefully selected from 100% of Campus France offerings across more than",
+    "schools_count": "300",
+    "schools_label": "partner institutions",
+    "description_cta": "Compare, choose, and launch your international journey with confidence.",
+    "searchPlaceholder": "Search for a program, a school...",
+    "clearSearch": "Clear search",
+    "search": "Search",
+    "searching": "Searching...",
+    "advancedFilters": "Advanced Filters",
+    "resultsCount_one": "{{count}} program available",
+    "resultsCount_other": "{{count}} programs available",
+    "specializations_in": "Specializations in",
+    "viewPrograms": "View programs"
+  },
+  "accompany_tab": {
+    "title": "Personalized Guidance",
+    "description": "Let our experts guide you to the perfect program based on your profile and goals."
+  },
+  "organizations_tab": {
+    "title": "Partners & Organizations",
+    "description": "Do you represent a school, university, training organization, or company? Join our partner network and increase visibility for your programs."
+  },
+  "subdomainSelection": {
+    "selected_one": "{{count}} specialization selected",
+    "selected_other": "{{count}} specializations selected",
+    "selectPrompt": "Select domains and specializations",
+    "clearAll": "Clear all"
+  },
+  "domainSelection": {
+    "noDomainFound": "No domain found",
+    "totalDomains": "Total domains: {{count}}",
+    "searchQuery": "Search: \"{{query}}\"",
+    "title": "Discover programs by field",
+    "description": "Click on a field to explore available specializations",
+    "noResults": "No programs available in this field at the moment.",
+    "backToDomains": "← Back to fields",
+    "noDomains": "No domains available"
+  },
+  "filters": {
+    "title": "Advanced Filters",
+    "subtitle": "Refine your search to find the ideal program",
+    "active_filters_one": "{{count}} active",
+    "active_filters_other": "{{count}} active",
+    "reset_all": "Reset all",
+    "close": "Close",
+    "general": {
+      "domainsAndSpecializations": "Domains & Specializations",
+      "generalCriteria": "General Criteria",
+      "entryLevel": "Entry Level",
+      "entryLevel.all": "All levels",
+      "degreeType": "Degree Type",
+      "degreeType.all": "All degrees",
+      "duration": "Program Duration",
+      "duration.all": "All durations",
+      "city": "City",
+      "city.all": "All cities",
+      "city.search": "Search for a city...",
+      "city.no_results": "No city found",
+      "alternance": "Work-Study",
+      "year_one": "{{count}} year",
+      "year_other": "{{count}} years",
+      "filter_any": "Any",
+      "filter_available": "✓ Available",
+      "filter_not_available": "✗ Not available"
+    },
+    "domains": "Domains",
+    "specializations": "Specializations",
+    "specializations_count": "Specializations ({{count}})",
+    "modify": "Modify filters",
+    "viewMore": "View all ({{count}} more)",
+    "viewLess": "View less",
+    "removeFilter": "Remove this filter",
+    "more" : "more",
+    "cost": {
+      "title": "Fees & Costs",
+      "tuition_label": "Annual tuition fees (€)",
+      "deposit_label": "Required deposit (€)",
+      "min_placeholder": "Min",
+      "max_placeholder": "Max",
+      "quick_filter_less_5000": "< €5000",
+      "quick_filter_5000_10000": "€5000 - €10000",
+      "quick_filter_more_10000": "> €10000"
+    },
+    "language": {
+      "title": "Language of Instruction",
+      "language_label": "Language",
+      "min_level_label": "Minimum required level",
+      "all_languages": "All languages",
+      "all_levels": "All levels",
+      "languages": {
+        "french": "🇫🇷 French",
+        "english": "🇬🇧 English",
+        "spanish": "🇪🇸 Spanish"
+      },
+      "levels": {
+        "a1": "A1 - Beginner",
+        "a2": "A2 - Elementary",
+        "b1": "B1 - Intermediate",
+        "b2": "B2 - Upper Intermediate",
+        "c1": "C1 - Advanced",
+        "c2": "C2 - Proficiency"
+      }
+    },
+    "admission": {
+      "title": "Calendar & Admission",
+      "application_period_label": "Application period",
+      "rncp_level_label": "RNCP Level",
+      "all_year": "Year-round",
+      "all_periods": "All periods",
+      "rncp_all_levels": "All levels",
+      "rncp_level": "Level {{level}}",
+      "periods": {
+        "jan_mar": "🗓️ Jan-Mar",
+        "apr_jun": "🌸 Apr-Jun",
+        "sep_nov": "🍂 Sep-Nov",
+        "dec_feb": "❄️ Dec-Feb"
+      },
+      "advanced": "⚙️ Advanced"
+    },
+    "campus_france": {
+      "title": "Campus France & Labels",
+      "connected_school": "Campus France Connected School",
+      "connected_school_help": "Schools with a Campus France account for application submissions",
+      "parallel_procedure": "Parallel Campus France Procedure",
+      "parallel_procedure_help": "Possibility to apply outside the platform",
+      "tuition_exemption": "Tuition fee exemption",
+      "exemption_total": "Full",
+      "exemption_partial": "Partial",
+      "exemption_none": "None",
+      "welcome_label": "\"Bienvenue en France\" Label",
+      "welcome_label_all": "All",
+      "welcome_label_help": "This label evaluates the quality of international student support"
+    }
+  },
+  "results": {
+    "found_one": "{{count}} program found",
+    "found_other": "{{count}} programs found",
+    "noResults": "No programs found",
+    "noResultsSubdomains": "No programs match your criteria in the selected domains.",
+    "noResultsFilters": "No programs match your criteria. Try modifying your filters.",
+    "viewAllPrograms": "View all programs",
+    "newSearch": "New search",
+    "for": "for",
+    "loading": "Loading..."
+  },
+  "program": {
+    "alternance": "Work-Study",
+    "intake": "Intake",
+    "exonerationFull": "Full Exsemption",
+    "exonerationPartial": "Partial Exemption",
+    "exonerationNone": "No Exemption",
+    "duration": "Duration",
+    "viewProgram": "View program",
+    "deadline": "Deadline",
+    "campusFranceCalendar": "Campus France Calendar",
+    "deposit": "Deposit"
+  },
+  "accompany": {
+    "orientation": {
+      "name": "🎯 Orientation+ Package",
+      "tagline": "From idea to perfect choice",
+      "description": "Find THE program that will transform your future",
+      "mostPopular": "Most popular",
+      "features": {
+        "analysis": "Personalized profile analysis",
+        "recommendations": "Tailored school recommendations",
+        "dossier": "Application assistance",
+        "followup": "Follow-up until guaranteed admission"
+      },
+      "detailed": {
+        "strategy": {
+          "title": "Strategic Counseling and Personalized Guidance",
+          "items": {
+            "analysis": "Comprehensive analysis of your academic and professional background",
+            "strengths": "Identification of your strengths and areas for improvement",
+            "recommendations": "Tailored recommendations for programs aligned with your goals",
+            "guide": "Complete guide to administrative procedures",
+            "financing": "Financial guidance and funding solutions"
+          }
+        },
+        "preparation": {
+          "title": "Optimal Application Preparation",
+          "items": {
+            "campusFrance": "Complete assistance for your Campus France application",
+            "selection": "Strategic selection of institutions",
+            "structure": "Structuring your academic and professional project",
+            "motivation": "Writing compelling motivation letters",
+            "interview": "Intensive preparation for Campus France interview"
+          }
+        }
+      },
+      "specialMessage": "Rest assured, we guide you to the schools best suited for you."
+    },
+    "visa": {
+      "name": "🛂 Visa & Preparation Package",
+      "tagline": "Your passport to France",
+      "description": "Get your visa stress-free, we take care of everything",
+      "mostComplete": "Most comprehensive",
+      "features": {
+        "dossier": "Complete visa application preparation",
+        "interview": "Consular interview preparation",
+        "guarantee": "Financial guarantee & accommodation",
+        "support": "Assistance in case of refusal"
+      },
+      "detailed": {
+        "assistance": {
+          "title": "Complete Visa Assistance",
+          "items": {
+            "dossier": "Professional preparation of long-stay visa application",
+            "coaching": "Coaching for consular interview",
+            "strategies": "Strategies in case of visa refusal",
+            "financial": "Financial solutions (blocked account, guarantor)",
+            "documents": "Preparation of all travel documents"
+          }
+        },
+        "housing": {
+          "title": "Housing & Finance Preparation",
+          "items": {
+            "search": "Search and securing student accommodation",
+            "guarantee": "Assistance for financial guarantees",
+            "insurance": "Advice on travel and health insurance",
+            "budget": "Preparation of living budget in France",
+            "banking": "Help with banking procedures"
+          }
+        }
+      },
+      "specialMessage": "Your peace of mind: we secure your visa."
+    },
+    "installation": {
+      "name": "🏠 France Settlement Package",
+      "tagline": "Your new life starts here",
+      "description": "Integrate easily and quickly into your new French life",
+      "successGuaranteed": "Success guaranteed",
+      "features": {
+        "banking": "Bank account opening",
+        "university": "Facilitated university enrollment",
+        "social": "Social security & health insurance",
+        "integration": "Student life integration"
+      },
+      "detailed": {
+        "administrative": {
+          "title": "Essential Administrative Procedures",
+          "items": {
+            "banking": "Assistance opening French bank account",
+            "university": "Support for university enrollment",
+            "social": "Social security and student health insurance registration",
+            "residence": "Residence permit regularization",
+            "cards": "Obtaining student discount cards"
+          }
+        },
+        "integration": {
+          "title": "Integration and Student Life",
+          "items": {
+            "coaching": "Integration coaching into French life",
+            "jobs": "Help finding student jobs",
+            "internships": "Support for finding internships",
+            "network": "Access to student and associative networks",
+            "support": "Continuous support during the first months"
+          }
+        }
+      },
+      "specialMessage": "We accompany you in your first steps in France."
+    },
+    "savings": "Save {{amount}}!",
+    "chooseOffer": "Choose this offer",
+    "learnMore": "Learn more",
+    "trust": {
+      "title": "Why do they trust us?",
+      "security": {
+        "title": "Security & Transparency",
+        "description": "Real-time tracking and constant communication with our students"
+      },
+      "expertise": {
+        "title": "Recognized Expertise",
+        "description": "Team of former students in France and education professionals"
+      },
+      "human": {
+        "title": "Human Support",
+        "description": "A dedicated advisor who believes in your potential available 7/7"
+      }
+    },
+    "guarantees": {
+      "satisfaction": "100% satisfaction guarantee",
+      "students": "+500 students supported",
+      "advisors": "Bilingual advisors"
+    }
+  },
+  "organization": {
+    "title": "Partners Area",
+    "titleLong": "Are you a school or university?",
+    "subtitle": "Join our network and attract the best international talents",
+    "advantages": {
+      "visibility": {
+        "title": "Increased Visibility",
+        "description": "Reach thousands of French-speaking students worldwide"
+      },
+      "reach": {
+        "title": "International Reach",
+        "description": "Attract talents from Cameroon, Senegal, Morocco and many other countries"
+      },
+      "support": {
+        "title": "Expert Support",
+        "description": "Benefit from our expertise in international recruitment"
+      }
+    },
+    "contact": {
+      "title": "Contact us",
+      "subtitle": "Tell us about your institution and recruitment objectives",
+      "form": {
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "position": "Position Title",
+        "organization": "Institution",
+        "email": "Email Address",
+        "message": "Your Message",
+        "placeholders": {
+          "firstName": "Your first name",
+          "lastName": "Your last name",
+          "position": "Director, Admissions Manager...",
+          "organization": "Your school/university name",
+          "email": "your.email@institution.com",
+          "message": "Describe your institution, your programs, your international recruitment objectives and how we can collaborate..."
+        },
+        "errors": {
+          "firstNameRequired": "First name required",
+          "lastNameRequired": "Last name required",
+          "positionRequired": "Position title required",
+          "organizationRequired": "Institution name required",
+          "emailRequired": "Email required",
+          "emailInvalid": "Invalid email format",
+          "messageRequired": "Message required",
+          "messageTooShort": "Message too short (minimum 20 characters)",
+          "submitError": "Error sending. Please try again."
+        },
+        "required": "*",
+        "charactersCount": "{{count}}/1000 characters",
+        "submit": "Send our message",
+        "submitting": "Sending..."
+      },
+      "success": {
+        "title": "Message sent successfully!",
+        "message": "Thank you for your message. Our team will contact you as soon as possible to discuss our partnership opportunities.",
+        "sendAnother": "Send another message"
+      },
+      "privacy": "🔒 Your information is treated confidentially and will only be used for our potential collaboration."
+    },
+    "testimonials": {
+      "title": "They already trust us",
+      "businessSchools": {
+        "title": "Business Schools",
+        "quote": "Wendogo allowed us to recruit quality international profiles"
+      },
+      "universities": {
+        "title": "Universities",
+        "quote": "An effective platform to attract motivated and well-prepared students"
+      },
+      "specializedSchools": {
+        "title": "Specialized Schools",
+        "quote": "Thanks to Wendogo, we diversified our international recruitment"
+      }
+    }
+  },
+  "stats": {
+    "programs": "Programs",
+    "schools": "Schools",
+    "satisfactionRate": "Satisfaction Rate",
+    "supportAvailable": "Support Available"
+  },
+  "footer": {
+    "about": "About Wendogo",
+    "fundamentals": "Fundamentals",
+    "resources": "Wendogo Resources",
+    "whyWendogo": "Why go through Wendogo?",
+    "whoWeAre": "Who are we?",
+    "contact": "Contact",
+    "cookies": "Cookies",
+    "privacy": "Privacy Policy",
+    "legal": "Legal Notice",
+    "terms": "Terms & Conditions",
+    "termsOfService": "Terms & Conditions",
+    "studyInFrance": "Study in France",
+    "studentVisa": "Student Visa",
+    "housing": "Housing",
+    "campusFrance": "Campus France",
+    "disclaimer": "Wendogo Consulting is a simplified joint-stock company, registered with ORIAS as a systems and computer software consultancy under number 497 933 408, with registered office at 50 avenue des Champs-Elysees 75008 Paris. A contract commits you and must be respected. Verify your financial capabilities before committing."
+  },
+  "favoriteButton": {
+    "add": "Add to favorites",
+    "remove": "Remove from favorites"
+  }
+}

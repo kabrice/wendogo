@@ -1,0 +1,123 @@
+{
+  "meta": {
+    "title": "Our Mission - Make Your Dream of Studying in France Come True - Wendogo",
+    "description": "Discover Wendogo's mission: to support you from A to Z in your study project in France with care and expertise."
+  },
+  "hero": {
+    "title": "Make Your Dream of Studying in France Come True",
+    "description": "Wendogo is the reference platform for supporting international students in their study project in France. From guidance to settlement, we are your trusted partner.",
+    "cta": "Get Support",
+    "imageAlt": "Happy student"
+  },
+  "stats": {
+    "formations": {
+      "number": "2100+",
+      "label": "Programs listed"
+    },
+    "schools": {
+      "number": "500+",
+      "label": "Partner schools"
+    },
+    "satisfaction": {
+      "number": "95%",
+      "label": "Satisfaction rate"
+    },
+    "support": {
+      "number": "24/7",
+      "label": "Available support"
+    }
+  },
+  "tabs": {
+    "mission": "Our Mission",
+    "values": "Our Values",
+    "services": "Our Services"
+  },
+  "mission": {
+    "title": "Our Mission",
+    "subtitle": "To democratize access to French higher education and support every student in achieving their academic project.",
+    "whyTitle": "Why Does Wendogo Exist?",
+    "reasons": {
+      "simplify": {
+        "bold": "Simplify",
+        "text": "complex and bureaucratic procedures"
+      },
+      "democratize": {
+        "bold": "Democratize",
+        "text": "access to information about French programs"
+      },
+      "accompany": {
+        "bold": "Support",
+        "text": "each student humanely in their journey"
+      },
+      "maximize": {
+        "bold": "Maximize",
+        "text": "chances of success through our expertise"
+      }
+    },
+    "imageAlt": "Student support",
+    "commitment": {
+      "title": "Our Commitment",
+      "description": "We are committed to providing personalized, transparent, and caring support to every student, putting our expertise at the service of their study project's success in France."
+    }
+  },
+  "values": {
+    "title": "Our Values",
+    "subtitle": "The principles that guide our daily actions and define how we support students.",
+    "items": {
+      "benevolence": {
+        "title": "Care",
+        "description": "We understand that your study project is unique and precious. Every student is supported with empathy and respect."
+      },
+      "excellence": {
+        "title": "Excellence",
+        "description": "Our team of experts guides you to the best programs and optimizes every step of your journey."
+      },
+      "transparency": {
+        "title": "Transparency",
+        "description": "Clear pricing, transparent process, honest advice. We defend your interests with complete transparency."
+      },
+      "accessibility": {
+        "title": "Accessibility",
+        "description": "Wherever you are in the world, our 24/7 support accompanies you in your language and according to your time zone."
+      }
+    }
+  },
+  "services": {
+    "title": "Our Services",
+    "subtitle": "Complete support for all stages of your study project in France.",
+    "items": {
+      "orientation": {
+        "title": "Personalized Guidance",
+        "description": "Analysis of your profile and recommendations for programs suited to your goals.",
+        "features": [
+          "Profile analysis",
+          "Personalized recommendations",
+          "Guidance coaching"
+        ]
+      },
+      "visa": {
+        "title": "Visa Support",
+        "description": "Complete support for your student visa file and Campus France procedure.",
+        "features": [
+          "File preparation",
+          "Campus France follow-up",
+          "Interview support"
+        ]
+      },
+      "support": {
+        "title": "Continuous Support",
+        "description": "Support before, during, and after your arrival in France.",
+        "features": [
+          "24/7 support",
+          "Housing assistance",
+          "Integration in France"
+        ]
+      }
+    }
+  },
+  "cta": {
+    "title": "Ready to Start Your Academic Adventure in France?",
+    "description": "Join thousands of students who made their dream of studying in France come true with Wendogo.",
+    "button": "Get Support"
+  }
+}

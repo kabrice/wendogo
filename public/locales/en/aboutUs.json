@@ -1,0 +1,129 @@
+{
+  "meta": {
+    "title": "About Wendogo - Your Partner for Studying in France",
+    "description": "Discover the Wendogo team and our mission: to support you with expertise and care in your study project in France."
+  },
+  "hero": {
+    "title": "Who Are We?",
+    "description": "Wendogo is a passionate team of international education experts who fully understand the challenges you face. We are your trusted partners in making your dream of studying in France come true.",
+    "expertTeam": "Expert Team",
+    "supportiveCare": "Supportive Guidance",
+    "teamImageAlt": "Wendogo Team"
+  },
+  "navigation": {
+    "team": "Our Team",
+    "expertise": "Our Expertise",
+    "story": "Our Story"
+  },
+  "team": {
+    "title": "Our Team",
+    "description": "Passionate experts who put their experience and care at the service of your success.",
+    "members": {
+      "edgar": {
+        "name": "Edgar Kamdem",
+        "role": "Co-founder & CEO",
+        "description": "Engineer and entrepreneur passionate about international education. Edgar created Wendogo after experiencing the difficulties of study abroad procedures."
+      },
+      "advisors": {
+        "name": "Advisory Team",
+        "role": "Guidance Experts",
+        "description": "A team of experienced advisors, former international students, who perfectly understand the challenges you face."
+      }
+    },
+    "whyChooseAdvisors": "Why Choose Our Advisors?",
+    "advisorQualities": {
+      "livedExperience": {
+        "title": "Lived Experience",
+        "description": "Our advisors have themselves experienced studying abroad"
+      },
+      "recognizedExpertise": {
+        "title": "Recognized Expertise",
+        "description": "Continuous training and certification on French procedures"
+      },
+      "humanSupport": {
+        "title": "Human Support",
+        "description": "Listening, empathy, and support throughout your journey"
+      }
+    }
+  },
+  "expertise": {
+    "title": "Our Expertise",
+    "description": "What sets us apart and makes us your best allies to succeed in your study project in France.",
+    "sections": {
+      "personalizedSupport": {
+        "title": "Personalized Support",
+        "description": "Every student is unique. Our advisors take the time to understand your profile, goals, and constraints to offer you tailor-made support."
+      },
+      "recognizedExpertise": {
+        "title": "Recognized Expertise",
+        "description": "Our team has a perfect command of the French education system, administrative procedures, and institution expectations."
+      },
+      "supportiveCare": {
+        "title": "Caring Follow-up",
+        "description": "We support you with empathy and care, understanding the emotional challenges of your study project."
+      },
+      "extensiveNetwork": {
+        "title": "Extensive Network",
+        "description": "Through our network of partners and alumni, we open doors for you and facilitate your integration."
+      }
+    },
+    "domains": {
+      "title": "Our Areas of Expertise",
+      "orientation": {
+        "title": "🎓 Academic Guidance",
+        "description": "Over 2,100 programs analyzed and listed"
+      },
+      "visa": {
+        "title": "📋 Student Visa",
+        "description": "Complete expertise in consular procedures"
+      },
+      "campusFrance": {
+        "title": "🏫 Campus France",
+        "description": "Personalized support from A to Z"
+      },
+      "installation": {
+        "title": "🏠 Settlement",
+        "description": "Support for your arrival and integration"
+      }
+    }
+  },
+  "story": {
+    "title": "Our Story",
+    "description": "Wendogo was born from a personal frustration that turned into a mission: to facilitate access to higher education in France.",
+    "origin": {
+      "title": "Wendogo's Origin",
+      "paragraph1": "It all started with Edgar Kamdem, an engineer passionate about education, who experienced the difficulties of administrative procedures for helping his loved ones travel and supporting them in their studies abroad.",
+      "paragraph2": "Seeing that many talented students were giving up their dreams due to the complexity of procedures, Edgar decided to create a solution to democratize access to studies in France.",
+      "paragraph3": "Thus, Wendogo was born from this desire to simplify, support, and succeed together.",
+      "imageAlt": "Wendogo Advisor"
+    },
+    "milestones": {
+      "title": "Key Milestones in Our Development",
+      "2020": {
+        "title": "Wendogo's Creation",
+        "description": "Birth of the idea following difficulties encountered by the founders"
+      },
+      "2021": {
+        "title": "First Supported Students",
+        "description": "Official launch with first guidance services"
+      },
+      "2022": {
+        "title": "Service Expansion",
+        "description": "Addition of visa support and partnerships with schools"
+      },
+      "2023": {
+        "title": "National Recognition",
+        "description": "Wendogo becomes a reference for studies in France"
+      },
+      "2024": {
+        "title": "Continuous Innovation",
+        "description": "New tools and services to optimize your experience"
+      }
+    }
+  },
+  "cta": {
+    "title": "Ready to Team Up with Us?",
+    "description": "Join the Wendogo community and benefit from the support of experts who truly understand your project.",
+    "button": "Get Support"
+  }
+}
