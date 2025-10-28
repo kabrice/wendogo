@@ -6,7 +6,10 @@ import { useTranslation } from 'next-i18next';
 
 const PrivacyPolicy = () => {
   const { t } = useTranslation(['common', 'privacy']);
-
+  const getTranslationArray = (t, key, defaultValue = []) => {
+    const result = t(key, { returnObjects: true });
+    return Array.isArray(result) ? result : defaultValue;
+  };
   return (
     <>
       <NavBar variant="simple" languageSelectorVariant="light" />
@@ -62,7 +65,7 @@ const PrivacyPolicy = () => {
                 <div className="bg-blue-50 p-4 rounded-lg">
                   <h3 className="font-semibold text-blue-900 mb-2">{t('privacy:collecte.inscription.title')}</h3>
                   <ul className="list-disc list-inside text-blue-800 space-y-1">
-                    {t('privacy:collecte.inscription.items', { returnObjects: true }).map((item, index) => (
+                    {getTranslationArray(t, 'privacy:collecte.inscription.items').map((item, index) => (
                       <li key={index}>{item}</li>
                     ))}
                   </ul>
@@ -74,7 +77,7 @@ const PrivacyPolicy = () => {
                     {t('privacy:collecte.social.description')}
                   </p>
                   <ul className="list-disc list-inside text-green-800 space-y-1">
-                    {t('privacy:collecte.social.items', { returnObjects: true }).map((item, index) => (
+                    {getTranslationArray(t, 'privacy:collecte.social.items').map((item, index) => (
                       <li key={index}>{item}</li>
                     ))}
                   </ul>
@@ -83,7 +86,7 @@ const PrivacyPolicy = () => {
                 <div className="bg-orange-50 p-4 rounded-lg">
                   <h3 className="font-semibold text-orange-900 mb-2">{t('privacy:collecte.usage.title')}</h3>
                   <ul className="list-disc list-inside text-orange-800 space-y-1">
-                    {t('privacy:collecte.usage.items', { returnObjects: true }).map((item, index) => (
+                    {getTranslationArray(t, 'privacy:collecte.usage.items').map((item, index) => (
                       <li key={index}>{item}</li>
                     ))}
                   </ul>
@@ -102,7 +105,7 @@ const PrivacyPolicy = () => {
                 <div className="bg-gray-50 p-4 rounded-lg">
                   <h3 className="font-semibold text-gray-900 mb-2">{t('privacy:utilisation.principal.title')}</h3>
                   <ul className="list-disc list-inside text-gray-700 space-y-1">
-                    {t('privacy:utilisation.principal.items', { returnObjects: true }).map((item, index) => (
+                    {getTranslationArray(t, 'privacy:utilisation.principal.items').map((item, index) => (
                       <li key={index}>{item}</li>
                     ))}
                   </ul>
@@ -111,7 +114,7 @@ const PrivacyPolicy = () => {
                 <div className="bg-gray-50 p-4 rounded-lg">
                   <h3 className="font-semibold text-gray-900 mb-2">{t('privacy:utilisation.amelioration.title')}</h3>
                   <ul className="list-disc list-inside text-gray-700 space-y-1">
-                    {t('privacy:utilisation.amelioration.items', { returnObjects: true }).map((item, index) => (
+                    {getTranslationArray(t, 'privacy:utilisation.amelioration.items').map((item, index) => (
                       <li key={index}>{item}</li>
                     ))}
                   </ul>

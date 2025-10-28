@@ -30,7 +30,10 @@ import Link from 'next/link';
 function LegalNotice() {
   const { t } = useTranslation(['common', 'legalNotice']);
   const [expandedSection, setExpandedSection] = useState(null);
-
+  const getTranslationArray = (t, key, defaultValue = []) => {
+    const result = t(key, { returnObjects: true });
+    return Array.isArray(result) ? result : defaultValue;
+  };
   useEffect(() => {
     trackPageView('legal_notice_page');
   }, []);
@@ -166,7 +169,7 @@ function LegalNotice() {
             <div className="bg-white border border-gray-200 rounded-lg p-4">
               <h5 className="font-semibold text-gray-900 mb-2">{t('legalNotice:sections.servicesDescription.orientation.title')}</h5>
               <ul className="text-sm text-gray-700 space-y-1">
-                {t('legalNotice:sections.servicesDescription.orientation.items', { returnObjects: true }).map((item, index) => (
+                {getTranslationArray(t, 'legalNotice:sections.servicesDescription.orientation.items').map((item, index) => (
                   <li key={index}>{item}</li>
                 ))}
               </ul>
@@ -174,7 +177,7 @@ function LegalNotice() {
             <div className="bg-white border border-gray-200 rounded-lg p-4">
               <h5 className="font-semibold text-gray-900 mb-2">{t('legalNotice:sections.servicesDescription.visa.title')}</h5>
               <ul className="text-sm text-gray-700 space-y-1">
-                {t('legalNotice:sections.servicesDescription.visa.items', { returnObjects: true }).map((item, index) => (
+                {getTranslationArray(t, 'legalNotice:sections.servicesDescription.visa.items').map((item, index) => (
                   <li key={index}>{item}</li>
                 ))}
               </ul>
@@ -245,7 +248,7 @@ function LegalNotice() {
             <div className="bg-white border border-gray-200 rounded-lg p-4">
               <h5 className="font-semibold text-gray-900 mb-3">{t('legalNotice:sections.personalData.purposes.title')}</h5>
               <ul className="text-sm text-gray-700 space-y-1">
-                {t('legalNotice:sections.personalData.purposes.items', { returnObjects: true }).map((item, index) => (
+                {getTranslationArray(t, 'legalNotice:sections.personalData.purposes.items').map((item, index) => (
                   <li key={index}>{item}</li>
                 ))}
               </ul>
@@ -253,7 +256,7 @@ function LegalNotice() {
             <div className="bg-white border border-gray-200 rounded-lg p-4">
               <h5 className="font-semibold text-gray-900 mb-3">{t('legalNotice:sections.personalData.rights.title')}</h5>
               <ul className="text-sm text-gray-700 space-y-1">
-                {t('legalNotice:sections.personalData.rights.items', { returnObjects: true }).map((item, index) => (
+                {getTranslationArray(t, 'legalNotice:sections.personalData.rights.items').map((item, index) => (
                   <li key={index}>{item}</li>
                 ))}
               </ul>
@@ -320,7 +323,7 @@ function LegalNotice() {
               {t('legalNotice:sections.cookies.manage.description')}
             </p>
             <ul className="text-blue-700 text-sm space-y-1">
-              {t('legalNotice:sections.cookies.manage.items', { returnObjects: true }).map((item, index) => (
+              {getTranslationArray(t, 'legalNotice:sections.cookies.manage.items').map((item, index) => (
                 <li key={index}>{item}</li>
               ))}
             </ul>

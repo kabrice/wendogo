@@ -15,7 +15,10 @@ function CGU() {
 
   const router = useRouter();
   const { t } = useTranslation(['common', 'cgu']);  
-
+  const getTranslationArray = (t, key, defaultValue = []) => {
+    const result = t(key, { returnObjects: true });
+    return Array.isArray(result) ? result : defaultValue;
+  };
   useEffect(() => {
     trackPageView('cgu_page');
   }, []);
@@ -105,7 +108,7 @@ function CGU() {
               <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-lg">
                 <h3 className="font-semibold text-blue-900 mb-3">{t('cgu:purpose.academic.title')}</h3>
                 <ul className="text-blue-800 space-y-2 text-sm">
-                  {t('cgu:purpose.academic.items', { returnObjects: true }).map((item, index) => (
+                  {getTranslationArray(t, 'cgu:purpose.academic.items').map((item, index) => (
                     <li key={index}>{item}</li>
                   ))}
                 </ul>
@@ -113,7 +116,7 @@ function CGU() {
               <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-6 rounded-lg">
                 <h3 className="font-semibold text-green-900 mb-3">{t('cgu:purpose.visa.title')}</h3>
                 <ul className="text-green-800 space-y-2 text-sm">
-                  {t('cgu:purpose.visa.items', { returnObjects: true }).map((item, index) => (
+                  {getTranslationArray(t, 'cgu:purpose.visa.items').map((item, index) => (
                     <li key={index}>{item}</li>
                   ))}
                 </ul>
@@ -129,7 +132,7 @@ function CGU() {
             <div className="bg-white border border-gray-200 rounded-lg p-6">
               <h3 className="font-semibold text-gray-900 mb-4">{t('cgu:obligations.subtitle')}</h3>
               <ul className="space-y-3 text-gray-700">
-                {t('cgu:obligations.items', { returnObjects: true }).map((item, index) => (
+                {getTranslationArray(t, 'cgu:obligations.items').map((item, index) => (
                   <li key={index} className="flex items-start">
                     <span className="text-green-500 mr-2">✓</span>
                     {item}
@@ -176,7 +179,7 @@ function CGU() {
                 {t('cgu:dataProtection.description')}
               </p>
               <ul className="text-green-700 space-y-2">
-                {t('cgu:dataProtection.purposes', { returnObjects: true }).map((purpose, index) => (
+                  {getTranslationArray(t, 'cgu:dataProtection.purposes').map((purpose, index) => (
                   <li key={index}>{purpose}</li>
                 ))}
               </ul>
@@ -202,10 +205,10 @@ function CGU() {
                 <div>
                   <h4 className="font-semibold text-gray-800 mb-2">{t('cgu:contact.address.label')}</h4>
                   <p className="text-gray-600">
-                    {t('cgu:contact.address.lines', { returnObjects: true }).map((line, index) => (
+                    {getTranslationArray(t, 'cgu:contact.address.lines').map((line, index) => (
                       <span key={index}>
                         {line}
-                        {index < t('cgu:contact.address.lines', { returnObjects: true }).length - 1 && <br />}
+                        {index < getTranslationArray(t, 'cgu:contact.address.lines').length - 1 && <br />}
                       </span>
                     ))}
                   </p>
@@ -224,10 +227,10 @@ function CGU() {
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-3">{t('cgu:legal.publisher.title')}</h3>
                   <p className="text-gray-700">
-                    {t('cgu:legal.publisher.lines', { returnObjects: true }).map((line, index) => (
+                    {getTranslationArray(t, 'cgu:legal.publisher.lines').map((line, index) => (
                       <span key={index}>
                         {line}
-                        {index < t('cgu:legal.publisher.lines', { returnObjects: true }).length - 1 && <br />}
+                        {index < getTranslationArray(t, 'cgu:legal.publisher.lines').length - 1 && <br />}
                       </span>
                     ))}
                   </p>
@@ -235,10 +238,10 @@ function CGU() {
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-3">{t('cgu:legal.director.title')}</h3>
                   <p className="text-gray-700">
-                    {t('cgu:legal.director.lines', { returnObjects: true }).map((line, index) => (
+                    {getTranslationArray(t, 'cgu:legal.director.lines').map((line, index) => (
                       <span key={index}>
                         {line}
-                        {index < t('cgu:legal.director.lines', { returnObjects: true }).length - 1 && <br />}
+                        {index < getTranslationArray(t, 'cgu:legal.director.lines').length - 1 && <br />}
                       </span>
                     ))}
                   </p>

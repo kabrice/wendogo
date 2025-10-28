@@ -25,7 +25,10 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
   const [showAllPrograms, setShowAllPrograms] = useState(false);
   const [subdomains, setSubdomains] = useState([]);
   const [subdomainsLoaded, setSubdomainsLoaded] = useState(false);
-
+  const getTranslationArray = (t, key, defaultValue = []) => {
+    const result = t(key, { returnObjects: true });
+    return Array.isArray(result) ? result : defaultValue;
+  };
   console.log('Écoles similaires (côté client):', similarSchools);
 
   useEffect(() => {
@@ -435,7 +438,7 @@ const SchoolPage = ({ school, programs, similarSchools, error }) => {
                 {t('schools:campusFrance.description', { schoolName: school.name })}
               </p>
               <div className="space-y-2">
-                {(t('schools:campusFrance.procedures', { returnObjects: true }) || []).map((procedure, index) => (
+                {getTranslationArray(t, 'schools:campusFrance.procedures').map((procedure, index) => (
                   <div key={index} className="flex items-start gap-2">
                     <CheckCircle className="w-3 h-3 text-green-600 mt-1 flex-shrink-0" />
                     <span className="text-blue-700 text-xs">{procedure}</span>
