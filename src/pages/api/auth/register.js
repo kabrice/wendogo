@@ -56,7 +56,7 @@ export default async function handler(req, res) {
     }
 
     // Vérifier si l'email existe
-    const checkUserResponse = await fetch(`${REST_API_PARAMS.baseUrl}/auth/check-email`, {
+    const checkUserResponse = await fetch(`${REST_API_PARAMS.baseUrl}/auth/check-email?locale=${locale}`, {
       method: 'POST',
       headers: REST_API_PARAMS.headers,
       body: JSON.stringify({ email })
@@ -74,7 +74,7 @@ export default async function handler(req, res) {
     const formattedBirthdate = new Date(birthdate).toISOString().split('T')[0];
 
     // Créer l'utilisateur
-    const createUserResponse = await fetch(`${REST_API_PARAMS.baseUrl}/auth/register`, {
+    const createUserResponse = await fetch(`${REST_API_PARAMS.baseUrl}/auth/register?locale=${locale}`, {
       method: 'POST',
       headers: REST_API_PARAMS.headers,
       body: JSON.stringify({

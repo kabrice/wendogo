@@ -34,7 +34,8 @@ const ResetPassword = () => {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             token: token,
-            email: decodeURIComponent(email)
+            email: decodeURIComponent(email),
+            locale: router.locale || 'fr'
           })
         });
 
@@ -88,7 +89,8 @@ const ResetPassword = () => {
         body: JSON.stringify({
           token: token,
           email: decodeURIComponent(email),
-          new_password: hashedPassword
+          new_password: hashedPassword,
+          locale: router.locale || 'fr'
         })
       });
 

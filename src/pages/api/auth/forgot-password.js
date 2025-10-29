@@ -1,3 +1,4 @@
+// src/pages/api/auth/forgot-password.js - VERSION CORRIGÉE
 import crypto from 'crypto';
 import { REST_API_PARAMS } from '../../../utils/Constants';
 import { getApiMessages } from '../../../utils/apiMessages';
@@ -10,7 +11,7 @@ export default async function handler(req, res) {
   try {
     const { email, locale = 'fr' } = req.body;
     const messages = getApiMessages(locale);
-
+    console.log('🔐 Mot de passe oublié pour:', email, 'Locale:', locale, 'message:', messages);
     if (!email) {
       return res.status(400).json({ 
         success: false, 
@@ -40,7 +41,7 @@ export default async function handler(req, res) {
     const expiresAt = new Date(Date.now() + 60 * 60 * 1000);
 
     // Sauvegarder le token
-    const saveTokenResponse = await fetch(`${REST_API_PARAMS.baseUrl}/auth/save-reset-token`, {
+    const saveTokenResponse = await fetch(`${REST_API_PARAMS.baseUrl}/auth/save-reset-token?locale=${locale}`, {
       method: 'POST',
       headers: REST_API_PARAMS.headers,
       body: JSON.stringify({
@@ -56,7 +57,7 @@ export default async function handler(req, res) {
 
     // Construire l'URL
     const baseUrl = process.env.NEXTAUTH_URL || 'https://www.wendogo.com';
-    const resetUrl = `${baseUrl}/${locale}/auth/reset-password?token=${resetToken}&email=${encodeURIComponent(email)}`;
+    const resetUrl = `${baseUrl}/${locale}/auth/reset-password?locale=${locale}&token=${resetToken}&email=${encodeURIComponent(email)}`;
 
     // Envoyer l'email
     const emailData = {
@@ -71,8 +72,8 @@ export default async function handler(req, res) {
         expiresIn: locale === 'en' ? '1 hour' : '1 heure'
       }
     };
-
-    const sendEmailResponse = await fetch(`${REST_API_PARAMS.baseUrl}/auth/send-reset-email`, {
+    console.log('Envoi email avec les données:', emailData, messages);
+    const sendEmailResponse = await fetch(`${REST_API_PARAMS.baseUrl}/auth/send-reset-email?locale=${locale}`, {
       method: 'POST',
       headers: REST_API_PARAMS.headers,
       body: JSON.stringify(emailData)

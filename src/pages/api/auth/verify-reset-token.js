@@ -16,7 +16,7 @@ export default async function handler(req, res) {
       });
     }
 
-    const verifyResponse = await fetch(`${REST_API_PARAMS.baseUrl}/auth/verify-reset-token`, {
+    const verifyResponse = await fetch(`${REST_API_PARAMS.baseUrl}/auth/verify-reset-token?locale=${locale}`, {
       method: 'POST',
       headers: REST_API_PARAMS.headers,
       body: JSON.stringify({ token, email })

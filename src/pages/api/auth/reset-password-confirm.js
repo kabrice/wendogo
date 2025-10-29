@@ -7,7 +7,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { token, email, new_password } = req.body;
+    const { token, email, new_password, locale } = req.body;
 
     if (!token || !email || !new_password) {
       return res.status(400).json({ 
@@ -19,7 +19,7 @@ export default async function handler(req, res) {
     console.log('🔄 Réinitialisation mot de passe pour:', email);
 
     // Appeler Flask pour réinitialiser le mot de passe
-    const resetResponse = await fetch(`${REST_API_PARAMS.baseUrl}/auth/reset-password`, {
+    const resetResponse = await fetch(`${REST_API_PARAMS.baseUrl}/auth/reset-password?locale=${locale}`, {
       method: 'POST',
       headers: REST_API_PARAMS.headers,
       body: JSON.stringify({
@@ -71,7 +71,7 @@ export async function verifyResetTokenHandler(req, res) {
     }
 
     // Vérifier le token via Flask
-    const verifyResponse = await fetch(`${REST_API_PARAMS.baseUrl}/auth/verify-reset-token`, {
+    const verifyResponse = await fetch(`${REST_API_PARAMS.baseUrl}/auth/verify-reset-token?locale=${locale}`, {
       method: 'POST',
       headers: REST_API_PARAMS.headers,
       body: JSON.stringify({ token, email })

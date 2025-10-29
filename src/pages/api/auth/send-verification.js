@@ -23,7 +23,7 @@ export default async function handler(req, res) {
     const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
 
     // Sauvegarder le token
-    const saveTokenResponse = await fetch(`${REST_API_PARAMS.baseUrl}/auth/save-verification-token`, {
+    const saveTokenResponse = await fetch(`${REST_API_PARAMS.baseUrl}/auth/save-verification-token?locale=${locale}`, {
       method: 'POST',
       headers: REST_API_PARAMS.headers,
       body: JSON.stringify({
@@ -39,7 +39,7 @@ export default async function handler(req, res) {
 
     // Construire l'URL
     const baseUrl = process.env.NEXTAUTH_URL || 'https://www.wendogo.com';
-    const verificationUrl = `${baseUrl}/${locale}/auth/verify-email?token=${verificationToken}&email=${encodeURIComponent(email)}`;
+    const verificationUrl = `${baseUrl}/${locale}/auth/verify-email?locale=${locale}&token=${verificationToken}&email=${encodeURIComponent(email)}`;
 
     // Envoyer l'email
     const emailData = {
@@ -56,7 +56,7 @@ export default async function handler(req, res) {
       }
     };
 
-    const sendEmailResponse = await fetch(`${REST_API_PARAMS.baseUrl}/auth/send-verification-email`, {
+    const sendEmailResponse = await fetch(`${REST_API_PARAMS.baseUrl}/auth/send-verification-email?locale=${locale}`, {
       method: 'POST',
       headers: REST_API_PARAMS.headers,
       body: JSON.stringify(emailData)

@@ -250,6 +250,7 @@ const AuthModal = () => {
     setErrors({});
 
     try {
+      console.log('🔐 Demande de réinitialisation pour:', formData.email, 'Locale:', currentLocale);
       const response = await fetch('/api/auth/forgot-password', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -257,7 +258,7 @@ const AuthModal = () => {
       });
 
       const data = await response.json();
-
+      console.log('🔐 Réponse mot de passe oublié:', data);
       if (response.ok) {
         setErrors({
           success: t('success.resetSent')
@@ -440,7 +441,8 @@ const AuthModal = () => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               email: formData.email,
-              firstname: formData.firstname
+              firstname: formData.firstname,
+              locale: currentLocale
             })
           });
           
@@ -517,7 +519,8 @@ const AuthModal = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           email: formData.email,
-          firstname: formData.firstname || t('form.defaultUser')
+          firstname: formData.firstname || t('form.defaultUser'),
+          locale: currentLocale
         })
       });
       
