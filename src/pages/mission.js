@@ -175,41 +175,41 @@ function WendogoMission() {
             <div>
               <div className="text-center mb-12">
                 <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                  {t('mission:mission.title')}
+                  {t('mission:myMission.title')}
                 </h2>
                 <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                  {t('mission:mission.subtitle')}
+                  {t('mission:myMission.subtitle')}
                 </p>
               </div>
 
               <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
                 <div>
                   <h3 className="text-2xl font-semibold text-gray-900 mb-6">
-                    {t('mission:mission.whyTitle')}
+                    {t('mission:myMission.whyTitle')}
                   </h3>
                   <div className="space-y-4">
                     <div className="flex items-start">
                       <CheckCircle className="w-6 h-6 text-green-500 mr-3 mt-1 flex-shrink-0" />
                       <p className="text-gray-700">
-                        <strong>{t('mission:mission.reasons.simplify.bold')}</strong> {t('mission:mission.reasons.simplify.text')}
+                        <strong>{t('mission:myMission.reasons.simplify.bold')}</strong> {t('mission:myMission.reasons.simplify.text')}
                       </p>
                     </div>
                     <div className="flex items-start">
                       <CheckCircle className="w-6 h-6 text-green-500 mr-3 mt-1 flex-shrink-0" />
                       <p className="text-gray-700">
-                        <strong>{t('mission:mission.reasons.democratize.bold')}</strong> {t('mission:mission.reasons.democratize.text')}
+                        <strong>{t('mission:myMission.reasons.democratize.bold')}</strong> {t('mission:myMission.reasons.democratize.text')}
                       </p>
                     </div>
                     <div className="flex items-start">
                       <CheckCircle className="w-6 h-6 text-green-500 mr-3 mt-1 flex-shrink-0" />
                       <p className="text-gray-700">
-                        <strong>{t('mission:mission.reasons.accompany.bold')}</strong> {t('mission:mission.reasons.accompany.text')}
+                        <strong>{t('mission:myMission.reasons.accompany.bold')}</strong> {t('mission:myMission.reasons.accompany.text')}
                       </p>
                     </div>
                     <div className="flex items-start">
                       <CheckCircle className="w-6 h-6 text-green-500 mr-3 mt-1 flex-shrink-0" />
                       <p className="text-gray-700">
-                        <strong>{t('mission:mission.reasons.maximize.bold')}</strong> {t('mission:mission.reasons.maximize.text')}
+                        <strong>{t('mission:myMission.reasons.maximize.bold')}</strong> {t('mission:myMission.reasons.maximize.text')}
                       </p>
                     </div>
                   </div>
@@ -217,7 +217,7 @@ function WendogoMission() {
                 <div className="relative">
                   <Image
                     src={Mentorship}
-                    alt={t('mission:mission.imageAlt')}
+                    alt={t('mission:myMission.imageAlt')}
                     className="rounded-2xl shadow-lg"
                     width={500}
                     height={400}
@@ -227,10 +227,10 @@ function WendogoMission() {
 
               <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-8">
                 <h3 className="text-2xl font-semibold text-gray-900 mb-4 text-center">
-                  {t('mission:mission.commitment.title')}
+                  {t('mission:myMission.commitment.title')}
                 </h3>
                 <p className="text-lg text-gray-700 text-center max-w-4xl mx-auto">
-                  {t('mission:mission.commitment.description')}
+                  {t('mission:myMission.commitment.description')}
                 </p>
               </div>
             </div>

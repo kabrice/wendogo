@@ -12,11 +12,13 @@ import SocialMediaLogo from '../assets/optimized/social_media_logo.webp';
 import { FloatingWhatsApp } from 'react-floating-whatsapp';
 import { REST_API_PARAMS } from '../utils/Constants';
 import { useTranslation } from 'next-i18next';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 
 function Contact() {
   const { t } = useTranslation(['common', 'contact']);  
-
+  const router = useRouter();
+  const locale = router.locale || 'fr';
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -48,8 +50,9 @@ function Contact() {
     setSubmitMessage('');
 
     try {
+      console.log('✅✅✅Submitting contact form with data:', formData);
       // ✅ VRAIE API CALL vers votre backend Flask
-      const response = await fetch(`${REST_API_PARAMS.baseUrl}/api/contact/send-message`, {
+      const response = await fetch(`${REST_API_PARAMS.baseUrl}/api/contact/send-message?locale=${locale}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

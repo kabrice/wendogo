@@ -129,7 +129,7 @@
       "quick_filter_more_10000": "> €10000"
     },
     "language": {
-      "title": "Language of Instruction",
+      "title": "Required language level",
       "language_label": "Language",
       "min_level_label": "Minimum required level",
       "all_languages": "All languages",
